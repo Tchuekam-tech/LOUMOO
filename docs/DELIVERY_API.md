@@ -59,6 +59,24 @@ delivered, cancelled: terminal
 * A retry (`failed -> assigned`) issues a **new handover code** and clears the old
   rider's location trail, but does **not** refill the code-guess budget (below).
 
+## Response shapes (`data`)
+| Endpoint | HTTP | `data` |
+|---|---|---|
+| `POST /` | **201** | `{ delivery }` |
+| `GET /:id`, `GET /by-order/:orderId` | 200 | `{ delivery }` |
+| `POST /:id/assign`, `/cancel`, `/accept`, `/status`, `/complete`, `/resolve` | 200 | `{ delivery }` |
+| `POST /:id/decline` | 200 | `{ delivery: { id, status } }` (the rider loses access afterwards) |
+| `POST /:id/location` | 200 | `{ accepted: true, location, etaMinutes, distanceKm }` or `{ accepted: false, reason }` |
+| `GET /:id/code` | 200 | `{ code, digits, attemptsRemaining }` |
+| `GET /drivers` | 200 | `{ drivers: [{ id, name, phone }] }` |
+| `POST /drivers/:profileId` | 200 | `{ driver: { id, name, phone, status } }` |
+| `GET /driver/me` | 200 | `{ driver: { id, name, phone }, deliveries: [delivery] }` |
+| `POST /:id/reconcile` | 200 | `{ reconciled: true, deliveryStatus }` |
+
+Request bodies are **strict**: any key not listed in this document is a `400`
+(this is what stops a client sending `buyerId`, `status`, `driverId` on create…).
+Actions with no body (`accept`, `decline`, `reconcile`) ignore one.
+
 ## Objects
 
 ### Delivery
