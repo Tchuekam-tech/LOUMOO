@@ -19,7 +19,7 @@
 
 const { SupabaseDatabase, handleDatabaseFailure } = require('../../../infrastructure/database/SupabaseClient');
 const { ConflictError, NotFoundError, ValidationError } = require('../../../shared/errors/AppError');
-const { TERMINAL_STATUSES, DRIVER_STATUS } = require('../domain/Delivery');
+const { DELIVERY_STATUS, TERMINAL_STATUSES, DRIVER_STATUS } = require('../domain/Delivery');
 
 const PG_UNIQUE_VIOLATION = '23505';
 const PG_FOREIGN_KEY_VIOLATION = '23503';
@@ -225,6 +225,36 @@ class DeliveryRepository {
     return [...this._deliveries.values()]
       .filter((d) => d.driverId === driverId && isOpen(d.status))
       .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+      .slice(0, limit)
+      .map((d) => ({ ...d }));
+  }
+
+  /**
+   * Offers (`assigned` deliveries) handed out at or before `cutoffIso`, oldest
+   * first: the ones whose acceptance window has lapsed. A row with no
+   * `assigned_at` is never returned (nothing to count from). Bounded, so a
+   * backlog is worked off over several sweeps instead of in one long query.
+   */
+  async findStaleOffers(cutoffIso, { limit = 50 } = {}) {
+    const cutoff = Date.parse(cutoffIso);
+    if (!Number.isFinite(cutoff)) return [];
+    const db = this.db;
+    if (db) {
+      try {
+        const { data, error } = await db.from('deliveries').select('*')
+          .eq('status', DELIVERY_STATUS.ASSIGNED)
+          .lte('assigned_at', new Date(cutoff).toISOString())
+          .order('assigned_at', { ascending: true })
+          .limit(limit);
+        if (error) handleDatabaseFailure(error, 'DeliveryRepository.findStaleOffers');
+        else return (data || []).map(fromRow);
+      } catch (err) {
+        handleDatabaseFailure(err, 'DeliveryRepository.findStaleOffers');
+      }
+    }
+    return [...this._deliveries.values()]
+      .filter((d) => d.status === DELIVERY_STATUS.ASSIGNED && d.assignedAt && Date.parse(d.assignedAt) <= cutoff)
+      .sort((a, b) => Date.parse(a.assignedAt) - Date.parse(b.assignedAt))
       .slice(0, limit)
       .map((d) => ({ ...d }));
   }
