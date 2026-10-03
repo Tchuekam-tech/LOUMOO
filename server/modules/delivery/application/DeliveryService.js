@@ -117,7 +117,9 @@ class DeliveryService {
   async _loadForCaller(deliveryId, callerInput) {
     const caller = this._caller(callerInput);
     if (!deliveryId) throw new ValidationError('Delivery ID is required.');
-    const delivery = await this.repo.findById(deliveryId);
+    // A lapsed offer is released before anyone is judged against it, so a rider
+    // whose window closed is no longer a participant (404, as after a decline).
+    const delivery = await this._releaseIfLapsed(await this.repo.findById(deliveryId));
     const role = delivery ? this._participantRole(delivery, caller) : null;
     // Same response for "does not exist" and "not yours": no id enumeration.
     if (!delivery || !role) throw new NotFoundError('Delivery', deliveryId);
