@@ -395,3 +395,39 @@
     } catch (e) { /* map not ready yet */ }
   }
 
+  // --------------------------------------------------------------- live feed
+  function startLive(id) {
+    if (!window.deliveryApi || !window.deliveryApi.subscribe) return;
+    state.sub = window.deliveryApi.subscribe(id, {
+      onStatus: function (evt) {
+        if (!state.delivery || !evt) return;
+        var changed = state.delivery.status !== evt.status;
+        state.delivery.status = evt.status;
+        if (evt.etaMinutes !== undefined) state.delivery.etaMinutes = evt.etaMinutes;
+        if (evt.distanceKm !== undefined) state.delivery.distanceKm = evt.distanceKm;
+        setPill(labelFor(evt.status).toUpperCase(), statusKind(evt.status));
+        renderTimeline(state.delivery);
+        renderEta(state.delivery);
+        // On a real transition, re-read the full record so the rider card,
+        // drop-off and handover code reflect the new phase.
+        if (changed) refreshDelivery();
+      },
+      onLocation: function (loc) {
+        if (!state.delivery || !loc) return;
+        state.delivery.lastLocation = loc;
+        updateMap(state.delivery);
+      },
+      onEta: function (evt) {
+        if (!state.delivery || !evt) return;
+        if (evt.etaMinutes !== undefined) state.delivery.etaMinutes = evt.etaMinutes;
+        if (evt.distanceKm !== undefined) state.delivery.distanceKm = evt.distanceKm;
+        renderEta(state.delivery);
+      },
+      onEnd: function (reason) {
+        if (reason === 'access_revoked') renderError('You no longer have access to this delivery.');
+        refreshDelivery(); // settle on the final state (delivered / cancelled)
+      },
+      onError: function () { /* transient — the feed reconnects or falls back to polling */ }
+    });
+  }
+
