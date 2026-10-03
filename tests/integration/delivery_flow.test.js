@@ -467,6 +467,25 @@ async function run() {
     assert.strictEqual(buyerEarly.etaMinutes, null, 'and no ETA');
     assert.strictEqual(buyerEarly.distanceKm, null);
 
+    // ----------------------------------------------------------------- pickup
+    console.log('  Picking the parcel up...');
+    const statusPath = '/' + deliveryId + '/status';
+    assert.strictEqual((await api('POST', statusPath, cast.rider, {})).status, 400, 'a status is required');
+    assert.strictEqual((await api('POST', statusPath, cast.rider, { status: 'delivered' })).status, 400, 'a rider cannot self-report delivered');
+    assert.strictEqual((await api('POST', statusPath, cast.rider, { status: 'picked_up', rider: 'x' })).status, 400, 'unknown keys are refused');
+    assert.strictEqual((await api('POST', statusPath, cast.seller, { status: 'picked_up' })).status, 403, 'the seller cannot move the rider along');
+    assert.strictEqual((await api('POST', statusPath, cast.rider, { status: 'arrived' })).status, 409, 'arrived before picked_up is an illegal transition');
+    assert.strictEqual((await orderRow(order.id)).fulfillment_status, 'processing', 'refused changes leave the order alone');
+
+    const pickup = await api('POST', statusPath, cast.rider, { status: 'picked_up' });
+    assert.strictEqual(pickup.status, 200, JSON.stringify(pickup.body));
+    assert.strictEqual(pickup.body.data.delivery.status, 'picked_up');
+    assert.strictEqual((await orderRow(order.id)).fulfillment_status, 'in_transit', 'pickup moves iam.orders to in_transit');
+    assert.ok((await db().from('deliveries').select('picked_up_at').eq('id', deliveryId).single()).data.picked_up_at, 'picked_up_at is stamped');
+    const viaOrders = await call('GET', '/api/v1/orders/' + order.id, cast.buyer);
+    assert.strictEqual(viaOrders.status, 200, JSON.stringify(viaOrders.body));
+    assert.strictEqual(viaOrders.body.data.order.fulfillmentStatus, 'in_transit', 'the buyer sees the new status through the ordinary order endpoint too (no stale cache)');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
