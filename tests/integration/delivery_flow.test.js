@@ -162,6 +162,8 @@ async function makeCast() {
   return { seller, store, listing, rival, buyer, stranger, rider, rider2, admin };
 }
 const createdOrderIds = [];
+// Riders registered by the offer section below, removed with everything else.
+const extraDriverIds = [];
 
 /** Places a real order through POST /api/v1/orders as the buyer. */
 async function placeOrder(cast, { deliveryMethod = 'HOME_DELIVERY' } = {}) {
@@ -228,7 +230,9 @@ async function removeDeliveryData(cast) {
     await quiet(() => db().from('orders').delete().in('id', createdOrderIds));
   }
   if (cast) {
-    await quiet(() => db().from('delivery_drivers').delete().in('profile_id', [cast.rider.id, cast.rider2.id]));
+    const riderIds = [cast.rider.id, cast.rider2.id, ...extraDriverIds];
+    await quiet(() => db().from('delivery_drivers').delete().in('profile_id', riderIds));
+    extraDriverIds.length = 0;
   }
 
   if (createdOrderIds.length) {
@@ -831,7 +835,144 @@ async function run() {
     assert.strictEqual((await api('POST', '/' + roadJob.id + '/assign', cast.seller, { driverId: cast.rider2.id })).status, 200, 'the seller can now hand it to another rider');
     console.log('    ✓ Failure and retry, locks, cancellation (and its cascade), suspension and admin repair.');
 
-    // @@SECTIONS@@
+    // ------------------------------------- offers: expiry, ranking, auto-assign
+    // The unit suites prove this logic against in-memory stand-ins. What only a
+    // real database can show, and what is checked here: the compare-and-swap
+    // that releases a lapsed offer is guarded on `assigned_at`, so it works only
+    // if a TIMESTAMPTZ round-trips through PostgREST unchanged; and the two
+    // ranking queries really match real rows — the recent-lapse one filters
+    // `delivery_events` on a note that contains a colon and spaces.
+    console.log('  Offers: expiry, ranking and auto-assign...');
+    const { OFFER_EXPIRED_NOTE } = require('../../server/modules/delivery/domain/Delivery');
+    const { getSharedDeliveryService } = require('../../server/modules/delivery/application/DeliveryService');
+
+    const deliveryRow = async id => {
+      const { data, error } = await db().from('deliveries').select('*').eq('id', id).single();
+      if (error) throw new Error(`delivery_flow: could not read delivery ${id}: ${error.message}`);
+      return data;
+    };
+
+    /** Registers `user` as an active rider under a name that fixes its place in a tie. */
+    const makeRider = async (user, name, phone) => {
+      const res = await api('POST', '/drivers/' + user.id, cast.admin, { name, phone, status: 'active' });
+      assert.strictEqual(res.status, 200, `rider registration failed: ${JSON.stringify(res.body)}`);
+      extraDriverIds.push(user.id);
+      return user;
+    };
+
+    /**
+     * Pushes an offer's `assigned_at` back beyond its own window, which is how a
+     * fifteen-minute lapse is tested in seconds. The window is measured from the
+     * deadline the API itself reported, so any configured TTL works.
+     */
+    const ageOutOffer = async (id, offerExpiresAt) => {
+      const row = await deliveryRow(id);
+      const windowMs = Date.parse(offerExpiresAt) - Date.parse(row.assigned_at);
+      assert.ok(windowMs > 0, 'the offer carries a real acceptance window');
+      const { error } = await db().from('deliveries')
+        .update({ assigned_at: new Date(Date.now() - windowMs - 60000).toISOString() }).eq('id', id);
+      if (error) throw new Error(`delivery_flow: could not age offer ${id}: ${error.message}`);
+    };
+
+    // Ranking reads every active rider on the platform, so the riders the
+    // earlier sections left behind are parked first: otherwise they would weigh
+    // in the order asserted below.
+    for (const left of [cast.rider, cast.rider2]) {
+      assert.strictEqual((await api('POST', '/drivers/' + left.id, cast.admin,
+        { name: 'Parked Rider', phone: '+237600000009', status: 'suspended' })).status, 200,
+      'the riders from the earlier sections are parked');
+    }
+    const riderA = await makeRider(await harness.createUser({ stage: 'ready' }), 'Aaa Offer Rider', '+237600000011');
+    const riderM = await makeRider(await harness.createUser({ stage: 'ready' }), 'Mmm Offer Rider', '+237600000012');
+    const riderZ = await makeRider(await harness.createUser({ stage: 'ready' }), 'Zzz Offer Rider', '+237600000013');
+
+    // Who is told how long the rider has.
+    const offered = await openDelivery(cast, { rider: riderA });
+    const offerExpiresAt = (await api('GET', '/' + offered.id, cast.seller)).body.data.delivery.offerExpiresAt;
+    assert.ok(offerExpiresAt, 'the seller is told when the offer runs out');
+    assert.ok((await api('GET', '/' + offered.id, riderA)).body.data.delivery.offerExpiresAt,
+      'and so is the rider holding it');
+    assert.ok((await api('GET', '/' + offered.id, cast.admin)).body.data.delivery.offerExpiresAt,
+      'and an administrator');
+    assert.ok(!(await api('GET', '/' + offered.id, cast.buyer)).body.data.delivery.offerExpiresAt,
+      'the buyer is never shown the offer deadline');
+
+    // The release. The swap must match status, rider AND the exact assigned_at
+    // read back from the database, so a silent failure here would leave the row
+    // sitting in `assigned` for ever.
+    await ageOutOffer(offered.id, offerExpiresAt);
+    assert.strictEqual((await api('GET', '/' + offered.id, cast.seller)).body.data.delivery.status,
+      'pending_assignment', 'reading a lapsed offer returns it to the seller');
+    const releasedRow = await deliveryRow(offered.id);
+    assert.strictEqual(releasedRow.status, 'pending_assignment', 'and the stored row really changed');
+    assert.strictEqual(releasedRow.driver_id, null, 'the rider is off it');
+    assert.strictEqual(releasedRow.assigned_at, null, 'and its window is cleared');
+
+    const offerTrail = (await db().from('delivery_events').select('*').eq('delivery_id', offered.id).order('id')).data;
+    const lapseRow = (offerTrail || []).filter(e => e.status === 'pending_assignment' && e.previous_status === 'assigned').pop();
+    assert.ok(lapseRow, 'the lapse is written to the timeline');
+    assert.strictEqual(lapseRow.actor_id, riderA.id, 'with the silent rider as its actor');
+    assert.strictEqual(lapseRow.note, OFFER_EXPIRED_NOTE, 'and exactly the note the ranking matches on');
+
+    // Too late, and the answer says why rather than "no such delivery".
+    const lateAccept = await api('POST', '/' + offered.id + '/accept', riderA);
+    assert.strictEqual(lateAccept.status, 409, JSON.stringify(lateAccept.body));
+    assert.strictEqual(lateAccept.body.error.code, 'OFFER_EXPIRED');
+    assert.ok(!((await api('GET', '/driver/me', riderA)).body.data.deliveries || []).some(d => d.id === offered.id),
+      'and the dead offer has left the rider\'s job list');
+
+    // One rider carrying real work, one idle, one who has just gone silent.
+    // Alphabetically the order would be exactly the reverse, so a ranking that
+    // ignored either the workload or the lapse would fail here.
+    await openDelivery(cast, { rider: riderM, accept: true });
+    const rankedRiders = await api('GET', '/drivers', cast.seller);
+    assert.strictEqual(rankedRiders.status, 200);
+    assert.deepStrictEqual(rankedRiders.body.data.drivers.map(d => d.id), [riderZ.id, riderM.id, riderA.id],
+      `idle, then busy, then the rider who went silent: ${JSON.stringify(rankedRiders.body.data.drivers)}`);
+    const riderById = Object.fromEntries(rankedRiders.body.data.drivers.map(d => [d.id, d]));
+    assert.strictEqual(riderById[riderM.id].openDeliveries, 1, 'the workload count comes from the real rows');
+    assert.strictEqual(riderById[riderZ.id].openDeliveries, 0, 'and an idle rider carries nothing');
+
+    // Auto-assign follows that order and skips whoever already passed on THIS
+    // delivery, so the idle rider gets it and the one who let it lapse does not.
+    const autoPick = await api('POST', '/' + offered.id + '/auto-assign', cast.seller);
+    assert.strictEqual(autoPick.status, 200, JSON.stringify(autoPick.body));
+    assert.strictEqual(autoPick.body.data.delivery.driver.id, riderZ.id, 'the server picked the idle rider');
+
+    const passedFlags = Object.fromEntries((await api('GET', '/drivers?deliveryId=' + offered.id, cast.seller))
+      .body.data.drivers.map(d => [d.id, d.declined]));
+    assert.strictEqual(passedFlags[riderA.id], true, 'a rider who let this offer lapse is flagged as having passed');
+    assert.strictEqual(passedFlags[riderM.id], false, 'a rider who never saw it is not');
+
+    // A decline hands it back, and that rider is skipped on the next pick.
+    assert.strictEqual((await api('POST', '/' + offered.id + '/decline', riderZ)).status, 200);
+    const autoPick2 = await api('POST', '/' + offered.id + '/auto-assign', cast.seller);
+    assert.strictEqual(autoPick2.status, 200, JSON.stringify(autoPick2.body));
+    assert.strictEqual(autoPick2.body.data.delivery.driver.id, riderM.id,
+      'the only rider left who has not passed, busy or not');
+
+    // Once everyone has passed, the seller is told plainly instead of being
+    // handed the same rider again.
+    assert.strictEqual((await api('POST', '/' + offered.id + '/decline', riderM)).status, 200);
+    const exhausted = await api('POST', '/' + offered.id + '/auto-assign', cast.seller);
+    assert.strictEqual(exhausted.status, 409, JSON.stringify(exhausted.body));
+    assert.strictEqual(exhausted.body.error.code, 'NO_RIDER_AVAILABLE');
+
+    // The background sweep against the real table: two dead offers released in
+    // one bounded call. Nothing else exercises findStaleOffers' comparison
+    // against a real timestamp column.
+    const sweepA = await openDelivery(cast, { rider: riderA });
+    const sweepZ = await openDelivery(cast, { rider: riderZ });
+    for (const job of [sweepA, sweepZ]) {
+      await ageOutOffer(job.id, (await api('GET', '/' + job.id, cast.seller)).body.data.delivery.offerExpiresAt);
+    }
+    const sweepResult = await getSharedDeliveryService().expireStaleOffers({ limit: 50 });
+    assert.ok(sweepResult.expired >= 2, `the sweep released both dead offers, got ${sweepResult.expired}`);
+    for (const job of [sweepA, sweepZ]) {
+      assert.strictEqual((await deliveryRow(job.id)).status, 'pending_assignment',
+        `the sweep really freed ${job.id}`);
+    }
+    console.log('    ✓ Offers: the window and its audience, the release and its timeline, late accept, workload and non-responder ranking, auto-assign, and the real sweep.');
   } finally {
     await removeDeliveryData(cast);
     await harness.cleanup();
