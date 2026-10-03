@@ -104,6 +104,33 @@ async function makeCast() {
 
   return { seller, store, listing, rival, buyer, stranger, rider, rider2, admin };
 }
+const createdOrderIds = [];
+
+/** Places a real order through POST /api/v1/orders as the buyer. */
+async function placeOrder(cast, { deliveryMethod = 'HOME_DELIVERY' } = {}) {
+  const res = await call('POST', '/api/v1/orders', cast.buyer, {
+    items: [{ listingId: cast.listing.id, quantity: 1 }],
+    deliveryMethod,
+    shippingAddress: {
+      fullName: 'Awa Njoya',
+      phone: '+237690123456',
+      street: 'Rue de la Joie',
+      neighbourhood: 'Bonanjo',
+      city: 'Douala'
+    }
+  });
+  assert.strictEqual(res.status, 201, `order placement failed: ${JSON.stringify(res.body)}`);
+  const order = res.body.data.order;
+  createdOrderIds.push(order.id);
+  return order;
+}
+
+/** The order row as the database holds it, bypassing every cache. */
+async function orderRow(orderId) {
+  const { data, error } = await db().from('orders').select('*').eq('id', orderId).single();
+  if (error) throw new Error(`delivery_flow: could not read order ${orderId}: ${error.message}`);
+  return data;
+}
 async function run() {
   console.log('═══════════════════════════════════════════════════════════');
   console.log('  DELIVERY TRACKING — DATABASE-BACKED INTEGRATION TEST');
