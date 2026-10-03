@@ -175,8 +175,19 @@ The buyer reads a 4-digit code to the rider in person. `POST /:id/complete`:
   refill it) → `423 DELIVERY_LOCKED`; even the right code is then refused and the
   rider cannot report `failed` either. An admin must `resolve` it.
 
-## SSE events (`GET /:id/stream`)
+## Live stream (`GET /:id/stream`, Server-Sent Events)
+
+**The browser's native `EventSource` cannot be used.** It cannot send an
+`Authorization` header, and putting the session token in the URL would leak it into
+access logs, so query-string tokens are deliberately **not** supported. Use
+`fetch()` with a streaming body reader (or a fetch-based client such as
+`@microsoft/fetch-event-source`) and send `Authorization: Bearer …` as for every
+other call. Parse the standard SSE framing (`event:` / `data:` lines, blank line
+between events, `:` comment lines).
+
 ```
+retry: 5000
+
 event: status
 data: {"status":"picked_up","at":"…","etaMinutes":9,"distanceKm":2.8}
 
@@ -185,12 +196,38 @@ data: {"lat":4.055,"lng":9.72,"at":"…","speedKmh":24,"heading":90}
 
 event: eta
 data: {"etaMinutes":9,"distanceKm":2.8}
+
+: keep-alive
+
+event: end
+data: {"reason":"complete"}
 ```
-A `: keep-alive` comment is sent every 25 s. On connect the server first sends the
-current `status` and last `location`. The server applies the **same visibility
-table as the REST view**: a buyer's stream carries no `location`/`eta` events
-until the delivery is `picked_up`. One server process only (in-process fan-out);
-revisit if the API is scaled horizontally.
+
+* On connect the server sends the **current** `status` and, if any, the last
+  `location` (so a late joiner is up to date), then live events.
+* `: keep-alive` comment every 25 s. `retry: 5000` is the reconnect delay hint.
+* The same **visibility table as the REST view** applies: a buyer's stream carries
+  no `location`/`eta` events, and `etaMinutes`/`distanceKm` are `null`, until the
+  delivery is `picked_up`.
+* The stream ends itself with `event: end` and then closes. `reason`:
+  `complete` (delivery delivered or cancelled), `access_revoked` (you are no longer
+  a participant, e.g. a rider who was replaced, **or your account was suspended,
+  deleted or demoted**: access is re-checked against the live account on every
+  status change and every heartbeat, about every 25 s), `timeout` (maximum lifetime
+  30 minutes: just reconnect), `server_restart` (the server is shutting down:
+  reconnect after a moment).
+* **Limit:** 5 open streams per user; a 6th attempt gets `429 RATE_LIMITED`. Close
+  streams you no longer show.
+* Errors before the stream starts are normal JSON (`401`, `404`, `429`), so check
+  the response status before reading the body as a stream.
+* **Works only where the API is a long-lived process** (Railway). On a serverless
+  runtime (Netlify, Vercel, Lambda) the endpoint answers immediately with
+  `501 { error: { code: "STREAM_UNSUPPORTED" } }` instead of hanging, and the
+  frontend must **poll `GET /:id` every 5–10 s** from then on. Do the same when
+  the stream fails to open or closes with no `end` event (network drop). Treat the
+  stream as an optimisation, not a requirement.
+* Delivery events are fanned out inside one server process (see
+  `DeliveryEvents.js`); revisit if the API is ever scaled horizontally.
 
 ## Errors
 `400` validation · `401` unauthenticated · `403` wrong role / not the assigned or
