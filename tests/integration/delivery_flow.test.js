@@ -221,6 +221,15 @@ async function run() {
     }
     console.log('    ✓ Anonymous and forged callers are refused on every kind of route.');
 
+    // ----------------------------------------------------------------- riders
+    console.log('  Registering riders...');
+    const riderBody = { name: 'Alain Mbarga', phone: '+237600000001' };
+    assert.strictEqual((await api('POST', `/drivers/${cast.rider.id}`, cast.seller, riderBody)).status, 403, 'a seller cannot register riders');
+    assert.strictEqual((await api('POST', `/drivers/${cast.rider.id}`, cast.buyer, riderBody)).status, 403, 'a customer cannot register riders');
+    assert.strictEqual((await api('POST', `/drivers/${cast.rider.id}`, cast.admin, { ...riderBody, role: 'admin' })).status, 400, 'unknown keys are refused');
+    assert.strictEqual((await api('POST', `/drivers/${cast.rider.id}`, cast.admin, { ...riderBody, status: 'banished' })).status, 400, 'status must be active or suspended');
+    assert.strictEqual((await api('POST', `/drivers/${cast.rider.id}`, cast.admin, { name: 'No Phone' })).status, 400, 'a phone number is required');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
