@@ -272,6 +272,31 @@ async function run() {
     const pickupTry = await api('POST', '/', cast.seller, { orderId: pickupOrder.id });
     assert.strictEqual(pickupTry.status, 409, 'a store-pickup order never gets a delivery');
 
+    const created = await api('POST', '/', cast.seller, { orderId: order.id, dropoffLocation: DROPOFF });
+    assert.strictEqual(created.status, 201, JSON.stringify(created.body));
+    assert.strictEqual(created.body.success, true);
+    const deliveryId = created.body.data.delivery.id;
+    assert.strictEqual(created.body.data.delivery.status, 'pending_assignment');
+    assert.strictEqual(created.body.data.delivery.viewerRole, 'seller');
+    assert.strictEqual(created.body.data.delivery.orderId, order.id);
+    assert.ok(/Bonanjo/.test(created.body.data.delivery.dropoff.area || ''), 'the area comes from the order address');
+
+    const row = (await db().from('deliveries').select('*').eq('id', deliveryId).single()).data;
+    assert.strictEqual(row.status, 'pending_assignment');
+    assert.strictEqual(row.buyer_id, cast.buyer.id, 'the buyer is denormalised from the order');
+    assert.strictEqual(row.seller_id, cast.seller.id, 'the seller is denormalised from the order');
+    assert.strictEqual(row.driver_id, null);
+    assert.strictEqual(row.handover_nonce, 1);
+    assert.strictEqual(row.code_attempts, 0);
+    const firstEvents = (await db().from('delivery_events').select('*').eq('delivery_id', deliveryId).order('id')).data;
+    assert.strictEqual(firstEvents.length, 1, 'one timeline entry for the creation');
+    assert.strictEqual(firstEvents[0].status, 'pending_assignment');
+    assert.strictEqual((await orderRow(order.id)).fulfillment_status, 'processing', 'creating a delivery leaves the order alone');
+
+    const duplicate = await api('POST', '/', cast.seller, { orderId: order.id });
+    assert.strictEqual(duplicate.status, 409, 'one open delivery per order');
+    assert.strictEqual(duplicate.body.error.code, 'CONFLICT');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
