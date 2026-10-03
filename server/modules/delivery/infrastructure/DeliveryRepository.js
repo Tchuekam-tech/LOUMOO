@@ -20,7 +20,9 @@
 const { SupabaseDatabase, handleDatabaseFailure } = require('../../../infrastructure/database/SupabaseClient');
 const { ConflictError, NotFoundError, ValidationError } = require('../../../shared/errors/AppError');
 const logger = require('../../../shared/logging/logger');
-const { DELIVERY_STATUS, TERMINAL_STATUSES, WORKLOAD_STATUSES, DRIVER_STATUS } = require('../domain/Delivery');
+const {
+  DELIVERY_STATUS, TERMINAL_STATUSES, WORKLOAD_STATUSES, DRIVER_STATUS, OFFER_EXPIRED_NOTE
+} = require('../domain/Delivery');
 
 const PG_UNIQUE_VIOLATION = '23505';
 const PG_FOREIGN_KEY_VIOLATION = '23503';
@@ -379,6 +381,41 @@ class DeliveryRepository {
       }
     }
     return (this._events.get(deliveryId) || []).map((e) => ({ ...e }));
+  }
+
+  /**
+   * How many offers each rider let lapse since `sinceIso`, as `Map<riderId, count>`
+   * (riders with none are absent). A lapse is the timeline row written when an
+   * `assigned` offer returns to `pending_assignment` with OFFER_EXPIRED_NOTE; the
+   * rider is its actor. A decline has the same shape but a different note, and is
+   * deliberately NOT counted: declining is a rider who is answering.
+   */
+  async countRecentLapses(sinceIso) {
+    const since = Date.parse(sinceIso);
+    if (!Number.isFinite(since)) return new Map();
+    const db = this.db;
+    if (db) {
+      try {
+        const { data, error } = await db.from('delivery_events').select('actor_id')
+          .eq('status', DELIVERY_STATUS.PENDING_ASSIGNMENT)
+          .eq('previous_status', DELIVERY_STATUS.ASSIGNED)
+          .eq('note', OFFER_EXPIRED_NOTE)
+          .gte('created_at', new Date(since).toISOString())
+          .limit(MAX_WORKLOAD_ROWS);
+        if (error) handleDatabaseFailure(error, 'DeliveryRepository.countRecentLapses');
+        else return tally((data || []).map((r) => r.actor_id).filter(Boolean));
+      } catch (err) {
+        handleDatabaseFailure(err, 'DeliveryRepository.countRecentLapses');
+      }
+    }
+    const ids = [];
+    for (const list of this._events.values()) {
+      for (const e of list) {
+        if (e.status === DELIVERY_STATUS.PENDING_ASSIGNMENT && e.previousStatus === DELIVERY_STATUS.ASSIGNED
+          && e.note === OFFER_EXPIRED_NOTE && e.actorId && Date.parse(e.at) >= since) ids.push(e.actorId);
+      }
+    }
+    return tally(ids);
   }
 
   // ----------------------------------------------------------------------- GPS
