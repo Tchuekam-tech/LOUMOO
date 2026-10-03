@@ -337,6 +337,25 @@ async function run() {
     assert.strictEqual((await api('GET', '/by-order/' + order.orderNumber, cast.seller)).body.data.delivery.id, deliveryId, 'lookup by order number');
     assert.strictEqual((await api('GET', '/by-order/' + order.id, cast.stranger)).status, 404, 'a stranger cannot look an order up');
 
+    // ----------------------------------------------------------------- assign
+    console.log('  Assigning a rider...');
+    assert.strictEqual((await api('POST', '/' + deliveryId + '/assign', cast.buyer, { driverId: cast.rider.id })).status, 404, 'the buyer cannot assign a rider');
+    assert.strictEqual((await api('POST', '/' + deliveryId + '/assign', cast.rival, { driverId: cast.rider.id })).status, 404, 'another seller cannot either');
+    assert.strictEqual((await api('POST', '/' + deliveryId + '/assign', cast.seller, {})).status, 400, 'driverId is required');
+    assert.strictEqual((await api('POST', '/' + deliveryId + '/assign', cast.seller, { driverId: cast.rider.id, status: 'delivered' })).status, 400, 'no status injection');
+    assert.strictEqual((await api('POST', '/' + deliveryId + '/assign', cast.seller, { driverId: 'profile_that_does_not_exist' })).status, 400, 'an unknown rider is refused');
+    assert.strictEqual((await api('POST', '/' + deliveryId + '/assign', cast.seller, { driverId: cast.stranger.id })).status, 400, 'a profile that is not a registered rider is refused');
+
+    const assigned = await api('POST', '/' + deliveryId + '/assign', cast.seller, { driverId: cast.rider.id });
+    assert.strictEqual(assigned.status, 200, JSON.stringify(assigned.body));
+    assert.strictEqual(assigned.body.data.delivery.status, 'assigned');
+    assert.strictEqual(assigned.body.data.delivery.driver.id, cast.rider.id);
+    const assignedRow = (await db().from('deliveries').select('*').eq('id', deliveryId).single()).data;
+    assert.strictEqual(assignedRow.driver_id, cast.rider.id, 'the rider is stored on the delivery');
+    assert.ok(assignedRow.assigned_at, 'assigned_at is stamped');
+    const buyerBeforeAccept = (await api('GET', '/' + deliveryId, cast.buyer)).body.data.delivery;
+    assert.strictEqual(buyerBeforeAccept.driver, null, 'the buyer is not told who until the rider accepts');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
