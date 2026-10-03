@@ -721,6 +721,60 @@ async function run() {
       assert.ok(deliveryId && order);
     }
 
+    // Orders are read FRESH from the database for every decision. OrderRepository's
+    // ordinary read serves a per-instance cache that is never refreshed, so an order
+    // cancelled or refunded elsewhere would still look live to this service.
+    {
+      const makeRow = (over = {}) => ({
+        id: 'ord_db_1', buyer_id: 'buyer_1', seller_id: 'seller_1', order_number: 'KM-TEST-DB1', total_amount_xaf: 50000,
+        items: [{ listingId: 'lst_1', title: 'Phone', unitPriceXaf: 50000, quantity: 1, sellerId: 'seller_1', storeName: 'Tech Shop' }],
+        shipping_address: { fullName: 'Awa', phone: '+237622222222', city: 'Douala', _deliveryMethod: 'HOME_DELIVERY' },
+        payment_status: 'paid', fulfillment_status: 'processing',
+        created_at: '2026-10-03T09:00:00.000Z', updated_at: '2026-10-03T09:00:00.000Z', ...over
+      });
+
+      // The repository itself.
+      const rows = new Map([['ord_db_1', makeRow()]]);
+      const orders = new OrderRepository({ db: stubOrdersDb(rows) });
+      assert.strictEqual((await orders.findOrderById('ord_db_1')).fulfillmentStatus, 'processing');
+      rows.get('ord_db_1').fulfillment_status = 'cancelled'; // cancelled by another request
+      assert.strictEqual((await orders.findOrderById('ord_db_1')).fulfillmentStatus, 'processing', 'the ordinary read is stale: this is why a fresh read exists');
+      assert.strictEqual((await orders.findOrderByIdFresh('ord_db_1')).fulfillmentStatus, 'cancelled', 'the fresh read sees the database');
+      assert.strictEqual((await orders.findOrderById('ord_db_1')).fulfillmentStatus, 'cancelled', 'and refreshes the cache');
+      assert.strictEqual((await orders.findOrderByIdFresh('KM-TEST-DB1')).id, 'ord_db_1', 'an order number resolves too');
+      rows.delete('ord_db_1');
+      assert.strictEqual(await orders.findOrderByIdFresh('ord_db_1'), null, 'a row that is gone is gone');
+      assert.strictEqual(await orders.findOrderById('ord_db_1'), null, 'including from the cache');
+      assert.strictEqual(await orders.findOrderByIdFresh(''), null);
+      assert.strictEqual(await new OrderRepository({ db: null }).findOrderByIdFresh('nope'), null, 'no database: falls back to memory');
+
+      // The atomic status update compares against the database, not a cached copy.
+      const rows2 = new Map([['ord_db_1', makeRow()]]);
+      const orders2 = new OrderRepository({ db: stubOrdersDb(rows2) });
+      await orders2.findOrderById('ord_db_1'); // warm the cache at "processing"
+      rows2.get('ord_db_1').fulfillment_status = 'in_transit'; // moved on elsewhere
+      assert.strictEqual(
+        await code(orders2.updateFulfillmentStatusAtomic('ord_db_1', 'processing', 'in_transit', { note: 'x' })),
+        'CONFLICT',
+        'a stale cache must not turn into a silent success or a bogus transition'
+      );
+
+      // The delivery service's decisions.
+      const rows3 = new Map([['ord_db_1', makeRow()]]);
+      const orders3 = new OrderRepository({ db: stubOrdersDb(rows3) });
+      const w = { repo: new DeliveryRepository({ db: null }) };
+      const service = new DeliveryService({ repository: w.repo, orderRepository: orders3, events: new DeliveryEvents() });
+      await orders3.findOrderById('ord_db_1'); // the cache believes: processing, paid
+      rows3.get('ord_db_1').fulfillment_status = 'cancelled';
+      assert.strictEqual(await code(service.createDelivery('ord_db_1', SELLER)), 'CONFLICT', 'a delivery is not created for an order that was cancelled elsewhere');
+      rows3.get('ord_db_1').fulfillment_status = 'processing';
+      rows3.get('ord_db_1').payment_status = 'refunded';
+      assert.strictEqual(await code(service.createDelivery('ord_db_1', SELLER)), 'CONFLICT', 'nor for one that was refunded elsewhere');
+      rows3.get('ord_db_1').payment_status = 'paid';
+      const made = await service.createDelivery('ord_db_1', SELLER);
+      assert.strictEqual(made.status, 'pending_assignment', 'once the database says it is deliverable, it is');
+    }
+
     console.log('    ✓ Delivery service: authorisation, flow, GPS policy, handover budget and races hold.');
   } finally {
     NotificationService.create = originalCreate;
