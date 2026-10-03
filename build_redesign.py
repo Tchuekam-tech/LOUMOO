@@ -14344,15 +14344,25 @@ class Component extends DCLogic {
       retryHotelDetail: () => this.loadHotelDetail(this.state.hotelSelectedId),
       selectHotelRoomId: (roomId) => this.setState({ hotelSelectedRoomId: roomId, hotelSubmitError: '' }),
 
-      // Opens an external immersive experience in a new, isolated tab. readTourUrl
-      // already validated https+host; this guards again before navigating.
+      // Opens the property's immersive tour INSIDE LOUMOO (a fullscreen iframe
+      // modal) so guests stay in the app. A persistent "open in new tab" action
+      // is the fallback for tour hosts that block embedding. readTourUrl already
+      // validated https+host; this guards again before mounting the frame.
       openHotelVirtualTour: (url) => {
         const u = typeof url === 'string' ? url.trim() : '';
+        if (!/^https:\/\/[^\s]+\.[^\s]+/i.test(u)) return;
+        this.setState({ tourModalUrl: u, tourModalOpen: true });
+      },
+      closeHotelVirtualTour: () => this.setState({ tourModalOpen: false, tourModalUrl: '' }),
+      openHotelTourInNewTab: () => {
+        const u = (this.state && this.state.tourModalUrl) || '';
         if (!/^https:\/\/[^\s]+\.[^\s]+/i.test(u)) return;
         try {
           if (typeof window !== 'undefined' && window.open) window.open(u, '_blank', 'noopener,noreferrer');
         } catch (e) {}
       },
+      tourModalOpen: !!(this.state && this.state.tourModalOpen),
+      tourModalUrl: (this.state && this.state.tourModalUrl) || '',
       // Client-only favourite mark for the hero heart (not persisted).
       toggleHotelFavorite: () => {
         const id = this.state.hotelSelectedId;
@@ -14408,6 +14418,7 @@ class Component extends DCLogic {
           const url = readTourUrl(sp);
           return {
             name: sp.name || sp.title || '',
+            category: sp.category || '',
             description: sp.description || sp.summary || '',
             image: encImg((sp.images && sp.images[0]) || sp.image || ''),
             features: (sp.amenities || sp.features || []).slice(0, 3).join(' · '),
