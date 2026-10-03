@@ -236,6 +236,34 @@ async function main() {
     assert.strictEqual((await api('GET', '/drivers', BUYER)).status, 403, 'customers cannot list riders');
     assert.strictEqual((await api('GET', '/driver/me', STRANGER)).status, 403, 'non-riders have no rider overview');
 
+    // ---------------------------------------------------------------- create
+    const order = await placeOrder();
+    assert.strictEqual((await api('POST', '/', SELLER, {})).status, 400, 'orderId is required');
+    assert.strictEqual((await api('POST', '/', SELLER, { orderId: order.id, buyerId: 'attacker' })).status, 400, 'privileged fields are refused');
+    assert.strictEqual((await api('POST', '/', SELLER, { orderId: order.id, status: 'delivered' })).status, 400, 'status cannot be injected on create');
+    assert.strictEqual((await api('POST', '/', SELLER, { orderId: order.id, dropoffLocation: { lat: 1, lng: 2, alt: 3 } })).status, 400, 'strict nested objects');
+    assert.strictEqual((await api('POST', '/', SELLER, { orderId: order.id, dropoffLocation: { lat: 95, lng: 0 } })).status, 400, 'range errors come from the service');
+    assert.strictEqual((await api('POST', '/', STRANGER, { orderId: order.id })).status, 404, 'a stranger gets 404');
+    const created = await api('POST', '/', SELLER, { orderId: order.id, dropoffLocation: { lat: 4.0601, lng: 9.7679 } });
+    assert.strictEqual(created.status, 201);
+    assert.strictEqual(created.body.success, true);
+    const deliveryId = created.body.data.delivery.id;
+    assert.strictEqual(created.body.data.delivery.status, 'pending_assignment');
+    assert.strictEqual(created.body.data.delivery.viewerRole, 'seller');
+    const dup = await api('POST', '/', SELLER, { orderId: order.id });
+    assert.strictEqual(dup.status, 409, 'one open delivery per order');
+    assert.strictEqual(dup.body.error.code, 'CONFLICT');
+
+    // ----------------------------------------------------------------- reads
+    assert.strictEqual((await api('GET', `/${deliveryId}`, STRANGER)).status, 404);
+    assert.strictEqual((await api('GET', '/dlv_nope', BUYER)).status, 404);
+    const buyerView = await api('GET', `/${deliveryId}`, BUYER);
+    assert.strictEqual(buyerView.status, 200);
+    assert.strictEqual(buyerView.body.data.delivery.viewerRole, 'buyer');
+    assert.strictEqual((await api('GET', `/by-order/${order.id}`, BUYER)).body.data.delivery.id, deliveryId);
+    assert.strictEqual((await api('GET', `/by-order/${order.orderNumber}`, SELLER)).body.data.delivery.id, deliveryId, 'order number works');
+    assert.strictEqual((await api('GET', `/by-order/${order.id}`, STRANGER)).status, 404);
+
     console.log('    ✓ Delivery routes: wiring, validation, status codes and the live stream hold.');
   } finally {
     NotificationService.create = originalCreate;
