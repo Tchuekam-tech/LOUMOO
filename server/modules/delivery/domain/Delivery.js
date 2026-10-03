@@ -214,7 +214,7 @@ function describeAddress(shippingAddress = {}) {
  * Never included for anyone: handover nonce, code attempts, raw rows. The
  * handover code itself is served by a separate buyer-only call.
  */
-function presentDelivery(d, viewer, { timeline = [], order = null } = {}) {
+function presentDelivery(d, viewer, { timeline = [], order = null, offerTtlMs = 0 } = {}) {
   const afterAcceptance = [
     DELIVERY_STATUS.ACCEPTED, DELIVERY_STATUS.PICKED_UP, DELIVERY_STATUS.ARRIVED, DELIVERY_STATUS.DELIVERED
   ].includes(d.status);
@@ -243,6 +243,9 @@ function presentDelivery(d, viewer, { timeline = [], order = null } = {}) {
 
   const hideEta = viewer === 'buyer' && !BUYER_VISIBLE_LOCATION_STATUSES.includes(d.status);
 
+  // The buyer never learns an offer exists, let alone when it lapses.
+  const deadline = staff || viewer === 'driver' ? offerDeadlineMs(d, offerTtlMs) : null;
+
   return {
     id: d.id,
     orderId: d.orderId,
@@ -256,6 +259,7 @@ function presentDelivery(d, viewer, { timeline = [], order = null } = {}) {
     distanceKm: hideEta ? null : (d.distanceKm ?? null),
     lastLocation,
     failureReason: staff || viewer === 'driver' ? (d.failureReason || null) : null,
+    offerExpiresAt: deadline === null ? null : new Date(deadline).toISOString(),
     timeline: timeline.map((e) => ({ status: e.status, at: e.at, note: staff || viewer === 'driver' ? (e.note || null) : null })),
     createdAt: d.createdAt,
     updatedAt: d.updatedAt
