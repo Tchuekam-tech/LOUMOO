@@ -615,6 +615,20 @@ async function main() {
       assert.ok(!productionRouter.isServerlessRuntime({}));
     }
 
+    // Graceful shutdown ends every open stream with a reason.
+    {
+      const { id } = await newAssignedDelivery();
+      const a = await openStream(`/api/v1/deliveries/${id}/stream`, BUYER);
+      const b = await openStream(`/api/v1/deliveries/${id}/stream`, SELLER);
+      await waitFor(() => typesOf(a).includes('status') && typesOf(b).includes('status'), 'both snapshots');
+      router.closeAllStreams('server_restart');
+      await waitFor(() => a.ended && b.ended, 'both streams to close on shutdown');
+      assert.strictEqual(a.events.find((e) => e.type === 'end').data.reason, 'server_restart');
+      assert.strictEqual(b.events.find((e) => e.type === 'end').data.reason, 'server_restart');
+      assert.strictEqual(router.openStreamCount(), 0);
+      router.closeAllStreams(); // idempotent with nothing open
+    }
+
     // Every stream has been released.
     for (const st of openStreams) closeStream(st);
     await waitFor(() => router.openStreamCount() === 0 && shortLivedRouter.openStreamCount() === 0, 'all streams to be released', 4000);
