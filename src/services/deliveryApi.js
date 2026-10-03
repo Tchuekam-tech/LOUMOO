@@ -81,3 +81,36 @@ class DeliveryApiClient {
     return this._request(`/by-order/${encodeURIComponent(orderId)}`);
   }
 
+  /** A delivery by its id. @returns {Promise<{delivery: object}>} */
+  async get(id) {
+    return this._request(`/${encodeURIComponent(id)}`);
+  }
+
+  /**
+   * The 4-digit handover code — the order BUYER only, and only from `accepted`
+   * to `arrived`. Seller, admin and rider get 403.
+   * @returns {Promise<{code: string, digits: number, attemptsRemaining: number}>}
+   */
+  async getCode(id) {
+    return this._request(`/${encodeURIComponent(id)}/code`);
+  }
+
+  // ----------------------------------------------------------------- live feed
+
+  /** Parse one SSE frame ("event:"/"data:"/":" lines) into {type,data}. */
+  _parseSseFrame(frame) {
+    const ev = { type: 'message', data: null };
+    let sawField = false;
+    for (const line of frame.split('\n')) {
+      if (!line || line.startsWith(':')) continue; // keep-alive comment
+      if (line.startsWith('event:')) { ev.type = line.slice(6).trim(); sawField = true; }
+      else if (line.startsWith('data:')) {
+        const raw = line.slice(5).trim();
+        try { ev.data = JSON.parse(raw); } catch (e) { ev.data = raw; }
+        sawField = true;
+      }
+      // "retry:" and unknown fields are ignored.
+    }
+    return sawField ? ev : null;
+  }
+
