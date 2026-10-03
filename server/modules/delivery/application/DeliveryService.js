@@ -810,6 +810,17 @@ class DeliveryService {
     return this._present(delivery, role);
   }
 
+  /**
+   * The caller's role on a delivery, or null if they have no access. Never
+   * throws for "not yours": the live stream calls this on every status change to
+   * drop a viewer whose access ended (a rider who was replaced or declined).
+   */
+  async getViewerRole(deliveryId, callerInput) {
+    const caller = this._caller(callerInput);
+    const delivery = deliveryId ? await this.repo.findById(deliveryId) : null;
+    return delivery ? this._participantRole(delivery, caller) : null;
+  }
+
   async getDeliveryByOrder(orderId, callerInput) {
     const caller = this._caller(callerInput);
     if (!orderId) throw new ValidationError('Order ID is required.');
