@@ -431,3 +431,14 @@
     });
   }
 
+  async function refreshDelivery() {
+    if (!state.deliveryId || !window.deliveryApi) return;
+    try {
+      var res = await window.deliveryApi.get(state.deliveryId);
+      if (res && res.delivery && state.mounted) {
+        applyDelivery(res.delivery);
+        loadCode(res.delivery);
+      }
+    } catch (e) { /* ignore; the live feed keeps trying */ }
+  }
+
