@@ -1,17 +1,19 @@
-# Delivery Tracking — API Contract (v1, backend step 1 implemented)
+# Delivery Tracking — API Contract (v1, backend steps 1–2 implemented)
 
 Single source of truth for the backend (`server/modules/delivery/**`) and the
 frontend (rider page, customer tracking screen). **Change this file first, then
 tell the other side.** Neither side codes against anything not written here.
 
-> Status: the domain, repository and service behind every rule below are built
-> and unit-tested (`tests/unit/delivery_*.test.js`). The HTTP routes and the SSE
-> stream are **step 2** and are not mounted yet; their shapes are fixed here.
+> Status: **implemented and mounted** at `/api/v1/deliveries` (domain, service,
+> routes, SSE), covered by `tests/unit/delivery_*.test.js` (no database needed).
+> **Not yet run against a real database or with the real session guard:** migration
+> 013 has not been applied anywhere, and the tests stand in for authentication.
 
 Base path: `/api/v1/deliveries` (mounted like `/api/v1/orders`).
 Auth: same bearer session as the rest of the API (`requireAuth`).
 Envelope: `{ success: true, status: 'success', data: ... }` on success; errors use
-the existing `AppError` JSON shape `{ error: { code, message, details, statusCode } }`.
+the shared error shape `{ success: false, error: { code, message, details, requestId } }`.
+The `data` payload per endpoint is in **Response shapes** below.
 Money: integer XAF. Time: ISO-8601 UTC strings. Coordinates: `{ lat, lng }`
 (WGS84, decimal degrees).
 
@@ -56,6 +58,24 @@ delivered, cancelled: terminal
   different rider) and `failed` (retry). Not from `accepted` or later.
 * A retry (`failed -> assigned`) issues a **new handover code** and clears the old
   rider's location trail, but does **not** refill the code-guess budget (below).
+
+## Response shapes (`data`)
+| Endpoint | HTTP | `data` |
+|---|---|---|
+| `POST /` | **201** | `{ delivery }` |
+| `GET /:id`, `GET /by-order/:orderId` | 200 | `{ delivery }` |
+| `POST /:id/assign`, `/cancel`, `/accept`, `/status`, `/complete`, `/resolve` | 200 | `{ delivery }` |
+| `POST /:id/decline` | 200 | `{ delivery: { id, status } }` (the rider loses access afterwards) |
+| `POST /:id/location` | 200 | `{ accepted: true, location, etaMinutes, distanceKm }` or `{ accepted: false, reason }` |
+| `GET /:id/code` | 200 | `{ code, digits, attemptsRemaining }` |
+| `GET /drivers` | 200 | `{ drivers: [{ id, name, phone }] }` |
+| `POST /drivers/:profileId` | 200 | `{ driver: { id, name, phone, status } }` |
+| `GET /driver/me` | 200 | `{ driver: { id, name, phone }, deliveries: [delivery] }` |
+| `POST /:id/reconcile` | 200 | `{ reconciled: true, deliveryStatus }` |
+
+Request bodies are **strict**: any key not listed in this document is a `400`
+(this is what stops a client sending `buyerId`, `status`, `driverId` on create…).
+Actions with no body (`accept`, `decline`, `reconcile`) ignore one.
 
 ## Objects
 
@@ -132,7 +152,7 @@ Only the **assigned, active** rider may call these (`403` for other participants
 ### Admin
 | Method & path | Purpose |
 |---|---|
-| `POST /drivers/:profileId` `{ name, phone, status?: 'active' \| 'suspended' }` | Register, update or suspend a rider. Suspending returns their un-started deliveries (`assigned`/`accepted`) to `pending_assignment`; ones already collected need `resolve`. |
+| `POST /drivers/:profileId` `{ name, phone, status?: 'active' \| 'suspended' }` | Register, update or suspend a rider. **An omitted `status` leaves an existing rider's status unchanged** (a new rider starts `active`), so editing a name never reactivates someone who was suspended; reactivating needs an explicit `"active"`. Suspending returns their un-started deliveries (`assigned`/`accepted`) to `pending_assignment`; ones already collected need `resolve`. |
 | `POST /:id/resolve` `{ action: 'unlock' \| 'fail', note? }` | `unlock`: a delivery locked by wrong codes gets a new code and a fresh budget. `fail`: mark a `picked_up`/`arrived` delivery failed (note required) so another rider can be assigned. |
 | `POST /:id/reconcile` | Re-apply the order status implied by the delivery. Idempotent. |
 
@@ -155,8 +175,19 @@ The buyer reads a 4-digit code to the rider in person. `POST /:id/complete`:
   refill it) → `423 DELIVERY_LOCKED`; even the right code is then refused and the
   rider cannot report `failed` either. An admin must `resolve` it.
 
-## SSE events (`GET /:id/stream`)
+## Live stream (`GET /:id/stream`, Server-Sent Events)
+
+**The browser's native `EventSource` cannot be used.** It cannot send an
+`Authorization` header, and putting the session token in the URL would leak it into
+access logs, so query-string tokens are deliberately **not** supported. Use
+`fetch()` with a streaming body reader (or a fetch-based client such as
+`@microsoft/fetch-event-source`) and send `Authorization: Bearer …` as for every
+other call. Parse the standard SSE framing (`event:` / `data:` lines, blank line
+between events, `:` comment lines).
+
 ```
+retry: 5000
+
 event: status
 data: {"status":"picked_up","at":"…","etaMinutes":9,"distanceKm":2.8}
 
@@ -165,18 +196,45 @@ data: {"lat":4.055,"lng":9.72,"at":"…","speedKmh":24,"heading":90}
 
 event: eta
 data: {"etaMinutes":9,"distanceKm":2.8}
+
+: keep-alive
+
+event: end
+data: {"reason":"complete"}
 ```
-A `: keep-alive` comment is sent every 25 s. On connect the server first sends the
-current `status` and last `location`. The server applies the **same visibility
-table as the REST view**: a buyer's stream carries no `location`/`eta` events
-until the delivery is `picked_up`. One server process only (in-process fan-out);
-revisit if the API is scaled horizontally.
+
+* On connect the server sends the **current** `status` and, if any, the last
+  `location` (so a late joiner is up to date), then live events.
+* `: keep-alive` comment every 25 s. `retry: 5000` is the reconnect delay hint.
+* The same **visibility table as the REST view** applies: a buyer's stream carries
+  no `location`/`eta` events, and `etaMinutes`/`distanceKm` are `null`, until the
+  delivery is `picked_up`.
+* The stream ends itself with `event: end` and then closes. `reason`:
+  `complete` (delivery delivered or cancelled), `access_revoked` (you are no longer
+  a participant, e.g. a rider who was replaced, **or your account was suspended,
+  deleted or demoted**: access is re-checked against the live account on every
+  status change and every heartbeat, about every 25 s), `timeout` (maximum lifetime
+  30 minutes: just reconnect), `server_restart` (the server is shutting down:
+  reconnect after a moment).
+* **Limit:** 5 open streams per user; a 6th attempt gets `429 RATE_LIMITED`. Close
+  streams you no longer show.
+* Errors before the stream starts are normal JSON (`401`, `404`, `429`), so check
+  the response status before reading the body as a stream.
+* **Works only where the API is a long-lived process** (Railway). On a serverless
+  runtime (Netlify, Vercel, Lambda) the endpoint answers immediately with
+  `501 { error: { code: "STREAM_UNSUPPORTED" } }` instead of hanging, and the
+  frontend must **poll `GET /:id` every 5–10 s** from then on. Do the same when
+  the stream fails to open or closes with no `end` event (network drop). Treat the
+  stream as an optimisation, not a requirement.
+* Delivery events are fanned out inside one server process (see
+  `DeliveryEvents.js`); revisit if the API is ever scaled horizontally.
 
 ## Errors
-`400` validation · `401` unauthenticated · `403` wrong role / not the assigned or
+`400` validation (`details` is at most 5 `{ field, message }` entries) · `401` unauthenticated · `403` wrong role / not the assigned or
 an inactive rider · `404` not found **or not a participant** (including a rider who
 was replaced or declined) · `409` illegal transition / already exists / changed by
-someone else · `423` handover locked.
+someone else · `423` handover locked · `429` too many open streams (or the global
+rate limit, see decision 7) · `501` live streaming unsupported on this deployment.
 
 ## Decisions taken (change here first if you disagree)
 1. **Who assigns riders?** The order's seller or an admin.
@@ -191,3 +249,18 @@ someone else · `423` handover locked.
    deliveries are **not** handled yet.
 6. **GPS history** (`driver_locations`) grows with every stored ping; run
    `SELECT iam.prune_driver_locations(30);` periodically.
+7. **Rate limiting is shared, and delivery adds load to it. This needs a decision.**
+   Reading `RateLimitService` and `server/index.js`: `/api` is limited to 120
+   requests/min per client IP **and** 120/min per *immediate peer* (the ingress
+   proxy), checked first. Behind a single ingress (Railway) that second bucket is
+   effectively **one 120/min budget for every user of the whole API**. Delivery adds
+   6–12 calls/min per active rider (pings) and, if the stream is unavailable, 6–12
+   per polling buyer. A handful of simultaneous deliveries can exhaust the shared
+   budget and make *unrelated* endpoints answer `429`. This was not measured in
+   production. Options: raise `peerMaxRequests` for `/api`, exempt delivery pings
+   from the peer bucket, or add a per-user limiter. **Not changed here** because it
+   alters platform-wide abuse protection. Until then the client must treat a `429`
+   on a ping as "skip this one" (the next carries fresh state).
+8. **The order is read fresh from the database** for every delivery decision
+   (`OrderRepository.findOrderByIdFresh`): the ordinary read serves a per-instance
+   cache that is never refreshed.
