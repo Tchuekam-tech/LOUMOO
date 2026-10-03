@@ -67,14 +67,27 @@ entry after finishing one. Newest entry first.
   **One existing integration assertion was edited without being run:**
   `tests/integration/delivery_flow.test.js` (the `GET /drivers` key set now includes
   `openDeliveries`); it needs the live database.
-  *An independent review* (parts of it ran; several reviewers were cut off by a usage
-  limit) found, and this branch fixed: a huge/tiny `DELIVERY_OFFER_TTL_MINUTES`
+  *Two independent review rounds* (five lenses in all: authz, contract, concurrency,
+  operations/DB semantics, adversarial tests; every finding re-checked by a skeptic)
+  found, and this branch fixed, in round 1: a huge/tiny `DELIVERY_OFFER_TTL_MINUTES`
   crashing views or disabling expiry (now bounded: 1 s to 1 week); a late accept
   answering 404 once released (now 409); lapsed offers counting as rider workload and
   a non-responding rider winning every offer (lapsed offers are released before
   ranking, and recent lapses sort last); the untested default/env wiring; weak tests;
-  and doc overstatements. **Not reviewed in full:** the concurrency, operations and
-  adversarial-test lenses were being re-run when this was written.
+  and doc overstatements. Round 2 (after those fixes) found, and this branch fixed: a
+  failed lazy release turning reads into 500s (now best effort); a seller or admin
+  acting as the rider getting 403 instead of 409 on a late accept; auto-assign
+  releasing the very delivery it was assigning (spurious 409); concurrent
+  auto-assigns all picking one rider (now serialised per process); a failed ranking
+  query in production being read as 'nobody is busy' (now an error); a 5000-row cap
+  that exceeded the platform's 1000-row limit; a sweep that hammered a failing
+  database (now stops at the first infrastructure error) and a 50-offer release
+  cap (now bounded rounds); the offer text rounding the window up; and a lost lapse
+  timeline row voiding three decisions (now retried once).
+  **Known, accepted:** the lapse query filters `delivery_events` on columns with no
+  index (migration 013 only indexes `delivery_id`); the table is small today, and
+  adding an index is a migration, so it is deferred to whoever owns the database.
+  Auto-assign serialisation is per process, not across instances.
   **Decision for the owner (decision 11):** `openDeliveries` shows every seller each
   rider's total workload across all sellers.
   **Not verified:** (a) the two new queries (`findStaleOffers`, `countOpenByDriver`)
