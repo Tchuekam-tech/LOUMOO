@@ -180,6 +180,24 @@ async function run() {
       assert.strictEqual((await w.repo.findById(id)).status, 'pending_assignment', 'and released it');
     }
 
+    // -------------------------------------- the rider is told how long they have
+    {
+      for (const [ttl, expected] of [
+        [OFFER_TTL_MS, 'Open LOUMOO to accept or decline it within 15 minutes.'],
+        [MIN, 'Open LOUMOO to accept or decline it within 1 minute.'],
+        [10 * 1000, 'Open LOUMOO to accept or decline it within 1 minute.'],
+        [0, 'Open LOUMOO to accept or decline it.']
+      ]) {
+        const w = makeWorld({ offerTtlMs: ttl });
+        await registerRiders(w);
+        const before = notifications.length;
+        await newDelivery(w, { assignTo: 'rider_1' });
+        const sent = notifications.slice(before).filter((n) => n.userId === 'rider_1' && n.title === 'New delivery assigned');
+        assert.strictEqual(sent.length, 1, 'exactly one offer notification');
+        assert.strictEqual(sent[0].body, expected, `window ${ttl} ms`);
+      }
+    }
+
     // ----------------------------------------------------- accepted never expires
     {
       const w = makeWorld();
