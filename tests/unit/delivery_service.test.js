@@ -53,6 +53,31 @@ async function placeOrder(world, overrides = {}) {
   return world.orders.saveOrder(order);
 }
 
+/**
+ * Minimal stand-in for the Supabase query builder over an `orders` table held in
+ * a Map, covering the reads and the conditional update OrderRepository performs.
+ */
+function stubOrdersDb(rows) {
+  return {
+    from(table) {
+      assert.strictEqual(table, 'orders');
+      const q = { filters: {}, patch: null };
+      const matching = () => [...rows.values()].filter((r) => Object.entries(q.filters).every(([c, v]) => r[c] === v));
+      q.select = () => q;
+      q.eq = (col, val) => { q.filters[col] = val; return q; };
+      q.update = (patch) => { q.patch = patch; return q; };
+      q.maybeSingle = async () => ({ data: matching()[0] ? { ...matching()[0] } : null, error: null });
+      q.single = async () => {
+        const row = matching()[0];
+        if (!row) return { data: null, error: { code: 'PGRST116', message: 'no rows' } };
+        if (q.patch) Object.assign(row, q.patch);
+        return { data: { ...row }, error: null };
+      };
+      return q;
+    }
+  };
+}
+
 const BUYER = { userId: 'buyer_1', userRole: 'customer' };
 const SELLER = { userId: 'seller_1', userRole: 'seller' };
 const ADMIN = { userId: 'admin_1', userRole: 'admin' };
