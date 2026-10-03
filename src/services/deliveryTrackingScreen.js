@@ -389,26 +389,30 @@
       state.map.addControl(new ml.NavigationControl({ showCompass: false }), 'top-right');
       addRecenterControl(ml);
 
-      var loaded = false;
-      state.map.on('load', function () {
-        loaded = true;
+      // Render markers + route as soon as the STYLE SPEC is ready — do not wait
+      // for every tile (the 'load' event), or a slow-but-working connection looks
+      // broken and gets wrongly downgraded to the demo tiles.
+      var styleReady = false;
+      function onStyleReady() {
+        if (!state.map || !(state.map.isStyleLoaded && state.map.isStyleLoaded()) || styleReady) return;
+        styleReady = true;
         if (msg) msg.style.display = 'none';
         ensureRoute();
         updateMap(state.delivery || d);
-      });
+      }
+      state.map.on('styledata', onStyleReady);
+      state.map.on('load', onStyleReady);
       // Only count genuine user gestures as "took control" of the camera.
       state.map.on('dragstart', function () { state._userMovedMap = true; });
       state.map.on('zoomstart', function (e) { if (e && e.originalEvent) state._userMovedMap = true; });
-      state.map.on('error', function () { /* tile/style errors are non-fatal */ });
-      // If the chosen style never loads, fall back to the demo style once.
+      state.map.on('error', function () { /* individual tile/glyph errors are non-fatal */ });
+      // Fall back to the demo style ONLY if the chosen style SPEC itself fails to
+      // load within a generous window (not merely because tiles are still streaming).
       setTimeout(function () {
-        if (!loaded && state.map && mapStyle() !== DEMO_STYLE) {
-          try {
-            state.map.setStyle(DEMO_STYLE);
-            state.map.once('styledata', function () { if (msg) msg.style.display = 'none'; ensureRoute(); updateMap(state.delivery || d); });
-          } catch (e) {}
+        if (state.map && mapStyle() !== DEMO_STYLE && !(state.map.isStyleLoaded && state.map.isStyleLoaded())) {
+          try { styleReady = false; state.map.setStyle(DEMO_STYLE); } catch (e) {}
         }
-      }, 9000);
+      }, 15000);
 
       geocodeDestIfNeeded(d);
     }).catch(function () {
