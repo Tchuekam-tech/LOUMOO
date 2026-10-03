@@ -81,6 +81,14 @@ class DeliveryLockedError extends AppError {
   }
 }
 
+// 409 with its own code, so a rider app can tell "too late" from "someone else
+// changed it" and show the right message.
+class OfferExpiredError extends AppError {
+  constructor(message = 'This offer expired before it was accepted.') {
+    super(message, { code: 'OFFER_EXPIRED', statusCode: 409 });
+  }
+}
+
 function newDeliveryId() {
   return `dlv_${crypto.randomUUID()}`;
 }
@@ -262,6 +270,7 @@ module.exports = {
   OFFER_DEFAULT_TTL_MINUTES,
   WORKLOAD_STATUSES,
   DeliveryLockedError,
+  OfferExpiredError,
   newDeliveryId,
   parseLocation,
   optionalNumber,
