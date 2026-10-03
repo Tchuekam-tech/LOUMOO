@@ -131,6 +131,32 @@ async function orderRow(orderId) {
   if (error) throw new Error(`delivery_flow: could not read order ${orderId}: ${error.message}`);
   return data;
 }
+// A point in Douala, and one a few hundred metres away for the rider's pings.
+const DROPOFF = { lat: 4.0511, lng: 9.7679 };
+const NEARBY = { lat: 4.0561, lng: 9.7679 };
+
+/**
+ * A fresh order with a delivery created by the seller and assigned to `rider`
+ * (and accepted by them when `accept` is set). Returns { order, id }.
+ */
+async function openDelivery(cast, { rider = cast.rider, accept = false } = {}) {
+  const order = await placeOrder(cast);
+  const created = await api('POST', '/', cast.seller, { orderId: order.id, dropoffLocation: DROPOFF });
+  assert.strictEqual(created.status, 201, `delivery creation failed: ${JSON.stringify(created.body)}`);
+  const id = created.body.data.delivery.id;
+
+  const assigned = await api('POST', `/${id}/assign`, cast.seller, { driverId: rider.id });
+  assert.strictEqual(assigned.status, 200, `assign failed: ${JSON.stringify(assigned.body)}`);
+
+  if (accept) {
+    const accepted = await api('POST', `/${id}/accept`, rider);
+    assert.strictEqual(accepted.status, 200, `accept failed: ${JSON.stringify(accepted.body)}`);
+  }
+  return { order, id };
+}
+
+/** A 4-digit code that is guaranteed not to be `code`. */
+const wrongCodeFor = code => String((Number(code) + 1) % 10000).padStart(4, '0');
 async function run() {
   console.log('═══════════════════════════════════════════════════════════');
   console.log('  DELIVERY TRACKING — DATABASE-BACKED INTEGRATION TEST');
