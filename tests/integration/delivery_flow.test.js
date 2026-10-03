@@ -308,6 +308,19 @@ async function run() {
     const raceRows = (await db().from('deliveries').select('id').eq('order_id', raceOrder.id)).data;
     assert.strictEqual(raceRows.length, 1, 'and the database holds a single delivery for the order');
 
+    // Row Level Security: only the service role may touch these tables. The
+    // handover nonce and attempt counter must never be reachable with the public
+    // key, whatever the API layer does.
+    const { SupabaseDatabase } = require('../../server/infrastructure/database/SupabaseClient');
+    for (const table of ['deliveries', 'delivery_events', 'delivery_drivers', 'driver_locations']) {
+      const viaAnon = await SupabaseDatabase.getPublic().from(table).select('*').limit(5);
+      assert.ok(viaAnon.error || (viaAnon.data || []).length === 0, 'the public key must not read iam.' + table);
+    }
+    const anonWrite = await SupabaseDatabase.getPublic().from('deliveries').update({ status: 'delivered' }).eq('id', deliveryId).select();
+    assert.ok(anonWrite.error || (anonWrite.data || []).length === 0, 'the public key must not write deliveries');
+    assert.strictEqual((await db().from('deliveries').select('status').eq('id', deliveryId).single()).data.status, 'pending_assignment', 'and the delivery is unchanged');
+    console.log('    ✓ Creation: guards, rows, the one-open-delivery index under a race, and RLS.');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
