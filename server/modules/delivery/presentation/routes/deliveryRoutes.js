@@ -278,6 +278,9 @@ function createDeliveryRouter({
     liveStreams.add(end);
     ready = true;
     for (const event of buffer.splice(0)) handleEvent(event);
+    // A buffered terminal event may just have ended the stream: do not start
+    // timers on a stream that is already closed (nothing would ever clear them).
+    if (closed) return;
 
     heartbeat = setInterval(() => { write(': keep-alive\n\n'); recheckAccess(); }, heartbeatMs);
     lifetime = setTimeout(() => end('timeout'), maxStreamMs);
