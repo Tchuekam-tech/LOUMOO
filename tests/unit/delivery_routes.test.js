@@ -364,6 +364,69 @@ async function main() {
       assert.strictEqual(cancelled.body.data.delivery.status, 'cancelled');
     }
 
+    // ------------------------------------------------------------ the stream
+    {
+      assert.strictEqual((await api('GET', '/dlv_nope/stream', BUYER)).status, 404);
+      const { id } = await newAssignedDelivery();
+      assert.strictEqual((await api('GET', `/${id}/stream`, STRANGER)).status, 404, 'strangers cannot stream');
+      assert.strictEqual((await api('GET', `/${id}/stream`, null)).status, 401);
+
+      const buyerStream = await openStream(`/api/v1/deliveries/${id}/stream`, BUYER);
+      const sellerStream = await openStream(`/api/v1/deliveries/${id}/stream`, SELLER);
+      assert.strictEqual(buyerStream.status, 200);
+      assert.ok(/text\/event-stream/.test(buyerStream.headers['content-type']));
+      assert.ok(/no-transform/.test(buyerStream.headers['cache-control']), 'no-transform keeps the compression middleware from buffering the stream');
+      assert.strictEqual(buyerStream.headers['content-encoding'], undefined, 'the stream is not compressed');
+      await waitFor(() => typesOf(buyerStream).includes('status'), 'the buyer snapshot');
+      const snap = buyerStream.events.find((e) => e.type === 'status').data;
+      assert.strictEqual(snap.status, 'assigned');
+      assert.ok(buyerStream.events.some((e) => e.type === 'retry'), 'the client is told how long to wait before reconnecting');
+      await waitFor(() => buyerStream.events.some((e) => e.type === 'comment'), 'a keep-alive comment');
+
+      // Accept: both see it. Position before pickup: the seller sees it, the buyer does not.
+      await api('POST', `/${id}/accept`, RIDER);
+      await waitFor(() => buyerStream.events.some((e) => e.type === 'status' && e.data.status === 'accepted'), 'accepted on the buyer stream');
+      clock.advance(5000);
+      await api('POST', `/${id}/location`, RIDER, { ...NEAR, speedKmh: 20 });
+      await waitFor(() => sellerStream.events.some((e) => e.type === 'location'), 'the seller sees the rider');
+      await sleep(80);
+      assert.ok(!typesOf(buyerStream).includes('location'), 'the buyer is NOT sent the rider position before pickup');
+      assert.ok(!typesOf(buyerStream).includes('eta'));
+
+      // After pickup the buyer gets position and ETA too.
+      clock.advance(5000);
+      await api('POST', `/${id}/status`, RIDER, { status: 'picked_up' });
+      await waitFor(() => buyerStream.events.some((e) => e.type === 'status' && e.data.status === 'picked_up'), 'picked_up');
+      // Move the rider ~0.65 km closer over 30 s (78 km/h: plausible), so the ETA actually changes.
+      clock.advance(30000);
+      await api('POST', `/${id}/location`, RIDER, { lat: 4.057, lng: 9.7679 });
+      const live = await waitFor(() => buyerStream.events.find((e) => e.type === 'location'), 'a live position for the buyer');
+      assert.strictEqual(live.data.lat, 4.057);
+      assert.strictEqual(live.data.status, undefined, 'internal fields are not on the wire');
+      await waitFor(() => buyerStream.events.some((e) => e.type === 'eta' && e.data.etaMinutes >= 1), 'an ETA for the buyer');
+
+      // Connecting late still yields the current state, including the last position.
+      const late = await openStream(`/api/v1/deliveries/${id}/stream`, BUYER);
+      await waitFor(() => typesOf(late).includes('location'), 'the snapshot includes the last position');
+      assert.strictEqual(late.events.find((e) => e.type === 'status').data.status, 'picked_up');
+      closeStream(late);
+
+      // Finishing the delivery ends every stream.
+      await api('POST', `/${id}/status`, RIDER, { status: 'arrived' });
+      const realCode = (await api('GET', `/${id}/code`, BUYER)).body.data.code;
+      await api('POST', `/${id}/complete`, RIDER, { code: realCode });
+      await waitFor(() => buyerStream.events.some((e) => e.type === 'end'), 'the end event');
+      assert.strictEqual(buyerStream.events.find((e) => e.type === 'end').data.reason, 'complete');
+      assert.ok(buyerStream.events.some((e) => e.type === 'status' && e.data.status === 'delivered'), 'the final status is delivered before the end');
+      await waitFor(() => buyerStream.ended && sellerStream.ended, 'both streams to close');
+
+      // A finished delivery: snapshot, then immediately closed.
+      const after = await openStream(`/api/v1/deliveries/${id}/stream`, BUYER);
+      await waitFor(() => after.ended, 'a finished delivery stream to close');
+      assert.deepStrictEqual(typesOf(after).slice(-2), ['status', 'end']);
+      assert.strictEqual(events.listenerCount(id), 0, 'nothing stays subscribed once a delivery\'s streams have all ended');
+    }
+
     console.log('    ✓ Delivery routes: wiring, validation, status codes and the live stream hold.');
   } finally {
     NotificationService.create = originalCreate;
