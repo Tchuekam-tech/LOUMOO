@@ -75,6 +75,35 @@ async function call(method, path, user, body) {
 }
 
 const api = (method, path, user, body) => call(method, `/api/v1/deliveries${path}`, user, body);
+/**
+ * Real principals, each a row in iam.profiles that the real session guard will
+ * resolve: the seller of the goods, the buyer, a stranger, a rival seller (a
+ * seller, but not of this order), an administrator and two riders.
+ */
+async function makeCast() {
+  const seller = await harness.createUser({ stage: 'seller_ready' });
+  const store = await harness.createStore(seller, { status: 'ACTIVE' });
+  const listing = await harness.createListing(seller, store, {
+    title: 'Delivery Test Blender',
+    base_price_minor: 45000,
+    currency: 'XAF',
+    status: 'PUBLISHED'
+  });
+
+  const rival = await harness.createUser({ stage: 'seller_ready' });
+  const buyer = await harness.createUser({ stage: 'ready' });
+  const stranger = await harness.createUser({ stage: 'ready' });
+  const rider = await harness.createUser({ stage: 'ready' });
+  const rider2 = await harness.createUser({ stage: 'ready' });
+  const admin = await harness.createUser({ stage: 'ready' });
+
+  // Administrators are profiles with an admin primary role; promoting the row
+  // before its first request means the role is read fresh by the session guard.
+  const { error } = await db().from('profiles').update({ primary_role: 'admin' }).eq('id', admin.id);
+  if (error) throw new Error(`delivery_flow: could not promote the admin: ${error.message}`);
+
+  return { seller, store, listing, rival, buyer, stranger, rider, rider2, admin };
+}
 async function run() {
   console.log('═══════════════════════════════════════════════════════════');
   console.log('  DELIVERY TRACKING — DATABASE-BACKED INTEGRATION TEST');
