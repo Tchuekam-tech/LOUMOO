@@ -799,6 +799,19 @@ async function run() {
     assert.strictEqual(reactivated.body.data.driver.status, 'active', 'reactivating takes an explicit active');
     assert.strictEqual((await api('POST', '/' + queuedJob.id + '/assign', cast.seller, { driverId: cast.rider2.id })).status, 200, 'and the rider can be assigned again');
 
+    // A rider suspended mid-job is refused, but a parcel already collected needs an admin.
+    const suspendedMidJob = await api('POST', '/drivers/' + cast.rider.id, cast.admin, { ...riderBody, status: 'suspended' });
+    assert.strictEqual(suspendedMidJob.status, 200);
+    assert.strictEqual((await db().from('deliveries').select('status,driver_id').eq('id', roadJob.id).single()).data.status, 'picked_up', 'a collected parcel is not silently released');
+    assert.strictEqual((await api('POST', '/' + roadJob.id + '/status', cast.rider, { status: 'arrived' })).status, 403, 'the suspended rider can no longer report progress');
+    assert.strictEqual((await api('POST', '/' + roadJob.id + '/location', cast.rider, NEARBY)).status, 403, 'or post positions');
+    assert.strictEqual((await api('POST', '/' + roadJob.id + '/resolve', cast.admin, { action: 'fail' })).status, 400, 'failing it needs a note');
+    const adminFail = await api('POST', '/' + roadJob.id + '/resolve', cast.admin, { action: 'fail', note: 'Rider suspended with the parcel' });
+    assert.strictEqual(adminFail.status, 200, JSON.stringify(adminFail.body));
+    assert.strictEqual(adminFail.body.data.delivery.status, 'failed');
+    assert.strictEqual((await api('POST', '/' + roadJob.id + '/assign', cast.seller, { driverId: cast.rider2.id })).status, 200, 'the seller can now hand it to another rider');
+    console.log('    ✓ Failure and retry, locks, cancellation (and its cascade), suspension and admin repair.');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
