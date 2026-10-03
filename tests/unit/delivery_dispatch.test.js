@@ -772,6 +772,32 @@ async function run() {
       assert.ok(errors.some((m) => /Could not release lapsed offer/.test(m)), 'with the failure logged');
     }
     {
+      // A failing release must never turn a READ into an error: housekeeping is best effort.
+      const w = makeWorld();
+      await registerRiders(w);
+      const { id, order } = await newDelivery(w, { assignTo: 'rider_1' });
+      w.clock.advance(OFFER_TTL_MS + MIN);
+      w.service._expireOffer = async () => { throw new Error('write path is down'); };
+      const originalWarn = logger.warn;
+      const originalErr = logger.error;
+      const warned = [];
+      logger.warn = (m) => warned.push(String(m));
+      logger.error = () => {}; // accept logs its own best-effort release failure
+      try {
+        const seen = await w.service.getDelivery(id, SELLER);
+        assert.strictEqual(seen.status, 'assigned', 'the seller still gets the delivery, as it is');
+        assert.ok(Date.parse(seen.offerExpiresAt) < w.clock.now(), 'with a deadline that has visibly passed');
+        assert.strictEqual((await w.service.getDeliveryByOrder(order.id, BUYER)).status, 'assigned', 'by order too');
+        assert.strictEqual(await w.service.getViewerRole(id, RIDER), 'driver', "the stream's access check does not throw either");
+        assert.strictEqual((await w.service.getRiderOverview(RIDER)).deliveries.length, 1, "nor does the rider's job list");
+        assert.strictEqual(await code(w.service.acceptDelivery(id, RIDER)), 'OFFER_EXPIRED', 'and accept still refuses a lapsed offer');
+      } finally {
+        logger.warn = originalWarn;
+        logger.error = originalErr;
+      }
+      assert.ok(warned.some((m) => /Could not release lapsed offer/.test(m) && /write path is down/.test(m)), 'the failure is logged');
+    }
+    {
       // The rider cap is applied, and says so.
       const w = makeWorld();
       for (let i = 0; i < 510; i += 1) {
