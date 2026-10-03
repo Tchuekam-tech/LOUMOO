@@ -758,6 +758,25 @@ async function run() {
     assert.notStrictEqual(restarted.body.data.delivery.id, cancelId, 'it is a new delivery');
     assert.strictEqual((await db().from('deliveries').select('id', { count: 'exact', head: true }).eq('order_id', cancelJob.order.id)).count, 2, 'both rows are kept');
 
+    // Cancelling the ORDER cancels its delivery while the parcel has not been collected.
+    const cascadeJob = await openDelivery(cast, { accept: true });
+    const orderCancel = await call('POST', '/api/v1/orders/' + cascadeJob.order.id + '/cancel', cast.buyer, { reason: 'Found it cheaper elsewhere' });
+    assert.strictEqual(orderCancel.status, 200, JSON.stringify(orderCancel.body));
+    assert.strictEqual((await orderRow(cascadeJob.order.id)).fulfillment_status, 'cancelled');
+    const cascaded = (await db().from('deliveries').select('status,cancelled_at').eq('id', cascadeJob.id).single()).data;
+    assert.strictEqual(cascaded.status, 'cancelled', 'cancelling the order cancelled the accepted delivery');
+    assert.ok(cascaded.cancelled_at);
+    const cascadeStory = (await db().from('delivery_events').select('status').eq('delivery_id', cascadeJob.id).order('id')).data.map(e => e.status);
+    assert.strictEqual(cascadeStory[cascadeStory.length - 1], 'cancelled', 'and the timeline says so');
+
+    // Once the rider has the parcel, neither side can cancel it away.
+    const roadJob = await openDelivery(cast, { accept: true });
+    assert.strictEqual((await api('POST', '/' + roadJob.id + '/status', cast.rider, { status: 'picked_up' })).status, 200);
+    assert.strictEqual((await api('POST', '/' + roadJob.id + '/cancel', cast.seller, { reason: 'too late' })).status, 409, 'a seller cannot cancel a collected parcel');
+    const lateOrderCancel = await call('POST', '/api/v1/orders/' + roadJob.order.id + '/cancel', cast.buyer, { reason: 'too late' });
+    assert.ok(lateOrderCancel.status >= 400 && lateOrderCancel.status < 500, 'a buyer cannot cancel an in-transit order: ' + lateOrderCancel.status);
+    assert.strictEqual((await db().from('deliveries').select('status').eq('id', roadJob.id).single()).data.status, 'picked_up', 'the delivery carries on');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
