@@ -476,6 +476,24 @@ async function main() {
       await waitFor(() => st.ended, 'the stream to close after its lifetime');
     }
 
+    // The live account is re-checked while a stream is open (suspension, deletion, demotion).
+    {
+      const { id } = await newAssignedDelivery();
+      const buyerStream = await openStream(`/api/v1/deliveries/${id}/stream`, BUYER);
+      await waitFor(() => typesOf(buyerStream).includes('status'), 'a buyer snapshot');
+      revokedUsers.add('buyer_1'); // the account is suspended after the stream opened
+      await waitFor(() => buyerStream.events.some((e) => e.type === 'end'), 'the revocation to close the stream', 2000);
+      assert.strictEqual(buyerStream.events.find((e) => e.type === 'end').data.reason, 'access_revoked');
+      revokedUsers.delete('buyer_1');
+
+      const adminStream = await openStream(`/api/v1/deliveries/${id}/stream`, ADMIN);
+      await waitFor(() => typesOf(adminStream).includes('status'), 'an admin snapshot');
+      demotedUsers.add('admin_1'); // demoted: no longer an admin, and not a participant either
+      await waitFor(() => adminStream.events.some((e) => e.type === 'end'), 'the demotion to close the stream', 2000);
+      assert.strictEqual(adminStream.events.find((e) => e.type === 'end').data.reason, 'access_revoked', 'a demoted admin keeps nothing from their old role');
+      demotedUsers.delete('admin_1');
+    }
+
     // Every stream has been released.
     for (const st of openStreams) closeStream(st);
     await waitFor(() => router.openStreamCount() === 0 && shortLivedRouter.openStreamCount() === 0, 'all streams to be released', 4000);
