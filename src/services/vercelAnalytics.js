@@ -4,6 +4,11 @@
  * Initializes Vercel Web Analytics for the LOUMOO platform.
  * This script loads the analytics tracking code which sends pageview
  * events to Vercel's analytics endpoint.
+ * 
+ * Implementation follows the official @vercel/analytics package approach
+ * adapted for vanilla JavaScript (non-module) usage.
+ * 
+ * Documentation: https://vercel.com/docs/analytics/quickstart
  */
 
 (function() {
