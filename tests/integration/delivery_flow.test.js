@@ -198,6 +198,18 @@ async function run() {
   let cast = null;
   try {
     cast = await makeCast();
+    // ----------------------------------------------------------------- schema
+    console.log('  Checking the migration surface...');
+    for (const table of ['delivery_drivers', 'deliveries', 'delivery_events', 'driver_locations']) {
+      const { error } = await db().from(table).select('*', { count: 'exact', head: true });
+      assert.ok(!error, `the service role must reach iam.${table}: ${error && error.message}`);
+    }
+    // retain_days < 1 is refused by the function itself, which proves it exists
+    // and is callable by the service role without deleting any GPS history.
+    const prune = await db().rpc('prune_driver_locations', { retain_days: 0 });
+    assert.ok(prune.error && /at least 1/.test(prune.error.message), 'prune_driver_locations rejects a retention below one day');
+    console.log('    ✓ Tables and the retention function are reachable.');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
