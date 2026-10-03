@@ -94,10 +94,13 @@ async function main() {
   const openStreams = [];
 
   async function call(method, path, user, body) {
+    // The timeout matters: if a stream route regressed and answered 200, fetch would
+    // wait on the open response forever and stall the whole master test runner.
     const res = await fetch(base + path, {
       method,
       headers: { ...(user ? { 'x-test-user': user } : {}), 'content-type': 'application/json' },
-      body: body === undefined ? undefined : JSON.stringify(body)
+      body: body === undefined ? undefined : JSON.stringify(body),
+      signal: AbortSignal.timeout(8000)
     });
     let json = null;
     try { json = await res.json(); } catch (e) { /* no body */ }
