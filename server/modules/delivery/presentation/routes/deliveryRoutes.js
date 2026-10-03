@@ -250,6 +250,31 @@ function createDeliveryRouter({
     ok(res, await svc().reconcileOrder(req.params.id, callerOf(req)));
   }));
 
+  // -------------------------------------------------------------------- rider
+
+  router.post('/:id/accept', authenticate, route(async (req, res) => {
+    ok(res, { delivery: await svc().acceptDelivery(req.params.id, callerOf(req)) });
+  }));
+
+  router.post('/:id/decline', authenticate, route(async (req, res) => {
+    ok(res, { delivery: await svc().declineDelivery(req.params.id, callerOf(req)) });
+  }));
+
+  router.post('/:id/status', authenticate, route(async (req, res) => {
+    const { status, note } = parseBody(schemas.RiderStatusSchema, req.body, 'status');
+    ok(res, { delivery: await svc().updateStatus(req.params.id, status, note, callerOf(req)) });
+  }));
+
+  router.post('/:id/location', authenticate, route(async (req, res) => {
+    const body = parseBody(schemas.LocationPingSchema, req.body, 'location');
+    ok(res, await svc().recordLocation(req.params.id, body, callerOf(req)));
+  }));
+
+  router.post('/:id/complete', authenticate, route(async (req, res) => {
+    const { code } = parseBody(schemas.CompleteDeliverySchema, req.body, 'completion');
+    ok(res, { delivery: await svc().completeDelivery(req.params.id, code, callerOf(req)) }, { message: 'Delivery completed.' });
+  }));
+
   router.openStreamCount = () => [...openStreams.values()].reduce((a, b) => a + b, 0);
   return router;}
 
