@@ -619,6 +619,24 @@ async function run() {
     assert.strictEqual((await api('POST', completePath, cast.rider, { code })).status, 409, 'completing twice is refused');
     assert.notStrictEqual((await api('GET', '/' + deliveryId + '/code', cast.buyer)).status, 200, 'the code is no longer served once delivered');
 
+    // Delivering ends every open stream, after the final status.
+    await waitFor(() => buyerStream.events.some(e => e.type === 'end'), 'the end event on the buyer stream');
+    await waitFor(() => sellerStream.events.some(e => e.type === 'end'), 'the end event on the seller stream');
+    assert.strictEqual(buyerStream.events.find(e => e.type === 'end').data.reason, 'complete');
+    assert.ok(buyerStream.events.some(e => e.type === 'status' && e.data.status === 'arrived'), 'the buyer saw arrived on the stream');
+    const finalStatus = buyerStream.events.filter(e => e.type === 'status').pop();
+    assert.strictEqual(finalStatus.data.status, 'delivered', 'the last status before the end is delivered');
+    await waitFor(() => buyerStream.ended && sellerStream.ended, 'both streams to close');
+
+    // The timeline is the complete, ordered story, and the GPS trail kept every accepted point.
+    const story = (await db().from('delivery_events').select('status,previous_status,actor_id').eq('delivery_id', deliveryId).order('id')).data;
+    assert.deepStrictEqual(story.map(e => e.status), ['pending_assignment', 'assigned', 'accepted', 'picked_up', 'arrived', 'delivered'], 'the timeline in order');
+    assert.strictEqual(story[story.length - 1].actor_id, cast.rider.id, 'the rider is recorded as having delivered it');
+    const apiTimeline = (await api('GET', '/' + deliveryId, cast.seller)).body.data.delivery.timeline;
+    assert.deepStrictEqual(apiTimeline.map(e => e.status), story.map(e => e.status), 'the API timeline matches the table');
+    assert.strictEqual((await db().from('driver_locations').select('id', { count: 'exact', head: true }).eq('delivery_id', deliveryId)).count, 3, 'three accepted points in the trail');
+    console.log('    ✓ Full happy path: assign, accept, pings, pickup, arrive, code, delivered; order and streams follow.');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
