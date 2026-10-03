@@ -506,19 +506,19 @@ async function run() {
     assert.strictEqual((await db().from('driver_locations').select('id', { count: 'exact', head: true }).eq('delivery_id', deliveryId)).count, 1, 'a throttled ping is not stored');
 
     await sleep(3200);
-    const secondPing = await api('POST', pingPath, cast.rider, { lat: 4.0546, lng: 9.7679, speedKmh: 20 });
+    const secondPing = await api('POST', pingPath, cast.rider, { lat: 4.0558, lng: 9.7679, speedKmh: 20 });
     assert.strictEqual(secondPing.body.data.accepted, true, 'three seconds later a new point is accepted: ' + JSON.stringify(secondPing.body));
 
     // About 110 km in three seconds is a GPS glitch, not a motorbike.
     await sleep(3200);
-    const glitch = await api('POST', pingPath, cast.rider, { lat: 5.0546, lng: 9.7679 });
+    const glitch = await api('POST', pingPath, cast.rider, { lat: 5.0558, lng: 9.7679 });
     assert.strictEqual(glitch.status, 200);
     assert.deepStrictEqual(glitch.body.data, { accepted: false, reason: 'implausible_jump' });
     assert.strictEqual((await db().from('driver_locations').select('id', { count: 'exact', head: true }).eq('delivery_id', deliveryId)).count, 2, 'the glitch is not stored');
 
     // Before pickup the staff see the rider, the buyer does not.
     const sellerLive = (await api('GET', '/' + deliveryId, cast.seller)).body.data.delivery;
-    assert.strictEqual(sellerLive.lastLocation.lat, 4.0546, 'the seller sees the latest accepted point');
+    assert.strictEqual(sellerLive.lastLocation.lat, 4.0558, 'the seller sees the latest accepted point');
     const buyerEarly = (await api('GET', '/' + deliveryId, cast.buyer)).body.data.delivery;
     assert.strictEqual(buyerEarly.lastLocation, null, 'the buyer sees no position before pickup');
     assert.strictEqual(buyerEarly.etaMinutes, null, 'and no ETA');
@@ -546,7 +546,7 @@ async function run() {
     // Once the parcel is on the road the buyer is shown where it is.
     const buyerLive = (await api('GET', '/' + deliveryId, cast.buyer)).body.data.delivery;
     assert.strictEqual(buyerLive.status, 'picked_up');
-    assert.strictEqual(buyerLive.lastLocation.lat, 4.0546, 'the buyer now sees the rider position');
+    assert.strictEqual(buyerLive.lastLocation.lat, 4.0558, 'the buyer now sees the rider position');
     assert.ok(Number.isInteger(buyerLive.etaMinutes), 'and an ETA');
     assert.ok(buyerLive.distanceKm > 0, 'and a distance');
     assert.ok(!('failureReason' in buyerLive) || buyerLive.failureReason === null, 'but never a failure reason');
@@ -574,14 +574,14 @@ async function run() {
     assert.strictEqual(buyerStream.events.find(e => e.type === 'status').data.status, 'picked_up', 'the snapshot is the current status');
     assert.ok(buyerStream.events.some(e => e.type === 'retry'), 'the client is told how long to wait before reconnecting');
     await waitFor(() => typesOf(buyerStream).includes('location'), 'the last position in the late-joiner snapshot');
-    assert.strictEqual(buyerStream.events.find(e => e.type === 'location').data.lat, 4.0546, 'a late joiner gets the last accepted position');
+    assert.strictEqual(buyerStream.events.find(e => e.type === 'location').data.lat, 4.0558, 'a late joiner gets the last accepted position');
 
     // A new point reaches both open streams within the request, no polling.
     await sleep(3200);
-    const livePing = await api('POST', pingPath, cast.rider, { lat: 4.0541, lng: 9.7679, speedKmh: 21 });
+    const livePing = await api('POST', pingPath, cast.rider, { lat: 4.0555, lng: 9.7679, speedKmh: 21 });
     assert.strictEqual(livePing.body.data.accepted, true, JSON.stringify(livePing.body));
-    await waitFor(() => buyerStream.events.some(e => e.type === 'location' && e.data.lat === 4.0541), 'the live position on the buyer stream');
-    await waitFor(() => sellerStream.events.some(e => e.type === 'location' && e.data.lat === 4.0541), 'the live position on the seller stream');
+    await waitFor(() => buyerStream.events.some(e => e.type === 'location' && e.data.lat === 4.0555), 'the live position on the buyer stream');
+    await waitFor(() => sellerStream.events.some(e => e.type === 'location' && e.data.lat === 4.0555), 'the live position on the seller stream');
     await waitFor(() => buyerStream.events.some(e => e.type === 'eta' && Number.isInteger(e.data.etaMinutes)), 'an ETA on the buyer stream');
     const wire = buyerStream.events.filter(e => e.type === 'location').pop().data;
     assert.strictEqual(wire.status, undefined, 'internal fields are not on the wire');
