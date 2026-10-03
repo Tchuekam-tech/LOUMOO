@@ -696,6 +696,41 @@ async function run() {
     assert.strictEqual((await api('POST', '/' + lockId + '/reconcile', cast.admin)).status, 200);
     assert.strictEqual((await orderRow(lockJob.order.id)).fulfillment_status, 'delivered', 'reconcile walks the order back to delivered');
 
+    // ------------------------------------------------------- failure and retry
+    console.log('  Failing a delivery and retrying it with another rider...');
+    const failJob = await openDelivery(cast, { accept: true });
+    const failId = failJob.id;
+    assert.strictEqual((await api('POST', '/' + failId + '/status', cast.rider, { status: 'picked_up' })).status, 200);
+    assert.strictEqual((await api('POST', '/' + failId + '/status', cast.rider, { status: 'failed' })).status, 400, 'a failure needs a note');
+    assert.strictEqual((await api('POST', '/' + failId + '/status', cast.rider, { status: 'failed', note: 'x'.repeat(501) })).status, 400, 'and the note is bounded');
+    const failed = await api('POST', '/' + failId + '/status', cast.rider, { status: 'failed', note: 'Customer unreachable, phone off' });
+    assert.strictEqual(failed.status, 200, JSON.stringify(failed.body));
+    assert.strictEqual(failed.body.data.delivery.status, 'failed');
+    assert.strictEqual(failed.body.data.delivery.failureReason, 'Customer unreachable, phone off', 'the rider sees the reason they gave');
+    assert.strictEqual((await orderRow(failJob.order.id)).fulfillment_status, 'in_transit', 'a failed delivery leaves the order in_transit');
+    assert.strictEqual((await api('GET', '/' + failId, cast.buyer)).body.data.delivery.failureReason, null, 'the buyer is not shown the failure reason');
+    assert.strictEqual((await api('GET', '/' + failId, cast.seller)).body.data.delivery.failureReason, 'Customer unreachable, phone off', 'the seller is');
+    const failedNonce = (await db().from('deliveries').select('handover_nonce').eq('id', failId).single()).data.handover_nonce;
+
+    // Retry: another rider, a new code, and the first rider loses access.
+    const retried = await api('POST', '/' + failId + '/assign', cast.seller, { driverId: cast.rider2.id });
+    assert.strictEqual(retried.status, 200, JSON.stringify(retried.body));
+    assert.strictEqual(retried.body.data.delivery.status, 'assigned');
+    const retryRow = (await db().from('deliveries').select('handover_nonce,driver_id,failure_reason').eq('id', failId).single()).data;
+    assert.ok(retryRow.handover_nonce > failedNonce, 'a retry issues a new handover code');
+    assert.strictEqual(retryRow.driver_id, cast.rider2.id);
+    assert.strictEqual((await api('GET', '/' + failId, cast.rider)).status, 404, 'the replaced rider loses access');
+    assert.strictEqual((await api('POST', '/' + failId + '/accept', cast.rider)).status, 404, 'and cannot accept it any more');
+
+    assert.strictEqual((await api('POST', '/' + failId + '/accept', cast.rider2)).status, 200);
+    assert.strictEqual((await api('POST', '/' + failId + '/status', cast.rider2, { status: 'picked_up' })).status, 200);
+    assert.strictEqual((await api('POST', '/' + failId + '/status', cast.rider2, { status: 'arrived' })).status, 200);
+    const retryCode = (await api('GET', '/' + failId + '/code', cast.buyer)).body.data.code;
+    assert.strictEqual((await api('POST', '/' + failId + '/complete', cast.rider2, { code: retryCode })).status, 200, 'the second rider completes it');
+    assert.strictEqual((await orderRow(failJob.order.id)).fulfillment_status, 'delivered');
+    const retryStory = (await db().from('delivery_events').select('status').eq('delivery_id', failId).order('id')).data.map(e => e.status);
+    assert.deepStrictEqual(retryStory, ['pending_assignment', 'assigned', 'accepted', 'picked_up', 'failed', 'assigned', 'accepted', 'picked_up', 'arrived', 'delivered'], 'the timeline shows both attempts');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
