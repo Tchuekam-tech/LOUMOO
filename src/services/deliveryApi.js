@@ -142,3 +142,13 @@ class DeliveryApiClient {
     const POLL_MS = 7000;
     const TERMINAL = ['delivered', 'cancelled'];
 
+    let stopped = false;
+    let controller = null;
+    let pollTimer = null;
+
+    const stop = () => {
+      stopped = true;
+      try { if (controller) controller.abort(); } catch (e) { /* ignore */ }
+      if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+    };
+
