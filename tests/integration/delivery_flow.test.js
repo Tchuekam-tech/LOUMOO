@@ -494,8 +494,21 @@ async function run() {
     assert.strictEqual(firstPing.body.data.etaMinutes, null, 'no ETA before pickup');
     assert.strictEqual(firstPing.body.data.distanceKm, null, 'and no distance-to-customer before pickup');
 
+    // Throttle and plausibility compare the server clock against the last stored
+    // point, so these pings go straight to the app WITHOUT the rate-limit pacer
+    // (which can sleep for seconds) and the throttle check runs BEFORE the remote
+    // DB reads below (also seconds) — otherwise a ping meant to land inside the 3s
+    // window would arrive late and be accepted. A few unpaced calls stay under the limit.
+    const ping = (user, body) => harness.request('POST', '/api/v1/deliveries' + pingPath, { token: user.token, body });
+
+    // Immediately: a second point inside the 3s minimum interval is throttled.
+    const tooSoon = await ping(cast.rider, NEARBY);
+    assert.strictEqual(tooSoon.status, 200, 'an ignored ping is not an error');
+    assert.deepStrictEqual(tooSoon.body.data, { accepted: false, reason: 'throttled' });
+
+    // Only the first (accepted) point is stored — on the trail and the delivery row.
     const trail = (await db().from('driver_locations').select('*').eq('delivery_id', deliveryId)).data;
-    assert.strictEqual(trail.length, 1, 'the point is added to the GPS trail');
+    assert.strictEqual(trail.length, 1, 'the accepted point is stored; the throttled one is not');
     assert.strictEqual(trail[0].driver_id, cast.rider.id);
     assert.strictEqual(trail[0].lat, NEARBY.lat);
     assert.strictEqual(trail[0].heading, 359.99999, 'a heading just under 360 survives the column (double precision, not float4)');
@@ -504,18 +517,14 @@ async function run() {
     assert.strictEqual(pinged.eta_minutes, null, 'the delivery row carries no ETA while still accepted');
     assert.strictEqual(pinged.distance_km, null);
 
-    const tooSoon = await api('POST', pingPath, cast.rider, NEARBY);
-    assert.strictEqual(tooSoon.status, 200, 'an ignored ping is not an error');
-    assert.deepStrictEqual(tooSoon.body.data, { accepted: false, reason: 'throttled' });
-    assert.strictEqual((await db().from('driver_locations').select('id', { count: 'exact', head: true }).eq('delivery_id', deliveryId)).count, 1, 'a throttled ping is not stored');
-
+    // After the 3s window a nearby point is accepted.
     await sleep(3200);
-    const secondPing = await api('POST', pingPath, cast.rider, { lat: 4.0558, lng: 9.7679, speedKmh: 20 });
+    const secondPing = await ping(cast.rider, { lat: 4.0558, lng: 9.7679, speedKmh: 20 });
     assert.strictEqual(secondPing.body.data.accepted, true, 'three seconds later a new point is accepted: ' + JSON.stringify(secondPing.body));
 
-    // About 110 km in three seconds is a GPS glitch, not a motorbike.
+    // ~110 km three seconds later is a GPS glitch, not a motorbike: rejected, not stored.
     await sleep(3200);
-    const glitch = await api('POST', pingPath, cast.rider, { lat: 5.0558, lng: 9.7679 });
+    const glitch = await ping(cast.rider, { lat: 5.0558, lng: 9.7679 });
     assert.strictEqual(glitch.status, 200);
     assert.deepStrictEqual(glitch.body.data, { accepted: false, reason: 'implausible_jump' });
     assert.strictEqual((await db().from('driver_locations').select('id', { count: 'exact', head: true }).eq('delivery_id', deliveryId)).count, 2, 'the glitch is not stored');
