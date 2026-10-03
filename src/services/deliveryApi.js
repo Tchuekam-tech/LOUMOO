@@ -238,3 +238,18 @@ class DeliveryApiClient {
       startPolling(); // dropped without an end event → poll
     };
 
+    runStream();
+    return { close: stop };
+  }
+}
+
+const deliveryApi = new DeliveryApiClient();
+
+if (typeof window !== 'undefined') {
+  window.deliveryApi = deliveryApi;
+  window.LoumooDeliveryAPI = deliveryApi;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { DeliveryApiClient, deliveryApi };
+}
