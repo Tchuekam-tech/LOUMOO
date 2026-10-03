@@ -11,6 +11,7 @@ require('../setup');
 
 const assert = require('assert');
 const config = require('../../server/config/env');
+const logger = require('../../server/shared/logging/logger');
 
 const { DeliveryService } = require('../../server/modules/delivery/application/DeliveryService');
 const { DeliveryRepository } = require('../../server/modules/delivery/infrastructure/DeliveryRepository');
@@ -586,6 +587,232 @@ async function run() {
       assert.ok(['rider_1', 'rider_2'].includes(final.driverId));
       const assignedEvents = (await w.repo.listEvents(id)).filter((e) => e.status === 'assigned');
       assert.strictEqual(assignedEvents.length, 1, 'one timeline row: the losers left none');
+    }
+
+    // ------------------------ a late accept is "too late" however the offer was released
+    {
+      // Released by the sweeper, with no read in between: still 409, not 404.
+      const w = makeWorld();
+      await registerRiders(w);
+      const { id } = await newDelivery(w, { assignTo: 'rider_1' });
+      w.clock.advance(OFFER_TTL_MS + 5000);
+      assert.deepStrictEqual(await w.service.expireStaleOffers(), { expired: 1 });
+      assert.strictEqual((await w.repo.findById(id)).driverId, null, 'it really was released before the rider tapped Accept');
+      assert.strictEqual(await code(w.service.acceptDelivery(id, RIDER)), 'OFFER_EXPIRED', 'so the rider is told it was too late');
+    }
+    {
+      // The failed accept itself releases the offer. Checked in storage, with no service read in
+      // between (a read would release it lazily and hide a missing release in accept).
+      const w = makeWorld();
+      await registerRiders(w);
+      const { id } = await newDelivery(w, { assignTo: 'rider_1' });
+      w.clock.advance(OFFER_TTL_MS);
+      assert.strictEqual(await code(w.service.acceptDelivery(id, RIDER)), 'OFFER_EXPIRED');
+      const stored = await w.repo.findById(id);
+      assert.strictEqual(stored.status, 'pending_assignment', 'released by the accept itself');
+      assert.strictEqual(stored.driverId, null);
+      assert.strictEqual(stored.assignedAt, null);
+    }
+    {
+      // A decline or a release is not a lapse: afterwards the delivery is simply not theirs.
+      const w = makeWorld();
+      await registerRiders(w);
+      const { id } = await newDelivery(w, { assignTo: 'rider_1' });
+      await w.service.declineDelivery(id, RIDER);
+      assert.strictEqual(await code(w.service.acceptDelivery(id, RIDER)), 'NOT_FOUND', 'after their own decline: not found');
+      await w.service.assignDriver(id, 'rider_2', SELLER);
+      await w.service.acceptDelivery(id, RIDER2);
+      await w.service.declineDelivery(id, RIDER2); // releasing an accepted job
+      assert.strictEqual(await code(w.service.acceptDelivery(id, RIDER2)), 'NOT_FOUND', 'after releasing it: not found');
+    }
+    {
+      // Only the rider it lapsed on is told "expired". Everyone else keeps the old answers.
+      const w = makeWorld();
+      await registerRiders(w);
+      const { id } = await newDelivery(w, { assignTo: 'rider_1' });
+      w.clock.advance(OFFER_TTL_MS + MIN);
+      await w.service.expireStaleOffers();
+      assert.strictEqual(await code(w.service.acceptDelivery(id, RIDER2)), 'NOT_FOUND', 'a rider who was never offered it');
+      assert.strictEqual(await code(w.service.acceptDelivery(id, { userId: 'stranger_1', userRole: 'customer' })), 'NOT_FOUND', 'a stranger');
+      assert.strictEqual(await code(w.service.acceptDelivery(id, BUYER)), 'PERMISSION_DENIED', 'the buyer is a participant without the rider role');
+      assert.strictEqual(await code(w.service.acceptDelivery('dlv_missing', RIDER)), 'NOT_FOUND', 'and an id that does not exist');
+      // The latest hand-back is what counts: lapse, re-offer, decline, then a stale accept is a plain 404.
+      await w.service.assignDriver(id, 'rider_1', SELLER);
+      await w.service.declineDelivery(id, RIDER);
+      assert.strictEqual(await code(w.service.acceptDelivery(id, RIDER)), 'NOT_FOUND', 'their most recent hand-back was a decline');
+      // And a fresh offer after a lapse is accepted normally.
+      await w.service.assignDriver(id, 'rider_1', SELLER);
+      assert.strictEqual(await code(w.service.acceptDelivery(id, RIDER)), 'OK', 'a new offer to a rider whose last one lapsed works');
+    }
+
+    // ------------------------------- a rider who never answers does not win every offer
+    {
+      const w = makeWorld();
+      await registerRiders(w, [['rider_1', 'Alain'], ['rider_2', 'Bruno']]);
+      const first = await newDelivery(w);
+      assert.strictEqual((await w.service.autoAssignDriver(first.id, SELLER)).driver.id, 'rider_1', 'a tie goes to the first name');
+
+      w.clock.advance(OFFER_TTL_MS + MIN); // Alain never answers
+      const second = await newDelivery(w);
+      assert.strictEqual((await w.service.autoAssignDriver(second.id, SELLER)).driver.id, 'rider_2',
+        'the next delivery skips the rider who just let one lapse, even though their load is back to 0');
+      await w.service.acceptDelivery(second.id, RIDER2);
+      const third = await newDelivery(w);
+      assert.strictEqual((await w.service.autoAssignDriver(third.id, SELLER)).driver.id, 'rider_2', 'and so does the one after, while they are the only responder');
+      await w.service.acceptDelivery(third.id, RIDER2); // Bruno answers this one too, so he never lapses below
+      assert.deepStrictEqual((await w.service.listDrivers(SELLER)).map((r) => [r.id, r.openDeliveries]), [['rider_2', 2], ['rider_1', 0]],
+        'the list puts them last, but still shows the true count and still shows them');
+
+      // It fades: still counted at exactly an hour after the lapse, gone one millisecond later.
+      w.clock.advance(60 * MIN);
+      assert.deepStrictEqual((await w.service.listDrivers(SELLER)).map((r) => r.id), ['rider_2', 'rider_1'], 'exactly an hour on, still last');
+      w.clock.advance(1);
+      assert.deepStrictEqual((await w.service.listDrivers(SELLER)).map((r) => r.id), ['rider_1', 'rider_2'], 'a millisecond later they rank by load again');
+
+      // A seller can still pick them by hand: the rule steers, it does not ban.
+      const fourth = await newDelivery(w);
+      assert.strictEqual((await w.service.assignDriver(fourth.id, 'rider_1', SELLER)).driver.id, 'rider_1');
+    }
+    {
+      // A decline means the rider is answering, so it does not push them down.
+      const w = makeWorld();
+      await registerRiders(w, [['rider_1', 'Alain'], ['rider_2', 'Bruno']]);
+      const first = await newDelivery(w, { assignTo: 'rider_1' });
+      await w.service.declineDelivery(first.id, RIDER);
+      const second = await newDelivery(w);
+      assert.strictEqual((await w.service.autoAssignDriver(second.id, SELLER)).driver.id, 'rider_1', 'a rider who declined is still first in line for a different delivery');
+    }
+
+    // --------------------- a dead offer is released before riders are ranked or listed
+    {
+      const w = makeWorld();
+      await registerRiders(w, [['rider_z', 'Zed'], ['rider_b', 'Bruno']]);
+      const dead = await newDelivery(w, { assignTo: 'rider_z' });
+      const live = await newDelivery(w, { assignTo: 'rider_b' });
+      await w.service.acceptDelivery(live.id, { userId: 'rider_b', userRole: 'customer' });
+      w.clock.advance(20 * MIN); // nobody has read `dead`, and there is no sweeper
+      assert.strictEqual((await w.repo.findById(dead.id)).status, 'assigned', 'still assigned in storage');
+      const told = sentTo('seller_1', 'A rider did not respond').length;
+
+      const list = await w.service.listDrivers(SELLER);
+      assert.deepStrictEqual(list.map((r) => [r.id, r.openDeliveries]), [['rider_b', 1], ['rider_z', 0]],
+        'listing riders does not count the dead offer as work');
+      assert.strictEqual((await w.repo.findById(dead.id)).status, 'pending_assignment', 'and released it');
+      assert.strictEqual(sentTo('seller_1', 'A rider did not respond').length - told, 1, 'so the seller is told even with no sweeper');
+    }
+    {
+      // If releasing fails, ranking still works: the listing must not depend on it.
+      const w = makeWorld();
+      await registerRiders(w);
+      w.service.expireStaleOffers = async () => { throw new Error('database is down'); };
+      const originalWarn = logger.warn;
+      const warned = [];
+      logger.warn = (m) => warned.push(String(m));
+      try {
+        assert.deepStrictEqual((await w.service.listDrivers(SELLER)).map((r) => r.id), ['rider_1', 'rider_2'], 'the list still comes back');
+        const d = await newDelivery(w);
+        assert.strictEqual((await w.service.autoAssignDriver(d.id, SELLER)).status, 'assigned', 'and so does auto-assign');
+      } finally {
+        logger.warn = originalWarn;
+      }
+      assert.ok(warned.some((m) => /Could not release lapsed offers/.test(m) && /database is down/.test(m)), 'the failure is logged, not swallowed silently');
+    }
+
+    // ----------------------------------------- failure paths that were never exercised
+    {
+      // One bad row does not stop the sweep.
+      const w = makeWorld();
+      await registerRiders(w);
+      const a = await newDelivery(w, { assignTo: 'rider_1' });
+      w.clock.advance(MIN);
+      const b = await newDelivery(w, { assignTo: 'rider_2' });
+      w.clock.advance(OFFER_TTL_MS + MIN);
+      const original = w.service._expireOffer.bind(w.service);
+      w.service._expireOffer = async (d) => { if (d.id === a.id) throw new Error('boom'); return original(d); };
+      const originalError = logger.error;
+      const errors = [];
+      logger.error = (m) => errors.push(String(m));
+      try {
+        assert.deepStrictEqual(await w.service.expireStaleOffers(), { expired: 1 }, 'the second offer is still released');
+      } finally {
+        logger.error = originalError;
+      }
+      assert.strictEqual((await w.repo.findById(a.id)).status, 'assigned', 'the failing one is left for the next sweep');
+      assert.strictEqual((await w.repo.findById(b.id)).status, 'pending_assignment');
+      assert.ok(errors.some((m) => m.includes(a.id) && /boom/.test(m)), 'and the failure names the delivery');
+    }
+    {
+      // Losing the swap to a fresh re-offer returns the fresh delivery, not the stale snapshot.
+      const w = makeWorld();
+      await registerRiders(w);
+      const { id } = await newDelivery(w, { assignTo: 'rider_1' });
+      w.clock.advance(OFFER_TTL_MS + MIN);
+      const stale = await w.repo.findById(id);
+      await w.service.assignDriver(id, 'rider_1', SELLER); // a fresh offer to the same rider wins the race
+      const seen = await w.service._releaseIfLapsed(stale);
+      assert.strictEqual(seen.status, 'assigned');
+      assert.notStrictEqual(seen.assignedAt, stale.assignedAt, 'it is the fresh offer, with the fresh deadline');
+      assert.strictEqual((await w.repo.findById(id)).driverId, 'rider_1', 'and nothing was released');
+    }
+    {
+      // Failing to release inside accept must not turn "too late" into a 500.
+      const w = makeWorld();
+      await registerRiders(w);
+      const { id } = await newDelivery(w, { assignTo: 'rider_1' });
+      w.clock.advance(OFFER_TTL_MS);
+      w.service._expireOffer = async () => { throw new Error('database is down'); };
+      const originalError = logger.error;
+      const errors = [];
+      logger.error = (m) => errors.push(String(m));
+      try {
+        assert.strictEqual(await code(w.service.acceptDelivery(id, RIDER)), 'OFFER_EXPIRED', 'still a clean 409');
+      } finally {
+        logger.error = originalError;
+      }
+      assert.ok(errors.some((m) => /Could not release lapsed offer/.test(m)), 'with the failure logged');
+    }
+    {
+      // The rider cap is applied, and says so.
+      const w = makeWorld();
+      for (let i = 0; i < 510; i += 1) {
+        await w.service.registerDriver(`rider_${String(i).padStart(4, '0')}`, { name: `Rider ${String(i).padStart(4, '0')}`, phone: '+237600000000' }, ADMIN);
+      }
+      const originalWarn = logger.warn;
+      const warned = [];
+      logger.warn = (m) => warned.push(String(m));
+      try {
+        assert.strictEqual((await w.service.listDrivers(SELLER)).length, 500, 'at most 500 riders are considered');
+      } finally {
+        logger.warn = originalWarn;
+      }
+      assert.ok(warned.some((m) => /500-row cap/.test(m)), 'and reaching the cap is logged');
+    }
+
+    // ------------- the production default and the environment variable that sets it
+    {
+      const KEY = 'DELIVERY_OFFER_TTL_MINUTES';
+      const saved = process.env[KEY];
+      const deps = () => ({ repository: new DeliveryRepository({ db: null }), orderRepository: new OrderRepository({ db: null }) });
+      const ttl = (extra = {}) => new DeliveryService({ ...deps(), ...extra }).offerTtlMs;
+      try {
+        delete process.env[KEY];
+        assert.strictEqual(ttl(), 15 * MIN, 'with nothing configured the window is 15 minutes');
+        for (const [value, expected] of [
+          ['30', 30 * MIN], ['0', 0], ['  ', 15 * MIN], ['', 15 * MIN], ['abc', 15 * MIN], ['-5', 15 * MIN],
+          ['0.5', 30 * 1000], ['1e12', 7 * 24 * 60 * MIN], ['0.00000001', 1000]
+        ]) {
+          process.env[KEY] = value;
+          assert.strictEqual(ttl(), expected, `${KEY}=${JSON.stringify(value)}`);
+        }
+        process.env[KEY] = '30';
+        assert.strictEqual(ttl({ offerTtlMs: 0 }), 0, 'an explicit option beats the environment (0 = off)');
+        assert.strictEqual(ttl({ offerTtlMs: 2 * MIN }), 2 * MIN, 'whatever it is');
+        assert.strictEqual(ttl({ offerTtlMs: null }), 30 * MIN, 'a non-number option is ignored, so the environment applies');
+        assert.strictEqual(ttl({ offerTtlMs: NaN }), 15 * MIN, 'a NaN option falls back to the default, never to "off"');
+        assert.strictEqual(ttl({ offerTtlMs: -1 }), 15 * MIN, 'as does a negative one');
+      } finally {
+        if (saved === undefined) delete process.env[KEY]; else process.env[KEY] = saved;
+      }
     }
 
     console.log('    ✓ Delivery dispatch: offer window, lazy and swept expiry hold.');
