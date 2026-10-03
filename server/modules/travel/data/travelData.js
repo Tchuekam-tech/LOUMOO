@@ -867,6 +867,52 @@ const travelData = {
         'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=700&auto=format&fit=crop&q=80',
         'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=700&auto=format&fit=crop&q=80'
       ],
+      // Immersive 360° virtual tour of the whole property, plus per-space entry
+      // points. A hotel manager fills these in via the "For Hotels" upload;
+      // guests explore the property inside LOUMOO before they book.
+      virtualTourUrl: 'https://pillows-ghent.virtualtour.nu/',
+      spaces: [
+        {
+          name: 'Grand Lobby & Reception',
+          category: 'Lobby',
+          description: 'Double-height marble lobby with a curated art wall and 24/7 concierge.',
+          image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600&auto=format&fit=crop&q=80',
+          amenities: ['Concierge', 'Welcome Lounge', 'Art Wall'],
+          virtualTourUrl: 'https://pillows-ghent.virtualtour.nu/'
+        },
+        {
+          name: 'Rooftop Infinity Pool',
+          category: 'Pool',
+          description: 'Heated infinity pool on the 12th floor with panoramic Wouri estuary views.',
+          image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&auto=format&fit=crop&q=80',
+          amenities: ['Infinity Edge', 'Pool Bar', 'Sun Deck'],
+          virtualTourUrl: 'https://pillows-ghent.virtualtour.nu/'
+        },
+        {
+          name: 'Le Panorama Restaurant',
+          category: 'Restaurant',
+          description: 'Signature fine-dining room pairing Cameroonian produce with French technique.',
+          image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&auto=format&fit=crop&q=80',
+          amenities: ['Fine Dining', 'Wine Cellar', 'Private Booths'],
+          virtualTourUrl: 'https://pillows-ghent.virtualtour.nu/'
+        },
+        {
+          name: 'Wellness Spa & Hammam',
+          category: 'Spa',
+          description: 'Full-service spa with hammam, steam rooms and five treatment suites.',
+          image: 'https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=600&auto=format&fit=crop&q=80',
+          amenities: ['Hammam', 'Sauna', 'Treatment Suites'],
+          virtualTourUrl: 'https://pillows-ghent.virtualtour.nu/'
+        },
+        {
+          name: 'Executive Port Suite',
+          category: 'Suite',
+          description: '65m² suite with a separate lounge, executive club access and harbour panorama.',
+          image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600&auto=format&fit=crop&q=80',
+          amenities: ['Lounge', 'Club Access', 'Balcony'],
+          virtualTourUrl: 'https://pillows-ghent.virtualtour.nu/'
+        }
+      ],
       status: 'ACTIVE',
       rooms: [
         {
@@ -881,7 +927,8 @@ const travelData = {
           availableInventory: 8,
           cancellationPolicy: 'FREE_CANCELLATION_24H',
           amenities: ['King Bed', 'Rain Shower', 'Espresso Machine', 'High-Speed Wi-Fi', 'Smart TV 55"'],
-          images: ['https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&auto=format&fit=crop&q=80']
+          images: ['https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&auto=format&fit=crop&q=80'],
+          virtualTourUrl: 'https://pillows-ghent.virtualtour.nu/'
         },
         {
           id: 'rm-krystal-exec',

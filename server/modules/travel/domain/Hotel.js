@@ -2,6 +2,36 @@
  * LOUMOO Hotel & Room Domain Entities
  */
 
+// Accept only a real https URL for an external virtual tour (virtualtour.nu,
+// Matterport, Kuula, …). Everything else collapses to '' so the UI cleanly
+// hides the CTA rather than linking somewhere broken or insecure.
+function normalizeTourUrl(raw) {
+  const s = typeof raw === 'string' ? raw.trim() : '';
+  return /^https:\/\/[^\s]+\.[^\s]+/i.test(s) ? s : '';
+}
+
+// Canonicalize a hotel "space" (a named area with its own virtual tour):
+// lobby, restaurant, spa, pool, a suite category, the rooftop, etc.
+const SPACE_CATEGORIES = ['Room', 'Suite', 'Lobby', 'Restaurant', 'Bar', 'Spa', 'Pool', 'Gym', 'Event Space', 'Exterior', 'Space'];
+function normalizeSpace(sp = {}) {
+  const images = Array.isArray(sp.images) ? sp.images.filter(Boolean)
+    : (sp.image ? [sp.image] : []);
+  const amenities = Array.isArray(sp.amenities) ? sp.amenities
+    : (Array.isArray(sp.features) ? sp.features : []);
+  const rawCat = (sp.category || sp.type || 'Space').trim();
+  const category = SPACE_CATEGORIES.find(c => c.toLowerCase() === rawCat.toLowerCase()) || rawCat || 'Space';
+  return {
+    id: sp.id || `sp_${Date.now()}_${Math.floor(Math.random() * 1e4)}`,
+    name: (sp.name || sp.title || '').trim(),
+    category,
+    description: (sp.description || sp.summary || '').trim(),
+    image: images[0] || '',
+    images,
+    amenities,
+    virtualTourUrl: normalizeTourUrl(sp.virtualTourUrl || sp.virtual_tour_url || sp.tourUrl || sp.tour_url || sp.url)
+  };
+}
+
 class Room {
   constructor(data = {}) {
     this.id = data.id || `rm_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
@@ -16,6 +46,9 @@ class Room {
     this.amenities = Array.isArray(data.amenities) ? data.amenities : [];
     this.images = Array.isArray(data.images) ? data.images : [];
     this.cancellationPolicy = data.cancellationPolicy || data.cancellation_policy || 'FREE_CANCELLATION_24H';
+    // Optional external immersive tour for this specific room (virtualtour.nu,
+    // Matterport, etc.). Only a real https URL is kept; anything else -> ''.
+    this.virtualTourUrl = normalizeTourUrl(data.virtualTourUrl || data.virtual_tour_url || data.tourUrl || data.tour_url);
   }
 
   isAvailable(requestedRooms = 1) {
@@ -55,6 +88,8 @@ class Room {
       availableInventory: this.availableInventory,
       amenities: this.amenities,
       images: this.images,
+      virtualTourUrl: this.virtualTourUrl,
+      hasVirtualTour: Boolean(this.virtualTourUrl),
       cancellationPolicy: this.cancellationPolicy
     };
   }
@@ -64,6 +99,9 @@ class Hotel {
   constructor(data = {}) {
     this.id = data.id || `htl_${Date.now()}`;
     this.providerId = data.providerId || data.provider_id || '';
+    // The account that created/claimed this hotel (empty for unclaimed seed
+    // properties). Management endpoints are scoped to the owner or an admin.
+    this.ownerId = data.ownerId || data.owner_id || '';
     this.name = (data.name || '').trim();
     this.description = data.description || '';
     this.location = (data.location || '').trim();
@@ -84,6 +122,14 @@ class Hotel {
     this.rooms = Array.isArray(data.rooms)
       ? data.rooms.map(r => (r instanceof Room ? r : new Room({ ...r, hotelId: this.id })))
       : [];
+
+    // Property-level immersive tour + named "spaces" (lobby, restaurant, spa,
+    // pool, suites…), each linking to an external 360°/virtual-tour experience.
+    // This is the model a hotel fills in instead of uploading photos/videos.
+    this.virtualTourUrl = normalizeTourUrl(data.virtualTourUrl || data.virtual_tour_url || data.tourUrl || data.tour_url);
+    this.spaces = Array.isArray(data.spaces)
+      ? data.spaces.map(normalizeSpace).filter(s => s.name)
+      : [];
     
     // Dynamically calculate priceFrom if rooms exist
     if (this.rooms.length > 0 && (!this.priceFrom || this.priceFrom === 0)) {
@@ -99,6 +145,7 @@ class Hotel {
     return {
       id: this.id,
       providerId: this.providerId,
+      ownerId: this.ownerId,
       name: this.name,
       description: this.description,
       location: this.location,
@@ -116,9 +163,13 @@ class Hotel {
       contact: this.contact,
       phone: this.phone,
       whatsapp: this.whatsapp,
+      virtualTourUrl: this.virtualTourUrl,
+      hasVirtualTour: Boolean(this.virtualTourUrl),
+      spaces: this.spaces,
+      hasSpaces: this.spaces.length > 0,
       rooms: this.rooms.map(r => r.toJSON())
     };
   }
 }
 
-module.exports = { Hotel, Room };
+module.exports = { Hotel, Room, normalizeTourUrl, normalizeSpace, SPACE_CATEGORIES };
