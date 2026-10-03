@@ -253,5 +253,6 @@ module.exports = {
   coarseLocation,
   describeArea,
   describeAddress,
-  presentDelivery
+  presentDelivery,
+  eventForViewer
 };
