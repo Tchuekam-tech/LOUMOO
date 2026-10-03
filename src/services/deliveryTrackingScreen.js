@@ -33,16 +33,15 @@
   // is the last-resort fallback if a custom style spec fails to load.
   var OPENFREEMAP_STYLE = 'https://tiles.openfreemap.org/styles/liberty';
   var DEMO_STYLE = 'https://demotiles.maplibre.org/style.json';
-  var CARTO_TILES = [
-    'https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-    'https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-    'https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-    'https://d.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
-  ];
+  // Esri World Street Map: keyless, real street tiles, free to use with
+  // attribution, and reliable on mobile data (lightweight JPEG). Note the
+  // {z}/{y}/{x} order Esri uses. Override with window.LOUMOO_MAP_STYLE for a
+  // vector style (OpenFreeMap) or an SLA provider (MapTiler/Stadia).
+  var ESRI_STREET_TILES = ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}'];
   function rasterStreetStyle() {
     return {
       version: 8,
-      sources: { basemap: { type: 'raster', tiles: CARTO_TILES, tileSize: 256, attribution: '© OpenStreetMap contributors, © CARTO' } },
+      sources: { basemap: { type: 'raster', tiles: ESRI_STREET_TILES, tileSize: 256, attribution: 'Tiles © Esri — Esri, HERE, Garmin, © OpenStreetMap contributors' } },
       layers: [{ id: 'basemap', type: 'raster', source: 'basemap' }]
     };
   }
