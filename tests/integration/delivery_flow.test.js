@@ -297,6 +297,17 @@ async function run() {
     assert.strictEqual(duplicate.status, 409, 'one open delivery per order');
     assert.strictEqual(duplicate.body.error.code, 'CONFLICT');
 
+    // Four tabs, one parcel. The partial unique index
+    // uq_deliveries_one_open_per_order is what makes this safe; the service's own
+    // existing-delivery check alone would let several through.
+    const raceOrder = await placeOrder(cast);
+    const race = await Promise.all([1, 2, 3, 4].map(() => api('POST', '/', cast.seller, { orderId: raceOrder.id })));
+    const winners = race.filter(r => r.status === 201);
+    assert.strictEqual(winners.length, 1, 'exactly one concurrent create wins: ' + race.map(r => r.status).join(','));
+    assert.ok(race.filter(r => r !== winners[0]).every(r => r.status === 409), 'the losers get a clean 409');
+    const raceRows = (await db().from('deliveries').select('id').eq('order_id', raceOrder.id)).data;
+    assert.strictEqual(raceRows.length, 1, 'and the database holds a single delivery for the order');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
