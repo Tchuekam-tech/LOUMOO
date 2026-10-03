@@ -52,7 +52,8 @@ const {
   NotFoundError,
   ValidationError,
   AuthorizationError,
-  ConflictError
+  ConflictError,
+  InfrastructureError
 } = require('../../../shared/errors/AppError');
 const logger = require('../../../shared/logging/logger');
 
@@ -69,6 +70,11 @@ const CAS_RETRIES = 3;
 // How many active riders one listing or auto-assign considers. Far above a
 // realistic fleet; a warning is logged if it is ever reached.
 const MAX_RIDERS_CONSIDERED = 500;
+// Releasing lapsed offers ahead of a ranking: this many per round, at most this
+// many rounds (so at most 200 per call), then stop. Bounded so one listing cannot
+// become a long write storm; the sweeper and later calls take the rest.
+const RELEASE_BATCH = 50;
+const MAX_RELEASE_ROUNDS = 4;
 const ORDER_PATH = [FULFILLMENT_STATUS.PROCESSING, FULFILLMENT_STATUS.IN_TRANSIT, FULFILLMENT_STATUS.DELIVERED];
 
 function cleanText(value, field, max = 255) {
@@ -396,6 +402,12 @@ class DeliveryService {
         if (await this._expireOffer(delivery)) expired += 1;
       } catch (err) {
         logger.error(`[Delivery] Could not expire offer ${delivery.id}: ${err.message}`);
+        if (err instanceof InfrastructureError) {
+          // The database itself is failing, not this row: do not repeat the failure
+          // for every remaining offer. The next tick (or call) retries.
+          logger.error('[Delivery] Stopping this sweep: the database looks unhealthy.');
+          break;
+        }
       }
     }
     return { expired };
@@ -1210,7 +1222,10 @@ class DeliveryService {
    */
   async _releaseLapsedOffers() {
     try {
-      await this.expireStaleOffers({ limit: 50 });
+      for (let round = 0; round < MAX_RELEASE_ROUNDS; round += 1) {
+        const { expired } = await this.expireStaleOffers({ limit: RELEASE_BATCH });
+        if (expired < RELEASE_BATCH) break; // a short round means the backlog is drained
+      }
     } catch (err) {
       logger.warn(`[Delivery] Could not release lapsed offers before ranking riders: ${err.message}`);
     }
