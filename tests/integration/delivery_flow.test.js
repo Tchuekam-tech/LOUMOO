@@ -610,7 +610,10 @@ async function run() {
 
     const wrong = await api('POST', completePath, cast.rider, { code: wrongCodeFor(code) });
     assert.strictEqual(wrong.status, 400, 'a wrong code is a 400');
-    assert.ok(/4/.test(wrong.body.error.message), 'the message says how many guesses are left: ' + wrong.body.error.message);
+    assert.strictEqual(wrong.body.error.message, 'Incorrect handover code', 'the top-level message names the failure');
+    // The remaining-guess count is carried in the field detail, not the headline.
+    const wrongDetail = (wrong.body.error.details || []).map(d => d.message).join(' ');
+    assert.ok(/4\s+attempts?\s+left/i.test(wrongDetail), 'the detail says how many guesses are left: ' + wrongDetail);
     assert.strictEqual(await attemptsUsed(), 1, 'the wrong guess is counted in the database');
     assert.strictEqual((await api('GET', '/' + deliveryId + '/code', cast.buyer)).body.data.attemptsRemaining, 4, 'and the buyer can see how many remain');
     assert.strictEqual((await db().from('deliveries').select('status').eq('id', deliveryId).single()).data.status, 'arrived', 'a wrong code does not complete it');
