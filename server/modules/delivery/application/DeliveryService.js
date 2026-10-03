@@ -893,8 +893,17 @@ class DeliveryService {
     if (!phone || phone.length < 6) {
       throw new ValidationError('A valid phone number is required', [{ field: 'phone', message: 'Provide a phone number the customer can call.' }]);
     }
-    const status = body.status === DRIVER_STATUS.SUSPENDED ? DRIVER_STATUS.SUSPENDED : DRIVER_STATUS.ACTIVE;
-    const driver = await this.repo.upsertDriver({ profileId, name, phone, status, createdBy: caller.userId });
+    if (body.status !== undefined && body.status !== null && !Object.values(DRIVER_STATUS).includes(body.status)) {
+      throw new ValidationError('Unknown rider status', [{ field: 'status', message: 'Use "active" or "suspended".' }]);
+    }
+    // An omitted status means "leave it as it is" for an existing rider: editing a
+    // name or phone must not quietly reactivate someone an admin suspended. A new
+    // rider starts active.
+    const existing = await this.repo.findDriver(profileId);
+    const status = body.status || (existing ? existing.status : DRIVER_STATUS.ACTIVE);
+    const driver = await this.repo.upsertDriver({
+      profileId, name, phone, status, createdBy: existing ? existing.createdBy : caller.userId
+    });
     if (status === DRIVER_STATUS.SUSPENDED) await this._releaseDriverWork(profileId, caller.userId, 'Rider suspended');
     return { id: driver.id, name: driver.name, phone: driver.phone, status: driver.status };
   }
