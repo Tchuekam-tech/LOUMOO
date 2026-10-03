@@ -304,6 +304,53 @@ async function main() {
     assert.strictEqual((await orders.findOrderById(order.id)).fulfillmentStatus, FULFILLMENT_STATUS.IN_TRANSIT, 'pickup moved the order through the route');
     assert.strictEqual((await api('POST', `/${deliveryId}/status`, RIDER, { status: 'arrived' })).status, 200);
 
+    // ----------------------------------------------------- handover & finish
+    assert.strictEqual((await api('GET', `/${deliveryId}/code`, SELLER)).status, 403);
+    assert.strictEqual((await api('GET', `/${deliveryId}/code`, STRANGER)).status, 404);
+    const codeRes = await api('GET', `/${deliveryId}/code`, BUYER);
+    assert.strictEqual(codeRes.status, 200);
+    const code = codeRes.body.data.code;
+    assert.ok(/^\d{4}$/.test(code));
+    assert.strictEqual(codeRes.body.data.digits, 4);
+    const wrong = String((Number(code) + 1) % 10000).padStart(4, '0');
+    assert.strictEqual((await api('POST', `/${deliveryId}/complete`, RIDER, {})).status, 400);
+    assert.strictEqual((await api('POST', `/${deliveryId}/complete`, RIDER, { code: 'abcd' })).status, 400);
+    assert.strictEqual((await api('POST', `/${deliveryId}/complete`, RIDER, { code: wrong })).status, 400, 'wrong code');
+    assert.strictEqual((await api('POST', `/${deliveryId}/complete`, BUYER, { code })).status, 403, 'the buyer cannot complete');
+    const done = await api('POST', `/${deliveryId}/complete`, RIDER, { code });
+    assert.strictEqual(done.status, 200);
+    assert.strictEqual(done.body.data.delivery.status, 'delivered');
+    assert.strictEqual((await orders.findOrderById(order.id)).fulfillmentStatus, FULFILLMENT_STATUS.DELIVERED);
+    assert.strictEqual((await api('POST', `/${deliveryId}/complete`, RIDER, { code })).status, 409, 'replay refused');
+
+    // --------------------------------------- 423 reaches the client as a 423
+    {
+      const { id } = await newAssignedDelivery({ accept: true });
+      clock.advance(5000);
+      await api('POST', `/${id}/location`, RIDER, { ...NEAR });
+      clock.advance(5000);
+      await api('POST', `/${id}/status`, RIDER, { status: 'picked_up' });
+      await api('POST', `/${id}/status`, RIDER, { status: 'arrived' });
+      const real = (await api('GET', `/${id}/code`, BUYER)).body.data.code;
+      const bad = String((Number(real) + 1) % 10000).padStart(4, '0');
+      let last;
+      for (let i = 0; i < 5; i += 1) last = await api('POST', `/${id}/complete`, RIDER, { code: bad });
+      assert.strictEqual(last.status, 423, 'the fifth wrong code locks the delivery with a real 423');
+      assert.strictEqual(last.body.error.code, 'DELIVERY_LOCKED');
+      assert.strictEqual((await api('POST', `/${id}/complete`, RIDER, { code: real })).status, 423, 'even the right code is refused');
+      assert.strictEqual((await api('POST', `/${id}/status`, RIDER, { status: 'failed', note: 'escape' })).status, 423, 'and failing is not an escape');
+
+      assert.strictEqual((await api('POST', `/${id}/resolve`, SELLER, { action: 'unlock' })).status, 403);
+      assert.strictEqual((await api('POST', `/${id}/resolve`, ADMIN, { action: 'wipe' })).status, 400);
+      assert.strictEqual((await api('POST', `/${id}/resolve`, ADMIN, { action: 'unlock', extra: 1 })).status, 400);
+      assert.strictEqual((await api('POST', `/${id}/resolve`, ADMIN, { action: 'unlock' })).status, 200);
+      const fresh = (await api('GET', `/${id}/code`, BUYER)).body.data;
+      assert.strictEqual(fresh.attemptsRemaining, 5);
+      assert.strictEqual((await api('POST', `/${id}/complete`, RIDER, { code: fresh.code })).status, 200);
+      assert.strictEqual((await api('POST', `/${id}/reconcile`, SELLER)).status, 403);
+      assert.strictEqual((await api('POST', `/${id}/reconcile`, ADMIN)).status, 200);
+    }
+
     console.log('    ✓ Delivery routes: wiring, validation, status codes and the live stream hold.');
   } finally {
     NotificationService.create = originalCreate;
