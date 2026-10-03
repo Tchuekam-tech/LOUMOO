@@ -199,6 +199,38 @@ function presentDelivery(d, viewer, { timeline = [], order = null } = {}) {
   };
 }
 
+/**
+ * The wire payload of a live event for one kind of viewer, or `null` when that
+ * viewer must not receive it. This is the stream's twin of presentDelivery():
+ * the buyer learns nothing about the rider's position or ETA until pickup, so
+ * the live feed must withhold exactly what the REST view withholds.
+ *
+ * `event` is the internal shape the service publishes (`status` rides along on
+ * every event); the returned object is what goes on the wire.
+ */
+function eventForViewer(event, viewer) {
+  if (!event || !event.type) return null;
+  const hidden = viewer === 'buyer' && !BUYER_VISIBLE_LOCATION_STATUSES.includes(event.status);
+  switch (event.type) {
+    case 'status':
+      return {
+        status: event.status,
+        at: event.at,
+        etaMinutes: hidden ? null : (event.etaMinutes ?? null),
+        distanceKm: hidden ? null : (event.distanceKm ?? null)
+      };
+    case 'location':
+      return hidden ? null : {
+        lat: event.lat, lng: event.lng, at: event.at,
+        speedKmh: event.speedKmh ?? null, heading: event.heading ?? null
+      };
+    case 'eta':
+      return hidden ? null : { etaMinutes: event.etaMinutes ?? null, distanceKm: event.distanceKm ?? null };
+    default:
+      return null;
+  }
+}
+
 module.exports = {
   DELIVERY_STATUS,
   DRIVER_STATUS,
@@ -221,5 +253,6 @@ module.exports = {
   coarseLocation,
   describeArea,
   describeAddress,
-  presentDelivery
+  presentDelivery,
+  eventForViewer
 };

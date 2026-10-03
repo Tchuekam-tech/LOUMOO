@@ -145,7 +145,7 @@ class DeliveryService {
 
   /** Refuses to move a delivery whose order has been cancelled in the meantime. */
   async _assertOrderNotCancelled(delivery) {
-    const order = await this.orders.findOrderById(delivery.orderId);
+    const order = await this._freshOrder(delivery.orderId);
     if (!order) throw new NotFoundError('Order', delivery.orderId);
     if (order.fulfillmentStatus === FULFILLMENT_STATUS.CANCELLED) {
       throw new ConflictError('The order was cancelled, so this delivery cannot continue.');
@@ -156,6 +156,19 @@ class DeliveryService {
   // ------------------------------------------------------------- shared steps
 
   _nowIso() { return new Date(this.now()).toISOString(); }
+
+  /**
+   * The order as the database has it NOW. OrderRepository.findOrderById serves a
+   * per-instance memory cache that is never invalidated, so an order cancelled or
+   * refunded elsewhere would still look live here. Every guard and every status
+   * sync in this service decides from a fresh read.
+   */
+  async _freshOrder(idOrNumber) {
+    const repo = this.orders;
+    return typeof repo.findOrderByIdFresh === 'function'
+      ? repo.findOrderByIdFresh(idOrNumber)
+      : repo.findOrderById(idOrNumber);
+  }
 
   async _withDriver(delivery) {
     if (!delivery) return delivery;
@@ -232,7 +245,7 @@ class DeliveryService {
     const target = DeliveryStateMachine.orderStatusFor(delivery.status);
     if (!target) return;
     try {
-      const order = await this.orders.findOrderById(delivery.orderId);
+      const order = await this._freshOrder(delivery.orderId);
       if (!order) {
         logger.error(`[Delivery] Order ${delivery.orderId} for delivery ${delivery.id} not found while syncing.`);
         return;
@@ -288,7 +301,7 @@ class DeliveryService {
     const caller = this._caller(callerInput);
     if (!orderId) throw new ValidationError('Order ID is required.');
 
-    const order = await this.orders.findOrderById(orderId);
+    const order = await this._freshOrder(orderId);
     const isAdmin = this._isAdmin(caller.userRole);
     if (!order || (!isAdmin && order.sellerId !== caller.userId)) {
       throw new NotFoundError('Order', orderId);
@@ -810,6 +823,17 @@ class DeliveryService {
     return this._present(delivery, role);
   }
 
+  /**
+   * The caller's role on a delivery, or null if they have no access. Never
+   * throws for "not yours": the live stream calls this on every status change to
+   * drop a viewer whose access ended (a rider who was replaced or declined).
+   */
+  async getViewerRole(deliveryId, callerInput) {
+    const caller = this._caller(callerInput);
+    const delivery = deliveryId ? await this.repo.findById(deliveryId) : null;
+    return delivery ? this._participantRole(delivery, caller) : null;
+  }
+
   async getDeliveryByOrder(orderId, callerInput) {
     const caller = this._caller(callerInput);
     if (!orderId) throw new ValidationError('Order ID is required.');
@@ -869,8 +893,17 @@ class DeliveryService {
     if (!phone || phone.length < 6) {
       throw new ValidationError('A valid phone number is required', [{ field: 'phone', message: 'Provide a phone number the customer can call.' }]);
     }
-    const status = body.status === DRIVER_STATUS.SUSPENDED ? DRIVER_STATUS.SUSPENDED : DRIVER_STATUS.ACTIVE;
-    const driver = await this.repo.upsertDriver({ profileId, name, phone, status, createdBy: caller.userId });
+    if (body.status !== undefined && body.status !== null && !Object.values(DRIVER_STATUS).includes(body.status)) {
+      throw new ValidationError('Unknown rider status', [{ field: 'status', message: 'Use "active" or "suspended".' }]);
+    }
+    // An omitted status means "leave it as it is" for an existing rider: editing a
+    // name or phone must not quietly reactivate someone an admin suspended. A new
+    // rider starts active.
+    const existing = await this.repo.findDriver(profileId);
+    const status = body.status || (existing ? existing.status : DRIVER_STATUS.ACTIVE);
+    const driver = await this.repo.upsertDriver({
+      profileId, name, phone, status, createdBy: existing ? existing.createdBy : caller.userId
+    });
     if (status === DRIVER_STATUS.SUSPENDED) await this._releaseDriverWork(profileId, caller.userId, 'Rider suspended');
     return { id: driver.id, name: driver.name, phone: driver.phone, status: driver.status };
   }

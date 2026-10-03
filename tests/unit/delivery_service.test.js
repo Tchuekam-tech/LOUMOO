@@ -53,6 +53,31 @@ async function placeOrder(world, overrides = {}) {
   return world.orders.saveOrder(order);
 }
 
+/**
+ * Minimal stand-in for the Supabase query builder over an `orders` table held in
+ * a Map, covering the reads and the conditional update OrderRepository performs.
+ */
+function stubOrdersDb(rows) {
+  return {
+    from(table) {
+      assert.strictEqual(table, 'orders');
+      const q = { filters: {}, patch: null };
+      const matching = () => [...rows.values()].filter((r) => Object.entries(q.filters).every(([c, v]) => r[c] === v));
+      q.select = () => q;
+      q.eq = (col, val) => { q.filters[col] = val; return q; };
+      q.update = (patch) => { q.patch = patch; return q; };
+      q.maybeSingle = async () => ({ data: matching()[0] ? { ...matching()[0] } : null, error: null });
+      q.single = async () => {
+        const row = matching()[0];
+        if (!row) return { data: null, error: { code: 'PGRST116', message: 'no rows' } };
+        if (q.patch) Object.assign(row, q.patch);
+        return { data: { ...row }, error: null };
+      };
+      return q;
+    }
+  };
+}
+
 const BUYER = { userId: 'buyer_1', userRole: 'customer' };
 const SELLER = { userId: 'seller_1', userRole: 'seller' };
 const ADMIN = { userId: 'admin_1', userRole: 'admin' };
@@ -694,6 +719,75 @@ async function run() {
       assert.strictEqual((await fresh.orders.findOrderById(o.id)).fulfillmentStatus, FULFILLMENT_STATUS.IN_TRANSIT, 'reconcileOrder repairs a missed sync');
       await fresh.service.reconcileOrder(d.id, ADMIN); // idempotent
       assert.ok(deliveryId && order);
+    }
+
+    // Orders are read FRESH from the database for every decision. OrderRepository's
+    // ordinary read serves a per-instance cache that is never refreshed, so an order
+    // cancelled or refunded elsewhere would still look live to this service.
+    {
+      const makeRow = (over = {}) => ({
+        id: 'ord_db_1', buyer_id: 'buyer_1', seller_id: 'seller_1', order_number: 'KM-TEST-DB1', total_amount_xaf: 50000,
+        items: [{ listingId: 'lst_1', title: 'Phone', unitPriceXaf: 50000, quantity: 1, sellerId: 'seller_1', storeName: 'Tech Shop' }],
+        shipping_address: { fullName: 'Awa', phone: '+237622222222', city: 'Douala', _deliveryMethod: 'HOME_DELIVERY' },
+        payment_status: 'paid', fulfillment_status: 'processing',
+        created_at: '2026-10-03T09:00:00.000Z', updated_at: '2026-10-03T09:00:00.000Z', ...over
+      });
+
+      // The repository itself.
+      const rows = new Map([['ord_db_1', makeRow()]]);
+      const orders = new OrderRepository({ db: stubOrdersDb(rows) });
+      assert.strictEqual((await orders.findOrderById('ord_db_1')).fulfillmentStatus, 'processing');
+      rows.get('ord_db_1').fulfillment_status = 'cancelled'; // cancelled by another request
+      assert.strictEqual((await orders.findOrderById('ord_db_1')).fulfillmentStatus, 'processing', 'the ordinary read is stale: this is why a fresh read exists');
+      assert.strictEqual((await orders.findOrderByIdFresh('ord_db_1')).fulfillmentStatus, 'cancelled', 'the fresh read sees the database');
+      assert.strictEqual((await orders.findOrderById('ord_db_1')).fulfillmentStatus, 'cancelled', 'and refreshes the cache');
+      assert.strictEqual((await orders.findOrderByIdFresh('KM-TEST-DB1')).id, 'ord_db_1', 'an order number resolves too');
+      rows.delete('ord_db_1');
+      assert.strictEqual(await orders.findOrderByIdFresh('ord_db_1'), null, 'a row that is gone is gone');
+      assert.strictEqual(await orders.findOrderById('ord_db_1'), null, 'including from the cache');
+      assert.strictEqual(await orders.findOrderByIdFresh(''), null);
+      assert.strictEqual(await new OrderRepository({ db: null }).findOrderByIdFresh('nope'), null, 'no database: falls back to memory');
+
+      // The atomic status update compares against the database, not a cached copy.
+      const rows2 = new Map([['ord_db_1', makeRow()]]);
+      const orders2 = new OrderRepository({ db: stubOrdersDb(rows2) });
+      await orders2.findOrderById('ord_db_1'); // warm the cache at "processing"
+      rows2.get('ord_db_1').fulfillment_status = 'in_transit'; // moved on elsewhere
+      assert.strictEqual(
+        await code(orders2.updateFulfillmentStatusAtomic('ord_db_1', 'processing', 'in_transit', { note: 'x' })),
+        'CONFLICT',
+        'a stale cache must not turn into a silent success or a bogus transition'
+      );
+
+      // The delivery service's decisions.
+      const rows3 = new Map([['ord_db_1', makeRow()]]);
+      const orders3 = new OrderRepository({ db: stubOrdersDb(rows3) });
+      const w = { repo: new DeliveryRepository({ db: null }) };
+      const service = new DeliveryService({ repository: w.repo, orderRepository: orders3, events: new DeliveryEvents() });
+      await orders3.findOrderById('ord_db_1'); // the cache believes: processing, paid
+      rows3.get('ord_db_1').fulfillment_status = 'cancelled';
+      assert.strictEqual(await code(service.createDelivery('ord_db_1', SELLER)), 'CONFLICT', 'a delivery is not created for an order that was cancelled elsewhere');
+      rows3.get('ord_db_1').fulfillment_status = 'processing';
+      rows3.get('ord_db_1').payment_status = 'refunded';
+      assert.strictEqual(await code(service.createDelivery('ord_db_1', SELLER)), 'CONFLICT', 'nor for one that was refunded elsewhere');
+      rows3.get('ord_db_1').payment_status = 'paid';
+      const made = await service.createDelivery('ord_db_1', SELLER);
+      assert.strictEqual(made.status, 'pending_assignment', 'once the database says it is deliverable, it is');
+    }
+
+    // Re-registering a rider without a status keeps whatever the rider already had.
+    {
+      const w = makeWorld();
+      await w.service.registerDriver('rider_1', { name: 'Alain', phone: '+237600000001', status: 'suspended' }, ADMIN);
+      await w.service.registerDriver('rider_1', { name: 'Alain B.', phone: '+237600000001' }, ADMIN);
+      const kept = await w.repo.findDriver('rider_1');
+      assert.strictEqual(kept.status, 'suspended', 'an omitted status never reactivates a suspended rider');
+      assert.strictEqual(kept.name, 'Alain B.');
+      assert.strictEqual(await code(w.service.registerDriver('rider_1', { name: 'A', phone: '+237600000001', status: 'banished' }, ADMIN)), 'VALIDATION_ERROR');
+      await w.service.registerDriver('rider_1', { name: 'Alain B.', phone: '+237600000001', status: 'active' }, ADMIN);
+      assert.strictEqual((await w.repo.findDriver('rider_1')).status, 'active', 'reactivation is explicit');
+      await w.service.registerDriver('rider_new', { name: 'New', phone: '+237600000009' }, ADMIN);
+      assert.strictEqual((await w.repo.findDriver('rider_new')).status, 'active', 'a new rider starts active');
     }
 
     console.log('    ✓ Delivery service: authorisation, flow, GPS policy, handover budget and races hold.');

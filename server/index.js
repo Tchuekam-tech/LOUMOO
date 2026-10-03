@@ -38,6 +38,7 @@ const adaptiveRoutes = require('./modules/adaptive/presentation/routes/adaptiveR
 const announcementRoutes = require('./modules/announcement/presentation/routes/announcementRoutes');
 const travelRoutes = require('./modules/travel/presentation/routes/travelRoutes');
 const orderRoutes = require('./modules/commerce/presentation/routes/orderRoutes');
+const deliveryRoutes = require('./modules/delivery/presentation/routes/deliveryRoutes');
 const superAdminRoutes = require('../SuperAdmin/backend/routes/superAdminRoutes');
 const { maintenanceGuard } = require('../SuperAdmin/backend/middleware/maintenanceGuard');
 
@@ -202,6 +203,7 @@ v1Router.use('/uploads', uploadRoutes);
 v1Router.use('/announcements', announcementRoutes);
 v1Router.use('/travel', travelRoutes);
 v1Router.use('/orders', orderRoutes);
+v1Router.use('/deliveries', deliveryRoutes);
 v1Router.use('/admin', superAdminRoutes);
 
 app.use('/api/v1', v1Router);
@@ -400,6 +402,9 @@ if (require.main === module) {
     if (shuttingDown) return;
     shuttingDown = true;
     logger.info(`[Shutdown] Received ${signal} — draining connections (max 10s).`);
+    // Open delivery streams never finish on their own: end them so clients
+    // reconnect, and so server.close() is not held open until the drain timeout.
+    try { deliveryRoutes.closeAllStreams('server_restart'); } catch (_) { /* best effort */ }
     const timer = setTimeout(() => {
       logger.error('[Shutdown] Drain timeout exceeded — forcing exit.');
       process.exit(1);
