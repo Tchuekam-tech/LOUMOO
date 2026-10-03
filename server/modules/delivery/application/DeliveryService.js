@@ -63,6 +63,9 @@ const SELLER_ROLES = ['seller', 'seller_staff', ...ADMIN_ROLES];
 const RIDER_REPORTABLE_STATUSES = [S.PICKED_UP, S.ARRIVED, S.FAILED];
 const CANCELLABLE_STATUSES = [S.PENDING_ASSIGNMENT, S.ASSIGNED, S.ACCEPTED];
 const CAS_RETRIES = 3;
+// How many active riders one listing or auto-assign considers. Far above a
+// realistic fleet; a warning is logged if it is ever reached.
+const MAX_RIDERS_CONSIDERED = 500;
 const ORDER_PATH = [FULFILLMENT_STATUS.PROCESSING, FULFILLMENT_STATUS.IN_TRANSIT, FULFILLMENT_STATUS.DELIVERED];
 
 function cleanText(value, field, max = 255) {
@@ -1100,13 +1103,49 @@ class DeliveryService {
     return passed;
   }
 
-  async listDrivers(callerInput) {
+  /**
+   * Active riders with how many deliveries each is carrying, least busy first,
+   * then by name, then by id (so ties break the same way every time).
+   */
+  async _rankedActiveRiders() {
+    const [drivers, load] = await Promise.all([
+      this.repo.listDrivers({ status: DRIVER_STATUS.ACTIVE, limit: MAX_RIDERS_CONSIDERED }),
+      this.repo.countOpenByDriver()
+    ]);
+    if (drivers.length >= MAX_RIDERS_CONSIDERED) {
+      logger.warn(`[Delivery] Rider list hit its ${MAX_RIDERS_CONSIDERED}-row cap; riders beyond it are not offered.`);
+    }
+    const byText = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+    return drivers
+      .map((driver) => ({ driver, openDeliveries: load.get(driver.id) || 0 }))
+      .sort((a, b) => a.openDeliveries - b.openDeliveries
+        || String(a.driver.name || '').localeCompare(String(b.driver.name || ''), 'en')
+        || byText(a.driver.id, b.driver.id));
+  }
+
+  /**
+   * The riders a seller or admin can pick from, least busy first. With a
+   * `deliveryId` (the caller must be that delivery's seller or an admin, else
+   * 404) each rider also says whether they already handed THAT delivery back.
+   */
+  async listDrivers(callerInput, { deliveryId } = {}) {
     const caller = this._caller(callerInput);
     if (!SELLER_ROLES.includes(caller.userRole)) {
       throw new AuthorizationError('Only sellers and administrators can list riders.');
     }
-    const drivers = await this.repo.listDrivers({ status: DRIVER_STATUS.ACTIVE });
-    return drivers.map((d) => ({ id: d.id, name: d.name, phone: d.phone }));
+    let passed = null;
+    if (deliveryId !== undefined && deliveryId !== null && deliveryId !== '') {
+      const { delivery } = await this._requireStaff(deliveryId, callerInput);
+      passed = await this._ridersWhoPassed(delivery.id);
+    }
+    const ranked = await this._rankedActiveRiders();
+    return ranked.map(({ driver, openDeliveries }) => ({
+      id: driver.id,
+      name: driver.name,
+      phone: driver.phone,
+      openDeliveries,
+      ...(passed ? { declined: passed.has(driver.id) } : {})
+    }));
   }
 }
 
