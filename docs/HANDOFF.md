@@ -40,13 +40,17 @@ entry after finishing one. Newest entry first.
   steps 1–2). What was missing around it, now built: (1) **offer expiry** — an
   `assigned` offer lapses after 15 min (`DELIVERY_OFFER_TTL_MINUTES`, `0` = never),
   returns to `pending_assignment`, notifies seller and rider, and shows
-  `offerExpiresAt` to seller/admin/rider (never the buyer); applied lazily on every
-  read path *and* by a once-a-minute sweeper, so Netlify behaves like Railway;
-  accepting a lapsed offer is `409 OFFER_EXPIRED`. (2) **`GET /drivers`** now carries
-  `openDeliveries` and sorts least-busy first; with `?deliveryId=` it adds a
-  `declined` boolean per rider. (3) **`POST /:id/auto-assign`** picks the least-busy
-  active rider who is not the buyer, has not handed this delivery back, and does not
-  already hold the offer; `409 NO_RIDER_AVAILABLE` when nobody qualifies.
+  `offerExpiresAt` to seller/admin/rider (never the buyer); applied lazily when a
+  delivery is read or a rider list is ranked, *and* by a once-a-minute sweeper (on a
+  serverless runtime there is no sweeper: the seller is only told when something
+  touches the delivery or lists riders, see the contract); accepting a lapsed offer
+  is always `409 OFFER_EXPIRED`. (2) **`GET /drivers`** now carries
+  `openDeliveries` and sorts responsive, then least-busy, riders first; with
+  `?deliveryId=` it adds a `declined` boolean per rider. (3) **`POST /:id/auto-assign`**
+  picks the first rider in that order who is not the buyer, has not handed this
+  delivery back, and does not already hold the offer; `409 NO_RIDER_AVAILABLE` when
+  nobody qualifies. A rider who lets an offer lapse sorts behind responsive riders
+  for an hour, so one who never answers does not win every offer.
   **No schema change and no migration**: the deadline is `assigned_at + window`, and
   "who handed it back" is read from `delivery_events`. Contract: `docs/DELIVERY_API.md`
   (new section "Offer expiry", decisions 9–10).
@@ -60,6 +64,19 @@ entry after finishing one. Newest entry first.
   *Tests:* new `delivery_dispatch`, `delivery_repository`, `delivery_sweeper` unit
   suites, plus additions to `delivery_domain` and `delivery_routes`. Mutation
   checks: every deliberate break of the production code I tried was caught.
+  **One existing integration assertion was edited without being run:**
+  `tests/integration/delivery_flow.test.js` (the `GET /drivers` key set now includes
+  `openDeliveries`); it needs the live database.
+  *An independent review* (parts of it ran; several reviewers were cut off by a usage
+  limit) found, and this branch fixed: a huge/tiny `DELIVERY_OFFER_TTL_MINUTES`
+  crashing views or disabling expiry (now bounded: 1 s to 1 week); a late accept
+  answering 404 once released (now 409); lapsed offers counting as rider workload and
+  a non-responding rider winning every offer (lapsed offers are released before
+  ranking, and recent lapses sort last); the untested default/env wiring; weak tests;
+  and doc overstatements. **Not reviewed in full:** the concurrency, operations and
+  adversarial-test lenses were being re-run when this was written.
+  **Decision for the owner (decision 11):** `openDeliveries` shows every seller each
+  rider's total workload across all sellers.
   **Not verified:** (a) the two new queries (`findStaleOffers`, `countOpenByDriver`)
   against the real PostgREST/Postgres — the repository suite uses a query-builder
   stand-in, so a DB-backed section in `tests/integration/delivery_flow.test.js` is
