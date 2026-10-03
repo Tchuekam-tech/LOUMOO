@@ -219,6 +219,16 @@ function createDeliveryRouter({
     if (lifetime.unref) lifetime.unref();
   }));
 
+  // ---------------------------------------------------- per-delivery reads
+
+  router.get('/:id/code', authenticate, route(async (req, res) => {
+    ok(res, await svc().getHandoverCode(req.params.id, callerOf(req)));
+  }));
+
+  router.get('/:id', authenticate, route(async (req, res) => {
+    ok(res, { delivery: await svc().getDelivery(req.params.id, callerOf(req)) });
+  }));
+
   router.openStreamCount = () => [...openStreams.values()].reduce((a, b) => a + b, 0);
   return router;}
 
