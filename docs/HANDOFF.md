@@ -25,13 +25,32 @@ entry after finishing one. Newest entry first.
 | Step | Owner | Status |
 |---|---|---|
 | 0. Branches, contract, handoff file | Claude | done |
-| 1. Migration 013 + `delivery` module (domain, repo, service) | Claude | **done** (unit-tested; migration NOT applied to any database yet) |
-| 2. Delivery routes, rider endpoints, SSE, route tests | Claude | **done** (mounted at `/api/v1/deliveries`; tested with a stand-in for auth, no database) |
+| 1. Migration 013 + `delivery` module (domain, repo, service) | Claude | **done** (unit-tested; migration **applied to the production DB 2026-10-03**) |
+| 2. Delivery routes, rider endpoints, SSE, route tests | Claude | **done** (mounted at `/api/v1/deliveries`; unit-tested, and now **DB-backed integration tested** — see `tests/integration/delivery_flow.test.js`) |
+| 2b. DB-backed integration suite (real guard, real DB, real stream) | Claude | **done** (passes against the live database) |
 | 3. Rider page (GPS posting) | ChatGPT/Codex | can start now against `docs/DELIVERY_API.md` v1 |
 | 4. Customer tracking screen (map, timeline, code) | ChatGPT/Codex | |
 | 5. Merge both, rebuild frontend, end-to-end check | owner | |
 
 ## Log
+- **Step 2b — DB-backed integration suite (Claude, 2026-10-03):** Migration 013
+  is now applied to the production Supabase project, and
+  `tests/integration/delivery_flow.test.js` drives the whole flow over real HTTP
+  against the real database with the real session guard: schema + RLS, rider
+  registration (incl. the FK), creation (incl. the one-open-delivery race),
+  reads/IDOR, assign, accept (race), the handover-code audience, GPS pings
+  (throttle + implausible-jump), pickup→arrive→delivered with the order status
+  following in `iam.orders`, the live SSE stream through compression, the 5-wrong-code
+  lock + admin unlock/reconcile, failure→retry with a new rider+code, decline,
+  buyer/seller cancel, the order→delivery cancel cascade, and rider suspension +
+  admin recovery. It **skips with a notice** when 013 is not applied (so `npm test`
+  stays usable on a behind DB; set `LOUMOO_REQUIRE_DELIVERY_DB=1` to force failure).
+  **Real bug it caught:** migration 013 created the `BIGSERIAL` tables but never
+  granted the sequences to `service_role`, so every insert into `delivery_events`
+  / `driver_locations` failed with SQLSTATE 42501 — in production (which throws
+  instead of the dev in-memory fallback) that would have broken delivery creation.
+  Fixed in 013 with explicit table + sequence GRANTs (idempotent). Built as 40+
+  small commits. Runs green; cleanup leaves no rows.
 - **Step 2 (Claude):** Added `server/modules/delivery/presentation/**` (strict zod
   schemas, `createDeliveryRouter`, 17 routes) and mounted it in `server/index.js`
   (one require + one `v1Router.use`; shared file). `tests/unit/delivery_routes.test.js`
