@@ -195,6 +195,7 @@
     state._driverHeading = null;
     state.destGeocoded = null;
     state._userMovedMap = false;
+    state._styleOk = false;
     if (state.root && state.root.parentNode) state.root.parentNode.removeChild(state.root);
     state.root = null;
     state.mounted = false;
@@ -407,30 +408,29 @@
       state.map.addControl(new ml.NavigationControl({ showCompass: false }), 'top-right');
       addRecenterControl(ml);
 
-      // Render markers + route as soon as the STYLE SPEC is ready — do not wait
-      // for every tile (the 'load' event), or a slow-but-working connection looks
-      // broken and gets wrongly downgraded to the demo tiles.
-      var styleReady = false;
-      function onStyleReady() {
-        if (!state.map || !(state.map.isStyleLoaded && state.map.isStyleLoaded()) || styleReady) return;
-        styleReady = true;
+      // Add markers + route when the STYLE SPEC is parsed ('style.load'), NOT when
+      // every tile has loaded ('load') — isStyleLoaded() waits for source tiles, so
+      // keying off it wrongly reported "not loaded" on slow links and churned styles.
+      var chosenStyle = mapStyle();
+      function onStyleLoad() {
+        state._styleOk = true;
         if (msg) msg.style.display = 'none';
         ensureRoute();
         updateMap(state.delivery || d);
       }
-      state.map.on('styledata', onStyleReady);
-      state.map.on('load', onStyleReady);
+      state.map.on('style.load', onStyleLoad);
+      state.map.on('load', function () { if (msg) msg.style.display = 'none'; });
       // Only count genuine user gestures as "took control" of the camera.
       state.map.on('dragstart', function () { state._userMovedMap = true; });
       state.map.on('zoomstart', function (e) { if (e && e.originalEvent) state._userMovedMap = true; });
       state.map.on('error', function () { /* individual tile/glyph errors are non-fatal */ });
-      // Fall back to the demo style ONLY if the chosen style SPEC itself fails to
-      // load within a generous window (not merely because tiles are still streaming).
-      setTimeout(function () {
-        if (state.map && mapStyle() !== DEMO_STYLE && !(state.map.isStyleLoaded && state.map.isStyleLoaded())) {
-          try { styleReady = false; state.map.setStyle(DEMO_STYLE); } catch (e) {}
-        }
-      }, 15000);
+      // A URL style can fail to fetch; the default inline raster style cannot. Only
+      // arm the demo fallback for a URL style that has not parsed in time.
+      if (typeof chosenStyle === 'string' && chosenStyle !== DEMO_STYLE) {
+        setTimeout(function () {
+          if (state.map && !state._styleOk) { try { state.map.setStyle(DEMO_STYLE); } catch (e) {} }
+        }, 15000);
+      }
 
       geocodeDestIfNeeded(d);
     }).catch(function () {
