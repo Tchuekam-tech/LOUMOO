@@ -154,6 +154,38 @@ function estimateEta(from, to) {
   return { etaMinutes, distanceKm: Math.round(distanceKm * 100) / 100 };
 }
 
+/**
+ * Turns the configured window (minutes) into milliseconds. Anything that is not
+ * a finite number >= 0 falls back to the default, so a typo in an environment
+ * variable cannot silently switch expiry off or make every offer lapse at once.
+ * `0` is a real value and means "never expire".
+ */
+function offerTtlMsFrom(minutes) {
+  if (minutes === undefined || minutes === null || minutes === '') return OFFER_DEFAULT_TTL_MINUTES * 60 * 1000;
+  const n = typeof minutes === 'string' ? Number(minutes.trim()) : minutes;
+  if (!isFiniteNumber(n) || n < 0) return OFFER_DEFAULT_TTL_MINUTES * 60 * 1000;
+  return Math.round(n * 60 * 1000);
+}
+
+/**
+ * When an offer lapses, as epoch milliseconds, or `null` when this delivery has
+ * no deadline: it is not `assigned`, expiry is off (`ttlMs` 0), or it has no
+ * `assignedAt` to count from (a row written by hand, never by the service).
+ */
+function offerDeadlineMs(delivery, ttlMs) {
+  if (!delivery || delivery.status !== DELIVERY_STATUS.ASSIGNED) return null;
+  if (!isFiniteNumber(ttlMs) || ttlMs <= 0) return null;
+  const assignedAt = Date.parse(delivery.assignedAt);
+  if (!Number.isFinite(assignedAt)) return null;
+  return assignedAt + ttlMs;
+}
+
+/** True once the offer's deadline has passed (a deadline of exactly `nowMs` has). */
+function isOfferLapsed(delivery, ttlMs, nowMs) {
+  const deadline = offerDeadlineMs(delivery, ttlMs);
+  return deadline !== null && nowMs >= deadline;
+}
+
 /** Rounds a point to ~1.1 km (2 decimals): enough to judge distance, not to find a door. */
 function coarseLocation(loc) {
   if (!loc || !isFiniteNumber(loc.lat) || !isFiniteNumber(loc.lng)) return null;
@@ -285,6 +317,9 @@ module.exports = {
   optionalNumber,
   haversineKm,
   estimateEta,
+  offerTtlMsFrom,
+  offerDeadlineMs,
+  isOfferLapsed,
   coarseLocation,
   describeArea,
   describeAddress,
