@@ -673,7 +673,7 @@ async function run() {
     // Only an administrator can lift the lock.
     const unlockPath = '/' + lockId + '/resolve';
     assert.strictEqual((await api('POST', unlockPath, cast.seller, { action: 'unlock' })).status, 403, 'a seller cannot unlock');
-    assert.strictEqual((await api('POST', unlockPath, cast.buyer, { action: 'unlock' })).status, 404, 'the buyer is not even told about it');
+    assert.strictEqual((await api('POST', unlockPath, cast.buyer, { action: 'unlock' })).status, 403, 'a buyer cannot unlock either (the role check runs before any lookup)');
     assert.strictEqual((await api('POST', unlockPath, cast.admin, { action: 'wipe' })).status, 400, 'an unknown action is refused');
     assert.strictEqual((await api('POST', unlockPath, cast.admin, { action: 'unlock', extra: 1 })).status, 400, 'unknown keys are refused');
     assert.strictEqual((await api('POST', unlockPath, cast.admin, { action: 'unlock' })).status, 200, 'an administrator can unlock');
