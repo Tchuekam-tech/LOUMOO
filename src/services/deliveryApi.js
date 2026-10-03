@@ -50,3 +50,34 @@ class DeliveryApiClient {
     };
   }
 
+  /** One request. Returns the unwrapped `data` payload; throws a typed Error. */
+  async _request(endpoint, options = {}) {
+    const token = await this._resolveToken();
+    const response = await fetch(`${this.baseUrl}${endpoint}`, {
+      ...options,
+      headers: this._headers(token, options.headers)
+    });
+    const body = (await response.json().catch(() => null)) || {};
+    if (!response.ok) {
+      const err = new Error(body.error?.message || `Request failed with status ${response.status}`);
+      err.code = body.error?.code || 'API_ERROR';
+      err.status = response.status;
+      err.details = body.error?.details || null;
+      throw err;
+    }
+    // Backend envelope is { success, status, data }. Hand callers the payload.
+    return body.data !== undefined ? body.data : body;
+  }
+
+  // -------------------------------------------------------------- read methods
+
+  /**
+   * The delivery for an order. `:orderId` may be the order id or its number.
+   * Returns the open delivery, else the latest finished one. Throws 404 when
+   * there is none, or when the order is not the caller's.
+   * @returns {Promise<{delivery: object}>}
+   */
+  async getByOrder(orderId) {
+    return this._request(`/by-order/${encodeURIComponent(orderId)}`);
+  }
+
