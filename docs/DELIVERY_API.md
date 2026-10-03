@@ -157,7 +157,7 @@ nonce, the attempt counter, the code itself.
 | `driver` | only once `accepted` or later | always | yes |
 | `lastLocation`, `etaMinutes`, `distanceKm` | only while `picked_up` / `arrived` | always | yes |
 | `failureReason`, timeline `note`s | hidden (`null`) | yes | yes |
-| `offerExpiresAt` | always `null` | while `assigned` | while `assigned` |
+| `offerExpiresAt` | always `null` | while `assigned`, unless expiry is off (`null`) | while `assigned`, unless expiry is off (`null`) |
 | `dropoff` | full | full | **before accepting:** only `{ area, location }` with `location` rounded to ~1 km; **after:** full |
 
 A rider who has not accepted must not be shown the customer's name, address,
