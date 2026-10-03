@@ -428,6 +428,26 @@ async function run() {
     const noTrail = await db().from('driver_locations').select('id', { count: 'exact', head: true }).eq('delivery_id', deliveryId);
     assert.strictEqual(noTrail.count, 0, 'refused pings leave no GPS rows');
 
+    const firstPing = await api('POST', pingPath, cast.rider, { ...NEARBY, speedKmh: 18, heading: 359.99999, accuracyM: 8 });
+    assert.strictEqual(firstPing.status, 200, JSON.stringify(firstPing.body));
+    assert.strictEqual(firstPing.body.data.accepted, true);
+    assert.ok(Number.isInteger(firstPing.body.data.etaMinutes), 'an ETA is computed from the drop-off point');
+    assert.ok(firstPing.body.data.distanceKm > 0 && firstPing.body.data.distanceKm < 5, 'a short straight-line distance: ' + firstPing.body.data.distanceKm);
+
+    const trail = (await db().from('driver_locations').select('*').eq('delivery_id', deliveryId)).data;
+    assert.strictEqual(trail.length, 1, 'the point is added to the GPS trail');
+    assert.strictEqual(trail[0].driver_id, cast.rider.id);
+    assert.strictEqual(trail[0].lat, NEARBY.lat);
+    assert.strictEqual(trail[0].heading, 359.99999, 'a heading just under 360 survives the column (double precision, not float4)');
+    const pinged = (await db().from('deliveries').select('last_location,eta_minutes,distance_km').eq('id', deliveryId).single()).data;
+    assert.strictEqual(pinged.last_location.lat, NEARBY.lat, 'the latest point is on the delivery row');
+    assert.ok(pinged.eta_minutes >= 0 && Number(pinged.distance_km) > 0);
+
+    const tooSoon = await api('POST', pingPath, cast.rider, NEARBY);
+    assert.strictEqual(tooSoon.status, 200, 'an ignored ping is not an error');
+    assert.deepStrictEqual(tooSoon.body.data, { accepted: false, reason: 'throttled' });
+    assert.strictEqual((await db().from('driver_locations').select('id', { count: 'exact', head: true }).eq('delivery_id', deliveryId)).count, 1, 'a throttled ping is not stored');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
