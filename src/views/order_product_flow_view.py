@@ -47,6 +47,18 @@ def get_order_product_flow_view():
     <div class="card-premium" style="display:flex;flex-direction:column;gap:14px">
       <div style="font:700 12px/1 var(--font-heading);letter-spacing:.08em;color:var(--color-text-muted);text-transform:uppercase">Delivery Progress</div>
 
+      <!-- Live delivery tracking (step 4). The button is handled by
+           src/services/deliveryTrackingScreen.js via [data-track-delivery] (no DC
+           event binding needed): it opens a MapLibre map, a live status timeline
+           and the buyer's handover code, or a friendly notice if this order has
+           no home delivery yet. The static steps below are the pre-existing
+           escrow/fulfilment outline and remain as a summary. -->
+      <button type="button" data-track-delivery data-order-id="{{ currentOrder.id }}"
+        style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px 16px;border:none;border-radius:var(--radius-md);background:var(--color-accent);color:#fff;font:700 13.5px/1 var(--font-heading);cursor:pointer">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-6-5.686-6-10a6 6 0 1 1 12 0c0 4.314-6 10-6 10z"/><circle cx="12" cy="11" r="2"/></svg>
+        Track live delivery
+      </button>
+
       <div style="display:flex;flex-direction:column;gap:0;position:relative;padding-left:24px">
         <div style="position:absolute;left:7px;top:10px;bottom:10px;width:2px;background:var(--color-divider)"></div>
 
