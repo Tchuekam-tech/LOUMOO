@@ -583,6 +583,34 @@ async function run() {
       assert.strictEqual(await code(w.service.autoAssignDriver(cancelled.id, SELLER)), 'CONFLICT', 'a cancelled order cannot be dispatched');
     }
 
+    // ----------------- concurrent auto-assigns on DIFFERENT deliveries spread out, not pile up
+    {
+      const w = makeWorld();
+      await registerRiders(w, [['rider_1', 'Alain'], ['rider_2', 'Bruno'], ['rider_3', 'Chantal'], ['rider_4', 'Dora']]);
+      const deliveries = [];
+      for (let i = 0; i < 4; i += 1) deliveries.push(await newDelivery(w));
+      // A bulk "assign all": four calls at once. Unserialised, all four rank before any offer lands
+      // (every rider at zero) and the name tie-break hands every delivery to rider_1.
+      const results = await Promise.all(deliveries.map((d) => w.service.autoAssignDriver(d.id, SELLER)));
+      assert.deepStrictEqual(results.map((r) => r.status), ['assigned', 'assigned', 'assigned', 'assigned']);
+      assert.deepStrictEqual(results.map((r) => r.driver.id).sort(), ['rider_1', 'rider_2', 'rider_3', 'rider_4'],
+        'each rider got exactly one: the picks saw each other');
+      assert.ok((await w.service.listDrivers(SELLER)).every((r) => r.openDeliveries === 1), 'and every rider carries one job');
+
+      // A failing call in the queue does not block the ones behind it.
+      const first = await newDelivery(w);
+      const second = await newDelivery(w);
+      let failed = false;
+      const apply = w.service._applyAssignment.bind(w.service);
+      w.service._applyAssignment = async (...args) => {
+        if (!failed) { failed = true; throw new Error('boom'); }
+        return apply(...args);
+      };
+      const mixed = await Promise.all([code(w.service.autoAssignDriver(first.id, SELLER)), code(w.service.autoAssignDriver(second.id, SELLER))]);
+      assert.deepStrictEqual(mixed, ['Error', 'OK'], 'a failure inside the queue is not a wedge: the next call still runs');
+      assert.strictEqual((await w.repo.findById(first.id)).status, 'pending_assignment', 'and the failed one changed nothing');
+    }
+
     // ------------------------------------------------ auto-assign under a race
     {
       const w = makeWorld();
