@@ -118,6 +118,7 @@ Actions with no body (`accept`, `decline`, `reconcile`) ignore one.
   "distanceKm": 3.4,
   "lastLocation": { "lat": 4.055, "lng": 9.72, "at": "2026-10-03T10:00:00Z", "speedKmh": 24, "heading": 90 },
   "failureReason": null,
+  "offerExpiresAt": null,
   "timeline": [ { "status": "assigned", "at": "…", "note": null } ],
   "createdAt": "…",
   "updatedAt": "…"
@@ -133,6 +134,7 @@ nonce, the attempt counter, the code itself.
 | `driver` | only once `accepted` or later | always | yes |
 | `lastLocation`, `etaMinutes`, `distanceKm` | only while `picked_up` / `arrived` | always | yes |
 | `failureReason`, timeline `note`s | hidden (`null`) | yes | yes |
+| `offerExpiresAt` | always `null` | while `assigned` | while `assigned` |
 | `dropoff` | full | full | **before accepting:** only `{ area, location }` with `location` rounded to ~1 km; **after:** full |
 
 A rider who has not accepted must not be shown the customer's name, address,
