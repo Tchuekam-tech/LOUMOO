@@ -156,6 +156,16 @@ class DeleteAccountUseCase {
       logger.debug(`[DeleteAccount] Auth session deletion notice: ${sessionErr.message}`);
     }
 
+    // A rider's name and phone live in delivery_drivers (keyed by profile_id, so
+    // the table loop above does not reach it). Scrub it, suspend the rider and
+    // hand any un-started deliveries back to their sellers.
+    try {
+      const { getSharedDeliveryService } = require('../../delivery/application/DeliveryService');
+      await getSharedDeliveryService().onAccountDeleted(userId);
+    } catch (riderErr) {
+      piiErrors.push(`delivery_drivers: ${riderErr.message}`);
+    }
+
     if (piiErrors.length > 0) {
       // Never silently succeed: the profile is anonymized, but the child PII
       // cleanup is the second half of the promise.

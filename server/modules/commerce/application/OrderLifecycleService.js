@@ -17,6 +17,20 @@ let NotificationService = null;
 try { UserActivityUseCase = require('../../identity/application/UserActivityUseCase'); } catch (e) {}
 try { NotificationService = require('../../identity/application/NotificationService'); } catch (e) {}
 
+/**
+ * An order that is cancelled must not leave a rider heading to the shop. The
+ * delivery module depends on commerce, so this is a lazy, best-effort call in
+ * the other direction: it can never fail or slow the cancellation itself.
+ */
+async function cancelOpenDelivery(orderId, reason, actorId) {
+  try {
+    const { getSharedDeliveryService } = require('../../delivery/application/DeliveryService');
+    await getSharedDeliveryService().cancelForOrder(orderId, { reason: reason || 'Order cancelled', actorId });
+  } catch (e) {
+    logger.warn(`[OrderLifecycle] Could not cancel the delivery for order ${orderId}: ${e.message}`);
+  }
+}
+
 class OrderLifecycleService {
   constructor(repository = null) {
     this.repository = repository || new OrderRepository();
@@ -63,6 +77,8 @@ class OrderLifecycleService {
         updatedBy: callerId
       }
     );
+
+    await cancelOpenDelivery(order.id, reason, callerId);
 
     // Invalidate Buyer's Cache
     try {
@@ -134,6 +150,10 @@ class OrderLifecycleService {
       nextStatus,
       { note, updatedBy: callerId }
     );
+
+    if (nextStatus === FULFILLMENT_STATUS.CANCELLED) {
+      await cancelOpenDelivery(order.id, note, callerId);
+    }
 
     // Invalidate Buyer's Cache
     try {
