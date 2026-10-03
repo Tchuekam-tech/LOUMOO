@@ -34,6 +34,42 @@ entry after finishing one. Newest entry first.
 | 5. Merge both, rebuild frontend, end-to-end check | owner | |
 
 ## Log
+- **Step 2c — Driver assignment (Claude, 2026-10-03, branch `feat/delivery-assignment`,
+  forked from `feat/delivery-backend` at `9a2bbe6`, NOT merged):** Assigning a rider
+  and letting them accept already existed (`POST /:id/assign`, `/accept`, `/decline`,
+  steps 1–2). What was missing around it, now built: (1) **offer expiry** — an
+  `assigned` offer lapses after 15 min (`DELIVERY_OFFER_TTL_MINUTES`, `0` = never),
+  returns to `pending_assignment`, notifies seller and rider, and shows
+  `offerExpiresAt` to seller/admin/rider (never the buyer); applied lazily on every
+  read path *and* by a once-a-minute sweeper, so Netlify behaves like Railway;
+  accepting a lapsed offer is `409 OFFER_EXPIRED`. (2) **`GET /drivers`** now carries
+  `openDeliveries` and sorts least-busy first; with `?deliveryId=` it adds a
+  `declined` boolean per rider. (3) **`POST /:id/auto-assign`** picks the least-busy
+  active rider who is not the buyer, has not handed this delivery back, and does not
+  already hold the offer; `409 NO_RIDER_AVAILABLE` when nobody qualifies.
+  **No schema change and no migration**: the deadline is `assigned_at + window`, and
+  "who handed it back" is read from `delivery_events`. Contract: `docs/DELIVERY_API.md`
+  (new section "Offer expiry", decisions 9–10).
+  *Shared files touched:* `server/index.js` only — two `require`s next to the
+  delivery router and one block in the background-workers section that starts the
+  sweeper (and registers its timer for shutdown). Everything else is inside
+  `server/modules/delivery/**`, `docs/`, and new test files. **Merge hot spots**
+  with `feat/delivery-backend`: `DeliveryService.js`, `deliveryRoutes.js`,
+  `deliverySchemas.js`, `DeliveryRepository.js`, `Delivery.js`, `delivery_routes.test.js`,
+  `DELIVERY_API.md`, this file.
+  *Tests:* new `delivery_dispatch`, `delivery_repository`, `delivery_sweeper` unit
+  suites, plus additions to `delivery_domain` and `delivery_routes`. Mutation
+  checks: every deliberate break of the production code I tried was caught.
+  **Not verified:** (a) the two new queries (`findStaleOffers`, `countOpenByDriver`)
+  against the real PostgREST/Postgres — the repository suite uses a query-builder
+  stand-in, so a DB-backed section in `tests/integration/delivery_flow.test.js` is
+  still owed (deliberately not run while the database was in use elsewhere);
+  (b) the sweeper on Railway under real load; (c) `GET /drivers` with a large fleet
+  (it reads at most 500 active riders and logs a warning if it hits that).
+  **Frontend must know:** `offerExpiresAt` is new on every Delivery; a rider's
+  `accept` can now answer `409 OFFER_EXPIRED`; the seller's picker should call
+  `GET /drivers?deliveryId=…` and grey out `declined: true` riders; there is still
+  no seller-facing "assign a rider" screen or rider job-inbox screen in the plan.
 - **Step 2b — DB-backed integration suite (Claude, 2026-10-03):** Migration 013
   is now applied to the production Supabase project, and
   `tests/integration/delivery_flow.test.js` drives the whole flow over real HTTP
