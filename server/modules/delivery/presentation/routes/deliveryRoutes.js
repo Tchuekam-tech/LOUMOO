@@ -35,6 +35,11 @@ const logger = require('../../../../shared/logging/logger');
 
 const MAX_VALIDATION_ISSUES = 5;
 
+/** True when this process cannot hold a response open (Lambda-style runtimes). */
+function isServerlessRuntime(env = process.env) {
+  return Boolean(env.AWS_LAMBDA_FUNCTION_NAME || env.NETLIFY || env.VERCEL);
+}
+
 const DEFAULTS = Object.freeze({
   heartbeatMs: 25 * 1000,
   maxStreamMs: 30 * 60 * 1000,
@@ -76,7 +81,8 @@ function createDeliveryRouter({
   events = deliveryEvents,
   heartbeatMs = DEFAULTS.heartbeatMs,
   maxStreamMs = DEFAULTS.maxStreamMs,
-  maxStreamsPerUser = DEFAULTS.maxStreamsPerUser
+  maxStreamsPerUser = DEFAULTS.maxStreamsPerUser,
+  streamSupported = !isServerlessRuntime()
 } = {}) {
   const router = express.Router();
   const svc = () => service || getSharedDeliveryService();
@@ -117,6 +123,20 @@ function createDeliveryRouter({
   // ------------------------------------------------------------- live stream
 
   router.get('/:id/stream', authenticate, route(async (req, res) => {
+    if (!streamSupported) {
+      // Not an error to log: it is the correct answer on this deployment. The
+      // client switches to polling GET /:id (see docs/DELIVERY_API.md).
+      res.status(501).json({
+        success: false,
+        error: {
+          code: 'STREAM_UNSUPPORTED',
+          message: 'Live streaming is not available on this deployment. Poll GET /deliveries/:id every 5-10 seconds instead.',
+          details: null,
+          requestId: req.requestId || 'req_unknown'
+        }
+      });
+      return;
+    }
     const who = callerOf(req);
     const userKey = String(who.userId || '');
     const openNow = openStreams.get(userKey) || 0;
@@ -291,4 +311,5 @@ const router = createDeliveryRouter();
 
 module.exports = router;
 module.exports.createDeliveryRouter = createDeliveryRouter;
+module.exports.isServerlessRuntime = isServerlessRuntime;
 module.exports.DEFAULTS = DEFAULTS;
