@@ -157,6 +157,29 @@ async function openDelivery(cast, { rider = cast.rider, accept = false } = {}) {
 
 /** A 4-digit code that is guaranteed not to be `code`. */
 const wrongCodeFor = code => String((Number(code) + 1) % 10000).padStart(4, '0');
+/**
+ * Removes everything this suite created. Deliveries reference orders and
+ * profiles with ON DELETE RESTRICT, so they (and then the orders) must go
+ * before the harness deletes the profiles, or those deletes fail silently and
+ * leave rows behind. Deleting a delivery cascades to its events and GPS trail.
+ */
+async function removeDeliveryData(cast) {
+  const quiet = async fn => { try { return await fn(); } catch (e) { return { error: e }; } };
+
+  if (createdOrderIds.length) {
+    await quiet(() => db().from('deliveries').delete().in('order_id', createdOrderIds));
+    await quiet(() => db().from('orders').delete().in('id', createdOrderIds));
+  }
+  if (cast) {
+    await quiet(() => db().from('delivery_drivers').delete().in('profile_id', [cast.rider.id, cast.rider2.id]));
+  }
+
+  if (createdOrderIds.length) {
+    const left = await quiet(() => db().from('orders').select('id', { count: 'exact', head: true }).in('id', createdOrderIds));
+    if (left && left.count) console.warn(`  WARNING: ${left.count} test order(s) could not be removed.`);
+  }
+  createdOrderIds.length = 0;
+}
 async function run() {
   console.log('═══════════════════════════════════════════════════════════');
   console.log('  DELIVERY TRACKING — DATABASE-BACKED INTEGRATION TEST');
@@ -172,9 +195,12 @@ async function run() {
 
   await harness.start();
 
+  let cast = null;
   try {
+    cast = await makeCast();
     // @@SECTIONS@@
   } finally {
+    await removeDeliveryData(cast);
     await harness.cleanup();
   }
 }
