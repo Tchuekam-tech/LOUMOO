@@ -363,7 +363,17 @@ class DeliveryService {
    */
   async _releaseIfLapsed(delivery) {
     if (!delivery || !isOfferLapsed(delivery, this.offerTtlMs, this.now())) return delivery;
-    const released = await this._expireOffer(delivery);
+    let released;
+    try {
+      released = await this._expireOffer(delivery);
+    } catch (err) {
+      // Best effort. A read must not become a 500 because the housekeeping write
+      // failed (a degraded write path with working reads, a locked row): show the
+      // delivery as it is. Accept still refuses a lapsed offer on its own, and the
+      // sweeper or the next read retries the release.
+      logger.warn(`[Delivery] Could not release lapsed offer ${delivery.id} while reading it: ${err.message}`);
+      return delivery;
+    }
     if (released) return released;
     // Lost the race: whatever happened is the truth now.
     return (await this.repo.findById(delivery.id)) || delivery;
