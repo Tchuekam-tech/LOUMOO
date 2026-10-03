@@ -185,3 +185,37 @@
   }
   function setSubtitle(text) { var el = q('.dt-sub'); if (el) el.textContent = text; }
 
+  function renderError(msg) {
+    var el = q('[data-dt-error]'); if (!el) return;
+    el.textContent = msg; el.hidden = false;
+  }
+
+  function statusKind(status) {
+    if (status === 'delivered') return 'ok';
+    if (status === 'failed' || status === 'cancelled') return 'bad';
+    return '';
+  }
+
+  function labelFor(status) {
+    if (status === 'failed') return 'Delivery attempt failed';
+    if (status === 'cancelled') return 'Delivery cancelled';
+    var i = STEP_INDEX[status];
+    return i != null ? STEPS[i].label : status;
+  }
+
+  function renderTimeline(delivery) {
+    var ul = q('[data-dt-timeline]'); if (!ul) return;
+    var status = delivery.status;
+    var at = {};
+    (delivery.timeline || []).forEach(function (e) { if (e.status && !at[e.status]) at[e.status] = e.at; });
+
+    if (status === 'cancelled' || status === 'failed') {
+      var reached = STEP_INDEX[status === 'failed' ? 'picked_up' : 'pending_assignment'];
+      var rows = STEPS.slice(0, (reached || 0) + 1).map(function (s) {
+        return stepRow(s.label, 'done', at[s.key]);
+      });
+      rows.push(stepRow(labelFor(status), 'bad', at[status]));
+      ul.innerHTML = rows.join('');
+      return;
+    }
+
