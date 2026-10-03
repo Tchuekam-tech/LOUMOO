@@ -342,6 +342,50 @@ class OrderRepository {
   }
 
   /**
+   * Like findOrderById, but never answers from the in-memory cache when a
+   * database is available. findOrderById returns whatever this instance cached
+   * first and never refreshes it, which is wrong for any decision about an
+   * order's CURRENT status made in a different request or by a different
+   * service instance (a cancelled or refunded order must not look live). The
+   * database row is read, the cache is refreshed with it, and the memory copy
+   * is only used when there is no database (tests, a laptop with no credentials)
+   * or, outside production, after a handled database failure.
+   * @param {string} idOrNumber
+   * @returns {Promise<Order|null>}
+   */
+  async findOrderByIdFresh(idOrNumber) {
+    if (!idOrNumber) return null;
+    if (!this.db) return this.findOrderById(idOrNumber);
+
+    try {
+      let query = this.db.from('orders').select('*');
+      if (idOrNumber.startsWith('KM-') || idOrNumber.startsWith('LM-')) {
+        query = query.eq('order_number', idOrNumber);
+      } else {
+        query = query.eq('id', idOrNumber);
+      }
+      const { data, error } = await query.maybeSingle();
+      if (error) {
+        handleDatabaseFailure(error, 'OrderRepository.findOrderByIdFresh');
+      } else if (data) {
+        const order = this._mapRowToOrder(data);
+        this._inMemoryOrders.set(order.id, order);
+        return order;
+      } else {
+        // Gone from the database: drop any stale cached copy as well.
+        for (const [id, ord] of this._inMemoryOrders.entries()) {
+          if (id === idOrNumber || ord.orderNumber === idOrNumber) this._inMemoryOrders.delete(id);
+        }
+        return null;
+      }
+    } catch (err) {
+      handleDatabaseFailure(err, 'OrderRepository.findOrderByIdFresh');
+    }
+    // Handled failure outside production: serve what we have.
+    return this.findOrderById(idOrNumber);
+  }
+
+  /**
    * Paged query of orders belonging to a buyer.
    * @param {string} buyerId
    * @param {object} options
