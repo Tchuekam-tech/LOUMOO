@@ -58,6 +58,21 @@ const ETA_ASSUMED_SPEED_KMH = 20;
 
 const MAX_HANDOVER_ATTEMPTS = 5;
 
+// An `assigned` delivery is an offer the rider has this long to accept before it
+// goes back to the seller (docs/DELIVERY_API.md, "Offer expiry"). A starting
+// point to tune with real riders, not a measured value. 0 disables expiry.
+const OFFER_DEFAULT_TTL_MINUTES = 15;
+
+// The deliveries that make a rider "busy" when the seller picks one. `failed` is
+// deliberately absent: that job is waiting on a seller/admin decision, not on
+// the rider's time.
+const WORKLOAD_STATUSES = Object.freeze([
+  DELIVERY_STATUS.ASSIGNED,
+  DELIVERY_STATUS.ACCEPTED,
+  DELIVERY_STATUS.PICKED_UP,
+  DELIVERY_STATUS.ARRIVED
+]);
+
 // Extends AppError so the shared error handler renders it as a real 423; a bare
 // Error subclass would fall through to a 500.
 class DeliveryLockedError extends AppError {
@@ -244,6 +259,8 @@ module.exports = {
   ETA_ROAD_FACTOR,
   ETA_ASSUMED_SPEED_KMH,
   MAX_HANDOVER_ATTEMPTS,
+  OFFER_DEFAULT_TTL_MINUTES,
+  WORKLOAD_STATUSES,
   DeliveryLockedError,
   newDeliveryId,
   parseLocation,
