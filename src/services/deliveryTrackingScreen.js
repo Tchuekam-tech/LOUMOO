@@ -219,3 +219,42 @@
       return;
     }
 
+    var current = STEP_INDEX[status];
+    if (current == null) current = 0;
+    ul.innerHTML = STEPS.map(function (s, i) {
+      var cls = i < current ? 'done' : (i === current ? 'current' : 'pending');
+      return stepRow(s.label, cls, at[s.key]);
+    }).join('');
+  }
+
+  function stepRow(label, cls, at) {
+    return '<li class="dt-step ' + cls + '">' +
+      '<span class="dt-dot"></span>' +
+      '<div class="dt-step-label">' + esc(label) + '</div>' +
+      (at ? '<div class="dt-step-at">' + esc(fmtTime(at)) + '</div>' : '') +
+      '</li>';
+  }
+
+  function renderEta(delivery) {
+    var el = q('[data-dt-eta]'); if (!el) return;
+    if (delivery.etaMinutes == null) { el.hidden = true; return; }
+    var dist = delivery.distanceKm != null ? ' <span>· ' + esc(delivery.distanceKm) + ' km away</span>' : '';
+    el.innerHTML = '<b>' + esc(delivery.etaMinutes) + ' min</b>' + dist;
+    el.hidden = false;
+  }
+
+  function renderDriver(delivery) {
+    var el = q('[data-dt-driver]'); if (!el) return;
+    var d = delivery.driver;
+    if (!d || !d.name) { el.hidden = true; return; }
+    var wa = digitsOnly(d.phone);
+    el.innerHTML =
+      '<div class="dt-avatar">' + esc(initials(d.name)) + '</div>' +
+      '<div class="dt-dn"><b>' + esc(d.name) + '</b><span>Your rider' + (d.phone ? ' · ' + esc(d.phone) : '') + '</span></div>' +
+      '<div class="dt-actions">' +
+        (d.phone ? '<a href="tel:' + esc(d.phone) + '" aria-label="Call rider"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>' : '') +
+        (wa ? '<a class="wa" href="https://wa.me/' + esc(wa) + '" target="_blank" rel="noopener" aria-label="WhatsApp rider"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm0 2a8 8 0 1 1-4.1 14.9l-.3-.2-2.8.8.8-2.7-.2-.3A8 8 0 0 1 12 4zm4.6 10.3c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.1-.2 0-.4.1-.5l.4-.5.2-.4v-.4l-.7-1.7c-.2-.4-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3c-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.8 2.8 4.4 3.8 1.6.6 2.2.7 3 .6.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1l-.3-.2z"/></svg></a>' : '') +
+      '</div>';
+    el.hidden = false;
+  }
+
