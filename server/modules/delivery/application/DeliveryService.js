@@ -41,6 +41,7 @@ const {
   offerTtlMsFrom,
   isOfferLapsed,
   OfferExpiredError,
+  NoRiderAvailableError,
   describeAddress,
   describeArea,
   presentDelivery
@@ -487,6 +488,28 @@ class DeliveryService {
     }
 
     return this._applyAssignment(delivery, driver, caller, role, `Assigned to ${driver.name}`);
+  }
+
+  /**
+   * Picks the rider for the seller: the least busy active rider who is not the
+   * buyer, has not already handed this delivery back, and is not the rider who
+   * already holds the offer (re-offering to them would change nothing). Ties
+   * break by name, then id, so the choice is deterministic. There is no
+   * "nearest" rider: positions are only recorded during a delivery (see
+   * decision 10 in docs/DELIVERY_API.md).
+   */
+  async autoAssignDriver(deliveryId, callerInput) {
+    const { caller, delivery, role } = await this._requireStaff(deliveryId, callerInput);
+    DeliveryStateMachine.assertCanAssign(delivery.status);
+    await this._assertOrderNotCancelled(delivery);
+
+    const [ranked, passed] = await Promise.all([this._rankedActiveRiders(), this._ridersWhoPassed(delivery.id)]);
+    const pick = ranked.find(({ driver }) => driver.id !== delivery.buyerId
+      && !passed.has(driver.id)
+      && !(delivery.status === S.ASSIGNED && driver.id === delivery.driverId));
+    if (!pick) throw new NoRiderAvailableError();
+
+    return this._applyAssignment(delivery, pick.driver, caller, role, `Auto-assigned to ${pick.driver.name}`);
   }
 
   /**
