@@ -223,18 +223,25 @@ class DeliveryService {
    * notifications and stream that follow (the rider would see an error for a
    * change that did happen, and retrying would be refused as a conflict).
    */
-  async _record(delivery, previousStatus, actorId, note = null) {
-    try {
-      await this.repo.insertEvent({
-        deliveryId: delivery.id,
-        status: delivery.status,
-        previousStatus,
-        actorId,
-        note,
-        at: delivery.updatedAt
-      });
-    } catch (err) {
-      logger.error(`[Delivery] Timeline write failed for ${delivery.id} (${previousStatus} -> ${delivery.status}): ${err.message}`);
+  async _record(delivery, previousStatus, actorId, note = null, { retries = 0 } = {}) {
+    // `retries` is for rows other decisions depend on (the lapse row), which a single
+    // transient failure would otherwise silently void.
+    for (let attempt = 0; ; attempt += 1) {
+      try {
+        await this.repo.insertEvent({
+          deliveryId: delivery.id,
+          status: delivery.status,
+          previousStatus,
+          actorId,
+          note,
+          at: delivery.updatedAt
+        });
+        break;
+      } catch (err) {
+        if (attempt < retries) continue;
+        logger.error(`[Delivery] Timeline write failed for ${delivery.id} (${previousStatus} -> ${delivery.status}): ${err.message}`);
+        break;
+      }
     }
     this.events.publish(delivery.id, {
       type: 'status',
@@ -347,7 +354,9 @@ class DeliveryService {
       { status: S.PENDING_ASSIGNMENT, driverId: null, assignedAt: null, acceptedAt: null, updatedAt: this._nowIso() }
     );
     if (!updated) return null;
-    await this._record(updated, S.ASSIGNED, riderId, OFFER_EXPIRED_NOTE);
+    // Retried once: the recent-lapse ranking, the declined flag and the late-accept
+    // answer all read this row, and a lost one would silently void them.
+    await this._record(updated, S.ASSIGNED, riderId, OFFER_EXPIRED_NOTE, { retries: 1 });
     this._notify(updated.sellerId, {
       title: 'A rider did not respond',
       body: 'The offer expired. Assign another rider to keep the order moving.',
