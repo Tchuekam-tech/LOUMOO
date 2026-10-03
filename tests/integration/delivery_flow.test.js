@@ -588,6 +588,37 @@ async function run() {
     assert.strictEqual(wire.nonce, undefined);
     console.log('    ✓ Stream: auth, snapshot, headers and live position through compression and the session guard.');
 
+    // ------------------------------------------------------- arrive and hand over
+    console.log('  Arriving and handing over...');
+    const arrived = await api('POST', statusPath, cast.rider, { status: 'arrived' });
+    assert.strictEqual(arrived.status, 200, JSON.stringify(arrived.body));
+    assert.strictEqual((await orderRow(order.id)).fulfillment_status, 'in_transit', 'arriving does not complete the order');
+
+    const completePath = '/' + deliveryId + '/complete';
+    const attemptsUsed = async () => (await db().from('deliveries').select('code_attempts').eq('id', deliveryId).single()).data.code_attempts;
+    assert.strictEqual((await api('POST', completePath, cast.rider, {})).status, 400, 'a code is required');
+    assert.strictEqual((await api('POST', completePath, cast.rider, { code: 'abcd' })).status, 400, 'a malformed code is refused');
+    assert.strictEqual((await api('POST', completePath, cast.rider, { code: '12345' })).status, 400, 'five digits is refused');
+    assert.strictEqual(await attemptsUsed(), 0, 'a malformed code does not use a guess');
+    assert.strictEqual((await api('POST', completePath, cast.buyer, { code })).status, 403, 'the buyer cannot complete it');
+    assert.strictEqual((await api('POST', completePath, cast.seller, { code })).status, 403, 'neither can the seller');
+    assert.strictEqual((await api('POST', completePath, cast.stranger, { code })).status, 404, 'a stranger gets 404');
+
+    const wrong = await api('POST', completePath, cast.rider, { code: wrongCodeFor(code) });
+    assert.strictEqual(wrong.status, 400, 'a wrong code is a 400');
+    assert.ok(/4/.test(wrong.body.error.message), 'the message says how many guesses are left: ' + wrong.body.error.message);
+    assert.strictEqual(await attemptsUsed(), 1, 'the wrong guess is counted in the database');
+    assert.strictEqual((await api('GET', '/' + deliveryId + '/code', cast.buyer)).body.data.attemptsRemaining, 4, 'and the buyer can see how many remain');
+    assert.strictEqual((await db().from('deliveries').select('status').eq('id', deliveryId).single()).data.status, 'arrived', 'a wrong code does not complete it');
+
+    const done = await api('POST', completePath, cast.rider, { code });
+    assert.strictEqual(done.status, 200, JSON.stringify(done.body));
+    assert.strictEqual(done.body.data.delivery.status, 'delivered');
+    assert.strictEqual((await orderRow(order.id)).fulfillment_status, 'delivered', 'the order is delivered in iam.orders');
+    assert.ok((await db().from('deliveries').select('delivered_at').eq('id', deliveryId).single()).data.delivered_at, 'delivered_at is stamped');
+    assert.strictEqual((await api('POST', completePath, cast.rider, { code })).status, 409, 'completing twice is refused');
+    assert.notStrictEqual((await api('GET', '/' + deliveryId + '/code', cast.buyer)).status, 200, 'the code is no longer served once delivered');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
