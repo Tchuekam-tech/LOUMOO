@@ -256,6 +256,22 @@ async function run() {
     assert.strictEqual((await api('GET', '/driver/me', cast.stranger)).status, 403, 'a non-rider has no rider overview');
     console.log('    ✓ Riders: registration rules, foreign key, listing and the rider overview guard.');
 
+    // ----------------------------------------------------------------- create
+    console.log('  Creating a delivery...');
+    const order = await placeOrder(cast);
+    assert.strictEqual((await api('POST', '/', cast.seller, {})).status, 400, 'orderId is required');
+    assert.strictEqual((await api('POST', '/', cast.seller, { orderId: order.id, buyerId: cast.stranger.id })).status, 400, 'a privileged field is refused');
+    assert.strictEqual((await api('POST', '/', cast.seller, { orderId: order.id, status: 'delivered' })).status, 400, 'a status cannot be injected');
+    assert.strictEqual((await api('POST', '/', cast.seller, { orderId: order.id, dropoffLocation: { lat: 95, lng: 0 } })).status, 400, 'a latitude out of range is refused');
+    assert.strictEqual((await api('POST', '/', cast.seller, { orderId: 'ord_does_not_exist' })).status, 404, 'an unknown order is a 404');
+    assert.strictEqual((await api('POST', '/', cast.stranger, { orderId: order.id })).status, 404, 'a stranger gets 404, not 403');
+    assert.strictEqual((await api('POST', '/', cast.rival, { orderId: order.id })).status, 404, 'a seller of another store gets 404');
+    assert.strictEqual((await api('POST', '/', cast.buyer, { orderId: order.id })).status, 404, 'the buyer cannot create it either');
+
+    const pickupOrder = await placeOrder(cast, { deliveryMethod: 'STORE_PICKUP' });
+    const pickupTry = await api('POST', '/', cast.seller, { orderId: pickupOrder.id });
+    assert.strictEqual(pickupTry.status, 409, 'a store-pickup order never gets a delivery');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
