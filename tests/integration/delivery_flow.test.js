@@ -210,6 +210,17 @@ async function run() {
     assert.ok(prune.error && /at least 1/.test(prune.error.message), 'prune_driver_locations rejects a retention below one day');
     console.log('    ✓ Tables and the retention function are reachable.');
 
+    // --------------------------------------------------------- authentication
+    console.log('  Checking the real session guard...');
+    const forged = { token: 'not.a.real.session' };
+    for (const [method, path] of [['GET', '/drivers'], ['GET', '/driver/me'], ['GET', '/dlv_x'], ['POST', '/'], ['POST', '/dlv_x/location'], ['GET', '/dlv_x/stream']]) {
+      const anonymous = await api(method, path, null, method === 'POST' ? {} : undefined);
+      assert.strictEqual(anonymous.status, 401, `${method} ${path} needs a session`);
+      const bogus = await api(method, path, forged, method === 'POST' ? {} : undefined);
+      assert.strictEqual(bogus.status, 401, `${method} ${path} rejects a forged token`);
+    }
+    console.log('    ✓ Anonymous and forged callers are refused on every kind of route.');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
