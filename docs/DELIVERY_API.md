@@ -152,7 +152,7 @@ Only the **assigned, active** rider may call these (`403` for other participants
 ### Admin
 | Method & path | Purpose |
 |---|---|
-| `POST /drivers/:profileId` `{ name, phone, status?: 'active' \| 'suspended' }` | Register, update or suspend a rider. Suspending returns their un-started deliveries (`assigned`/`accepted`) to `pending_assignment`; ones already collected need `resolve`. |
+| `POST /drivers/:profileId` `{ name, phone, status?: 'active' \| 'suspended' }` | Register, update or suspend a rider. **An omitted `status` leaves an existing rider's status unchanged** (a new rider starts `active`), so editing a name never reactivates someone who was suspended; reactivating needs an explicit `"active"`. Suspending returns their un-started deliveries (`assigned`/`accepted`) to `pending_assignment`; ones already collected need `resolve`. |
 | `POST /:id/resolve` `{ action: 'unlock' \| 'fail', note? }` | `unlock`: a delivery locked by wrong codes gets a new code and a fresh budget. `fail`: mark a `picked_up`/`arrived` delivery failed (note required) so another rider can be assigned. |
 | `POST /:id/reconcile` | Re-apply the order status implied by the delivery. Idempotent. |
 
