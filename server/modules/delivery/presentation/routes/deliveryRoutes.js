@@ -310,6 +310,11 @@ function createDeliveryRouter({
     ok(res, { delivery: await svc().assignDriver(req.params.id, driverId, callerOf(req)) });
   }));
 
+  // No body: the server chooses the rider. A body, if sent, is ignored (as for accept/decline).
+  router.post('/:id/auto-assign', authenticate, route(async (req, res) => {
+    ok(res, { delivery: await svc().autoAssignDriver(req.params.id, callerOf(req)) });
+  }));
+
   router.post('/:id/cancel', authenticate, route(async (req, res) => {
     const { reason } = parseBody(schemas.CancelDeliverySchema, req.body, 'cancellation');
     ok(res, { delivery: await svc().cancelDelivery(req.params.id, reason, callerOf(req)) }, { message: 'Delivery cancelled.' });
