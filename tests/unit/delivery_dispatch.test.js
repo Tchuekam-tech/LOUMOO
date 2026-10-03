@@ -645,6 +645,35 @@ async function run() {
       assert.strictEqual(await code(w.service.acceptDelivery(id, RIDER)), 'OK', 'a new offer to a rider whose last one lapsed works');
     }
 
+    {
+      // A seller delivering their own parcel, or an admin acting as a rider, is a participant who
+      // is no longer the holder after the release: still "too late", not a bare 403.
+      const w = makeWorld();
+      await registerRiders(w);
+      await w.service.registerDriver('seller_1', { name: 'Shop Owner', phone: '+237600000050' }, ADMIN);
+      await w.service.registerDriver('admin_1', { name: 'Admin Rider', phone: '+237600000051' }, ADMIN);
+
+      const own = await newDelivery(w, { assignTo: 'seller_1' });
+      const adminJob = await newDelivery(w, { assignTo: 'admin_1' });
+      w.clock.advance(OFFER_TTL_MS + 5000);
+      assert.deepStrictEqual(await w.service.expireStaleOffers(), { expired: 2 });
+      assert.strictEqual(await code(w.service.acceptDelivery(own.id, SELLER)), 'OFFER_EXPIRED', 'the seller who was offered their own parcel');
+      assert.strictEqual(await code(w.service.acceptDelivery(adminJob.id, ADMIN)), 'OFFER_EXPIRED', 'the admin who was offered a delivery');
+
+      // Only the lapse earns it. A seller never offered this delivery is still told it is not theirs...
+      const other = await newDelivery(w, { assignTo: 'rider_1' });
+      assert.strictEqual(await code(w.service.acceptDelivery(other.id, SELLER)), 'PERMISSION_DENIED', 'never offered: 403, as before');
+      // ...and so is one whose latest hand-back was a decline, not a lapse.
+      await w.service.assignDriver(own.id, 'seller_1', SELLER);
+      await w.service.declineDelivery(own.id, SELLER);
+      assert.strictEqual(await code(w.service.acceptDelivery(own.id, SELLER)), 'PERMISSION_DENIED', 'after their own decline: 403');
+      // A fresh offer after a lapse is theirs and works.
+      await w.service.assignDriver(own.id, 'seller_1', SELLER);
+      assert.strictEqual(await code(w.service.acceptDelivery(own.id, SELLER)), 'OK', 'a new offer to the same seller can be accepted');
+      // The buyer, a participant without the role, is never told "expired".
+      assert.strictEqual(await code(w.service.acceptDelivery(adminJob.id, BUYER)), 'PERMISSION_DENIED', 'the buyer gets the plain refusal');
+    }
+
     // ------------------------------- a rider who never answers does not win every offer
     {
       const w = makeWorld();
