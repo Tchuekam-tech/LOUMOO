@@ -313,3 +313,32 @@
     }
   }
 
+  // --------------------------------------------------------------- map
+  function loadMapLibre() {
+    return new Promise(function (resolve, reject) {
+      if (window.maplibregl) return resolve(window.maplibregl);
+      if (!document.getElementById('loumoo-dt-maplibre-css')) {
+        var link = document.createElement('link');
+        link.id = 'loumoo-dt-maplibre-css'; link.rel = 'stylesheet'; link.href = MAPLIBRE_CSS;
+        document.head.appendChild(link);
+      }
+      var existing = document.getElementById('loumoo-dt-maplibre-js');
+      if (existing) {
+        existing.addEventListener('load', function () { window.maplibregl ? resolve(window.maplibregl) : reject(new Error('maplibre missing')); });
+        existing.addEventListener('error', function () { reject(new Error('maplibre failed')); });
+        return;
+      }
+      var s = document.createElement('script');
+      s.id = 'loumoo-dt-maplibre-js'; s.src = MAPLIBRE_JS; s.async = true;
+      s.onload = function () { window.maplibregl ? resolve(window.maplibregl) : reject(new Error('maplibre missing')); };
+      s.onerror = function () { reject(new Error('maplibre failed to load')); };
+      document.head.appendChild(s);
+    });
+  }
+
+  function markerEl(color) {
+    var el = document.createElement('div');
+    el.style.cssText = 'width:16px;height:16px;border-radius:50%;background:' + color + ';border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)';
+    return el;
+  }
+
