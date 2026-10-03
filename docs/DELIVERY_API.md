@@ -80,14 +80,29 @@ When an offer lapses with no answer:
 Only `assigned` expires. Once the rider has `accepted` the job never times out.
 Re-assigning (to anyone) starts a fresh window.
 
-Expiry is applied in two ways so every deployment behaves the same:
-1. a background sweeper, once a minute, on long-lived runtimes (Railway);
-2. **lazily**, when the stale delivery is read or acted on (`GET /:id`,
-   `GET /by-order/:orderId`, `GET /driver/me`, `POST /:id/accept`, the live stream
-   snapshot). Serverless runtimes (Netlify, Vercel) cannot run the sweeper and rely
-   on this alone.
+Expiry is applied in two ways:
+1. a background sweeper, once a minute, on long-lived runtimes (Railway). The seller
+   is told within about a minute of the deadline;
+2. **lazily**, when something touches the stale delivery or ranks the riders: `GET /:id`
+   and the other participant-scoped reads and actions, `GET /by-order/:orderId`,
+   `GET /driver/me`, the live stream's snapshot and access checks, `POST /:id/accept`,
+   and `GET /drivers` / `POST /:id/auto-assign` (which release every lapsed offer
+   before ranking riders, so a dead offer never counts as a rider's work).
 
-`POST /:id/accept` on a lapsed offer answers `409 OFFER_EXPIRED` (and releases it).
+Serverless runtimes (Netlify, Vercel) cannot run the sweeper and rely on the lazy
+path alone. **There the seller is told only when something touches the delivery or
+lists riders**: an offer nobody reads or ranks around stays `assigned`, and the
+seller hears nothing, until then. Lapsed offers are never *honoured* in the
+meantime (accept is refused, ranking ignores them), but they are not announced
+either. Run the API on a long-lived process if prompt notification matters.
+
+**Late accept.** `POST /:id/accept` on a lapsed offer answers `409 OFFER_EXPIRED`
+and releases it, whether the sweeper (or a read) already released it or not: a rider
+whose own latest hand-back of the delivery was a lapse always gets the 409, never a
+404. A rider who *declined* or *released* it, or was never offered it, gets `404`.
+Until a lapsed offer is released, `POST /:id/status` and `/location` on it answer
+`409` (an illegal transition), not `404`.
+
 Clients should show the countdown from `offerExpiresAt` (see the Delivery object)
 but never decide expiry themselves: the server's clock is the only one that counts.
 
