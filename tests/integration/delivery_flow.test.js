@@ -321,6 +321,22 @@ async function run() {
     assert.strictEqual((await db().from('deliveries').select('status').eq('id', deliveryId).single()).data.status, 'pending_assignment', 'and the delivery is unchanged');
     console.log('    ✓ Creation: guards, rows, the one-open-delivery index under a race, and RLS.');
 
+    // ------------------------------------------------------------------ reads
+    console.log('  Reading deliveries as each participant...');
+    assert.strictEqual((await api('GET', '/' + deliveryId, cast.stranger)).status, 404, 'a stranger gets 404');
+    assert.strictEqual((await api('GET', '/' + deliveryId, cast.rival)).status, 404, 'so does another seller');
+    assert.strictEqual((await api('GET', '/dlv_does_not_exist', cast.buyer)).status, 404, 'an unknown id is a 404');
+    const buyerView = await api('GET', '/' + deliveryId, cast.buyer);
+    assert.strictEqual(buyerView.status, 200);
+    assert.strictEqual(buyerView.body.data.delivery.viewerRole, 'buyer');
+    assert.strictEqual(buyerView.body.data.delivery.driver, null, 'no rider is shown before one is assigned');
+    assert.strictEqual((await api('GET', '/' + deliveryId, cast.seller)).body.data.delivery.viewerRole, 'seller');
+    assert.strictEqual((await api('GET', '/' + deliveryId, cast.admin)).body.data.delivery.viewerRole, 'admin');
+
+    assert.strictEqual((await api('GET', '/by-order/' + order.id, cast.buyer)).body.data.delivery.id, deliveryId, 'lookup by order id');
+    assert.strictEqual((await api('GET', '/by-order/' + order.orderNumber, cast.seller)).body.data.delivery.id, deliveryId, 'lookup by order number');
+    assert.strictEqual((await api('GET', '/by-order/' + order.id, cast.stranger)).status, 404, 'a stranger cannot look an order up');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
