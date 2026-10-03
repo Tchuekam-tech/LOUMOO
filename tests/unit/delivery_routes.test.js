@@ -629,6 +629,20 @@ async function main() {
       router.closeAllStreams(); // idempotent with nothing open
     }
 
+    // Validation details are bounded and flat.
+    {
+      const junk = Object.fromEntries(Array.from({ length: 60 }, (_, i) => [`junk${i}`, i]));
+      const res = await api('POST', '/', SELLER, { orderId: 'x', ...junk });
+      assert.strictEqual(res.status, 400);
+      const details = res.body.error.details;
+      assert.ok(Array.isArray(details) && details.length <= 5, `details are capped (${details && details.length})`);
+      for (const d of details) {
+        assert.deepStrictEqual(Object.keys(d).sort(), ['field', 'message']);
+        assert.ok(String(d.message).length <= 200);
+      }
+      assert.ok(JSON.stringify(res.body).length < 2000, 'the error body stays small whatever the client sent');
+    }
+
     // Every stream has been released.
     for (const st of openStreams) closeStream(st);
     await waitFor(() => router.openStreamCount() === 0 && shortLivedRouter.openStreamCount() === 0, 'all streams to be released', 4000);
