@@ -1,7 +1,7 @@
 /**
  * LOUMOO — Delivery repository queries
  * ---------------------------------------------------------------------------
- * The read queries behind offer expiry and rider workload, driven through a
+ * The two read queries behind offer expiry and rider workload, driven through a
  * stand-in for the Supabase query builder over plain rows. This proves the
  * filters, ordering, limits and column mapping the repository asks for, and that
  * the in-memory backend answers identically. It does NOT prove PostgREST
@@ -13,6 +13,7 @@ require('../setup');
 const assert = require('assert');
 const logger = require('../../server/shared/logging/logger');
 const { DeliveryRepository } = require('../../server/modules/delivery/infrastructure/DeliveryRepository');
+const { WORKLOAD_STATUSES } = require('../../server/modules/delivery/domain/Delivery');
 
 /**
  * Minimal Supabase query-builder stand-in. Mirrors SQL where it matters here:
@@ -126,7 +127,58 @@ async function run() {
     }
   }
 
-  console.log('    ✓ Delivery repository: the stale-offer query holds, memory and database paths agree.');
+  // ----------------------------------------------------------- countOpenByDriver
+  {
+    const rows = [
+      row('1', 'assigned', 't', 'rider_1'),
+      row('2', 'accepted', 't', 'rider_1'),
+      row('3', 'picked_up', 't', 'rider_2'),
+      row('4', 'arrived', 't', 'rider_2'),
+      row('5', 'failed', 't', 'rider_2'),
+      row('6', 'delivered', 't', 'rider_1'),
+      row('7', 'cancelled', 't', 'rider_3'),
+      row('8', 'pending_assignment', null, null)
+    ];
+    const db = stubDb(rows);
+    const repo = new DeliveryRepository({ db });
+    const expected = [['rider_1', 2], ['rider_2', 2]];
+
+    const counts = await repo.countOpenByDriver();
+    assert.deepStrictEqual([...counts.entries()].sort(), expected,
+      'assigned/accepted/picked_up/arrived count; failed, delivered, cancelled and unassigned do not');
+    assert.strictEqual(counts.get('rider_3'), undefined, 'a rider with nothing open is absent, not 0');
+    const inCall = db.calls.find(([op, col]) => op === 'in' && col === 'status');
+    assert.ok(inCall, 'it filters by status');
+    assert.deepStrictEqual([...inCall[2]].sort(), [...WORKLOAD_STATUSES].sort(), 'with exactly the workload statuses');
+    assert.ok(db.calls.some(([op, col]) => op === 'select' && col === 'driver_id'), 'it reads only driver_id, not whole rows');
+
+    const memory = new DeliveryRepository({ db: null });
+    for (const r of rows) {
+      await memory.insertDelivery({
+        id: r.id, orderId: r.order_id, buyerId: 'b', sellerId: 's', driverId: r.driver_id, status: r.status,
+        pickup: {}, dropoff: {}, createdAt: 't', updatedAt: 't'
+      });
+    }
+    assert.deepStrictEqual([...(await memory.countOpenByDriver()).entries()].sort(), expected, 'memory matches the database path');
+
+    // The row cap is loud, not silent.
+    const many = Array.from({ length: 5000 }, (_, i) => row(`m${i}`, 'assigned', 't', 'rider_9'));
+    const warnings = [];
+    const originalWarn = logger.warn;
+    logger.warn = (m) => warnings.push(String(m));
+    try {
+      const capped = await new DeliveryRepository({ db: stubDb(many) }).countOpenByDriver();
+      assert.strictEqual(capped.get('rider_9'), 5000);
+      assert.ok(warnings.some((w) => /cap/.test(w)), 'hitting the row cap is logged');
+      warnings.length = 0;
+      await repo.countOpenByDriver();
+      assert.strictEqual(warnings.length, 0, 'a normal count logs nothing');
+    } finally {
+      logger.warn = originalWarn;
+    }
+  }
+
+  console.log('    ✓ Delivery repository: stale-offer and workload queries hold, memory and database paths agree.');
 }
 
 module.exports = { run };
