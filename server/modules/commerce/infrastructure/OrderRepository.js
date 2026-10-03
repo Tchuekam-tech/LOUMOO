@@ -447,7 +447,10 @@ class OrderRepository {
    * @returns {Promise<Order>}
    */
   async updateFulfillmentStatusAtomic(orderId, expectedCurrentStatus, nextStatus, { note = '', updatedBy = 'system' } = {}) {
-    const existing = await this.findOrderById(orderId);
+    // Compare against the database, not a cached copy: a stale cache would turn a
+    // legitimate transition into a spurious "concurrency conflict" (or let one
+    // through that the conditional UPDATE below would then reject).
+    const existing = await this.findOrderByIdFresh(orderId);
     if (!existing) {
       throw new NotFoundError('Order not found');
     }
