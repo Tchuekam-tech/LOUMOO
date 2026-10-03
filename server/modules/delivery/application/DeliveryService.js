@@ -96,6 +96,7 @@ class DeliveryService {
     this.orders = orderRepository || new OrderRepository();
     this.events = events || deliveryEvents;
     this.now = typeof now === 'function' ? now : () => Date.now();
+    this._serialQueue = Promise.resolve(); // see _serialised()
     this.offerTtlMs = typeof offerTtlMs === 'number'
       ? offerTtlMsFrom(offerTtlMs / 60000)
       : offerTtlMsFrom(process.env.DELIVERY_OFFER_TTL_MINUTES);
@@ -523,13 +524,27 @@ class DeliveryService {
     DeliveryStateMachine.assertCanAssign(delivery.status);
     await this._assertOrderNotCancelled(delivery);
 
-    const [ranked, passed] = await Promise.all([this._rankedActiveRiders({ release: false }), this._ridersWhoPassed(delivery.id)]);
-    const pick = ranked.find(({ driver }) => driver.id !== delivery.buyerId
-      && !passed.has(driver.id)
-      && !(delivery.status === S.ASSIGNED && driver.id === delivery.driverId));
-    if (!pick) throw new NoRiderAvailableError();
+    // Rank and assign as ONE step, one at a time per process. Ranking reads each
+    // rider's workload and the assignment is what changes it, so concurrent calls
+    // (a bulk "assign all", two tabs) would all read the same zeros and offer every
+    // delivery to the same rider. Serialised, each sees the previous one's offer.
+    // Best effort across several API instances, which do not share this queue.
+    return this._serialised(async () => {
+      const [ranked, passed] = await Promise.all([this._rankedActiveRiders({ release: false }), this._ridersWhoPassed(delivery.id)]);
+      const pick = ranked.find(({ driver }) => driver.id !== delivery.buyerId
+        && !passed.has(driver.id)
+        && !(delivery.status === S.ASSIGNED && driver.id === delivery.driverId));
+      if (!pick) throw new NoRiderAvailableError();
 
-    return this._applyAssignment(delivery, pick.driver, caller, role, `Auto-assigned to ${pick.driver.name}`);
+      return this._applyAssignment(delivery, pick.driver, caller, role, `Auto-assigned to ${pick.driver.name}`);
+    });
+  }
+
+  /** Runs `task` once every earlier serialised task has finished, whatever its outcome. */
+  _serialised(task) {
+    const result = this._serialQueue.then(task);
+    this._serialQueue = result.then(() => {}, () => {});
+    return result;
   }
 
   /** What the rider is told with a new offer: how long they have, when there is a limit. */
