@@ -569,8 +569,36 @@ class DeliveryService {
 
   // ------------------------------------------------------------ rider actions
 
+  /**
+   * True when `callerInput`'s most recent hand-back of this delivery was an offer
+   * that lapsed on them (rather than a decline or a release). Read from the
+   * timeline, whose lapse row names the rider as its actor.
+   */
+  async _offerLapsedFor(deliveryId, callerInput) {
+    const caller = this._caller(callerInput);
+    let last = null;
+    for (const e of await this.repo.listEvents(deliveryId)) {
+      const handedBack = e.status === S.PENDING_ASSIGNMENT
+        && (e.previousStatus === S.ASSIGNED || e.previousStatus === S.ACCEPTED);
+      if (handedBack && e.actorId === caller.userId) last = e;
+    }
+    return Boolean(last) && last.note === OFFER_EXPIRED_NOTE;
+  }
+
   async acceptDelivery(deliveryId, callerInput) {
-    const { caller, delivery, driver } = await this._requireAssignedRider(deliveryId, callerInput);
+    let ctx;
+    try {
+      ctx = await this._requireAssignedRider(deliveryId, callerInput);
+    } catch (err) {
+      // The sweeper (or any read) may already have released a lapsed offer by the
+      // time the rider taps Accept, which makes them a stranger to the delivery
+      // (404). Tell them it was too late, as for a lapse not yet released.
+      if (err instanceof NotFoundError && await this._offerLapsedFor(deliveryId, callerInput)) {
+        throw new OfferExpiredError();
+      }
+      throw err;
+    }
+    const { caller, delivery, driver } = ctx;
     DeliveryStateMachine.assertTransition(delivery.status, S.ACCEPTED);
     if (isOfferLapsed(delivery, this.offerTtlMs, this.now())) {
       // Too late: hand it back to the seller now (best effort) and say why. The

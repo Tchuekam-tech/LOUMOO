@@ -141,7 +141,7 @@ async function run() {
       assert.strictEqual(notifications.length - before, 2, 'and nobody else');
 
       assert.strictEqual(await code(w.service.getDelivery(id, RIDER)), 'NOT_FOUND', 'the rider has lost access, as after a decline');
-      assert.strictEqual(await code(w.service.acceptDelivery(id, RIDER)), 'NOT_FOUND', 'a second accept is a 404: they no longer hold it');
+      assert.strictEqual(await code(w.service.acceptDelivery(id, RIDER)), 'OFFER_EXPIRED', 'a second accept is still "too late", not "not found": the lapse released it but it was theirs');
       assert.deepStrictEqual((await w.service.getRiderOverview(RIDER)).deliveries, [], 'it is gone from their job list');
       assert.strictEqual(sentTo('seller_1', 'A rider did not respond').length, 1, 'nothing fires twice');
     }
@@ -306,7 +306,7 @@ async function run() {
       assert.strictEqual(reassigned.status, 'assigned');
       assert.strictEqual(reassigned.driver.id, 'rider_2', 'the seller can offer it to someone else');
       assert.strictEqual(await code(w.service.acceptDelivery(id, RIDER2)), 'OK');
-      assert.strictEqual(await code(w.service.acceptDelivery(id, RIDER)), 'NOT_FOUND', 'the first rider cannot sneak back in');
+      assert.strictEqual(await code(w.service.acceptDelivery(id, RIDER)), 'OFFER_EXPIRED', 'the first rider cannot sneak back in, and is told why');
     }
 
     // ------------------------------------------------- the live stream hears of it
