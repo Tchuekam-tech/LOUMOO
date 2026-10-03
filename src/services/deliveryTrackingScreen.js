@@ -137,3 +137,23 @@
     return root;
   }
 
+  function q(sel) { return state.root ? state.root.querySelector(sel) : null; }
+
+  // --------------------------------------------------------------- lifecycle
+  function open(opts) {
+    opts = opts || {};
+    var orderId = opts.orderId || opts.order || null;
+    var deliveryId = opts.deliveryId || opts.id || null;
+    if (!orderId && !deliveryId) { console.warn('[DeliveryTracking] open() needs orderId or deliveryId'); return; }
+    if (state.mounted) close();
+
+    injectStyles();
+    state.root = buildOverlay(opts.subtitle);
+    document.body.appendChild(state.root);
+    state.mounted = true;
+    try { document.body.style.overflow = 'hidden'; } catch (e) {}
+
+    // load() and map init are added in the next commits.
+    if (typeof load === 'function') load(orderId, deliveryId);
+  }
+
