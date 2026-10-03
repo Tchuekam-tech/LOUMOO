@@ -442,3 +442,24 @@
     } catch (e) { /* ignore; the live feed keeps trying */ }
   }
 
+  // --------------------------------------------------------------- triggers
+  // Any element with [data-track-delivery] opens the overlay when clicked, using
+  // its data-order-id / data-delivery-id. This needs no DC event binding, so a
+  // screen template can add a plain button without touching the app root:
+  //   <button data-track-delivery data-order-id="{{ currentOrder.id }}">Track delivery</button>
+  function onDocClick(e) {
+    var trigger = e.target && e.target.closest ? e.target.closest('[data-track-delivery]') : null;
+    if (!trigger) return;
+    e.preventDefault();
+    open({
+      orderId: trigger.getAttribute('data-order-id') || null,
+      deliveryId: trigger.getAttribute('data-delivery-id') || null
+    });
+  }
+  document.addEventListener('click', onDocClick);
+
+  // Close on Escape, for parity with a back gesture.
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && state.mounted) close(); });
+
+  window.LoumooDeliveryTracking = { open: open, close: close, _state: state };
+})();
