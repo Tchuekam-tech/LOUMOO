@@ -916,7 +916,7 @@ class DeliveryService {
     if (!orderId) throw new ValidationError('Order ID is required.');
     // Resolve an order number or id to the real order id first.
     const order = await this.orders.findOrderById(orderId);
-    const delivery = order ? await this.repo.findByOrder(order.id) : null;
+    const delivery = await this._releaseIfLapsed(order ? await this.repo.findByOrder(order.id) : null);
     const role = delivery ? this._participantRole(delivery, caller) : null;
     if (!delivery || !role) throw new NotFoundError('Delivery');
     return this._present(delivery, role);
