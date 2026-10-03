@@ -166,3 +166,22 @@ DROP POLICY IF EXISTS "Service role full access to driver_locations" ON iam.driv
 CREATE POLICY "Service role full access to driver_locations"
     ON iam.driver_locations FOR ALL TO service_role
     USING (true) WITH CHECK (true);
+
+-- 6. Privileges for the service role ---------------------------------------------
+-- RLS above restricts these tables to the service role, but a policy is NOT a
+-- GRANT. Supabase auto-grants table privileges to the API roles when a table is
+-- created, yet the BIGSERIAL sequences in this (non-public) schema are missed,
+-- so INSERT into delivery_events / driver_locations fails with SQLSTATE 42501
+-- ("permission denied for sequence") because nextval() needs USAGE. Grant the
+-- table and sequence privileges explicitly. Idempotent: GRANT is repeatable, and
+-- pg_get_serial_sequence resolves the sequence name however it was created.
+GRANT ALL ON iam.delivery_drivers, iam.deliveries, iam.delivery_events, iam.driver_locations
+    TO service_role;
+
+DO $$
+BEGIN
+    EXECUTE 'GRANT USAGE, SELECT ON SEQUENCE '
+        || pg_get_serial_sequence('iam.delivery_events', 'id') || ' TO service_role';
+    EXECUTE 'GRANT USAGE, SELECT ON SEQUENCE '
+        || pg_get_serial_sequence('iam.driver_locations', 'id') || ' TO service_role';
+END $$;
