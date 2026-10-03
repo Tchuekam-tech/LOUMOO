@@ -19,11 +19,15 @@
 
 const { SupabaseDatabase, handleDatabaseFailure } = require('../../../infrastructure/database/SupabaseClient');
 const { ConflictError, NotFoundError, ValidationError } = require('../../../shared/errors/AppError');
-const { DELIVERY_STATUS, TERMINAL_STATUSES, DRIVER_STATUS } = require('../domain/Delivery');
+const logger = require('../../../shared/logging/logger');
+const { DELIVERY_STATUS, TERMINAL_STATUSES, WORKLOAD_STATUSES, DRIVER_STATUS } = require('../domain/Delivery');
 
 const PG_UNIQUE_VIOLATION = '23505';
 const PG_FOREIGN_KEY_VIOLATION = '23503';
 const MAX_MEMORY_LOCATIONS_PER_DELIVERY = 500;
+// Hard cap on the rows read to count rider workload; far above any realistic number of
+// simultaneously open deliveries, and logged loudly if it is ever reached.
+const MAX_WORKLOAD_ROWS = 5000;
 
 // camelCase record key -> column name, for both reads and writes.
 const DELIVERY_COLUMNS = Object.freeze({
@@ -90,6 +94,13 @@ function driverFromRow(row) {
 
 function isOpen(status) {
   return !TERMINAL_STATUSES.includes(status);
+}
+
+/** `Map<value, occurrences>` of a list of ids. */
+function tally(ids) {
+  const counts = new Map();
+  for (const id of ids) counts.set(id, (counts.get(id) || 0) + 1);
+  return counts;
 }
 
 class DeliveryRepository {
@@ -257,6 +268,34 @@ class DeliveryRepository {
       .sort((a, b) => Date.parse(a.assignedAt) - Date.parse(b.assignedAt))
       .slice(0, limit)
       .map((d) => ({ ...d }));
+  }
+
+  /**
+   * How many deliveries each rider is carrying right now (assigned, accepted,
+   * picked up or arrived), as `Map<driverId, count>`. Riders with none are absent.
+   */
+  async countOpenByDriver() {
+    const db = this.db;
+    if (db) {
+      try {
+        const { data, error } = await db.from('deliveries').select('driver_id')
+          .in('status', [...WORKLOAD_STATUSES])
+          .not('driver_id', 'is', null)
+          .limit(MAX_WORKLOAD_ROWS);
+        if (error) handleDatabaseFailure(error, 'DeliveryRepository.countOpenByDriver');
+        else {
+          if ((data || []).length >= MAX_WORKLOAD_ROWS) {
+            logger.warn(`[DeliveryRepository] Workload count hit its ${MAX_WORKLOAD_ROWS}-row cap; rider counts may be low.`);
+          }
+          return tally((data || []).map((r) => r.driver_id));
+        }
+      } catch (err) {
+        handleDatabaseFailure(err, 'DeliveryRepository.countOpenByDriver');
+      }
+    }
+    return tally([...this._deliveries.values()]
+      .filter((d) => d.driverId && WORKLOAD_STATUSES.includes(d.status))
+      .map((d) => d.driverId));
   }
 
   /**
