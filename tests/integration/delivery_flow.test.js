@@ -396,7 +396,7 @@ async function run() {
 
     // ----------------------------------------------------------------- assign
     console.log('  Assigning a rider...');
-    assert.strictEqual((await api('POST', '/' + deliveryId + '/assign', cast.buyer, { driverId: cast.rider.id })).status, 404, 'the buyer cannot assign a rider');
+    assert.strictEqual((await api('POST', '/' + deliveryId + '/assign', cast.buyer, { driverId: cast.rider.id })).status, 403, 'the buyer is a participant but cannot assign a rider');
     assert.strictEqual((await api('POST', '/' + deliveryId + '/assign', cast.rival, { driverId: cast.rider.id })).status, 404, 'another seller cannot either');
     assert.strictEqual((await api('POST', '/' + deliveryId + '/assign', cast.seller, {})).status, 400, 'driverId is required');
     assert.strictEqual((await api('POST', '/' + deliveryId + '/assign', cast.seller, { driverId: cast.rider.id, status: 'delivered' })).status, 400, 'no status injection');
