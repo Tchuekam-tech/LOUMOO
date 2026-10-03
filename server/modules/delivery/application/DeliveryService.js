@@ -1136,21 +1136,42 @@ class DeliveryService {
   }
 
   /**
-   * Active riders with how many deliveries each is carrying, least busy first,
-   * then by name, then by id (so ties break the same way every time).
+   * Returns lapsed offers to their sellers before riders are ranked. A dead offer
+   * still sits in `assigned` and would count as work for a rider who never
+   * answered, and (with no sweeper, i.e. serverless) nothing else may touch it for
+   * a long time. Best effort: ranking must work even if this fails.
+   */
+  async _releaseLapsedOffers() {
+    try {
+      await this.expireStaleOffers({ limit: 50 });
+    } catch (err) {
+      logger.warn(`[Delivery] Could not release lapsed offers before ranking riders: ${err.message}`);
+    }
+  }
+
+  /**
+   * Active riders with how many deliveries each is carrying. Order: riders who did
+   * NOT let an offer lapse in the last hour (RECENT_LAPSE_WINDOW_MS) first, then
+   * the least busy, then by name, then by id (so ties break the same way every
+   * time). The lapse rule keeps a rider who never answers from taking the first
+   * offer of every delivery just because their lapsed jobs left them at zero.
    */
   async _rankedActiveRiders() {
-    const [drivers, load] = await Promise.all([
+    await this._releaseLapsedOffers();
+    const since = new Date(this.now() - RECENT_LAPSE_WINDOW_MS).toISOString();
+    const [drivers, load, lapses] = await Promise.all([
       this.repo.listDrivers({ status: DRIVER_STATUS.ACTIVE, limit: MAX_RIDERS_CONSIDERED }),
-      this.repo.countOpenByDriver()
+      this.repo.countOpenByDriver(),
+      this.repo.countRecentLapses(since)
     ]);
     if (drivers.length >= MAX_RIDERS_CONSIDERED) {
       logger.warn(`[Delivery] Rider list hit its ${MAX_RIDERS_CONSIDERED}-row cap; riders beyond it are not offered.`);
     }
     const byText = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
     return drivers
-      .map((driver) => ({ driver, openDeliveries: load.get(driver.id) || 0 }))
-      .sort((a, b) => a.openDeliveries - b.openDeliveries
+      .map((driver) => ({ driver, openDeliveries: load.get(driver.id) || 0, recentlyLapsed: (lapses.get(driver.id) || 0) > 0 }))
+      .sort((a, b) => Number(a.recentlyLapsed) - Number(b.recentlyLapsed)
+        || a.openDeliveries - b.openDeliveries
         || String(a.driver.name || '').localeCompare(String(b.driver.name || ''), 'en')
         || byText(a.driver.id, b.driver.id));
   }
