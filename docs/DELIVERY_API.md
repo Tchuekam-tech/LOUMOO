@@ -98,10 +98,16 @@ either. Run the API on a long-lived process if prompt notification matters.
 
 **Late accept.** `POST /:id/accept` on a lapsed offer answers `409 OFFER_EXPIRED`
 and releases it, whether the sweeper (or a read) already released it or not: a rider
-whose own latest hand-back of the delivery was a lapse always gets the 409, never a
-404. A rider who *declined* or *released* it, or was never offered it, gets `404`.
-Until a lapsed offer is released, `POST /:id/status` and `/location` on it answer
-`409` (an illegal transition), not `404`.
+whose own latest hand-back of the delivery was a lapse gets the 409, not a 404, and
+so does a seller or admin delivering the parcel themselves (otherwise a bare `403`).
+A rider who *declined* or *released* it, or was never offered it, gets `404` (`403`
+for a seller/admin who was not offered it). The 409 after a release depends on the
+timeline row the lapse writes: that write is retried once, but if it is lost anyway,
+or is still in flight during the few milliseconds after a concurrent release, the
+answer is the plain `404`/`403`. Until a lapsed offer is released, `POST /:id/status`
+and `/location` on it answer `409` (an illegal transition), not `404`. If releasing
+fails (the database is unhealthy), reads still succeed and show the offer as it is,
+with a deadline in the past; accept still refuses it.
 
 Clients should show the countdown from `offerExpiresAt` (see the Delivery object)
 but never decide expiry themselves: the server's clock is the only one that counts.
@@ -333,7 +339,8 @@ streaming unsupported on this deployment.
     record, only account *deletion* has a hook) returns to zero load after each
     lapse and would be offered the first slot of every new delivery. The penalty
     fades on its own; a decline does not trigger it; a seller can still pick the
-    rider by hand. The proper fix is to suspend the rider record when their
+    rider by hand. The penalty is read from the same timeline row as `declined`
+    (written best-effort, retried once), so a lost row means it is not applied. The proper fix is to suspend the rider record when their
     account is suspended; this does not replace it.
 11. **Rider workload is shared across sellers, on purpose.** Riders are a pool an
     admin registers, not per-seller staff, so `openDeliveries` counts a rider's
