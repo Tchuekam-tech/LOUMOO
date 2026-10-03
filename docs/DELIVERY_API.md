@@ -249,3 +249,18 @@ rate limit, see decision 7) · `501` live streaming unsupported on this deployme
    deliveries are **not** handled yet.
 6. **GPS history** (`driver_locations`) grows with every stored ping; run
    `SELECT iam.prune_driver_locations(30);` periodically.
+7. **Rate limiting is shared, and delivery adds load to it. This needs a decision.**
+   Reading `RateLimitService` and `server/index.js`: `/api` is limited to 120
+   requests/min per client IP **and** 120/min per *immediate peer* (the ingress
+   proxy), checked first. Behind a single ingress (Railway) that second bucket is
+   effectively **one 120/min budget for every user of the whole API**. Delivery adds
+   6–12 calls/min per active rider (pings) and, if the stream is unavailable, 6–12
+   per polling buyer. A handful of simultaneous deliveries can exhaust the shared
+   budget and make *unrelated* endpoints answer `429`. This was not measured in
+   production. Options: raise `peerMaxRequests` for `/api`, exempt delivery pings
+   from the peer bucket, or add a per-user limiter. **Not changed here** because it
+   alters platform-wide abuse protection. Until then the client must treat a `429`
+   on a ping as "skip this one" (the next carries fresh state).
+8. **The order is read fresh from the database** for every delivery decision
+   (`OrderRepository.findOrderByIdFresh`): the ordinary read serves a per-instance
+   cache that is never refreshed.
