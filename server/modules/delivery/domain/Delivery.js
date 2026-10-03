@@ -62,6 +62,12 @@ const MAX_HANDOVER_ATTEMPTS = 5;
 // goes back to the seller (docs/DELIVERY_API.md, "Offer expiry"). A starting
 // point to tune with real riders, not a measured value. 0 disables expiry.
 const OFFER_DEFAULT_TTL_MINUTES = 15;
+// Bounds on a configured window. A positive value below a second would round to
+// 0 ms, which means "never expire", so it is raised to the floor; one above a
+// week is clamped to it (an operator writing a huge number means "very long", and
+// an unbounded one would push the deadline past the largest representable Date).
+const OFFER_MIN_TTL_MS = 1000;
+const OFFER_MAX_TTL_MINUTES = 7 * 24 * 60;
 
 // The deliveries that make a rider "busy" when the seller picks one. `failed` is
 // deliberately absent: that job is waiting on a seller/admin decision, not on
@@ -158,7 +164,10 @@ function estimateEta(from, to) {
  * Turns the configured window (minutes) into milliseconds. Anything that is not
  * a finite number >= 0 falls back to the default, so a typo in an environment
  * variable cannot silently switch expiry off or make every offer lapse at once.
- * `0` is a real value and means "never expire".
+ * `0` is a real value and means "never expire". A positive value is kept between
+ * one second and one week (OFFER_MIN_TTL_MS, OFFER_MAX_TTL_MINUTES): below the
+ * floor it would round to 0 ms and silently disable expiry, above the cap the
+ * deadline could pass the largest representable Date.
  */
 function offerTtlMsFrom(minutes) {
   const fallback = OFFER_DEFAULT_TTL_MINUTES * 60 * 1000;
@@ -167,7 +176,9 @@ function offerTtlMsFrom(minutes) {
   if (raw === undefined || raw === null || raw === '') return fallback;
   const n = typeof raw === 'string' ? Number(raw) : raw;
   if (!isFiniteNumber(n) || n < 0) return fallback;
-  return Math.round(n * 60 * 1000);
+  if (n === 0) return 0;
+  const ms = Math.round(Math.min(n, OFFER_MAX_TTL_MINUTES) * 60 * 1000);
+  return Math.max(OFFER_MIN_TTL_MS, ms);
 }
 
 /**
@@ -180,7 +191,10 @@ function offerDeadlineMs(delivery, ttlMs) {
   if (!isFiniteNumber(ttlMs) || ttlMs <= 0) return null;
   const assignedAt = Date.parse(delivery.assignedAt);
   if (!Number.isFinite(assignedAt)) return null;
-  return assignedAt + ttlMs;
+  const deadline = assignedAt + ttlMs;
+  // Past the largest representable Date, new Date(deadline).toISOString() throws
+  // and would turn every view of the delivery into a 500: no usable deadline.
+  return Number.isFinite(new Date(deadline).getTime()) ? deadline : null;
 }
 
 /** True once the offer's deadline has passed (a deadline of exactly `nowMs` has). */
@@ -315,6 +329,8 @@ module.exports = {
   ETA_ASSUMED_SPEED_KMH,
   MAX_HANDOVER_ATTEMPTS,
   OFFER_DEFAULT_TTL_MINUTES,
+  OFFER_MIN_TTL_MS,
+  OFFER_MAX_TTL_MINUTES,
   WORKLOAD_STATUSES,
   DeliveryLockedError,
   OfferExpiredError,
