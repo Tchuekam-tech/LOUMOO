@@ -308,7 +308,10 @@ async function run() {
     assert.strictEqual(listed.status, 200, '/drivers is the rider list, not a delivery called "drivers"');
     const listedIds = listed.body.data.drivers.map(d => d.id);
     assert.ok(listedIds.includes(cast.rider.id) && listedIds.includes(cast.rider2.id), 'sellers see the active riders');
-    assert.ok(listed.body.data.drivers.every(d => Object.keys(d).sort().join() === 'id,name,phone'), 'the list carries only id, name and phone');
+    // v1.1 added the workload count (docs/DELIVERY_API.md, GET /drivers). Updated by the
+    // driver-assignment branch WITHOUT running this suite (it needs the live database).
+    assert.ok(listed.body.data.drivers.every(d => Object.keys(d).sort().join() === 'id,name,openDeliveries,phone'), 'the list carries id, name, phone and the workload count, and nothing else');
+    assert.ok(listed.body.data.drivers.every(d => Number.isInteger(d.openDeliveries) && d.openDeliveries >= 0), 'openDeliveries is a count');
     assert.strictEqual((await api('GET', '/drivers', cast.buyer)).status, 403, 'customers cannot list riders');
     assert.strictEqual((await api('GET', '/driver/me', cast.stranger)).status, 403, 'a non-rider has no rider overview');
     console.log('    ✓ Riders: registration rules, foreign key, listing and the rider overview guard.');

@@ -191,7 +191,7 @@ async function main() {
       const expected = [
         'GET /drivers', 'POST /drivers/:profileId', 'GET /driver/me', 'GET /by-order/:orderId', 'POST /',
         'GET /:id/stream', 'GET /:id/code', 'GET /:id',
-        'POST /:id/assign', 'POST /:id/cancel', 'POST /:id/resolve', 'POST /:id/reconcile',
+        'POST /:id/assign', 'POST /:id/auto-assign', 'POST /:id/cancel', 'POST /:id/resolve', 'POST /:id/reconcile',
         'POST /:id/accept', 'POST /:id/decline', 'POST /:id/status', 'POST /:id/location', 'POST /:id/complete'
       ].sort();
       assert.deepStrictEqual(table, expected, 'the route table matches docs/DELIVERY_API.md (update both together)');
@@ -677,6 +677,129 @@ async function main() {
       assert.strictEqual(eventForViewer({ type: 'mystery', status: 'accepted' }, 'seller'), null, 'unknown event types are dropped');
       assert.strictEqual(eventForViewer(null, 'seller'), null);
       assert.strictEqual(eventForViewer({}, 'seller'), null);
+    }
+
+    // -------------------------------- dispatch: auto-assign, rider list, offer expiry
+    // Its own server and repositories: auto-assign ranks every active rider, so the
+    // riders and deliveries the sections above left behind must not skew it.
+    {
+      const ordersD = new OrderRepository({ db: null });
+      const repoD = new DeliveryRepository({ db: null });
+      const eventsD = new DeliveryEvents();
+      const OFFER_MS = 15 * 60 * 1000;
+      const serviceD = new DeliveryService({ repository: repoD, orderRepository: ordersD, events: eventsD, now: clock.now, offerTtlMs: OFFER_MS });
+      const appD = express();
+      appD.use(express.json());
+      appD.use('/d', createDeliveryRouter({ service: serviceD, authenticate: fakeAuth, events: eventsD, revalidate }));
+      appD.use(errorHandler);
+      const serverD = http.createServer(appD);
+      await new Promise((resolve) => serverD.listen(0, '127.0.0.1', resolve));
+      const baseD = `http://127.0.0.1:${serverD.address().port}`;
+      const OTHER_SELLER = 'seller_2|seller';
+      const d = async (method, path, user, body) => {
+        const res = await fetch(`${baseD}/d${path}`, {
+          method,
+          headers: { ...(user ? { 'x-test-user': user } : {}), 'content-type': 'application/json' },
+          body: body === undefined ? undefined : JSON.stringify(body),
+          signal: AbortSignal.timeout(8000)
+        });
+        let json = null;
+        try { json = await res.json(); } catch (e) { /* no body */ }
+        return { status: res.status, body: json };
+      };
+      const newDelivery = async () => {
+        const order = await ordersD.saveOrder(new Order({
+          buyerId: 'buyer_1',
+          sellerId: 'seller_1',
+          items: [{ listingId: 'lst_d', title: 'Phone', unitPriceXaf: 50000, quantity: 1, sellerId: 'seller_1', storeName: 'Tech Shop' }],
+          shippingAddress: { fullName: 'Awa Njoya', phone: '+237622222222', street: 'Rue 1', neighbourhood: 'Bonanjo', city: 'Douala' },
+          deliveryMethod: DELIVERY_METHOD.HOME_DELIVERY,
+          paymentStatus: PAYMENT_STATUS.PAID,
+          fulfillmentStatus: FULFILLMENT_STATUS.PROCESSING
+        }));
+        const created = await d('POST', '/', SELLER, { orderId: order.id });
+        assert.strictEqual(created.status, 201, JSON.stringify(created.body));
+        return created.body.data.delivery.id;
+      };
+
+      try {
+        await d('POST', '/drivers/rider_1', ADMIN, { name: 'Alain', phone: '+237600000001' });
+        await d('POST', '/drivers/rider_2', ADMIN, { name: 'Bruno', phone: '+237600000002' });
+        const id = await newDelivery();
+
+        // Authentication and roles.
+        const anon = await d('POST', `/${id}/auto-assign`, null, {});
+        assert.strictEqual(anon.status, 401, 'auto-assign needs a session');
+        assert.strictEqual(anon.body.error.code, 'UNAUTHENTICATED');
+        assert.strictEqual((await d('POST', `/${id}/auto-assign`, BUYER, {})).status, 403, 'the buyer cannot dispatch their own order');
+        assert.strictEqual((await d('POST', `/${id}/auto-assign`, STRANGER, {})).status, 404, 'a stranger gets a 404, not a hint that it exists');
+        assert.strictEqual((await d('POST', `/${id}/auto-assign`, OTHER_SELLER, {})).status, 404, "another seller cannot dispatch it");
+        assert.strictEqual((await d('POST', '/dlv_missing/auto-assign', SELLER, {})).status, 404);
+        assert.strictEqual((await repoD.findById(id)).status, 'pending_assignment', 'none of those changed anything');
+
+        // The call itself. A body is ignored: the server decides, not the client.
+        const auto = await d('POST', `/${id}/auto-assign`, SELLER, { driverId: 'rider_2', status: 'delivered', surprise: true });
+        assert.strictEqual(auto.status, 200, JSON.stringify(auto.body));
+        const delivery = auto.body.data.delivery;
+        assert.strictEqual(delivery.status, 'assigned');
+        assert.strictEqual(delivery.driver.id, 'rider_1', 'the server chose, ignoring the body');
+        assert.strictEqual(delivery.viewerRole, 'seller');
+        assert.strictEqual(delivery.offerExpiresAt, new Date(clock.now() + OFFER_MS).toISOString(), 'the response carries the deadline');
+
+        // offerExpiresAt over the wire: staff and rider see it, the buyer never does.
+        assert.strictEqual((await d('GET', `/${id}`, RIDER)).body.data.delivery.offerExpiresAt, delivery.offerExpiresAt);
+        assert.strictEqual((await d('GET', `/${id}`, BUYER)).body.data.delivery.offerExpiresAt, null);
+        assert.strictEqual((await d('GET', '/driver/me', RIDER)).body.data.deliveries[0].offerExpiresAt, delivery.offerExpiresAt, "and so does the rider's own list");
+
+        // The rider list: workload, order, and the optional deliveryId.
+        const list = await d('GET', '/drivers', SELLER);
+        assert.strictEqual(list.status, 200);
+        assert.deepStrictEqual(list.body.data.drivers.map((r) => [r.id, r.openDeliveries]), [['rider_2', 0], ['rider_1', 1]], 'least busy first, with the count');
+        assert.ok(list.body.data.drivers.every((r) => !('declined' in r)), 'no declined flag without a deliveryId');
+        const withHistory = await d('GET', `/drivers?deliveryId=${id}`, SELLER);
+        assert.strictEqual(withHistory.status, 200);
+        assert.ok(withHistory.body.data.drivers.every((r) => r.declined === false), 'with one, every rider has the flag');
+        assert.strictEqual((await d('GET', '/drivers?_=1700000000', SELLER)).status, 200, 'unrelated query keys are ignored');
+        const empty = await d('GET', '/drivers?deliveryId=', SELLER);
+        assert.strictEqual(empty.status, 400, 'an empty deliveryId is a 400');
+        assert.strictEqual(empty.body.error.code, 'VALIDATION_ERROR');
+        assert.strictEqual((await d('GET', '/drivers?deliveryId=a&deliveryId=b', SELLER)).status, 400, 'a repeated deliveryId is a 400, not a crash');
+        assert.strictEqual((await d('GET', `/drivers?deliveryId=${'x'.repeat(200)}`, SELLER)).status, 400, 'an over-long deliveryId is a 400');
+        assert.strictEqual((await d('GET', '/drivers?deliveryId=dlv_missing', SELLER)).status, 404);
+        assert.strictEqual((await d('GET', `/drivers?deliveryId=${id}`, OTHER_SELLER)).status, 404, "another seller cannot read this delivery's history");
+        assert.strictEqual((await d('GET', `/drivers?deliveryId=${id}`, BUYER)).status, 403, 'a customer cannot list riders at all');
+
+        // A decline is remembered and steers the next pick.
+        assert.strictEqual((await d('POST', `/${id}/decline`, RIDER)).status, 200);
+        const afterDecline = await d('GET', `/drivers?deliveryId=${id}`, SELLER);
+        // Both are idle again, so they tie on workload and the order falls back to the name.
+        assert.deepStrictEqual(afterDecline.body.data.drivers.map((r) => [r.id, r.declined]), [['rider_1', true], ['rider_2', false]]);
+        const second = await d('POST', `/${id}/auto-assign`, SELLER);
+        assert.strictEqual(second.body.data.delivery.driver.id, 'rider_2', 'the rider who declined is not offered it again');
+
+        // Nobody left: a clean 409 with its own code, and the delivery is untouched.
+        assert.strictEqual((await d('POST', `/${id}/decline`, RIDER2)).status, 200);
+        const none = await d('POST', `/${id}/auto-assign`, SELLER);
+        assert.strictEqual(none.status, 409);
+        assert.strictEqual(none.body.error.code, 'NO_RIDER_AVAILABLE');
+        assert.strictEqual(none.body.success, false);
+        assert.strictEqual((await repoD.findById(id)).status, 'pending_assignment');
+
+        // An unanswered offer: 409 OFFER_EXPIRED on accept, then it is back with the seller.
+        assert.strictEqual((await d('POST', `/${id}/assign`, SELLER, { driverId: 'rider_1' })).status, 200);
+        clock.advance(OFFER_MS);
+        const late = await d('POST', `/${id}/accept`, RIDER);
+        assert.strictEqual(late.status, 409, 'accepting at the deadline is refused');
+        assert.strictEqual(late.body.error.code, 'OFFER_EXPIRED');
+        assert.strictEqual((await d('GET', '/driver/me', RIDER)).body.data.deliveries.length, 0, 'it has left the rider\'s list');
+        assert.strictEqual((await d('GET', `/${id}`, RIDER)).status, 404, 'and the rider no longer has access');
+        const back = await d('GET', `/${id}`, SELLER);
+        assert.strictEqual(back.body.data.delivery.status, 'pending_assignment', 'the seller sees it waiting for a new rider');
+        assert.strictEqual(back.body.data.delivery.offerExpiresAt, null);
+      } finally {
+        if (serverD.closeAllConnections) serverD.closeAllConnections();
+        await new Promise((resolve) => serverD.close(resolve));
+      }
     }
 
     console.log('    ✓ Delivery routes: wiring, validation, status codes and the live stream hold.');

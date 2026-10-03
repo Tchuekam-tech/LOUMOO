@@ -25,6 +25,17 @@ const { codeFor, verifyCode } = require('../../server/modules/delivery/domain/Ha
 const { FULFILLMENT_STATUS } = require('../../server/modules/commerce/domain/Order');
 const { AppError } = require('../../server/shared/errors/AppError');
 const { DeliveryLockedError, coarseLocation, describeArea } = require('../../server/modules/delivery/domain/Delivery');
+const {
+  OFFER_DEFAULT_TTL_MINUTES,
+  OFFER_MIN_TTL_MS,
+  OFFER_MAX_TTL_MINUTES,
+  WORKLOAD_STATUSES,
+  OfferExpiredError,
+  NoRiderAvailableError,
+  offerTtlMsFrom,
+  offerDeadlineMs,
+  isOfferLapsed
+} = require('../../server/modules/delivery/domain/Delivery');
 
 function throwsWithCode(fn, code) {
   try { fn(); } catch (e) { return e.code === code; }
@@ -224,6 +235,81 @@ async function run() {
     // Presenting must not mutate the stored record.
     assert.strictEqual(base.dropoff.contactPhone, '+237622222222', 'presenting did not mutate the record');
     assert.strictEqual(base.status, S.ASSIGNED);
+
+    // --- 7. Offer expiry and rider workload ----------------------------------
+    assert.strictEqual(OFFER_DEFAULT_TTL_MINUTES, 15, 'the offer window defaults to 15 minutes');
+    assert.deepStrictEqual([...WORKLOAD_STATUSES].sort(), [S.ACCEPTED, S.ARRIVED, S.ASSIGNED, S.PICKED_UP].sort(),
+      'a rider is busy while assigned, accepted, picked up or arrived');
+    assert.ok(!WORKLOAD_STATUSES.includes(S.FAILED), 'a failed job is waiting on the seller, not the rider');
+    for (const [Err, code] of [[OfferExpiredError, 'OFFER_EXPIRED'], [NoRiderAvailableError, 'NO_RIDER_AVAILABLE']]) {
+      const err = new Err();
+      assert.ok(err instanceof AppError, `${code} extends AppError so the shared handler renders it`);
+      assert.strictEqual(err.code, code);
+      assert.strictEqual(err.statusCode, 409, `${code} is a 409, not a 500`);
+    }
+
+    const MIN = 60 * 1000;
+    assert.strictEqual(offerTtlMsFrom(undefined), 15 * MIN, 'unset means the default');
+    assert.strictEqual(offerTtlMsFrom(''), 15 * MIN, 'empty means the default');
+    assert.strictEqual(offerTtlMsFrom('   '), 15 * MIN, 'blank text is "unset", not 0 ("never expire")');
+    assert.strictEqual(offerTtlMsFrom('30'), 30 * MIN, 'an environment string works');
+    assert.strictEqual(offerTtlMsFrom(2), 2 * MIN);
+    assert.strictEqual(offerTtlMsFrom(0), 0, '0 is a real value: never expire');
+    assert.strictEqual(offerTtlMsFrom('0'), 0);
+    assert.strictEqual(offerTtlMsFrom('abc'), 15 * MIN, 'a typo cannot switch expiry off');
+    assert.strictEqual(offerTtlMsFrom(-5), 15 * MIN, 'a negative window is a typo, not "instant expiry"');
+    assert.strictEqual(offerTtlMsFrom(NaN), 15 * MIN);
+    assert.strictEqual(offerTtlMsFrom(Infinity), 15 * MIN, 'a non-finite window falls back to the default');
+    const WEEK_MS = OFFER_MAX_TTL_MINUTES * MIN;
+    assert.strictEqual(OFFER_MAX_TTL_MINUTES, 7 * 24 * 60, 'the cap is one week');
+    assert.strictEqual(offerTtlMsFrom(OFFER_MAX_TTL_MINUTES), WEEK_MS, 'exactly the cap is allowed');
+    assert.strictEqual(offerTtlMsFrom(OFFER_MAX_TTL_MINUTES + 1), WEEK_MS, 'one minute over is clamped to the cap');
+    assert.strictEqual(offerTtlMsFrom('999999999999'), WEEK_MS, 'a huge value is clamped, not passed through to overflow a Date');
+    assert.strictEqual(offerTtlMsFrom('1e12'), WEEK_MS);
+    assert.strictEqual(offerTtlMsFrom(Number.MAX_VALUE), WEEK_MS);
+    assert.strictEqual(OFFER_MIN_TTL_MS, 1000, 'the floor is one second');
+    assert.strictEqual(offerTtlMsFrom('0.00000001'), OFFER_MIN_TTL_MS, 'a tiny positive value is raised to the floor, not rounded to 0 (never expire)');
+    assert.strictEqual(offerTtlMsFrom(0.0001), OFFER_MIN_TTL_MS);
+    assert.strictEqual(offerTtlMsFrom(1 / 60), OFFER_MIN_TTL_MS, 'exactly one second is allowed');
+    assert.strictEqual(offerTtlMsFrom('0'), 0, 'but a real 0 still means never');
+    assert.ok(offerTtlMsFrom('1e12') > 0 && offerTtlMsFrom('0.00000001') > 0, 'neither extreme disables expiry');
+
+    const offered = { status: S.ASSIGNED, assignedAt: '2026-10-03T10:00:00.000Z' };
+    const t0 = Date.parse(offered.assignedAt);
+    assert.strictEqual(offerDeadlineMs(offered, 15 * MIN), t0 + 15 * MIN, 'the deadline is assignedAt + the window');
+    assert.strictEqual(offerDeadlineMs({ ...offered, status: S.ACCEPTED }, 15 * MIN), null, 'an accepted job has no deadline');
+    assert.strictEqual(offerDeadlineMs({ ...offered, status: S.PENDING_ASSIGNMENT }, 15 * MIN), null);
+    assert.strictEqual(offerDeadlineMs(offered, 0), null, 'expiry off means no deadline');
+    assert.strictEqual(offerDeadlineMs({ status: S.ASSIGNED }, 15 * MIN), null, 'no assignedAt, nothing to count from');
+    assert.strictEqual(offerDeadlineMs({ status: S.ASSIGNED, assignedAt: 'not a date' }, 15 * MIN), null);
+    assert.strictEqual(offerDeadlineMs(null, 15 * MIN), null);
+    assert.strictEqual(isOfferLapsed(offered, 15 * MIN, t0 + 15 * MIN - 1), false, 'one millisecond early is still open');
+    assert.strictEqual(isOfferLapsed(offered, 15 * MIN, t0 + 15 * MIN), true, 'the deadline itself has lapsed');
+    assert.strictEqual(isOfferLapsed(offered, 15 * MIN, t0 + 16 * MIN), true);
+    assert.strictEqual(isOfferLapsed({ ...offered, status: S.ACCEPTED }, 15 * MIN, t0 + 99 * MIN), false, 'accepted jobs never lapse');
+    assert.strictEqual(isOfferLapsed(offered, 0, t0 + 99 * MIN), false, 'with expiry off nothing lapses');
+
+    // A deadline that would pass the largest representable Date is "no deadline", not a crash.
+    const edge = { status: S.ASSIGNED, assignedAt: '+275760-09-13T00:00:00.000Z' };
+    assert.strictEqual(offerDeadlineMs(edge, 15 * MIN), null, 'an unrepresentable deadline is null');
+    assert.strictEqual(isOfferLapsed(edge, 15 * MIN, Date.now()), false);
+    assert.doesNotThrow(() => presentDelivery({ ...base, ...edge }, 'seller', { offerTtlMs: 15 * MIN }), 'presenting never throws on it');
+    assert.strictEqual(presentDelivery({ ...base, ...edge }, 'seller', { offerTtlMs: 15 * MIN }).offerExpiresAt, null);
+
+    const offerBase = { ...base, assignedAt: '2026-10-03T10:00:00.000Z' };
+    for (const viewer of ['seller', 'admin', 'driver']) {
+      assert.strictEqual(presentDelivery(offerBase, viewer, { offerTtlMs: 15 * MIN }).offerExpiresAt, '2026-10-03T10:15:00.000Z',
+        `${viewer} sees when the offer lapses`);
+    }
+    assert.strictEqual(presentDelivery(offerBase, 'buyer', { offerTtlMs: 15 * MIN }).offerExpiresAt, null, 'the buyer never learns of the offer');
+    for (const viewer of ['buyer', 'seller', 'admin', 'driver']) {
+      assert.strictEqual(presentDelivery(offerBase, viewer).offerExpiresAt, null, `${viewer}: no window given means no deadline`);
+      assert.strictEqual(presentDelivery(offerBase, viewer, { offerTtlMs: 0 }).offerExpiresAt, null, `${viewer}: expiry off means no deadline`);
+      assert.strictEqual(presentDelivery({ ...offerBase, status: S.ACCEPTED }, viewer, { offerTtlMs: 15 * MIN }).offerExpiresAt, null,
+        `${viewer}: an accepted job has no deadline`);
+      assert.ok(!JSON.stringify(presentDelivery(offerBase, viewer, { offerTtlMs: 15 * MIN })).includes('assignedAt'),
+        `${viewer} never sees the raw assignedAt column`);
+    }
 
     console.log('    ✓ Delivery domain: state machine, geo, handover code and viewer redaction hold.');
   } finally {

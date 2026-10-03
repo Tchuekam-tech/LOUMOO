@@ -30,6 +30,14 @@ const AssignDriverSchema = z.object({
   driverId: z.string().trim().min(1, 'driverId is required').max(128)
 }).strict();
 
+// GET /drivers?deliveryId=…  Unlike bodies, a query string is NOT strict: clients
+// and proxies add harmless keys (cache busters), so unknown ones are dropped. The
+// one key we read must be a single, non-empty string (a repeated `deliveryId`
+// arrives as an array and is refused).
+const ListDriversQuerySchema = z.object({
+  deliveryId: z.string().trim().min(1, 'deliveryId must not be empty').max(128).optional()
+});
+
 const CancelDeliverySchema = z.object({
   reason: z.string().max(600).optional().nullable()
 }).strict();
@@ -67,6 +75,7 @@ const ResolveDeliverySchema = z.object({
 module.exports = {
   CreateDeliverySchema,
   AssignDriverSchema,
+  ListDriversQuerySchema,
   CancelDeliverySchema,
   RiderStatusSchema,
   LocationPingSchema,

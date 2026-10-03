@@ -38,6 +38,12 @@ const {
   optionalNumber,
   haversineKm,
   estimateEta,
+  offerTtlMsFrom,
+  isOfferLapsed,
+  OFFER_EXPIRED_NOTE,
+  RECENT_LAPSE_WINDOW_MS,
+  OfferExpiredError,
+  NoRiderAvailableError,
   describeAddress,
   describeArea,
   presentDelivery
@@ -46,7 +52,8 @@ const {
   NotFoundError,
   ValidationError,
   AuthorizationError,
-  ConflictError
+  ConflictError,
+  InfrastructureError
 } = require('../../../shared/errors/AppError');
 const logger = require('../../../shared/logging/logger');
 
@@ -60,6 +67,14 @@ const SELLER_ROLES = ['seller', 'seller_staff', ...ADMIN_ROLES];
 const RIDER_REPORTABLE_STATUSES = [S.PICKED_UP, S.ARRIVED, S.FAILED];
 const CANCELLABLE_STATUSES = [S.PENDING_ASSIGNMENT, S.ASSIGNED, S.ACCEPTED];
 const CAS_RETRIES = 3;
+// How many active riders one listing or auto-assign considers. Far above a
+// realistic fleet; a warning is logged if it is ever reached.
+const MAX_RIDERS_CONSIDERED = 500;
+// Releasing lapsed offers ahead of a ranking: this many per round, at most this
+// many rounds (so at most 200 per call), then stop. Bounded so one listing cannot
+// become a long write storm; the sweeper and later calls take the rest.
+const RELEASE_BATCH = 50;
+const MAX_RELEASE_ROUNDS = 4;
 const ORDER_PATH = [FULFILLMENT_STATUS.PROCESSING, FULFILLMENT_STATUS.IN_TRANSIT, FULFILLMENT_STATUS.DELIVERED];
 
 function cleanText(value, field, max = 255) {
@@ -76,11 +91,21 @@ function cleanText(value, field, max = 255) {
 }
 
 class DeliveryService {
-  constructor({ repository, orderRepository, events, now } = {}) {
+  /**
+   * `offerTtlMs` is how long a rider has to accept an assigned delivery (0 = never
+   * expires). Unset, it comes from DELIVERY_OFFER_TTL_MINUTES, then the default.
+   * An explicit value that is not a finite number >= 0 also falls back, so a bad
+   * option cannot silently switch expiry off.
+   */
+  constructor({ repository, orderRepository, events, now, offerTtlMs } = {}) {
     this.repo = repository || new DeliveryRepository();
     this.orders = orderRepository || new OrderRepository();
     this.events = events || deliveryEvents;
     this.now = typeof now === 'function' ? now : () => Date.now();
+    this._serialQueue = Promise.resolve(); // see _serialised()
+    this.offerTtlMs = typeof offerTtlMs === 'number'
+      ? offerTtlMsFrom(offerTtlMs / 60000)
+      : offerTtlMsFrom(process.env.DELIVERY_OFFER_TTL_MINUTES);
   }
 
   // ----------------------------------------------------------------- identity
@@ -105,7 +130,9 @@ class DeliveryService {
   async _loadForCaller(deliveryId, callerInput) {
     const caller = this._caller(callerInput);
     if (!deliveryId) throw new ValidationError('Delivery ID is required.');
-    const delivery = await this.repo.findById(deliveryId);
+    // A lapsed offer is released before anyone is judged against it, so a rider
+    // whose window closed is no longer a participant (404, as after a decline).
+    const delivery = await this._releaseIfLapsed(await this.repo.findById(deliveryId));
     const role = delivery ? this._participantRole(delivery, caller) : null;
     // Same response for "does not exist" and "not yours": no id enumeration.
     if (!delivery || !role) throw new NotFoundError('Delivery', deliveryId);
@@ -186,7 +213,7 @@ class DeliveryService {
     if (includeTimeline) timeline = await this.repo.listEvents(delivery.id);
     let order = null;
     try { order = await this.orders.findOrderById(delivery.orderId); } catch (e) { /* number is cosmetic */ }
-    return presentDelivery(hydrated, role, { timeline, order });
+    return presentDelivery(hydrated, role, { timeline, order, offerTtlMs: this.offerTtlMs });
   }
 
   /**
@@ -196,18 +223,25 @@ class DeliveryService {
    * notifications and stream that follow (the rider would see an error for a
    * change that did happen, and retrying would be refused as a conflict).
    */
-  async _record(delivery, previousStatus, actorId, note = null) {
-    try {
-      await this.repo.insertEvent({
-        deliveryId: delivery.id,
-        status: delivery.status,
-        previousStatus,
-        actorId,
-        note,
-        at: delivery.updatedAt
-      });
-    } catch (err) {
-      logger.error(`[Delivery] Timeline write failed for ${delivery.id} (${previousStatus} -> ${delivery.status}): ${err.message}`);
+  async _record(delivery, previousStatus, actorId, note = null, { retries = 0 } = {}) {
+    // `retries` is for rows other decisions depend on (the lapse row), which a single
+    // transient failure would otherwise silently void.
+    for (let attempt = 0; ; attempt += 1) {
+      try {
+        await this.repo.insertEvent({
+          deliveryId: delivery.id,
+          status: delivery.status,
+          previousStatus,
+          actorId,
+          note,
+          at: delivery.updatedAt
+        });
+        break;
+      } catch (err) {
+        if (attempt < retries) continue;
+        logger.error(`[Delivery] Timeline write failed for ${delivery.id} (${previousStatus} -> ${delivery.status}): ${err.message}`);
+        break;
+      }
     }
     this.events.publish(delivery.id, {
       type: 'status',
@@ -293,6 +327,99 @@ class DeliveryService {
     }
     await this._record(updated, delivery.status, actorId, note);
     return updated;
+  }
+
+  // ------------------------------------------------------------- offer expiry
+
+  /**
+   * Returns a lapsed offer to the seller. Returns the updated record, or `null`
+   * when someone else got there first (the rider accepted, the seller
+   * re-assigned or cancelled): the caller should re-read, not retry.
+   *
+   * The swap is guarded on `assignedAt` as well as the rider: a seller who
+   * re-assigns the same rider while a sweep is in flight has just started a
+   * fresh window, and a status+rider match alone would expire it.
+   *
+   * The timeline row names the RIDER as the actor (the transition is their
+   * silence, and `_ridersWhoPassed` reads it to keep them off the next offer).
+   */
+  async _expireOffer(delivery) {
+    const riderId = delivery.driverId;
+    const updated = await this.repo.updateWhere(
+      delivery.id,
+      { status: S.ASSIGNED, driverId: riderId, assignedAt: delivery.assignedAt },
+      // updatedAt is the lapse's timestamp (it becomes the timeline row's time, which
+      // the recent-lapse ranking compares with this service's clock), so it is
+      // stamped here rather than left to the repository's own wall clock.
+      { status: S.PENDING_ASSIGNMENT, driverId: null, assignedAt: null, acceptedAt: null, updatedAt: this._nowIso() }
+    );
+    if (!updated) return null;
+    // Retried once: the recent-lapse ranking, the declined flag and the late-accept
+    // answer all read this row, and a lost one would silently void them.
+    await this._record(updated, S.ASSIGNED, riderId, OFFER_EXPIRED_NOTE, { retries: 1 });
+    this._notify(updated.sellerId, {
+      title: 'A rider did not respond',
+      body: 'The offer expired. Assign another rider to keep the order moving.',
+      tone: 'neutral',
+      delivery: updated
+    });
+    this._notify(riderId, {
+      title: 'A delivery offer expired',
+      body: 'It was not accepted in time and went back to the seller.',
+      tone: 'neutral',
+      delivery: updated
+    });
+    return updated;
+  }
+
+  /**
+   * The delivery as it stands now: if its offer has lapsed, releases it first.
+   * Every read path calls this, so a deployment that cannot run the sweeper
+   * (serverless) still never shows or honours a dead offer.
+   */
+  async _releaseIfLapsed(delivery) {
+    if (!delivery || !isOfferLapsed(delivery, this.offerTtlMs, this.now())) return delivery;
+    let released;
+    try {
+      released = await this._expireOffer(delivery);
+    } catch (err) {
+      // Best effort. A read must not become a 500 because the housekeeping write
+      // failed (a degraded write path with working reads, a locked row): show the
+      // delivery as it is. Accept still refuses a lapsed offer on its own, and the
+      // sweeper or the next read retries the release.
+      logger.warn(`[Delivery] Could not release lapsed offer ${delivery.id} while reading it: ${err.message}`);
+      return delivery;
+    }
+    if (released) return released;
+    // Lost the race: whatever happened is the truth now.
+    return (await this.repo.findById(delivery.id)) || delivery;
+  }
+
+  /**
+   * Sweeps lapsed offers back to their sellers. For the background sweeper; the
+   * reads above cover the same ground one delivery at a time. Bounded per call
+   * (`limit`), so a backlog is worked off over several ticks, and one failing
+   * row never stops the rest. Returns how many were released.
+   */
+  async expireStaleOffers({ limit = 50 } = {}) {
+    if (!(this.offerTtlMs > 0)) return { expired: 0 };
+    const cutoff = new Date(this.now() - this.offerTtlMs).toISOString();
+    const stale = await this.repo.findStaleOffers(cutoff, { limit });
+    let expired = 0;
+    for (const delivery of stale) {
+      try {
+        if (await this._expireOffer(delivery)) expired += 1;
+      } catch (err) {
+        logger.error(`[Delivery] Could not expire offer ${delivery.id}: ${err.message}`);
+        if (err instanceof InfrastructureError) {
+          // The database itself is failing, not this row: do not repeat the failure
+          // for every remaining offer. The next tick (or call) retries.
+          logger.error('[Delivery] Stopping this sweep: the database looks unhealthy.');
+          break;
+        }
+      }
+    }
+    return { expired };
   }
 
   // ------------------------------------------------------------------- create
@@ -397,6 +524,68 @@ class DeliveryService {
       throw new ValidationError('A rider cannot deliver their own order', [{ field: 'driverId', message: 'Choose a different rider.' }]);
     }
 
+    return this._applyAssignment(delivery, driver, caller, role, `Assigned to ${driver.name}`);
+  }
+
+  /**
+   * Picks the rider for the seller: the least busy active rider who is not the
+   * buyer, has not already handed this delivery back, and is not the rider who
+   * already holds the offer (re-offering to them would change nothing). Ties
+   * break by name, then id, so the choice is deterministic. There is no
+   * "nearest" rider: positions are only recorded during a delivery (see
+   * decision 10 in docs/DELIVERY_API.md).
+   */
+  async autoAssignDriver(deliveryId, callerInput) {
+    // Release lapsed offers BEFORE this delivery is read. If the ranking did it
+    // afterwards, it could release the very delivery being assigned (its offer
+    // lapsing between the read and the ranking) and the swap below would fail with
+    // a spurious "changed by someone else".
+    await this._releaseLapsedOffers();
+    const { caller, delivery, role } = await this._requireStaff(deliveryId, callerInput);
+    DeliveryStateMachine.assertCanAssign(delivery.status);
+    await this._assertOrderNotCancelled(delivery);
+
+    // Rank and assign as ONE step, one at a time per process. Ranking reads each
+    // rider's workload and the assignment is what changes it, so concurrent calls
+    // (a bulk "assign all", two tabs) would all read the same zeros and offer every
+    // delivery to the same rider. Serialised, each sees the previous one's offer.
+    // Best effort across several API instances, which do not share this queue.
+    return this._serialised(async () => {
+      const [ranked, passed] = await Promise.all([this._rankedActiveRiders({ release: false }), this._ridersWhoPassed(delivery.id)]);
+      const pick = ranked.find(({ driver }) => driver.id !== delivery.buyerId
+        && !passed.has(driver.id)
+        && !(delivery.status === S.ASSIGNED && driver.id === delivery.driverId));
+      if (!pick) throw new NoRiderAvailableError();
+
+      return this._applyAssignment(delivery, pick.driver, caller, role, `Auto-assigned to ${pick.driver.name}`);
+    });
+  }
+
+  /** Runs `task` once every earlier serialised task has finished, whatever its outcome. */
+  _serialised(task) {
+    const result = this._serialQueue.then(task);
+    this._serialQueue = result.then(() => {}, () => {});
+    return result;
+  }
+
+  /** What the rider is told with a new offer: how long they have, when there is a limit. */
+  _offerPrompt() {
+    const base = 'Open LOUMOO to accept or decline it';
+    if (!(this.offerTtlMs > 0)) return `${base}.`;
+    // Rounded DOWN: the text must never promise more time than the server honours
+    // (a rider who trusts "within 1 minute" on a 30 s window would be refused).
+    const seconds = Math.floor(this.offerTtlMs / 1000);
+    if (seconds < 60) return `${base} within ${seconds} ${seconds === 1 ? 'second' : 'seconds'}.`;
+    const minutes = Math.floor(seconds / 60);
+    return `${base} within ${minutes} ${minutes === 1 ? 'minute' : 'minutes'}.`;
+  }
+
+  /**
+   * The shared tail of assign and auto-assign: the rider is already chosen and
+   * validated; this performs the compare-and-swap, notifies them and presents
+   * the result. `note` is the timeline text.
+   */
+  async _applyAssignment(delivery, driver, caller, role, note) {
     const retrying = delivery.status === S.FAILED;
     const patch = {
       driverId: driver.id,
@@ -423,12 +612,12 @@ class DeliveryService {
       delivery,
       { status: delivery.status, driverId: delivery.driverId },
       patch,
-      { actorId: caller.userId, note: `Assigned to ${driver.name}`, label: 'Delivery' }
+      { actorId: caller.userId, note, label: 'Delivery' }
     );
 
     this._notify(driver.id, {
       title: 'New delivery assigned',
-      body: 'Open LOUMOO to accept or decline it.',
+      body: this._offerPrompt(),
       delivery: updated
     });
     return this._present(updated, role);
@@ -436,9 +625,53 @@ class DeliveryService {
 
   // ------------------------------------------------------------ rider actions
 
+  /**
+   * True when `callerInput`'s most recent hand-back of this delivery was an offer
+   * that lapsed on them (rather than a decline or a release). Read from the
+   * timeline, whose lapse row names the rider as its actor.
+   */
+  async _offerLapsedFor(deliveryId, callerInput) {
+    const caller = this._caller(callerInput);
+    // No such delivery, or it is theirs right now (a fresh offer): nothing lapsed on them.
+    const current = await this.repo.findById(deliveryId);
+    if (!current || current.driverId === caller.userId) return false;
+    let last = null;
+    for (const e of await this.repo.listEvents(deliveryId)) {
+      const handedBack = e.status === S.PENDING_ASSIGNMENT
+        && (e.previousStatus === S.ASSIGNED || e.previousStatus === S.ACCEPTED);
+      if (handedBack && e.actorId === caller.userId) last = e;
+    }
+    return Boolean(last) && last.note === OFFER_EXPIRED_NOTE;
+  }
+
   async acceptDelivery(deliveryId, callerInput) {
-    const { caller, delivery, driver } = await this._requireAssignedRider(deliveryId, callerInput);
+    let ctx;
+    try {
+      ctx = await this._requireAssignedRider(deliveryId, callerInput);
+    } catch (err) {
+      // The sweeper (or any read) may already have released a lapsed offer by the
+      // time the rider taps Accept, which makes them a stranger to the delivery
+      // (404), or, for a seller or admin delivering it themselves, a participant
+      // who is no longer the holder (403). Tell them it was too late, as for a
+      // lapse not yet released.
+      const notTheHolder = err instanceof NotFoundError || err instanceof AuthorizationError;
+      if (notTheHolder && await this._offerLapsedFor(deliveryId, callerInput)) {
+        throw new OfferExpiredError();
+      }
+      throw err;
+    }
+    const { caller, delivery, driver } = ctx;
     DeliveryStateMachine.assertTransition(delivery.status, S.ACCEPTED);
+    if (isOfferLapsed(delivery, this.offerTtlMs, this.now())) {
+      // Too late: hand it back to the seller now (best effort) and say why. The
+      // rider must never win a race against the deadline.
+      try {
+        await this._expireOffer(delivery);
+      } catch (err) {
+        logger.error(`[Delivery] Could not release lapsed offer ${delivery.id}: ${err.message}`);
+      }
+      throw new OfferExpiredError();
+    }
     await this._assertOrderNotCancelled(delivery);
 
     const updated = await this._transition(
@@ -830,7 +1063,9 @@ class DeliveryService {
    */
   async getViewerRole(deliveryId, callerInput) {
     const caller = this._caller(callerInput);
-    const delivery = deliveryId ? await this.repo.findById(deliveryId) : null;
+    // Releasing a lapsed offer here is what ends a rider's open stream (within
+    // one heartbeat) on a deployment that has no sweeper.
+    const delivery = deliveryId ? await this._releaseIfLapsed(await this.repo.findById(deliveryId)) : null;
     return delivery ? this._participantRole(delivery, caller) : null;
   }
 
@@ -839,7 +1074,7 @@ class DeliveryService {
     if (!orderId) throw new ValidationError('Order ID is required.');
     // Resolve an order number or id to the real order id first.
     const order = await this.orders.findOrderById(orderId);
-    const delivery = order ? await this.repo.findByOrder(order.id) : null;
+    const delivery = await this._releaseIfLapsed(order ? await this.repo.findByOrder(order.id) : null);
     const role = delivery ? this._participantRole(delivery, caller) : null;
     if (!delivery || !role) throw new NotFoundError('Delivery');
     return this._present(delivery, role);
@@ -872,7 +1107,12 @@ class DeliveryService {
     }
     const open = await this.repo.findOpenByDriver(caller.userId);
     const deliveries = [];
-    for (const d of open) deliveries.push(await this._present(d, 'driver', { includeTimeline: false }));
+    for (const listed of open) {
+      // An offer that lapsed is no longer this rider's: release it and leave it out.
+      const d = await this._releaseIfLapsed(listed);
+      if (d.driverId !== caller.userId) continue;
+      deliveries.push(await this._present(d, 'driver', { includeTimeline: false }));
+    }
     return { driver: { id: driver.id, name: driver.name, phone: driver.phone }, deliveries };
   }
 
@@ -972,13 +1212,89 @@ class DeliveryService {
     await this._releaseDriverWork(userId, userId, 'Rider account deleted');
   }
 
-  async listDrivers(callerInput) {
+  /**
+   * Riders who already handed this delivery back: declined it, released it after
+   * accepting, or let the offer lapse. Read from the timeline: each of those is a
+   * move back to `pending_assignment` whose actor is the rider. The timeline write
+   * is best-effort, so a lost row only means a rider might be offered it again.
+   */
+  async _ridersWhoPassed(deliveryId) {
+    const passed = new Set();
+    for (const e of await this.repo.listEvents(deliveryId)) {
+      const handedBack = e.status === S.PENDING_ASSIGNMENT
+        && (e.previousStatus === S.ASSIGNED || e.previousStatus === S.ACCEPTED);
+      if (handedBack && e.actorId) passed.add(e.actorId);
+    }
+    return passed;
+  }
+
+  /**
+   * Returns lapsed offers to their sellers before riders are ranked. A dead offer
+   * still sits in `assigned` and would count as work for a rider who never
+   * answered, and (with no sweeper, i.e. serverless) nothing else may touch it for
+   * a long time. Best effort: ranking must work even if this fails.
+   */
+  async _releaseLapsedOffers() {
+    try {
+      for (let round = 0; round < MAX_RELEASE_ROUNDS; round += 1) {
+        const { expired } = await this.expireStaleOffers({ limit: RELEASE_BATCH });
+        if (expired < RELEASE_BATCH) break; // a short round means the backlog is drained
+      }
+    } catch (err) {
+      logger.warn(`[Delivery] Could not release lapsed offers before ranking riders: ${err.message}`);
+    }
+  }
+
+  /**
+   * Active riders with how many deliveries each is carrying. Order: riders who did
+   * NOT let an offer lapse in the last hour (RECENT_LAPSE_WINDOW_MS) first, then
+   * the least busy, then by name, then by id (so ties break the same way every
+   * time). The lapse rule keeps a rider who never answers from taking the first
+   * offer of every delivery just because their lapsed jobs left them at zero.
+   */
+  async _rankedActiveRiders({ release = true } = {}) {
+    if (release) await this._releaseLapsedOffers();
+    const since = new Date(this.now() - RECENT_LAPSE_WINDOW_MS).toISOString();
+    const [drivers, load, lapses] = await Promise.all([
+      this.repo.listDrivers({ status: DRIVER_STATUS.ACTIVE, limit: MAX_RIDERS_CONSIDERED }),
+      this.repo.countOpenByDriver(),
+      this.repo.countRecentLapses(since)
+    ]);
+    if (drivers.length >= MAX_RIDERS_CONSIDERED) {
+      logger.warn(`[Delivery] Rider list hit its ${MAX_RIDERS_CONSIDERED}-row cap; riders beyond it are not offered.`);
+    }
+    const byText = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+    return drivers
+      .map((driver) => ({ driver, openDeliveries: load.get(driver.id) || 0, recentlyLapsed: (lapses.get(driver.id) || 0) > 0 }))
+      .sort((a, b) => Number(a.recentlyLapsed) - Number(b.recentlyLapsed)
+        || a.openDeliveries - b.openDeliveries
+        || String(a.driver.name || '').localeCompare(String(b.driver.name || ''), 'en')
+        || byText(a.driver.id, b.driver.id));
+  }
+
+  /**
+   * The riders a seller or admin can pick from, least busy first. With a
+   * `deliveryId` (the caller must be that delivery's seller or an admin, else
+   * 404) each rider also says whether they already handed THAT delivery back.
+   */
+  async listDrivers(callerInput, { deliveryId } = {}) {
     const caller = this._caller(callerInput);
     if (!SELLER_ROLES.includes(caller.userRole)) {
       throw new AuthorizationError('Only sellers and administrators can list riders.');
     }
-    const drivers = await this.repo.listDrivers({ status: DRIVER_STATUS.ACTIVE });
-    return drivers.map((d) => ({ id: d.id, name: d.name, phone: d.phone }));
+    let passed = null;
+    if (deliveryId !== undefined && deliveryId !== null && deliveryId !== '') {
+      const { delivery } = await this._requireStaff(deliveryId, callerInput);
+      passed = await this._ridersWhoPassed(delivery.id);
+    }
+    const ranked = await this._rankedActiveRiders();
+    return ranked.map(({ driver, openDeliveries }) => ({
+      id: driver.id,
+      name: driver.name,
+      phone: driver.phone,
+      openDeliveries,
+      ...(passed ? { declined: passed.has(driver.id) } : {})
+    }));
   }
 }
 
