@@ -138,6 +138,61 @@ class TravelService {
     return this.repo.getHotelRooms(hotelId, params);
   }
 
+  // --- HOTEL MANAGEMENT (the "For Hotels" upload: profile + virtual tours) ---
+  _validateTourUrl(url, field) {
+    if (url == null || url === '') return; // optional
+    const s = String(url).trim();
+    if (!/^https:\/\/[^\s]+\.[^\s]+/i.test(s)) {
+      throw new ValidationError('Virtual tour link must be a valid https:// URL', [
+        { field, message: 'Paste the full https:// link to the virtual tour (e.g. from virtualtour.nu or Matterport).' }
+      ]);
+    }
+  }
+
+  _validateSpaces(spaces) {
+    if (spaces === undefined) return;
+    if (!Array.isArray(spaces)) {
+      throw new ValidationError('spaces must be a list', [{ field: 'spaces', message: 'Provide a list of spaces.' }]);
+    }
+    if (spaces.length > 40) {
+      throw new ValidationError('A hotel can list at most 40 spaces', [{ field: 'spaces', message: 'Limit to 40 spaces.' }]);
+    }
+    spaces.forEach((sp, i) => {
+      if (!sp || typeof sp !== 'object') {
+        throw new ValidationError(`Space ${i + 1} is invalid`, [{ field: `spaces[${i}]`, message: 'Each space must be an object.' }]);
+      }
+      const name = (sp.name || sp.title || '').trim();
+      if (!name) {
+        throw new ValidationError(`Space ${i + 1} needs a name`, [{ field: `spaces[${i}].name`, message: 'Name the space (e.g. Deluxe Suite, Lobby, Rooftop Bar).' }]);
+      }
+      this._validateTourUrl(sp.virtualTourUrl || sp.virtual_tour_url || sp.tourUrl || sp.url, `spaces[${i}].virtualTourUrl`);
+    });
+  }
+
+  async createHotel(data = {}, { user } = {}) {
+    const name = (data.name || '').trim();
+    if (!name) throw new ValidationError('Hotel name is required', [{ field: 'name', message: 'Provide the hotel name.' }]);
+    const city = (data.city || '').trim();
+    if (!city) throw new ValidationError('Hotel city is required', [{ field: 'city', message: 'Provide the city (e.g. Douala, Yaoundé).' }]);
+    this._validateTourUrl(data.virtualTourUrl, 'virtualTourUrl');
+    this._validateSpaces(data.spaces);
+    const ownerId = user && user.id ? user.id : '';
+    return this.repo.createHotel({ ...data, providerId: data.providerId || ownerId, ownerId });
+  }
+
+  async updateHotel(hotelId, patch = {}, { user } = {}) {
+    await this.getHotelById(hotelId); // asserts existence
+    if (patch.virtualTourUrl !== undefined) this._validateTourUrl(patch.virtualTourUrl, 'virtualTourUrl');
+    if (patch.spaces !== undefined) this._validateSpaces(patch.spaces);
+    return this.repo.updateHotel(hotelId, patch);
+  }
+
+  async setHotelSpaces(hotelId, spaces = [], { user } = {}) {
+    await this.getHotelById(hotelId); // asserts existence
+    this._validateSpaces(spaces);
+    return this.repo.setHotelSpaces(hotelId, spaces);
+  }
+
   async checkHotelRoomAvailability(params) {
     return this.hotelService.checkRoomAvailability(params);
   }

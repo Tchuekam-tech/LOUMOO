@@ -172,6 +172,66 @@ router.get('/hotels/:id/rooms', async (req, res, next) => {
   }
 });
 
+// ----------------------------------------------------------------------------
+// 2b. HOTEL MANAGEMENT — the "For Hotels" upload (profile + virtual tours)
+// ----------------------------------------------------------------------------
+
+// Only the hotel's owner or an admin may manage it. Unclaimed seed properties
+// (no ownerId) are claimable in this demo build so a manager can showcase live.
+function assertCanManageHotel(hotel, principal) {
+  const role = principal && (principal.primaryRole || principal.role);
+  const isAdmin = ['admin', 'super_admin'].includes(role);
+  if (isAdmin) return;
+  const ownerId = hotel && (hotel.ownerId || '');
+  if (ownerId && principal && ownerId === principal.id) return;
+  if (!ownerId) return; // unclaimed — claimable in the demo
+  throw new AuthorizationError('You do not manage this hotel.');
+}
+
+// POST /api/v1/travel/hotels — create/claim a hotel profile
+router.post('/hotels', requireAuth, async (req, res, next) => {
+  try {
+    const hotel = await travelService.createHotel(req.body || {}, { user: req.principal });
+    res.status(201).json({
+      success: true,
+      message: 'Hotel profile created. Add your virtual-tour spaces to bring it to life.',
+      data: hotel
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// PUT /api/v1/travel/hotels/:id — update profile (name, description, amenities, tour…)
+router.put('/hotels/:id', requireAuth, async (req, res, next) => {
+  try {
+    const existing = await travelService.getHotelById(req.params.id);
+    assertCanManageHotel(existing, req.principal);
+    const hotel = await travelService.updateHotel(req.params.id, req.body || {}, { user: req.principal });
+    res.json({ success: true, message: 'Hotel profile updated.', data: hotel });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// PUT /api/v1/travel/hotels/:id/spaces — set the virtual-tour spaces
+router.put('/hotels/:id/spaces', requireAuth, async (req, res, next) => {
+  try {
+    const existing = await travelService.getHotelById(req.params.id);
+    assertCanManageHotel(existing, req.principal);
+    const body = req.body || {};
+    const spaces = Array.isArray(body) ? body : (body.spaces || []);
+    const hotel = await travelService.setHotelSpaces(req.params.id, spaces, { user: req.principal });
+    res.json({
+      success: true,
+      message: `Saved ${hotel.spaces.length} virtual-tour space${hotel.spaces.length === 1 ? '' : 's'}.`,
+      data: hotel
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 // ============================================================================
 // 3. EXCURSIONS
 // ============================================================================

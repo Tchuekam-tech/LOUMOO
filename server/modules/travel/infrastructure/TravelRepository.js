@@ -289,6 +289,36 @@ class TravelRepository {
     return this._findRoom(roomId, hotelId);
   }
 
+  // --- HOTEL MANAGEMENT (create / update / virtual tours) ---
+  // Demo-ready persistence: hotels live in the in-memory store (like the seed).
+  // A durable Supabase table is a follow-up; the write path is centralized here
+  // so swapping in a DB later is a localized change.
+  async createHotel(data = {}) {
+    const hotel = new Hotel(data);
+    this.hotels.set(hotel.id, hotel);
+    hotel.rooms.forEach(r => this.rooms.set(r.id, r));
+    logger.info(`[TravelRepo] Hotel created (in-memory): ${hotel.id} (${hotel.name}), spaces=${hotel.spaces.length}`);
+    return hotel.toJSON();
+  }
+
+  async updateHotel(hotelId, patch = {}) {
+    const existing = this._findHotel(hotelId);
+    if (!existing) throw new NotFoundError('Hotel', hotelId);
+    // Rebuild from merged data so all normalization (tour URLs, spaces) reruns.
+    // Rooms are preserved unless the caller explicitly replaces them.
+    const merged = { ...existing.toJSON(), ...patch, id: existing.id };
+    if (patch.rooms === undefined) merged.rooms = existing.rooms;
+    const hotel = new Hotel(merged);
+    this.hotels.set(hotel.id, hotel);
+    hotel.rooms.forEach(r => this.rooms.set(r.id, r));
+    logger.info(`[TravelRepo] Hotel updated (in-memory): ${hotel.id}, spaces=${hotel.spaces.length}, hotelTour=${hotel.virtualTourUrl ? 'yes' : 'no'}`);
+    return hotel.toJSON();
+  }
+
+  async setHotelSpaces(hotelId, spaces = []) {
+    return this.updateHotel(hotelId, { spaces: Array.isArray(spaces) ? spaces : [] });
+  }
+
   // --- TRANSPORT SERVICES ---
   async getTransportServices(filters = {}) {
     let list = Array.from(this.transportServices.values());
