@@ -118,7 +118,8 @@ function createDeliveryRouter({
   // ------------------------------------------------------------------ riders
 
   router.get('/drivers', authenticate, route(async (req, res) => {
-    ok(res, { drivers: await svc().listDrivers(callerOf(req)) });
+    const { deliveryId } = parseBody(schemas.ListDriversQuerySchema, req.query, 'query');
+    ok(res, { drivers: await svc().listDrivers(callerOf(req), { deliveryId }) });
   }));
 
   router.post('/drivers/:profileId', authenticate, route(async (req, res) => {
