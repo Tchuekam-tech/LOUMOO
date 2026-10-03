@@ -13,11 +13,25 @@
  * connection) it falls back to polling GET /:id, exactly as the contract says.
  */
 
-const DELIVERY_API_BASE = '/api/v1/deliveries';
+const DELIVERY_API_PATH = '/api/v1/deliveries';
+
+/**
+ * The API base. Same-origin by default, but in production the frontend
+ * (Netlify) and the API (Railway) are different origins, so an absolute origin
+ * can be set once before the app loads:
+ *     window.LOUMOO_API_ORIGIN = 'https://loumoo-production.up.railway.app';
+ * Streaming and CORS then need that origin allowed on the server.
+ */
+function resolveApiBase() {
+  var origin = (typeof window !== 'undefined' && window.LOUMOO_API_ORIGIN)
+    ? String(window.LOUMOO_API_ORIGIN).replace(/\/+$/, '')
+    : '';
+  return origin + DELIVERY_API_PATH;
+}
 
 class DeliveryApiClient {
-  constructor(baseUrl = DELIVERY_API_BASE) {
-    this.baseUrl = baseUrl;
+  constructor(baseUrl) {
+    this.baseUrl = baseUrl || resolveApiBase();
   }
 
   /** The same bearer the rest of the app uses (canonical client, then storage). */
