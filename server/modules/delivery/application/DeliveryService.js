@@ -502,6 +502,16 @@ class DeliveryService {
   async acceptDelivery(deliveryId, callerInput) {
     const { caller, delivery, driver } = await this._requireAssignedRider(deliveryId, callerInput);
     DeliveryStateMachine.assertTransition(delivery.status, S.ACCEPTED);
+    if (isOfferLapsed(delivery, this.offerTtlMs, this.now())) {
+      // Too late: hand it back to the seller now (best effort) and say why. The
+      // rider must never win a race against the deadline.
+      try {
+        await this._expireOffer(delivery);
+      } catch (err) {
+        logger.error(`[Delivery] Could not release lapsed offer ${delivery.id}: ${err.message}`);
+      }
+      throw new OfferExpiredError();
+    }
     await this._assertOrderNotCancelled(delivery);
 
     const updated = await this._transition(
