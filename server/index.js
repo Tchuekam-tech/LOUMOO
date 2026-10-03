@@ -38,6 +38,7 @@ const adaptiveRoutes = require('./modules/adaptive/presentation/routes/adaptiveR
 const announcementRoutes = require('./modules/announcement/presentation/routes/announcementRoutes');
 const travelRoutes = require('./modules/travel/presentation/routes/travelRoutes');
 const orderRoutes = require('./modules/commerce/presentation/routes/orderRoutes');
+const deliveryRoutes = require('./modules/delivery/presentation/routes/deliveryRoutes');
 const superAdminRoutes = require('../SuperAdmin/backend/routes/superAdminRoutes');
 const { maintenanceGuard } = require('../SuperAdmin/backend/middleware/maintenanceGuard');
 
