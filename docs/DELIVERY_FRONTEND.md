@@ -64,3 +64,34 @@ window.LoumooDeliveryTracking.open({ deliveryId: 'dlv_123' });
 `getByOrder` accepts the order id or the order number. If the order has no home
 delivery yet, the overlay shows a friendly notice rather than an error.
 
+## Map tiles
+
+Without a key it uses the keyless MapLibre demo tiles (coarse world map). For
+street-level tiles, set a style URL before the app loads:
+
+```html
+<script>window.LOUMOO_MAP_STYLE = 'https://api.maptiler.com/maps/streets/style.json?key=YOUR_KEY';</script>
+```
+
+(or any Stadia/other MapLibre-compatible style). MapLibre GL itself is loaded
+lazily from a CDN the first time the overlay opens, so it never weighs on the
+initial shell.
+
+## Build & merge
+
+- `npm run build:frontend` (`python build_redesign.py`) regenerates the
+  `.dc.html` bundles. Per the handoff, rebuild only after merging, one side at a
+  time.
+- This branch and the rider-page branch both touch `build_redesign.py`, but only
+  minimally and in different places (step 4 adds two script tags); expect a
+  trivial merge at most.
+
+## Known follow-ups (need a build + browser pass)
+
+- The order-detail screen still shows the **pre-existing static** escrow/fulfilment
+  steps as a summary; they could be replaced by the live timeline once the DC
+  root projects delivery data.
+- Optionally promote the overlay into DC navigation (back-stack integration)
+  instead of a self-managed overlay.
+- Verify the `data-track-delivery` button survives DC compilation (it uses plain
+  attributes + a native delegate, so it should) and wire real street tiles.
