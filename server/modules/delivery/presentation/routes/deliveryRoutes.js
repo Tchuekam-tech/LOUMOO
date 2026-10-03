@@ -229,6 +229,27 @@ function createDeliveryRouter({
     ok(res, { delivery: await svc().getDelivery(req.params.id, callerOf(req)) });
   }));
 
+  // ------------------------------------------------------------ seller / admin
+
+  router.post('/:id/assign', authenticate, route(async (req, res) => {
+    const { driverId } = parseBody(schemas.AssignDriverSchema, req.body, 'assignment');
+    ok(res, { delivery: await svc().assignDriver(req.params.id, driverId, callerOf(req)) });
+  }));
+
+  router.post('/:id/cancel', authenticate, route(async (req, res) => {
+    const { reason } = parseBody(schemas.CancelDeliverySchema, req.body, 'cancellation');
+    ok(res, { delivery: await svc().cancelDelivery(req.params.id, reason, callerOf(req)) }, { message: 'Delivery cancelled.' });
+  }));
+
+  router.post('/:id/resolve', authenticate, route(async (req, res) => {
+    const body = parseBody(schemas.ResolveDeliverySchema, req.body, 'resolution');
+    ok(res, { delivery: await svc().resolveDelivery(req.params.id, body, callerOf(req)) });
+  }));
+
+  router.post('/:id/reconcile', authenticate, route(async (req, res) => {
+    ok(res, await svc().reconcileOrder(req.params.id, callerOf(req)));
+  }));
+
   router.openStreamCount = () => [...openStreams.values()].reduce((a, b) => a + b, 0);
   return router;}
 
