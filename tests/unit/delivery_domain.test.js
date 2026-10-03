@@ -27,6 +27,8 @@ const { AppError } = require('../../server/shared/errors/AppError');
 const { DeliveryLockedError, coarseLocation, describeArea } = require('../../server/modules/delivery/domain/Delivery');
 const {
   OFFER_DEFAULT_TTL_MINUTES,
+  OFFER_MIN_TTL_MS,
+  OFFER_MAX_TTL_MINUTES,
   WORKLOAD_STATUSES,
   OfferExpiredError,
   NoRiderAvailableError,
@@ -258,6 +260,19 @@ async function run() {
     assert.strictEqual(offerTtlMsFrom(-5), 15 * MIN, 'a negative window is a typo, not "instant expiry"');
     assert.strictEqual(offerTtlMsFrom(NaN), 15 * MIN);
     assert.strictEqual(offerTtlMsFrom(Infinity), 15 * MIN, 'a non-finite window falls back to the default');
+    const WEEK_MS = OFFER_MAX_TTL_MINUTES * MIN;
+    assert.strictEqual(OFFER_MAX_TTL_MINUTES, 7 * 24 * 60, 'the cap is one week');
+    assert.strictEqual(offerTtlMsFrom(OFFER_MAX_TTL_MINUTES), WEEK_MS, 'exactly the cap is allowed');
+    assert.strictEqual(offerTtlMsFrom(OFFER_MAX_TTL_MINUTES + 1), WEEK_MS, 'one minute over is clamped to the cap');
+    assert.strictEqual(offerTtlMsFrom('999999999999'), WEEK_MS, 'a huge value is clamped, not passed through to overflow a Date');
+    assert.strictEqual(offerTtlMsFrom('1e12'), WEEK_MS);
+    assert.strictEqual(offerTtlMsFrom(Number.MAX_VALUE), WEEK_MS);
+    assert.strictEqual(OFFER_MIN_TTL_MS, 1000, 'the floor is one second');
+    assert.strictEqual(offerTtlMsFrom('0.00000001'), OFFER_MIN_TTL_MS, 'a tiny positive value is raised to the floor, not rounded to 0 (never expire)');
+    assert.strictEqual(offerTtlMsFrom(0.0001), OFFER_MIN_TTL_MS);
+    assert.strictEqual(offerTtlMsFrom(1 / 60), OFFER_MIN_TTL_MS, 'exactly one second is allowed');
+    assert.strictEqual(offerTtlMsFrom('0'), 0, 'but a real 0 still means never');
+    assert.ok(offerTtlMsFrom('1e12') > 0 && offerTtlMsFrom('0.00000001') > 0, 'neither extreme disables expiry');
 
     const offered = { status: S.ASSIGNED, assignedAt: '2026-10-03T10:00:00.000Z' };
     const t0 = Date.parse(offered.assignedAt);
@@ -273,6 +288,13 @@ async function run() {
     assert.strictEqual(isOfferLapsed(offered, 15 * MIN, t0 + 16 * MIN), true);
     assert.strictEqual(isOfferLapsed({ ...offered, status: S.ACCEPTED }, 15 * MIN, t0 + 99 * MIN), false, 'accepted jobs never lapse');
     assert.strictEqual(isOfferLapsed(offered, 0, t0 + 99 * MIN), false, 'with expiry off nothing lapses');
+
+    // A deadline that would pass the largest representable Date is "no deadline", not a crash.
+    const edge = { status: S.ASSIGNED, assignedAt: '+275760-09-13T00:00:00.000Z' };
+    assert.strictEqual(offerDeadlineMs(edge, 15 * MIN), null, 'an unrepresentable deadline is null');
+    assert.strictEqual(isOfferLapsed(edge, 15 * MIN, Date.now()), false);
+    assert.doesNotThrow(() => presentDelivery({ ...base, ...edge }, 'seller', { offerTtlMs: 15 * MIN }), 'presenting never throws on it');
+    assert.strictEqual(presentDelivery({ ...base, ...edge }, 'seller', { offerTtlMs: 15 * MIN }).offerExpiresAt, null);
 
     const offerBase = { ...base, assignedAt: '2026-10-03T10:00:00.000Z' };
     for (const viewer of ['seller', 'admin', 'driver']) {
