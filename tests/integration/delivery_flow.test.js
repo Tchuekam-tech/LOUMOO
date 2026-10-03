@@ -391,6 +391,27 @@ async function run() {
     assert.strictEqual(buyerAfterAccept.driver.id, cast.rider.id, 'the buyer now sees the rider');
     assert.strictEqual(buyerAfterAccept.driver.name, riderBody.name);
 
+    // ---------------------------------------------------------- handover code
+    console.log('  Checking who can read the handover code...');
+    assert.strictEqual((await api('GET', '/' + deliveryId + '/code', cast.seller)).status, 403, 'the seller never sees the code');
+    assert.strictEqual((await api('GET', '/' + deliveryId + '/code', cast.admin)).status, 403, 'nor does an admin');
+    assert.strictEqual((await api('GET', '/' + deliveryId + '/code', cast.rider)).status, 403, 'nor the rider');
+    assert.strictEqual((await api('GET', '/' + deliveryId + '/code', cast.stranger)).status, 404, 'a stranger gets 404');
+    const codeRes = await api('GET', '/' + deliveryId + '/code', cast.buyer);
+    assert.strictEqual(codeRes.status, 200, JSON.stringify(codeRes.body));
+    const code = codeRes.body.data.code;
+    assert.ok(/^\d{4}$/.test(code), 'the code is four digits');
+    assert.strictEqual(codeRes.body.data.digits, 4);
+    assert.strictEqual(codeRes.body.data.attemptsRemaining, 5);
+    assert.strictEqual((await api('GET', '/' + deliveryId + '/code', cast.buyer)).body.data.code, code, 'the code is stable between reads');
+
+    // Only the nonce is stored, so a database dump reveals no live code.
+    const codeRow = (await db().from('deliveries').select('*').eq('id', deliveryId).single()).data;
+    assert.ok(!Object.keys(codeRow).some(k => /code$/.test(k) && k !== 'code_attempts'), 'no column holds the code');
+    assert.ok(!Object.values(codeRow).some(v => v === code), 'no stored value equals the code');
+    assert.ok(Number.isInteger(codeRow.handover_nonce));
+    console.log('    ✓ Reads, assignment, rider privacy, accept (with a race) and the code audience.');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
