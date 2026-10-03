@@ -18,7 +18,8 @@
  */
 
 const { SupabaseDatabase, handleDatabaseFailure } = require('../../../infrastructure/database/SupabaseClient');
-const { ConflictError, NotFoundError, ValidationError } = require('../../../shared/errors/AppError');
+const { ConflictError, NotFoundError, ValidationError, InfrastructureError } = require('../../../shared/errors/AppError');
+const { config } = require('../../../config/env');
 const logger = require('../../../shared/logging/logger');
 const {
   DELIVERY_STATUS, TERMINAL_STATUSES, WORKLOAD_STATUSES, DRIVER_STATUS, OFFER_EXPIRED_NOTE
@@ -96,6 +97,19 @@ function driverFromRow(row) {
 
 function isOpen(status) {
   return !TERMINAL_STATUSES.includes(status);
+}
+
+/**
+ * For a query whose answer decides who is offered a job: a database error must
+ * not be read as an empty answer. handleDatabaseFailure logs and alerts, but in
+ * production it lets READS fall back to the (empty) in-memory store, and "nobody
+ * is busy" or "nobody has lapsed" would silently steer an assignment to the wrong
+ * rider. So in production the error is thrown and the request fails visibly;
+ * elsewhere the usual development fallback applies.
+ */
+function failRankingInput(error, context) {
+  handleDatabaseFailure(error, context);
+  if (config.isProduction) throw new InfrastructureError('Supabase', context, error);
 }
 
 /** `Map<value, occurrences>` of a list of ids. */
@@ -284,7 +298,7 @@ class DeliveryRepository {
           .in('status', [...WORKLOAD_STATUSES])
           .not('driver_id', 'is', null)
           .limit(MAX_WORKLOAD_ROWS);
-        if (error) handleDatabaseFailure(error, 'DeliveryRepository.countOpenByDriver');
+        if (error) failRankingInput(error, 'DeliveryRepository.countOpenByDriver');
         else {
           if ((data || []).length >= MAX_WORKLOAD_ROWS) {
             logger.warn(`[DeliveryRepository] Workload count hit its ${MAX_WORKLOAD_ROWS}-row cap; rider counts may be low.`);
@@ -292,7 +306,8 @@ class DeliveryRepository {
           return tally((data || []).map((r) => r.driver_id));
         }
       } catch (err) {
-        handleDatabaseFailure(err, 'DeliveryRepository.countOpenByDriver');
+        if (err instanceof InfrastructureError) throw err;
+        failRankingInput(err, 'DeliveryRepository.countOpenByDriver');
       }
     }
     return tally([...this._deliveries.values()]
@@ -402,10 +417,11 @@ class DeliveryRepository {
           .eq('note', OFFER_EXPIRED_NOTE)
           .gte('created_at', new Date(since).toISOString())
           .limit(MAX_WORKLOAD_ROWS);
-        if (error) handleDatabaseFailure(error, 'DeliveryRepository.countRecentLapses');
+        if (error) failRankingInput(error, 'DeliveryRepository.countRecentLapses');
         else return tally((data || []).map((r) => r.actor_id).filter(Boolean));
       } catch (err) {
-        handleDatabaseFailure(err, 'DeliveryRepository.countRecentLapses');
+        if (err instanceof InfrastructureError) throw err;
+        failRankingInput(err, 'DeliveryRepository.countRecentLapses');
       }
     }
     const ids = [];
