@@ -94,6 +94,18 @@ function createDeliveryRouter({
     ok(res, await svc().getRiderOverview(callerOf(req)));
   }));
 
+  // -------------------------------------------------------- create / look-ups
+
+  router.get('/by-order/:orderId', authenticate, route(async (req, res) => {
+    ok(res, { delivery: await svc().getDeliveryByOrder(req.params.orderId, callerOf(req)) });
+  }));
+
+  router.post('/', authenticate, route(async (req, res) => {
+    const { orderId, ...input } = parseBody(schemas.CreateDeliverySchema, req.body, 'delivery');
+    const delivery = await svc().createDelivery(orderId, callerOf(req), input);
+    ok(res, { delivery }, { status: 201 });
+  }));
+
   router.openStreamCount = () => [...openStreams.values()].reduce((a, b) => a + b, 0);
   return router;}
 
