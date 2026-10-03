@@ -494,6 +494,19 @@ async function main() {
       demotedUsers.delete('admin_1');
     }
 
+    // Slot reservation is race-free: a burst of simultaneous connects cannot exceed the cap.
+    {
+      const { id } = await newAssignedDelivery();
+      await waitFor(() => router.openStreamCount() === 0, 'earlier streams to be released before the burst');
+      const burst = await Promise.all(Array.from({ length: limits.maxStreamsPerUser + 2 }, () => openStream(`/api/v1/deliveries/${id}/stream`, BUYER)));
+      const statuses = burst.map((b) => b.status).sort();
+      assert.strictEqual(statuses.filter((c) => c === 200).length, limits.maxStreamsPerUser, 'exactly the cap is admitted');
+      assert.strictEqual(statuses.filter((c) => c === 429).length, 2, 'the rest are refused');
+      burst.forEach(closeStream);
+      await waitFor(() => router.openStreamCount() === 0, 'the burst streams to be released');
+      assert.strictEqual(events.listenerCount(id), 0, 'no subscription outlives its stream');
+    }
+
     // Every stream has been released.
     for (const st of openStreams) closeStream(st);
     await waitFor(() => router.openStreamCount() === 0 && shortLivedRouter.openStreamCount() === 0, 'all streams to be released', 4000);
