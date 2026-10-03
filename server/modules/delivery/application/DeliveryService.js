@@ -360,6 +360,27 @@ class DeliveryService {
     return (await this.repo.findById(delivery.id)) || delivery;
   }
 
+  /**
+   * Sweeps lapsed offers back to their sellers. For the background sweeper; the
+   * reads above cover the same ground one delivery at a time. Bounded per call
+   * (`limit`), so a backlog is worked off over several ticks, and one failing
+   * row never stops the rest. Returns how many were released.
+   */
+  async expireStaleOffers({ limit = 50 } = {}) {
+    if (!(this.offerTtlMs > 0)) return { expired: 0 };
+    const cutoff = new Date(this.now() - this.offerTtlMs).toISOString();
+    const stale = await this.repo.findStaleOffers(cutoff, { limit });
+    let expired = 0;
+    for (const delivery of stale) {
+      try {
+        if (await this._expireOffer(delivery)) expired += 1;
+      } catch (err) {
+        logger.error(`[Delivery] Could not expire offer ${delivery.id}: ${err.message}`);
+      }
+    }
+    return { expired };
+  }
+
   // ------------------------------------------------------------------- create
 
   async createDelivery(orderId, callerInput, input = {}) {
