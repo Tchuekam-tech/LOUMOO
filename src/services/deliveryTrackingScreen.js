@@ -25,13 +25,31 @@
 
   var MAPLIBRE_JS = 'https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.js';
   var MAPLIBRE_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.css';
-  // Real street tiles by default: OpenFreeMap is free, keyless and production-
-  // usable (self-hostable too). For an SLA-backed provider set a MapTiler/Stadia
-  // style URL via window.LOUMOO_MAP_STYLE. The old demo style stays as a last
-  // resort if a custom style fails to load.
+  // Real street tiles by default. A lightweight RASTER basemap (Carto Voyager:
+  // keyless, labels baked in, just PNG tiles) is the default because it renders
+  // reliably even on slow/constrained connections — important for a delivery app
+  // used on mobile data. For vector or an SLA-backed provider, set a style URL
+  // (OpenFreeMap / MapTiler / Stadia) via window.LOUMOO_MAP_STYLE. The demo style
+  // is the last-resort fallback if a custom style spec fails to load.
   var OPENFREEMAP_STYLE = 'https://tiles.openfreemap.org/styles/liberty';
   var DEMO_STYLE = 'https://demotiles.maplibre.org/style.json';
-  function mapStyle() { return (typeof window !== 'undefined' && window.LOUMOO_MAP_STYLE) || OPENFREEMAP_STYLE; }
+  var CARTO_TILES = [
+    'https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+    'https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+    'https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+    'https://d.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
+  ];
+  function rasterStreetStyle() {
+    return {
+      version: 8,
+      sources: { basemap: { type: 'raster', tiles: CARTO_TILES, tileSize: 256, attribution: '© OpenStreetMap contributors, © CARTO' } },
+      layers: [{ id: 'basemap', type: 'raster', source: 'basemap' }]
+    };
+  }
+  function mapStyle() {
+    if (typeof window !== 'undefined' && window.LOUMOO_MAP_STYLE) return window.LOUMOO_MAP_STYLE; // URL or style object
+    return rasterStreetStyle();
+  }
   // Optional geocoder for a drop-off that has an address but no coordinates.
   var GEOCODER = (typeof window !== 'undefined' && window.LOUMOO_GEOCODER_URL) || 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=';
   var DOUALA = { lat: 4.0511, lng: 9.7679 };
