@@ -106,6 +106,119 @@ function createDeliveryRouter({
     ok(res, { delivery }, { status: 201 });
   }));
 
+  // ------------------------------------------------------------- live stream
+
+  router.get('/:id/stream', authenticate, route(async (req, res) => {
+    const who = callerOf(req);
+    const userKey = String(who.userId || '');
+    const openNow = openStreams.get(userKey) || 0;
+    if (openNow >= maxStreamsPerUser) {
+      throw new RateLimitError('Too many open delivery streams. Close one and try again.', 10);
+    }
+
+    const deliveryId = req.params.id;
+    const buffer = [];    let ready = false;
+    let closed = false;
+    let role = null;
+    let heartbeat = null;
+    let lifetime = null;
+    let unsubscribe = () => {};
+
+    // Subscribe BEFORE reading the snapshot, and hold events until the snapshot
+    // is written, so a change landing between the read and the subscription is
+    // delivered (after the snapshot) rather than lost.
+    unsubscribe = events.subscribe(deliveryId, (event) => {
+      if (closed) return;
+      if (!ready) { buffer.push(event); return; }
+      handleEvent(event);
+    });
+
+    let snapshot;
+    try {
+      snapshot = await svc().getDelivery(deliveryId, who); // 404 for non-participants
+    } catch (err) {
+      unsubscribe();
+      throw err;
+    }
+    if (req.destroyed || res.destroyed) { unsubscribe(); return; }
+    role = snapshot.viewerRole;
+
+    function write(chunk) {
+      if (closed) return;
+      try {
+        res.write(chunk);
+        if (typeof res.flush === 'function') res.flush();
+      } catch (err) {
+        cleanup();
+      }
+    }
+    function send(type, data) {
+      write(`event: ${type}\ndata: ${JSON.stringify(data)}\n\n`);
+    }
+    function cleanup() {
+      if (closed) return;
+      closed = true;
+      unsubscribe();
+      if (heartbeat) clearInterval(heartbeat);
+      if (lifetime) clearTimeout(lifetime);
+      const left = (openStreams.get(userKey) || 1) - 1;
+      if (left <= 0) openStreams.delete(userKey); else openStreams.set(userKey, left);
+    }
+    function end(reason) {
+      if (closed) return;
+      send('end', { reason });
+      cleanup();
+      try { res.end(); } catch (err) { /* already gone */ }
+    }
+    function handleEvent(event) {
+      const wire = eventForViewer(event, role);
+      if (wire) send(event.type, wire);
+      if (event.type !== 'status') return;
+      if (TERMINAL_STATUSES.includes(event.status)) { end('complete'); return; }
+      // A status change is when access can change (a rider was replaced or
+      // declined): re-check, rather than trusting the check made at connect.
+      svc().getViewerRole(deliveryId, who).then((current) => {
+        if (!current) end('access_revoked');
+      }).catch((err) => logger.warn(`[DeliveryStream] Access re-check failed for ${deliveryId}: ${err.message}`));
+    }
+
+    res.status(200);
+    res.set({
+      'Content-Type': 'text/event-stream; charset=utf-8',
+      // no-transform: stops the compression middleware from buffering the stream.
+      'Cache-Control': 'no-cache, no-transform',
+      Connection: 'keep-alive',
+      'X-Accel-Buffering': 'no'
+    });
+    res.flushHeaders();
+    openStreams.set(userKey, openNow + 1);
+    req.on('close', cleanup);
+    res.on('error', cleanup);
+
+    write(`retry: ${DEFAULTS.retryMs}\n\n`);
+    send('status', {
+      status: snapshot.status,
+      at: snapshot.updatedAt,
+      etaMinutes: snapshot.etaMinutes,
+      distanceKm: snapshot.distanceKm
+    });
+    if (snapshot.lastLocation) {
+      const loc = snapshot.lastLocation;
+      send('location', {
+        lat: loc.lat, lng: loc.lng, at: loc.at, speedKmh: loc.speedKmh ?? null, heading: loc.heading ?? null
+      });
+    }
+    if (TERMINAL_STATUSES.includes(snapshot.status)) { end('complete'); return; }
+
+    ready = true;
+    for (const event of buffer.splice(0)) handleEvent(event);
+
+    heartbeat = setInterval(() => write(': keep-alive\n\n'), heartbeatMs);
+    lifetime = setTimeout(() => end('timeout'), maxStreamMs);
+    if (heartbeat.unref) heartbeat.unref();
+    if (lifetime.unref) lifetime.unref();
+  }));
+
   router.openStreamCount = () => [...openStreams.values()].reduce((a, b) => a + b, 0);
   return router;}
 
