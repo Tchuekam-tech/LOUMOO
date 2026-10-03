@@ -512,6 +512,13 @@ class DeliveryService {
     return this._applyAssignment(delivery, pick.driver, caller, role, `Auto-assigned to ${pick.driver.name}`);
   }
 
+  /** What the rider is told with a new offer: how long they have, when there is a limit. */
+  _offerPrompt() {
+    if (!(this.offerTtlMs > 0)) return 'Open LOUMOO to accept or decline it.';
+    const minutes = Math.max(1, Math.round(this.offerTtlMs / 60000));
+    return `Open LOUMOO to accept or decline it within ${minutes} ${minutes === 1 ? 'minute' : 'minutes'}.`;
+  }
+
   /**
    * The shared tail of assign and auto-assign: the rider is already chosen and
    * validated; this performs the compare-and-swap, notifies them and presents
@@ -549,7 +556,7 @@ class DeliveryService {
 
     this._notify(driver.id, {
       title: 'New delivery assigned',
-      body: 'Open LOUMOO to accept or decline it.',
+      body: this._offerPrompt(),
       delivery: updated
     });
     return this._present(updated, role);
