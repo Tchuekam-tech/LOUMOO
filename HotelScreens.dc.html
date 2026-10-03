@@ -345,6 +345,7 @@
               <div class="hotel-space-card">
                 <sc-if value="{{ space.image }}"><div class="hotel-space-media"><img src="{{ space.image }}" alt="{{ space.name }}" loading="lazy" decoding="async"></div></sc-if>
                 <div class="hotel-space-body">
+                  <sc-if value="{{ space.category }}"><span class="hotel-space-cat">{{ space.category }}</span></sc-if>
                   <div class="hotel-space-name">{{ space.name }}</div>
                   <sc-if value="{{ space.description }}"><div class="hotel-space-desc lc-2">{{ space.description }}</div></sc-if>
                   <sc-if value="{{ space.features }}"><div class="hotel-space-feat">{{ space.features }}</div></sc-if>
@@ -678,6 +679,40 @@
       </button>
     </div>
 
+  </div>
+</div>
+</sc-if>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     EMBEDDED VIRTUAL-TOUR VIEWER (opens over any hotel screen)
+     The tour host loads fullscreen inside LOUMOO; a persistent "open in new tab"
+     action is the fallback for providers that block iframe embedding. Mounted
+     only while open, so the iframe src binds to a real URL (never a placeholder).
+     ══════════════════════════════════════════════════════════════════════ -->
+<sc-if value="{{ tourModalOpen }}">
+<div class="hotel-tour-modal" onClick="{{ closeHotelVirtualTour }}">
+  <div class="hotel-tour-modal-panel" onClick="{{ (e) => e && e.stopPropagation && e.stopPropagation() }}">
+    <div class="hotel-tour-modal-bar">
+      <div class="hotel-tour-modal-title">
+        <span class="hotel-tour-modal-dot"></span>
+        <span>360° Virtual Tour</span>
+      </div>
+      <div class="hotel-tour-modal-actions">
+        <button onClick="{{ openHotelTourInNewTab }}" class="hotel-tour-modal-btn">
+          <span>Open in new tab</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M8 7h9v9"/></svg>
+        </button>
+        <button onClick="{{ closeHotelVirtualTour }}" class="hotel-tour-modal-close" aria-label="Close virtual tour">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="hotel-tour-modal-frame">
+      <iframe src="{{ tourModalUrl }}" title="Virtual tour" allow="fullscreen; xr-spatial-tracking; gyroscope; accelerometer; vr" allowfullscreen loading="eager" referrerpolicy="no-referrer"></iframe>
+      <div class="hotel-tour-modal-fallback">
+        Tour not loading? <button onClick="{{ openHotelTourInNewTab }}">Open it in a new tab</button>
+      </div>
+    </div>
   </div>
 </div>
 </sc-if>
