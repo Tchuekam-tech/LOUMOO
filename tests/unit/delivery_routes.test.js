@@ -82,6 +82,7 @@ async function main() {
   const shortLivedRouter = createDeliveryRouter({ service, authenticate: fakeAuth, events, revalidate, heartbeatMs: 40, maxStreamMs: 200, maxStreamsPerUser: 3 });
   const LEAK_HEARTBEAT_MS = 37; // unique, so a leaked heartbeat interval is attributable to these routers
   const leakRouter = createDeliveryRouter({ service, authenticate: fakeAuth, events, revalidate, heartbeatMs: LEAK_HEARTBEAT_MS, maxStreamMs: 60000, maxStreamsPerUser: 50 });
+  const noStreamRouter = createDeliveryRouter({ service, authenticate: fakeAuth, events, revalidate, streamSupported: false });
 
   const app = express();
   app.use(compression({ threshold: 0 })); // as in production: this is what buffers a badly-headed stream
@@ -89,6 +90,7 @@ async function main() {
   app.use('/api/v1/deliveries', router);
   app.use('/short/deliveries', shortLivedRouter);
   app.use('/leak/deliveries', leakRouter);
+  app.use('/nostream/deliveries', noStreamRouter);
   app.use(errorHandler);
 
   const server = http.createServer(app);
@@ -593,6 +595,24 @@ async function main() {
       assert.strictEqual(st.status, 200, 'a GET with a body is answered');
       await waitFor(() => st.sawStatus, 'the snapshot on a GET-with-body stream');
       closeStream(st);
+    }
+
+    // Serverless runtimes answer at once instead of hanging.
+    {
+      const { id } = await newAssignedDelivery();
+      const started = Date.now();
+      const res = await call('GET', `/nostream/deliveries/${id}/stream`, BUYER);
+      assert.strictEqual(res.status, 501);
+      assert.strictEqual(res.body.error.code, 'STREAM_UNSUPPORTED');
+      assert.ok(Date.now() - started < 1500, 'it answers immediately');
+      assert.strictEqual((await call('GET', `/nostream/deliveries/${id}`, BUYER)).status, 200, 'polling the same delivery still works');
+      assert.strictEqual(noStreamRouter.openStreamCount(), 0, 'no slot is ever reserved');
+      assert.strictEqual((await call('GET', `/nostream/deliveries/${id}/stream`, null)).status, 401, 'unauthenticated callers still get 401, not 501');
+      assert.strictEqual((await call('GET', `/nostream/deliveries/dlv_nope/stream`, BUYER)).status, 501, 'the unsupported answer does not depend on the delivery');
+      assert.ok(productionRouter.isServerlessRuntime({ AWS_LAMBDA_FUNCTION_NAME: 'api' }));
+      assert.ok(productionRouter.isServerlessRuntime({ NETLIFY: 'true' }));
+      assert.ok(productionRouter.isServerlessRuntime({ VERCEL: '1' }));
+      assert.ok(!productionRouter.isServerlessRuntime({}));
     }
 
     // Every stream has been released.
