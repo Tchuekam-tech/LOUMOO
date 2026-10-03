@@ -38,6 +38,7 @@ const {
   optionalNumber,
   haversineKm,
   estimateEta,
+  offerTtlMsFrom,
   describeAddress,
   describeArea,
   presentDelivery
@@ -76,11 +77,20 @@ function cleanText(value, field, max = 255) {
 }
 
 class DeliveryService {
-  constructor({ repository, orderRepository, events, now } = {}) {
+  /**
+   * `offerTtlMs` is how long a rider has to accept an assigned delivery (0 = never
+   * expires). Unset, it comes from DELIVERY_OFFER_TTL_MINUTES, then the default.
+   * An explicit value that is not a finite number >= 0 also falls back, so a bad
+   * option cannot silently switch expiry off.
+   */
+  constructor({ repository, orderRepository, events, now, offerTtlMs } = {}) {
     this.repo = repository || new DeliveryRepository();
     this.orders = orderRepository || new OrderRepository();
     this.events = events || deliveryEvents;
     this.now = typeof now === 'function' ? now : () => Date.now();
+    this.offerTtlMs = typeof offerTtlMs === 'number'
+      ? offerTtlMsFrom(offerTtlMs / 60000)
+      : offerTtlMsFrom(process.env.DELIVERY_OFFER_TTL_MINUTES);
   }
 
   // ----------------------------------------------------------------- identity
@@ -186,7 +196,7 @@ class DeliveryService {
     if (includeTimeline) timeline = await this.repo.listEvents(delivery.id);
     let order = null;
     try { order = await this.orders.findOrderById(delivery.orderId); } catch (e) { /* number is cosmetic */ }
-    return presentDelivery(hydrated, role, { timeline, order });
+    return presentDelivery(hydrated, role, { timeline, order, offerTtlMs: this.offerTtlMs });
   }
 
   /**
