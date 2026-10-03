@@ -88,7 +88,7 @@ but never decide expiry themselves: the server's clock is the only one that coun
 |---|---|---|
 | `POST /` | **201** | `{ delivery }` |
 | `GET /:id`, `GET /by-order/:orderId` | 200 | `{ delivery }` |
-| `POST /:id/assign`, `/cancel`, `/accept`, `/status`, `/complete`, `/resolve` | 200 | `{ delivery }` |
+| `POST /:id/assign`, `/auto-assign`, `/cancel`, `/accept`, `/status`, `/complete`, `/resolve` | 200 | `{ delivery }` |
 | `POST /:id/decline` | 200 | `{ delivery: { id, status } }` (the rider loses access afterwards) |
 | `POST /:id/location` | 200 | `{ accepted: true, location, etaMinutes, distanceKm }` or `{ accepted: false, reason }` |
 | `GET /:id/code` | 200 | `{ code, digits, attemptsRemaining }` |
@@ -99,7 +99,7 @@ but never decide expiry themselves: the server's clock is the only one that coun
 
 Request bodies are **strict**: any key not listed in this document is a `400`
 (this is what stops a client sending `buyerId`, `status`, `driverId` on create…).
-Actions with no body (`accept`, `decline`, `reconcile`) ignore one.
+Actions with no body (`accept`, `decline`, `auto-assign`, `reconcile`) ignore one.
 
 ## Objects
 
@@ -158,6 +158,7 @@ frontend must handle `etaMinutes: null` and `lastLocation` without a destination
 | `GET /:id/stream` | same | **Server-Sent Events** (below). |
 | `POST /` | seller of the order, admin | Create the delivery. Body: `{ orderId, pickup?: { label?, address?, location? }, dropoffLocation?: { lat, lng }, dropoffAddress? }`. Order must be `HOME_DELIVERY`, `processing`, not refunded, and have no open or delivered delivery. |
 | `POST /:id/assign` `{ driverId }` | seller, admin | Assign or re-assign a rider (see Transitions). The rider cannot be the order's buyer. |
+| `POST /:id/auto-assign` | seller, admin | Let the server pick the rider: the active rider with the fewest `openDeliveries` who is not the order's buyer, has not declined, released or let an offer lapse on this delivery, and (when re-offering an `assigned` delivery) is not the rider already holding the offer. Ties go to the name, then the id, so the choice is deterministic. Allowed from the same statuses as `/assign`. No body (one is ignored). `409 NO_RIDER_AVAILABLE` when nobody qualifies. Responds like `/assign`. |
 | `POST /:id/cancel` `{ reason? }` | seller, admin; buyer only while `pending_assignment` | Cancel before pickup. |
 | `GET /:id/code` | order **buyer only** | `{ code, digits: 4, attemptsRemaining }`. Only from `accepted` to `arrived`. Seller, admin and rider get `403`. |
 | `GET /drivers` | seller, admin | Active riders to pick from: `[{ id, name, phone, openDeliveries, declined? }]`, fewest `openDeliveries` first, then by name. `openDeliveries` counts the rider's `assigned`, `accepted`, `picked_up` and `arrived` deliveries. With `?deliveryId=…` (seller or admin **of that delivery**, else `404`) every rider also carries `declined: true` when they declined, released, or let an offer lapse on **that** delivery, so the picker can grey them out. `declined` is absent without `deliveryId`. |
