@@ -203,6 +203,7 @@ v1Router.use('/uploads', uploadRoutes);
 v1Router.use('/announcements', announcementRoutes);
 v1Router.use('/travel', travelRoutes);
 v1Router.use('/orders', orderRoutes);
+v1Router.use('/deliveries', deliveryRoutes);
 v1Router.use('/admin', superAdminRoutes);
 
 app.use('/api/v1', v1Router);
