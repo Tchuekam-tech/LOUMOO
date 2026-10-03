@@ -106,3 +106,34 @@
     document.head.appendChild(el);
   }
 
+  // --------------------------------------------------------------- overlay shell
+  function h(tag, attrs, html) {
+    var el = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) { el.setAttribute(k, attrs[k]); });
+    if (html != null) el.innerHTML = html;
+    return el;
+  }
+
+  function buildOverlay(subtitle) {
+    var root = h('div', { id: 'loumoo-dt', role: 'dialog', 'aria-label': 'Delivery tracking' });
+    root.innerHTML =
+      '<div class="dt-head">' +
+        '<button class="dt-iconbtn" data-dt-close aria-label="Close tracking">' +
+          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m15 18-6-6 6-6"/></svg>' +
+        '</button>' +
+        '<div class="dt-title"><h4>Track delivery</h4><div class="dt-sub">' + (subtitle || 'Loading…') + '</div></div>' +
+        '<span class="dt-pill" data-dt-pill>…</span>' +
+      '</div>' +
+      '<div class="dt-map" data-dt-map><div class="dt-map-fallback" data-dt-mapmsg>Loading map…</div></div>' +
+      '<div class="dt-body">' +
+        '<div class="dt-card dt-eta" data-dt-eta hidden></div>' +
+        '<div class="dt-card dt-code" data-dt-code hidden></div>' +
+        '<div class="dt-card dt-driver" data-dt-driver hidden></div>' +
+        '<div class="dt-card"><ul class="dt-timeline" data-dt-timeline></ul></div>' +
+        '<div class="dt-error" data-dt-error hidden></div>' +
+        '<div class="dt-note">Live location updates while your parcel is on the way. If the live feed is unavailable this screen refreshes every few seconds.</div>' +
+      '</div>';
+    root.querySelector('[data-dt-close]').addEventListener('click', close);
+    return root;
+  }
+
