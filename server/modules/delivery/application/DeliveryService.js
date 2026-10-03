@@ -245,7 +245,7 @@ class DeliveryService {
     const target = DeliveryStateMachine.orderStatusFor(delivery.status);
     if (!target) return;
     try {
-      const order = await this.orders.findOrderById(delivery.orderId);
+      const order = await this._freshOrder(delivery.orderId);
       if (!order) {
         logger.error(`[Delivery] Order ${delivery.orderId} for delivery ${delivery.id} not found while syncing.`);
         return;
