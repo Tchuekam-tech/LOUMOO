@@ -258,3 +258,27 @@
     el.hidden = false;
   }
 
+  function renderCode(codeData) {
+    var el = q('[data-dt-code]'); if (!el) return;
+    if (!codeData || !codeData.code) { el.hidden = true; return; }
+    var left = codeData.attemptsRemaining != null
+      ? esc(codeData.attemptsRemaining) + ' attempt' + (codeData.attemptsRemaining === 1 ? '' : 's') + ' left · keep it private'
+      : 'Give this code to your rider to confirm the handover';
+    el.innerHTML =
+      '<div class="dt-code-label">Handover code</div>' +
+      '<div class="dt-code-digits">' + esc(codeData.code) + '</div>' +
+      '<div class="dt-code-hint">' + left + '</div>';
+    el.hidden = false;
+  }
+  function hideCode() { var el = q('[data-dt-code]'); if (el) el.hidden = true; }
+
+  function applyDelivery(d) {
+    state.delivery = d;
+    setSubtitle(d.orderNumber ? 'Order ' + d.orderNumber : (d.orderId ? 'Order ' + d.orderId : ''));
+    setPill(labelFor(d.status).toUpperCase(), statusKind(d.status));
+    renderTimeline(d);
+    renderEta(d);
+    renderDriver(d);
+    if (typeof updateMap === 'function') updateMap(d);
+  }
+
