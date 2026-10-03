@@ -29,3 +29,14 @@ async function run() {
   assert.deepStrictEqual(c._parseSseFrame('retry: 5000'), null, 'a retry-only frame yields no event');
   ok('ignores a retry-only frame');
 
+  // -- envelope unwrap + methods -------------------------------------------
+  const calls = [];
+  global.fetch = async (url, opts) => {
+    calls.push({ url, opts });
+    return { ok: true, status: 200, json: async () => ({ success: true, status: 'success', data: { delivery: { id: 'dlv_1', status: 'assigned' } } }) };
+  };
+  let res = await deliveryApi.getByOrder('ord_42');
+  assert.deepStrictEqual(res, { delivery: { id: 'dlv_1', status: 'assigned' } }, 'unwraps envelope.data');
+  assert.ok(calls[0].url.endsWith('/api/v1/deliveries/by-order/ord_42'), 'calls the by-order path');
+  ok('getByOrder unwraps the data envelope and hits the right path');
+
