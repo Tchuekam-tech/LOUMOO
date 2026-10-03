@@ -89,6 +89,14 @@ class OfferExpiredError extends AppError {
   }
 }
 
+// Auto-assign found nobody eligible. A 409 (the delivery is fine; the situation
+// is what blocks it), distinct from a validation error on a rider the seller chose.
+class NoRiderAvailableError extends AppError {
+  constructor(message = 'No rider is available for this delivery right now.') {
+    super(message, { code: 'NO_RIDER_AVAILABLE', statusCode: 409 });
+  }
+}
+
 function newDeliveryId() {
   return `dlv_${crypto.randomUUID()}`;
 }
@@ -271,6 +279,7 @@ module.exports = {
   WORKLOAD_STATUSES,
   DeliveryLockedError,
   OfferExpiredError,
+  NoRiderAvailableError,
   newDeliveryId,
   parseLocation,
   optionalNumber,
