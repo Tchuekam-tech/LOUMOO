@@ -157,3 +157,31 @@
     if (typeof load === 'function') load(orderId, deliveryId);
   }
 
+  function close() {
+    if (state.sub && state.sub.close) { try { state.sub.close(); } catch (e) {} }
+    state.sub = null;
+    if (state.map && state.map.remove) { try { state.map.remove(); } catch (e) {} }
+    state.map = null;
+    state.driverMarker = null;
+    state.destMarker = null;
+    if (state.root && state.root.parentNode) state.root.parentNode.removeChild(state.root);
+    state.root = null;
+    state.mounted = false;
+    state.delivery = null;
+    state.deliveryId = null;
+    try { document.body.style.overflow = ''; } catch (e) {}
+  }
+
+  // --------------------------------------------------------------- rendering
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function initials(name) { return String(name || '?').trim().split(/\s+/).slice(0, 2).map(function (p) { return p.charAt(0).toUpperCase(); }).join('') || '?'; }
+  function fmtTime(at) { try { return new Date(at).toLocaleString(); } catch (e) { return ''; } }
+  function digitsOnly(p) { return String(p || '').replace(/[^\d]/g, ''); }
+
+  function setPill(text, kind) {
+    var el = q('[data-dt-pill]'); if (!el) return;
+    el.textContent = text;
+    el.className = 'dt-pill' + (kind ? ' ' + kind : '');
+  }
+  function setSubtitle(text) { var el = q('.dt-sub'); if (el) el.textContent = text; }
+
