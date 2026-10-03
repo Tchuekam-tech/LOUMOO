@@ -565,6 +565,36 @@ async function main() {
       assert.strictEqual(leakRouter.openStreamCount(), 0);
     }
 
+    // A GET that carries a body (read by express.json()) still gets its stream, not a hung response.
+    {
+      const { id } = await newAssignedDelivery();
+      const st = await new Promise((resolve, reject) => {
+        // A regression here means NO response at all, so the test itself must not wait forever.
+        const hung = setTimeout(() => reject(new Error('a GET carrying a body was left hanging with no response')), 3000);
+        const state = { events: [], buffer: '', ended: false, status: null };
+        const req = http.request(`${base}/api/v1/deliveries/${id}/stream`, {
+          method: 'GET',
+          headers: { 'x-test-user': BUYER, 'content-type': 'application/json', 'content-length': 2 }
+        }, (res) => {
+          clearTimeout(hung);
+          state.status = res.statusCode;
+          state.res = res;
+          res.setEncoding('utf8');
+          res.on('data', (c) => { state.buffer += c; if (/event: status/.test(state.buffer)) state.sawStatus = true; });
+          res.on('close', () => { state.ended = true; });
+          resolve(state);
+        });
+        state.req = req;
+        req.on('error', (e) => { if (!state.ended) reject(e); });
+        req.write('{}');
+        req.end();
+        openStreams.push(state);
+      });
+      assert.strictEqual(st.status, 200, 'a GET with a body is answered');
+      await waitFor(() => st.sawStatus, 'the snapshot on a GET-with-body stream');
+      closeStream(st);
+    }
+
     // Every stream has been released.
     for (const st of openStreams) closeStream(st);
     await waitFor(() => router.openStreamCount() === 0 && shortLivedRouter.openStreamCount() === 0, 'all streams to be released', 4000);
