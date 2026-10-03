@@ -66,16 +66,39 @@ delivery yet, the overlay shows a friendly notice rather than an error.
 
 ## Map tiles
 
-Without a key it uses the keyless MapLibre demo tiles (coarse world map). For
-street-level tiles, set a style URL before the app loads:
+The default is **Esri World Street Map** — real street tiles, **keyless**, free to
+use with attribution, and lightweight (JPEG raster) so it renders reliably on
+mobile data. No configuration needed.
+
+To use a different basemap, set a style before the app loads (a URL or a MapLibre
+style object):
 
 ```html
+<!-- Vector (OpenFreeMap — free, keyless, self-hostable): -->
+<script>window.LOUMOO_MAP_STYLE = 'https://tiles.openfreemap.org/styles/liberty';</script>
+<!-- or an SLA-backed provider: -->
 <script>window.LOUMOO_MAP_STYLE = 'https://api.maptiler.com/maps/streets/style.json?key=YOUR_KEY';</script>
 ```
 
-(or any Stadia/other MapLibre-compatible style). MapLibre GL itself is loaded
-lazily from a CDN the first time the overlay opens, so it never weighs on the
-initial shell.
+A URL style that fails to load falls back to the MapLibre demo tiles; the inline
+Esri default cannot fail that way. MapLibre GL is loaded lazily from a CDN the
+first time the overlay opens, so it never weighs on the initial shell.
+
+When the drop-off has an address but no coordinates (the checkout address has
+none today), the destination is geocoded — Nominatim by default, overridable via
+`window.LOUMOO_GEOCODER_URL` (append-query form).
+
+## API origin
+
+Same-origin by default. In production the frontend (Netlify) and the API
+(Railway) are different origins, so set the API origin once before load:
+
+```html
+<script>window.LOUMOO_API_ORIGIN = 'https://loumoo-production.up.railway.app';</script>
+```
+
+The server must then allow that origin in `CORS_ORIGINS` (the live stream and the
+REST calls are both cross-origin).
 
 ## Build & merge
 
@@ -86,12 +109,24 @@ initial shell.
   minimally and in different places (step 4 adds two script tags); expect a
   trivial merge at most.
 
-## Known follow-ups (need a build + browser pass)
+## Verified
 
-- The order-detail screen still shows the **pre-existing static** escrow/fulfilment
-  steps as a summary; they could be replaced by the live timeline once the DC
-  root projects delivery data.
+Checked live on 2026-10-03:
+- `npm run build:frontend` builds; both service `<script>` tags land in
+  `Commerce App.dc.html` and the `data-track-delivery` button survives DC
+  compilation (binding intact) in `OrderScreens.dc.html`.
+- The overlay renders real Esri street tiles, the directional animated rider, the
+  destination pin, the route line, ETA, timeline, rider card and handover code.
+- **Full end-to-end:** the real client (`deliveryApi.js`) talking to the real
+  backend `/api/v1/deliveries` against the live Supabase database (migration 013
+  applied) — a seeded picked-up delivery rendered its real rider position, 5-min
+  ETA and handover code on the real map. Cross-origin (CORS) and the node client
+  unit test (`deliveryApi.test.js`, 8/8) both pass.
+
+## Known follow-ups
+
 - Optionally promote the overlay into DC navigation (back-stack integration)
   instead of a self-managed overlay.
-- Verify the `data-track-delivery` button survives DC compilation (it uses plain
-  attributes + a native delegate, so it should) and wire real street tiles.
+- Road-snapped routing (a provider/OSRM) instead of the straight geodesic line.
+- An SLA-backed tile provider + key for very high volume (Esri/OpenFreeMap cover
+  normal use keyless).
