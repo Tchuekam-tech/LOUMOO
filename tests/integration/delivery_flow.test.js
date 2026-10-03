@@ -576,6 +576,18 @@ async function run() {
     await waitFor(() => typesOf(buyerStream).includes('location'), 'the last position in the late-joiner snapshot');
     assert.strictEqual(buyerStream.events.find(e => e.type === 'location').data.lat, 4.0546, 'a late joiner gets the last accepted position');
 
+    // A new point reaches both open streams within the request, no polling.
+    await sleep(3200);
+    const livePing = await api('POST', pingPath, cast.rider, { lat: 4.0541, lng: 9.7679, speedKmh: 21 });
+    assert.strictEqual(livePing.body.data.accepted, true, JSON.stringify(livePing.body));
+    await waitFor(() => buyerStream.events.some(e => e.type === 'location' && e.data.lat === 4.0541), 'the live position on the buyer stream');
+    await waitFor(() => sellerStream.events.some(e => e.type === 'location' && e.data.lat === 4.0541), 'the live position on the seller stream');
+    await waitFor(() => buyerStream.events.some(e => e.type === 'eta' && Number.isInteger(e.data.etaMinutes)), 'an ETA on the buyer stream');
+    const wire = buyerStream.events.filter(e => e.type === 'location').pop().data;
+    assert.strictEqual(wire.status, undefined, 'internal fields are not on the wire');
+    assert.strictEqual(wire.nonce, undefined);
+    console.log('    ✓ Stream: auth, snapshot, headers and live position through compression and the session guard.');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
