@@ -274,6 +274,21 @@ async function run() {
     assert.strictEqual(isOfferLapsed({ ...offered, status: S.ACCEPTED }, 15 * MIN, t0 + 99 * MIN), false, 'accepted jobs never lapse');
     assert.strictEqual(isOfferLapsed(offered, 0, t0 + 99 * MIN), false, 'with expiry off nothing lapses');
 
+    const offerBase = { ...base, assignedAt: '2026-10-03T10:00:00.000Z' };
+    for (const viewer of ['seller', 'admin', 'driver']) {
+      assert.strictEqual(presentDelivery(offerBase, viewer, { offerTtlMs: 15 * MIN }).offerExpiresAt, '2026-10-03T10:15:00.000Z',
+        `${viewer} sees when the offer lapses`);
+    }
+    assert.strictEqual(presentDelivery(offerBase, 'buyer', { offerTtlMs: 15 * MIN }).offerExpiresAt, null, 'the buyer never learns of the offer');
+    for (const viewer of ['buyer', 'seller', 'admin', 'driver']) {
+      assert.strictEqual(presentDelivery(offerBase, viewer).offerExpiresAt, null, `${viewer}: no window given means no deadline`);
+      assert.strictEqual(presentDelivery(offerBase, viewer, { offerTtlMs: 0 }).offerExpiresAt, null, `${viewer}: expiry off means no deadline`);
+      assert.strictEqual(presentDelivery({ ...offerBase, status: S.ACCEPTED }, viewer, { offerTtlMs: 15 * MIN }).offerExpiresAt, null,
+        `${viewer}: an accepted job has no deadline`);
+      assert.ok(!JSON.stringify(presentDelivery(offerBase, viewer, { offerTtlMs: 15 * MIN })).includes('assignedAt'),
+        `${viewer} never sees the raw assignedAt column`);
+    }
+
     console.log('    ✓ Delivery domain: state machine, geo, handover code and viewer redaction hold.');
   } finally {
     if (!hadSecret) config.supabase.jwtSecret = hadSecret;
