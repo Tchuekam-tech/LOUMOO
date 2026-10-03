@@ -543,6 +543,21 @@ async function run() {
       assert.strictEqual(after.driverId, 'rider_1');
     }
 
+    {
+      // The offer lapses WHILE auto-assign is running (after it read the delivery, before it ranks):
+      // the seller's re-offer must still go through, not fail with a spurious "changed by someone else".
+      const w = makeWorld();
+      await registerRiders(w, [['rider_1', 'Alain'], ['rider_2', 'Bruno']]);
+      const { id } = await newDelivery(w, { assignTo: 'rider_1' });
+      w.clock.advance(OFFER_TTL_MS - 5); // 5 ms before the deadline
+      const original = w.service._assertOrderNotCancelled.bind(w.service);
+      w.service._assertOrderNotCancelled = async (d) => { w.clock.advance(10); return original(d); }; // time passes mid-call
+      const moved = await w.service.autoAssignDriver(id, SELLER);
+      assert.strictEqual(moved.status, 'assigned');
+      assert.strictEqual(moved.driver.id, 'rider_2', 'the re-offer went through');
+      assert.strictEqual(moved.offerExpiresAt, new Date(w.clock.now() + OFFER_TTL_MS).toISOString(), 'with a fresh window');
+    }
+
     // ------------------------------------------ auto-assign: states it works from
     {
       const w = makeWorld();
