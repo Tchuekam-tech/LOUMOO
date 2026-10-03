@@ -180,3 +180,27 @@ class DeliveryApiClient {
       pollTimer = setInterval(tick, POLL_MS);
     };
 
+    const runStream = async () => {
+      if (stopped) return;
+      controller = new AbortController();
+      let res;
+      try {
+        const token = await this._resolveToken();
+        res = await fetch(`${this.baseUrl}/${encodeURIComponent(id)}/stream`, {
+          headers: this._headers(token, { Accept: 'text/event-stream' }),
+          signal: controller.signal
+        });
+      } catch (err) {
+        if (!stopped) startPolling(); // couldn't open the stream → poll
+        return;
+      }
+      if (res.status === 501) return startPolling(); // serverless: streaming unsupported
+      if (!res.ok || !res.body) {
+        const body = await res.json().catch(() => null);
+        if (res.status === 404 || res.status === 403) { stop(); return h.onEnd('access_revoked'); }
+        const err = new Error(body?.error?.message || `Stream failed (${res.status})`);
+        err.code = body?.error?.code; err.status = res.status;
+        h.onError(err);
+        return startPolling();
+      }
+
