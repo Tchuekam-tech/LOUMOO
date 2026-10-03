@@ -214,6 +214,28 @@ async function main() {
       await new Promise((resolve) => prodServer.close(resolve));
     }
 
+    // ------------------------------------------------------- authentication
+    for (const [method, path] of [['GET', '/drivers'], ['GET', '/driver/me'], ['GET', '/dlv_x'], ['POST', '/'], ['POST', '/dlv_x/location']]) {
+      const r = await api(method, path, null, method === 'POST' ? {} : undefined);
+      assert.strictEqual(r.status, 401, `${method} ${path} needs a session`);
+      assert.strictEqual(r.body.error.code, 'UNAUTHENTICATED');
+    }
+
+    // ---------------------------------------------------------------- riders
+    assert.strictEqual((await api('POST', '/drivers/rider_1', SELLER, { name: 'Alain', phone: '+237600000001' })).status, 403, 'only admins register riders');
+    assert.strictEqual((await api('POST', '/drivers/rider_1', ADMIN, { name: 'Alain', phone: '+237600000001', role: 'admin' })).status, 400, 'unknown keys are rejected');
+    assert.strictEqual((await api('POST', '/drivers/rider_1', ADMIN, { name: 'Alain', phone: '+237600000001', status: 'banished' })).status, 400, 'status must be a known value');
+    const registered = await api('POST', '/drivers/rider_1', ADMIN, { name: 'Alain', phone: '+237600000001' });
+    assert.strictEqual(registered.status, 200);
+    assert.strictEqual(registered.body.data.driver.status, 'active');
+    await api('POST', '/drivers/rider_2', ADMIN, { name: 'Bruno', phone: '+237600000002' });
+
+    const listed = await api('GET', '/drivers', SELLER);
+    assert.strictEqual(listed.status, 200, '/drivers is the rider list, not a delivery called "drivers"');
+    assert.deepStrictEqual(listed.body.data.drivers.map((d) => d.id).sort(), ['rider_1', 'rider_2']);
+    assert.strictEqual((await api('GET', '/drivers', BUYER)).status, 403, 'customers cannot list riders');
+    assert.strictEqual((await api('GET', '/driver/me', STRANGER)).status, 403, 'non-riders have no rider overview');
+
     console.log('    ✓ Delivery routes: wiring, validation, status codes and the live stream hold.');
   } finally {
     NotificationService.create = originalCreate;
