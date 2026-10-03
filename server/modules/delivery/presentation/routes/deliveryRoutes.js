@@ -251,7 +251,10 @@ function createDeliveryRouter({
       'X-Accel-Buffering': 'no'
     });
     res.flushHeaders();
-    req.on('close', cleanup);
+    // `res` 'close' is the documented signal that the response ended or the
+    // client went away. (A request's own 'close' changed meaning in Node 16 and
+    // can fire once the request body has been read, so it is not relied on.)
+    res.on('close', cleanup);
     res.on('error', cleanup);
 
     write(`retry: ${DEFAULTS.retryMs}\n\n`);
