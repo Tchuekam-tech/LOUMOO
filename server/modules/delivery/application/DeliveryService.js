@@ -39,6 +39,8 @@ const {
   haversineKm,
   estimateEta,
   offerTtlMsFrom,
+  isOfferLapsed,
+  OfferExpiredError,
   describeAddress,
   describeArea,
   presentDelivery
@@ -303,6 +305,57 @@ class DeliveryService {
     }
     await this._record(updated, delivery.status, actorId, note);
     return updated;
+  }
+
+  // ------------------------------------------------------------- offer expiry
+
+  /**
+   * Returns a lapsed offer to the seller. Returns the updated record, or `null`
+   * when someone else got there first (the rider accepted, the seller
+   * re-assigned or cancelled): the caller should re-read, not retry.
+   *
+   * The swap is guarded on `assignedAt` as well as the rider: a seller who
+   * re-assigns the same rider while a sweep is in flight has just started a
+   * fresh window, and a status+rider match alone would expire it.
+   *
+   * The timeline row names the RIDER as the actor (the transition is their
+   * silence, and `_ridersWhoPassed` reads it to keep them off the next offer).
+   */
+  async _expireOffer(delivery) {
+    const riderId = delivery.driverId;
+    const updated = await this.repo.updateWhere(
+      delivery.id,
+      { status: S.ASSIGNED, driverId: riderId, assignedAt: delivery.assignedAt },
+      { status: S.PENDING_ASSIGNMENT, driverId: null, assignedAt: null, acceptedAt: null }
+    );
+    if (!updated) return null;
+    await this._record(updated, S.ASSIGNED, riderId, 'Offer expired: no response from the rider');
+    this._notify(updated.sellerId, {
+      title: 'A rider did not respond',
+      body: 'The offer expired. Assign another rider to keep the order moving.',
+      tone: 'neutral',
+      delivery: updated
+    });
+    this._notify(riderId, {
+      title: 'A delivery offer expired',
+      body: 'It was not accepted in time and went back to the seller.',
+      tone: 'neutral',
+      delivery: updated
+    });
+    return updated;
+  }
+
+  /**
+   * The delivery as it stands now: if its offer has lapsed, releases it first.
+   * Every read path calls this, so a deployment that cannot run the sweeper
+   * (serverless) still never shows or honours a dead offer.
+   */
+  async _releaseIfLapsed(delivery) {
+    if (!delivery || !isOfferLapsed(delivery, this.offerTtlMs, this.now())) return delivery;
+    const released = await this._expireOffer(delivery);
+    if (released) return released;
+    // Lost the race: whatever happened is the truth now.
+    return (await this.repo.findById(delivery.id)) || delivery;
   }
 
   // ------------------------------------------------------------------- create
