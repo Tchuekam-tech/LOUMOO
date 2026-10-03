@@ -905,7 +905,9 @@ class DeliveryService {
    */
   async getViewerRole(deliveryId, callerInput) {
     const caller = this._caller(callerInput);
-    const delivery = deliveryId ? await this.repo.findById(deliveryId) : null;
+    // Releasing a lapsed offer here is what ends a rider's open stream (within
+    // one heartbeat) on a deployment that has no sweeper.
+    const delivery = deliveryId ? await this._releaseIfLapsed(await this.repo.findById(deliveryId)) : null;
     return delivery ? this._participantRole(delivery, caller) : null;
   }
 
