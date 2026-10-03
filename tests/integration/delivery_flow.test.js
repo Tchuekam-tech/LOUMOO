@@ -554,6 +554,28 @@ async function run() {
       assert.ok(!JSON.stringify(buyerLive).includes(hidden), 'the delivery payload never carries ' + hidden);
     }
 
+    // ------------------------------------------------------------- the stream
+    console.log('  Opening the live stream through the full middleware stack...');
+    const streamUrl = '/api/v1/deliveries/' + deliveryId + '/stream';
+    const anonymousStream = await openStream(streamUrl, null);
+    assert.strictEqual(anonymousStream.status, 401, 'the stream needs the Authorization header');
+    const strangerStream = await openStream(streamUrl, cast.stranger);
+    assert.strictEqual(strangerStream.status, 404, 'a stranger cannot stream');
+    assert.strictEqual((await openStream('/api/v1/deliveries/dlv_does_not_exist/stream', cast.buyer)).status, 404);
+
+    const buyerStream = await openStream(streamUrl, cast.buyer);
+    const sellerStream = await openStream(streamUrl, cast.seller);
+    assert.strictEqual(buyerStream.status, 200);
+    assert.ok(/text\/event-stream/.test(buyerStream.headers['content-type']), 'served as event-stream');
+    assert.ok(/no-transform/.test(buyerStream.headers['cache-control']), 'no-transform keeps compression from buffering the stream');
+    assert.strictEqual(buyerStream.headers['content-encoding'], undefined, 'the stream is not compressed');
+    await waitFor(() => typesOf(buyerStream).includes('status'), 'the buyer snapshot');
+    await waitFor(() => typesOf(sellerStream).includes('status'), 'the seller snapshot');
+    assert.strictEqual(buyerStream.events.find(e => e.type === 'status').data.status, 'picked_up', 'the snapshot is the current status');
+    assert.ok(buyerStream.events.some(e => e.type === 'retry'), 'the client is told how long to wait before reconnecting');
+    await waitFor(() => typesOf(buyerStream).includes('location'), 'the last position in the late-joiner snapshot');
+    assert.strictEqual(buyerStream.events.find(e => e.type === 'location').data.lat, 4.0546, 'a late joiner gets the last accepted position');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
