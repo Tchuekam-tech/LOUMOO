@@ -949,7 +949,12 @@ class DeliveryService {
     }
     const open = await this.repo.findOpenByDriver(caller.userId);
     const deliveries = [];
-    for (const d of open) deliveries.push(await this._present(d, 'driver', { includeTimeline: false }));
+    for (const listed of open) {
+      // An offer that lapsed is no longer this rider's: release it and leave it out.
+      const d = await this._releaseIfLapsed(listed);
+      if (d.driverId !== caller.userId) continue;
+      deliveries.push(await this._present(d, 'driver', { includeTimeline: false }));
+    }
     return { driver: { id: driver.id, name: driver.name, phone: driver.phone }, deliveries };
   }
 
