@@ -507,6 +507,25 @@ async function main() {
       assert.strictEqual(events.listenerCount(id), 0, 'no subscription outlives its stream');
     }
 
+    // A client that leaves while the snapshot is still loading leaks nothing.
+    {
+      const { id } = await newAssignedDelivery();
+      const original = service.getDelivery.bind(service);
+      service.getDelivery = async (...args) => { const r = await original(...args); await sleep(200); return r; };
+      try {
+        const st = await openStream(`/api/v1/deliveries/${id}/stream`, BUYER).catch(() => null);
+        // the response has not started (snapshot pending); abandon the request
+        const pending = new Promise((resolve) => setTimeout(resolve, 60));
+        await pending;
+        if (st) closeStream(st);
+        await sleep(350);
+      } finally {
+        service.getDelivery = original;
+      }
+      assert.strictEqual(router.openStreamCount(), 0, 'the reserved slot is released when the client disconnects mid-snapshot');
+      assert.strictEqual(events.listenerCount(id), 0, 'and so is the subscription');
+    }
+
     // Every stream has been released.
     for (const st of openStreams) closeStream(st);
     await waitFor(() => router.openStreamCount() === 0 && shortLivedRouter.openStreamCount() === 0, 'all streams to be released', 4000);
