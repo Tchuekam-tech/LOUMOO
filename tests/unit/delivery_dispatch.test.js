@@ -717,6 +717,16 @@ async function run() {
       // A fresh offer after a lapse is theirs and works.
       await w.service.assignDriver(own.id, 'seller_1', SELLER);
       assert.strictEqual(await code(w.service.acceptDelivery(own.id, SELLER)), 'OK', 'a new offer to the same seller can be accepted');
+      // A rider who is suspended while HOLDING a fresh offer is refused for that reason, not told
+      // "expired" because an earlier offer of theirs once lapsed. (Suspension normally releases their
+      // offers; the rider record is changed directly here to reach the state.)
+      const lapsed = await newDelivery(w, { assignTo: 'rider_1' });
+      w.clock.advance(OFFER_TTL_MS + 5000);
+      await w.service.expireStaleOffers();
+      await w.service.assignDriver(lapsed.id, 'rider_1', SELLER); // a fresh offer to the rider whose last one lapsed
+      await w.repo.upsertDriver({ profileId: 'rider_1', name: 'Alain', phone: '+237600000001', status: 'suspended' });
+      assert.strictEqual(await code(w.service.acceptDelivery(lapsed.id, RIDER)), 'PERMISSION_DENIED',
+        'a suspended holder is told their account is not active, not that the offer expired');
       // The buyer, a participant without the role, is never told "expired".
       assert.strictEqual(await code(w.service.acceptDelivery(adminJob.id, BUYER)), 'PERMISSION_DENIED', 'the buyer gets the plain refusal');
     }
