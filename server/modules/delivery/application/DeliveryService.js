@@ -157,6 +157,19 @@ class DeliveryService {
 
   _nowIso() { return new Date(this.now()).toISOString(); }
 
+  /**
+   * The order as the database has it NOW. OrderRepository.findOrderById serves a
+   * per-instance memory cache that is never invalidated, so an order cancelled or
+   * refunded elsewhere would still look live here. Every guard and every status
+   * sync in this service decides from a fresh read.
+   */
+  async _freshOrder(idOrNumber) {
+    const repo = this.orders;
+    return typeof repo.findOrderByIdFresh === 'function'
+      ? repo.findOrderByIdFresh(idOrNumber)
+      : repo.findOrderById(idOrNumber);
+  }
+
   async _withDriver(delivery) {
     if (!delivery) return delivery;
     const withDriver = { ...delivery, driver: null };
