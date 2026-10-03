@@ -80,12 +80,15 @@ async function main() {
   const limits = { heartbeatMs: 40, maxStreamMs: 60000, maxStreamsPerUser: 3 };
   const router = createDeliveryRouter({ service, authenticate: fakeAuth, events, revalidate, ...limits });
   const shortLivedRouter = createDeliveryRouter({ service, authenticate: fakeAuth, events, revalidate, heartbeatMs: 40, maxStreamMs: 200, maxStreamsPerUser: 3 });
+  const LEAK_HEARTBEAT_MS = 37; // unique, so a leaked heartbeat interval is attributable to these routers
+  const leakRouter = createDeliveryRouter({ service, authenticate: fakeAuth, events, revalidate, heartbeatMs: LEAK_HEARTBEAT_MS, maxStreamMs: 60000, maxStreamsPerUser: 50 });
 
   const app = express();
   app.use(compression({ threshold: 0 })); // as in production: this is what buffers a badly-headed stream
   app.use(express.json());
   app.use('/api/v1/deliveries', router);
   app.use('/short/deliveries', shortLivedRouter);
+  app.use('/leak/deliveries', leakRouter);
   app.use(errorHandler);
 
   const server = http.createServer(app);
@@ -524,6 +527,42 @@ async function main() {
       }
       assert.strictEqual(router.openStreamCount(), 0, 'the reserved slot is released when the client disconnects mid-snapshot');
       assert.strictEqual(events.listenerCount(id), 0, 'and so is the subscription');
+    }
+
+    // A terminal event that lands while the snapshot is loading ends the stream
+    // cleanly and does NOT leave a heartbeat timer running behind it.
+    {
+      const liveHeartbeats = new Set();
+      const realSetInterval = global.setInterval;
+      const realClearInterval = global.clearInterval;
+      global.setInterval = (fn, ms, ...rest) => {
+        const handle = realSetInterval(fn, ms, ...rest);
+        if (ms === LEAK_HEARTBEAT_MS) liveHeartbeats.add(handle);
+        return handle;
+      };
+      global.clearInterval = (handle) => { liveHeartbeats.delete(handle); return realClearInterval(handle); };
+
+      const original = service.getDelivery.bind(service);
+      let slow = true;
+      service.getDelivery = async (...args) => { const r = await original(...args); if (slow) await sleep(250); return r; };
+      try {
+        const { id } = await newAssignedDelivery();
+        const streamPromise = openStream(`/leak/deliveries/${id}/stream`, BUYER);
+        await sleep(60); // the snapshot was read (non-terminal) and is being held back
+        slow = false;
+        assert.strictEqual((await api('POST', `/${id}/cancel`, SELLER, { reason: 'while you were connecting' })).status, 200);
+        const st = await streamPromise;
+        await waitFor(() => st.ended, 'the stream to end after the buffered terminal event', 3000);
+        assert.strictEqual(st.events.find((e) => e.type === 'end').data.reason, 'complete');
+        await sleep(2 * LEAK_HEARTBEAT_MS + 20);
+        assert.strictEqual(liveHeartbeats.size, 0, 'no heartbeat interval survives an ended stream');
+        assert.ok(!st.events.some((e) => e.type === 'comment'), 'and no keep-alive was ever written to the closed stream');
+      } finally {
+        service.getDelivery = original;
+        global.setInterval = realSetInterval;
+        global.clearInterval = realClearInterval;
+      }
+      assert.strictEqual(leakRouter.openStreamCount(), 0);
     }
 
     // Every stream has been released.
