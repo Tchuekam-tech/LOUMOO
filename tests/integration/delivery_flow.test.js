@@ -412,6 +412,22 @@ async function run() {
     assert.ok(Number.isInteger(codeRow.handover_nonce));
     console.log('    ✓ Reads, assignment, rider privacy, accept (with a race) and the code audience.');
 
+    // -------------------------------------------------------------- locations
+    console.log('  Posting GPS pings...');
+    const pingPath = '/' + deliveryId + '/location';
+    assert.strictEqual((await api('POST', pingPath, cast.rider, { lat: 'x', lng: 1 })).status, 400, 'a non-numeric latitude is refused');
+    assert.strictEqual((await api('POST', pingPath, cast.rider, { lat: 95, lng: 0 })).status, 400, 'a latitude out of range is refused');
+    assert.strictEqual((await api('POST', pingPath, cast.rider, { ...NEARBY, heading: 360 })).status, 400, 'a heading of 360 is refused');
+    assert.strictEqual((await api('POST', pingPath, cast.rider, { ...NEARBY, speedKmh: -1 })).status, 400, 'a negative speed is refused');
+    assert.strictEqual((await api('POST', pingPath, cast.rider, { ...NEARBY, accuracyM: 900 })).status, 400, 'a poor GPS fix is refused');
+    assert.strictEqual((await api('POST', pingPath, cast.rider, { ...NEARBY, owner: 'me' })).status, 400, 'unknown keys are refused');
+    assert.strictEqual((await api('POST', pingPath, cast.buyer, NEARBY)).status, 403, 'the buyer cannot post a position');
+    assert.strictEqual((await api('POST', pingPath, cast.seller, NEARBY)).status, 403, 'neither can the seller');
+    assert.strictEqual((await api('POST', pingPath, cast.stranger, NEARBY)).status, 404, 'a stranger gets 404');
+    assert.strictEqual((await api('POST', pingPath, cast.rider2, NEARBY)).status, 404, 'an unassigned rider gets 404');
+    const noTrail = await db().from('driver_locations').select('id', { count: 'exact', head: true }).eq('delivery_id', deliveryId);
+    assert.strictEqual(noTrail.count, 0, 'refused pings leave no GPS rows');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
