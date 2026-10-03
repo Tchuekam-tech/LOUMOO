@@ -264,6 +264,46 @@ async function main() {
     assert.strictEqual((await api('GET', `/by-order/${order.orderNumber}`, SELLER)).body.data.delivery.id, deliveryId, 'order number works');
     assert.strictEqual((await api('GET', `/by-order/${order.id}`, STRANGER)).status, 404);
 
+    // ---------------------------------------------------------------- assign
+    assert.strictEqual((await api('POST', `/${deliveryId}/assign`, BUYER, { driverId: 'rider_1' })).status, 403);
+    assert.strictEqual((await api('POST', `/${deliveryId}/assign`, SELLER, {})).status, 400);
+    assert.strictEqual((await api('POST', `/${deliveryId}/assign`, SELLER, { driverId: 'rider_1', status: 'delivered' })).status, 400, 'no status injection on assign');
+    assert.strictEqual((await api('POST', `/${deliveryId}/assign`, SELLER, { driverId: 'ghost' })).status, 400);
+    const assigned = await api('POST', `/${deliveryId}/assign`, SELLER, { driverId: 'rider_1' });
+    assert.strictEqual(assigned.status, 200);
+    assert.strictEqual(assigned.body.data.delivery.driver.id, 'rider_1');
+
+    // ----------------------------------------------------------- rider flow
+    const mine = await api('GET', '/driver/me', RIDER);
+    assert.strictEqual(mine.status, 200);
+    assert.deepStrictEqual(mine.body.data.deliveries.map((d) => d.id), [deliveryId]);
+    assert.deepStrictEqual(Object.keys(mine.body.data.deliveries[0].dropoff).sort(), ['area', 'location'], 'before accepting, a coarse drop-off only');
+
+    assert.strictEqual((await api('POST', `/${deliveryId}/accept`, STRANGER)).status, 404);
+    assert.strictEqual((await api('POST', `/${deliveryId}/accept`, SELLER)).status, 403);
+    assert.strictEqual((await api('POST', `/${deliveryId}/accept`, RIDER, { surprise: true })).status, 200, 'accept takes no body, extra keys on an empty action are ignored');
+    assert.strictEqual((await api('POST', `/${deliveryId}/accept`, RIDER)).status, 409, 'second accept conflicts');
+
+    assert.strictEqual((await api('POST', `/${deliveryId}/location`, RIDER, { lat: 'x', lng: 1 })).status, 400);
+    assert.strictEqual((await api('POST', `/${deliveryId}/location`, RIDER, { ...NEAR, owner: 'me' })).status, 400, 'strict');
+    assert.strictEqual((await api('POST', `/${deliveryId}/location`, RIDER, { ...NEAR, accuracyM: 900 })).status, 400, 'poor GPS fix refused');
+    assert.strictEqual((await api('POST', `/${deliveryId}/location`, BUYER, { ...NEAR })).status, 403);
+    const ping = await api('POST', `/${deliveryId}/location`, RIDER, { ...NEAR, speedKmh: 18, heading: 45, accuracyM: 8 });
+    assert.strictEqual(ping.status, 200);
+    assert.strictEqual(ping.body.data.accepted, true);
+    clock.advance(1000);
+    const throttled = await api('POST', `/${deliveryId}/location`, RIDER, { ...NEAR });
+    assert.strictEqual(throttled.status, 200, 'an ignored ping is not an error');
+    assert.deepStrictEqual(throttled.body.data, { accepted: false, reason: 'throttled' });
+
+    assert.strictEqual((await api('POST', `/${deliveryId}/status`, RIDER, { status: 'delivered' })).status, 400, 'a rider cannot self-report delivered');
+    assert.strictEqual((await api('POST', `/${deliveryId}/status`, RIDER, {})).status, 400);
+    clock.advance(5000);
+    const picked = await api('POST', `/${deliveryId}/status`, RIDER, { status: 'picked_up' });
+    assert.strictEqual(picked.status, 200);
+    assert.strictEqual((await orders.findOrderById(order.id)).fulfillmentStatus, FULFILLMENT_STATUS.IN_TRANSIT, 'pickup moved the order through the route');
+    assert.strictEqual((await api('POST', `/${deliveryId}/status`, RIDER, { status: 'arrived' })).status, 200);
+
     console.log('    ✓ Delivery routes: wiring, validation, status codes and the live stream hold.');
   } finally {
     NotificationService.create = originalCreate;
