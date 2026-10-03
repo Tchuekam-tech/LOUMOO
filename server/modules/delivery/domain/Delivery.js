@@ -161,9 +161,12 @@ function estimateEta(from, to) {
  * `0` is a real value and means "never expire".
  */
 function offerTtlMsFrom(minutes) {
-  if (minutes === undefined || minutes === null || minutes === '') return OFFER_DEFAULT_TTL_MINUTES * 60 * 1000;
-  const n = typeof minutes === 'string' ? Number(minutes.trim()) : minutes;
-  if (!isFiniteNumber(n) || n < 0) return OFFER_DEFAULT_TTL_MINUTES * 60 * 1000;
+  const fallback = OFFER_DEFAULT_TTL_MINUTES * 60 * 1000;
+  // Blank text must read as "unset", not as Number('') === 0 ("never expire").
+  const raw = typeof minutes === 'string' ? minutes.trim() : minutes;
+  if (raw === undefined || raw === null || raw === '') return fallback;
+  const n = typeof raw === 'string' ? Number(raw) : raw;
+  if (!isFiniteNumber(n) || n < 0) return fallback;
   return Math.round(n * 60 * 1000);
 }
 
