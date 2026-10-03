@@ -187,7 +187,11 @@ async function run() {
       for (const [ttl, expected] of [
         [OFFER_TTL_MS, 'Open LOUMOO to accept or decline it within 15 minutes.'],
         [MIN, 'Open LOUMOO to accept or decline it within 1 minute.'],
-        [10 * 1000, 'Open LOUMOO to accept or decline it within 1 minute.'],
+        [90 * 1000, 'Open LOUMOO to accept or decline it within 1 minute.'],     // rounded down, never up
+        [150 * 1000, 'Open LOUMOO to accept or decline it within 2 minutes.'],
+        [30 * 1000, 'Open LOUMOO to accept or decline it within 30 seconds.'],   // sub-minute windows are said in seconds
+        [10 * 1000, 'Open LOUMOO to accept or decline it within 10 seconds.'],
+        [1000, 'Open LOUMOO to accept or decline it within 1 second.'],
         [0, 'Open LOUMOO to accept or decline it.']
       ]) {
         const w = makeWorld({ offerTtlMs: ttl });
