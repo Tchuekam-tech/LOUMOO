@@ -427,6 +427,52 @@ async function main() {
       assert.strictEqual(events.listenerCount(id), 0, 'nothing stays subscribed once a delivery\'s streams have all ended');
     }
 
+    // A replaced rider loses their stream.
+    {
+      const { id } = await newAssignedDelivery();
+      const riderStream = await openStream(`/api/v1/deliveries/${id}/stream`, RIDER);
+      await waitFor(() => typesOf(riderStream).includes('status'), 'the rider snapshot');
+      assert.strictEqual((await api('POST', `/${id}/assign`, SELLER, { driverId: 'rider_2' })).status, 200);
+      await waitFor(() => riderStream.events.some((e) => e.type === 'end'), 'the access-revoked end');
+      assert.strictEqual(riderStream.events.find((e) => e.type === 'end').data.reason, 'access_revoked');
+      await waitFor(() => riderStream.ended, 'the replaced rider stream to close');
+    }
+
+    // Per-user cap, and the slot is released when a stream closes.
+    {
+      const { id } = await newAssignedDelivery();
+      const held = [];
+      for (let i = 0; i < limits.maxStreamsPerUser; i += 1) {
+        const st = await openStream(`/api/v1/deliveries/${id}/stream`, BUYER);
+        await waitFor(() => typesOf(st).includes('status'), `stream ${i + 1} to open`);
+        held.push(st);
+      }
+      assert.strictEqual(router.openStreamCount(), limits.maxStreamsPerUser, 'the router counts open streams');
+      const over = await api('GET', `/${id}/stream`, BUYER);
+      assert.strictEqual(over.status, 429, 'a 4th concurrent stream is refused');
+      assert.strictEqual(over.body.error.code, 'RATE_LIMITED');
+      const otherUser = await openStream(`/api/v1/deliveries/${id}/stream`, SELLER);
+      assert.strictEqual(otherUser.status, 200, 'the cap is per user, not global');
+      held.push(otherUser);
+      // 3 buyer streams + 1 seller stream are open; closing one frees exactly one slot.
+      closeStream(held[0]);
+      await waitFor(() => router.openStreamCount() === limits.maxStreamsPerUser, 'the closed stream to release its slot');
+      const reopened = await openStream(`/api/v1/deliveries/${id}/stream`, BUYER);
+      assert.strictEqual(reopened.status, 200, 'after a stream closes, the user can open another');
+      await waitFor(() => typesOf(reopened).includes('status'), 'the reopened stream snapshot');
+      held.push(reopened);
+      for (const st of held.slice(1)) closeStream(st);
+    }
+
+    // Streams have a maximum life; the client reconnects.
+    {
+      const { id } = await newAssignedDelivery();
+      const st = await openStream(`/short/deliveries/${id}/stream`, BUYER);
+      await waitFor(() => st.events.some((e) => e.type === 'end'), 'the lifetime end', 2000);
+      assert.strictEqual(st.events.find((e) => e.type === 'end').data.reason, 'timeout');
+      await waitFor(() => st.ended, 'the stream to close after its lifetime');
+    }
+
     console.log('    ✓ Delivery routes: wiring, validation, status codes and the live stream hold.');
   } finally {
     NotificationService.create = originalCreate;
