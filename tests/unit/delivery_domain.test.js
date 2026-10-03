@@ -25,6 +25,15 @@ const { codeFor, verifyCode } = require('../../server/modules/delivery/domain/Ha
 const { FULFILLMENT_STATUS } = require('../../server/modules/commerce/domain/Order');
 const { AppError } = require('../../server/shared/errors/AppError');
 const { DeliveryLockedError, coarseLocation, describeArea } = require('../../server/modules/delivery/domain/Delivery');
+const {
+  OFFER_DEFAULT_TTL_MINUTES,
+  WORKLOAD_STATUSES,
+  OfferExpiredError,
+  NoRiderAvailableError,
+  offerTtlMsFrom,
+  offerDeadlineMs,
+  isOfferLapsed
+} = require('../../server/modules/delivery/domain/Delivery');
 
 function throwsWithCode(fn, code) {
   try { fn(); } catch (e) { return e.code === code; }
@@ -224,6 +233,18 @@ async function run() {
     // Presenting must not mutate the stored record.
     assert.strictEqual(base.dropoff.contactPhone, '+237622222222', 'presenting did not mutate the record');
     assert.strictEqual(base.status, S.ASSIGNED);
+
+    // --- 7. Offer expiry and rider workload ----------------------------------
+    assert.strictEqual(OFFER_DEFAULT_TTL_MINUTES, 15, 'the offer window defaults to 15 minutes');
+    assert.deepStrictEqual([...WORKLOAD_STATUSES].sort(), [S.ACCEPTED, S.ARRIVED, S.ASSIGNED, S.PICKED_UP].sort(),
+      'a rider is busy while assigned, accepted, picked up or arrived');
+    assert.ok(!WORKLOAD_STATUSES.includes(S.FAILED), 'a failed job is waiting on the seller, not the rider');
+    for (const [Err, code] of [[OfferExpiredError, 'OFFER_EXPIRED'], [NoRiderAvailableError, 'NO_RIDER_AVAILABLE']]) {
+      const err = new Err();
+      assert.ok(err instanceof AppError, `${code} extends AppError so the shared handler renders it`);
+      assert.strictEqual(err.code, code);
+      assert.strictEqual(err.statusCode, 409, `${code} is a 409, not a 500`);
+    }
 
     console.log('    ✓ Delivery domain: state machine, geo, handover code and viewer redaction hold.');
   } finally {
