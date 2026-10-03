@@ -402,6 +402,9 @@ if (require.main === module) {
     if (shuttingDown) return;
     shuttingDown = true;
     logger.info(`[Shutdown] Received ${signal} — draining connections (max 10s).`);
+    // Open delivery streams never finish on their own: end them so clients
+    // reconnect, and so server.close() is not held open until the drain timeout.
+    try { deliveryRoutes.closeAllStreams('server_restart'); } catch (_) { /* best effort */ }
     const timer = setTimeout(() => {
       logger.error('[Shutdown] Drain timeout exceeded — forcing exit.');
       process.exit(1);
