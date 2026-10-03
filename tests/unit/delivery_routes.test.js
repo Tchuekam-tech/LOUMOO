@@ -351,6 +351,19 @@ async function main() {
       assert.strictEqual((await api('POST', `/${id}/reconcile`, ADMIN)).status, 200);
     }
 
+    // ---------------------------------------------------- cancel / decline
+    {
+      const { id } = await newAssignedDelivery();
+      assert.strictEqual((await api('POST', `/${id}/cancel`, BUYER, {})).status, 403, 'the buyer cannot cancel once a rider is assigned');
+      assert.strictEqual((await api('POST', `/${id}/cancel`, SELLER, { reason: 'x', nope: 1 })).status, 400);
+      const declined = await api('POST', `/${id}/decline`, RIDER);
+      assert.strictEqual(declined.status, 200);
+      assert.deepStrictEqual(declined.body.data.delivery, { id, status: 'pending_assignment' });
+      const cancelled = await api('POST', `/${id}/cancel`, BUYER, { reason: 'Changed my mind' });
+      assert.strictEqual(cancelled.status, 200, 'the buyer may cancel while nobody is assigned');
+      assert.strictEqual(cancelled.body.data.delivery.status, 'cancelled');
+    }
+
     console.log('    ✓ Delivery routes: wiring, validation, status codes and the live stream hold.');
   } finally {
     NotificationService.create = originalCreate;
