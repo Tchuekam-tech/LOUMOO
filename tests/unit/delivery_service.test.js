@@ -775,6 +775,21 @@ async function run() {
       assert.strictEqual(made.status, 'pending_assignment', 'once the database says it is deliverable, it is');
     }
 
+    // Re-registering a rider without a status keeps whatever the rider already had.
+    {
+      const w = makeWorld();
+      await w.service.registerDriver('rider_1', { name: 'Alain', phone: '+237600000001', status: 'suspended' }, ADMIN);
+      await w.service.registerDriver('rider_1', { name: 'Alain B.', phone: '+237600000001' }, ADMIN);
+      const kept = await w.repo.findDriver('rider_1');
+      assert.strictEqual(kept.status, 'suspended', 'an omitted status never reactivates a suspended rider');
+      assert.strictEqual(kept.name, 'Alain B.');
+      assert.strictEqual(await code(w.service.registerDriver('rider_1', { name: 'A', phone: '+237600000001', status: 'banished' }, ADMIN)), 'VALIDATION_ERROR');
+      await w.service.registerDriver('rider_1', { name: 'Alain B.', phone: '+237600000001', status: 'active' }, ADMIN);
+      assert.strictEqual((await w.repo.findDriver('rider_1')).status, 'active', 'reactivation is explicit');
+      await w.service.registerDriver('rider_new', { name: 'New', phone: '+237600000009' }, ADMIN);
+      assert.strictEqual((await w.repo.findDriver('rider_new')).status, 'active', 'a new rider starts active');
+    }
+
     console.log('    ✓ Delivery service: authorisation, flow, GPS policy, handover budget and races hold.');
   } finally {
     NotificationService.create = originalCreate;
