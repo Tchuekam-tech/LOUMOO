@@ -486,6 +486,17 @@ async function run() {
     assert.strictEqual(viaOrders.status, 200, JSON.stringify(viaOrders.body));
     assert.strictEqual(viaOrders.body.data.order.fulfillmentStatus, 'in_transit', 'the buyer sees the new status through the ordinary order endpoint too (no stale cache)');
 
+    // Once the parcel is on the road the buyer is shown where it is.
+    const buyerLive = (await api('GET', '/' + deliveryId, cast.buyer)).body.data.delivery;
+    assert.strictEqual(buyerLive.status, 'picked_up');
+    assert.strictEqual(buyerLive.lastLocation.lat, 4.0546, 'the buyer now sees the rider position');
+    assert.ok(Number.isInteger(buyerLive.etaMinutes), 'and an ETA');
+    assert.ok(buyerLive.distanceKm > 0, 'and a distance');
+    assert.ok(!('failureReason' in buyerLive) || buyerLive.failureReason === null, 'but never a failure reason');
+    for (const hidden of ['handoverNonce', 'codeAttempts', 'handover_nonce', 'code_attempts']) {
+      assert.ok(!JSON.stringify(buyerLive).includes(hidden), 'the delivery payload never carries ' + hidden);
+    }
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
