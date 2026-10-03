@@ -152,3 +152,31 @@ class DeliveryApiClient {
       if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
     };
 
+    const startPolling = () => {
+      if (stopped || pollTimer) return;
+      let lastStatus = null;
+      let lastAt = null;
+      const tick = async () => {
+        if (stopped) return;
+        try {
+          const { delivery } = await this.get(id);
+          if (!delivery || stopped) return;
+          if (delivery.status !== lastStatus) {
+            lastStatus = delivery.status;
+            h.onStatus({ status: delivery.status, at: delivery.updatedAt, etaMinutes: delivery.etaMinutes, distanceKm: delivery.distanceKm });
+          }
+          if (delivery.lastLocation && delivery.lastLocation.at !== lastAt) {
+            lastAt = delivery.lastLocation.at;
+            h.onLocation(delivery.lastLocation);
+          }
+          if (delivery.etaMinutes != null) h.onEta({ etaMinutes: delivery.etaMinutes, distanceKm: delivery.distanceKm });
+          if (TERMINAL.includes(delivery.status)) { stop(); h.onEnd('complete'); }
+        } catch (err) {
+          if (err.status === 404 || err.status === 403) { stop(); h.onEnd('access_revoked'); }
+          else h.onError(err);
+        }
+      };
+      tick();
+      pollTimer = setInterval(tick, POLL_MS);
+    };
+
