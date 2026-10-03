@@ -167,13 +167,13 @@ async function run() {
     assert.deepStrictEqual([...(await memory.countOpenByDriver()).entries()].sort(), expected, 'memory matches the database path');
 
     // The row cap is loud, not silent.
-    const many = Array.from({ length: 5000 }, (_, i) => row(`m${i}`, 'assigned', 't', 'rider_9'));
+    const many = Array.from({ length: 1000 }, (_, i) => row(`m${i}`, 'assigned', 't', 'rider_9'));
     const warnings = [];
     const originalWarn = logger.warn;
     logger.warn = (m) => warnings.push(String(m));
     try {
       const capped = await new DeliveryRepository({ db: stubDb(many) }).countOpenByDriver();
-      assert.strictEqual(capped.get('rider_9'), 5000);
+      assert.strictEqual(capped.get('rider_9'), 1000, 'the cap is the platform row limit, so reaching it is detectable');
       assert.ok(warnings.some((w) => /cap/.test(w)), 'hitting the row cap is logged');
       warnings.length = 0;
       await repo.countOpenByDriver();
@@ -220,6 +220,22 @@ async function run() {
     }
     assert.deepStrictEqual([...(await memory.countRecentLapses(since)).entries()].sort(), [['rider_1', 2], ['rider_2', 1]], 'memory matches the database path');
     assert.strictEqual((await memory.countRecentLapses('garbage')).size, 0);
+
+    // Reaching the row cap is logged, for this query too.
+    const manyLapses = Array.from({ length: 1000 }, () => evt('rider_9', '2026-10-03T09:30:00.000Z'));
+    const warnings = [];
+    const originalWarn = logger.warn;
+    logger.warn = (m) => warnings.push(String(m));
+    try {
+      const capped = await new DeliveryRepository({ db: stubDb([], { events: manyLapses }) }).countRecentLapses(since);
+      assert.strictEqual(capped.get('rider_9'), 1000);
+      assert.ok(warnings.some((w) => /Recent-lapse count hit its 1000-row cap/.test(w)), 'the lapse count says when it was cut short');
+      warnings.length = 0;
+      await repo.countRecentLapses(since);
+      assert.strictEqual(warnings.length, 0, 'a normal lapse count logs nothing');
+    } finally {
+      logger.warn = originalWarn;
+    }
   }
 
   // ------------------- production: a failed ranking input is an error, not "nobody is busy"
