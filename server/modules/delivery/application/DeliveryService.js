@@ -536,10 +536,18 @@ class DeliveryService {
    * decision 10 in docs/DELIVERY_API.md).
    */
   async autoAssignDriver(deliveryId, callerInput) {
-    // Release lapsed offers BEFORE this delivery is read. If the ranking did it
-    // afterwards, it could release the very delivery being assigned (its offer
-    // lapsing between the read and the ranking) and the swap below would fail with
-    // a spurious "changed by someone else".
+    // Who is asking comes first. Releasing lapsed offers is platform-wide work —
+    // up to MAX_RELEASE_ROUNDS * RELEASE_BATCH swaps, each with a timeline row and
+    // two notifications — so a caller with no claim to this delivery must not be
+    // able to set it going by naming an id at random. GET /drivers guards its own
+    // ranking the same way, by role.
+    await this._requireStaff(deliveryId, callerInput);
+
+    // Only then release lapsed offers, and BEFORE this delivery is read for the
+    // swap. If the ranking did it afterwards, it could release the very delivery
+    // being assigned (its offer lapsing between the read and the ranking) and the
+    // swap below would fail with a spurious "changed by someone else". The second
+    // read is one row, against a sweep of up to two hundred.
     await this._releaseLapsedOffers();
     const { caller, delivery, role } = await this._requireStaff(deliveryId, callerInput);
     DeliveryStateMachine.assertCanAssign(delivery.status);
