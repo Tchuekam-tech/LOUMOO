@@ -643,6 +643,19 @@ async function main() {
       assert.ok(JSON.stringify(res.body).length < 2000, 'the error body stays small whatever the client sent');
     }
 
+    // Editing a rider never silently reactivates a suspended one.
+    {
+      await api('POST', '/drivers/rider_suspended', ADMIN, { name: 'Chris', phone: '+237600000003', status: 'suspended' });
+      const edited = await api('POST', '/drivers/rider_suspended', ADMIN, { name: 'Chris N.', phone: '+237600000003' });
+      assert.strictEqual(edited.status, 200);
+      assert.strictEqual(edited.body.data.driver.status, 'suspended', 'omitting status leaves it suspended');
+      assert.strictEqual(edited.body.data.driver.name, 'Chris N.', 'but the edit applied');
+      const reactivated = await api('POST', '/drivers/rider_suspended', ADMIN, { name: 'Chris N.', phone: '+237600000003', status: 'active' });
+      assert.strictEqual(reactivated.body.data.driver.status, 'active', 'reactivating takes an explicit status');
+      const brandNew = await api('POST', '/drivers/rider_fresh', ADMIN, { name: 'Dan', phone: '+237600000004' });
+      assert.strictEqual(brandNew.body.data.driver.status, 'active', 'a new rider starts active');
+    }
+
     // Every stream has been released.
     for (const st of openStreams) closeStream(st);
     await waitFor(() => router.openStreamCount() === 0 && shortLivedRouter.openStreamCount() === 0, 'all streams to be released', 4000);
