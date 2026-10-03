@@ -162,8 +162,13 @@ function createDeliveryRouter({
       throw new RateLimitError('Too many open delivery streams. Close one and try again.', 10);
     }
 
+    // Reserve the slot immediately (before any await) so a burst of connects
+    // cannot all pass the cap check; cleanup() releases it exactly once.
+    openStreams.set(userKey, openNow + 1);
+
     const deliveryId = req.params.id;
-    const buffer = [];    let ready = false;
+    const buffer = [];
+    let ready = false;
     let closed = false;
     let role = null;
     let heartbeat = null;
@@ -183,10 +188,10 @@ function createDeliveryRouter({
     try {
       snapshot = await svc().getDelivery(deliveryId, who); // 404 for non-participants
     } catch (err) {
-      unsubscribe();
+      cleanup();
       throw err;
     }
-    if (req.destroyed || res.destroyed) { unsubscribe(); return; }
+    if (req.destroyed || res.destroyed) { cleanup(); return; }
     role = snapshot.viewerRole;
 
     function write(chunk) {
@@ -246,7 +251,6 @@ function createDeliveryRouter({
       'X-Accel-Buffering': 'no'
     });
     res.flushHeaders();
-    openStreams.set(userKey, openNow + 1);
     req.on('close', cleanup);
     res.on('error', cleanup);
 
