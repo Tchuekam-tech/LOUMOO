@@ -731,6 +731,33 @@ async function run() {
     const retryStory = (await db().from('delivery_events').select('status').eq('delivery_id', failId).order('id')).data.map(e => e.status);
     assert.deepStrictEqual(retryStory, ['pending_assignment', 'assigned', 'accepted', 'picked_up', 'failed', 'assigned', 'accepted', 'picked_up', 'arrived', 'delivered'], 'the timeline shows both attempts');
 
+    // ------------------------------------------------------ decline and cancel
+    console.log('  Declining and cancelling...');
+    const cancelJob = await openDelivery(cast);
+    const cancelId = cancelJob.id;
+    assert.strictEqual((await api('POST', '/' + cancelId + '/cancel', cast.buyer, {})).status, 403, 'the buyer cannot cancel once a rider is assigned');
+    assert.strictEqual((await api('POST', '/' + cancelId + '/cancel', cast.stranger, {})).status, 404, 'a stranger gets 404');
+    assert.strictEqual((await api('POST', '/' + cancelId + '/cancel', cast.seller, { reason: 'x', nope: 1 })).status, 400, 'unknown keys are refused');
+
+    const declined = await api('POST', '/' + cancelId + '/decline', cast.rider);
+    assert.strictEqual(declined.status, 200, JSON.stringify(declined.body));
+    assert.deepStrictEqual(declined.body.data.delivery, { id: cancelId, status: 'pending_assignment' }, 'a decline returns only the id and status');
+    assert.strictEqual((await db().from('deliveries').select('driver_id').eq('id', cancelId).single()).data.driver_id, null, 'the rider is released');
+    assert.strictEqual((await api('GET', '/' + cancelId, cast.rider)).status, 404, 'a rider who declined loses access');
+
+    const buyerCancel = await api('POST', '/' + cancelId + '/cancel', cast.buyer, { reason: 'Changed my mind' });
+    assert.strictEqual(buyerCancel.status, 200, 'the buyer may cancel while nobody is assigned: ' + JSON.stringify(buyerCancel.body));
+    assert.strictEqual(buyerCancel.body.data.delivery.status, 'cancelled');
+    assert.ok((await db().from('deliveries').select('cancelled_at').eq('id', cancelId).single()).data.cancelled_at, 'cancelled_at is stamped');
+    assert.strictEqual((await orderRow(cancelJob.order.id)).fulfillment_status, 'processing', 'cancelling a delivery does not cancel the order');
+    assert.strictEqual((await api('GET', '/by-order/' + cancelJob.order.id, cast.buyer)).body.data.delivery.status, 'cancelled', 'by-order shows the latest finished delivery');
+
+    // The order is still processing, so the seller may start over with a new delivery.
+    const restarted = await api('POST', '/', cast.seller, { orderId: cancelJob.order.id });
+    assert.strictEqual(restarted.status, 201, 'a cancelled delivery frees the order: ' + JSON.stringify(restarted.body));
+    assert.notStrictEqual(restarted.body.data.delivery.id, cancelId, 'it is a new delivery');
+    assert.strictEqual((await db().from('deliveries').select('id', { count: 'exact', head: true }).eq('order_id', cancelJob.order.id)).count, 2, 'both rows are kept');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
