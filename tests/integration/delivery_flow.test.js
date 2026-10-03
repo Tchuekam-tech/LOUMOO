@@ -371,6 +371,26 @@ async function run() {
     }
     assert.strictEqual((await api('GET', '/' + deliveryId, cast.rider2)).status, 404, 'a rider who is not assigned cannot read it');
 
+    // ----------------------------------------------------------------- accept
+    console.log('  Accepting the job...');
+    assert.strictEqual((await api('POST', '/' + deliveryId + '/accept', cast.stranger)).status, 404, 'a stranger gets 404');
+    assert.strictEqual((await api('POST', '/' + deliveryId + '/accept', cast.rider2)).status, 404, 'a rider who is not assigned gets 404');
+    assert.strictEqual((await api('POST', '/' + deliveryId + '/accept', cast.seller)).status, 403, 'the seller is a participant but not the rider');
+    assert.strictEqual((await api('POST', '/' + deliveryId + '/accept', cast.buyer)).status, 403, 'the buyer is a participant but not the rider');
+
+    // The same rider tapping twice: the compare-and-swap lets exactly one through.
+    const taps = await Promise.all([api('POST', '/' + deliveryId + '/accept', cast.rider), api('POST', '/' + deliveryId + '/accept', cast.rider)]);
+    assert.deepStrictEqual(taps.map(r => r.status).sort(), [200, 409], 'a double accept is one 200 and one 409: ' + taps.map(r => r.status).join(','));
+    assert.strictEqual((await db().from('deliveries').select('status,accepted_at').eq('id', deliveryId).single()).data.status, 'accepted');
+    assert.ok((await db().from('deliveries').select('accepted_at').eq('id', deliveryId).single()).data.accepted_at, 'accepted_at is stamped');
+
+    const riderView = (await api('GET', '/' + deliveryId, cast.rider)).body.data.delivery;
+    assert.strictEqual(riderView.viewerRole, 'driver');
+    assert.ok(/Rue de la Joie/.test(riderView.dropoff.address || ''), 'after accepting, the rider sees the full address');
+    const buyerAfterAccept = (await api('GET', '/' + deliveryId, cast.buyer)).body.data.delivery;
+    assert.strictEqual(buyerAfterAccept.driver.id, cast.rider.id, 'the buyer now sees the rider');
+    assert.strictEqual(buyerAfterAccept.driver.name, riderBody.name);
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
