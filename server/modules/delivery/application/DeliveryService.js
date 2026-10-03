@@ -586,6 +586,9 @@ class DeliveryService {
    */
   async _offerLapsedFor(deliveryId, callerInput) {
     const caller = this._caller(callerInput);
+    // No such delivery, or it is theirs right now (a fresh offer): nothing lapsed on them.
+    const current = await this.repo.findById(deliveryId);
+    if (!current || current.driverId === caller.userId) return false;
     let last = null;
     for (const e of await this.repo.listEvents(deliveryId)) {
       const handedBack = e.status === S.PENDING_ASSIGNMENT
@@ -602,8 +605,11 @@ class DeliveryService {
     } catch (err) {
       // The sweeper (or any read) may already have released a lapsed offer by the
       // time the rider taps Accept, which makes them a stranger to the delivery
-      // (404). Tell them it was too late, as for a lapse not yet released.
-      if (err instanceof NotFoundError && await this._offerLapsedFor(deliveryId, callerInput)) {
+      // (404), or, for a seller or admin delivering it themselves, a participant
+      // who is no longer the holder (403). Tell them it was too late, as for a
+      // lapse not yet released.
+      const notTheHolder = err instanceof NotFoundError || err instanceof AuthorizationError;
+      if (notTheHolder && await this._offerLapsedFor(deliveryId, callerInput)) {
         throw new OfferExpiredError();
       }
       throw err;
