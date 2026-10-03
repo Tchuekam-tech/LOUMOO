@@ -222,6 +222,47 @@ async function run() {
     assert.strictEqual((await memory.countRecentLapses('garbage')).size, 0);
   }
 
+  // ------------------- production: a failed ranking input is an error, not "nobody is busy"
+  {
+    const config = require('../../server/config/env');
+    const failing = { error: { code: '57014', message: 'statement timeout' } };
+    const throwing = { from() { throw new Error('connection reset'); } };
+    const originals = { prod: config.isProduction, error: logger.error, warn: logger.warn };
+    logger.error = () => {};
+    logger.warn = () => {};
+    try {
+      // Outside production the development fallback applies, as for every other read.
+      config.isProduction = false;
+      assert.strictEqual((await new DeliveryRepository({ db: stubDb([], failing) }).countOpenByDriver()).size, 0, 'dev: falls back to memory');
+      assert.strictEqual((await new DeliveryRepository({ db: stubDb([], failing) }).countRecentLapses('2026-10-03T09:00:00.000Z')).size, 0);
+
+      config.isProduction = true;
+      for (const [label, make] of [['an error response', () => stubDb([], failing)], ['a thrown error', () => throwing]]) {
+        const repo = new DeliveryRepository({ db: make() });
+        for (const [name, call] of [
+          ['countOpenByDriver', () => repo.countOpenByDriver()],
+          ['countRecentLapses', () => repo.countRecentLapses('2026-10-03T09:00:00.000Z')]
+        ]) {
+          let caught = null;
+          try { await call(); } catch (e) { caught = e; }
+          assert.ok(caught, `production + ${label}: ${name} throws instead of answering "nobody"`);
+          assert.strictEqual(caught.code, 'INFRASTRUCTURE_ERROR', `${name} (${label}) is an InfrastructureError`);
+          assert.strictEqual(caught.statusCode, 500);
+        }
+      }
+      // Housekeeping reads keep the platform's read fallback: an unreleased offer is retried later.
+      assert.deepStrictEqual(await new DeliveryRepository({ db: stubDb([], failing) }).findStaleOffers('2026-10-03T09:00:00.000Z'), [],
+        'findStaleOffers still degrades to nothing (the next sweep retries)');
+      // And a healthy query in production is unaffected.
+      const healthy = await new DeliveryRepository({ db: stubDb([row('1', 'assigned', 't', 'rider_1')]) }).countOpenByDriver();
+      assert.strictEqual(healthy.get('rider_1'), 1);
+    } finally {
+      config.isProduction = originals.prod;
+      logger.error = originals.error;
+      logger.warn = originals.warn;
+    }
+  }
+
   console.log('    ✓ Delivery repository: stale-offer, workload and lapse queries hold, memory and database paths agree.');
 }
 
