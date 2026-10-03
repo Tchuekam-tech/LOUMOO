@@ -92,7 +92,7 @@ but never decide expiry themselves: the server's clock is the only one that coun
 | `POST /:id/decline` | 200 | `{ delivery: { id, status } }` (the rider loses access afterwards) |
 | `POST /:id/location` | 200 | `{ accepted: true, location, etaMinutes, distanceKm }` or `{ accepted: false, reason }` |
 | `GET /:id/code` | 200 | `{ code, digits, attemptsRemaining }` |
-| `GET /drivers` | 200 | `{ drivers: [{ id, name, phone }] }` |
+| `GET /drivers` | 200 | `{ drivers: [{ id, name, phone, openDeliveries, declined? }] }` |
 | `POST /drivers/:profileId` | 200 | `{ driver: { id, name, phone, status } }` |
 | `GET /driver/me` | 200 | `{ driver: { id, name, phone }, deliveries: [delivery] }` |
 | `POST /:id/reconcile` | 200 | `{ reconciled: true, deliveryStatus }` |
@@ -160,7 +160,7 @@ frontend must handle `etaMinutes: null` and `lastLocation` without a destination
 | `POST /:id/assign` `{ driverId }` | seller, admin | Assign or re-assign a rider (see Transitions). The rider cannot be the order's buyer. |
 | `POST /:id/cancel` `{ reason? }` | seller, admin; buyer only while `pending_assignment` | Cancel before pickup. |
 | `GET /:id/code` | order **buyer only** | `{ code, digits: 4, attemptsRemaining }`. Only from `accepted` to `arrived`. Seller, admin and rider get `403`. |
-| `GET /drivers` | seller, admin | Active riders `[{ id, name, phone }]` to pick from. |
+| `GET /drivers` | seller, admin | Active riders to pick from: `[{ id, name, phone, openDeliveries, declined? }]`, fewest `openDeliveries` first, then by name. `openDeliveries` counts the rider's `assigned`, `accepted`, `picked_up` and `arrived` deliveries. With `?deliveryId=…` (seller or admin **of that delivery**, else `404`) every rider also carries `declined: true` when they declined, released, or let an offer lapse on **that** delivery, so the picker can grey them out. `declined` is absent without `deliveryId`. |
 
 ### Rider
 | Method & path | Purpose |
