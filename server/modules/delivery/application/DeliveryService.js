@@ -145,7 +145,7 @@ class DeliveryService {
 
   /** Refuses to move a delivery whose order has been cancelled in the meantime. */
   async _assertOrderNotCancelled(delivery) {
-    const order = await this.orders.findOrderById(delivery.orderId);
+    const order = await this._freshOrder(delivery.orderId);
     if (!order) throw new NotFoundError('Order', delivery.orderId);
     if (order.fulfillmentStatus === FULFILLMENT_STATUS.CANCELLED) {
       throw new ConflictError('The order was cancelled, so this delivery cannot continue.');
