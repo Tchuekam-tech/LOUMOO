@@ -637,6 +637,18 @@ async function run() {
     assert.strictEqual((await db().from('driver_locations').select('id', { count: 'exact', head: true }).eq('delivery_id', deliveryId)).count, 3, 'three accepted points in the trail');
     console.log('    ✓ Full happy path: assign, accept, pings, pickup, arrive, code, delivered; order and streams follow.');
 
+    // ------------------------------------------------------- after delivery
+    console.log('  Guarding a delivered parcel...');
+    const again = await api('POST', '/', cast.seller, { orderId: order.id });
+    assert.strictEqual(again.status, 409, 'a delivered parcel never gets a second delivery');
+    assert.ok(/delivered|processing/i.test(again.body.error.message), 'the refusal says why: ' + again.body.error.message);
+    assert.strictEqual((await api('POST', '/' + deliveryId + '/cancel', cast.seller, { reason: 'too late' })).status, 409, 'a delivered delivery cannot be cancelled');
+    assert.strictEqual((await api('POST', '/' + deliveryId + '/assign', cast.seller, { driverId: cast.rider2.id })).status, 409, 'nor re-assigned');
+    const finished = await api('GET', '/by-order/' + order.id, cast.buyer);
+    assert.strictEqual(finished.body.data.delivery.status, 'delivered', 'by-order falls back to the finished delivery');
+    const riderAfter = (await api('GET', '/driver/me', cast.rider)).body.data.deliveries;
+    assert.ok(!riderAfter.some(d => d.id === deliveryId), 'a finished job leaves the rider overview');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
