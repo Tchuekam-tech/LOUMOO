@@ -104,6 +104,7 @@ function createDeliveryRouter({
   const router = express.Router();
   const svc = () => service || getSharedDeliveryService();
   const openStreams = new Map(); // userId -> count
+  const liveStreams = new Set(); // end(reason) callbacks, for graceful shutdown
 
   // Wraps an async handler so a rejected promise reaches the error middleware.
   const route = (fn) => (req, res, next) => {
@@ -203,6 +204,7 @@ function createDeliveryRouter({
     function cleanup() {
       if (closed) return;
       closed = true;
+      liveStreams.delete(end);
       unsubscribe();
       if (heartbeat) clearInterval(heartbeat);
       if (lifetime) clearTimeout(lifetime);
@@ -263,6 +265,7 @@ function createDeliveryRouter({
     }
     if (TERMINAL_STATUSES.includes(snapshot.status)) { end('complete'); return; }
 
+    liveStreams.add(end);
     ready = true;
     for (const event of buffer.splice(0)) handleEvent(event);
 
@@ -329,7 +332,14 @@ function createDeliveryRouter({
   }));
 
   router.openStreamCount = () => [...openStreams.values()].reduce((a, b) => a + b, 0);
-  return router;}
+  // Graceful shutdown: tell every open stream why it is closing so clients
+  // reconnect (to the next instance) instead of waiting out a dead socket, and
+  // so server.close() is not held open until the drain timeout.
+  router.closeAllStreams = (reason = 'server_restart') => {
+    for (const end of [...liveStreams]) end(reason);
+  };
+  return router;
+}
 
 // Production router: real authentication, shared service, default limits.
 const router = createDeliveryRouter();
