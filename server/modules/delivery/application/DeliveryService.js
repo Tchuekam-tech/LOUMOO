@@ -334,7 +334,10 @@ class DeliveryService {
     const updated = await this.repo.updateWhere(
       delivery.id,
       { status: S.ASSIGNED, driverId: riderId, assignedAt: delivery.assignedAt },
-      { status: S.PENDING_ASSIGNMENT, driverId: null, assignedAt: null, acceptedAt: null }
+      // updatedAt is the lapse's timestamp (it becomes the timeline row's time, which
+      // the recent-lapse ranking compares with this service's clock), so it is
+      // stamped here rather than left to the repository's own wall clock.
+      { status: S.PENDING_ASSIGNMENT, driverId: null, assignedAt: null, acceptedAt: null, updatedAt: this._nowIso() }
     );
     if (!updated) return null;
     await this._record(updated, S.ASSIGNED, riderId, OFFER_EXPIRED_NOTE);
