@@ -191,7 +191,10 @@ function createDeliveryRouter({
       cleanup();
       throw err;
     }
-    if (req.destroyed || res.destroyed) { cleanup(); return; }
+    // Check the RESPONSE/socket, not req.destroyed: a request whose body was
+    // read (express.json() reads even a GET that carries one) is `destroyed`
+    // while its connection is perfectly alive.
+    if (res.destroyed || res.writableEnded || !res.socket || res.socket.destroyed) { cleanup(); return; }
     role = snapshot.viewerRole;
 
     function write(chunk) {
