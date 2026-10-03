@@ -62,12 +62,20 @@ delivered, cancelled: terminal
 ### Offer expiry (v1.1)
 An `assigned` delivery is an *offer*: the rider has **15 minutes** from the moment
 of assignment to accept it. The window is the `DELIVERY_OFFER_TTL_MINUTES`
-setting; `0` turns expiry off. When it lapses with no answer:
+setting, in minutes:
+
+| Value | Meaning |
+|---|---|
+| unset, blank, not a number, or negative | the default, 15 minutes (a typo never switches expiry off) |
+| `0` | expiry is off: offers never lapse, `offerExpiresAt` is always `null` |
+| `0.5` … `10080` | that many minutes (fractions allowed). Below one second is raised to one second; above one week (10080) is clamped to one week |
+
+When an offer lapses with no answer:
 
 * the delivery goes back to `pending_assignment` (timeline note
-  `Offer expired: no response from the rider`) and `assignedAt` is cleared;
+  `Offer expired: no response from the rider`);
 * the seller is notified, and so is the rider;
-* the rider loses access (`404`), exactly as after a decline.
+* once released, the rider loses access (`404`), exactly as after a decline.
 
 Only `assigned` expires. Once the rider has `accepted` the job never times out.
 Re-assigning (to anyone) starts a fresh window.
