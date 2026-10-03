@@ -246,6 +246,34 @@ async function run() {
       assert.strictEqual(err.statusCode, 409, `${code} is a 409, not a 500`);
     }
 
+    const MIN = 60 * 1000;
+    assert.strictEqual(offerTtlMsFrom(undefined), 15 * MIN, 'unset means the default');
+    assert.strictEqual(offerTtlMsFrom(''), 15 * MIN, 'empty means the default');
+    assert.strictEqual(offerTtlMsFrom('   '), 15 * MIN, 'blank text is "unset", not 0 ("never expire")');
+    assert.strictEqual(offerTtlMsFrom('30'), 30 * MIN, 'an environment string works');
+    assert.strictEqual(offerTtlMsFrom(2), 2 * MIN);
+    assert.strictEqual(offerTtlMsFrom(0), 0, '0 is a real value: never expire');
+    assert.strictEqual(offerTtlMsFrom('0'), 0);
+    assert.strictEqual(offerTtlMsFrom('abc'), 15 * MIN, 'a typo cannot switch expiry off');
+    assert.strictEqual(offerTtlMsFrom(-5), 15 * MIN, 'a negative window is a typo, not "instant expiry"');
+    assert.strictEqual(offerTtlMsFrom(NaN), 15 * MIN);
+    assert.strictEqual(offerTtlMsFrom(Infinity), 15 * MIN, 'a non-finite window falls back to the default');
+
+    const offered = { status: S.ASSIGNED, assignedAt: '2026-10-03T10:00:00.000Z' };
+    const t0 = Date.parse(offered.assignedAt);
+    assert.strictEqual(offerDeadlineMs(offered, 15 * MIN), t0 + 15 * MIN, 'the deadline is assignedAt + the window');
+    assert.strictEqual(offerDeadlineMs({ ...offered, status: S.ACCEPTED }, 15 * MIN), null, 'an accepted job has no deadline');
+    assert.strictEqual(offerDeadlineMs({ ...offered, status: S.PENDING_ASSIGNMENT }, 15 * MIN), null);
+    assert.strictEqual(offerDeadlineMs(offered, 0), null, 'expiry off means no deadline');
+    assert.strictEqual(offerDeadlineMs({ status: S.ASSIGNED }, 15 * MIN), null, 'no assignedAt, nothing to count from');
+    assert.strictEqual(offerDeadlineMs({ status: S.ASSIGNED, assignedAt: 'not a date' }, 15 * MIN), null);
+    assert.strictEqual(offerDeadlineMs(null, 15 * MIN), null);
+    assert.strictEqual(isOfferLapsed(offered, 15 * MIN, t0 + 15 * MIN - 1), false, 'one millisecond early is still open');
+    assert.strictEqual(isOfferLapsed(offered, 15 * MIN, t0 + 15 * MIN), true, 'the deadline itself has lapsed');
+    assert.strictEqual(isOfferLapsed(offered, 15 * MIN, t0 + 16 * MIN), true);
+    assert.strictEqual(isOfferLapsed({ ...offered, status: S.ACCEPTED }, 15 * MIN, t0 + 99 * MIN), false, 'accepted jobs never lapse');
+    assert.strictEqual(isOfferLapsed(offered, 0, t0 + 99 * MIN), false, 'with expiry off nothing lapses');
+
     console.log('    ✓ Delivery domain: state machine, geo, handover code and viewer redaction hold.');
   } finally {
     if (!hadSecret) config.supabase.jwtSecret = hadSecret;
