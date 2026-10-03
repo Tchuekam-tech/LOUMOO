@@ -356,6 +356,21 @@ async function run() {
     const buyerBeforeAccept = (await api('GET', '/' + deliveryId, cast.buyer)).body.data.delivery;
     assert.strictEqual(buyerBeforeAccept.driver, null, 'the buyer is not told who until the rider accepts');
 
+    // A rider who has not accepted is shown the job card only: an area and a
+    // point rounded to about a kilometre. Never the customer's name, phone,
+    // street or exact location.
+    const mine = await api('GET', '/driver/me', cast.rider);
+    assert.strictEqual(mine.status, 200, JSON.stringify(mine.body));
+    assert.strictEqual(mine.body.data.driver.id, cast.rider.id);
+    const job = mine.body.data.deliveries.find(d => d.id === deliveryId);
+    assert.ok(job, 'the assigned delivery is on the rider overview');
+    assert.deepStrictEqual(Object.keys(job.dropoff).sort(), ['area', 'location'], 'a coarse drop-off only');
+    assert.deepStrictEqual(job.dropoff.location, { lat: 4.05, lng: 9.77 }, 'the point is rounded to two decimals');
+    for (const secret of ['Awa Njoya', '+237690123456', 'Rue de la Joie']) {
+      assert.ok(!JSON.stringify(mine.body).includes(secret), 'the rider overview must not reveal ' + secret);
+    }
+    assert.strictEqual((await api('GET', '/' + deliveryId, cast.rider2)).status, 404, 'a rider who is not assigned cannot read it');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
