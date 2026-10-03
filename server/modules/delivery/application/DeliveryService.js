@@ -301,7 +301,7 @@ class DeliveryService {
     const caller = this._caller(callerInput);
     if (!orderId) throw new ValidationError('Order ID is required.');
 
-    const order = await this.orders.findOrderById(orderId);
+    const order = await this._freshOrder(orderId);
     const isAdmin = this._isAdmin(caller.userRole);
     if (!order || (!isAdmin && order.sellerId !== caller.userId)) {
       throw new NotFoundError('Order', orderId);
