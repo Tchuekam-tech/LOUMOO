@@ -327,3 +327,20 @@ streaming unsupported on this deployment.
     delivery), so there is no honest "nearest rider" until riders can report
     availability and position without a job. Least-busy is what we can compute
     truthfully today. Revisit with a presence table.
+    **A rider who lets an offer lapse sorts behind every responsive rider for the
+    next hour.** Without this, a rider who never answers (offline, or suspended in
+    their LOUMOO account: nothing yet syncs an account suspension to the rider
+    record, only account *deletion* has a hook) returns to zero load after each
+    lapse and would be offered the first slot of every new delivery. The penalty
+    fades on its own; a decline does not trigger it; a seller can still pick the
+    rider by hand. The proper fix is to suspend the rider record when their
+    account is suspended; this does not replace it.
+11. **Rider workload is shared across sellers, on purpose.** Riders are a pool an
+    admin registers, not per-seller staff, so `openDeliveries` counts a rider's
+    work for every seller, and any seller can read it. The trade-off: a seller can
+    watch when a named rider takes or finishes other sellers' jobs, and estimate a
+    competitor's live volume if riders mostly serve one shop. Judged acceptable
+    while the pool is small and shared; if riders become per-seller, or that
+    visibility is unwanted, show only a coarse free/busy flag, or only the caller's
+    own count, and keep the global count for ranking. **Needs the owner's
+    confirmation.**
