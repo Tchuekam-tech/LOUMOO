@@ -230,6 +230,23 @@ async function run() {
     assert.strictEqual((await api('POST', `/drivers/${cast.rider.id}`, cast.admin, { ...riderBody, status: 'banished' })).status, 400, 'status must be active or suspended');
     assert.strictEqual((await api('POST', `/drivers/${cast.rider.id}`, cast.admin, { name: 'No Phone' })).status, 400, 'a phone number is required');
 
+    // A rider row has a foreign key to iam.profiles. The unit suites cannot see
+    // that constraint; against the real database an unknown account id must come
+    // back as a clean 400, not a 500 from the raw Postgres error.
+    const ghost = await api('POST', '/drivers/profile_that_does_not_exist', cast.admin, riderBody);
+    assert.strictEqual(ghost.status, 400, `an unknown account id is a validation error: ${JSON.stringify(ghost.body)}`);
+
+    const registered = await api('POST', `/drivers/${cast.rider.id}`, cast.admin, riderBody);
+    assert.strictEqual(registered.status, 200, JSON.stringify(registered.body));
+    assert.deepStrictEqual(registered.body.data.driver, { id: cast.rider.id, name: riderBody.name, phone: riderBody.phone, status: 'active' });
+    const second = await api('POST', `/drivers/${cast.rider2.id}`, cast.admin, { name: 'Bruno Essomba', phone: '+237600000002' });
+    assert.strictEqual(second.status, 200, JSON.stringify(second.body));
+
+    const driverRow = (await db().from('delivery_drivers').select('*').eq('profile_id', cast.rider.id).single()).data;
+    assert.strictEqual(driverRow.display_name, riderBody.name, 'the rider is stored in iam.delivery_drivers');
+    assert.strictEqual(driverRow.status, 'active');
+    assert.strictEqual(driverRow.created_by, cast.admin.id, 'the registering admin is recorded');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
