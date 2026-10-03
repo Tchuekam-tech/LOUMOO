@@ -26,7 +26,7 @@ entry after finishing one. Newest entry first.
 |---|---|---|
 | 0. Branches, contract, handoff file | Claude | done |
 | 1. Migration 013 + `delivery` module (domain, repo, service) | Claude | **done** (unit-tested; migration NOT applied to any database yet) |
-| 2. Delivery routes, rider endpoints, SSE, route tests | Claude | next |
+| 2. Delivery routes, rider endpoints, SSE, route tests | Claude | **done** (mounted at `/api/v1/deliveries`; tested with a stand-in for auth, no database) |
 | 3. Rider page (GPS posting) | ChatGPT/Codex | can start now against `docs/DELIVERY_API.md` v1 |
 | 4. Customer tracking screen (map, timeline, code) | ChatGPT/Codex | |
 | 5. Merge both, rebuild frontend, end-to-end check | owner | |
