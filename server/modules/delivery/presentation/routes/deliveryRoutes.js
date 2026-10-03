@@ -33,6 +33,8 @@ const { requireAuth } = require('../../../identity/presentation/guards/authGuard
 const { ValidationError, RateLimitError } = require('../../../../shared/errors/AppError');
 const logger = require('../../../../shared/logging/logger');
 
+const MAX_VALIDATION_ISSUES = 5;
+
 const DEFAULTS = Object.freeze({
   heartbeatMs: 25 * 1000,
   maxStreamMs: 30 * 60 * 1000,
@@ -51,7 +53,13 @@ function parseBody(schema, body, what) {
   if (!parsed.success) {
     const issue = parsed.error.issues[0];
     const path = issue && issue.path && issue.path.length ? `${issue.path.join('.')}: ` : '';
-    throw new ValidationError(`${path}${(issue && issue.message) || `Invalid ${what} payload`}`, parsed.error.issues);
+    // Bounded, flat details: raw zod issues would echo every unrecognised key a
+    // client sent (unbounded) in a shape no other endpoint uses.
+    const details = parsed.error.issues.slice(0, MAX_VALIDATION_ISSUES).map((i) => ({
+      field: (i.path || []).join('.') || null,
+      message: String(i.message || 'Invalid value').slice(0, 200)
+    }));
+    throw new ValidationError(`${path}${(issue && String(issue.message).slice(0, 200)) || `Invalid ${what} payload`}`, details);
   }
   return parsed.data;
 }
