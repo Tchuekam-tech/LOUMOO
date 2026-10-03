@@ -260,8 +260,10 @@ data: {"reason":"complete"}
 `400` validation (`details` is at most 5 `{ field, message }` entries) · `401` unauthenticated · `403` wrong role / not the assigned or
 an inactive rider · `404` not found **or not a participant** (including a rider who
 was replaced or declined) · `409` illegal transition / already exists / changed by
-someone else · `423` handover locked · `429` too many open streams (or the global
-rate limit, see decision 7) · `501` live streaming unsupported on this deployment.
+someone else · `409 OFFER_EXPIRED` accepting an offer whose window lapsed ·
+`409 NO_RIDER_AVAILABLE` auto-assign found no eligible rider · `423` handover locked ·
+`429` too many open streams (or the global rate limit, see decision 7) · `501` live
+streaming unsupported on this deployment.
 
 ## Decisions taken (change here first if you disagree)
 1. **Who assigns riders?** The order's seller or an admin.
