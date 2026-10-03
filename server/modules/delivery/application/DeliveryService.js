@@ -483,6 +483,15 @@ class DeliveryService {
       throw new ValidationError('A rider cannot deliver their own order', [{ field: 'driverId', message: 'Choose a different rider.' }]);
     }
 
+    return this._applyAssignment(delivery, driver, caller, role, `Assigned to ${driver.name}`);
+  }
+
+  /**
+   * The shared tail of assign and auto-assign: the rider is already chosen and
+   * validated; this performs the compare-and-swap, notifies them and presents
+   * the result. `note` is the timeline text.
+   */
+  async _applyAssignment(delivery, driver, caller, role, note) {
     const retrying = delivery.status === S.FAILED;
     const patch = {
       driverId: driver.id,
@@ -509,7 +518,7 @@ class DeliveryService {
       delivery,
       { status: delivery.status, driverId: delivery.driverId },
       patch,
-      { actorId: caller.userId, note: `Assigned to ${driver.name}`, label: 'Delivery' }
+      { actorId: caller.userId, note, label: 'Delivery' }
     );
 
     this._notify(driver.id, {
