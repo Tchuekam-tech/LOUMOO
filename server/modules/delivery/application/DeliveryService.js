@@ -561,9 +561,14 @@ class DeliveryService {
 
   /** What the rider is told with a new offer: how long they have, when there is a limit. */
   _offerPrompt() {
-    if (!(this.offerTtlMs > 0)) return 'Open LOUMOO to accept or decline it.';
-    const minutes = Math.max(1, Math.round(this.offerTtlMs / 60000));
-    return `Open LOUMOO to accept or decline it within ${minutes} ${minutes === 1 ? 'minute' : 'minutes'}.`;
+    const base = 'Open LOUMOO to accept or decline it';
+    if (!(this.offerTtlMs > 0)) return `${base}.`;
+    // Rounded DOWN: the text must never promise more time than the server honours
+    // (a rider who trusts "within 1 minute" on a 30 s window would be refused).
+    const seconds = Math.floor(this.offerTtlMs / 1000);
+    if (seconds < 60) return `${base} within ${seconds} ${seconds === 1 ? 'second' : 'seconds'}.`;
+    const minutes = Math.floor(seconds / 60);
+    return `${base} within ${minutes} ${minutes === 1 ? 'minute' : 'minutes'}.`;
   }
 
   /**
