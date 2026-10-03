@@ -282,3 +282,34 @@
     if (typeof updateMap === 'function') updateMap(d);
   }
 
+  // --------------------------------------------------------------- data load
+  async function load(orderId, deliveryId) {
+    if (!window.deliveryApi) { renderError('Delivery service is not available.'); return; }
+    try {
+      var res = deliveryId
+        ? await window.deliveryApi.get(deliveryId)
+        : await window.deliveryApi.getByOrder(orderId);
+      var d = res.delivery;
+      if (!d) { renderError('No delivery found for this order yet.'); setPill('NO DELIVERY', 'bad'); return; }
+      state.deliveryId = d.id;
+      if (typeof initMap === 'function') initMap(d);
+      applyDelivery(d);
+      loadCode(d);
+      if (typeof startLive === 'function') startLive(d.id);
+    } catch (err) {
+      renderError(err && err.status === 404 ? 'No delivery found for this order yet.' : ((err && err.message) || 'Could not load tracking.'));
+      setPill('UNAVAILABLE', 'bad');
+    }
+  }
+
+  async function loadCode(d) {
+    if (!window.deliveryApi.getCode) return hideCode();
+    if (['accepted', 'picked_up', 'arrived'].indexOf(d.status) === -1) return hideCode();
+    try {
+      var c = await window.deliveryApi.getCode(d.id);
+      renderCode(c);
+    } catch (e) {
+      hideCode(); // 403 for non-buyers, or not in a code-bearing state
+    }
+  }
+
