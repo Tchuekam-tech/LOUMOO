@@ -473,6 +473,29 @@ async function main() {
       await waitFor(() => st.ended, 'the stream to close after its lifetime');
     }
 
+    // Every stream has been released.
+    for (const st of openStreams) closeStream(st);
+    await waitFor(() => router.openStreamCount() === 0 && shortLivedRouter.openStreamCount() === 0, 'all streams to be released', 4000);
+
+    // ------------------------------------------------ eventForViewer, directly
+    {
+      const loc = { type: 'location', status: 'accepted', lat: 1, lng: 2, at: 't', speedKmh: 3, heading: 4 };
+      assert.strictEqual(eventForViewer(loc, 'buyer'), null, 'buyer: no position before pickup');
+      assert.deepStrictEqual(eventForViewer(loc, 'seller'), { lat: 1, lng: 2, at: 't', speedKmh: 3, heading: 4 });
+      assert.deepStrictEqual(eventForViewer({ ...loc, status: 'picked_up' }, 'buyer'), { lat: 1, lng: 2, at: 't', speedKmh: 3, heading: 4 });
+      assert.strictEqual(eventForViewer({ type: 'eta', status: 'assigned', etaMinutes: 3, distanceKm: 1 }, 'buyer'), null);
+      assert.deepStrictEqual(eventForViewer({ type: 'eta', status: 'arrived', etaMinutes: 0, distanceKm: 0 }, 'buyer'), { etaMinutes: 0, distanceKm: 0 });
+      assert.deepStrictEqual(
+        eventForViewer({ type: 'status', status: 'accepted', at: 't', etaMinutes: 9, distanceKm: 2 }, 'buyer'),
+        { status: 'accepted', at: 't', etaMinutes: null, distanceKm: null },
+        'a buyer status event before pickup carries no ETA'
+      );
+      assert.strictEqual(eventForViewer({ type: 'status', status: 'accepted', at: 't', etaMinutes: 9, distanceKm: 2 }, 'driver').etaMinutes, 9);
+      assert.strictEqual(eventForViewer({ type: 'mystery', status: 'accepted' }, 'seller'), null, 'unknown event types are dropped');
+      assert.strictEqual(eventForViewer(null, 'seller'), null);
+      assert.strictEqual(eventForViewer({}, 'seller'), null);
+    }
+
     console.log('    ✓ Delivery routes: wiring, validation, status codes and the live stream hold.');
   } finally {
     NotificationService.create = originalCreate;
