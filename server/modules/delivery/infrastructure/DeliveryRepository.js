@@ -28,9 +28,12 @@ const {
 const PG_UNIQUE_VIOLATION = '23505';
 const PG_FOREIGN_KEY_VIOLATION = '23503';
 const MAX_MEMORY_LOCATIONS_PER_DELIVERY = 500;
-// Hard cap on the rows read to count rider workload; far above any realistic number of
-// simultaneously open deliveries, and logged loudly if it is ever reached.
-const MAX_WORKLOAD_ROWS = 5000;
+// Rows read to count rider workload and recent lapses. Equal to Supabase's default
+// API row limit (db-max-rows = 1000): PostgREST silently truncates any larger
+// client limit to that, so a bigger number here would make the "cap reached" warning
+// unreachable while counts quietly came back short. Far above any realistic number
+// of simultaneously open deliveries; logged loudly if it is ever reached.
+const MAX_WORKLOAD_ROWS = 1000;
 
 // camelCase record key -> column name, for both reads and writes.
 const DELIVERY_COLUMNS = Object.freeze({
@@ -418,7 +421,12 @@ class DeliveryRepository {
           .gte('created_at', new Date(since).toISOString())
           .limit(MAX_WORKLOAD_ROWS);
         if (error) failRankingInput(error, 'DeliveryRepository.countRecentLapses');
-        else return tally((data || []).map((r) => r.actor_id).filter(Boolean));
+        else {
+          if ((data || []).length >= MAX_WORKLOAD_ROWS) {
+            logger.warn(`[DeliveryRepository] Recent-lapse count hit its ${MAX_WORKLOAD_ROWS}-row cap; the non-responder penalty may miss riders.`);
+          }
+          return tally((data || []).map((r) => r.actor_id).filter(Boolean));
+        }
       } catch (err) {
         if (err instanceof InfrastructureError) throw err;
         failRankingInput(err, 'DeliveryRepository.countRecentLapses');
