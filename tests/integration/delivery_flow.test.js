@@ -34,6 +34,47 @@ async function migrationIsApplied() {
   throw new Error(`delivery_flow: could not probe iam.deliveries: ${error.code || ''} ${error.message}`);
 }
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+// The app's global limiter allows 120 requests a minute per peer, and every
+// request from this process comes from the same peer (docs/DELIVERY_API.md,
+// decision 7). This suite makes well over that in total, so it paces itself:
+// never more than REQUEST_BUDGET requests in any rolling minute.
+const REQUEST_BUDGET = 90;
+const WINDOW_MS = 60 * 1000;
+const sentAt = [];
+
+async function pace() {
+  for (;;) {
+    const now = Date.now();
+    while (sentAt.length && now - sentAt[0] >= WINDOW_MS) sentAt.shift();
+    if (sentAt.length < REQUEST_BUDGET) {
+      sentAt.push(now);
+      return;
+    }
+    await sleep(WINDOW_MS - (now - sentAt[0]) + 25);
+  }
+}
+
+/**
+ * One paced HTTP call. A 429 that carries Retry-After comes from the global
+ * limiter, so it is waited out and retried; a 429 without it (the per-user
+ * stream cap) is a real answer and is returned as is.
+ */
+async function call(method, path, user, body) {
+  for (let attempt = 0; ; attempt += 1) {
+    await pace();
+    const res = await harness.request(method, path, { token: user ? user.token : null, body });
+    const retryAfter = Number(res.headers['retry-after']);
+    if (res.status === 429 && retryAfter > 0 && attempt < 3) {
+      await sleep(Math.min(retryAfter, 65) * 1000);
+      continue;
+    }
+    return res;
+  }
+}
+
+const api = (method, path, user, body) => call(method, `/api/v1/deliveries${path}`, user, body);
 async function run() {
   console.log('═══════════════════════════════════════════════════════════');
   console.log('  DELIVERY TRACKING — DATABASE-BACKED INTEGRATION TEST');
