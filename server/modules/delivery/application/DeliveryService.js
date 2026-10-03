@@ -40,6 +40,8 @@ const {
   estimateEta,
   offerTtlMsFrom,
   isOfferLapsed,
+  OFFER_EXPIRED_NOTE,
+  RECENT_LAPSE_WINDOW_MS,
   OfferExpiredError,
   NoRiderAvailableError,
   describeAddress,
@@ -335,7 +337,7 @@ class DeliveryService {
       { status: S.PENDING_ASSIGNMENT, driverId: null, assignedAt: null, acceptedAt: null }
     );
     if (!updated) return null;
-    await this._record(updated, S.ASSIGNED, riderId, 'Offer expired: no response from the rider');
+    await this._record(updated, S.ASSIGNED, riderId, OFFER_EXPIRED_NOTE);
     this._notify(updated.sellerId, {
       title: 'A rider did not respond',
       body: 'The offer expired. Assign another rider to keep the order moving.',

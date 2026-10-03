@@ -69,6 +69,17 @@ const OFFER_DEFAULT_TTL_MINUTES = 15;
 const OFFER_MIN_TTL_MS = 1000;
 const OFFER_MAX_TTL_MINUTES = 7 * 24 * 60;
 
+// The timeline note written when an offer lapses. It is also how the lapse is
+// told apart from a decline (both are a rider-attributed move back to
+// pending_assignment), so it is a constant that is both written and matched.
+const OFFER_EXPIRED_NOTE = 'Offer expired: no response from the rider';
+
+// A rider who let an offer lapse sorts behind every rider who did not for this
+// long, so one who never answers (offline, or suspended at the account level where
+// nothing yet syncs that to the rider record) does not take the first offer of
+// every delivery. Short on purpose: it fades without anyone having to clear it.
+const RECENT_LAPSE_WINDOW_MS = 60 * 60 * 1000;
+
 // The deliveries that make a rider "busy" when the seller picks one. `failed` is
 // deliberately absent: that job is waiting on a seller/admin decision, not on
 // the rider's time.
@@ -331,6 +342,8 @@ module.exports = {
   OFFER_DEFAULT_TTL_MINUTES,
   OFFER_MIN_TTL_MS,
   OFFER_MAX_TTL_MINUTES,
+  OFFER_EXPIRED_NOTE,
+  RECENT_LAPSE_WINDOW_MS,
   WORKLOAD_STATUSES,
   DeliveryLockedError,
   OfferExpiredError,
