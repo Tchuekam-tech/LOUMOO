@@ -1084,6 +1084,22 @@ class DeliveryService {
     await this._releaseDriverWork(userId, userId, 'Rider account deleted');
   }
 
+  /**
+   * Riders who already handed this delivery back: declined it, released it after
+   * accepting, or let the offer lapse. Read from the timeline: each of those is a
+   * move back to `pending_assignment` whose actor is the rider. The timeline write
+   * is best-effort, so a lost row only means a rider might be offered it again.
+   */
+  async _ridersWhoPassed(deliveryId) {
+    const passed = new Set();
+    for (const e of await this.repo.listEvents(deliveryId)) {
+      const handedBack = e.status === S.PENDING_ASSIGNMENT
+        && (e.previousStatus === S.ASSIGNED || e.previousStatus === S.ACCEPTED);
+      if (handedBack && e.actorId) passed.add(e.actorId);
+    }
+    return passed;
+  }
+
   async listDrivers(callerInput) {
     const caller = this._caller(callerInput);
     if (!SELLER_ROLES.includes(caller.userRole)) {
