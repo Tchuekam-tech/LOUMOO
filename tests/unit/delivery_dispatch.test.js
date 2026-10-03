@@ -316,6 +316,97 @@ async function run() {
       assert.strictEqual(await code(w.service.getDelivery('dlv_does_not_exist', OTHER_SELLER)), 'NOT_FOUND', 'indistinguishable from a missing id');
     }
 
+    // ------------------------------------------- the rider list and its workload
+    {
+      const w = makeWorld();
+      await registerRiders(w, [['rider_1', 'Alain'], ['rider_2', 'Bruno'], ['rider_3', 'Chantal']]);
+      const ids = async (caller, opts) => (await w.service.listDrivers(caller, opts)).map((d) => d.id);
+
+      assert.deepStrictEqual(await ids(SELLER), ['rider_1', 'rider_2', 'rider_3'], 'with nobody busy the order is by name');
+      assert.ok((await w.service.listDrivers(SELLER)).every((d) => d.openDeliveries === 0));
+
+      // rider_1 carries two jobs (one offered, one accepted), rider_3 one that is on the road.
+      const a = await newDelivery(w, { assignTo: 'rider_1' });
+      const b = await newDelivery(w, { assignTo: 'rider_1' });
+      await w.service.acceptDelivery(b.id, RIDER);
+      const c = await newDelivery(w, { assignTo: 'rider_3' });
+      await w.repo.updateWhere(c.id, {}, { status: 'picked_up' });
+      const list = await w.service.listDrivers(SELLER);
+      assert.deepStrictEqual(list.map((d) => [d.id, d.openDeliveries]), [['rider_2', 0], ['rider_3', 1], ['rider_1', 2]],
+        'least busy first, and an offer counts as work from the moment it is made');
+      assert.deepStrictEqual(Object.keys(list[0]).sort(), ['id', 'name', 'openDeliveries', 'phone'], 'no declined flag without a delivery id');
+
+      // Only jobs that occupy a rider count.
+      const d = await newDelivery(w, { assignTo: 'rider_2' });
+      await w.repo.updateWhere(d.id, {}, { status: 'failed' });
+      const e = await newDelivery(w, { assignTo: 'rider_2' });
+      await w.repo.updateWhere(e.id, {}, { status: 'delivered' });
+      const f = await newDelivery(w, { assignTo: 'rider_2' });
+      await w.repo.updateWhere(f.id, {}, { status: 'cancelled' });
+      assert.strictEqual((await w.service.listDrivers(SELLER)).find((r) => r.id === 'rider_2').openDeliveries, 0,
+        'failed, delivered and cancelled jobs do not make a rider busy');
+
+      // Handing a job back lowers the count at once.
+      await w.service.declineDelivery(a.id, RIDER);
+      assert.strictEqual((await w.service.listDrivers(SELLER)).find((r) => r.id === 'rider_1').openDeliveries, 1);
+
+      // Who may ask.
+      assert.strictEqual(await code(w.service.listDrivers(BUYER)), 'PERMISSION_DENIED', 'a customer cannot list riders');
+      assert.strictEqual(await code(w.service.listDrivers(RIDER)), 'PERMISSION_DENIED', 'nor can a rider');
+      assert.deepStrictEqual((await ids(ADMIN)).length, 3, 'an admin can');
+    }
+    {
+      // Tie-breaks are by name, then id, whatever order the riders were registered in.
+      const w = makeWorld();
+      await registerRiders(w, [['rider_z', 'Alain'], ['rider_b', 'Zoe'], ['rider_a', 'Zoe'], ['rider_c', 'alain']]);
+      const order = (await w.service.listDrivers(SELLER)).map((d) => d.id);
+      assert.strictEqual(order[0] === 'rider_z' || order[0] === 'rider_c', true, 'Alain/alain sort before Zoe');
+      assert.deepStrictEqual(order.slice(-2), ['rider_a', 'rider_b'], 'equal names fall back to the id');
+    }
+    {
+      const w = makeWorld();
+      await registerRiders(w);
+      await w.service.registerDriver('rider_2', { name: 'Bruno', phone: '+237600000002', status: 'suspended' }, ADMIN);
+      assert.deepStrictEqual((await w.service.listDrivers(SELLER)).map((d) => d.id), ['rider_1'], 'a suspended rider is not offered');
+    }
+
+    // ---------------------------------------- "who already handed this one back"
+    {
+      const w = makeWorld();
+      await registerRiders(w, [['rider_1', 'Alain'], ['rider_2', 'Bruno'], ['rider_3', 'Chantal'], ['rider_4', 'Dora']]);
+      const { id } = await newDelivery(w, { assignTo: 'rider_1' });
+      const flags = async (caller = SELLER) => Object.fromEntries((await w.service.listDrivers(caller, { deliveryId: id })).map((r) => [r.id, r.declined]));
+
+      assert.deepStrictEqual(await flags(), { rider_1: false, rider_2: false, rider_3: false, rider_4: false }, 'nobody has handed it back yet');
+
+      await w.service.declineDelivery(id, RIDER);
+      assert.strictEqual((await flags()).rider_1, true, 'a decline is remembered');
+
+      await w.service.assignDriver(id, 'rider_2', SELLER);
+      await w.service.acceptDelivery(id, RIDER2);
+      await w.service.declineDelivery(id, RIDER2); // releasing an accepted job
+      assert.strictEqual((await flags()).rider_2, true, 'releasing an accepted job is remembered');
+
+      await w.service.assignDriver(id, 'rider_3', SELLER);
+      w.clock.advance(OFFER_TTL_MS + MIN);
+      await w.service.expireStaleOffers();
+      assert.strictEqual((await flags()).rider_3, true, 'an offer left to lapse is remembered');
+
+      await w.service.assignDriver(id, 'rider_4', SELLER);
+      await w.service.assignDriver(id, 'rider_1', SELLER); // the seller takes the offer from rider_4
+      assert.strictEqual((await flags()).rider_4, false, 'a rider the seller replaced did not turn it down');
+
+      assert.deepStrictEqual(await flags(ADMIN), await flags(), 'an admin sees the same flags');
+      assert.strictEqual(await code(w.service.listDrivers(OTHER_SELLER, { deliveryId: id })), 'NOT_FOUND', "another seller cannot read this delivery's history");
+      assert.strictEqual(await code(w.service.listDrivers(SELLER, { deliveryId: 'dlv_missing' })), 'NOT_FOUND');
+      assert.strictEqual(await code(w.service.listDrivers(BUYER, { deliveryId: id })), 'PERMISSION_DENIED', 'the buyer is stopped by the role check first');
+
+      // Another delivery is a clean slate.
+      const other = await newDelivery(w);
+      const otherFlags = (await w.service.listDrivers(SELLER, { deliveryId: other.id })).map((r) => r.declined);
+      assert.ok(otherFlags.every((f) => f === false), 'handing back one delivery says nothing about another');
+    }
+
     console.log('    ✓ Delivery dispatch: offer window, lazy and swept expiry hold.');
   } finally {
     NotificationService.create = originalCreate;
