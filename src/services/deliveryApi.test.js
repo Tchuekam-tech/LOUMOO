@@ -75,3 +75,7 @@ async function run() {
   assert.strictEqual(events.ended, 'complete', 'a terminal status ended the subscription');
   ok('subscribe falls back to polling on a 501 stream and ends on a terminal status');
 
+  console.log('\nALL ' + passed + ' DELIVERY FRONTEND CLIENT CHECKS PASSED');
+}
+
+run().then(() => process.exit(0)).catch((err) => { console.error('TEST FAILED:', err); process.exit(1); });
