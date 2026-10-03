@@ -204,3 +204,37 @@ class DeliveryApiClient {
         return startPolling();
       }
 
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let ended = false;
+      let reconnect = false;
+      try {
+        for (;;) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          let idx;
+          while ((idx = buffer.indexOf('\n\n')) !== -1) {
+            const ev = this._parseSseFrame(buffer.slice(0, idx));
+            buffer = buffer.slice(idx + 2);
+            if (!ev) continue;
+            if (ev.type === 'status') h.onStatus(ev.data);
+            else if (ev.type === 'location') h.onLocation(ev.data);
+            else if (ev.type === 'eta') h.onEta(ev.data);
+            else if (ev.type === 'end') {
+              const reason = (ev.data && ev.data.reason) || 'complete';
+              if (reason === 'timeout' || reason === 'server_restart') reconnect = true;
+              else { ended = true; h.onEnd(reason); }
+            }
+          }
+          if (ended || reconnect) break;
+        }
+      } catch (err) {
+        // aborted on stop(), or the connection dropped mid-read
+      }
+      if (stopped || ended) return;
+      if (reconnect) return setTimeout(() => runStream(), 1500); // transient: reopen
+      startPolling(); // dropped without an end event → poll
+    };
+
