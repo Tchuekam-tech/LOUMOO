@@ -114,3 +114,31 @@ class DeliveryApiClient {
     return sawField ? ev : null;
   }
 
+  /**
+   * Live updates for a delivery. Opens the SSE stream with the Authorization
+   * header (fetch streaming, never native EventSource); if the stream is
+   * unsupported (501 on serverless), refused before it starts, or drops without
+   * a clean `end`, it falls back to polling GET /:id every ~7s. Visibility is
+   * the server's: a buyer gets no location/eta until the parcel is picked up.
+   *
+   * @param {string} id delivery id
+   * @param {object} handlers { onStatus, onLocation, onEta, onEnd, onError }
+   *   - onStatus({status, at, etaMinutes?, distanceKm?})
+   *   - onLocation({lat, lng, at, speedKmh?, heading?})
+   *   - onEta({etaMinutes, distanceKm})
+   *   - onEnd(reason)   reason: 'complete' | 'access_revoked'
+   *   - onError(error)
+   * @returns {{close: () => void}} call close() to stop and release the stream
+   */
+  subscribe(id, handlers = {}) {
+    const noop = () => {};
+    const h = {
+      onStatus: handlers.onStatus || noop,
+      onLocation: handlers.onLocation || noop,
+      onEta: handlers.onEta || noop,
+      onEnd: handlers.onEnd || noop,
+      onError: handlers.onError || noop
+    };
+    const POLL_MS = 7000;
+    const TERMINAL = ['delivered', 'cancelled'];
+
