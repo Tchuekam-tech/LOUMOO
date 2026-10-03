@@ -649,6 +649,27 @@ async function run() {
     const riderAfter = (await api('GET', '/driver/me', cast.rider)).body.data.deliveries;
     assert.ok(!riderAfter.some(d => d.id === deliveryId), 'a finished job leaves the rider overview');
 
+    // ---------------------------------------------------- five wrong codes: 423
+    console.log('  Locking the handover after five wrong codes...');
+    const lockJob = await openDelivery(cast, { accept: true });
+    const lockId = lockJob.id;
+    assert.strictEqual((await api('POST', '/' + lockId + '/status', cast.rider, { status: 'picked_up' })).status, 200);
+    assert.strictEqual((await api('POST', '/' + lockId + '/status', cast.rider, { status: 'arrived' })).status, 200);
+    const lockCode = (await api('GET', '/' + lockId + '/code', cast.buyer)).body.data.code;
+    const lockGuess = wrongCodeFor(lockCode);
+
+    for (let attempt = 1; attempt <= 4; attempt += 1) {
+      const miss = await api('POST', '/' + lockId + '/complete', cast.rider, { code: lockGuess });
+      assert.strictEqual(miss.status, 400, 'wrong code ' + attempt + ' is a plain 400');
+    }
+    const lastMiss = await api('POST', '/' + lockId + '/complete', cast.rider, { code: lockGuess });
+    assert.strictEqual(lastMiss.status, 423, 'the fifth wrong code locks the delivery with a real 423');
+    assert.strictEqual(lastMiss.body.error.code, 'DELIVERY_LOCKED');
+    assert.strictEqual((await db().from('deliveries').select('code_attempts').eq('id', lockId).single()).data.code_attempts, 5, 'five guesses recorded in the database');
+    assert.strictEqual((await api('POST', '/' + lockId + '/complete', cast.rider, { code: lockCode })).status, 423, 'even the right code is now refused');
+    assert.strictEqual((await api('POST', '/' + lockId + '/status', cast.rider, { status: 'failed', note: 'trying to escape the lock' })).status, 423, 'and reporting a failure is not a way out');
+    assert.strictEqual((await db().from('deliveries').select('status').eq('id', lockId).single()).data.status, 'arrived', 'the delivery stays arrived');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
