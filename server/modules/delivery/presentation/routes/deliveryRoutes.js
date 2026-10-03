@@ -40,6 +40,22 @@ function isServerlessRuntime(env = process.env) {
   return Boolean(env.AWS_LAMBDA_FUNCTION_NAME || env.NETLIFY || env.VERCEL);
 }
 
+/**
+ * Fresh look at the viewer's account, by profile id (uncached): returns the
+ * identity to authorise with, or null when the account is gone or blocked. The
+ * identity captured at connect is NOT reused: a demoted admin, or a user who was
+ * suspended or deleted after the stream opened, must stop receiving it.
+ */
+async function liveIdentity(who) {
+  const ProfileRepository = require('../../../identity/infrastructure/ProfileRepository');
+  const row = await ProfileRepository.findById(who.userId);
+  if (!row) return null;
+  const blocked = row.account_status === 'anonymized' || row.account_status === 'suspended'
+    || row.status === 'deleted' || row.status === 'suspended' || row.deleted_at;
+  if (blocked) return null;
+  return { userId: who.userId, userRole: row.primary_role || 'customer' };
+}
+
 const DEFAULTS = Object.freeze({
   heartbeatMs: 25 * 1000,
   maxStreamMs: 30 * 60 * 1000,
@@ -82,6 +98,7 @@ function createDeliveryRouter({
   heartbeatMs = DEFAULTS.heartbeatMs,
   maxStreamMs = DEFAULTS.maxStreamMs,
   maxStreamsPerUser = DEFAULTS.maxStreamsPerUser,
+  revalidate = liveIdentity,
   streamSupported = !isServerlessRuntime()
 } = {}) {
   const router = express.Router();
@@ -203,11 +220,19 @@ function createDeliveryRouter({
       if (wire) send(event.type, wire);
       if (event.type !== 'status') return;
       if (TERMINAL_STATUSES.includes(event.status)) { end('complete'); return; }
-      // A status change is when access can change (a rider was replaced or
-      // declined): re-check, rather than trusting the check made at connect.
-      svc().getViewerRole(deliveryId, who).then((current) => {
-        if (!current) end('access_revoked');
-      }).catch((err) => logger.warn(`[DeliveryStream] Access re-check failed for ${deliveryId}: ${err.message}`));
+      recheckAccess();
+    }
+    // Access can change while a stream is open: a rider is replaced or declines
+    // (delivery side), or an account is suspended, deleted or demoted (account
+    // side). Re-check on every status change and on every heartbeat, against the
+    // live account. A failed check is logged and retried next tick (fail open: a
+    // transient database error must not drop every viewer).
+    function recheckAccess() {
+      if (closed) return;
+      Promise.resolve(revalidate(who))
+        .then((fresh) => (fresh ? svc().getViewerRole(deliveryId, fresh) : null))
+        .then((current) => { if (!current) end('access_revoked'); })
+        .catch((err) => logger.warn(`[DeliveryStream] Access re-check failed for ${deliveryId}: ${err.message}`));
     }
 
     res.status(200);
@@ -241,7 +266,7 @@ function createDeliveryRouter({
     ready = true;
     for (const event of buffer.splice(0)) handleEvent(event);
 
-    heartbeat = setInterval(() => write(': keep-alive\n\n'), heartbeatMs);
+    heartbeat = setInterval(() => { write(': keep-alive\n\n'); recheckAccess(); }, heartbeatMs);
     lifetime = setTimeout(() => end('timeout'), maxStreamMs);
     if (heartbeat.unref) heartbeat.unref();
     if (lifetime.unref) lifetime.unref();
