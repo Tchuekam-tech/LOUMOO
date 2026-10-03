@@ -342,3 +342,56 @@
     return el;
   }
 
+  function initMap(d) {
+    var container = q('[data-dt-map]');
+    var msg = q('[data-dt-mapmsg]');
+    if (!container) return;
+    loadMapLibre().then(function (ml) {
+      if (!state.mounted || state.map) return;
+      var dest = d.dropoff && d.dropoff.location;
+      var center = d.lastLocation || dest || DOUALA;
+      var mapDiv = document.createElement('div');
+      mapDiv.style.cssText = 'position:absolute;inset:0';
+      container.appendChild(mapDiv);
+      state._ml = ml;
+      state.map = new ml.Map({
+        container: mapDiv,
+        style: window.LOUMOO_MAP_STYLE || DEMO_STYLE,
+        center: [center.lng, center.lat],
+        zoom: 12
+      });
+      state.map.on('load', function () {
+        if (msg) msg.style.display = 'none';
+        updateMap(state.delivery || d);
+      });
+      state.map.on('error', function () { /* tile errors are non-fatal */ });
+    }).catch(function () {
+      if (msg) msg.textContent = 'Live map unavailable. The status and ETA below are up to date.';
+    });
+  }
+
+  function updateMap(d) {
+    if (!state.map || !state._ml || !d) return;
+    var ml = state._ml;
+    var pts = [];
+    var dest = d.dropoff && d.dropoff.location;
+    if (dest) {
+      if (!state.destMarker) state.destMarker = new ml.Marker({ element: markerEl('#1a9d4b') }).setLngLat([dest.lng, dest.lat]).addTo(state.map);
+      pts.push([dest.lng, dest.lat]);
+    }
+    if (d.lastLocation) {
+      if (!state.driverMarker) state.driverMarker = new ml.Marker({ element: markerEl('#3245ff') }).setLngLat([d.lastLocation.lng, d.lastLocation.lat]).addTo(state.map);
+      else state.driverMarker.setLngLat([d.lastLocation.lng, d.lastLocation.lat]);
+      pts.push([d.lastLocation.lng, d.lastLocation.lat]);
+    }
+    try {
+      if (pts.length === 2) {
+        var b = new ml.LngLatBounds(pts[0], pts[0]);
+        pts.forEach(function (p) { b.extend(p); });
+        state.map.fitBounds(b, { padding: 60, maxZoom: 15, duration: 500 });
+      } else if (pts.length === 1) {
+        state.map.easeTo({ center: pts[0], zoom: 14, duration: 500 });
+      }
+    } catch (e) { /* map not ready yet */ }
+  }
+
