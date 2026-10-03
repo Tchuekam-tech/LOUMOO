@@ -1,17 +1,19 @@
-# Delivery Tracking — API Contract (v1, backend step 1 implemented)
+# Delivery Tracking — API Contract (v1, backend steps 1–2 implemented)
 
 Single source of truth for the backend (`server/modules/delivery/**`) and the
 frontend (rider page, customer tracking screen). **Change this file first, then
 tell the other side.** Neither side codes against anything not written here.
 
-> Status: the domain, repository and service behind every rule below are built
-> and unit-tested (`tests/unit/delivery_*.test.js`). The HTTP routes and the SSE
-> stream are **step 2** and are not mounted yet; their shapes are fixed here.
+> Status: **implemented and mounted** at `/api/v1/deliveries` (domain, service,
+> routes, SSE), covered by `tests/unit/delivery_*.test.js` (no database needed).
+> **Not yet run against a real database or with the real session guard:** migration
+> 013 has not been applied anywhere, and the tests stand in for authentication.
 
 Base path: `/api/v1/deliveries` (mounted like `/api/v1/orders`).
 Auth: same bearer session as the rest of the API (`requireAuth`).
 Envelope: `{ success: true, status: 'success', data: ... }` on success; errors use
-the existing `AppError` JSON shape `{ error: { code, message, details, statusCode } }`.
+the shared error shape `{ success: false, error: { code, message, details, requestId } }`.
+The `data` payload per endpoint is in **Response shapes** below.
 Money: integer XAF. Time: ISO-8601 UTC strings. Coordinates: `{ lat, lng }`
 (WGS84, decimal degrees).
 
