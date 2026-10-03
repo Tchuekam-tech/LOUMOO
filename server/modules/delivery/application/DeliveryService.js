@@ -514,11 +514,16 @@ class DeliveryService {
    * decision 10 in docs/DELIVERY_API.md).
    */
   async autoAssignDriver(deliveryId, callerInput) {
+    // Release lapsed offers BEFORE this delivery is read. If the ranking did it
+    // afterwards, it could release the very delivery being assigned (its offer
+    // lapsing between the read and the ranking) and the swap below would fail with
+    // a spurious "changed by someone else".
+    await this._releaseLapsedOffers();
     const { caller, delivery, role } = await this._requireStaff(deliveryId, callerInput);
     DeliveryStateMachine.assertCanAssign(delivery.status);
     await this._assertOrderNotCancelled(delivery);
 
-    const [ranked, passed] = await Promise.all([this._rankedActiveRiders(), this._ridersWhoPassed(delivery.id)]);
+    const [ranked, passed] = await Promise.all([this._rankedActiveRiders({ release: false }), this._ridersWhoPassed(delivery.id)]);
     const pick = ranked.find(({ driver }) => driver.id !== delivery.buyerId
       && !passed.has(driver.id)
       && !(delivery.status === S.ASSIGNED && driver.id === delivery.driverId));
@@ -1203,8 +1208,8 @@ class DeliveryService {
    * time). The lapse rule keeps a rider who never answers from taking the first
    * offer of every delivery just because their lapsed jobs left them at zero.
    */
-  async _rankedActiveRiders() {
-    await this._releaseLapsedOffers();
+  async _rankedActiveRiders({ release = true } = {}) {
+    if (release) await this._releaseLapsedOffers();
     const since = new Date(this.now() - RECENT_LAPSE_WINDOW_MS).toISOString();
     const [drivers, load, lapses] = await Promise.all([
       this.repo.listDrivers({ status: DRIVER_STATUS.ACTIVE, limit: MAX_RIDERS_CONSIDERED }),
