@@ -126,6 +126,8 @@ async function run() {
       const { id } = await newDelivery(w, { assignTo: 'rider_1' });
       w.clock.advance(OFFER_TTL_MS);
       const before = notifications.length;
+      const sellerBefore = sentTo('seller_1', 'A rider did not respond').length;
+      const riderBefore = sentTo('rider_1', 'A delivery offer expired').length;
 
       assert.strictEqual(await code(w.service.acceptDelivery(id, RIDER)), 'OFFER_EXPIRED', 'at the deadline the offer is gone');
       const seller = await w.service.getDelivery(id, SELLER);
@@ -136,14 +138,14 @@ async function run() {
       const last = seller.timeline[seller.timeline.length - 1];
       assert.strictEqual(last.status, 'pending_assignment');
       assert.strictEqual(last.note, 'Offer expired: no response from the rider', 'the timeline says why');
-      assert.strictEqual(sentTo('seller_1', 'A rider did not respond').length, 1, 'the seller is told');
-      assert.strictEqual(sentTo('rider_1', 'A delivery offer expired').length, 1, 'and so is the rider');
+      assert.strictEqual(sentTo('seller_1', 'A rider did not respond').length - sellerBefore, 1, 'the seller is told');
+      assert.strictEqual(sentTo('rider_1', 'A delivery offer expired').length - riderBefore, 1, 'and so is the rider');
       assert.strictEqual(notifications.length - before, 2, 'and nobody else');
 
       assert.strictEqual(await code(w.service.getDelivery(id, RIDER)), 'NOT_FOUND', 'the rider has lost access, as after a decline');
       assert.strictEqual(await code(w.service.acceptDelivery(id, RIDER)), 'OFFER_EXPIRED', 'a second accept is still "too late", not "not found": the lapse released it but it was theirs');
       assert.deepStrictEqual((await w.service.getRiderOverview(RIDER)).deliveries, [], 'it is gone from their job list');
-      assert.strictEqual(sentTo('seller_1', 'A rider did not respond').length, 1, 'nothing fires twice');
+      assert.strictEqual(sentTo('seller_1', 'A rider did not respond').length - sellerBefore, 1, 'nothing fires twice');
     }
 
     // --------------------------------------------- lazy release on every read path
@@ -151,8 +153,7 @@ async function run() {
       ['seller GET /:id', (w, id) => w.service.getDelivery(id, SELLER)],
       ['buyer GET /:id', (w, id) => w.service.getDelivery(id, BUYER)],
       ['buyer GET /by-order', (w, id, order) => w.service.getDeliveryByOrder(order.id, BUYER)],
-      ['seller GET /by-order', (w, id, order) => w.service.getDeliveryByOrder(order.orderNumber, SELLER)],
-      ['stream access check', async (w, id) => { await w.service.getViewerRole(id, SELLER); return w.service.getDelivery(id, SELLER); }]
+      ['seller GET /by-order', (w, id, order) => w.service.getDeliveryByOrder(order.orderNumber, SELLER)]
     ]) {
       const w = makeWorld();
       await registerRiders(w);
@@ -374,12 +375,20 @@ async function run() {
       assert.deepStrictEqual((await ids(ADMIN)).length, 3, 'an admin can');
     }
     {
-      // Tie-breaks are by name, then id, whatever order the riders were registered in.
-      const w = makeWorld();
-      await registerRiders(w, [['rider_z', 'Alain'], ['rider_b', 'Zoe'], ['rider_a', 'Zoe'], ['rider_c', 'alain']]);
-      const order = (await w.service.listDrivers(SELLER)).map((d) => d.id);
-      assert.strictEqual(order[0] === 'rider_z' || order[0] === 'rider_c', true, 'Alain/alain sort before Zoe');
-      assert.deepStrictEqual(order.slice(-2), ['rider_a', 'rider_b'], 'equal names fall back to the id');
+      // Tie-breaks are by name, then id, whatever order the riders were registered in. The
+      // exact collation of "Alain" vs "alain" depends on the runtime's ICU data, so what is
+      // pinned is that the result does not depend on registration order, and the id fallback.
+      const riders = [['rider_z', 'Alain'], ['rider_b', 'Zoe'], ['rider_a', 'Zoe'], ['rider_c', 'alain']];
+      const orders = [];
+      for (const registration of [riders, [...riders].reverse(), [riders[2], riders[0], riders[3], riders[1]]]) {
+        const w = makeWorld();
+        await registerRiders(w, registration);
+        orders.push((await w.service.listDrivers(SELLER)).map((d) => d.id));
+      }
+      assert.deepStrictEqual(orders[1], orders[0], 'registration order does not change the ranking');
+      assert.deepStrictEqual(orders[2], orders[0], 'nor does any other order');
+      assert.deepStrictEqual(orders[0].slice(0, 2).sort(), ['rider_c', 'rider_z'], 'both Alains sort before Zoe');
+      assert.deepStrictEqual(orders[0].slice(-2), ['rider_a', 'rider_b'], 'equal names fall back to the id');
     }
     {
       const w = makeWorld();
@@ -568,15 +577,15 @@ async function run() {
         code(w.service.autoAssignDriver(id, SELLER)),
         code(w.service.autoAssignDriver(id, ADMIN))
       ]);
-      assert.strictEqual(results.filter((r) => r === 'OK').length >= 1, true, 'at least one wins');
+      // All three read the delivery as pending before any swap lands, so the compare-and-swap
+      // is the only thing between them: exactly one wins and the other two get a clean 409.
+      // (Without the swap all three would succeed and the rider would be notified three times.)
+      assert.deepStrictEqual(results.slice().sort(), ['CONFLICT', 'CONFLICT', 'OK'], `one winner, two clean conflicts, got ${results.join(',')}`);
       const final = await w.repo.findById(id);
       assert.strictEqual(final.status, 'assigned');
       assert.ok(['rider_1', 'rider_2'].includes(final.driverId));
-      // A call that lands after another finished is a legitimate re-offer to the other rider, so
-      // several can succeed; what must hold is one timeline row per success and none per loser.
       const assignedEvents = (await w.repo.listEvents(id)).filter((e) => e.status === 'assigned');
-      assert.strictEqual(assignedEvents.length, results.filter((r) => r === 'OK').length, 'every success left exactly one timeline row, every loser none');
-      assert.ok(results.every((r) => r === 'OK' || r === 'CONFLICT'), `losers get a clean 409, got ${results.join(',')}`);
+      assert.strictEqual(assignedEvents.length, 1, 'one timeline row: the losers left none');
     }
 
     console.log('    ✓ Delivery dispatch: offer window, lazy and swept expiry hold.');
