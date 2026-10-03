@@ -293,3 +293,14 @@ streaming unsupported on this deployment.
 8. **The order is read fresh from the database** for every delivery decision
    (`OrderRepository.findOrderByIdFresh`): the ordinary read serves a per-instance
    cache that is never refreshed.
+9. **An unanswered offer lapses after 15 minutes** (`DELIVERY_OFFER_TTL_MINUTES`,
+   `0` = never). Without a deadline a rider who ignores the notification would hold
+   the order in `assigned` forever and the buyer would wait on nobody. Only `assigned`
+   expires, never `accepted`. Needs no schema change: the deadline is
+   `assigned_at + window`, and `assigned_at` already exists. 15 minutes is a starting
+   point to tune with real riders, not a measured value.
+10. **Auto-assign picks the least-busy rider, not the nearest.** A rider's position is
+    only recorded while they are on a delivery (`driver_locations` is keyed by
+    delivery), so there is no honest "nearest rider" until riders can report
+    availability and position without a job. Least-busy is what we can compute
+    truthfully today. Revisit with a presence table.
