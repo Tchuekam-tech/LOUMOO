@@ -21,7 +21,11 @@
  *   - applies the same visibility rules as the REST view (eventForViewer);
  *   - is bounded: a per-user cap on open streams, a maximum lifetime (sessions
  *     expire; the client reconnects), and it closes itself once the delivery is
- *     over or the viewer loses access.
+ *     over, the viewer loses access (re-checked on every heartbeat, against the
+ *     live account, not the identity captured at connect) or the server shuts down;
+ *   - answers 501 STREAM_UNSUPPORTED at once on a serverless runtime (Netlify /
+ *     Vercel / Lambda), where a held-open response would just hang until the
+ *     platform kills it; the client falls back to polling GET /:id.
  */
 
 const express = require('express');
