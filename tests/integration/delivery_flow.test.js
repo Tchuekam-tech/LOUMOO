@@ -670,6 +670,32 @@ async function run() {
     assert.strictEqual((await api('POST', '/' + lockId + '/status', cast.rider, { status: 'failed', note: 'trying to escape the lock' })).status, 423, 'and reporting a failure is not a way out');
     assert.strictEqual((await db().from('deliveries').select('status').eq('id', lockId).single()).data.status, 'arrived', 'the delivery stays arrived');
 
+    // Only an administrator can lift the lock.
+    const unlockPath = '/' + lockId + '/resolve';
+    assert.strictEqual((await api('POST', unlockPath, cast.seller, { action: 'unlock' })).status, 403, 'a seller cannot unlock');
+    assert.strictEqual((await api('POST', unlockPath, cast.buyer, { action: 'unlock' })).status, 404, 'the buyer is not even told about it');
+    assert.strictEqual((await api('POST', unlockPath, cast.admin, { action: 'wipe' })).status, 400, 'an unknown action is refused');
+    assert.strictEqual((await api('POST', unlockPath, cast.admin, { action: 'unlock', extra: 1 })).status, 400, 'unknown keys are refused');
+    assert.strictEqual((await api('POST', unlockPath, cast.admin, { action: 'unlock' })).status, 200, 'an administrator can unlock');
+    const unlocked = (await api('GET', '/' + lockId + '/code', cast.buyer)).body.data;
+    assert.strictEqual(unlocked.attemptsRemaining, 5, 'the guess budget is refilled');
+    assert.strictEqual((await db().from('deliveries').select('code_attempts,handover_nonce').eq('id', lockId).single()).data.code_attempts, 0);
+    assert.ok((await db().from('deliveries').select('handover_nonce').eq('id', lockId).single()).data.handover_nonce >= 2, 'the nonce moved on, so the old code is retired');
+    assert.strictEqual((await api('POST', '/' + lockId + '/complete', cast.rider, { code: unlocked.code })).status, 200, 'the new code completes it');
+    assert.strictEqual((await orderRow(lockJob.order.id)).fulfillment_status, 'delivered');
+
+    // Reconcile re-applies the order status and is idempotent.
+    assert.strictEqual((await api('POST', '/' + lockId + '/reconcile', cast.seller)).status, 403, 'a seller cannot reconcile');
+    const reconciled = await api('POST', '/' + lockId + '/reconcile', cast.admin);
+    assert.strictEqual(reconciled.status, 200, JSON.stringify(reconciled.body));
+    assert.deepStrictEqual(reconciled.body.data, { reconciled: true, deliveryStatus: 'delivered' });
+    assert.strictEqual((await api('POST', '/' + lockId + '/reconcile', cast.admin)).status, 200, 'reconciling twice is fine');
+
+    // Repair a drifted order: put it back to processing by hand, then reconcile.
+    await db().from('orders').update({ fulfillment_status: 'processing' }).eq('id', lockJob.order.id);
+    assert.strictEqual((await api('POST', '/' + lockId + '/reconcile', cast.admin)).status, 200);
+    assert.strictEqual((await orderRow(lockJob.order.id)).fulfillment_status, 'delivered', 'reconcile walks the order back to delivered');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
