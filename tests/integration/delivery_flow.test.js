@@ -777,6 +777,28 @@ async function run() {
     assert.ok(lateOrderCancel.status >= 400 && lateOrderCancel.status < 500, 'a buyer cannot cancel an in-transit order: ' + lateOrderCancel.status);
     assert.strictEqual((await db().from('deliveries').select('status').eq('id', roadJob.id).single()).data.status, 'picked_up', 'the delivery carries on');
 
+    // -------------------------------------------------------- suspended riders
+    console.log('  Suspending riders...');
+    const queuedJob = await openDelivery(cast, { rider: cast.rider2 });
+    const rider2Body = { name: 'Bruno Essomba', phone: '+237600000002' };
+    const suspension = await api('POST', '/drivers/' + cast.rider2.id, cast.admin, { ...rider2Body, status: 'suspended' });
+    assert.strictEqual(suspension.status, 200, JSON.stringify(suspension.body));
+    assert.strictEqual(suspension.body.data.driver.status, 'suspended');
+    const released = (await db().from('deliveries').select('status,driver_id').eq('id', queuedJob.id).single()).data;
+    assert.deepStrictEqual(released, { status: 'pending_assignment', driver_id: null }, 'an un-started job goes back to the seller when the rider is suspended');
+
+    assert.strictEqual((await api('GET', '/driver/me', cast.rider2)).status, 403, 'a suspended rider has no overview');
+    assert.ok(!(await api('GET', '/drivers', cast.seller)).body.data.drivers.some(d => d.id === cast.rider2.id), 'and is not offered to sellers');
+    assert.strictEqual((await api('POST', '/' + queuedJob.id + '/assign', cast.seller, { driverId: cast.rider2.id })).status, 400, 'a suspended rider cannot be assigned');
+
+    // Editing the name must not quietly reactivate someone who was suspended.
+    const renamed = await api('POST', '/drivers/' + cast.rider2.id, cast.admin, { name: 'Bruno E.', phone: rider2Body.phone });
+    assert.strictEqual(renamed.body.data.driver.status, 'suspended', 'an omitted status leaves a suspended rider suspended');
+    assert.strictEqual((await db().from('delivery_drivers').select('status').eq('profile_id', cast.rider2.id).single()).data.status, 'suspended');
+    const reactivated = await api('POST', '/drivers/' + cast.rider2.id, cast.admin, { ...rider2Body, status: 'active' });
+    assert.strictEqual(reactivated.body.data.driver.status, 'active', 'reactivating takes an explicit active');
+    assert.strictEqual((await api('POST', '/' + queuedJob.id + '/assign', cast.seller, { driverId: cast.rider2.id })).status, 200, 'and the rider can be assigned again');
+
     // @@SECTIONS@@
   } finally {
     await removeDeliveryData(cast);
