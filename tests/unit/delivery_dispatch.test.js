@@ -407,6 +407,160 @@ async function run() {
       assert.ok(otherFlags.every((f) => f === false), 'handing back one delivery says nothing about another');
     }
 
+    // ---------------------------------------------------------------- auto-assign
+    {
+      const w = makeWorld();
+      await registerRiders(w, [['rider_1', 'Alain'], ['rider_2', 'Bruno'], ['rider_3', 'Chantal']]);
+      const heldBy = async (id) => (await w.repo.findById(id)).driverId;
+
+      // Nobody busy: the tie goes to the name.
+      const first = await newDelivery(w);
+      const out = await w.service.autoAssignDriver(first.id, SELLER);
+      assert.strictEqual(out.status, 'assigned');
+      assert.strictEqual(out.driver.id, 'rider_1', 'with a tie the first name wins');
+      assert.strictEqual(out.viewerRole, 'seller', 'the response is the seller view');
+      assert.strictEqual(out.offerExpiresAt, new Date(w.clock.now() + OFFER_TTL_MS).toISOString(), 'and it starts the offer window');
+      assert.strictEqual(out.timeline[out.timeline.length - 1].note, 'Auto-assigned to Alain', 'the timeline says it was automatic');
+      assert.strictEqual(sentTo('rider_1', 'New delivery assigned').length >= 1, true, 'the chosen rider is notified');
+
+      // Work spreads out: each pick makes that rider busier.
+      const second = await newDelivery(w);
+      await w.service.autoAssignDriver(second.id, SELLER);
+      const third = await newDelivery(w);
+      await w.service.autoAssignDriver(third.id, ADMIN);
+      assert.deepStrictEqual([await heldBy(second.id), await heldBy(third.id)], ['rider_2', 'rider_3'], 'the next two go to the two idle riders');
+      const fourth = await newDelivery(w);
+      await w.service.autoAssignDriver(fourth.id, SELLER);
+      assert.strictEqual(await heldBy(fourth.id), 'rider_1', 'then it starts over at the top of the tie');
+
+      // Who may call it.
+      const fresh = await newDelivery(w);
+      assert.strictEqual(await code(w.service.autoAssignDriver(fresh.id, OTHER_SELLER)), 'NOT_FOUND', "another seller cannot touch someone else's delivery");
+      assert.strictEqual(await code(w.service.autoAssignDriver(fresh.id, BUYER)), 'PERMISSION_DENIED', 'the buyer cannot');
+      assert.strictEqual(await code(w.service.autoAssignDriver(fresh.id, RIDER)), 'NOT_FOUND', 'a rider with no stake in it gets a 404');
+      assert.strictEqual(await code(w.service.autoAssignDriver('dlv_missing', SELLER)), 'NOT_FOUND');
+      assert.strictEqual(await code(w.service.autoAssignDriver(fresh.id, { userRole: 'seller' })), 'PERMISSION_DENIED', 'no identity is refused');
+      assert.strictEqual((await w.repo.findById(fresh.id)).status, 'pending_assignment', 'none of that changed it');
+    }
+
+    // --------------------------------- auto-assign: who it never picks, and why
+    {
+      const w = makeWorld();
+      await registerRiders(w, [['rider_1', 'Alain'], ['rider_2', 'Bruno']]);
+      // The buyer is also a registered rider (and the idlest): never their own parcel.
+      await w.service.registerDriver('buyer_1', { name: 'Aaron', phone: '+237600000099' }, ADMIN);
+      const own = await newDelivery(w);
+      const picked = await w.service.autoAssignDriver(own.id, SELLER);
+      assert.notStrictEqual(picked.driver.id, 'buyer_1', 'a rider who is the buyer is skipped');
+      assert.strictEqual(picked.driver.id, 'rider_1');
+    }
+    {
+      const w = makeWorld();
+      await registerRiders(w, [['rider_1', 'Alain'], ['rider_2', 'Bruno']]);
+      await w.service.registerDriver('rider_1', { name: 'Alain', phone: '+237600000001', status: 'suspended' }, ADMIN);
+      const d = await newDelivery(w);
+      assert.strictEqual((await w.service.autoAssignDriver(d.id, SELLER)).driver.id, 'rider_2', 'a suspended rider is never picked');
+    }
+    {
+      // Declined, released and lapsed all keep a rider off the next pick, even when they are the idlest.
+      const w = makeWorld();
+      await registerRiders(w, [['rider_1', 'Alain'], ['rider_2', 'Bruno'], ['rider_3', 'Chantal'], ['rider_4', 'Dora']]);
+      const { id } = await newDelivery(w);
+      const pick = async () => (await w.service.autoAssignDriver(id, SELLER)).driver.id;
+
+      assert.strictEqual(await pick(), 'rider_1');
+      await w.service.declineDelivery(id, RIDER);
+      assert.strictEqual(await pick(), 'rider_2', 'after a decline the next rider is offered it, not the same one again');
+
+      await w.service.acceptDelivery(id, RIDER2);
+      await w.service.declineDelivery(id, RIDER2);
+      assert.strictEqual(await pick(), 'rider_3', 'after a release the same holds');
+
+      w.clock.advance(OFFER_TTL_MS + MIN); // rider_3 sits on it
+      assert.strictEqual(await pick(), 'rider_4', 'a lapsed offer is released first, and that rider is passed over');
+
+      await w.service.declineDelivery(id, { userId: 'rider_4', userRole: 'customer' });
+      assert.strictEqual(await code(w.service.autoAssignDriver(id, SELLER)), 'NO_RIDER_AVAILABLE', 'when everyone has passed there is nobody left');
+      const stuck = await w.repo.findById(id);
+      assert.strictEqual(stuck.status, 'pending_assignment', 'the delivery is left as it was');
+      assert.strictEqual(stuck.driverId, null);
+      // The seller can still choose by hand: a person may know something the rule does not.
+      assert.strictEqual((await w.service.assignDriver(id, 'rider_1', SELLER)).driver.id, 'rider_1', 'manual assignment is never blocked by the history');
+    }
+    {
+      const w = makeWorld();
+      const d = await newDelivery(w);
+      assert.strictEqual(await code(w.service.autoAssignDriver(d.id, SELLER)), 'NO_RIDER_AVAILABLE', 'no riders registered at all');
+    }
+
+    // ------------------------------------------ auto-assign when it is re-offering
+    {
+      const w = makeWorld();
+      await registerRiders(w, [['rider_1', 'Alain'], ['rider_2', 'Bruno']]);
+      const { id } = await newDelivery(w, { assignTo: 'rider_1' });
+      // rider_1 holds the offer (and is the only one with work): re-offering must move it.
+      w.clock.advance(5 * MIN);
+      const moved = await w.service.autoAssignDriver(id, SELLER);
+      assert.strictEqual(moved.driver.id, 'rider_2', 're-offering skips the rider who already holds the offer');
+      assert.strictEqual(moved.offerExpiresAt, new Date(w.clock.now() + OFFER_TTL_MS).toISOString(), 'and restarts the window');
+
+      // With nobody else eligible it refuses rather than pointlessly re-offering to the holder.
+      const w2 = makeWorld();
+      await registerRiders(w2, [['rider_1', 'Alain']]);
+      const lone = await newDelivery(w2, { assignTo: 'rider_1' });
+      const before = await w2.repo.findById(lone.id);
+      assert.strictEqual(await code(w2.service.autoAssignDriver(lone.id, SELLER)), 'NO_RIDER_AVAILABLE');
+      const after = await w2.repo.findById(lone.id);
+      assert.strictEqual(after.assignedAt, before.assignedAt, 'the holder keeps their original deadline');
+      assert.strictEqual(after.driverId, 'rider_1');
+    }
+
+    // ------------------------------------------ auto-assign: states it works from
+    {
+      const w = makeWorld();
+      await registerRiders(w);
+      for (const status of ['accepted', 'picked_up', 'arrived', 'delivered', 'cancelled']) {
+        const d = await newDelivery(w);
+        await w.repo.updateWhere(d.id, {}, { status, driverId: status === 'cancelled' ? null : 'rider_1' });
+        assert.strictEqual(await code(w.service.autoAssignDriver(d.id, SELLER)), 'CONFLICT', `cannot auto-assign a delivery that is ${status}`);
+        assert.strictEqual((await w.repo.findById(d.id)).status, status, `and ${status} is left alone`);
+      }
+      // A failed delivery is retried through the same path as assign: new code, fresh rider.
+      const failed = await newDelivery(w, { assignTo: 'rider_1' });
+      await w.repo.updateWhere(failed.id, {}, { status: 'failed' });
+      const nonceBefore = (await w.repo.findById(failed.id)).handoverNonce;
+      const retried = await w.service.autoAssignDriver(failed.id, SELLER);
+      assert.strictEqual(retried.status, 'assigned');
+      assert.strictEqual((await w.repo.findById(failed.id)).handoverNonce, nonceBefore + 1, 'a retry issues a new handover code');
+
+      // An order cancelled meanwhile stops it.
+      const cancelled = await newDelivery(w);
+      const order = await w.orders.findOrderById(cancelled.order.id);
+      await w.orders.updateFulfillmentStatusAtomic(order.id, 'processing', 'cancelled', { note: 'test', updatedBy: 'test' });
+      assert.strictEqual(await code(w.service.autoAssignDriver(cancelled.id, SELLER)), 'CONFLICT', 'a cancelled order cannot be dispatched');
+    }
+
+    // ------------------------------------------------ auto-assign under a race
+    {
+      const w = makeWorld();
+      await registerRiders(w, [['rider_1', 'Alain'], ['rider_2', 'Bruno']]);
+      const { id } = await newDelivery(w);
+      const results = await Promise.all([
+        code(w.service.autoAssignDriver(id, SELLER)),
+        code(w.service.autoAssignDriver(id, SELLER)),
+        code(w.service.autoAssignDriver(id, ADMIN))
+      ]);
+      assert.strictEqual(results.filter((r) => r === 'OK').length >= 1, true, 'at least one wins');
+      const final = await w.repo.findById(id);
+      assert.strictEqual(final.status, 'assigned');
+      assert.ok(['rider_1', 'rider_2'].includes(final.driverId));
+      // A call that lands after another finished is a legitimate re-offer to the other rider, so
+      // several can succeed; what must hold is one timeline row per success and none per loser.
+      const assignedEvents = (await w.repo.listEvents(id)).filter((e) => e.status === 'assigned');
+      assert.strictEqual(assignedEvents.length, results.filter((r) => r === 'OK').length, 'every success left exactly one timeline row, every loser none');
+      assert.ok(results.every((r) => r === 'OK' || r === 'CONFLICT'), `losers get a clean 409, got ${results.join(',')}`);
+    }
+
     console.log('    ✓ Delivery dispatch: offer window, lazy and swept expiry hold.');
   } finally {
     NotificationService.create = originalCreate;
