@@ -33,3 +33,34 @@ exactly as the contract requires.
 | `build_redesign.py` | Two `<script defer>` tags in the head load the two services. (Only build edit needed.) |
 | `src/views/order_product_flow_view.py` | A "Track live delivery" button in the order-detail screen. |
 
+## Why an overlay, not a DC child screen
+
+DC child screens carry no logic of their own — the comment in `build_redesign.py`
+(`_write_screen_chunk`) is explicit: "A child DC component intentionally has no
+logic of its own. The root owns navigation/state." A live map + stream + code
+screen is all logic, so as a DC screen it would push hundreds of lines into the
+shared 17.5k-line `build_redesign.py` root — exactly where the rider-page work
+also lives, inviting collisions. Implementing it as a framework-agnostic overlay
+keeps step 4 isolated, independently testable, and merge-safe.
+
+## How to open it
+
+Any element with `data-track-delivery` opens the overlay (handled by a
+document-level delegate — no DC event binding needed):
+
+```html
+<button data-track-delivery data-order-id="{{ currentOrder.id }}">Track delivery</button>
+<!-- or -->
+<button data-track-delivery data-delivery-id="dlv_123">Track delivery</button>
+```
+
+Or from JavaScript:
+
+```js
+window.LoumooDeliveryTracking.open({ orderId: order.id });
+window.LoumooDeliveryTracking.open({ deliveryId: 'dlv_123' });
+```
+
+`getByOrder` accepts the order id or the order number. If the order has no home
+delivery yet, the overlay shows a friendly notice rather than an error.
+
