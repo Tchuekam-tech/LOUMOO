@@ -924,6 +924,51 @@ async function run() {
       assert.ok(warned.some((m) => /Could not release lapsed offer/.test(m) && /write path is down/.test(m)), 'the failure is logged');
     }
     {
+      // The lapse row is retried once, because three decisions read it. One transient failure: nothing is lost.
+      const w = makeWorld();
+      await registerRiders(w, [['rider_1', 'Alain'], ['rider_2', 'Bruno']]);
+      const { id } = await newDelivery(w, { assignTo: 'rider_1' });
+      w.clock.advance(OFFER_TTL_MS + MIN);
+      const insert = w.repo.insertEvent.bind(w.repo);
+      let calls = 0;
+      w.repo.insertEvent = async (e) => { calls += 1; if (calls === 1) throw new Error('blip'); return insert(e); };
+      const originalError = logger.error;
+      const errors = [];
+      logger.error = (m) => errors.push(String(m));
+      try {
+        assert.deepStrictEqual(await w.service.expireStaleOffers(), { expired: 1 });
+      } finally {
+        logger.error = originalError;
+      }
+      assert.strictEqual(calls, 2, 'tried twice');
+      assert.strictEqual(errors.length, 0, 'and a recovered write is not reported as a failure');
+      assert.strictEqual(await code(w.service.acceptDelivery(id, RIDER)), 'OFFER_EXPIRED', 'so the late accept still knows it lapsed');
+      assert.strictEqual((await w.service.listDrivers(SELLER, { deliveryId: id })).find((r) => r.id === 'rider_1').declined, true, 'and the history is intact');
+    }
+    {
+      // Two failures in a row: the swap still stands, the loss is logged, and the event is still published.
+      const w = makeWorld();
+      await registerRiders(w);
+      const { id } = await newDelivery(w, { assignTo: 'rider_1' });
+      const heard = [];
+      w.events.subscribe(id, (e) => heard.push(e));
+      w.clock.advance(OFFER_TTL_MS + MIN);
+      let calls = 0;
+      w.repo.insertEvent = async () => { calls += 1; throw new Error('still down'); };
+      const originalError = logger.error;
+      const errors = [];
+      logger.error = (m) => errors.push(String(m));
+      try {
+        assert.deepStrictEqual(await w.service.expireStaleOffers(), { expired: 1 }, 'a lost timeline row does not undo the release');
+      } finally {
+        logger.error = originalError;
+      }
+      assert.strictEqual(calls, 2, 'one retry, not a loop');
+      assert.ok(errors.some((m) => /Timeline write failed/.test(m) && /still down/.test(m)), 'the loss is logged');
+      assert.strictEqual((await w.repo.findById(id)).status, 'pending_assignment');
+      assert.ok(heard.some((e) => e.type === 'status' && e.status === 'pending_assignment'), 'and the live event still went out');
+    }
+    {
       // The rider cap is applied, and says so.
       const w = makeWorld();
       for (let i = 0; i < 510; i += 1) {
