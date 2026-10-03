@@ -814,6 +814,56 @@ async function run() {
       assert.ok(errors.some((m) => m.includes(a.id) && /boom/.test(m)), 'and the failure names the delivery');
     }
     {
+      // A failing DATABASE (not a bad row) stops the sweep after one attempt instead of repeating the failure
+      // for every remaining offer; the next tick retries.
+      const { InfrastructureError } = require('../../server/shared/errors/AppError');
+      const w = makeWorld();
+      await registerRiders(w);
+      for (let i = 0; i < 4; i += 1) await newDelivery(w, { assignTo: 'rider_1' });
+      w.clock.advance(OFFER_TTL_MS + MIN);
+      let attempts = 0;
+      w.service._expireOffer = async () => { attempts += 1; throw new InfrastructureError('Supabase', 'DeliveryRepository.updateWhere'); };
+      const originalError = logger.error;
+      const errors = [];
+      logger.error = (m) => errors.push(String(m));
+      try {
+        assert.deepStrictEqual(await w.service.expireStaleOffers(), { expired: 0 });
+      } finally {
+        logger.error = originalError;
+      }
+      assert.strictEqual(attempts, 1, 'one attempt, not four');
+      assert.ok(errors.some((m) => /database looks unhealthy/.test(m)), 'and it says why it stopped');
+    }
+    {
+      // Ranking drains a backlog of lapsed offers in bounded rounds: more than one batch, but not unbounded.
+      const w = makeWorld();
+      await registerRiders(w);
+      const ids = [];
+      for (let i = 0; i < 210; i += 1) ids.push((await newDelivery(w, { assignTo: 'rider_1' })).id);
+      w.clock.advance(OFFER_TTL_MS + MIN);
+      const list = await w.service.listDrivers(SELLER);
+      const stillAssigned = [];
+      for (const id of ids) if ((await w.repo.findById(id)).status === 'assigned') stillAssigned.push(id);
+      assert.strictEqual(stillAssigned.length, 10, '4 rounds of 50: 200 released in one call, the other 10 left for the next');
+      assert.strictEqual(list.find((r) => r.id === 'rider_1').openDeliveries, 10, 'so the count is that of the remainder, not of all 210');
+      await w.service.listDrivers(SELLER);
+      assert.strictEqual((await w.repo.findById(stillAssigned[0])).status, 'pending_assignment', 'the next call finishes the rest');
+    }
+    {
+      // A short round ends the draining: it does not keep querying for nothing.
+      for (const [lapsed, expectedQueries] of [[0, 1], [3, 1], [50, 2], [60, 2], [120, 3]]) {
+        const w = makeWorld();
+        await registerRiders(w);
+        for (let i = 0; i < lapsed; i += 1) await newDelivery(w, { assignTo: 'rider_1' });
+        w.clock.advance(OFFER_TTL_MS + MIN);
+        let queries = 0;
+        const findStale = w.repo.findStaleOffers.bind(w.repo);
+        w.repo.findStaleOffers = async (...args) => { queries += 1; return findStale(...args); };
+        await w.service.listDrivers(SELLER);
+        assert.strictEqual(queries, expectedQueries, `${lapsed} lapsed offers take ${expectedQueries} stale-offer queries, not more`);
+      }
+    }
+    {
       // Losing the swap to a fresh re-offer returns the fresh delivery, not the stale snapshot.
       const w = makeWorld();
       await registerRiders(w);
