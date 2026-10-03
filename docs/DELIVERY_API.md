@@ -59,6 +59,30 @@ delivered, cancelled: terminal
 * A retry (`failed -> assigned`) issues a **new handover code** and clears the old
   rider's location trail, but does **not** refill the code-guess budget (below).
 
+### Offer expiry (v1.1)
+An `assigned` delivery is an *offer*: the rider has **15 minutes** from the moment
+of assignment to accept it. The window is the `DELIVERY_OFFER_TTL_MINUTES`
+setting; `0` turns expiry off. When it lapses with no answer:
+
+* the delivery goes back to `pending_assignment` (timeline note
+  `Offer expired: no response from the rider`) and `assignedAt` is cleared;
+* the seller is notified, and so is the rider;
+* the rider loses access (`404`), exactly as after a decline.
+
+Only `assigned` expires. Once the rider has `accepted` the job never times out.
+Re-assigning (to anyone) starts a fresh window.
+
+Expiry is applied in two ways so every deployment behaves the same:
+1. a background sweeper, once a minute, on long-lived runtimes (Railway);
+2. **lazily**, when the stale delivery is read or acted on (`GET /:id`,
+   `GET /by-order/:orderId`, `GET /driver/me`, `POST /:id/accept`, the live stream
+   snapshot). Serverless runtimes (Netlify, Vercel) cannot run the sweeper and rely
+   on this alone.
+
+`POST /:id/accept` on a lapsed offer answers `409 OFFER_EXPIRED` (and releases it).
+Clients should show the countdown from `offerExpiresAt` (see the Delivery object)
+but never decide expiry themselves: the server's clock is the only one that counts.
+
 ## Response shapes (`data`)
 | Endpoint | HTTP | `data` |
 |---|---|---|
