@@ -75,6 +75,63 @@ async function call(method, path, user, body) {
 }
 
 const api = (method, path, user, body) => call(method, `/api/v1/deliveries${path}`, user, body);
+const http = require('http');
+
+async function waitFor(predicate, what, ms = 8000) {
+  const start = Date.now();
+  while (Date.now() - start < ms) {
+    const value = predicate();
+    if (value) return value;
+    await sleep(25);
+  }
+  throw new Error('Timed out waiting for ' + what);
+}
+
+/**
+ * Opens a Server-Sent Events stream the way the real client must: a plain HTTP
+ * request with an Authorization header (the browser's native EventSource cannot
+ * send one), asking for gzip so a buffering compression layer would show up.
+ * Parses the standard framing into { type, data } events.
+ */
+async function openStream(path, user) {
+  const base = await harness.start();
+  await pace();
+  return new Promise((resolve, reject) => {
+    const stream = { events: [], buffer: '', raw: '', status: null, headers: null, ended: false, req: null };
+    const headers = { 'Accept-Encoding': 'gzip' };
+    if (user) headers.Authorization = 'Bearer ' + user.token;
+    const req = http.get(base + path, { headers }, res => {
+      stream.status = res.statusCode;
+      stream.headers = res.headers;
+      res.setEncoding('utf8');
+      res.on('data', chunk => {
+        stream.raw += chunk;
+        stream.buffer += chunk;
+        let at;
+        while ((at = stream.buffer.indexOf('\n\n')) !== -1) {
+          const block = stream.buffer.slice(0, at);
+          stream.buffer = stream.buffer.slice(at + 2);
+          const event = { type: 'message', data: null };
+          for (const line of block.split('\n')) {
+            if (line.startsWith(':')) event.type = 'comment';
+            else if (line.startsWith('event: ')) event.type = line.slice(7);
+            else if (line.startsWith('retry: ')) { event.type = 'retry'; event.data = Number(line.slice(7)); }
+            else if (line.startsWith('data: ')) event.data = JSON.parse(line.slice(6));
+          }
+          stream.events.push(event);
+        }
+      });
+      res.on('end', () => { stream.ended = true; });
+      res.on('close', () => { stream.ended = true; });
+      resolve(stream);
+    });
+    stream.req = req;
+    req.on('error', err => { if (!stream.ended) reject(err); });
+  });
+}
+
+const closeStream = stream => { try { stream.req.destroy(); } catch (e) { /* already gone */ } };
+const typesOf = stream => stream.events.filter(e => e.type !== 'retry' && e.type !== 'comment').map(e => e.type);
 /**
  * Real principals, each a row in iam.profiles that the real session guard will
  * resolve: the seller of the goods, the buyer, a stranger, a rival seller (a
