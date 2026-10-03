@@ -25,7 +25,15 @@
 
   var MAPLIBRE_JS = 'https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.js';
   var MAPLIBRE_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.css';
+  // Real street tiles by default: OpenFreeMap is free, keyless and production-
+  // usable (self-hostable too). For an SLA-backed provider set a MapTiler/Stadia
+  // style URL via window.LOUMOO_MAP_STYLE. The old demo style stays as a last
+  // resort if a custom style fails to load.
+  var OPENFREEMAP_STYLE = 'https://tiles.openfreemap.org/styles/liberty';
   var DEMO_STYLE = 'https://demotiles.maplibre.org/style.json';
+  function mapStyle() { return (typeof window !== 'undefined' && window.LOUMOO_MAP_STYLE) || OPENFREEMAP_STYLE; }
+  // Optional geocoder for a drop-off that has an address but no coordinates.
+  var GEOCODER = (typeof window !== 'undefined' && window.LOUMOO_GEOCODER_URL) || 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=';
   var DOUALA = { lat: 4.0511, lng: 9.7679 };
 
   // Customer-facing label + order for each delivery status.
@@ -153,17 +161,22 @@
     state.mounted = true;
     try { document.body.style.overflow = 'hidden'; } catch (e) {}
 
-    // load() and map init are added in the next commits.
-    if (typeof load === 'function') load(orderId, deliveryId);
+    load(orderId, deliveryId);
   }
 
   function close() {
     if (state.sub && state.sub.close) { try { state.sub.close(); } catch (e) {} }
     state.sub = null;
+    if (state._raf) { try { cancelAnimationFrame(state._raf); } catch (e) {} state._raf = null; }
     if (state.map && state.map.remove) { try { state.map.remove(); } catch (e) {} }
     state.map = null;
+    state._ml = null;
     state.driverMarker = null;
     state.destMarker = null;
+    state.driverPos = null;
+    state._driverHeading = null;
+    state.destGeocoded = null;
+    state._userMovedMap = false;
     if (state.root && state.root.parentNode) state.root.parentNode.removeChild(state.root);
     state.root = null;
     state.mounted = false;
@@ -336,10 +349,29 @@
     });
   }
 
-  function markerEl(color) {
+  function riderMarkerEl() {
     var el = document.createElement('div');
-    el.style.cssText = 'width:16px;height:16px;border-radius:50%;background:' + color + ';border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)';
+    el.style.cssText = 'width:36px;height:36px';
+    // A filled disc with a north-pointing arrow; the marker is rotated to the heading.
+    el.innerHTML =
+      '<svg width="36" height="36" viewBox="0 0 36 36">' +
+      '<circle cx="18" cy="18" r="11" fill="#3245ff" stroke="#fff" stroke-width="3"/>' +
+      '<path d="M18 10 L23 22 L18 19 L13 22 Z" fill="#fff"/></svg>';
     return el;
+  }
+
+  function destMarkerEl() {
+    var el = document.createElement('div');
+    el.style.cssText = 'width:30px;height:38px';
+    el.innerHTML =
+      '<svg width="30" height="38" viewBox="0 0 30 38">' +
+      '<path d="M15 1C7.8 1 2 6.8 2 14c0 9 13 23 13 23s13-14 13-23C28 6.8 22.2 1 15 1z" fill="#1a9d4b" stroke="#fff" stroke-width="2"/>' +
+      '<circle cx="15" cy="14" r="5" fill="#fff"/></svg>';
+    return el;
+  }
+
+  function destCoords(d) {
+    return (d && d.dropoff && d.dropoff.location) || state.destGeocoded || null;
   }
 
   function initMap(d) {
@@ -348,51 +380,148 @@
     if (!container) return;
     loadMapLibre().then(function (ml) {
       if (!state.mounted || state.map) return;
-      var dest = d.dropoff && d.dropoff.location;
-      var center = d.lastLocation || dest || DOUALA;
+      state._ml = ml;
+      var start = d.lastLocation || destCoords(d) || DOUALA;
       var mapDiv = document.createElement('div');
       mapDiv.style.cssText = 'position:absolute;inset:0';
       container.appendChild(mapDiv);
-      state._ml = ml;
-      state.map = new ml.Map({
-        container: mapDiv,
-        style: window.LOUMOO_MAP_STYLE || DEMO_STYLE,
-        center: [center.lng, center.lat],
-        zoom: 12
-      });
+      state.map = new ml.Map({ container: mapDiv, style: mapStyle(), center: [start.lng, start.lat], zoom: 13, attributionControl: true });
+      state.map.addControl(new ml.NavigationControl({ showCompass: false }), 'top-right');
+      addRecenterControl(ml);
+
+      var loaded = false;
       state.map.on('load', function () {
+        loaded = true;
         if (msg) msg.style.display = 'none';
+        ensureRoute();
         updateMap(state.delivery || d);
       });
-      state.map.on('error', function () { /* tile errors are non-fatal */ });
+      // Only count genuine user gestures as "took control" of the camera.
+      state.map.on('dragstart', function () { state._userMovedMap = true; });
+      state.map.on('zoomstart', function (e) { if (e && e.originalEvent) state._userMovedMap = true; });
+      state.map.on('error', function () { /* tile/style errors are non-fatal */ });
+      // If the chosen style never loads, fall back to the demo style once.
+      setTimeout(function () {
+        if (!loaded && state.map && mapStyle() !== DEMO_STYLE) {
+          try {
+            state.map.setStyle(DEMO_STYLE);
+            state.map.once('styledata', function () { if (msg) msg.style.display = 'none'; ensureRoute(); updateMap(state.delivery || d); });
+          } catch (e) {}
+        }
+      }, 9000);
+
+      geocodeDestIfNeeded(d);
     }).catch(function () {
       if (msg) msg.textContent = 'Live map unavailable. The status and ETA below are up to date.';
     });
   }
 
-  function updateMap(d) {
-    if (!state.map || !state._ml || !d) return;
-    var ml = state._ml;
+  function ensureRoute() {
+    var map = state.map;
+    if (!map || map.getSource('dt-route')) return;
+    try {
+      map.addSource('dt-route', { type: 'geojson', data: { type: 'Feature', geometry: { type: 'LineString', coordinates: [] } } });
+      map.addLayer({
+        id: 'dt-route', type: 'line', source: 'dt-route',
+        layout: { 'line-cap': 'round', 'line-join': 'round' },
+        paint: { 'line-color': '#3245ff', 'line-width': 4, 'line-opacity': 0.55, 'line-dasharray': [2, 1.5] }
+      });
+    } catch (e) { /* style not ready */ }
+  }
+
+  function setRoute(a, b) {
+    var map = state.map;
+    if (!map) return;
+    var src = map.getSource && map.getSource('dt-route');
+    if (!src) return;
+    src.setData({ type: 'Feature', geometry: { type: 'LineString', coordinates: [[a.lng, a.lat], [b.lng, b.lat]] } });
+  }
+
+  function addRecenterControl(ml) {
+    function Ctrl() {}
+    Ctrl.prototype.onAdd = function () {
+      var d = document.createElement('div');
+      d.className = 'maplibregl-ctrl maplibregl-ctrl-group';
+      var b = document.createElement('button');
+      b.type = 'button'; b.title = 'Recenter';
+      b.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin:5px auto;display:block"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>';
+      b.addEventListener('click', function () { state._userMovedMap = false; fitBoth(true); });
+      d.appendChild(b); this._c = d; return d;
+    };
+    Ctrl.prototype.onRemove = function () { if (this._c && this._c.parentNode) this._c.parentNode.removeChild(this._c); };
+    try { state.map.addControl(new Ctrl(), 'top-right'); } catch (e) {}
+  }
+
+  function fitBoth(animate) {
+    var map = state.map, ml = state._ml, d = state.delivery;
+    if (!map || !ml || !d) return;
     var pts = [];
-    var dest = d.dropoff && d.dropoff.location;
-    if (dest) {
-      if (!state.destMarker) state.destMarker = new ml.Marker({ element: markerEl('#1a9d4b') }).setLngLat([dest.lng, dest.lat]).addTo(state.map);
-      pts.push([dest.lng, dest.lat]);
-    }
-    if (d.lastLocation) {
-      if (!state.driverMarker) state.driverMarker = new ml.Marker({ element: markerEl('#3245ff') }).setLngLat([d.lastLocation.lng, d.lastLocation.lat]).addTo(state.map);
-      else state.driverMarker.setLngLat([d.lastLocation.lng, d.lastLocation.lat]);
-      pts.push([d.lastLocation.lng, d.lastLocation.lat]);
-    }
+    var dest = destCoords(d);
+    if (dest) pts.push([dest.lng, dest.lat]);
+    if (d.lastLocation) pts.push([d.lastLocation.lng, d.lastLocation.lat]);
     try {
       if (pts.length === 2) {
-        var b = new ml.LngLatBounds(pts[0], pts[0]);
-        pts.forEach(function (p) { b.extend(p); });
-        state.map.fitBounds(b, { padding: 60, maxZoom: 15, duration: 500 });
+        var bounds = new ml.LngLatBounds(pts[0], pts[0]);
+        pts.forEach(function (p) { bounds.extend(p); });
+        map.fitBounds(bounds, { padding: { top: 56, bottom: 48, left: 40, right: 40 }, maxZoom: 16, duration: animate ? 600 : 0 });
       } else if (pts.length === 1) {
-        state.map.easeTo({ center: pts[0], zoom: 14, duration: 500 });
+        map.easeTo({ center: pts[0], zoom: 15, duration: animate ? 600 : 0 });
       }
-    } catch (e) { /* map not ready yet */ }
+    } catch (e) { /* not ready */ }
+  }
+
+  function animateDriver(target, heading) {
+    var ml = state._ml;
+    if (!state.map || !ml) return;
+    if (heading != null && isFinite(heading)) state._driverHeading = heading;
+    if (!state.driverMarker) {
+      state.driverMarker = new ml.Marker({ element: riderMarkerEl(), rotationAlignment: 'map' }).setLngLat([target.lng, target.lat]).addTo(state.map);
+      state.driverPos = { lng: target.lng, lat: target.lat };
+      if (state._driverHeading != null) state.driverMarker.setRotation(state._driverHeading);
+      return;
+    }
+    if (state._driverHeading != null) state.driverMarker.setRotation(state._driverHeading);
+    var from = state.driverPos || target;
+    var dur = 700, start = null;
+    if (state._raf) cancelAnimationFrame(state._raf);
+    function frame(ts) {
+      if (!start) start = ts;
+      var t = Math.min(1, (ts - start) / dur);
+      var lng = from.lng + (target.lng - from.lng) * t;
+      var lat = from.lat + (target.lat - from.lat) * t;
+      state.driverMarker.setLngLat([lng, lat]);
+      state.driverPos = { lng: lng, lat: lat };
+      if (t < 1) state._raf = requestAnimationFrame(frame);
+    }
+    state._raf = requestAnimationFrame(frame);
+  }
+
+  function geocodeDestIfNeeded(d) {
+    if (destCoords(d)) return;
+    var addr = d && d.dropoff && (d.dropoff.address || d.dropoff.area);
+    if (!addr) return;
+    try {
+      fetch(GEOCODER + encodeURIComponent(addr), { headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (arr) {
+          if (!arr || !arr.length || !state.mounted) return;
+          var lat = parseFloat(arr[0].lat), lng = parseFloat(arr[0].lon);
+          if (isFinite(lat) && isFinite(lng)) { state.destGeocoded = { lat: lat, lng: lng }; updateMap(state.delivery || d); }
+        })
+        .catch(function () {});
+    } catch (e) {}
+  }
+
+  function updateMap(d) {
+    if (!state.map || !state._ml || !d) return;
+    var dest = destCoords(d);
+    if (dest) {
+      if (!state.destMarker) state.destMarker = new state._ml.Marker({ element: destMarkerEl(), anchor: 'bottom' }).setLngLat([dest.lng, dest.lat]).addTo(state.map);
+      else state.destMarker.setLngLat([dest.lng, dest.lat]);
+    }
+    if (d.lastLocation) animateDriver(d.lastLocation, d.lastLocation.heading != null ? d.lastLocation.heading : null);
+    if (dest && d.lastLocation) setRoute(d.lastLocation, dest);
+    if (!state._userMovedMap) fitBoth(true);
   }
 
   // --------------------------------------------------------------- live feed
