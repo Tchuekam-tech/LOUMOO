@@ -48,6 +48,7 @@ function testRouteChunks() {
     'PublishingScreens.dc.html',
     'SearchScreens.dc.html',
     'StoreBusinessScreens.dc.html',
+    'SuperAdminScreens.dc.html',
     'TravelScreens.dc.html'
   ];
 

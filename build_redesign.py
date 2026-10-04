@@ -44,6 +44,8 @@ header_and_styles = """<!DOCTYPE html>
      DOMContentLoaded, which is when the DC runtime mounts the app. The
      publishing engine is a route-level chunk loaded only when Sell is used. -->
 <script defer src="./src/services/loumooApi.js"></script>
+<script defer src="./src/services/searchExperience.js"></script>
+<link rel="stylesheet" href="./src/styles/search.css">
 <script defer src="./src/services/travelApi.js"></script>
 <script defer src="./src/services/deliveryApi.js"></script>
 <script defer src="./src/services/deliveryTrackingScreen.js"></script>
@@ -7407,6 +7409,7 @@ class Component extends DCLogic {
   };
 
   go = (s) => {
+    if (this._searchExperience) this._searchExperience.enter(s);
     this.setState(st => ({ screen: s, stack: [...st.stack, st.screen], toast: '' }));
     // The publishing studio is a feature chunk. Start loading it on intent,
     // while the route transition remains immediate for all other screens.
@@ -7419,11 +7422,12 @@ class Component extends DCLogic {
     }
     this._onScreenEnter(s);
   };
-  back = () => this.setState(st => {
-    const stack = st.stack.slice();
+  back = () => {
+    const stack = this.state.stack.slice();
     const prev = stack.pop() || 'home';
-    return { screen: prev, stack, toast: '' };
-  });
+    if (this._searchExperience) this._searchExperience.enter(prev);
+    this.setState({ screen: prev, stack, toast: '' });
+  };
   toast = (t) => {
     this.setState({ toast: t });
     clearTimeout(this._t);
@@ -8137,6 +8141,7 @@ class Component extends DCLogic {
   }
 
   componentWillUnmount() {
+    if (this._searchExperience) this._searchExperience.destroy();
     clearTimeout(this._t);
     clearTimeout(this._searchTimer);
     clearTimeout(this._heroSlideTimer);
@@ -8520,6 +8525,7 @@ class Component extends DCLogic {
    * their session had not been established yet.
    */
   _applyAnonymous() {
+    if (this._searchExperience && (this.state.isLoggedIn || this.state.sessionUser)) { this._searchExperience.destroy(true); this._searchExperience = null; }
     const guard = getGuard();
     if (guard) guard.invalidate();
     // The next account must never inherit the previous one's counts.
@@ -11251,6 +11257,8 @@ class Component extends DCLogic {
 
   _resolveCompareEntity(idOrObj) {
     if (!idOrObj) return null;
+    const live = this._searchExperience && this._searchExperience.compareEntities.get(typeof idOrObj === 'object' ? idOrObj.id : String(idOrObj));
+    if (live) return live;
     if (typeof idOrObj === 'object' && idOrObj.id) {
       return Object.assign({
         inStock: true,
@@ -11703,6 +11711,25 @@ class Component extends DCLogic {
   // Marketplace search against GET /api/v1/products (?q=...). Debounce is owned
   // by the caller (handleSearchInput); this method owns the race guard so a
   // slow response for an earlier query can never overwrite a newer one.
+  _searchView() {
+    if (typeof globalThis === 'undefined' || !globalThis.LoumooSearch) return {};
+    if (!this._searchExperience) this._searchExperience = new globalThis.LoumooSearch({
+      api: getApi(), navigate: s => this.go(s),
+      changed: d => { if (!this._unmounted) this.setState({ searchQuery:d.q, searchResults:d.items, filterCity:d.filters.city, filterVerifiedOnly:d.filters.verified, searchRevision:(this.state.searchRevision||0)+1 }); },
+      openItem: item => {
+        if (!item || !item.id) return;
+        if (item.entityType === 'store') { this.setState({currentStoreId:item.id,currentStore:{id:item.id,name:item.title,logoUrl:item.image}}); this.go('business'); }
+        else if (item.entityType === 'hotel') this.selectTravelResult({...item,type:'hotel'});
+        else if (item.entityType === 'travel') { this.setState({travelFrom:item.origin||'',travelTo:item.destination||'',travelServiceTab:item.transportType||'bus'}); this.go('travel'); this.toast('Choose your travel date to confirm this route and its availability.'); }
+        else if (item.entityType === 'announcement') this.openAnnouncement(item.id);
+        else this.openProduct(item.id);
+      }
+    });
+    const scoped = (type,e,extra) => { this._searchExperience.filter('type',type); for(const key of Object.keys(extra||{})) this._searchExperience.filter(key,extra[key]); this._searchExperience.input(e); };
+    return {...this._searchExperience.view(),handleCategoryGlobalSearch:e=>scoped('all',e),handleAnnouncementGlobalSearch:e=>scoped('announcement',e),
+      handleStoreGlobalSearch:e=>scoped('store',e,{city:this.state.storeCityFilter==='all'?'':this.state.storeCityFilter||'',verified:Boolean(this.state.storeVerifiedOnly)})};
+  }
+
   _executeSearch(rawQuery) {
     const query = String(rawQuery == null ? '' : rawQuery).trim();
     // Active refinement filters travel with the query on the same /products call.
@@ -11881,6 +11908,7 @@ class Component extends DCLogic {
   }
 
   signOut() {
+    if (this._searchExperience) { this._searchExperience.destroy(true); this._searchExperience = null; }
     const clerk = getClerk();
     const api = getApi();
     if (clerk && typeof clerk.signOut === 'function') {
@@ -17445,6 +17473,7 @@ class Component extends DCLogic {
     // Pass the already-derived render object to on-demand screen chunks. A
     // shared object keeps lazy boundaries cheap and avoids recomputing the
     // entire projection in every child component.
+    Object.assign(viewProps, this._searchView());
     viewProps.viewProps = viewProps;
     return viewProps;
   }
@@ -17562,9 +17591,14 @@ for _name, _condition, _markup in _screen_chunks:
         '</sc-if>\n'
     )
 
+def _compact_shell_markup(markup):
+    return re.sub(r'[\t ]+$', '', re.sub(r'<!--[\s\S]*?-->', '', markup), flags=re.M)
+
 full_html = (
-    _optimize_media_markup(header_and_styles)
-    + _optimize_media_markup(get_home_view())
+    # Keep design notes in the source templates, out of the initial payload.
+    # Only markup is compacted; never apply this to the application script.
+    _optimize_media_markup(_compact_shell_markup(header_and_styles))
+    + _optimize_media_markup(_compact_shell_markup(get_home_view()))
     + lazy_screen_markup
     + _optimize_media_markup(footer_and_scripts)
 )

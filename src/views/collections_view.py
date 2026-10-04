@@ -4,6 +4,8 @@ LOUMOO CURATED COLLECTIONS VIEWS
 Category discovery, Best Picks editorial magazine, and Black FreeDay high-energy flash sale with Lucide SVG icons.
 """
 
+from .search_shared import get_search_suggestions
+
 def get_collections_view():
     return """
 <!-- ══════════════════════════════════════════════════════════════════════════
@@ -47,7 +49,8 @@ def get_collections_view():
         <!-- Smart Category Search Input -->
         <div style="position:relative;max-width:640px;display:flex;align-items:center">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position:absolute;left:14px;color:var(--color-text-muted)"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg>
-          <input type="text" class="input" placeholder="Search categories, products, stores or services…" value="{{ categorySearchQuery }}" onChange="{{ updateCategorySearch }}" style="padding-left:42px;padding-right:38px;height:46px;font-size:14px;border-radius:var(--radius-pill);box-shadow:var(--shadow-sm)">
+          <input type="text" class="input" placeholder="Search categories, products, stores or services…" value="{{ searchQuery }}" onInput="{{ handleCategoryGlobalSearch }}" onKeyDown="{{ handleSearchKey }}" style="padding-left:42px;padding-right:38px;height:46px;font-size:14px;border-radius:var(--radius-pill);box-shadow:var(--shadow-sm)" role="combobox" aria-autocomplete="list" aria-expanded="{{ searchExpanded }}" aria-controls="search-suggestions" aria-activedescendant="{{ searchActiveOption }}" onFocus="{{ searchFocus }}" onBlur="{{ searchBlur }}" onCompositionStart="{{ searchCompositionStart }}" onCompositionEnd="{{ searchCompositionEnd }}" maxlength="200">
+""" + get_search_suggestions() + """
           <sc-if value="{{ categorySearchQuery }}">
             <button onClick="{{ clearCategorySearch }}" aria-label="Clear search" style="position:absolute;right:12px;background:var(--color-neutral-200);border:none;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:800;font-size:13px;color:var(--color-text)">✕</button>
           </sc-if>

@@ -11,7 +11,10 @@
     "test:services": "node scripts/verify_backend_services.js",
     "verify:screens": "python verify_screens.py",
     "verify:runtime": "node verify_runtime.js",
-    "build:frontend": "python build_redesign.py",
+    "build:frontend": "node scripts/build_combi.js && python build_redesign.py",
+    "build:combi": "node scripts/build_combi.js",
+    "test:search": "node tests/search/run.js",
+    "test:search:ui": "node tests/search/ui.test.js",
     "test:performance": "node tests/unit/frontend_performance.test.js",
     "test:unit": "node tests/run_all.js",
     "test:security": "node tests/integration/api_security.test.js",
@@ -34,6 +37,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@clerk/backend": "^1.24.1",
+    "@elevenlabs/client": "1.26.0",
     "@sentry/node": "^8.45.0",
     "@supabase/supabase-js": "^2.48.1",
     "@vercel/analytics": "^2.0.1",
@@ -52,6 +56,11 @@
     "zod": "^4.5.4"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "@electric-sql/pglite": "0.5.8",
+    "esbuild": "0.28.1",
+    "nodemon": "^3.1.9",
+    "playwright": "1.62.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
   }
 }

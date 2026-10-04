@@ -100,6 +100,13 @@
       <button onClick="{{ on.adminSetTabAudit }}" style="padding:8px 16px;border-radius:var(--radius-pill);font:700 12.5px/1 var(--font-heading);cursor:pointer;white-space:nowrap;border:1px solid {{ adminTabIsAudit ? 'var(--color-accent)' : 'var(--color-divider)' }};background:{{ adminTabIsAudit ? 'var(--color-accent)' : 'var(--color-surface)' }};color:{{ adminTabIsAudit ? '#fff' : 'var(--color-text)' }};box-shadow:{{ adminTabIsAudit ? '0 4px 12px rgba(0,122,255,0.22)' : 'none' }};transition:all .15s ease">
         🛡️ Journal d'Audit Immuable
       </button>
+
+      <!-- Rider roster (src/services/ridersAdmin.js), opened through
+           [data-open-riders-admin], a document-level delegate, so no DC tab state. -->
+      <button type="button" data-open-riders-admin style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius-pill);font:700 12.5px/1 var(--font-heading);cursor:pointer;white-space:nowrap;border:1px solid var(--color-divider);background:var(--color-surface);color:var(--color-text);transition:all .15s ease">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M8 17.5h7.5l-3-8H9"/><path d="M15 6h2.5l1 4.5"/><path d="M12.5 9.5H17"/></svg>
+        Livreurs
+      </button>
     </div>
 
     <!-- ══════════════════════════════════════════════════════════════════════════

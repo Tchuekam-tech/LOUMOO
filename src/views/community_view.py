@@ -6,6 +6,7 @@ Conversion Detail View, and VS Side-by-Side Comparison Matrix with Lucide SVG Ic
 """
 
 from src.views.publishing_view import publication_card
+from .search_shared import get_search_suggestions
 
 
 def get_community_view():
@@ -50,9 +51,9 @@ _TEMPLATE = """
     <!-- Search -->
     <div class="ann-search">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" placeholder="Search announcements"
-             value="{{ announceSearch }}"
-             onChange="{{ (e) => setAnnounceSearch(e && e.target ? e.target.value : e) }}">
+      <input type="search" placeholder="Search announcements" aria-label="Search announcements" value="{{ searchQuery }}" onInput="{{ handleAnnouncementGlobalSearch }}" onKeyDown="{{ handleSearchKey }}" onFocus="{{ searchFocus }}" onBlur="{{ searchBlur }}" role="combobox" aria-autocomplete="list" aria-expanded="{{ searchExpanded }}" aria-controls="search-suggestions" aria-activedescendant="{{ searchActiveOption }}" maxlength="200" autocomplete="off" enterkeyhint="search">
+""" + get_search_suggestions() + """
+      <button class="btn btn-secondary" onClick="{{ submitSearch }}">Search</button>
     </div>
 
     <!-- Filters -->
@@ -478,7 +479,7 @@ _TEMPLATE = """
       <div class="cmp-empty-hero">
         <span class="cmp-kicker">LOUMOO Comparison Studio</span>
         <h2 class="cmp-empty-title">Nothing to compare yet</h2>
-        <p class="cmp-empty-desc">Compare any products, verified merchant stores, or hotel stays head-to-head across Cameroon with guaranteed inventory, spec breakdowns, and Tier-1 buyer escrow.</p>
+        <p class="cmp-empty-desc">Search the public catalog to compare products, stores or hotel stays. Check the listings for current prices and availability.</p>
 
         <!-- Live Universal Search & Filter -->
         <div class="cmp-search-bar">
@@ -486,7 +487,7 @@ _TEMPLATE = """
             <span class="cmp-search-icon" aria-hidden="true">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
             </span>
-            <input class="cmp-search-input" type="text" placeholder="Search any product, store, stay to compare..." value="{{ vsPickerQuery }}" onInput="{{ handleVsPickerInput }}" />
+            <input class="cmp-search-input" type="search" aria-label="Find items to compare" placeholder="Search products, stores or stays to compare…" value="{{ vsPickerQuery }}" onInput="{{ handleVsPickerInput }}" onFocus="{{ handleVsPickerFocus }}" maxlength="180" autocomplete="off" />
           </div>
           <div class="cmp-picker-pills" role="tablist">
             <button onClick="{{ () => setVsPickerCat('all') }}" class="cmp-picker-pill {{ vsPickerCat === 'all' ? 'is-active' : '' }}">All Entities</button>
@@ -498,6 +499,8 @@ _TEMPLATE = """
         </div>
 
         <!-- Live Search Candidates -->
+        <sc-if value="{{ vsSearchLoading }}"><p role="status">Searching the catalog…</p></sc-if>
+        <sc-if value="{{ vsSearchError }}"><p role="alert">{{ vsSearchError }}</p></sc-if>
         <sc-if value="{{ vsPickerHasResults }}">
           <div class="cmp-picker-results">
             <sc-for list="{{ vsPickerResults }}" as="cand">
@@ -506,7 +509,7 @@ _TEMPLATE = """
                 <div class="cmp-picker-card-info">
                   <div class="cmp-picker-card-title">{{ cand.title }}</div>
                   <div class="cmp-picker-card-meta">{{ cand.meta }}</div>
-                  <div class="cmp-stock-badge">✓ {{ cand.stockLabel }}</div>
+                  <div class="cmp-stock-badge">{{ cand.stockLabel }}</div>
                 </div>
                 <button onClick="{{ () => addToCompare(cand.id) }}" class="cmp-picker-add-btn">+ Compare</button>
               </div>

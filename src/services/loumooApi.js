@@ -217,6 +217,7 @@
       if (token) headers.Authorization = 'Bearer ' + token;
 
       var init = { method: options.method || 'GET', headers: headers };
+      if (options.signal) init.signal = options.signal;
       if (options.rawBody !== undefined && options.rawBody !== null) {
         init.body = options.rawBody;
       } else if (options.body !== undefined) {
@@ -235,6 +236,7 @@
         return unwrap(body);
       });
     }, function (networkErr) {
+      if (networkErr && networkErr.name === 'AbortError') throw networkErr;
       var err = new Error('Cannot reach LOUMOO. Check your connection and try again.');
       err.status = 0;
       err.code = 'OFFLINE';
@@ -970,9 +972,15 @@
   // call resolves to the canonical { items, total, page, limit } payload. The
   // rejection is re-thrown so callers can distinguish a real failure (show the
   // error state) from a genuine zero-result response ({ items: [] }).
-  LoumooApiClient.prototype.searchProducts = function (query, params) {
+  LoumooApiClient.prototype.search = function (params, signal) { return this.request('/api/v1/search' + qs(params), { signal: signal }); };
+  LoumooApiClient.prototype.suggestSearch = function (params, signal) { return this.request('/api/v1/search/suggest' + qs(params), { signal: signal }); };
+  LoumooApiClient.prototype.searchCapabilities = function () { return this.request('/api/v1/search/capabilities'); };
+  LoumooApiClient.prototype.searchAssistant = function (body, signal) { return this.request('/api/v1/search/assistant', { method:'POST', body:body, signal:signal }); };
+  LoumooApiClient.prototype.searchVisual = function (body, signal) { return this.request('/api/v1/search/visual', { method:'POST', body:body, signal:signal }); };
+  LoumooApiClient.prototype.startCombiSession = function (signal) { return this.request('/api/v1/search/voice/session', { method:'POST', body:{}, signal:signal }); };
+  LoumooApiClient.prototype.searchProducts = function (query, params, signal) {
     var p = Object.assign({ q: query }, params || {});
-    return this.request('/api/v1/products' + qs(p));
+    return this.request('/api/v1/products' + qs(p), { signal:signal });
   };
 
 

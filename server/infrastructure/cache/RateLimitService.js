@@ -88,7 +88,7 @@ class RateLimitService {
    * @param {number} maxRequests - Max requests allowed in the window
    * @param {number} windowSeconds - Window size in seconds
    */
-  async consume(key, maxRequests = 100, windowSeconds = 60) {
+  async consume(key, maxRequests = 100, windowSeconds = 60, requireRedis = false) {
     if (!Number.isSafeInteger(maxRequests) || maxRequests < 1) {
       throw new TypeError('maxRequests must be a positive safe integer');
     }
@@ -138,9 +138,11 @@ class RateLimitService {
       }
     } catch (err) {
       if (err instanceof RateLimitError) throw err;
+      if (requireRedis) throw new ServiceUnavailableError('The assistant is temporarily unavailable.');
       logger.warn(`[RateLimitService] Redis rate limit unavailable, using memory fallback: ${err.message}`);
     }
 
+    if (requireRedis) throw new ServiceUnavailableError('The assistant is temporarily unavailable.');
     // In-memory fallback
     const bucket = this.memoryBuckets.get(rateLimitKey);
     let timestamps = bucket ? bucket.timestamps : [];
@@ -188,7 +190,7 @@ class RateLimitService {
     return clientKey === `ip:${peerIp}` ? [peerKey] : [peerKey, clientKey];
   }
 
-  middleware({ maxRequests = 60, windowSeconds = 60, keyGenerator = null, peerMaxRequests = maxRequests, keyPrefix = '' } = {}) {
+  middleware({ maxRequests = 60, windowSeconds = 60, keyGenerator = null, peerMaxRequests = maxRequests, keyPrefix = '', requireRedis = false } = {}) {
     return async (req, res, next) => {
       if (config.isProduction && (!this.redis || this.redis.status !== 'ready')) {
         // Liveness must remain probeable while the service is starting. The
@@ -215,7 +217,7 @@ class RateLimitService {
           const bucketLimit = !keyGenerator && index === 0 && keys.length > 1
             ? peerMaxRequests
             : maxRequests;
-          result = await this.consume(keys[index], bucketLimit, windowSeconds);
+          result = await this.consume(keys[index], bucketLimit, windowSeconds, requireRedis);
         }
         res.setHeader('X-RateLimit-Limit', result.total);
         res.setHeader('X-RateLimit-Remaining', result.remaining);

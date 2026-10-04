@@ -23,6 +23,7 @@ const requestContext = require('./shared/middleware/requestContext');
 const errorHandler = require('./shared/middleware/errorHandler');
 const { securityHeaders } = require('./shared/middleware/securityHeaders');
 const RateLimitService = require('./infrastructure/cache/RateLimitService');
+const { createSearchRouter } = require('./modules/search/presentation/searchRoutes');
 const IdempotencyService = require('./infrastructure/cache/IdempotencyService');
 const OutboxService = require('./infrastructure/events/OutboxService');
 const { MediaStorageService } = require('./infrastructure/storage/MediaStorageService');
@@ -154,7 +155,9 @@ app.use('/api', (req, res, next) => {
 // assets. In production Netlify's CDN serves those static files and only
 // routes /api/* to this app, so limiting /api mirrors production exactly while
 // keeping local dev (which also serves the frontend here) usable.
-app.use('/api', RateLimitService.middleware({ maxRequests: 120, windowSeconds: 60 }));
+const commerceLimit = RateLimitService.middleware({ maxRequests: 120, windowSeconds: 60 });
+const discoveryLimit = RateLimitService.middleware({ maxRequests: 180, peerMaxRequests: 3000, windowSeconds: 60, keyPrefix: 'discovery' });
+app.use('/api', (req, res, next) => /^\/v1\/search(?:\/|$)/.test(req.path) ? discoveryLimit(req,res,next) : commerceLimit(req,res,next));
 
 /**
  * 4. Body parsing.
@@ -195,6 +198,7 @@ app.use(maintenanceGuard);
 
 // 6. Versioned API routes
 const v1Router = express.Router();
+v1Router.use('/search', createSearchRouter());
 v1Router.use('/', healthRoutes);
 v1Router.use('/', identityRoutes);
 v1Router.use('/', catalogRoutes);
