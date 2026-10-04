@@ -215,6 +215,10 @@
       '.ldx-row.is-dim{opacity:.55}',
       '.ldx-row-main{flex:1;min-width:0}',
       '.ldx-row-title{font:600 16px/1.25 var(--ldx-font);letter-spacing:-.01em;color:var(--ldx-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
+      // Mail-style first line: title, then the time pinned to the right.
+      '.ldx-row-head{display:flex;align-items:baseline;gap:8px;min-width:0}',
+      '.ldx-row-head .ldx-row-title{flex:1;min-width:0}',
+      '.ldx-row-time{flex-shrink:0;font:400 13px/1.25 var(--ldx-font);color:var(--ldx-text-3);font-variant-numeric:tabular-nums;white-space:nowrap}',
       '.ldx-row-sub{margin-top:2px;font:400 14px/1.3 var(--ldx-font);color:var(--ldx-text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
       '.ldx-row-sub.is-wrap{white-space:normal}',
       '.ldx-row-status{margin-top:2px;font:600 14px/1.3 var(--ldx-font);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ldx-text-2)}',

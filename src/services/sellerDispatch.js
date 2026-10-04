@@ -177,23 +177,25 @@
           return sec;
         }
 
-        // Mail-style row: what was ordered, where its delivery stands (in colour),
-        // then the order number, area and age.
+        // Mail-style row: what was ordered with its age on the right, where its
+        // delivery stands (in colour), then the order number and area.
         function row(item) {
           var o = item.order, d = item.delivery;
           var status = d ? d.status : 'none';
           if (status === 'cancelled') status = 'none';
           var info = ui.statusInfo(status);
           var ico = status === 'delivered' ? 'checkCircle' : (status === 'failed' ? 'alert' : (['accepted', 'picked_up', 'arrived'].indexOf(status) !== -1 ? 'scooter' : 'package'));
-          var meta = [o.orderNumber, o.area, ui.relTime(status === 'delivered' && d ? d.updatedAt : o.placedAt)].filter(Boolean).join(' · ');
+          var when = ui.relTime(status === 'delivered' && d ? d.updatedAt : o.placedAt);
+          var meta = [o.orderNumber, o.area].filter(Boolean).join(' · ');
           var el = ui.h(
             '<button class="ldx-row" style="--ldx-inset:68px;align-items:center">' +
               '<span class="ldx-tile ldx-tone-' + info.tone + '">' + ui.icon(ico, 22) + '</span>' +
-              '<span class="ldx-row-main"><div class="ldx-row-title"></div><div class="ldx-row-status ldx-tone-' + info.tone + '"></div><div class="ldx-row-meta"></div></span>' +
+              '<span class="ldx-row-main"><div class="ldx-row-head"><div class="ldx-row-title"></div><span class="ldx-row-time"></span></div><div class="ldx-row-status ldx-tone-' + info.tone + '"></div><div class="ldx-row-meta"></div></span>' +
               '<span class="ldx-row-end"></span>' +
             '</button>'
           );
           el.querySelector('.ldx-row-title').textContent = o.title || orderTitle(o);
+          el.querySelector('.ldx-row-time').textContent = when;
           el.querySelector('.ldx-row-status').textContent = rowStatus(status, d);
           el.querySelector('.ldx-row-meta').textContent = meta;
           var end = el.querySelector('.ldx-row-end');
@@ -203,7 +205,7 @@
             end.appendChild(ring.el);
           }
           end.insertAdjacentHTML('beforeend', ui.icon('forward', 18));
-          el.setAttribute('aria-label', (o.title || orderTitle(o)) + ', ' + rowStatus(status, d) + ', ' + meta);
+          el.setAttribute('aria-label', [o.title || orderTitle(o), rowStatus(status, d), meta, when].filter(Boolean).join(', '));
           el.addEventListener('click', function () { nav.push(orderView(nav, item)); });
           return el;
         }
