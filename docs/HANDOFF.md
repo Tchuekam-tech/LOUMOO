@@ -29,11 +29,41 @@ entry after finishing one. Newest entry first.
 | 2. Delivery routes, rider endpoints, SSE, route tests | Claude | **done** (mounted at `/api/v1/deliveries`; unit-tested, and now **DB-backed integration tested** — see `tests/integration/delivery_flow.test.js`) |
 | 2b. DB-backed integration suite (real guard, real DB, real stream) | Claude | **done** (passes against the live database) |
 | 2c. Driver assignment: offer expiry, workload-aware rider list, auto-assign | Claude | **done on `feat/delivery-assignment`** (unit-tested, **not merged**, **no DB-backed test yet**; no schema change) |
-| 3. Rider page (GPS posting) | ChatGPT/Codex | can start now against `docs/DELIVERY_API.md` v1 |
+| 3. Rider page (GPS posting) | ChatGPT/Codex | can start now against `docs/DELIVERY_API.md` v1 — **covered by step 3b's rider hub; check it before starting** |
+| 3b. Seller dispatch board, rider hub, riders admin (+ `GET /dispatch`, admin roster) | Claude | **done on `feat/delivery-dispatch-ui`** (unit-tested, reviewed in a dev harness; **not pushed, not merged**, not yet run against the real backend) |
 | 4. Customer tracking screen (map, timeline, code) | ChatGPT/Codex | |
 | 5. Merge both, rebuild frontend, end-to-end check | owner | |
 
 ## Log
+- **Step 3b — Dispatch screens (Claude, 2026-10-04, branch `feat/delivery-dispatch-ui`,
+  from `feat/delivery-frontend-tracking` with `origin/main` merged in; NOT pushed, NOT
+  merged):** The screens around assignment that were missing. **Seller**: a dispatch
+  board (to dispatch / in progress / completed), an order screen with the delivery's
+  state and next action (arrange, choose a rider, auto-assign, change rider, cancel,
+  track live), and a rider picker showing each rider's load and who passed. **Rider**:
+  an inbox of offers with countdowns, accept and decline, then a job screen per phase
+  (pickup, deliver, arrive, 4-digit handover code, report a problem, hand the job
+  back) that posts GPS while it is open. This covers step 3's rider page. **Admin**:
+  the rider roster, edit, suspend or reactivate, and add a rider by account search or
+  ID. Entry points: a Deliveries card on the seller dashboard, a "Deliver with LOUMOO"
+  card in the account hub, a "Livreurs" pill in the super-admin tab bar.
+  *Backend (contract first, `DELIVERY_API.md` v1.2):* `GET /dispatch` (seller/admin
+  board) and `GET /drivers?status=all|active|suspended` (admin roster), in the delivery
+  module. **No schema change, no migration.**
+  *Shared files touched:* `build_redesign.py` (four `<script defer>` tags after the
+  tracking screen's) and `server/modules/commerce/infrastructure/OrderRepository.js`
+  (one new read method, `findOrdersBySeller`; existing methods unchanged). Generated
+  bundles were built locally to check them, **not committed** (rule 2).
+  *Tests:* new `delivery_board` suite; every delivery suite and the client checks
+  (`deliveryApi.test.js`, 10/10) pass. The screens were reviewed in light and dark
+  mode, on phone and desktop, in `tests/ui/dispatch_harness.html` (mock API; see
+  `DELIVERY_FRONTEND.md` → Step 5). **Not run against the real backend or on real
+  phones yet.**
+  *Merge notes:* this branch carries step 4 (`feat/delivery-frontend-tracking`) too.
+  Hot spots: `DeliveryService.js`, `deliveryRoutes.js`, `deliverySchemas.js`,
+  `DeliveryRepository.js`, `deliveryApi.js`, `build_redesign.py`, `DELIVERY_API.md`,
+  this file. The unmerged `fix/delivery-offer-hardening` (another session) also edits
+  `DeliveryService.js` and `delivery_dispatch.test.js`, and adds migration 014.
 - **Step 2c — Driver assignment (Claude, 2026-10-03, branch `feat/delivery-assignment`,
   forked from `feat/delivery-backend` at `9a2bbe6`, NOT merged):** Assigning a rider
   and letting them accept already existed (`POST /:id/assign`, `/accept`, `/decline`,
