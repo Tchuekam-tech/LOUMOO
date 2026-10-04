@@ -306,7 +306,7 @@
             var rr = ui.h('<div class="ldx-row is-static" style="--ldx-inset:68px">' + ui.avatar(r.name, 40) +
               '<span class="ldx-row-main"><div class="ldx-row-title"></div><div class="ldx-row-sub"></div></span>' +
               '<span class="ldx-row-end" style="gap:10px">' +
-                (r.phone ? '<a class="ldx-iconbtn" href="' + ui.esc(ui.telHref(r.phone)) + '" aria-label="Call ' + ui.esc(r.name) + '">' + ui.icon('phone', 19) + '</a>' : '') +
+                (r.phone ? '<a class="ldx-iconbtn is-call" href="' + ui.esc(ui.telHref(r.phone)) + '" aria-label="Call ' + ui.esc(r.name) + '">' + ui.icon('phone', 19) + '</a>' : '') +
                 (wa ? '<a class="ldx-iconbtn is-wa" href="' + ui.esc(wa) + '" target="_blank" rel="noopener" aria-label="WhatsApp ' + ui.esc(r.name) + '">' + ui.icon('chat', 19) + '</a>' : '') +
               '</span></div>');
             rr.querySelector('.ldx-row-title').textContent = r.name;

@@ -489,9 +489,9 @@
           var actions = ui.h('<div class="ldx-row is-static" style="gap:10px;justify-content:flex-start"></div>');
           var nav2 = ui.mapsHref(loc, address);
           if (nav2) actions.appendChild(ui.h('<a class="ldx-btn is-tinted is-small" href="' + ui.esc(nav2) + '" target="_blank" rel="noopener">' + ui.icon('navigate', 16) + '<span>Navigate</span></a>'));
-          if (phone) actions.appendChild(ui.h('<a class="ldx-btn is-gray is-small" href="' + ui.esc(ui.telHref(phone)) + '">' + ui.icon('phone', 16) + '<span>Call</span></a>'));
+          if (phone) actions.appendChild(ui.h('<a class="ldx-btn is-tinted is-small" href="' + ui.esc(ui.telHref(phone)) + '">' + ui.icon('phone', 16) + '<span>Call</span></a>'));
           var wa = kind === 'dropoff' ? ui.waHref(phone) : null;
-          if (wa) actions.appendChild(ui.h('<a class="ldx-btn is-small" style="background:#25d366;color:#fff" href="' + ui.esc(wa) + '" target="_blank" rel="noopener">' + ui.icon('chat', 16) + '<span>WhatsApp</span></a>'));
+          if (wa) actions.appendChild(ui.h('<a class="ldx-btn is-wa is-small" href="' + ui.esc(wa) + '" target="_blank" rel="noopener">' + ui.icon('chat', 16) + '<span>WhatsApp</span></a>'));
           if (actions.children.length) sec.group.appendChild(actions);
           return sec;
         }

@@ -263,7 +263,9 @@
       '.ldx-btn-row>.ldx-btn{flex:1}',
       '.ldx-iconbtn{width:44px;height:44px;border-radius:50%;border:0;display:inline-flex;align-items:center;justify-content:center;background:var(--ldx-fill);color:var(--ldx-accent);cursor:pointer;text-decoration:none;transition:transform .12s var(--ldx-ease-out)}',
       '.ldx-iconbtn:active{transform:scale(.92)}',
-      '.ldx-iconbtn.is-wa{background:#25d366;color:#fff}',
+      // Contact buttons are one family: tinted, blue to call, green for WhatsApp.
+      '.ldx-iconbtn.is-call{background:var(--ldx-accent-soft);color:var(--ldx-accent-ink)}',
+      '.ldx-iconbtn.is-wa,.ldx-btn.is-wa{background:var(--ldx-ok-soft);color:var(--ldx-ok-ink)}',
       // segmented control
       '.ldx-seg{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;padding:2px;margin:0 0 18px;border-radius:10px;background:var(--ldx-fill)}',
       '.ldx-seg-thumb{position:absolute;top:2px;bottom:2px;left:2px;border-radius:8px;background:var(--ldx-surface);box-shadow:0 3px 8px rgba(0,0,0,.12),0 3px 1px rgba(0,0,0,.04);transition:transform .32s var(--ldx-ease),width .32s var(--ldx-ease)}',
