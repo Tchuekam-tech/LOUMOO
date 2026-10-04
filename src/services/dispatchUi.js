@@ -351,6 +351,9 @@
   document.addEventListener('keydown', function (e) {
     var top = topLayer();
     if (!top) return;
+    // The live tracking overlay (opened from "Track live") sits above us and
+    // handles its own Escape: let it.
+    if (document.getElementById('loumoo-dt')) return;
     if (e.key === 'Escape') { e.preventDefault(); top.onEscape(); return; }
     if (e.key === 'Tab') {
       var items = focusables(top.el);
