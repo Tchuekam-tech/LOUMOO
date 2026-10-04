@@ -52,7 +52,7 @@
       title: 'Your deliveries',
       render: function (page) {
         var ui = UI(), api = API();
-        var data = null, rings = [];
+        var data = null, rings = [], sig = null, painted = false;
         page.setRight([{ icon: 'refresh', label: 'Refresh', onClick: function () { load(true); } }]);
         var body = document.createElement('div');
         page.content.appendChild(body);
@@ -65,7 +65,10 @@
             if (!page.alive) return;
             data = res;
             page.setTitle('Your deliveries', 'Hi ' + firstName(res.driver && res.driver.name) + ' — here’s your work.');
-            draw();
+            // Redraw only when the jobs changed: a background refresh must not
+            // rebuild the cards under the rider's thumb (countdowns tick on their own).
+            var next = JSON.stringify(res.deliveries || []);
+            if (next !== sig) { sig = next; draw(); }
             if (manual) ui.toast('Up to date', { tone: 'info', duration: 1400 });
           }).catch(function (err) {
             if (!page.alive) return;
@@ -118,13 +121,14 @@
             active.forEach(function (d) { s2.group.appendChild(activeRow(d)); });
             body.appendChild(s2);
           }
+          painted = true;
         }
 
         function offerCard(d) {
           var dist = ui.km(d.pickup && d.pickup.location, d.dropoff && d.dropoff.location);
           var card = ui.h(
-            '<div class="ldx-card ldx-fade-in" style="padding:16px">' +
-              '<button class="ldx-row" style="padding:0;min-height:0;gap:14px;align-items:flex-start;background:transparent">' +
+            '<div class="ldx-card' + (painted ? '' : ' ldx-fade-in') + '" style="padding:16px">' +
+              '<button class="ldx-row no-sep" style="padding:0;min-height:0;gap:14px;align-items:flex-start;background:transparent">' +
                 '<span class="ldx-ring-slot"></span>' +
                 '<span class="ldx-row-main">' +
                   '<div class="ldx-row-title" data-pickup></div>' +
@@ -165,10 +169,10 @@
 
         function activeRow(d) {
           var step = d.status === 'accepted' ? 'Pick up at ' + ((d.pickup && d.pickup.label) || 'the shop') : 'Deliver to ' + ((d.dropoff && (d.dropoff.label || d.dropoff.area)) || 'the customer');
-          var el = ui.h('<button class="ldx-row" style="--ldx-inset:68px"><span class="ldx-tile ldx-tone-accent">' + ui.icon(d.status === 'accepted' ? 'store' : 'scooter', 22) + '</span><span class="ldx-row-main"><div class="ldx-row-title"></div><div class="ldx-row-sub"></div></span><span class="ldx-row-end"></span></button>');
+          var el = ui.h('<button class="ldx-row" style="--ldx-inset:68px"><span class="ldx-tile ldx-tone-accent">' + ui.icon(d.status === 'accepted' ? 'store' : 'scooter', 22) + '</span><span class="ldx-row-main"><div class="ldx-row-title"></div><div class="ldx-row-status ldx-tone-accent"></div><div class="ldx-row-meta"></div></span><span class="ldx-row-end">' + ui.icon('forward', 18) + '</span></button>');
           el.querySelector('.ldx-row-title').textContent = step;
-          el.querySelector('.ldx-row-sub').textContent = [(d.dropoff && d.dropoff.address) || (d.dropoff && d.dropoff.area), d.orderNumber].filter(Boolean).join(' · ');
-          el.querySelector('.ldx-row-end').innerHTML = ui.statusBadge(d.status) + ui.icon('forward', 18);
+          el.querySelector('.ldx-row-status').textContent = d.status === 'accepted' ? 'Next: confirm pickup' : d.status === 'picked_up' ? 'Next: tell the customer you’ve arrived' : 'Next: take the handover code';
+          el.querySelector('.ldx-row-meta').textContent = [(d.dropoff && d.dropoff.address) || (d.dropoff && d.dropoff.area), d.orderNumber].filter(Boolean).join(' · ');
           el.addEventListener('click', function () { nav.push(jobView(nav, d)); });
           return el;
         }
@@ -303,6 +307,12 @@
       var center = first ? [first.loc.lng, first.loc.lat] : [9.7679, 4.0511]; // Douala
       map = new ml.Map({ container: el.querySelector('[data-map]'), style: mapStyle(), center: center, zoom: 13, attributionControl: { compact: true }, interactive: true, cooperativeGestures: true });
       map.on('style.load', function () { var m = el.querySelector('[data-msg]'); if (m) m.style.display = 'none'; place(); });
+      // The compact attribution opens expanded; fold it into its (i) button so it
+      // doesn't cover a third of a small map (it stays one tap away).
+      map.on('load', function () {
+        var a = el.querySelector('.maplibregl-ctrl-attrib');
+        if (a) { a.classList.remove('maplibregl-compact-show'); a.removeAttribute('open'); }
+      });
     }).catch(function () {
       var m = el.querySelector('[data-msg]');
       if (m) m.textContent = 'Map unavailable — use “Navigate” below';
@@ -441,11 +451,13 @@
 
           if (d.status === 'delivered') return drawDone();
 
-          // progress through the job
-          var steps = '<div class="ldx-steps" style="margin:0 4px 16px" aria-hidden="true">';
-          for (var i = 1; i <= 3; i++) steps += '<span class="ldx-step' + (i <= ph.step ? ' is-done' : '') + '"></span>';
-          steps += '</div>';
-          page.content.insertAdjacentHTML('beforeend', steps);
+          // progress through the job (from acceptance on)
+          if (ph.step > 0) {
+            var steps = '<div class="ldx-steps" style="margin:0 4px 16px" aria-hidden="true">';
+            for (var i = 1; i <= 3; i++) steps += '<span class="ldx-step' + (i <= ph.step ? ' is-done' : '') + '"></span>';
+            steps += '</div>';
+            page.content.insertAdjacentHTML('beforeend', steps);
+          }
 
           // map
           if (!map) map = jobMap(d); else map.update(d);
