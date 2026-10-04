@@ -235,6 +235,40 @@ class DeliveryRepository {
     return all[0] ? { ...all[0] } : null;
   }
 
+  /**
+   * For many orders at once: `Map<orderId, delivery>` holding each order's open
+   * delivery, else its most recent finished one (the same choice as findByOrder),
+   * in one query instead of one per order. Orders with no delivery are absent.
+   */
+  async findLatestByOrders(orderIds) {
+    const ids = [...new Set((orderIds || []).filter(Boolean))];
+    if (!ids.length) return new Map();
+    const pick = (rows) => {
+      const byOrder = new Map();
+      // Newest first, so the first finished row seen is the latest; an open one
+      // always wins over any finished one.
+      for (const d of rows.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))) {
+        const current = byOrder.get(d.orderId);
+        if (!current || (!isOpen(current.status) && isOpen(d.status))) byOrder.set(d.orderId, d);
+      }
+      return byOrder;
+    };
+    const db = this.db;
+    if (db) {
+      try {
+        const { data, error } = await db.from('deliveries').select('*')
+          .in('order_id', ids)
+          .order('created_at', { ascending: false })
+          .limit(MAX_WORKLOAD_ROWS);
+        if (error) handleDatabaseFailure(error, 'DeliveryRepository.findLatestByOrders');
+        else return pick((data || []).map(fromRow));
+      } catch (err) {
+        handleDatabaseFailure(err, 'DeliveryRepository.findLatestByOrders');
+      }
+    }
+    return pick([...this._deliveries.values()].filter((d) => ids.includes(d.orderId)).map((d) => ({ ...d })));
+  }
+
   /** Open deliveries assigned to a rider, newest activity first. */
   async findOpenByDriver(driverId, { limit = 20 } = {}) {
     if (!driverId) return [];
