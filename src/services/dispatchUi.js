@@ -351,6 +351,10 @@
       // lightness (keeping hues: water stays blue, roads orange) and tone them
       // down. Markers are HTML on top of the canvas, so they keep their colours.
       '[data-theme="dark"] .ldx-root .maplibregl-canvas{filter:invert(.9) hue-rotate(180deg) saturate(.6) brightness(.9)}',
+      // No lone last words: balanced headings, paragraphs that avoid orphans
+      // (ignored where unsupported).
+      '.ldx-large h1,.ldx-title2,.ldx-empty h3,.ldx-sheet-head h2{text-wrap:balance}',
+      '.ldx-large p,.ldx-body,.ldx-row-sub.is-wrap,.ldx-empty p,.ldx-sheet-msg,.ldx-hint,.ldx-section-foot{text-wrap:pretty}',
       '.ldx-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}',
       '.ldx-shake{animation:ldx-shake .42s var(--ldx-ease-out)}',
       '.ldx-fade-in{animation:ldx-fade .32s var(--ldx-ease-out) both}',
