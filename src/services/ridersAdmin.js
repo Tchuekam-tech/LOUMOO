@@ -137,6 +137,13 @@
       if (v.phone.replace(/\D/g, '').length < 6) return 'Enter a phone number customers can call.';
       return null;
     }
+    // Save stays off until something actually changed.
+    var original = values();
+    save.disabled = true;
+    form.addEventListener('input', function () {
+      var v = values();
+      save.disabled = v.name === original.name && v.phone === original.phone;
+    });
     function submit(btn, status, doneMessage) {
       var v = values();
       var problem = valid(v);
