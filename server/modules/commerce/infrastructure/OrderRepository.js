@@ -437,6 +437,45 @@ class OrderRepository {
   }
 
   /**
+   * A seller's orders in the given fulfillment statuses, newest first, read fresh
+   * (never from this instance's cache). `sellerId` null means every seller's
+   * (administrators). Used by the delivery dispatch board.
+   *
+   * The delivery method is stored inside the shipping_address JSON, and a row
+   * WITHOUT it maps to HOME_DELIVERY (see _mapRowToOrder); an SQL filter on that
+   * JSON key would silently drop those rows. So rows are filtered after mapping,
+   * from an over-fetch of twice the limit; `homeDeliveryOnly` defaults to true.
+   * @returns {Promise<Order[]>}
+   */
+  async findOrdersBySeller(sellerId, { statuses = [], limit = 50, homeDeliveryOnly = true } = {}) {
+    const wanted = Array.isArray(statuses) ? statuses.filter(Boolean) : [];
+    const cap = Math.max(1, Math.min(Number(limit) || 50, 100));
+    const keep = (o) => (!homeDeliveryOnly || o.deliveryMethod === DELIVERY_METHOD.HOME_DELIVERY)
+      && (!wanted.length || wanted.includes(o.fulfillmentStatus));
+
+    if (this.db) {
+      try {
+        let query = this.db.from('orders').select('*');
+        if (sellerId) query = query.eq('seller_id', sellerId);
+        if (wanted.length) query = query.in('fulfillment_status', wanted);
+        const { data, error } = await query.order('created_at', { ascending: false }).limit(cap * 2);
+        if (error) {
+          handleDatabaseFailure(error, 'OrderRepository.findOrdersBySeller');
+        } else {
+          return (data || []).map((r) => this._mapRowToOrder(r)).filter(keep).slice(0, cap);
+        }
+      } catch (err) {
+        handleDatabaseFailure(err, 'OrderRepository.findOrdersBySeller');
+      }
+    }
+
+    return Array.from(this._inMemoryOrders.values())
+      .filter((o) => (!sellerId || o.sellerId === sellerId) && keep(o))
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .slice(0, cap);
+  }
+
+  /**
    * Concurrency-safe atomic fulfillment state update.
    * Uses conditional WHERE on current status to prevent race conditions.
    *
