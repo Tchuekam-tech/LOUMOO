@@ -239,6 +239,7 @@
       '.ldx-card{background:var(--ldx-surface);border-radius:20px;padding:18px;margin:0 0 16px}',
       '.ldx-card.is-hero{padding:22px 20px}',
       '.ldx-eyebrow{font:600 12.5px/1.2 var(--ldx-font);letter-spacing:.02em;text-transform:uppercase;color:var(--ldx-text-3);margin:0 0 6px}',
+      '.ldx-eyebrow.ldx-tone-accent{color:var(--ldx-accent-ink)}.ldx-eyebrow.ldx-tone-ok{color:var(--ldx-ok-ink)}.ldx-eyebrow.ldx-tone-warn{color:var(--ldx-warn-ink)}.ldx-eyebrow.ldx-tone-bad{color:var(--ldx-bad-ink)}',
       '.ldx-title2{margin:0;font:700 22px/1.2 var(--ldx-font-h);letter-spacing:-.02em}',
       '.ldx-body{margin:6px 0 0;font:400 15px/1.45 var(--ldx-font);color:var(--ldx-text-2)}',
       '.ldx-meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;font:500 13.5px/1.3 var(--ldx-font);color:var(--ldx-text-2)}',

@@ -275,15 +275,17 @@
           var status = delivery ? delivery.status : 'none';
           var hero = (HERO[status] || HERO.none)(delivery);
 
-          // Status hero
-          var card = ui.h('<div class="ldx-card is-hero ldx-fade-in"><div style="display:flex;gap:16px;align-items:flex-start"><div style="flex:1;min-width:0"><p class="ldx-eyebrow">Delivery</p><h2 class="ldx-title2"></h2><p class="ldx-body"></p></div><div class="ldx-hero-side"></div></div></div>');
+          // Status hero. The title already says where things stand, so there's no
+          // status pill; the eyebrow carries the status colour instead.
+          var tone = ui.statusInfo(status === 'pending_assignment' ? 'none' : status).tone;
+          var card = ui.h('<div class="ldx-card is-hero ldx-fade-in"><div style="display:flex;gap:16px;align-items:flex-start"><div style="flex:1;min-width:0"><p class="ldx-eyebrow ldx-tone-' + tone + '">Delivery</p><h2 class="ldx-title2"></h2><p class="ldx-body"></p></div><div class="ldx-hero-side"></div></div></div>');
           card.querySelector('h2').textContent = hero.title;
           card.querySelector('.ldx-body').textContent = hero.body;
           if (status === 'assigned' && delivery.offerExpiresAt) {
             ring = ui.countdown(delivery.offerExpiresAt, { onExpire: function () { setTimeout(refresh, 800); } });
             card.querySelector('.ldx-hero-side').appendChild(ring.el);
-          } else if (status !== 'none') {
-            card.querySelector('.ldx-hero-side').innerHTML = ui.statusBadge(status === 'pending_assignment' ? 'none' : status);
+          } else {
+            card.querySelector('.ldx-hero-side').remove();
           }
           if (status !== 'failed' && status !== 'cancelled') {
             var n = STEP_OF[status] || 0;
