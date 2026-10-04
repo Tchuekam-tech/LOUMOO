@@ -109,6 +109,160 @@ class DeliveryApiClient {
     return this._request(`/${encodeURIComponent(id)}/code`);
   }
 
+  // ------------------------------------------------------------ write helpers
+
+  _post(endpoint, body) {
+    return this._request(endpoint, { method: 'POST', body: JSON.stringify(body || {}) });
+  }
+
+  /** `/api/v1` on the same origin as the delivery API (for the few non-delivery reads). */
+  _apiRoot() {
+    return this.baseUrl.replace(/\/deliveries\/?$/, '');
+  }
+
+  _qs(params) {
+    const pairs = Object.keys(params || {})
+      .filter((k) => params[k] !== undefined && params[k] !== null && params[k] !== '')
+      .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`);
+    return pairs.length ? `?${pairs.join('&')}` : '';
+  }
+
+  // ------------------------------------------------------- seller / admin (v1.2)
+
+  /**
+   * The seller's dispatch board: home-delivery orders that need or have a delivery.
+   * @param {{view?: 'active'|'completed', limit?: number}} opts
+   * @returns {Promise<{items: Array<{order: object, delivery: object|null}>}>}
+   */
+  async dispatchBoard({ view = 'active', limit } = {}) {
+    return this._request(`/dispatch${this._qs({ view, limit })}`);
+  }
+
+  /** Create the delivery for an order. @returns {Promise<{delivery: object}>} */
+  async create(orderId, { pickup, dropoffLocation, dropoffAddress } = {}) {
+    const body = { orderId };
+    if (pickup) body.pickup = pickup;
+    if (dropoffLocation) body.dropoffLocation = dropoffLocation;
+    if (dropoffAddress) body.dropoffAddress = dropoffAddress;
+    return this._post('/', body);
+  }
+
+  /**
+   * Active riders, ranked (responsive, then least busy). With a deliveryId each
+   * rider also carries `declined` for THAT delivery.
+   * @returns {Promise<{drivers: Array<{id, name, phone, openDeliveries, declined?}>}>}
+   */
+  async listDrivers({ deliveryId } = {}) {
+    return this._request(`/drivers${this._qs({ deliveryId })}`);
+  }
+
+  /** Offer the delivery to a chosen rider. @returns {Promise<{delivery: object}>} */
+  async assign(id, driverId) {
+    return this._post(`/${encodeURIComponent(id)}/assign`, { driverId });
+  }
+
+  /** Let the server pick the rider. @returns {Promise<{delivery: object}>} */
+  async autoAssign(id) {
+    return this._post(`/${encodeURIComponent(id)}/auto-assign`);
+  }
+
+  /** Cancel before pickup. @returns {Promise<{delivery: object}>} */
+  async cancel(id, reason) {
+    return this._post(`/${encodeURIComponent(id)}/cancel`, reason ? { reason } : {});
+  }
+
+  // ------------------------------------------------------------------- rider
+
+  /** The signed-in rider's profile and open jobs; 403 for a non-rider. */
+  async riderOverview() {
+    return this._request('/driver/me');
+  }
+
+  async accept(id) {
+    return this._post(`/${encodeURIComponent(id)}/accept`);
+  }
+
+  /** Decline an offer, or release an accepted job. @returns {Promise<{delivery: {id, status}}>} */
+  async decline(id) {
+    return this._post(`/${encodeURIComponent(id)}/decline`);
+  }
+
+  /** 'picked_up' | 'arrived' | 'failed' (failed needs a note). */
+  async setStatus(id, status, note) {
+    return this._post(`/${encodeURIComponent(id)}/status`, note ? { status, note } : { status });
+  }
+
+  /**
+   * One GPS point. A 200 can still be `{accepted: false, reason}` (throttled,
+   * implausible_jump, busy), which is not an error.
+   */
+  async postLocation(id, { lat, lng, speedKmh, heading, accuracyM }) {
+    const body = { lat, lng };
+    if (speedKmh != null && isFinite(speedKmh)) body.speedKmh = Math.max(0, speedKmh);
+    if (heading != null && isFinite(heading)) body.heading = ((heading % 360) + 360) % 360;
+    if (accuracyM != null && isFinite(accuracyM)) body.accuracyM = accuracyM;
+    return this._post(`/${encodeURIComponent(id)}/location`, body);
+  }
+
+  /** Verify the buyer's 4-digit code and complete the delivery. */
+  async complete(id, code) {
+    return this._post(`/${encodeURIComponent(id)}/complete`, { code: String(code) });
+  }
+
+  // ------------------------------------------------------------------- admin
+
+  /** Every rider with status and workload. @param {'all'|'active'|'suspended'} status */
+  async riderRoster(status = 'all') {
+    return this._request(`/drivers${this._qs({ status })}`);
+  }
+
+  /** Register, edit, suspend or reactivate a rider. */
+  async registerDriver(profileId, { name, phone, status } = {}) {
+    const body = { name, phone };
+    if (status) body.status = status;
+    return this._post(`/drivers/${encodeURIComponent(profileId)}`, body);
+  }
+
+  /**
+   * Admin user directory search (SuperAdmin API), to find the account to register
+   * as a rider. @returns {Promise<Array<{id, name, email, phone, role, city}>>}
+   */
+  async searchUsers(query, { limit = 20 } = {}) {
+    const token = await this._resolveToken();
+    const res = await fetch(`${this._apiRoot()}/admin/users${this._qs({ search: query, limit })}`, { headers: this._headers(token) });
+    const body = (await res.json().catch(() => null)) || {};
+    if (!res.ok) {
+      const err = new Error(body.error?.message || `Request failed with status ${res.status}`);
+      err.code = body.error?.code || 'API_ERROR';
+      err.status = res.status;
+      throw err;
+    }
+    const users = (body.data && body.data.users) || [];
+    return users.map((u) => ({
+      id: u.id,
+      name: u.full_name || u.display_name || u.name || null,
+      email: u.email || null,
+      phone: u.phone_number || u.phone || null,
+      role: u.primary_role || u.role || null,
+      city: u.city || null
+    }));
+  }
+
+  /** The signed-in account's id (for the "not a rider yet" screen), or null. */
+  async whoAmI() {
+    try {
+      const token = await this._resolveToken();
+      const res = await fetch(`${this._apiRoot()}/me/state`, { headers: this._headers(token) });
+      if (!res.ok) return null;
+      const body = (await res.json().catch(() => null)) || {};
+      const d = body.data || body;
+      const p = d.profile || d.user || d.account || d;
+      return (p && (p.id || p.profileId || p.userId)) || null;
+    } catch (e) {
+      return null;
+    }
+  }
+
   // ----------------------------------------------------------------- live feed
 
   /** Parse one SSE frame ("event:"/"data:"/":" lines) into {type,data}. */
