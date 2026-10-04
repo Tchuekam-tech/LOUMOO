@@ -316,6 +316,7 @@
       // states
       '.ldx-empty{display:flex;flex-direction:column;align-items:center;text-align:center;padding:56px 24px 40px}',
       '.ldx-empty-ico{width:72px;height:72px;border-radius:22px;display:flex;align-items:center;justify-content:center;background:var(--ldx-accent-soft);color:var(--ldx-accent);margin-bottom:18px}',
+      '.ldx-empty-ico.is-muted{background:var(--ldx-fill);color:var(--ldx-text-2)}',
       '.ldx-empty h3{margin:0;font:700 20px/1.25 var(--ldx-font-h);letter-spacing:-.015em}',
       '.ldx-empty p{margin:8px 0 0;max-width:320px;font:400 15px/1.45 var(--ldx-font);color:var(--ldx-text-2)}',
       '.ldx-empty .ldx-btn{margin-top:22px}',
@@ -768,7 +769,7 @@
   }
 
   function emptyState(o) {
-    var el = h('<div class="ldx-empty ldx-fade-in"><div class="ldx-empty-ico">' + icon(o.icon || 'inbox', 32) + '</div><h3></h3><p></p></div>');
+    var el = h('<div class="ldx-empty ldx-fade-in"><div class="ldx-empty-ico' + (o.tone === 'muted' ? ' is-muted' : '') + '">' + icon(o.icon || 'inbox', 32) + '</div><h3></h3><p></p></div>');
     el.querySelector('h3').textContent = o.title || '';
     var p = el.querySelector('p');
     if (o.body) p.textContent = o.body; else p.remove();
@@ -776,7 +777,7 @@
     return el;
   }
   function errorState(message, onRetry) {
-    return emptyState({ icon: 'alert', title: 'Couldn’t load this', body: message || 'Check your connection and try again.', actionLabel: onRetry ? 'Try again' : null, onAction: onRetry });
+    return emptyState({ icon: 'alert', tone: 'muted', title: 'Couldn’t load this', body: message || 'Check your connection and try again.', actionLabel: onRetry ? 'Try again' : null, onAction: onRetry });
   }
   function skeletonList(n) {
     var rows = '';

@@ -51,7 +51,7 @@
           }).catch(function (err) {
             if (!page.alive) return;
             body.innerHTML = '';
-            if (err && err.status === 403) body.appendChild(ui.emptyState({ icon: 'lock', title: 'Administrators only', body: 'Sign in with an administrator account to manage riders.' }));
+            if (err && err.status === 403) body.appendChild(ui.emptyState({ icon: 'lock', tone: 'muted', title: 'Administrators only', body: 'Sign in with an administrator account to manage riders.' }));
             else body.appendChild(ui.errorState(ui.errorMessage(err), function () { body.innerHTML = ''; body.appendChild(ui.skeletonList(5)); load(); }));
           });
         }
@@ -217,7 +217,7 @@
           }).catch(function (err) {
             if (mine !== seq || !page.alive) return;
             results.innerHTML = '';
-            results.appendChild(ui.emptyState({ icon: 'lock', title: err && err.status === 403 ? 'Account search needs admin access' : 'Search unavailable', body: err && err.status === 403 ? 'Paste the rider’s account ID below instead.' : ui.errorMessage(err) }));
+            results.appendChild(ui.emptyState({ icon: 'lock', tone: 'muted', title: err && err.status === 403 ? 'Account search needs admin access' : 'Search unavailable', body: err && err.status === 403 ? 'Paste the rider’s account ID below instead.' : ui.errorMessage(err) }));
           });
         }
 

@@ -421,7 +421,7 @@
           page.setTitle('Not yours anymore');
           page.content.innerHTML = '';
           page.footer.innerHTML = '';
-          page.content.appendChild(ui.emptyState({ icon: 'alert', title: 'This job is no longer yours', body: 'The seller cancelled it, offered it to someone else, or the offer ran out of time.', actionLabel: 'Back to deliveries', actionKind: 'filled', onAction: function () { nav.pop(); } }));
+          page.content.appendChild(ui.emptyState({ icon: 'alert', tone: 'muted', title: 'This job is no longer yours', body: 'The seller cancelled it, offered it to someone else, or the offer ran out of time.', actionLabel: 'Back to deliveries', actionKind: 'filled', onAction: function () { nav.pop(); } }));
         }
 
         var gpsChipHost = null;
