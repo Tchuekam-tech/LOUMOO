@@ -562,6 +562,37 @@ async function run() {
       assert.strictEqual(moved.offerExpiresAt, new Date(w.clock.now() + OFFER_TTL_MS).toISOString(), 'with a fresh window');
     }
 
+    {
+      // Authorisation comes before the platform-wide sweep. Releasing lapsed
+      // offers is up to two hundred swaps, each with a timeline row and two
+      // notifications, so a caller who may not touch this delivery must not be
+      // able to set it going — least of all by naming an id that does not exist.
+      // The bystander below is a dead offer nothing has read: only a sweep of
+      // the whole platform would move it.
+      const w = makeWorld();
+      await registerRiders(w);
+      const target = await newDelivery(w, { assignTo: 'rider_1' });
+      const bystander = await newDelivery(w, { assignTo: 'rider_2' });
+      w.clock.advance(OFFER_TTL_MS + MIN);
+
+      for (const [what, id, caller, expected] of [
+        ['an id that does not exist, from a customer who is nobody here', 'dlv_does_not_exist', { userId: 'nobody_1', userRole: 'customer' }, 'NOT_FOUND'],
+        ['a delivery belonging to another seller', target.id, OTHER_SELLER, 'NOT_FOUND'],
+        ['their own order, asked as the buyer', target.id, BUYER, 'PERMISSION_DENIED']
+      ]) {
+        assert.strictEqual(await code(w.service.autoAssignDriver(id, caller)), expected, `refused: ${what}`);
+        assert.strictEqual((await w.repo.findById(bystander.id)).status, 'assigned',
+          `and ${what} did not make the server sweep the platform`);
+      }
+
+      // The seller may, and then the sweep runs as before: the dead offer is
+      // released first and the rider who went silent is not offered it again.
+      const moved = await w.service.autoAssignDriver(target.id, SELLER);
+      assert.strictEqual(moved.driver.id, 'rider_2', 'the seller still gets a re-offer after the release');
+      assert.strictEqual((await w.repo.findById(bystander.id)).status, 'pending_assignment',
+        'and an authorised call does sweep the bystander');
+    }
+
     // ------------------------------------------ auto-assign: states it works from
     {
       const w = makeWorld();
