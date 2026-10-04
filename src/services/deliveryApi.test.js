@@ -75,6 +75,48 @@ async function run() {
   assert.strictEqual(events.ended, 'complete', 'a terminal status ended the subscription');
   ok('subscribe falls back to polling on a 501 stream and ends on a terminal status');
 
+  // -- dispatch / rider / admin methods (v1.2): exact method, path and body -----
+  const sent = [];
+  global.fetch = async (url, opts = {}) => {
+    sent.push({ url: String(url), method: opts.method || 'GET', body: opts.body ? JSON.parse(opts.body) : undefined });
+    return { ok: true, status: 200, json: async () => ({ success: true, data: { ok: true, users: [{ id: 'u1', full_name: 'Alain Mbarga', phone_number: '237600000001', email: 'a@x.cm', primary_role: 'customer', city: 'Douala' }] } }) };
+  };
+  const last = () => sent[sent.length - 1];
+  const expect = async (label, call, method, pathEnd, body) => {
+    await call();
+    const s = last();
+    assert.strictEqual(s.method, method, `${label}: method`);
+    assert.ok(s.url.endsWith(pathEnd), `${label}: ${s.url} ends with ${pathEnd}`);
+    assert.deepStrictEqual(s.body, body, `${label}: body`);
+  };
+  await expect('dispatchBoard', () => deliveryApi.dispatchBoard(), 'GET', '/api/v1/deliveries/dispatch?view=active', undefined);
+  await expect('dispatchBoard completed', () => deliveryApi.dispatchBoard({ view: 'completed', limit: 20 }), 'GET', '/dispatch?view=completed&limit=20', undefined);
+  await expect('create', () => deliveryApi.create('ord_1', { pickup: { label: 'Shop' } }), 'POST', '/api/v1/deliveries/', { orderId: 'ord_1', pickup: { label: 'Shop' } });
+  await expect('listDrivers', () => deliveryApi.listDrivers(), 'GET', '/api/v1/deliveries/drivers', undefined);
+  await expect('listDrivers for a delivery', () => deliveryApi.listDrivers({ deliveryId: 'dlv_1' }), 'GET', '/drivers?deliveryId=dlv_1', undefined);
+  await expect('assign', () => deliveryApi.assign('dlv_1', 'rider_1'), 'POST', '/dlv_1/assign', { driverId: 'rider_1' });
+  await expect('autoAssign', () => deliveryApi.autoAssign('dlv_1'), 'POST', '/dlv_1/auto-assign', {});
+  await expect('cancel', () => deliveryApi.cancel('dlv_1', 'Out of stock'), 'POST', '/dlv_1/cancel', { reason: 'Out of stock' });
+  await expect('cancel without reason', () => deliveryApi.cancel('dlv_1'), 'POST', '/dlv_1/cancel', {});
+  await expect('riderOverview', () => deliveryApi.riderOverview(), 'GET', '/api/v1/deliveries/driver/me', undefined);
+  await expect('accept', () => deliveryApi.accept('dlv_1'), 'POST', '/dlv_1/accept', {});
+  await expect('decline', () => deliveryApi.decline('dlv_1'), 'POST', '/dlv_1/decline', {});
+  await expect('setStatus', () => deliveryApi.setStatus('dlv_1', 'picked_up'), 'POST', '/dlv_1/status', { status: 'picked_up' });
+  await expect('setStatus failed', () => deliveryApi.setStatus('dlv_1', 'failed', 'Customer absent'), 'POST', '/dlv_1/status', { status: 'failed', note: 'Customer absent' });
+  await expect('postLocation', () => deliveryApi.postLocation('dlv_1', { lat: 4.05, lng: 9.7, speedKmh: -3, heading: 370, accuracyM: 12 }), 'POST', '/dlv_1/location',
+    { lat: 4.05, lng: 9.7, speedKmh: 0, heading: 10, accuracyM: 12 });
+  await expect('postLocation minimal', () => deliveryApi.postLocation('dlv_1', { lat: 4.05, lng: 9.7, speedKmh: null, heading: NaN }), 'POST', '/dlv_1/location', { lat: 4.05, lng: 9.7 });
+  await expect('complete', () => deliveryApi.complete('dlv_1', 482), 'POST', '/dlv_1/complete', { code: '482' });
+  await expect('riderRoster', () => deliveryApi.riderRoster(), 'GET', '/drivers?status=all', undefined);
+  await expect('registerDriver', () => deliveryApi.registerDriver('u1', { name: 'Alain', phone: '+237600000001' }), 'POST', '/drivers/u1', { name: 'Alain', phone: '+237600000001' });
+  await expect('suspend', () => deliveryApi.registerDriver('u1', { name: 'Alain', phone: '+237600000001', status: 'suspended' }), 'POST', '/drivers/u1', { name: 'Alain', phone: '+237600000001', status: 'suspended' });
+  ok('every dispatch, rider and admin call sends the documented method, path and body');
+
+  const users = await deliveryApi.searchUsers('alain');
+  assert.ok(last().url.endsWith('/api/v1/admin/users?search=alain&limit=20'), 'searchUsers hits the admin directory, not the delivery API: ' + last().url);
+  assert.deepStrictEqual(users, [{ id: 'u1', name: 'Alain Mbarga', email: 'a@x.cm', phone: '237600000001', role: 'customer', city: 'Douala' }]);
+  ok('searchUsers calls the admin directory and normalises the rows');
+
   console.log('\nALL ' + passed + ' DELIVERY FRONTEND CLIENT CHECKS PASSED');
 }
 
