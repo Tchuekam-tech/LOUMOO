@@ -33,6 +33,19 @@
     return 'live';
   }
   function orderTitle(order) { return order.orderNumber ? 'Order ' + order.orderNumber : 'Order'; }
+  /** One short line for a board row, in the seller's terms. */
+  function rowStatus(status, d) {
+    var who = d && d.driver ? firstName(d.driver.name) : null;
+    switch (status) {
+      case 'assigned': return who ? 'Waiting for ' + who + ' to accept' : 'Waiting for the rider';
+      case 'accepted': return who ? who + ' is heading to you' : 'Rider heading to you';
+      case 'picked_up': return 'Out for delivery' + (who ? ' with ' + who : '');
+      case 'arrived': return (who || 'The rider') + ' is at the door';
+      case 'delivered': return 'Delivered' + (d && d.updatedAt ? ' at ' + UI().clockTime(d.updatedAt) : '') + (who ? ' by ' + who : '');
+      case 'failed': return 'Attempt failed' + (who ? ' · ' + who : '');
+      default: return 'Needs a rider';
+    }
+  }
   function riderName(d) { return (d && d.driver && d.driver.name) || 'the rider'; }
   function firstName(name) { return String(name || '').trim().split(/\s+/)[0] || name; }
 
@@ -88,10 +101,15 @@
         function load(manual) {
           return api.dispatchBoard({ view: 'active', limit: 100 }).then(function (res) {
             if (!page.alive) return;
+            var sig = JSON.stringify(res.items || []);
+            var changed = sig !== state.sig;
+            state.sig = sig;
             state.active = res.items || [];
             state.error = null;
             if (manual) ui.toast('Up to date', { tone: 'info', duration: 1400 });
-            draw();
+            // Redraw only when something changed: a background refresh must not
+            // rebuild the list under the seller's finger or steal keyboard focus.
+            if (changed) draw();
           }).catch(function (err) {
             if (!page.alive) return;
             state.error = err;
@@ -159,35 +177,33 @@
           return sec;
         }
 
+        // Mail-style row: what was ordered, where its delivery stands (in colour),
+        // then the order number, area and age.
         function row(item) {
           var o = item.order, d = item.delivery;
           var status = d ? d.status : 'none';
           if (status === 'cancelled') status = 'none';
           var info = ui.statusInfo(status);
-          var ico = status === 'delivered' ? 'checkCircle' : (status === 'failed' ? 'alert' : (d && ['accepted', 'picked_up', 'arrived'].indexOf(status) !== -1 ? 'scooter' : 'package'));
-          var subParts = [];
-          if (d && d.driver && status !== 'none' && status !== 'pending_assignment') subParts.push((status === 'assigned' ? 'Offered to ' : '') + firstName(d.driver.name));
-          if (o.area) subParts.push(o.area);
-          subParts.push(ui.relTime(status === 'delivered' && d ? d.updatedAt : o.placedAt));
+          var ico = status === 'delivered' ? 'checkCircle' : (status === 'failed' ? 'alert' : (['accepted', 'picked_up', 'arrived'].indexOf(status) !== -1 ? 'scooter' : 'package'));
+          var meta = [o.orderNumber, o.area, ui.relTime(status === 'delivered' && d ? d.updatedAt : o.placedAt)].filter(Boolean).join(' · ');
           var el = ui.h(
-            '<button class="ldx-row" style="--ldx-inset:68px">' +
+            '<button class="ldx-row" style="--ldx-inset:68px;align-items:center">' +
               '<span class="ldx-tile ldx-tone-' + info.tone + '">' + ui.icon(ico, 22) + '</span>' +
-              '<span class="ldx-row-main"><div class="ldx-row-title"></div><div class="ldx-row-sub"></div></span>' +
+              '<span class="ldx-row-main"><div class="ldx-row-title"></div><div class="ldx-row-status ldx-tone-' + info.tone + '"></div><div class="ldx-row-meta"></div></span>' +
               '<span class="ldx-row-end"></span>' +
             '</button>'
           );
-          el.querySelector('.ldx-row-title').textContent = orderTitle(o) + (o.title ? ' · ' + o.title : '');
-          el.querySelector('.ldx-row-sub').textContent = subParts.filter(Boolean).join(' · ');
+          el.querySelector('.ldx-row-title').textContent = o.title || orderTitle(o);
+          el.querySelector('.ldx-row-status').textContent = rowStatus(status, d);
+          el.querySelector('.ldx-row-meta').textContent = meta;
           var end = el.querySelector('.ldx-row-end');
           if (status === 'assigned' && d.offerExpiresAt) {
             var ring = ui.countdown(d.offerExpiresAt, { onExpire: function () { load(); } });
             timers.push(ring);
             end.appendChild(ring.el);
-          } else if (status !== 'none' && status !== 'pending_assignment') {
-            end.insertAdjacentHTML('beforeend', ui.statusBadge(status));
           }
           end.insertAdjacentHTML('beforeend', ui.icon('forward', 18));
-          el.setAttribute('aria-label', orderTitle(o) + ', ' + info.label);
+          el.setAttribute('aria-label', (o.title || orderTitle(o)) + ', ' + rowStatus(status, d) + ', ' + meta);
           el.addEventListener('click', function () { nav.push(orderView(nav, item)); });
           return el;
         }
@@ -273,7 +289,9 @@
             var n = STEP_OF[status] || 0;
             var steps = '<div class="ldx-steps" aria-hidden="true">';
             for (var i = 1; i <= 4; i++) steps += '<span class="ldx-step' + (i <= n ? (status === 'delivered' ? ' is-ok' : ' is-done') : '') + '"></span>';
-            steps += '</div><div class="ldx-step-labels"><span>Offered</span><span>Accepted</span><span>Picked up</span><span>Delivered</span></div>';
+            steps += '</div><div class="ldx-step-labels">' + ['Offered', 'Accepted', 'Picked up', 'Delivered'].map(function (l, k) {
+              return '<span' + (k + 1 === n ? ' class="is-on"' : '') + '>' + l + '</span>';
+            }).join('') + '</div>';
             card.insertAdjacentHTML('beforeend', steps);
           }
           page.content.appendChild(card);
@@ -490,7 +508,7 @@
           }
           shown.forEach(function (r) {
             var busy = r.openDeliveries || 0;
-            var load = busy === 0 ? 'Free now' : 'On ' + busy + (busy === 1 ? ' delivery' : ' deliveries');
+            var load = busy === 0 ? 'Free' : busy + ' active';
             var isCurrent = r.id === current;
             var el = ui.h(
               '<button class="ldx-row' + (r.declined ? ' is-dim' : '') + '" style="--ldx-inset:68px">' + ui.avatar(r.name, 40) +
@@ -499,12 +517,12 @@
               '</button>'
             );
             el.querySelector('.ldx-row-title').textContent = r.name;
-            el.querySelector('.ldx-row-sub').textContent = load;
+            el.querySelector('.ldx-row-sub').textContent = r.phone || '';
             var end = el.querySelector('.ldx-row-end');
             if (isCurrent) end.insertAdjacentHTML('beforeend', ui.badge('Offered', 'accent'));
             else if (r.declined) end.insertAdjacentHTML('beforeend', ui.badge('Passed', 'muted'));
-            else end.insertAdjacentHTML('beforeend', ui.badge(busy === 0 ? 'Free' : 'Busy', busy === 0 ? 'ok' : 'warn'));
-            el.setAttribute('aria-label', r.name + ', ' + load + (r.declined ? ', already passed on this order' : ''));
+            else end.insertAdjacentHTML('beforeend', ui.badge(load, busy === 0 ? 'ok' : 'warn'));
+            el.setAttribute('aria-label', r.name + ', ' + (busy === 0 ? 'free' : 'on ' + busy + (busy === 1 ? ' delivery' : ' deliveries')) + (r.declined ? ', already passed on this order' : ''));
             if (isCurrent) { el.classList.add('is-static'); el.disabled = true; }
             else el.addEventListener('click', function () { offer(r); });
             sec.group.appendChild(el);
