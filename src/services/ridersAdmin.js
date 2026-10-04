@@ -79,9 +79,12 @@
           shown.forEach(function (r) {
             var el = ui.h('<button class="ldx-row" style="--ldx-inset:68px">' + ui.avatar(r.name, 40) + '<span class="ldx-row-main"><div class="ldx-row-title"></div><div class="ldx-row-sub"></div></span><span class="ldx-row-end"></span></button>');
             el.querySelector('.ldx-row-title').textContent = r.name;
-            var work = r.openDeliveries ? (r.openDeliveries + (r.openDeliveries === 1 ? ' delivery' : ' deliveries')) : 'No deliveries';
+            // Active is the norm, so only a suspension gets a badge; that leaves
+            // room for the phone and the rider's current load on one line.
+            var work = r.openDeliveries ? (r.openDeliveries + (r.openDeliveries === 1 ? ' delivery' : ' deliveries')) : 'Free';
             el.querySelector('.ldx-row-sub').textContent = [r.phone, r.status === 'active' ? work : null].filter(Boolean).join(' · ');
-            el.querySelector('.ldx-row-end').innerHTML = (r.status === 'active' ? ui.badge('Active', 'ok') : ui.badge('Suspended', 'muted')) + ui.icon('forward', 18);
+            el.querySelector('.ldx-row-end').innerHTML = (r.status === 'active' ? '' : ui.badge('Suspended', 'muted')) + ui.icon('forward', 18);
+            el.setAttribute('aria-label', [r.name, r.status === 'active' ? work : 'suspended', r.phone].filter(Boolean).join(', '));
             if (r.status !== 'active') el.querySelector('.ldx-avatar').style.filter = 'grayscale(1)';
             el.addEventListener('click', function () { editSheet(r, load); });
             sec.group.appendChild(el);
