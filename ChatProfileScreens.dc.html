@@ -55,16 +55,16 @@
         <span style="width:18px;height:18px;border-radius:50%;background:var(--color-wa-green);color:#fff;display:flex;align-items:center;justify-content:center;font:800 10px/1 var(--font-heading);flex-shrink:0">2</span>
       </button>
 
-      <!-- Thread 2: TchueKAM AI Assistant -->
-      <button onClick="{{ on.threadAi }}" aria-label="Open conversation with TchueKAM AI" class="card-premium" style="display:flex;align-items:center;gap:14px;padding:14px 16px;text-align:left;cursor:pointer">
+      <!-- Thread 2: LOUMOO Combi Assistant -->
+      <button onClick="{{ on.threadAi }}" aria-label="Open conversation with LOUMOO Combi" class="card-premium" style="display:flex;align-items:center;gap:14px;padding:14px 16px;text-align:left;cursor:pointer">
         <div style="width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--color-accent),#003d8a);color:#fff;display:flex;align-items:center;justify-content:center;font:800 14px/1 var(--font-heading);flex-shrink:0">AI</div>
         <div style="flex:1;min-width:0">
           <div style="display:flex;justify-content:space-between;align-items:center">
-            <span style="font:800 14.5px/1.2 var(--font-heading);color:var(--color-text)">TchueKAM AI Shopping Assistant</span>
+            <span style="font:800 14.5px/1.2 var(--font-heading);color:var(--color-text)">LOUMOO Combi</span>
             <span style="font:500 11px/1 var(--font-body);color:var(--color-text-muted)">11:41</span>
           </div>
           <div style="font:400 12.5px/1.4 var(--font-body);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:4px">
-            Three options match your budget in Douala for M2 laptops…
+            Ask a question or find options for your budget and city.
           </div>
         </div>
       </button>
@@ -166,44 +166,25 @@
      AI SHOPPING ASSISTANT (is.threadAi)
      ══════════════════════════════════════════════════════════════════════ -->
 <sc-if value="{{ is.threadAi }}">
-<div style="padding-bottom:32px">
-  
-  <div class="page-head">
-    <button onClick="{{ back }}" aria-label="Go back" style="border:1px solid var(--color-divider);background:var(--color-surface);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--color-text)">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m15 18-6-6 6-6"/></svg>
-    </button>
-    <div>
-      <h4 style="margin:0;font-size:16px">TchueKAM AI Assistant</h4>
-      <div style="font:400 11.5px/1 var(--font-body);color:var(--color-success)">✓ Real-time catalog &amp; price intelligence</div>
-    </div>
-  </div>
 
-  <div style="padding:16px;max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px">
-    
-    <div class="card-premium">
-      <div style="display:gap;align-items:flex-start">
-        <div style="display:flex;gap:12px;align-items:flex-start">
-          <div style="width:36px;height:36px;border-radius:50%;background:var(--color-accent);color:#fff;display:flex;align-items:center;justify-content:center;font:800 12px/1 var(--font-heading);flex-shrink:0">AI</div>
-          <div style="flex:1">
-            <div style="font:700 13.5px/1.2 var(--font-heading);color:var(--color-text)">AI Shopping Recommendation</div>
-            <p style="font-size:13px;color:var(--color-text-secondary);margin:6px 0 12px;line-height:1.45">
-              Based on your interest in creator hardware and your Douala location, here is the best verified deal with escrow protection:
-            </p>
+<section class="search-panel" aria-label="LOUMOO Combi"><div class="search-actions"><button class="btn btn-secondary" onClick="{{ back }}">Back</button><h2>LOUMOO Combi</h2></div>
 
-            <div style="background:var(--color-neutral-100);border:1px solid var(--color-divider);border-radius:var(--radius-sm);padding:12px;display:flex;justify-content:space-between;align-items:center">
-              <div>
-                <div style="font:700 13px/1.2 var(--font-heading)">Apple MacBook Air 13” (M2)</div>
-                <div style="font:800 14px/1 var(--font-heading);color:var(--color-accent);margin-top:2px">XAF 745 000 · Orca Electronics</div>
-              </div>
-              <button onClick="{{ on.product }}" class="btn btn-primary" style="height:34px;padding:0 14px;font-size:11.5px">VIEW</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<p>Tell Combi what you need, your budget and your city. It can ask follow-up questions and search the public catalog.</p>
+<sc-if value="{{ combiVoiceActive }}"><button class="btn btn-secondary" onClick="{{ stopCombiVoice }}">End conversation</button></sc-if>
 
-  </div>
-</div>
+<sc-if value="{{ !combiHasMessages }}"><p>Try “Un ordinateur à moins de 300 000 XAF à Douala” or “Help me find a hotel in Kribi”.</p></sc-if>
+<div class="combi-transcript" role="log" aria-label="Conversation" aria-live="polite" aria-relevant="additions text"><sc-for list="{{ combiMessages }}" as="message"><div class="combi-message"><strong>{{ message.role }}</strong><p>{{ message.text }}</p></div></sc-for></div>
+<div class="search-actions"><label class="search-grow">Message Combi<input class="input" value="{{ combiInput }}" maxlength="1500" onInput="{{ setCombiInput }}" onKeyDown="{{ combiKey }}" placeholder="Ask a question or refine your search…" autocomplete="off"></label><button class="btn btn-primary" disabled="{{ combiBusy }}" onClick="{{ sendCombi }}">Send</button></div>
+<sc-if value="{{ combiBusy }}"><p role="status">Connecting to Combi…</p></sc-if><sc-if value="{{ combiError }}"><p role="alert" class="search-error">{{ combiError }}</p></sc-if><sc-if value="{{ combiVoiceError }}"><p role="alert" class="search-error">{{ combiVoiceError }}</p></sc-if>
+<sc-if value="{{ !isLoggedIn }}"><button class="btn btn-secondary" onClick="{{ on.signIn }}">Sign in to use Combi</button></sc-if><button class="btn btn-secondary" onClick="{{ on.search }}">Search by typing</button>
+<sc-if value="{{ combiHasCards }}"><h3>From the LOUMOO catalog</h3><p>Check the listing for current details before ordering.</p>
+
+<div class="search-cards"><sc-for list="{{ combiCards }}" as="result">
+<button class="search-card" onClick="{{ () => openSearchItem(result) }}" type="button">
+<sc-if value="{{ result.image }}"><img src="{{ result.image }}" alt="" loading="lazy" decoding="async"></sc-if>
+<span class="search-card-body"><small>{{ result.entityType }} · {{ result.verifiedLabel }}</small><strong>{{ result.title }}</strong><span>{{ result.storeLabel }}</span><b>{{ result.priceLabel }}</b><small>{{ result.ratingLabel }} {{ result.stockLabel }}</small></span>
+</button></sc-for></div>
+</sc-if></section>
 </sc-if>
 
 <!-- ══════════════════════════════════════════════════════════════════════════
@@ -576,7 +557,7 @@
     <div class="card-premium" style="display:flex;flex-direction:column;padding:4px 16px">
       <div style="font:700 11px/1 var(--font-heading);letter-spacing:.08em;color:var(--color-text-muted);text-transform:uppercase;padding:14px 0 6px">Support &amp; Assistance</div>
       <button onClick="{{ on.threadAi }}" style="border:none;border-bottom:1px solid var(--color-divider);background:transparent;text-align:left;padding:12px 0;font:600 13px/1 var(--font-body);color:var(--color-text);display:flex;justify-content:space-between;cursor:pointer">
-        <span>Ask TchueKAM AI Support</span>
+        <span>Ask LOUMOO Combi</span>
         <span style="color:var(--color-text-muted)">→</span>
       </button>
       <button onClick="{{ on.chat }}" style="border:none;background:transparent;text-align:left;padding:12px 0;font:600 13px/1 var(--font-body);color:var(--color-text);display:flex;justify-content:space-between;cursor:pointer">

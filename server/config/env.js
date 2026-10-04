@@ -94,6 +94,10 @@ const envSchema = z.object({
 
   // ElevenLabs
   ELEVENLABS_API_KEY: z.string().optional(),
+  ELEVENLABS_AGENT_ID: z.string().optional(),
+  SEARCH_ENABLED: z.enum(['true', 'false']).default('false'),
+  OPENAI_API_KEY: z.string().optional(),
+  SEARCH_AI_MODEL: z.string().optional(),
 
   // PostHog
   POSTHOG_API_KEY: z.string().optional(),
@@ -224,7 +228,8 @@ const config = {
     model: env.AISSTREAM_MODEL || 'gpt-4o-mini'
   },
   google: { appPassword: env.GOOGLE_APP_PASSWORD || '' },
-  elevenlabs: { apiKey: env.ELEVENLABS_API_KEY || '' },
+  elevenlabs: { apiKey: env.ELEVENLABS_API_KEY || '', agentId: env.ELEVENLABS_AGENT_ID || '' },
+  search: { enabled: env.SEARCH_ENABLED === 'true', aiKey: env.OPENAI_API_KEY || '', aiModel: env.SEARCH_AI_MODEL || '' },
 
   posthog: {
     apiKey: env.POSTHOG_API_KEY || '',

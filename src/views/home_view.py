@@ -4,6 +4,8 @@ LOUMOO MASTER HOME MARKETPLACE HUB (is.home)
 World-class mobile-first discovery and infinite commerce hub combining Apple spatial precision with Insta360 visual storytelling.
 """
 
+from .search_shared import get_search_suggestions
+
 def get_home_view():
     return """
 <!-- ══════════════════════════════════════════════════════════════════════════
@@ -85,10 +87,11 @@ def get_home_view():
 
       <!-- 3. [Search input + search icon] (Dominant Center Element) -->
       <div class="lsb-search-wrap">
-        <input type="search" class="lsb-search-input" value="{{ searchQuery }}" onInput="{{ handleSearchInput }}" onKeyDown="{{ handleHubSearchKey }}" placeholder="Search anything..." aria-label="Search products, stores, services" enterkeyhint="search" autocomplete="off">
+        <input type="search" class="lsb-search-input" value="{{ searchQuery }}" onInput="{{ handleSearchInput }}" onKeyDown="{{ handleHubSearchKey }}" placeholder="Search anything..." aria-label="Search products, stores, services" enterkeyhint="search" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="{{ searchExpanded }}" aria-controls="search-suggestions" aria-activedescendant="{{ searchActiveOption }}" onFocus="{{ searchFocus }}" onBlur="{{ searchBlur }}" onCompositionStart="{{ searchCompositionStart }}" onCompositionEnd="{{ searchCompositionEnd }}" maxlength="200">
         <button onClick="{{ submitSearch }}" class="lsb-search-icon" aria-label="Search" title="Search">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg>
         </button>
+""" + get_search_suggestions() + """
       </div>
 
       <!-- 4. [Microphone] Button -->

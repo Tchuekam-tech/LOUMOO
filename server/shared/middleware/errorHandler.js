@@ -23,25 +23,27 @@ const EXPECTED_5XX_CODES = new Set([
 
 function errorHandler(err, req, res, next) {
   const requestId = req.requestId || 'req_unknown';
+  const rawPath = req.originalUrl || req.path || '';
+  const routePath = /^\/api\/v1\/search(?:[/?]|$)/.test(rawPath) ? rawPath.split('?')[0] : rawPath;
 
   // 1. Operational Domain Errors (AppError instances)
   if (err instanceof AppError) {
     if (err.statusCode >= 500 && !EXPECTED_5XX_CODES.has(err.code)) {
       logger.error(`[AppError ${err.statusCode}] ${err.message}`, err, {
         requestId,
-        path: req.originalUrl,
+        path: routePath,
         method: req.method,
         code: err.code
       });
       if (Sentry && Sentry.captureException) {
         Sentry.captureException(err, {
-          tags: { requestId, route: req.originalUrl, code: err.code }
+          tags: { requestId, route: routePath, code: err.code }
         });
       }
     } else {
       logger.warn(`[ClientError ${err.statusCode}] ${err.message}`, {
         requestId,
-        path: req.originalUrl,
+        path: routePath,
         method: req.method,
         code: err.code
       });
@@ -63,7 +65,7 @@ function errorHandler(err, req, res, next) {
 
   // 2. Syntax / JSON Parse Errors from Express Body Parser
   if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
-    logger.warn('[JSONParseError] Malformed request JSON', { requestId, path: req.originalUrl });
+    logger.warn('[JSONParseError] Malformed request JSON', { requestId, path: routePath });
     return res.status(400).json({
       success: false,
       error: {
@@ -81,7 +83,7 @@ function errorHandler(err, req, res, next) {
   if (err && (err.status === 413 || err.type === 'entity.too.large' || err.type === 'parameters.too.many')) {
     logger.warn('[RequestLimit] Request body exceeded the configured limit', {
       requestId,
-      path: req.originalUrl,
+      path: routePath,
       method: req.method
     });
     return res.status(413).json({
@@ -98,14 +100,14 @@ function errorHandler(err, req, res, next) {
   // 3. Unexpected Server Errors (500)
   logger.error('[UnhandledError] Unexpected runtime exception', err, {
     requestId,
-    path: req.originalUrl,
+    path: routePath,
     method: req.method
   });
 
   if (Sentry && Sentry.captureException) {
     Sentry.captureException(err, {
-      tags: { requestId, route: req.originalUrl, unhandled: true },
-      extra: { path: req.originalUrl, method: req.method }
+      tags: { requestId, route: routePath, unhandled: true },
+      extra: { path: routePath, method: req.method }
     });
   }
 

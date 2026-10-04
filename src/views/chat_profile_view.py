@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 LOUMOO MESSAGING, PROFILE & SYSTEM VIEWS
-WhatsApp messaging engine, voice note waveform player, TchueKAM AI assistant, notifications, upgraded user profile with onboarding entry point, saved items, settings, and skeleton states with Lucide SVG icons.
+WhatsApp messaging engine, voice note waveform player, LOUMOO Combi assistant, notifications, upgraded user profile with onboarding entry point, saved items, settings, and skeleton states with Lucide SVG icons.
 """
+
+from .search_shared import get_combi_view
 
 def get_chat_and_profile_view():
     return """
@@ -53,16 +55,16 @@ def get_chat_and_profile_view():
         <span style="width:18px;height:18px;border-radius:50%;background:var(--color-wa-green);color:#fff;display:flex;align-items:center;justify-content:center;font:800 10px/1 var(--font-heading);flex-shrink:0">2</span>
       </button>
 
-      <!-- Thread 2: TchueKAM AI Assistant -->
-      <button onClick="{{ on.threadAi }}" aria-label="Open conversation with TchueKAM AI" class="card-premium" style="display:flex;align-items:center;gap:14px;padding:14px 16px;text-align:left;cursor:pointer">
+      <!-- Thread 2: LOUMOO Combi Assistant -->
+      <button onClick="{{ on.threadAi }}" aria-label="Open conversation with LOUMOO Combi" class="card-premium" style="display:flex;align-items:center;gap:14px;padding:14px 16px;text-align:left;cursor:pointer">
         <div style="width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--color-accent),#003d8a);color:#fff;display:flex;align-items:center;justify-content:center;font:800 14px/1 var(--font-heading);flex-shrink:0">AI</div>
         <div style="flex:1;min-width:0">
           <div style="display:flex;justify-content:space-between;align-items:center">
-            <span style="font:800 14.5px/1.2 var(--font-heading);color:var(--color-text)">TchueKAM AI Shopping Assistant</span>
+            <span style="font:800 14.5px/1.2 var(--font-heading);color:var(--color-text)">LOUMOO Combi</span>
             <span style="font:500 11px/1 var(--font-body);color:var(--color-text-muted)">11:41</span>
           </div>
           <div style="font:400 12.5px/1.4 var(--font-body);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:4px">
-            Three options match your budget in Douala for M2 laptops…
+            Ask a question or find options for your budget and city.
           </div>
         </div>
       </button>
@@ -164,44 +166,7 @@ def get_chat_and_profile_view():
      AI SHOPPING ASSISTANT (is.threadAi)
      ══════════════════════════════════════════════════════════════════════ -->
 <sc-if value="{{ is.threadAi }}">
-<div style="padding-bottom:32px">
-  
-  <div class="page-head">
-    <button onClick="{{ back }}" aria-label="Go back" style="border:1px solid var(--color-divider);background:var(--color-surface);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--color-text)">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m15 18-6-6 6-6"/></svg>
-    </button>
-    <div>
-      <h4 style="margin:0;font-size:16px">TchueKAM AI Assistant</h4>
-      <div style="font:400 11.5px/1 var(--font-body);color:var(--color-success)">✓ Real-time catalog &amp; price intelligence</div>
-    </div>
-  </div>
-
-  <div style="padding:16px;max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px">
-    
-    <div class="card-premium">
-      <div style="display:gap;align-items:flex-start">
-        <div style="display:flex;gap:12px;align-items:flex-start">
-          <div style="width:36px;height:36px;border-radius:50%;background:var(--color-accent);color:#fff;display:flex;align-items:center;justify-content:center;font:800 12px/1 var(--font-heading);flex-shrink:0">AI</div>
-          <div style="flex:1">
-            <div style="font:700 13.5px/1.2 var(--font-heading);color:var(--color-text)">AI Shopping Recommendation</div>
-            <p style="font-size:13px;color:var(--color-text-secondary);margin:6px 0 12px;line-height:1.45">
-              Based on your interest in creator hardware and your Douala location, here is the best verified deal with escrow protection:
-            </p>
-
-            <div style="background:var(--color-neutral-100);border:1px solid var(--color-divider);border-radius:var(--radius-sm);padding:12px;display:flex;justify-content:space-between;align-items:center">
-              <div>
-                <div style="font:700 13px/1.2 var(--font-heading)">Apple MacBook Air 13” (M2)</div>
-                <div style="font:800 14px/1 var(--font-heading);color:var(--color-accent);margin-top:2px">XAF 745 000 · Orca Electronics</div>
-              </div>
-              <button onClick="{{ on.product }}" class="btn btn-primary" style="height:34px;padding:0 14px;font-size:11.5px">VIEW</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
+""" + get_combi_view() + """
 </sc-if>
 
 <!-- ══════════════════════════════════════════════════════════════════════════
@@ -574,7 +539,7 @@ def get_chat_and_profile_view():
     <div class="card-premium" style="display:flex;flex-direction:column;padding:4px 16px">
       <div style="font:700 11px/1 var(--font-heading);letter-spacing:.08em;color:var(--color-text-muted);text-transform:uppercase;padding:14px 0 6px">Support &amp; Assistance</div>
       <button onClick="{{ on.threadAi }}" style="border:none;border-bottom:1px solid var(--color-divider);background:transparent;text-align:left;padding:12px 0;font:600 13px/1 var(--font-body);color:var(--color-text);display:flex;justify-content:space-between;cursor:pointer">
-        <span>Ask TchueKAM AI Support</span>
+        <span>Ask LOUMOO Combi</span>
         <span style="color:var(--color-text-muted)">→</span>
       </button>
       <button onClick="{{ on.chat }}" style="border:none;background:transparent;text-align:left;padding:12px 0;font:600 13px/1 var(--font-body);color:var(--color-text);display:flex;justify-content:space-between;cursor:pointer">

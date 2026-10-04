@@ -11,6 +11,7 @@ seller sees in their catalogue is literally what a buyer sees in the feed.
 """
 
 from src.views.publishing_view import publication_card
+from .search_shared import get_search_suggestions
 
 
 def get_merchant_view():
@@ -99,7 +100,8 @@ _TEMPLATE = """
         <!-- Search Input -->
         <div class="filter-grow" style="position:relative;display:flex;align-items:center">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position:absolute;left:14px;color:var(--color-text-muted)"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg>
-          <input type="text" class="input" placeholder="Search stores, brands or locations…" value="{{ storeSearchQuery }}" onInput="{{ updateStoreSearch }}" onChange="{{ updateStoreSearch }}" style="padding-left:42px;padding-right:36px;height:44px;font-size:13.5px">
+          <input type="text" class="input" placeholder="Search stores, brands or locations…" value="{{ searchQuery }}" onInput="{{ handleStoreGlobalSearch }}" onKeyDown="{{ handleSearchKey }}" style="padding-left:42px;padding-right:36px;height:44px;font-size:13.5px" role="combobox" aria-autocomplete="list" aria-expanded="{{ searchExpanded }}" aria-controls="search-suggestions" aria-activedescendant="{{ searchActiveOption }}" onFocus="{{ searchFocus }}" onBlur="{{ searchBlur }}" onCompositionStart="{{ searchCompositionStart }}" onCompositionEnd="{{ searchCompositionEnd }}" maxlength="200">
+""" + get_search_suggestions() + """
           <sc-if value="{{ storeSearchQuery }}">
             <button onClick="{{ clearStoreSearch }}" aria-label="Clear search" style="position:absolute;right:8px;background:var(--color-neutral-200);border:none;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--color-text-secondary)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
           </sc-if>

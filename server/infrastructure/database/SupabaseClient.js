@@ -84,6 +84,7 @@ function nativeFetch(url, options = {}) {
       method: options.method || 'GET',
       headers,
       agent,
+      signal: options.signal,
       timeout: 45000
     }, (res) => {
       const chunks = [];
