@@ -699,7 +699,7 @@
     }
     el.setCount = function (v, n) {
       var x = buttons.find(function (y) { return y.opt.value === v; });
-      if (x) x.b.querySelector('.ldx-seg-n').textContent = n == null ? '' : String(n);
+      if (x) x.b.querySelector('.ldx-seg-n').textContent = n ? String(n) : ''; // no "0": an empty tab says nothing
     };
     el.set = set;
     set(value);
