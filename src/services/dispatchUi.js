@@ -115,7 +115,7 @@
   function clockTime(iso) {
     var t = Date.parse(iso);
     if (!isFinite(t)) return '';
-    try { return new Date(t).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; }
+    try { return new Date(t).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' }); } catch (e) { return ''; }
   }
   function mmss(ms) {
     var s = Math.max(0, Math.ceil(ms / 1000));
