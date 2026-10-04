@@ -445,13 +445,17 @@ class OrderRepository {
    * WITHOUT it maps to HOME_DELIVERY (see _mapRowToOrder); an SQL filter on that
    * JSON key would silently drop those rows. So rows are filtered after mapping,
    * from an over-fetch of twice the limit; `homeDeliveryOnly` defaults to true.
+   * `excludePaymentStatuses` is applied the same way, BEFORE the limit, so that a
+   * limit of N never returns fewer than N rows just because some were excluded.
    * @returns {Promise<Order[]>}
    */
-  async findOrdersBySeller(sellerId, { statuses = [], limit = 50, homeDeliveryOnly = true } = {}) {
+  async findOrdersBySeller(sellerId, { statuses = [], limit = 50, homeDeliveryOnly = true, excludePaymentStatuses = [] } = {}) {
     const wanted = Array.isArray(statuses) ? statuses.filter(Boolean) : [];
+    const excluded = Array.isArray(excludePaymentStatuses) ? excludePaymentStatuses : [];
     const cap = Math.max(1, Math.min(Number(limit) || 50, 100));
     const keep = (o) => (!homeDeliveryOnly || o.deliveryMethod === DELIVERY_METHOD.HOME_DELIVERY)
-      && (!wanted.length || wanted.includes(o.fulfillmentStatus));
+      && (!wanted.length || wanted.includes(o.fulfillmentStatus))
+      && !excluded.includes(o.paymentStatus);
 
     if (this.db) {
       try {
@@ -462,7 +466,16 @@ class OrderRepository {
         if (error) {
           handleDatabaseFailure(error, 'OrderRepository.findOrdersBySeller');
         } else {
-          return (data || []).map((r) => this._mapRowToOrder(r)).filter(keep).slice(0, cap);
+          // Mapped row by row: one malformed order must not blank the whole board.
+          const mapped = [];
+          for (const r of data || []) {
+            try {
+              mapped.push(this._mapRowToOrder(r));
+            } catch (err) {
+              logger.warn(`[OrderRepository] Skipping unreadable order ${r && r.id} on the dispatch board: ${err.message}`);
+            }
+          }
+          return mapped.filter(keep).slice(0, cap);
         }
       } catch (err) {
         handleDatabaseFailure(err, 'OrderRepository.findOrdersBySeller');
