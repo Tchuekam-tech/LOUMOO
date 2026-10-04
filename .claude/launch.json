@@ -20,6 +20,20 @@
         "PORT": "8099"
       },
       "port": 8099
+    },
+    {
+      "name": "dispatch-ui-harness",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5177",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "C:/Users/Rostand/Downloads/LOUMOO APP.worktrees/delivery-dispatch-ui"
+      ],
+      "port": 5177
     }
   ]
 }
