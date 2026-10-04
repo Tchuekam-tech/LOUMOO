@@ -167,6 +167,10 @@
       ':where(.ldx-root) button{font:inherit;color:inherit}',
       ':where(.ldx-root) a{color:inherit}',
       '.ldx-root :focus-visible{outline:3px solid var(--ldx-accent);outline:3px solid color-mix(in srgb,var(--ldx-accent) 55%,transparent);outline-offset:2px;border-radius:12px}',
+      // Text fields show focus the native way (caret, tinted label or icon), not with a ring.
+      '.ldx-root input:not([type=radio]):not([type=checkbox]):focus-visible,.ldx-root textarea:focus-visible{outline:none}',
+      // A row's ring is drawn inside it, so its group's rounded clip can't cut it off.
+      '.ldx-row:focus-visible{outline-offset:-3px}',
       // layer: full screen on phones, a centred card on wider screens
       '.ldx-layer{position:fixed;inset:0;z-index:' + Z + ';display:flex;align-items:stretch;justify-content:center}',
       '.ldx-scrim{position:absolute;inset:0;background:rgba(0,0,0,.32);opacity:0;transition:opacity .28s var(--ldx-ease-out);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}',
@@ -268,13 +272,16 @@
       '.ldx-search{position:relative;display:block;margin:0 0 16px}',
       '.ldx-search input{width:100%;height:40px;padding:0 36px 0 36px;border:0;border-radius:11px;background:var(--ldx-fill);font:400 16px/1 var(--ldx-font);color:var(--ldx-text);outline:none;-webkit-appearance:none}',
       '.ldx-search input::placeholder{color:var(--ldx-text-3)}',
+      '.ldx-search input,.ldx-field input,.ldx-field textarea{caret-color:var(--ldx-accent)}',
+      '.ldx-search:focus-within>.ldx-ico{color:var(--ldx-accent)}',
       '.ldx-search .ldx-ico{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--ldx-text-3);pointer-events:none}',
       '.ldx-search-clear{position:absolute;right:4px;top:4px;width:32px;height:32px;border:0;border-radius:50%;background:transparent;color:var(--ldx-text-3);cursor:pointer;display:none;align-items:center;justify-content:center}',
       '.ldx-search.has-value .ldx-search-clear{display:flex}',
       // forms
       '.ldx-field{display:block;padding:10px 16px;position:relative}',
       '.ldx-field:not(:last-child)::after{content:"";position:absolute;left:16px;right:0;bottom:0;height:.5px;background:var(--ldx-sep)}',
-      '.ldx-field span{display:block;font:500 12.5px/1.2 var(--ldx-font);color:var(--ldx-text-3);margin-bottom:3px}',
+      '.ldx-field span{display:block;font:500 12.5px/1.2 var(--ldx-font);color:var(--ldx-text-3);margin-bottom:3px;transition:color .15s}',
+      '.ldx-field:focus-within>span{color:var(--ldx-accent)}',
       '.ldx-field input,.ldx-field textarea{width:100%;border:0;background:transparent;padding:2px 0;font:400 16px/1.35 var(--ldx-font);color:var(--ldx-text);outline:none;resize:none}',
       '.ldx-field input::placeholder,.ldx-field textarea::placeholder{color:var(--ldx-text-3)}',
       '.ldx-hint{font:400 13px/1.4 var(--ldx-font);color:var(--ldx-text-3);padding:8px 4px 0}',
