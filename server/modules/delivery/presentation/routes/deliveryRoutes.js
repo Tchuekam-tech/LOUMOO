@@ -118,7 +118,8 @@ function createDeliveryRouter({
   // ------------------------------------------------------------------ riders
 
   router.get('/drivers', authenticate, route(async (req, res) => {
-    ok(res, { drivers: await svc().listDrivers(callerOf(req)) });
+    const { deliveryId } = parseBody(schemas.ListDriversQuerySchema, req.query, 'query');
+    ok(res, { drivers: await svc().listDrivers(callerOf(req), { deliveryId }) });
   }));
 
   router.post('/drivers/:profileId', authenticate, route(async (req, res) => {
@@ -307,6 +308,11 @@ function createDeliveryRouter({
   router.post('/:id/assign', authenticate, route(async (req, res) => {
     const { driverId } = parseBody(schemas.AssignDriverSchema, req.body, 'assignment');
     ok(res, { delivery: await svc().assignDriver(req.params.id, driverId, callerOf(req)) });
+  }));
+
+  // No body: the server chooses the rider. A body, if sent, is ignored (as for accept/decline).
+  router.post('/:id/auto-assign', authenticate, route(async (req, res) => {
+    ok(res, { delivery: await svc().autoAssignDriver(req.params.id, callerOf(req)) });
   }));
 
   router.post('/:id/cancel', authenticate, route(async (req, res) => {

@@ -39,6 +39,8 @@ const announcementRoutes = require('./modules/announcement/presentation/routes/a
 const travelRoutes = require('./modules/travel/presentation/routes/travelRoutes');
 const orderRoutes = require('./modules/commerce/presentation/routes/orderRoutes');
 const deliveryRoutes = require('./modules/delivery/presentation/routes/deliveryRoutes');
+const { getSharedDeliveryService } = require('./modules/delivery/application/DeliveryService');
+const { startOfferSweeper } = require('./modules/delivery/infrastructure/OfferSweeper');
 const superAdminRoutes = require('../SuperAdmin/backend/routes/superAdminRoutes');
 const { maintenanceGuard } = require('../SuperAdmin/backend/middleware/maintenanceGuard');
 
@@ -393,6 +395,13 @@ if (require.main === module) {
   }, 60 * 60 * 1000); // hourly
   sweepTimer.unref();
   workers.push(sweepTimer);
+
+  // Rider offers nobody answered go back to the seller (docs/DELIVERY_API.md,
+  // "Offer expiry"). Here, where the process owns the listen socket; a serverless
+  // deployment never reaches this block and relies on the release-on-read instead.
+  // Starts no timer at all when DELIVERY_OFFER_TTL_MINUTES is 0.
+  const offerSweeper = startOfferSweeper({ service: getSharedDeliveryService() });
+  if (offerSweeper.timer) workers.push(offerSweeper.timer);
 
   // Graceful shutdown — Railway / Kubernetes / Docker send SIGTERM before
   // killing the process. Drained in-flight requests, stopped workers, closed

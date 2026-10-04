@@ -18,12 +18,22 @@
  */
 
 const { SupabaseDatabase, handleDatabaseFailure } = require('../../../infrastructure/database/SupabaseClient');
-const { ConflictError, NotFoundError, ValidationError } = require('../../../shared/errors/AppError');
-const { TERMINAL_STATUSES, DRIVER_STATUS } = require('../domain/Delivery');
+const { ConflictError, NotFoundError, ValidationError, InfrastructureError } = require('../../../shared/errors/AppError');
+const { config } = require('../../../config/env');
+const logger = require('../../../shared/logging/logger');
+const {
+  DELIVERY_STATUS, TERMINAL_STATUSES, WORKLOAD_STATUSES, DRIVER_STATUS, OFFER_EXPIRED_NOTE
+} = require('../domain/Delivery');
 
 const PG_UNIQUE_VIOLATION = '23505';
 const PG_FOREIGN_KEY_VIOLATION = '23503';
 const MAX_MEMORY_LOCATIONS_PER_DELIVERY = 500;
+// Rows read to count rider workload and recent lapses. Equal to Supabase's default
+// API row limit (db-max-rows = 1000): PostgREST silently truncates any larger
+// client limit to that, so a bigger number here would make the "cap reached" warning
+// unreachable while counts quietly came back short. Far above any realistic number
+// of simultaneously open deliveries; logged loudly if it is ever reached.
+const MAX_WORKLOAD_ROWS = 1000;
 
 // camelCase record key -> column name, for both reads and writes.
 const DELIVERY_COLUMNS = Object.freeze({
@@ -90,6 +100,26 @@ function driverFromRow(row) {
 
 function isOpen(status) {
   return !TERMINAL_STATUSES.includes(status);
+}
+
+/**
+ * For a query whose answer decides who is offered a job: a database error must
+ * not be read as an empty answer. handleDatabaseFailure logs and alerts, but in
+ * production it lets READS fall back to the (empty) in-memory store, and "nobody
+ * is busy" or "nobody has lapsed" would silently steer an assignment to the wrong
+ * rider. So in production the error is thrown and the request fails visibly;
+ * elsewhere the usual development fallback applies.
+ */
+function failRankingInput(error, context) {
+  handleDatabaseFailure(error, context);
+  if (config.isProduction) throw new InfrastructureError('Supabase', context, error);
+}
+
+/** `Map<value, occurrences>` of a list of ids. */
+function tally(ids) {
+  const counts = new Map();
+  for (const id of ids) counts.set(id, (counts.get(id) || 0) + 1);
+  return counts;
 }
 
 class DeliveryRepository {
@@ -230,6 +260,65 @@ class DeliveryRepository {
   }
 
   /**
+   * Offers (`assigned` deliveries) handed out at or before `cutoffIso`, oldest
+   * first: the ones whose acceptance window has lapsed. A row with no
+   * `assigned_at` is never returned (nothing to count from). Bounded, so a
+   * backlog is worked off over several sweeps instead of in one long query.
+   */
+  async findStaleOffers(cutoffIso, { limit = 50 } = {}) {
+    const cutoff = Date.parse(cutoffIso);
+    if (!Number.isFinite(cutoff)) return [];
+    const db = this.db;
+    if (db) {
+      try {
+        const { data, error } = await db.from('deliveries').select('*')
+          .eq('status', DELIVERY_STATUS.ASSIGNED)
+          .lte('assigned_at', new Date(cutoff).toISOString())
+          .order('assigned_at', { ascending: true })
+          .limit(limit);
+        if (error) handleDatabaseFailure(error, 'DeliveryRepository.findStaleOffers');
+        else return (data || []).map(fromRow);
+      } catch (err) {
+        handleDatabaseFailure(err, 'DeliveryRepository.findStaleOffers');
+      }
+    }
+    return [...this._deliveries.values()]
+      .filter((d) => d.status === DELIVERY_STATUS.ASSIGNED && d.assignedAt && Date.parse(d.assignedAt) <= cutoff)
+      .sort((a, b) => Date.parse(a.assignedAt) - Date.parse(b.assignedAt))
+      .slice(0, limit)
+      .map((d) => ({ ...d }));
+  }
+
+  /**
+   * How many deliveries each rider is carrying right now (assigned, accepted,
+   * picked up or arrived), as `Map<driverId, count>`. Riders with none are absent.
+   */
+  async countOpenByDriver() {
+    const db = this.db;
+    if (db) {
+      try {
+        const { data, error } = await db.from('deliveries').select('driver_id')
+          .in('status', [...WORKLOAD_STATUSES])
+          .not('driver_id', 'is', null)
+          .limit(MAX_WORKLOAD_ROWS);
+        if (error) failRankingInput(error, 'DeliveryRepository.countOpenByDriver');
+        else {
+          if ((data || []).length >= MAX_WORKLOAD_ROWS) {
+            logger.warn(`[DeliveryRepository] Workload count hit its ${MAX_WORKLOAD_ROWS}-row cap; rider counts may be low.`);
+          }
+          return tally((data || []).map((r) => r.driver_id));
+        }
+      } catch (err) {
+        if (err instanceof InfrastructureError) throw err;
+        failRankingInput(err, 'DeliveryRepository.countOpenByDriver');
+      }
+    }
+    return tally([...this._deliveries.values()]
+      .filter((d) => d.driverId && WORKLOAD_STATUSES.includes(d.status))
+      .map((d) => d.driverId));
+  }
+
+  /**
    * Compare-and-swap update. `expected` is a map of record keys that must still
    * hold (e.g. `{ status: 'assigned', driverId: 'drv_1' }`; null means IS NULL).
    * Returns the updated record, or `null` when the row no longer matches — the
@@ -310,6 +399,47 @@ class DeliveryRepository {
       }
     }
     return (this._events.get(deliveryId) || []).map((e) => ({ ...e }));
+  }
+
+  /**
+   * How many offers each rider let lapse since `sinceIso`, as `Map<riderId, count>`
+   * (riders with none are absent). A lapse is the timeline row written when an
+   * `assigned` offer returns to `pending_assignment` with OFFER_EXPIRED_NOTE; the
+   * rider is its actor. A decline has the same shape but a different note, and is
+   * deliberately NOT counted: declining is a rider who is answering.
+   */
+  async countRecentLapses(sinceIso) {
+    const since = Date.parse(sinceIso);
+    if (!Number.isFinite(since)) return new Map();
+    const db = this.db;
+    if (db) {
+      try {
+        const { data, error } = await db.from('delivery_events').select('actor_id')
+          .eq('status', DELIVERY_STATUS.PENDING_ASSIGNMENT)
+          .eq('previous_status', DELIVERY_STATUS.ASSIGNED)
+          .eq('note', OFFER_EXPIRED_NOTE)
+          .gte('created_at', new Date(since).toISOString())
+          .limit(MAX_WORKLOAD_ROWS);
+        if (error) failRankingInput(error, 'DeliveryRepository.countRecentLapses');
+        else {
+          if ((data || []).length >= MAX_WORKLOAD_ROWS) {
+            logger.warn(`[DeliveryRepository] Recent-lapse count hit its ${MAX_WORKLOAD_ROWS}-row cap; the non-responder penalty may miss riders.`);
+          }
+          return tally((data || []).map((r) => r.actor_id).filter(Boolean));
+        }
+      } catch (err) {
+        if (err instanceof InfrastructureError) throw err;
+        failRankingInput(err, 'DeliveryRepository.countRecentLapses');
+      }
+    }
+    const ids = [];
+    for (const list of this._events.values()) {
+      for (const e of list) {
+        if (e.status === DELIVERY_STATUS.PENDING_ASSIGNMENT && e.previousStatus === DELIVERY_STATUS.ASSIGNED
+          && e.note === OFFER_EXPIRED_NOTE && e.actorId && Date.parse(e.at) >= since) ids.push(e.actorId);
+      }
+    }
+    return tally(ids);
   }
 
   // ----------------------------------------------------------------------- GPS

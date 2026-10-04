@@ -58,11 +58,59 @@ const ETA_ASSUMED_SPEED_KMH = 20;
 
 const MAX_HANDOVER_ATTEMPTS = 5;
 
+// An `assigned` delivery is an offer the rider has this long to accept before it
+// goes back to the seller (docs/DELIVERY_API.md, "Offer expiry"). A starting
+// point to tune with real riders, not a measured value. 0 disables expiry.
+const OFFER_DEFAULT_TTL_MINUTES = 15;
+// Bounds on a configured window. A positive value below a second would round to
+// 0 ms, which means "never expire", so it is raised to the floor; one above a
+// week is clamped to it (an operator writing a huge number means "very long", and
+// an unbounded one would push the deadline past the largest representable Date).
+const OFFER_MIN_TTL_MS = 1000;
+const OFFER_MAX_TTL_MINUTES = 7 * 24 * 60;
+
+// The timeline note written when an offer lapses. It is also how the lapse is
+// told apart from a decline (both are a rider-attributed move back to
+// pending_assignment), so it is a constant that is both written and matched.
+const OFFER_EXPIRED_NOTE = 'Offer expired: no response from the rider';
+
+// A rider who let an offer lapse sorts behind every rider who did not for this
+// long, so one who never answers (offline, or suspended at the account level where
+// nothing yet syncs that to the rider record) does not take the first offer of
+// every delivery. Short on purpose: it fades without anyone having to clear it.
+const RECENT_LAPSE_WINDOW_MS = 60 * 60 * 1000;
+
+// The deliveries that make a rider "busy" when the seller picks one. `failed` is
+// deliberately absent: that job is waiting on a seller/admin decision, not on
+// the rider's time.
+const WORKLOAD_STATUSES = Object.freeze([
+  DELIVERY_STATUS.ASSIGNED,
+  DELIVERY_STATUS.ACCEPTED,
+  DELIVERY_STATUS.PICKED_UP,
+  DELIVERY_STATUS.ARRIVED
+]);
+
 // Extends AppError so the shared error handler renders it as a real 423; a bare
 // Error subclass would fall through to a 500.
 class DeliveryLockedError extends AppError {
   constructor(message = 'Too many incorrect handover codes. An administrator must resolve this delivery.') {
     super(message, { code: 'DELIVERY_LOCKED', statusCode: 423 });
+  }
+}
+
+// 409 with its own code, so a rider app can tell "too late" from "someone else
+// changed it" and show the right message.
+class OfferExpiredError extends AppError {
+  constructor(message = 'This offer expired before it was accepted.') {
+    super(message, { code: 'OFFER_EXPIRED', statusCode: 409 });
+  }
+}
+
+// Auto-assign found nobody eligible. A 409 (the delivery is fine; the situation
+// is what blocks it), distinct from a validation error on a rider the seller chose.
+class NoRiderAvailableError extends AppError {
+  constructor(message = 'No rider is available for this delivery right now.') {
+    super(message, { code: 'NO_RIDER_AVAILABLE', statusCode: 409 });
   }
 }
 
@@ -123,6 +171,49 @@ function estimateEta(from, to) {
   return { etaMinutes, distanceKm: Math.round(distanceKm * 100) / 100 };
 }
 
+/**
+ * Turns the configured window (minutes) into milliseconds. Anything that is not
+ * a finite number >= 0 falls back to the default, so a typo in an environment
+ * variable cannot silently switch expiry off or make every offer lapse at once.
+ * `0` is a real value and means "never expire". A positive value is kept between
+ * one second and one week (OFFER_MIN_TTL_MS, OFFER_MAX_TTL_MINUTES): below the
+ * floor it would round to 0 ms and silently disable expiry, above the cap the
+ * deadline could pass the largest representable Date.
+ */
+function offerTtlMsFrom(minutes) {
+  const fallback = OFFER_DEFAULT_TTL_MINUTES * 60 * 1000;
+  // Blank text must read as "unset", not as Number('') === 0 ("never expire").
+  const raw = typeof minutes === 'string' ? minutes.trim() : minutes;
+  if (raw === undefined || raw === null || raw === '') return fallback;
+  const n = typeof raw === 'string' ? Number(raw) : raw;
+  if (!isFiniteNumber(n) || n < 0) return fallback;
+  if (n === 0) return 0;
+  const ms = Math.round(Math.min(n, OFFER_MAX_TTL_MINUTES) * 60 * 1000);
+  return Math.max(OFFER_MIN_TTL_MS, ms);
+}
+
+/**
+ * When an offer lapses, as epoch milliseconds, or `null` when this delivery has
+ * no deadline: it is not `assigned`, expiry is off (`ttlMs` 0), or it has no
+ * `assignedAt` to count from (a row written by hand, never by the service).
+ */
+function offerDeadlineMs(delivery, ttlMs) {
+  if (!delivery || delivery.status !== DELIVERY_STATUS.ASSIGNED) return null;
+  if (!isFiniteNumber(ttlMs) || ttlMs <= 0) return null;
+  const assignedAt = Date.parse(delivery.assignedAt);
+  if (!Number.isFinite(assignedAt)) return null;
+  const deadline = assignedAt + ttlMs;
+  // Past the largest representable Date, new Date(deadline).toISOString() throws
+  // and would turn every view of the delivery into a 500: no usable deadline.
+  return Number.isFinite(new Date(deadline).getTime()) ? deadline : null;
+}
+
+/** True once the offer's deadline has passed (a deadline of exactly `nowMs` has). */
+function isOfferLapsed(delivery, ttlMs, nowMs) {
+  const deadline = offerDeadlineMs(delivery, ttlMs);
+  return deadline !== null && nowMs >= deadline;
+}
+
 /** Rounds a point to ~1.1 km (2 decimals): enough to judge distance, not to find a door. */
 function coarseLocation(loc) {
   if (!loc || !isFiniteNumber(loc.lat) || !isFiniteNumber(loc.lng)) return null;
@@ -151,7 +242,7 @@ function describeAddress(shippingAddress = {}) {
  * Never included for anyone: handover nonce, code attempts, raw rows. The
  * handover code itself is served by a separate buyer-only call.
  */
-function presentDelivery(d, viewer, { timeline = [], order = null } = {}) {
+function presentDelivery(d, viewer, { timeline = [], order = null, offerTtlMs = 0 } = {}) {
   const afterAcceptance = [
     DELIVERY_STATUS.ACCEPTED, DELIVERY_STATUS.PICKED_UP, DELIVERY_STATUS.ARRIVED, DELIVERY_STATUS.DELIVERED
   ].includes(d.status);
@@ -180,6 +271,9 @@ function presentDelivery(d, viewer, { timeline = [], order = null } = {}) {
 
   const hideEta = viewer === 'buyer' && !BUYER_VISIBLE_LOCATION_STATUSES.includes(d.status);
 
+  // The buyer never learns an offer exists, let alone when it lapses.
+  const deadline = staff || viewer === 'driver' ? offerDeadlineMs(d, offerTtlMs) : null;
+
   return {
     id: d.id,
     orderId: d.orderId,
@@ -193,6 +287,7 @@ function presentDelivery(d, viewer, { timeline = [], order = null } = {}) {
     distanceKm: hideEta ? null : (d.distanceKm ?? null),
     lastLocation,
     failureReason: staff || viewer === 'driver' ? (d.failureReason || null) : null,
+    offerExpiresAt: deadline === null ? null : new Date(deadline).toISOString(),
     timeline: timeline.map((e) => ({ status: e.status, at: e.at, note: staff || viewer === 'driver' ? (e.note || null) : null })),
     createdAt: d.createdAt,
     updatedAt: d.updatedAt
@@ -244,12 +339,23 @@ module.exports = {
   ETA_ROAD_FACTOR,
   ETA_ASSUMED_SPEED_KMH,
   MAX_HANDOVER_ATTEMPTS,
+  OFFER_DEFAULT_TTL_MINUTES,
+  OFFER_MIN_TTL_MS,
+  OFFER_MAX_TTL_MINUTES,
+  OFFER_EXPIRED_NOTE,
+  RECENT_LAPSE_WINDOW_MS,
+  WORKLOAD_STATUSES,
   DeliveryLockedError,
+  OfferExpiredError,
+  NoRiderAvailableError,
   newDeliveryId,
   parseLocation,
   optionalNumber,
   haversineKm,
   estimateEta,
+  offerTtlMsFrom,
+  offerDeadlineMs,
+  isOfferLapsed,
   coarseLocation,
   describeArea,
   describeAddress,

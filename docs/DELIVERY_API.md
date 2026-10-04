@@ -59,23 +59,77 @@ delivered, cancelled: terminal
 * A retry (`failed -> assigned`) issues a **new handover code** and clears the old
   rider's location trail, but does **not** refill the code-guess budget (below).
 
+### Offer expiry (v1.1)
+An `assigned` delivery is an *offer*: the rider has **15 minutes** from the moment
+of assignment to accept it. The window is the `DELIVERY_OFFER_TTL_MINUTES`
+setting, in minutes:
+
+| Value | Meaning |
+|---|---|
+| unset, blank, not a number, or negative | the default, 15 minutes (a typo never switches expiry off) |
+| `0` | expiry is off: offers never lapse, `offerExpiresAt` is always `null` |
+| `0.5` … `10080` | that many minutes (fractions allowed). Below one second is raised to one second; above one week (10080) is clamped to one week |
+
+When an offer lapses with no answer:
+
+* the delivery goes back to `pending_assignment` (timeline note
+  `Offer expired: no response from the rider`);
+* the seller is notified, and so is the rider (the rider's new-offer notification says
+  how long they have, rounded down: “within 15 minutes”, “within 30 seconds”);
+* once released, the rider loses access (`404`), exactly as after a decline.
+
+Only `assigned` expires. Once the rider has `accepted` the job never times out.
+Re-assigning (to anyone) starts a fresh window.
+
+Expiry is applied in two ways:
+1. a background sweeper, once a minute, on long-lived runtimes (Railway). The seller
+   is told within about a minute of the deadline;
+2. **lazily**, when something touches the stale delivery or ranks the riders: `GET /:id`
+   and the other participant-scoped reads and actions, `GET /by-order/:orderId`,
+   `GET /driver/me`, the live stream's snapshot and access checks, `POST /:id/accept`,
+   and `GET /drivers` / `POST /:id/auto-assign` (which release every lapsed offer
+   before ranking riders, so a dead offer never counts as a rider's work).
+
+Serverless runtimes (Netlify, Vercel) cannot run the sweeper and rely on the lazy
+path alone. **There the seller is told only when something touches the delivery or
+lists riders**: an offer nobody reads or ranks around stays `assigned`, and the
+seller hears nothing, until then. Lapsed offers are never *honoured* in the
+meantime (accept is refused, ranking ignores them), but they are not announced
+either. Run the API on a long-lived process if prompt notification matters.
+
+**Late accept.** `POST /:id/accept` on a lapsed offer answers `409 OFFER_EXPIRED`
+and releases it, whether the sweeper (or a read) already released it or not: a rider
+whose own latest hand-back of the delivery was a lapse gets the 409, not a 404, and
+so does a seller or admin delivering the parcel themselves (otherwise a bare `403`).
+A rider who *declined* or *released* it, or was never offered it, gets `404` (`403`
+for a seller/admin who was not offered it). The 409 after a release depends on the
+timeline row the lapse writes: that write is retried once, but if it is lost anyway,
+or is still in flight during the few milliseconds after a concurrent release, the
+answer is the plain `404`/`403`. Until a lapsed offer is released, `POST /:id/status`
+and `/location` on it answer `409` (an illegal transition), not `404`. If releasing
+fails (the database is unhealthy), reads still succeed and show the offer as it is,
+with a deadline in the past; accept still refuses it.
+
+Clients should show the countdown from `offerExpiresAt` (see the Delivery object)
+but never decide expiry themselves: the server's clock is the only one that counts.
+
 ## Response shapes (`data`)
 | Endpoint | HTTP | `data` |
 |---|---|---|
 | `POST /` | **201** | `{ delivery }` |
 | `GET /:id`, `GET /by-order/:orderId` | 200 | `{ delivery }` |
-| `POST /:id/assign`, `/cancel`, `/accept`, `/status`, `/complete`, `/resolve` | 200 | `{ delivery }` |
+| `POST /:id/assign`, `/auto-assign`, `/cancel`, `/accept`, `/status`, `/complete`, `/resolve` | 200 | `{ delivery }` |
 | `POST /:id/decline` | 200 | `{ delivery: { id, status } }` (the rider loses access afterwards) |
 | `POST /:id/location` | 200 | `{ accepted: true, location, etaMinutes, distanceKm }` or `{ accepted: false, reason }` |
 | `GET /:id/code` | 200 | `{ code, digits, attemptsRemaining }` |
-| `GET /drivers` | 200 | `{ drivers: [{ id, name, phone }] }` |
+| `GET /drivers` | 200 | `{ drivers: [{ id, name, phone, openDeliveries, declined? }] }` |
 | `POST /drivers/:profileId` | 200 | `{ driver: { id, name, phone, status } }` |
 | `GET /driver/me` | 200 | `{ driver: { id, name, phone }, deliveries: [delivery] }` |
 | `POST /:id/reconcile` | 200 | `{ reconciled: true, deliveryStatus }` |
 
 Request bodies are **strict**: any key not listed in this document is a `400`
 (this is what stops a client sending `buyerId`, `status`, `driverId` on create…).
-Actions with no body (`accept`, `decline`, `reconcile`) ignore one.
+Actions with no body (`accept`, `decline`, `auto-assign`, `reconcile`) ignore one.
 
 ## Objects
 
@@ -94,6 +148,7 @@ Actions with no body (`accept`, `decline`, `reconcile`) ignore one.
   "distanceKm": 3.4,
   "lastLocation": { "lat": 4.055, "lng": 9.72, "at": "2026-10-03T10:00:00Z", "speedKmh": 24, "heading": 90 },
   "failureReason": null,
+  "offerExpiresAt": null,
   "timeline": [ { "status": "assigned", "at": "…", "note": null } ],
   "createdAt": "…",
   "updatedAt": "…"
@@ -109,6 +164,7 @@ nonce, the attempt counter, the code itself.
 | `driver` | only once `accepted` or later | always | yes |
 | `lastLocation`, `etaMinutes`, `distanceKm` | only while `picked_up` / `arrived` | always | yes |
 | `failureReason`, timeline `note`s | hidden (`null`) | yes | yes |
+| `offerExpiresAt` | always `null` | while `assigned`, unless expiry is off (`null`) | while `assigned`, unless expiry is off (`null`) |
 | `dropoff` | full | full | **before accepting:** only `{ area, location }` with `location` rounded to ~1 km; **after:** full |
 
 A rider who has not accepted must not be shown the customer's name, address,
@@ -132,9 +188,10 @@ frontend must handle `etaMinutes: null` and `lastLocation` without a destination
 | `GET /:id/stream` | same | **Server-Sent Events** (below). |
 | `POST /` | seller of the order, admin | Create the delivery. Body: `{ orderId, pickup?: { label?, address?, location? }, dropoffLocation?: { lat, lng }, dropoffAddress? }`. Order must be `HOME_DELIVERY`, `processing`, not refunded, and have no open or delivered delivery. |
 | `POST /:id/assign` `{ driverId }` | seller, admin | Assign or re-assign a rider (see Transitions). The rider cannot be the order's buyer. |
+| `POST /:id/auto-assign` | seller, admin | Let the server pick the rider, using the same order as `GET /drivers` (responsive riders first, then fewest `openDeliveries`, then name, then id) among riders who are active, are not the order's buyer, have not declined, released or let an offer lapse on **this** delivery, and (when re-offering an `assigned` delivery) are not the rider already holding the offer. Ties break deterministically. Allowed from the same statuses as `/assign`. No body (one is ignored). `409 NO_RIDER_AVAILABLE` when nobody qualifies. Releases any lapsed offers first. Rank-and-assign runs one call at a time per API process, so a burst of calls (a bulk “assign all”) spreads over the riders instead of piling onto one; this is best effort across several API instances, which do not share that queue. Responds like `/assign`. A seller-role account that is the delivery's buyer or assigned rider gets `403`, a non-participant `404`. |
 | `POST /:id/cancel` `{ reason? }` | seller, admin; buyer only while `pending_assignment` | Cancel before pickup. |
 | `GET /:id/code` | order **buyer only** | `{ code, digits: 4, attemptsRemaining }`. Only from `accepted` to `arrived`. Seller, admin and rider get `403`. |
-| `GET /drivers` | seller, admin | Active riders `[{ id, name, phone }]` to pick from. |
+| `GET /drivers` | seller, admin | Active riders to pick from: `[{ id, name, phone, openDeliveries, declined? }]`. **Order:** riders who did *not* let an offer lapse in the last hour first, then fewest `openDeliveries`, then name, then id; so a rider who never answers drops behind the responsive ones for an hour (a decline does not count: that rider is answering). `openDeliveries` is always the true count of the rider's `assigned`, `accepted`, `picked_up` and `arrived` deliveries, across **all** sellers (see decision 11). At most 500 active riders are considered (a warning is logged if reached). Lapsed offers are released first (up to 200 per call), so they do not count. The workload and lapse counts read at most 1000 rows each (the platform’s response limit; a warning is logged if reached). In production, if the workload or lapse query fails, this endpoint and `auto-assign` answer `500` rather than ranking on an empty answer. With `?deliveryId=…` every rider also carries `declined`, a boolean that is `true` when they declined, released, or let an offer lapse on **that** delivery, so the picker can grey them out; it is absent (not `false`) without `deliveryId`. Read from the delivery's timeline, which is written best-effort: a lost row means a rider may be listed as not declined. `?deliveryId` answers `400` if empty, repeated or over 128 characters, `404` if no such delivery **or you are not a participant**, and `403` if you are a participant without the seller/admin role (for example a seller-role account that is that delivery's buyer or assigned rider). Any of those fails the **whole** list, so never interpolate an unset id (`?deliveryId=undefined` is a `404`). |
 
 ### Rider
 | Method & path | Purpose |
@@ -233,8 +290,10 @@ data: {"reason":"complete"}
 `400` validation (`details` is at most 5 `{ field, message }` entries) · `401` unauthenticated · `403` wrong role / not the assigned or
 an inactive rider · `404` not found **or not a participant** (including a rider who
 was replaced or declined) · `409` illegal transition / already exists / changed by
-someone else · `423` handover locked · `429` too many open streams (or the global
-rate limit, see decision 7) · `501` live streaming unsupported on this deployment.
+someone else · `409 OFFER_EXPIRED` accepting an offer whose window lapsed ·
+`409 NO_RIDER_AVAILABLE` auto-assign found no eligible rider · `423` handover locked ·
+`429` too many open streams (or the global rate limit, see decision 7) · `501` live
+streaming unsupported on this deployment.
 
 ## Decisions taken (change here first if you disagree)
 1. **Who assigns riders?** The order's seller or an admin.
@@ -264,3 +323,32 @@ rate limit, see decision 7) · `501` live streaming unsupported on this deployme
 8. **The order is read fresh from the database** for every delivery decision
    (`OrderRepository.findOrderByIdFresh`): the ordinary read serves a per-instance
    cache that is never refreshed.
+9. **An unanswered offer lapses after 15 minutes** (`DELIVERY_OFFER_TTL_MINUTES`,
+   `0` = never). Without a deadline a rider who ignores the notification would hold
+   the order in `assigned` forever and the buyer would wait on nobody. Only `assigned`
+   expires, never `accepted`. Needs no schema change: the deadline is
+   `assigned_at + window`, and `assigned_at` already exists. 15 minutes is a starting
+   point to tune with real riders, not a measured value.
+10. **Auto-assign picks the least-busy rider, not the nearest.** A rider's position is
+    only recorded while they are on a delivery (`driver_locations` is keyed by
+    delivery), so there is no honest "nearest rider" until riders can report
+    availability and position without a job. Least-busy is what we can compute
+    truthfully today. Revisit with a presence table.
+    **A rider who lets an offer lapse sorts behind every responsive rider for the
+    next hour.** Without this, a rider who never answers (offline, or suspended in
+    their LOUMOO account: nothing yet syncs an account suspension to the rider
+    record, only account *deletion* has a hook) returns to zero load after each
+    lapse and would be offered the first slot of every new delivery. The penalty
+    fades on its own; a decline does not trigger it; a seller can still pick the
+    rider by hand. The penalty is read from the same timeline row as `declined`
+    (written best-effort, retried once), so a lost row means it is not applied. The proper fix is to suspend the rider record when their
+    account is suspended; this does not replace it.
+11. **Rider workload is shared across sellers, on purpose.** Riders are a pool an
+    admin registers, not per-seller staff, so `openDeliveries` counts a rider's
+    work for every seller, and any seller can read it. The trade-off: a seller can
+    watch when a named rider takes or finishes other sellers' jobs, and estimate a
+    competitor's live volume if riders mostly serve one shop. Judged acceptable
+    while the pool is small and shared; if riders become per-seller, or that
+    visibility is unwanted, show only a coarse free/busy flag, or only the caller's
+    own count, and keep the global count for ranking. **Needs the owner's
+    confirmation.**
