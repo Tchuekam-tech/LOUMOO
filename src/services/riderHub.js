@@ -171,7 +171,7 @@
           var step = d.status === 'accepted' ? 'Pick up at ' + ((d.pickup && d.pickup.label) || 'the shop') : 'Deliver to ' + ((d.dropoff && (d.dropoff.label || d.dropoff.area)) || 'the customer');
           var el = ui.h('<button class="ldx-row" style="--ldx-inset:68px"><span class="ldx-tile ldx-tone-accent">' + ui.icon(d.status === 'accepted' ? 'store' : 'scooter', 22) + '</span><span class="ldx-row-main"><div class="ldx-row-title"></div><div class="ldx-row-status ldx-tone-accent"></div><div class="ldx-row-meta"></div></span><span class="ldx-row-end">' + ui.icon('forward', 18) + '</span></button>');
           el.querySelector('.ldx-row-title').textContent = step;
-          el.querySelector('.ldx-row-status').textContent = d.status === 'accepted' ? 'Next: confirm pickup' : d.status === 'picked_up' ? 'Next: tell the customer you’ve arrived' : 'Next: take the handover code';
+          el.querySelector('.ldx-row-status').textContent = d.status === 'accepted' ? 'Next: confirm pickup' : d.status === 'picked_up' ? 'Next: mark your arrival' : 'Next: take the handover code';
           el.querySelector('.ldx-row-meta').textContent = [(d.dropoff && d.dropoff.address) || (d.dropoff && d.dropoff.area), d.orderNumber].filter(Boolean).join(' · ');
           el.addEventListener('click', function () { nav.push(jobView(nav, d)); });
           return el;
