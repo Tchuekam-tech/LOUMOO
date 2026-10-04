@@ -318,6 +318,7 @@
       '@media (min-width:760px){.ldx-grabber{display:none}}',
       '.ldx-sheet-head{display:flex;align-items:center;gap:8px;padding:6px 8px 4px 20px}',
       '.ldx-sheet-head h2{flex:1;margin:0;font:700 20px/1.25 var(--ldx-font-h);letter-spacing:-.015em}',
+      '.ldx-sheet-head h2:focus{outline:none}',
       '.ldx-sheet-body{overflow-y:auto;padding:4px 16px 8px}',
       '.ldx-sheet-msg{margin:0 4px 16px;font:400 15px/1.45 var(--ldx-font);color:var(--ldx-text-2)}',
       '.ldx-sheet-actions{display:flex;flex-direction:column;gap:10px;padding:8px 16px 16px}',
@@ -607,7 +608,17 @@
       grab.addEventListener('pointerup', end);
       grab.addEventListener('pointercancel', end);
     }
-    setTimeout(function () { var f = o.autofocus ? body.querySelector(o.autofocus) : focusables(body)[0]; if (f) f.focus({ preventScroll: true }); }, 80);
+    // Focus the field the sheet asks for (autofocus: a selector, or 'empty' for
+    // the first empty field), else the title. Never a button: a stray Enter
+    // must not confirm, or cancel, anything.
+    var heading = layerEl.querySelector('#' + id);
+    heading.setAttribute('tabindex', '-1');
+    setTimeout(function () {
+      var f = null;
+      if (o.autofocus === 'empty') f = Array.prototype.find.call(body.querySelectorAll('input:not([type=hidden]),textarea'), function (x) { return !x.value; }) || null;
+      else if (o.autofocus) f = body.querySelector(o.autofocus);
+      try { (f || heading).focus({ preventScroll: true }); } catch (e) { /* ignore */ }
+    }, 80);
     return { el: layerEl, body: body, close: close, done: done };
   }
 

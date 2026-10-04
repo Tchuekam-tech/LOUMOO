@@ -397,7 +397,7 @@
           form.querySelector('[name=address]').value = saved.address || '';
           var go = ui.button({ label: 'Continue', block: true });
           form.querySelector('.ldx-sheet-actions').appendChild(go);
-          var s = ui.sheet({ title: 'Arrange delivery', body: form, autofocus: saved.label ? '[name=address]' : '[name=label]' });
+          var s = ui.sheet({ title: 'Arrange delivery', body: form, autofocus: 'empty' });
           var errEl = form.querySelector('.ldx-error-text');
           go.addEventListener('click', function () {
             var label = form.querySelector('[name=label]').value.trim();

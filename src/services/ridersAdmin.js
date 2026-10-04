@@ -235,7 +235,7 @@
           form.querySelector('.ldx-hint').textContent = 'Account ' + u.id + '. They can start taking offers right away.';
           var add = ui.button({ label: 'Add rider', block: true });
           form.querySelector('.ldx-sheet-actions').appendChild(add);
-          var s = ui.sheet({ title: u.name ? 'Add ' + u.name + '?' : 'Add this account?', body: form, autofocus: u.name ? '[name=phone]' : '[name=name]' });
+          var s = ui.sheet({ title: u.name ? 'Add ' + u.name + '?' : 'Add this account?', body: form, autofocus: 'empty' });
           var err = form.querySelector('.ldx-error-text');
           add.addEventListener('click', function () {
             var name = form.querySelector('[name=name]').value.trim();
