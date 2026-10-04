@@ -1,8 +1,11 @@
-# Delivery Tracking — Frontend (step 4: customer tracking screen)
+# Delivery — Frontend (step 4: customer tracking · step 5: dispatch screens)
 
 Built on branch `feat/delivery-frontend-tracking` (forked from `origin/main`).
 Implements the customer-facing live tracking experience against the step 1–2
 backend contract in [`DELIVERY_API.md`](./DELIVERY_API.md).
+
+The seller, rider and admin screens (step 5) are described
+[below](#step-5--dispatch-screens-seller-rider-admin).
 
 ## What it is
 
@@ -130,3 +133,182 @@ Checked live on 2026-10-03:
 - Road-snapped routing (a provider/OSRM) instead of the straight geodesic line.
 - An SLA-backed tile provider + key for very high volume (Esri/OpenFreeMap cover
   normal use keyless).
+
+---
+
+## Step 5 — dispatch screens: seller, rider, admin
+
+Built on branch `feat/delivery-dispatch-ui` (from `feat/delivery-frontend-tracking`,
+with `origin/main` merged in) against the v1.2 contract in
+[`DELIVERY_API.md`](./DELIVERY_API.md). Three surfaces, each a full-screen overlay
+like the tracking screen, for the same reason: they are all logic.
+
+### Seller: Deliveries
+
+Opened from the **Deliveries** card on the seller dashboard.
+
+- **Board** (`GET /dispatch`), three tabs. *To dispatch* lists "Needs attention"
+  (failed attempts), then "Waiting for a rider", oldest first. *In progress* lists
+  offers waiting for an answer, each with a countdown ring, then deliveries on the
+  way. *Completed* lists delivered orders. Rows read like Mail: the item and its
+  age, the status in colour, then the order number and area. The board refreshes
+  every 20 s and when the tab comes back, and redraws only when something changed.
+- **Order screen**: a status card (what is happening, the offer countdown,
+  4-step progress), the rider with call and WhatsApp, the order (item and total,
+  customer and area, pickup, age), and the next action. It follows the delivery
+  live (`subscribe`).
+
+  | Delivery status | Actions |
+  |---|---|
+  | none, `cancelled` | Arrange delivery: pickup name and address (remembered on this device), then the rider picker |
+  | `pending_assignment` | Choose a rider, Auto-assign, Cancel delivery |
+  | `failed` | Choose a rider, Auto-assign (a failed delivery can only be re-assigned) |
+  | `assigned` | Change rider, Cancel delivery |
+  | `accepted` | Track live, Cancel delivery |
+  | `picked_up`, `arrived` | Track live |
+
+- **Rider picker** (`GET /drivers?deliveryId=`): search, an Auto-assign row, then
+  the riders with their load (*Free*, *2 active*). Riders who already passed on
+  this order are dimmed and marked *Passed*; the current offer is marked
+  *Offered*. Picking a rider asks for confirmation, then sends the offer.
+
+### Rider: Your deliveries
+
+Opened from the **Deliver with LOUMOO** card in the account hub.
+
+- **Inbox** (`GET /driver/me`): new offers as cards (countdown ring, pickup,
+  drop-off area, approximate distance, Decline and Accept), then jobs in progress
+  with their next step. Refreshes every 15 s while it is the screen on top.
+- **Job screen**, one per phase:
+  - *New offer*: a map with the pickup and only the drop-off **area**, a large
+    countdown, Accept and Decline.
+  - *Pick up*: confirm pickup, or *Can't do this job* to hand it back.
+  - *Deliver*: *I've arrived*.
+  - *Hand over*: the customer's 4-digit code. Four boxes take a paste or the SMS
+    autofill and submit on the fourth digit. A wrong code shakes them and shows
+    the attempts left; too many lock the delivery.
+  - A done screen.
+
+  Each place has Navigate (Google Maps), Call and WhatsApp. *Report a problem*
+  ends the attempt with a reason; details are required only for "Something else".
+- **Live location** is shared only while the job screen of an accepted job is
+  open: at most every 6 s unless the rider moved 25 m, and never a fix worse than
+  200 m. A chip shows the state: sharing, weak signal, location off, unavailable.
+  If the job is taken away (cancelled, reassigned, expired), the screen says so
+  and stops.
+- **Not a rider yet**: the screen explains that the LOUMOO team adds riders and
+  shows the account ID to send them, with a copy button.
+
+### Admin: Riders
+
+Opened from **Livreurs** in the super-admin tab bar. Anyone else sees an
+"Administrators only" screen.
+
+- **Roster** (`GET /drivers?status=all`): All, Active and Suspended, and search by
+  name or phone. Each rider shows their phone and current load.
+- **Edit** (tap a rider): name and phone (Save turns on once something changed),
+  Suspend (after a confirmation) or Reactivate, through `POST /drivers/:profileId`.
+- **Add** (+): search LOUMOO accounts (the admin user directory) or paste an
+  account ID, confirm the name and phone customers will see, then add.
+
+### Files
+
+| File | Role |
+|---|---|
+| `src/services/dispatchUi.js` | Shared UI kit (`window.LoumooDispatchUI`): navigation stack with large titles, grouped lists, segmented control, search, sheets and confirmations, countdown ring, toasts, loading, empty and error states, formatting, error messages. Injects its CSS on first use. |
+| `src/services/sellerDispatch.js` | Seller board, order screen and rider picker (`window.LoumooSellerDispatch`). |
+| `src/services/riderHub.js` | Rider inbox, job screens, handover code, problem report and live location (`window.LoumooRiderHub`). |
+| `src/services/ridersAdmin.js` | Admin roster, edit and add (`window.LoumooRidersAdmin`). |
+| `src/services/deliveryApi.js` | Adds the seller, rider and admin calls: `dispatchBoard`, `create`, `listDrivers`, `assign`, `autoAssign`, `cancel`, `riderOverview`, `accept`, `decline`, `setStatus`, `postLocation`, `complete`, `riderRoster`, `registerDriver`, `searchUsers`, `whoAmI`. |
+| `src/views/merchant_view.py`, `src/views/account_hub_view.py`, `src/views/super_admin_view.py` | The three entry points. |
+| `build_redesign.py` | Four more `<script defer>` tags after the tracking screen's. |
+| `tests/ui/dispatch_harness.html`, `tests/ui/phone_frame.html` | Dev-only harness (below). Not shipped. |
+
+### How to open them
+
+```html
+<button data-open-dispatch>Deliveries</button>
+<button data-open-dispatch data-order-id="{{ order.id }}">Arrange delivery</button>
+<button data-open-rider-hub>Deliver with LOUMOO</button>
+<button data-open-riders-admin>Riders</button>
+```
+
+```js
+window.LoumooSellerDispatch.open();             // the board
+window.LoumooSellerDispatch.open({ orderId });  // straight to one order
+window.LoumooRiderHub.open();
+window.LoumooRidersAdmin.open();
+```
+
+These screens sit below the tracking overlay (z-index 3500 against 4000), so
+*Track live* opens on top of an order and closes back to it.
+
+### Design
+
+The screens follow iOS conventions: large titles that collapse into a blurred
+bar, inset grouped lists, a segmented control, bottom sheets with a grabber
+(centred dialogs on wide screens), and every state said in words, not by colour
+alone. They read LOUMOO's tokens (`--color-*`, `--font-*`) and its
+`[data-theme="dark"]` palette, so they match the rest of the app.
+
+Colour: the bright tones fill bars, rings and tiles; text and small icons use a
+darker *ink* shade of each tone, so every coloured label keeps at least 4.5:1
+contrast in light and in dark mode. In dark mode the street map is darkened with
+a CSS filter.
+
+Accessibility: focus moves to the title of a new screen or sheet, never to a
+button, so a stray Enter can't confirm anything. Focus stays inside the top
+layer and Escape closes it. Touch targets are at least 44 px, rows have spoken
+labels, countdowns are `role="timer"`, and animations stop under
+`prefers-reduced-motion`.
+
+### Dev harness
+
+`tests/ui/dispatch_harness.html` loads the real modules against a mock API with
+sample Douala data, so every screen can be reviewed with no backend and no
+account. From the repo root:
+
+```bash
+python -m http.server 5177 --bind 127.0.0.1
+```
+
+Then open `http://127.0.0.1:5177/tests/ui/dispatch_harness.html`. The flags are
+`?rider=new` (not a rider), `&empty=1`, `&error=1`, `&gps=deny`, `&theme=dark`,
+and `&open=<scenario>` to go straight to a screen, such as `seller-order`,
+`picker`, `rider-offer`, `rider-code` or `admin-edit` (the file's header lists
+all 21). For a phone-sized headless capture, wrap it in `phone_frame.html`:
+
+```bash
+chrome --headless=new --hide-scrollbars --window-size=390,844 --force-device-scale-factor=2 --virtual-time-budget=16000 --screenshot=shot.png "http://127.0.0.1:5177/tests/ui/phone_frame.html?q=open%3Drider-offer%26static%3D1"
+```
+
+`static=1` turns animations off for captures. Now and then a capture comes back
+without the overlay; take it again.
+
+### Verified
+
+On 2026-10-04:
+- The delivery unit suites pass: `delivery_board` (the new board and roster
+  endpoints), `delivery_routes`, `delivery_service`, `delivery_dispatch`,
+  `delivery_domain`, `delivery_repository` and `delivery_sweeper`. So do the
+  client checks (`deliveryApi.test.js`, 10/10).
+- `npm run build:frontend` builds. The four `<script defer>` tags land in
+  `Commerce App.dc.html`, and each entry button survives DC compilation (in
+  `MerchantScreens`, `AccountHubScreens` and `SuperAdminScreens`). The rebuilt
+  bundles are not committed: per the handoff they are rebuilt after merging.
+- Every screen and state was reviewed from headless captures of the harness:
+  26 phone states in light and dark mode, and 4 desktop states.
+- **Not verified yet:** against the real backend and database (the screens
+  have only run against the mock API), and on real phones (location permission
+  prompts, `tel:` and WhatsApp links, the on-screen keyboard).
+
+### Known follow-ups
+
+- Riders aren't notified of a new offer: they see it only with the inbox open
+  (it refreshes every 15 s), and an unanswered offer lapses. A push or SMS
+  channel is the main gap.
+- On the web, location is shared only while the job screen is open and the
+  phone is awake; there is no background tracking.
+- The admin tab bar is French ("Livreurs") while these screens are English;
+  the modules have no translation layer yet.
+- Decision 11 (riders' workload counted across all sellers) is still open.
