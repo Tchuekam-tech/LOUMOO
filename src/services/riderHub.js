@@ -585,7 +585,7 @@
 
         function problemSheet() {
           var reasons = ['Customer can’t be reached', 'Wrong or incomplete address', 'Customer refused the parcel', 'Parcel damaged', 'Something else'];
-          var form = ui.h('<div><div class="ldx-group" role="radiogroup" aria-label="What went wrong"></div><div class="ldx-group" style="margin-top:14px"><label class="ldx-field"><span>Details for the seller</span><textarea rows="3" maxlength="500" placeholder="What happened? (required)"></textarea></label></div><div class="ldx-error-text" hidden></div><div class="ldx-sheet-actions" style="padding:16px 0 4px"></div></div>');
+          var form = ui.h('<div><div class="ldx-group" role="radiogroup" aria-label="What went wrong"></div><div class="ldx-group" style="margin-top:14px"><label class="ldx-field"><span>Details for the seller</span><textarea rows="3" maxlength="500" placeholder="Anything that helps the next attempt"></textarea></label></div><div class="ldx-error-text" hidden></div><div class="ldx-sheet-actions" style="padding:16px 0 4px"></div></div>');
           var picked = null;
           var group = form.querySelector('[role=radiogroup]');
           reasons.forEach(function (r) {
@@ -596,6 +596,10 @@
               group.querySelectorAll('[role=radio]').forEach(function (x) { x.setAttribute('aria-checked', 'false'); x.querySelector('.ldx-row-end').innerHTML = ''; });
               row.setAttribute('aria-checked', 'true');
               row.querySelector('.ldx-row-end').innerHTML = ui.icon('check', 20);
+              // Details are only required when no listed reason fits.
+              var ta = form.querySelector('textarea');
+              ta.placeholder = r === 'Something else' ? 'What happened? (required)' : 'Anything that helps the next attempt';
+              ta.required = r === 'Something else';
             });
             group.appendChild(row);
           });
