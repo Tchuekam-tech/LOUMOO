@@ -45,6 +45,12 @@ header_and_styles = """<!DOCTYPE html>
      publishing engine is a route-level chunk loaded only when Sell is used. -->
 <script defer src="./src/services/loumooApi.js"></script>
 <script defer src="./src/services/travelApi.js"></script>
+<script defer src="./src/services/deliveryApi.js"></script>
+<script defer src="./src/services/deliveryTrackingScreen.js"></script>
+<script defer src="./src/services/dispatchUi.js"></script>
+<script defer src="./src/services/sellerDispatch.js"></script>
+<script defer src="./src/services/riderHub.js"></script>
+<script defer src="./src/services/ridersAdmin.js"></script>
 <script defer src="./src/services/clerkSession.js"></script>
 <script defer src="./src/services/accountGuard.js"></script>
 <script defer src="./src/data/catalog_products_bundle.js"></script>

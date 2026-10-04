@@ -1105,6 +1105,20 @@ _TEMPLATE = """
     </div>
 
 
+    <!-- Home deliveries: opens the dispatch board (src/services/sellerDispatch.js)
+         through [data-open-dispatch], a document-level delegate, so no DC binding. -->
+    <button type="button" data-open-dispatch class="surface-raised" aria-label="Deliveries: assign riders and follow home deliveries"
+      style="display:flex;align-items:center;gap:14px;width:100%;padding:16px;border:0;text-align:left;cursor:pointer;color:var(--color-text)">
+      <span style="width:44px;height:44px;border-radius:12px;background:var(--color-accent-100);color:var(--color-accent);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M8 17.5h7.5l-3-8H9"/><path d="M15 6h2.5l1 4.5"/><path d="M12.5 9.5H17"/></svg>
+      </span>
+      <span style="flex:1;min-width:0">
+        <span style="display:block;font:700 15px/1.25 var(--font-heading)">Deliveries</span>
+        <span style="display:block;margin-top:3px;font:400 13px/1.35 var(--font-body);color:var(--color-text-secondary)">Assign riders to home-delivery orders and follow them to the door.</span>
+      </span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+
     <!-- Performance: store analytics + campaign reporting, together -->
     <div class="surface-raised" style="padding:18px 16px">
       <div class="section-head" style="margin-bottom:4px">

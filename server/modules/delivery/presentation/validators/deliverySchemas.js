@@ -35,7 +35,15 @@ const AssignDriverSchema = z.object({
 // one key we read must be a single, non-empty string (a repeated `deliveryId`
 // arrives as an array and is refused).
 const ListDriversQuerySchema = z.object({
-  deliveryId: z.string().trim().min(1, 'deliveryId must not be empty').max(128).optional()
+  deliveryId: z.string().trim().min(1, 'deliveryId must not be empty').max(128).optional(),
+  // Admin roster filter (v1.2); the service refuses it for anyone but an admin.
+  status: z.enum(['all', 'active', 'suspended']).optional()
+});
+
+// GET /dispatch?view=&limit=  Not strict, for the same reason as above.
+const DispatchBoardQuerySchema = z.object({
+  view: z.enum(['active', 'completed']).optional(),
+  limit: z.coerce.number().int().min(1).max(100).optional()
 });
 
 const CancelDeliverySchema = z.object({
@@ -76,6 +84,7 @@ module.exports = {
   CreateDeliverySchema,
   AssignDriverSchema,
   ListDriversQuerySchema,
+  DispatchBoardQuerySchema,
   CancelDeliverySchema,
   RiderStatusSchema,
   LocationPingSchema,

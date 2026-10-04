@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<!--
+  LOUMOO dispatch screens - DEV HARNESS (not shipped, not linked from the app).
+  Loads the real UI modules (src/services/*.js) against a MOCK delivery API with
+  sample Douala data, so every screen and state can be reviewed and screenshot in
+  light and dark mode, on phone and desktop, with no backend and no account.
+  Serve the repo root over HTTP and open /tests/ui/dispatch_harness.html
+  Query flags: ?rider=new (not a rider) &empty=1 (empty lists) &error=1 (loads fail)
+               &gps=deny (location refused) &theme=dark
+               &open=<scenario> drives straight to a screen: seller, seller-live,
+                 seller-done, seller-order, seller-moving, seller-failed,
+                 seller-arrange, picker, confirm, cancel, rider, rider-offer,
+                 rider-accepted, rider-active, rider-problem, rider-code,
+                 rider-wrong, rider-done, admin, admin-edit, admin-add
+                 (the title becomes "ready:<scenario>" once it is on screen)
+               &static=1 no animations, frames driven by timers (for headless
+                 captures with --virtual-time-budget)
+  Phone-sized captures: tests/ui/phone_frame.html?q=<these flags, URL-encoded>
+  The :root and [data-theme="dark"] token blocks below are copied from
+  build_redesign.py, so what you see here is the app's real palette and type.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LOUMOO dispatch harness</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-bg: #f5f7fa;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f8f9fc;
+  --color-surface-hover: #f1f3f7;
+  --color-surface-elevated: #ffffff;
+  --color-surface-glass: rgba(255, 255, 255, 0.88);
+  --color-text: #111214;
+  --color-text-secondary: #525763;
+  --color-text-muted: #838a98;
+  --color-text-tertiary: #aab0bd;
+  --color-accent: #007aff;
+  --color-accent-hover: #0570e6;
+  --color-accent-active: #005ec4;
+  --color-accent-600: #0062cc;
+  --color-accent-700: #004fb3;
+  --color-accent-800: #003d8a;
+  --color-accent-900: #002b61;
+  --color-accent-100: #eaf3ff;
+  --color-accent-200: #d6e8ff;
+  --color-accent-300: #add3ff;
+  --color-accent-400: #6ebbff;
+  --color-accent-500: #007aff;
+  --color-accent-energy: #ffd100;
+  --color-accent-energy-hover: #f2c600;
+  --color-accent-energy-100: #fffbe6;
+  --color-accent-energy-text: #7a5e00;
+  --color-accent-sale: #ff3b30;
+  --color-accent-sale-hover: #e03228;
+  --color-accent-sale-100: #ffebeb;
+  --color-success: #00c853;
+  --color-success-hover: #00b34a;
+  --color-success-100: #e6f9ed;
+  /* Error states across travel/hotel screens referenced --color-danger, which
+     was never defined: the declaration was dropped and the message rendered in
+     the inherited body colour, reading as ordinary copy rather than a failure. */
+  --color-danger: #d92d20;
+  --color-danger-hover: #b42318;
+  --color-danger-100: #fee4e2;
+  --color-momo-yellow: #ffcc00;
+  --color-momo-hover: #f0c000;
+  --color-om-orange: #ff6600;
+  --color-om-hover: #e65c00;
+  --color-wa-green: #25d366;
+  --color-wa-teal: #00a884;
+  --color-divider: #eceef2;
+  --color-border-subtle: #f0f2f5;
+  --color-border-focus: #007aff;
+  --color-neutral-100: #f8f9fb;
+  --color-neutral-200: #f1f3f7;
+  --color-neutral-300: #e4e7ec;
+  --color-neutral-400: #cbd1db;
+  --color-neutral-500: #9da4b2;
+  --color-neutral-600: #6e7687;
+  --color-neutral-700: #4a5160;
+  --color-neutral-800: #292e38;
+  --color-neutral-900: #111214;
+  --font-heading: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading-weight: 700;
+  --font-body: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 30px;
+  --radius-pill: 9999px;
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 24px 54px rgba(0, 0, 0, 0.11);
+  --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.09);
+  --shadow-glow-blue: 0 4px 20px rgba(0, 122, 255, 0.28);
+  --shadow-glow-yellow: 0 4px 20px rgba(255, 209, 0, 0.35);
+  --shadow-glow-green: 0 4px 20px rgba(0, 200, 83, 0.28);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --z-base: 1;
+  --z-sticky: 20;
+  --z-nav-mobile: 50;
+  --z-floating-action: 60;
+  --z-drawer: 100;
+  --z-modal-backdrop: 200;
+  --z-modal: 210;
+  --z-toast: 1000;
+}
+[data-theme="dark"] {
+  --color-bg: #090a0f; --color-surface: #141720; --color-surface-subtle: #0f1118; --color-surface-hover: #1c202c;
+  --color-text: #f5f7fa; --color-text-secondary: #a0a6b5; --color-text-muted: #6b7280;
+  --color-divider: #222632; --color-border-subtle: #191c26;
+  --color-neutral-100: #0f1118; --color-neutral-200: #1a1e28; --color-neutral-300: #272d3c;
+  --color-neutral-400: #4b5262; --color-neutral-500: #6e7687; --color-neutral-600: #9da4b2;
+  --color-neutral-700: #cbd1db; --color-neutral-800: #e4e7ec; --color-neutral-900: #ffffff;
+  /* Lifted so failure text keeps AA contrast on the dark surface. */
+  --color-danger: #ff6b63; --color-danger-hover: #ff8a83; --color-danger-100: #2a1412;
+}
+
+html,body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body)}
+[data-theme="dark"] body{background:#090a0f}
+.hx{max-width:720px;margin:0 auto;padding:28px 20px 60px}
+.hx h1{font:800 26px/1.15 var(--font-heading);letter-spacing:-.02em;margin:0 0 6px}
+.hx p{margin:0 0 22px;color:var(--color-text-secondary);font-size:14.5px;line-height:1.5}
+.hx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.hx-grid button{min-height:64px;border-radius:16px;border:1px solid var(--color-divider);background:var(--color-surface);color:var(--color-text);font:600 15px/1.2 var(--font-body);text-align:left;padding:14px 16px;cursor:pointer}
+.hx-grid button small{display:block;margin-top:4px;font-weight:400;color:var(--color-text-secondary);font-size:12.5px}
+.hx-bar{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px}
+.hx-bar a{font:600 13px/1 var(--font-body);color:var(--color-accent);text-decoration:none;padding:8px 12px;border-radius:999px;background:var(--color-accent-100)}
+[data-theme="dark"] .hx-bar a{background:rgba(10,132,255,.16)}
+</style>
+</head>
+<body>
+<div class="hx">
+  <h1>Dispatch screens</h1>
+  <p>Dev harness with sample data. Every button opens the real module the app ships.</p>
+  <div class="hx-bar">
+    <a href="#" data-theme-toggle>Toggle dark mode</a>
+    <a href="?">Default</a><a href="?rider=new">Not a rider</a><a href="?empty=1">Empty</a><a href="?error=1">Errors</a><a href="?gps=deny">GPS denied</a>
+  </div>
+  <div class="hx-grid">
+    <button data-open-dispatch>Seller &middot; Deliveries<small>Dispatch board, order screen, rider picker</small></button>
+    <button data-open-rider-hub>Rider &middot; Your deliveries<small>Offers, job flow, handover code</small></button>
+    <button data-open-riders-admin>Admin &middot; Riders<small>Roster, add, suspend</small></button>
+    <button data-open-dispatch data-order-id="ord_48190">Seller &middot; One order<small>Deep link to an offered order</small></button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var qs = new URLSearchParams(location.search);
+  if (qs.get('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  // ?static=1: no animations, for headless screenshots (virtual time freezes CSS
+  // animations on their first frame, which would capture fade-ins as invisible).
+  if (qs.get('static') === '1') {
+    var st = document.createElement('style');
+    st.textContent = '*,*::before,*::after{animation:none!important;transition:none!important}';
+    document.head.appendChild(st);
+    // Under --virtual-time-budget timers run on virtual time but animation
+    // frames wait for real ones, so on a busy machine the budget can run out
+    // before the frame that opens a screen: the capture shows no overlay. Drive
+    // frames off timers instead, so the whole run lives on virtual time.
+    window.requestAnimationFrame = function (cb) { return setTimeout(function () { cb(performance.now()); }, 16); };
+    window.cancelAnimationFrame = function (id) { clearTimeout(id); };
+  }
+  document.querySelector('[data-theme-toggle]').addEventListener('click', function (e) {
+    e.preventDefault();
+    var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (dark) document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', 'dark');
+  });
+
+  // ---------------------------------------------------------------- mock data
+  var MIN = 60000, now = Date.now();
+  var iso = function (ms) { return new Date(ms).toISOString(); };
+  var EMPTY = qs.get('empty') === '1', ERR = qs.get('error') === '1';
+  var riders = {
+    rider_alain: { id: 'rider_alain', name: 'Alain Mbarga', phone: '+237 677 12 34 56', status: 'active' },
+    rider_bruno: { id: 'rider_bruno', name: 'Bruno Nkoulou', phone: '+237 699 45 11 02', status: 'active' },
+    rider_chantal: { id: 'rider_chantal', name: 'Chantal Fotso', phone: '+237 655 80 21 44', status: 'active' },
+    rider_emma: { id: 'rider_emma', name: 'Emmanuel Tchoupo', phone: '+237 670 33 09 87', status: 'active' },
+    rider_ibra: { id: 'rider_ibra', name: 'Ibrahim Moussa', phone: '+237 691 02 77 65', status: 'active' },
+    rider_grace: { id: 'rider_grace', name: 'Grace Ngono', phone: '+237 650 44 18 20', status: 'suspended' }
+  };
+  var SHOP = { label: 'Orca Electronics Akwa', address: '45 Boulevard de la Liberté, Akwa, Douala', contactPhone: '+237 677 10 12 34', location: { lat: 4.0487, lng: 9.6966 } };
+  function order(id, num, title, qty, total, buyer, area, minsAgo, status) {
+    return { id: id, orderNumber: num, placedAt: iso(now - minsAgo * MIN), fulfillmentStatus: status || 'processing', paymentStatus: 'paid', totalXaf: total, itemCount: qty, title: title, buyerName: buyer, area: area };
+  }
+  var seq = 0;
+  function delivery(id, o, status, extra) {
+    seq += 1;
+    var base = {
+      id: id, orderId: o.id, orderNumber: o.orderNumber, status: status, viewerRole: 'seller', driver: null,
+      pickup: SHOP,
+      dropoff: { label: o.buyerName, address: '12 Rue ' + (seq * 7) + ', ' + o.area, area: o.area, contactPhone: '+237 694 55 66 77', notes: 'Blue gate after the pharmacy. Call when you arrive.', location: { lat: 4.052 + seq * 0.004, lng: 9.703 + seq * 0.003 } },
+      etaMinutes: null, distanceKm: null, lastLocation: null, failureReason: null, offerExpiresAt: null, timeline: [],
+      createdAt: o.placedAt, updatedAt: iso(now - 4 * MIN)
+    };
+    return Object.assign(base, extra || {});
+  }
+  var orders = {
+    ord_48213: order('ord_48213', 'LM-48213', 'iPhone 15 Pro 256 GB', 1, 745000, 'Samuel Ekane', 'Akwa, Douala', 12),
+    ord_48207: order('ord_48207', 'LM-48207', 'Samsung Galaxy A55', 1, 289000, 'Awa Njoya', 'Bonapriso, Douala', 34),
+    ord_48199: order('ord_48199', 'LM-48199', 'AirPods Pro (2nd gen)', 2, 318000, 'Patrice Essomba', 'Bonamoussadi, Douala', 95),
+    ord_48190: order('ord_48190', 'LM-48190', 'MacBook Air M3 13-inch', 1, 1150000, 'Marie-Claire Ateba', 'Bonanjo, Douala', 41),
+    ord_48176: order('ord_48176', 'LM-48176', 'JBL Charge 5', 1, 119000, 'Hervé Kamga', 'Makepe, Douala', 58),
+    ord_48170: order('ord_48170', 'LM-48170', 'Nike Air Max 270', 1, 96000, 'Linda Moukouri', 'Deido, Douala', 80),
+    ord_48102: order('ord_48102', 'LM-48102', 'PlayStation 5 Slim', 1, 389000, 'Yves Tchakounte', 'Logpom, Douala', 300, 'delivered')
+  };
+  var deliveries = {
+    dlv_48207: delivery('dlv_48207', orders.ord_48207, 'pending_assignment'),
+    dlv_48199: delivery('dlv_48199', orders.ord_48199, 'failed', { driver: riders.rider_ibra, driverId: 'rider_ibra', failureReason: 'Customer can’t be reached: called three times, no answer' }),
+    dlv_48190: delivery('dlv_48190', orders.ord_48190, 'assigned', { driver: riders.rider_alain, driverId: 'rider_alain', offerExpiresAt: iso(now + 9 * MIN + 24000) }),
+    dlv_48176: delivery('dlv_48176', orders.ord_48176, 'accepted', { driver: riders.rider_bruno, driverId: 'rider_bruno' }),
+    dlv_48170: delivery('dlv_48170', orders.ord_48170, 'picked_up', { driver: riders.rider_emma, driverId: 'rider_emma', etaMinutes: 11, distanceKm: 3.4, lastLocation: { lat: 4.055, lng: 9.712, at: iso(now - 20000), speedKmh: 24, heading: 70 } }),
+    dlv_48102: delivery('dlv_48102', orders.ord_48102, 'delivered', { driver: riders.rider_chantal, driverId: 'rider_chantal', updatedAt: iso(now - 170 * MIN) })
+  };
+  var declinedOn = { dlv_48199: ['rider_ibra'] };
+  // The signed-in rider's own jobs (rider app view).
+  var mine = {
+    dlv_48222: delivery('dlv_48222', order('ord_48222', 'LM-48222', 'Tecno Camon 30', 1, 165000, 'Joseph Mbock', 'Bonaberi, Douala', 6), 'assigned', { viewerRole: 'driver', driverId: 'rider_alain', offerExpiresAt: iso(now + 105000), dropoff: { area: 'Bonaberi, Douala', location: { lat: 4.07, lng: 9.67 } } }),
+    dlv_48190r: delivery('dlv_48190r', orders.ord_48190, 'assigned', { viewerRole: 'driver', driverId: 'rider_alain', offerExpiresAt: iso(now + 9 * MIN + 24000), dropoff: { area: 'Bonanjo, Douala', location: { lat: 4.05, lng: 9.69 } } }),
+    dlv_48150: delivery('dlv_48150', order('ord_48150', 'LM-48150', 'Xiaomi Redmi Note 13', 1, 139000, 'Sandrine Nkeng', 'Bali, Douala', 70), 'picked_up', { viewerRole: 'driver', driverId: 'rider_alain' })
+  };
+  if (EMPTY) { orders = {}; deliveries = {}; mine = {}; }
+
+  var delay = function (v, ms) { return new Promise(function (r) { setTimeout(function () { r(v); }, ms || 420); }); };
+  var fail = function (status, code, message) { return new Promise(function (_, rej) { setTimeout(function () { var e = new Error(message); e.status = status; e.code = code; rej(e); }, 420); }); };
+  var clone = function (x) { return JSON.parse(JSON.stringify(x)); };
+  var store = function (id) { return deliveries[id] || mine[id]; };
+  function load() {
+    var m = {};
+    Object.keys(deliveries).forEach(function (k) { var d = deliveries[k]; if (['assigned', 'accepted', 'picked_up', 'arrived'].indexOf(d.status) !== -1 && d.driverId) m[d.driverId] = (m[d.driverId] || 0) + 1; });
+    return m;
+  }
+  var wrongCodes = 0;
+
+  window.deliveryApi = {
+    dispatchBoard: function (o) {
+      if (ERR) return fail(0, null, 'offline');
+      var view = (o && o.view) || 'active';
+      var items = Object.keys(orders).map(function (k) { return orders[k]; })
+        .filter(function (x) { return view === 'completed' ? x.fulfillmentStatus === 'delivered' : x.fulfillmentStatus !== 'delivered'; })
+        .map(function (x) {
+          var d = Object.keys(deliveries).map(function (k) { return deliveries[k]; }).find(function (y) { return y.orderId === x.id; }) || null;
+          return { order: clone(x), delivery: d ? clone(d) : null };
+        });
+      return delay({ items: items });
+    },
+    create: function (orderId, opts) {
+      var o = orders[orderId];
+      var id = 'dlv_' + orderId.slice(4);
+      deliveries[id] = delivery(id, o, 'pending_assignment', { pickup: Object.assign({}, SHOP, (opts && opts.pickup) || {}) });
+      return delay({ delivery: clone(deliveries[id]) });
+    },
+    listDrivers: function (o) {
+      var l = load(), passed = (o && o.deliveryId && declinedOn[o.deliveryId]) || [];
+      var list = Object.keys(riders).map(function (k) { return riders[k]; }).filter(function (r) { return r.status === 'active'; })
+        .map(function (r) { var row = { id: r.id, name: r.name, phone: r.phone, openDeliveries: l[r.id] || 0 }; if (o && o.deliveryId) row.declined = passed.indexOf(r.id) !== -1; return row; })
+        .sort(function (a, b) { return a.openDeliveries - b.openDeliveries || a.name.localeCompare(b.name); });
+      return delay({ drivers: list });
+    },
+    assign: function (id, driverId) {
+      var d = deliveries[id];
+      Object.assign(d, { status: 'assigned', driverId: driverId, driver: riders[driverId], offerExpiresAt: iso(Date.now() + 15 * MIN), updatedAt: iso(Date.now()) });
+      return delay({ delivery: clone(d) });
+    },
+    autoAssign: function (id) {
+      var passed = declinedOn[id] || [], l = load();
+      var pick = Object.keys(riders).map(function (k) { return riders[k]; }).filter(function (r) { return r.status === 'active' && passed.indexOf(r.id) === -1 && r.id !== deliveries[id].driverId; })
+        .sort(function (a, b) { return (l[a.id] || 0) - (l[b.id] || 0) || a.name.localeCompare(b.name); })[0];
+      if (!pick) return fail(409, 'NO_RIDER_AVAILABLE', 'No rider is available for this delivery right now.');
+      return this.assign(id, pick.id);
+    },
+    cancel: function (id) { var d = deliveries[id]; d.status = 'cancelled'; d.offerExpiresAt = null; return delay({ delivery: clone(d) }); },
+    get: function (id) { var d = store(id); return d ? delay({ delivery: clone(d) }, 200) : fail(404, 'NOT_FOUND', 'Delivery not found'); },
+    getByOrder: function (oid) { var d = Object.keys(deliveries).map(function (k) { return deliveries[k]; }).find(function (y) { return y.orderId === oid; }); return d ? delay({ delivery: clone(d) }) : fail(404, 'NOT_FOUND', 'none'); },
+    getCode: function () { return delay({ code: '4821', digits: 4, attemptsRemaining: 5 }); },
+    subscribe: function () { return { close: function () {} }; },
+    riderOverview: function () {
+      if (qs.get('rider') === 'new') return fail(403, 'PERMISSION_DENIED', 'You are not a registered rider.');
+      if (ERR) return fail(0, null, 'offline');
+      return delay({ driver: { id: 'rider_alain', name: 'Alain Mbarga', phone: '+237 677 12 34 56' }, deliveries: Object.keys(mine).map(function (k) { return clone(mine[k]); }).filter(function (d) { return ['assigned', 'accepted', 'picked_up', 'arrived'].indexOf(d.status) !== -1; }) });
+    },
+    accept: function (id) {
+      var d = mine[id];
+      Object.assign(d, { status: 'accepted', offerExpiresAt: null, dropoff: { label: 'Marie-Claire Ateba', address: '12 Rue Joss, Bonanjo, Douala', area: d.dropoff.area, contactPhone: '+237 694 55 66 77', notes: 'Blue gate after the pharmacy. Call when you arrive.', location: d.dropoff.location } });
+      return delay({ delivery: clone(d) });
+    },
+    decline: function (id) { var d = mine[id] || deliveries[id]; d.status = 'pending_assignment'; return delay({ delivery: { id: id, status: 'pending_assignment' } }); },
+    setStatus: function (id, status, note) { var d = mine[id]; d.status = status; if (note) d.failureReason = note; d.updatedAt = iso(Date.now()); return delay({ delivery: clone(d) }); },
+    postLocation: function () { return delay({ accepted: true }, 150); },
+    complete: function (id, code) {
+      if (String(code) !== '4821') {
+        wrongCodes += 1;
+        if (wrongCodes >= 5) return fail(423, 'DELIVERY_LOCKED', 'Too many incorrect handover codes.');
+        return fail(400, 'VALIDATION_ERROR', 'Incorrect handover code. ' + (5 - wrongCodes) + ' attempts remaining.');
+      }
+      var d = mine[id]; d.status = 'delivered'; d.updatedAt = iso(Date.now());
+      return delay({ delivery: clone(d) });
+    },
+    riderRoster: function () {
+      var l = load();
+      return delay({ drivers: Object.keys(riders).map(function (k) { var r = riders[k]; return { id: r.id, name: r.name, phone: r.phone, status: r.status, openDeliveries: l[r.id] || 0 }; })
+        .sort(function (a, b) { return (a.status === 'active' ? 0 : 1) - (b.status === 'active' ? 0 : 1) || a.name.localeCompare(b.name); }) });
+    },
+    registerDriver: function (pid, v) {
+      var r = riders[pid] || (riders[pid] = { id: pid, status: 'active' });
+      r.name = v.name; r.phone = v.phone; if (v.status) r.status = v.status;
+      return delay({ driver: clone(r) });
+    },
+    searchUsers: function (q) {
+      var all = [
+        { id: 'usr_3f6c21aa', name: 'Kevin Ndjock', email: 'kevin.ndjock@gmail.com', phone: '237698441122', role: 'customer', city: 'Douala' },
+        { id: 'usr_9b02e7c1', name: 'Kelly Mbeng', email: 'kelly.mbeng@yahoo.fr', phone: '237655001983', role: 'customer', city: 'Douala' },
+        { id: 'usr_77ad10f0', name: 'Kenneth Atangana', email: 'k.atangana@loumoo.cm', phone: null, role: 'seller', city: 'Yaoundé' }
+      ];
+      return delay(all.filter(function (u) { return (u.name + u.email).toLowerCase().indexOf(q.toLowerCase()) !== -1; }), 500);
+    },
+    whoAmI: function () { return delay('usr_8f2c4e1a9b07d3', 300); }
+  };
+
+  // Simulated GPS for the rider job screen: a slow ride across Akwa (or a refusal).
+  var deny = qs.get('gps') === 'deny';
+  var pos = { lat: 4.0487, lng: 9.6966 };
+  var watchers = {}, n = 0;
+  try {
+    Object.defineProperty(navigator, 'geolocation', { configurable: true, value: {
+      watchPosition: function (ok, bad) {
+        var id = ++n;
+        if (deny) { setTimeout(function () { if (bad) bad({ code: 1, message: 'denied' }); }, 600); return id; }
+        var emit = function () { pos = { lat: pos.lat + 0.0006, lng: pos.lng + 0.0009 }; ok({ coords: { latitude: pos.lat, longitude: pos.lng, accuracy: 12, speed: 6, heading: 60 }, timestamp: Date.now() }); };
+        setTimeout(emit, 900);
+        watchers[id] = setInterval(emit, 4000);
+        return id;
+      },
+      clearWatch: function (id) { clearInterval(watchers[id]); delete watchers[id]; },
+      getCurrentPosition: function (ok) { ok({ coords: { latitude: pos.lat, longitude: pos.lng, accuracy: 12 } }); }
+    } });
+  } catch (e) { /* read-only in this browser: the real GPS is used */ }
+})();
+</script>
+<script src="../../src/services/dispatchUi.js"></script>
+<script src="../../src/services/deliveryTrackingScreen.js"></script>
+<script src="../../src/services/sellerDispatch.js"></script>
+<script src="../../src/services/riderHub.js"></script>
+<script src="../../src/services/ridersAdmin.js"></script>
+<script>
+// ?open=<scenario> drives straight to a screen and state (for review and for
+// headless screenshots). Each step waits for the UI to settle before the next.
+(function () {
+  var scenario = new URLSearchParams(location.search).get('open');
+  if (!scenario) return;
+  var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+  function click(selector, text) {
+    var els = Array.prototype.slice.call(document.querySelectorAll(selector));
+    var el = els.filter(function (e) { return !text || e.textContent.indexOf(text) !== -1; }).pop();
+    if (el) el.click();
+    return !!el;
+  }
+  var S = {
+    'seller': function () { LoumooSellerDispatch.open(); return wait(900); },
+    'seller-live': function () { return S.seller().then(function () { click('.ldx-seg button', 'In progress'); return wait(600); }); },
+    'seller-done': function () { return S.seller().then(function () { click('.ldx-seg button', 'Completed'); return wait(1200); }); },
+    'seller-order': function () { LoumooSellerDispatch.open({ orderId: 'ord_48190' }); return wait(1800); },
+    'seller-moving': function () { LoumooSellerDispatch.open({ orderId: 'ord_48170' }); return wait(1800); },
+    'seller-failed': function () { LoumooSellerDispatch.open({ orderId: 'ord_48199' }); return wait(1800); },
+    'seller-arrange': function () { LoumooSellerDispatch.open({ orderId: 'ord_48213' }); return wait(1800).then(function () { click('.ldx-btn', 'Arrange delivery'); return wait(900); }); },
+    'picker': function () { return S['seller-failed']().then(function () { click('.ldx-btn', 'Choose a rider'); return wait(1400); }); },
+    'confirm': function () { return S.picker().then(function () { click('.ldx-row', 'Chantal'); return wait(900); }); },
+    'cancel': function () { return S['seller-order']().then(function () { click('.ldx-btn', 'Cancel delivery'); return wait(900); }); },
+    'rider': function () { LoumooRiderHub.open(); return wait(1000); },
+    'rider-offer': function () { return S.rider().then(function () { click('.ldx-card button.ldx-row', 'Bonanjo'); return wait(2600); }); },
+    'rider-accepted': function () { return S['rider-offer']().then(function () { click('.ldx-footer .ldx-btn', 'Accept job'); return wait(3200); }); },
+    'rider-active': function () { return S.rider().then(function () { click('.ldx-section .ldx-row', 'Deliver to'); return wait(3200); }); },
+    'rider-problem': function () { return S['rider-active']().then(function () { click('.ldx-footer .ldx-btn', 'Report a problem'); return wait(700); }).then(function () { click('[role=radio]', 'reached'); return wait(400); }); },
+    'rider-code': function () { return S['rider-active']().then(function () { click('.ldx-footer .ldx-btn', 'arrived'); return wait(1200); }).then(function () { click('.ldx-footer .ldx-btn', 'handover code'); return wait(900); }); },
+    'rider-wrong': function () { return S['rider-code']().then(function () { var b = document.querySelectorAll('.ldx-code input'); '1234'.split('').forEach(function (d, i) { b[i].value = d; b[i].dispatchEvent(new Event('input', { bubbles: true })); }); return wait(1300); }); },
+    'rider-done': function () { return S['rider-code']().then(function () { var b = document.querySelectorAll('.ldx-code input'); '4821'.split('').forEach(function (d, i) { b[i].value = d; b[i].dispatchEvent(new Event('input', { bubbles: true })); }); return wait(1500); }); },
+    'admin': function () { LoumooRidersAdmin.open(); return wait(1000); },
+    'admin-edit': function () { return S.admin().then(function () { click('.ldx-row', 'Bruno'); return wait(800); }); },
+    'admin-add': function () { return S.admin().then(function () { click('.ldx-navbtn[aria-label="Add rider"]'); return wait(900); }).then(function () { var i = document.querySelector('.ldx-search input'); i.value = 'ke'; i.dispatchEvent(new Event('input', { bubbles: true })); return wait(1400); }); }
+  };
+  function start() {
+    var run = S[scenario];
+    if (run) setTimeout(function () { run().then(function () { document.title = 'ready:' + scenario; }); }, 300);
+  }
+  // Not on 'load': that waits for web fonts and map tiles, which can stall a
+  // headless capture. The modules above are already defined at this point.
+  start();
+})();
+</script>
+</body>
+</html>

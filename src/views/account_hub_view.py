@@ -171,6 +171,21 @@ def get_account_hub_view():
           </div>
         </sc-if>
 
+        <!-- Rider work: opens the rider app (src/services/riderHub.js) through
+             [data-open-rider-hub], a document-level delegate, so no DC binding. For a
+             non-rider it explains how to become one and shows their account ID. -->
+        <button type="button" data-open-rider-hub class="card-premium" aria-label="Deliver with LOUMOO: your delivery offers and jobs"
+          style="display:flex;align-items:center;gap:14px;width:100%;text-align:left;cursor:pointer;border:1px solid var(--color-divider);padding:16px;color:var(--color-text)">
+          <span style="width:40px;height:40px;border-radius:12px;background:var(--color-accent-100);color:var(--color-accent);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M8 17.5h7.5l-3-8H9"/><path d="M15 6h2.5l1 4.5"/><path d="M12.5 9.5H17"/></svg>
+          </span>
+          <span style="flex:1;min-width:0">
+            <span style="display:block;font:700 14px/1.25 var(--font-heading)">Deliver with LOUMOO</span>
+            <span style="display:block;margin-top:3px;font:400 12.5px/1.35 var(--font-body);color:var(--color-text-secondary)">Your delivery offers and jobs, if you ride for LOUMOO.</span>
+          </span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+
         <!-- Default delivery address -->
         <div class="card-premium" style="display:flex;flex-direction:column;gap:12px">
           <div style="display:flex;align-items:center;justify-content:space-between">

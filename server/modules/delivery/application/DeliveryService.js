@@ -1296,6 +1296,99 @@ class DeliveryService {
       ...(passed ? { declined: passed.has(driver.id) } : {})
     }));
   }
+
+  /**
+   * The admin rider roster (GET /drivers?status=): every rider, or only the active
+   * or suspended ones, each with its status and current workload. Active riders
+   * first, then by name. Administrators only: a seller only ever picks from the
+   * ranked list of active riders above.
+   */
+  async listRiderRoster(callerInput, { status = 'all' } = {}) {
+    const caller = this._caller(callerInput);
+    if (!this._isAdmin(caller.userRole)) {
+      throw new AuthorizationError('Only an administrator can see the full rider roster.');
+    }
+    if (!['all', DRIVER_STATUS.ACTIVE, DRIVER_STATUS.SUSPENDED].includes(status)) {
+      throw new ValidationError('Unknown rider status filter', [{ field: 'status', message: 'Use "all", "active" or "suspended".' }]);
+    }
+    const [drivers, load] = await Promise.all([
+      this.repo.listDrivers({ status: status === 'all' ? null : status, limit: MAX_RIDERS_CONSIDERED }),
+      this.repo.countOpenByDriver()
+    ]);
+    const rank = (d) => (d.status === DRIVER_STATUS.ACTIVE ? 0 : 1);
+    const byText = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+    return drivers
+      .map((d) => ({ id: d.id, name: d.name, phone: d.phone, status: d.status, openDeliveries: load.get(d.id) || 0 }))
+      .sort((a, b) => rank(a) - rank(b)
+        || String(a.name || '').localeCompare(String(b.name || ''), 'en')
+        || byText(a.id, b.id));
+  }
+
+  /**
+   * The dispatch board (GET /dispatch): the caller's home-delivery orders that need
+   * or have a delivery, newest first, each with its delivery in the seller view,
+   * or null when none was created yet. An administrator sees every seller's.
+   * The caller is checked BEFORE lapsed offers are released, so a customer cannot
+   * use this endpoint to make the platform do work. Each delivery's timeline is
+   * left empty here (one read per row would be needed); GET /:id has it.
+   */
+  async getDispatchBoard(callerInput, { view = 'active', limit = 50 } = {}) {
+    const caller = this._caller(callerInput);
+    if (!SELLER_ROLES.includes(caller.userRole)) {
+      throw new AuthorizationError('Only sellers and administrators have a dispatch board.');
+    }
+    if (!['active', 'completed'].includes(view)) {
+      throw new ValidationError('Unknown board view', [{ field: 'view', message: 'Use "active" or "completed".' }]);
+    }
+    const isAdmin = this._isAdmin(caller.userRole);
+    await this._releaseLapsedOffers();
+
+    const statuses = view === 'completed'
+      ? [FULFILLMENT_STATUS.DELIVERED]
+      : [FULFILLMENT_STATUS.PROCESSING, FULFILLMENT_STATUS.IN_TRANSIT];
+    // Refunded orders are excluded inside the query, before the limit.
+    const orders = await this.orders.findOrdersBySeller(isAdmin ? null : caller.userId, {
+      statuses, limit, excludePaymentStatuses: [PAYMENT_STATUS.REFUNDED]
+    });
+    const latest = await this.repo.findLatestByOrders(orders.map((o) => o.id));
+
+    const role = isAdmin ? 'admin' : 'seller';
+    const riders = new Map(); // one lookup per rider, not per row
+    const items = [];
+    for (const order of orders) {
+      const d = latest.get(order.id) || null;
+      let delivery = null;
+      if (d) {
+        let driver = null;
+        if (d.driverId) {
+          if (!riders.has(d.driverId)) riders.set(d.driverId, await this.repo.findDriver(d.driverId));
+          const r = riders.get(d.driverId);
+          if (r) driver = { id: r.id, name: r.name, phone: r.phone };
+        }
+        delivery = presentDelivery({ ...d, driver }, role, { timeline: [], order, offerTtlMs: this.offerTtlMs });
+      }
+      items.push({ order: summarizeOrder(order), delivery });
+    }
+    return { items };
+  }
+}
+
+/** What the dispatch board shows of an order: enough to recognise it, nothing more. */
+function summarizeOrder(order) {
+  const items = Array.isArray(order.items) ? order.items : [];
+  const ship = order.shippingAddress || {};
+  return {
+    id: order.id,
+    orderNumber: order.orderNumber || null,
+    placedAt: order.createdAt || null,
+    fulfillmentStatus: order.fulfillmentStatus,
+    paymentStatus: order.paymentStatus,
+    totalXaf: Number.isFinite(Number(order.totalAmountXaf)) ? Number(order.totalAmountXaf) : null,
+    itemCount: items.reduce((n, i) => n + (Number(i.quantity) || 1), 0),
+    title: items[0] && items[0].title ? items[0].title : null,
+    buyerName: typeof ship.fullName === 'string' && ship.fullName.trim() ? ship.fullName.trim() : null,
+    area: describeArea(ship) || null
+  };
 }
 
 let sharedService = null;

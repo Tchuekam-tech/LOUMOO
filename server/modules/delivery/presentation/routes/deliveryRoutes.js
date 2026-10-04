@@ -118,8 +118,19 @@ function createDeliveryRouter({
   // ------------------------------------------------------------------ riders
 
   router.get('/drivers', authenticate, route(async (req, res) => {
-    const { deliveryId } = parseBody(schemas.ListDriversQuerySchema, req.query, 'query');
-    ok(res, { drivers: await svc().listDrivers(callerOf(req), { deliveryId }) });
+    const { deliveryId, status } = parseBody(schemas.ListDriversQuerySchema, req.query, 'query');
+    // ?status= is the admin roster (every rider, suspended ones included); without
+    // it this is the ranked list of active riders a seller picks from.
+    const drivers = status
+      ? await svc().listRiderRoster(callerOf(req), { status })
+      : await svc().listDrivers(callerOf(req), { deliveryId });
+    ok(res, { drivers });
+  }));
+
+  // The seller's dispatch board (literal path: registered before /:id).
+  router.get('/dispatch', authenticate, route(async (req, res) => {
+    const { view, limit } = parseBody(schemas.DispatchBoardQuerySchema, req.query, 'query');
+    ok(res, await svc().getDispatchBoard(callerOf(req), { view, limit }));
   }));
 
   router.post('/drivers/:profileId', authenticate, route(async (req, res) => {

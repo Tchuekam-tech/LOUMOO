@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<!-- Dev only: shows the harness in a phone-sized frame (390x844 by default) so a
+     headless browser that cannot shrink its own window can still capture phone
+     layouts. /tests/ui/phone_frame.html?w=390&h=844&q=<harness query string> -->
+<html><head><meta charset="utf-8"><title>phone frame</title>
+<style>html,body{margin:0;background:#000}iframe{display:block;border:0}</style></head>
+<body><script>
+var p = new URLSearchParams(location.search);
+var f = document.createElement('iframe');
+f.width = p.get('w') || 390; f.height = p.get('h') || 844;
+f.src = 'dispatch_harness.html?' + (p.get('q') || '');
+document.body.appendChild(f);
+</script></body></html>
