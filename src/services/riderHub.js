@@ -308,11 +308,21 @@
       map = new ml.Map({ container: el.querySelector('[data-map]'), style: mapStyle(), center: center, zoom: 13, attributionControl: { compact: true }, interactive: true, cooperativeGestures: true });
       map.on('style.load', function () { var m = el.querySelector('[data-msg]'); if (m) m.style.display = 'none'; place(); });
       // The compact attribution opens expanded; fold it into its (i) button so it
-      // doesn't cover a third of a small map (it stays one tap away).
-      map.on('load', function () {
-        var a = el.querySelector('.maplibregl-ctrl-attrib');
-        if (a) { a.classList.remove('maplibregl-compact-show'); a.removeAttribute('open'); }
-      });
+      // doesn't cover a third of a small map (it stays one tap away). MapLibre
+      // builds it when the tile source reports its credits, often long before
+      // the tiles finish, so fold it then, once, rather than on 'load'.
+      var folded = false;
+      var fold = function () {
+        if (folded) return;
+        var a = el.querySelector('.maplibregl-ctrl-attrib.maplibregl-compact');
+        if (!a) return;
+        a.classList.remove('maplibregl-compact-show');
+        a.removeAttribute('open');
+        folded = true;
+      };
+      map.on('styledata', fold);
+      map.on('sourcedata', fold);
+      map.on('load', fold);
     }).catch(function () {
       var m = el.querySelector('[data-msg]');
       if (m) m.textContent = 'Map unavailable — use “Navigate” below';
