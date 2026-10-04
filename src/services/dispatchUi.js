@@ -189,6 +189,7 @@
       '.ldx-bar-spacer{flex:1}',
       '.ldx-scroll{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:0 16px calc(28px + env(safe-area-inset-bottom,0px))}',
       '.ldx-large{padding:2px 4px 14px}',
+      '.ldx-large h1:focus,.ldx-bar-title:focus{outline:none}',
       '.ldx-large h1{margin:0;font:700 31px/1.12 var(--ldx-font-h);letter-spacing:-.025em;color:var(--ldx-text)}',
       '.ldx-large p{margin:6px 0 0;font:400 15px/1.4 var(--ldx-font);color:var(--ldx-text-2)}',
       '.ldx-footer{flex-shrink:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:var(--ldx-bg);background:color-mix(in srgb,var(--ldx-bg) 86%,transparent);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:.5px solid var(--ldx-sep);display:flex;flex-direction:column;gap:10px}',
@@ -505,7 +506,11 @@
       var record = { el: pageEl, page: page, cleanup: null, view: view };
       pages.push(record);
       try { record.cleanup = view.render(page) || null; } catch (err) { console.error('[DispatchUI] render failed', err); content.appendChild(errorState('Something went wrong showing this screen.')); }
-      setTimeout(function () { var f = focusables(pageEl)[0]; if (f && !layerEl.contains(document.activeElement)) f.focus({ preventScroll: true }); }, 60);
+      // Move focus to the screen's title (announced by screen readers, no visible
+      // ring), not to the first button, the way a native screen does.
+      var heading = h1 || barTitle;
+      heading.setAttribute('tabindex', '-1');
+      setTimeout(function () { try { heading.focus({ preventScroll: true }); } catch (e) { /* ignore */ } }, 60);
       return page;
     }
 
