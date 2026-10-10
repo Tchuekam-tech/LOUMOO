@@ -292,6 +292,258 @@ function testBuyerNotification() {
   assert.ok(/Your order is confirmed — pay on delivery\. Total XAF 21,500\./.test(plain.body), 'without context it reads as before');
 }
 
+// ------------------------------------------------- 5. delivery, through the service
+
+const { OrderCreationService } = require('../../server/modules/commerce/application/OrderCreationService');
+const { OrderRecipients, usableEmail } = require('../../server/modules/commerce/application/OrderRecipients');
+const logger = require('../../server/shared/logging/logger');
+
+function listing(id, sellerId, storeName, storeId) {
+  return {
+    id, title: `Item ${id}`, status: 'PUBLISHED', visibility: 'PUBLIC', deletedAt: null, storeStatus: 'ACTIVE',
+    basePriceMinor: 10000, salePriceMinor: null, sku: null, sellerId, storeId: storeId || `store_${sellerId}`, storeName,
+    storePhone: '+237611111111'
+  };
+}
+
+/**
+ * A creation service over an in-memory repository with every outside dependency
+ * replaced by a recorder, so nothing here can reach a database, a mailbox or a
+ * notification table.
+ */
+function harness(overrides = {}) {
+  const saved = [];
+  const listings = { l1: listing('l1', 'seller_1', 'Tech Shop'), l2: listing('l2', 'seller_1', 'Tech Shop') };
+  const repository = {
+    findListingById: async (id) => listings[id] || null,
+    findVariantById: async () => null,
+    checkInventory: async () => ({ isAvailable: true, availableQuantity: 99 }),
+    saveOrder: async (order) => { order.id = `ord_${saved.length + 1}`; saved.push(order); return order; }
+  };
+  const sent = [];
+  const emails = [];
+  const notificationService = overrides.notificationService || {
+    create: async (userId, payload) => { sent.push({ userId, ...payload }); return null; }
+  };
+  const deps = {
+    notificationService,
+    sendEmail: overrides.sendEmail || (async (message) => { emails.push(message); return { sent: true }; }),
+    getNotificationPreferences: overrides.getNotificationPreferences || (async () => ({ channels: { inApp: true, email: true } })),
+    recipients: overrides.recipients || {
+      sellerEmail: async () => 'seller@shop.cm',
+      buyerContact: async () => ({ name: 'Profile Buyer', phone: '690000000', email: 'buyer@mail.cm' })
+    },
+    houseStore: { resolve: async () => null, resolveDefaultProvider: async () => null },
+    ...(overrides.deps || {})
+  };
+  const service = new OrderCreationService(repository, deps);
+  return { service, saved, sent, emails, to: (id) => sent.filter((n) => n.userId === id) };
+}
+
+const ADDRESS = { fullName: 'Awa Njoya', phone: '+237622222222', street: 'Rue 1', city: 'Douala', neighbourhood: 'Bonanjo' };
+const BAG = [{ listingId: 'l1', quantity: 2 }, { listingId: 'l2', quantity: 1 }];
+
+/** Captures what the logger is asked to write while fn runs. */
+async function capturingLogs(fn) {
+  const lines = [];
+  const originals = { warn: logger.warn, info: logger.info, error: logger.error };
+  logger.warn = (m) => { lines.push(String(m)); };
+  logger.info = (m) => { lines.push(String(m)); };
+  logger.error = (m) => { lines.push(String(m)); };
+  try { await fn(); } finally { Object.assign(logger, originals); }
+  return lines;
+}
+
+async function testSellerGetsMessageAndEmail() {
+  const h = harness();
+  const order = await h.service.createOrder('buyer_1', { items: BAG, shippingAddress: ADDRESS, deliveryMethod: 'HOME_DELIVERY' });
+  await h.service.notificationsSettled();
+
+  const note = h.to('seller_1')[0];
+  assert.ok(note, 'the seller is notified in-app');
+  assert.strictEqual(note.metadata.orderId, order.id);
+  assert.strictEqual(note.metadata.audience, 'seller');
+  assert.strictEqual(note.metadata.action, 'open_dispatch');
+  for (const needle of ['Awa Njoya', '+237622222222', 'https://wa.me/237622222222', 'Rue 1, Bonanjo, Douala',
+    'Item l1', 'Subtotal:', 'Delivery fee:', 'Total:', 'Pay on delivery', order.orderNumber, 'Store: Tech Shop']) {
+    assert.ok(note.body.includes(needle), `the in-app message carries "${needle}"`);
+  }
+  assert.strictEqual(note.metadata.details.buyer.name, 'Awa Njoya');
+  assert.strictEqual(note.metadata.details.items.length, 2);
+  assert.strictEqual(note.metadata.details.totalXaf, order.totalAmountXaf);
+
+  assert.strictEqual(h.emails.length, 1, 'and the seller is e-mailed');
+  assert.strictEqual(h.emails[0].to, 'seller@shop.cm');
+  assert.ok(h.emails[0].subject.includes(order.orderNumber));
+  assert.ok(h.emails[0].html.includes('Awa Njoya') && h.emails[0].html.includes('wa.me/237622222222'));
+  assert.ok(h.emails[0].html.includes('buyer@mail.cm'), 'the e-mail also carries the buyer address from their profile');
+  assert.ok(h.emails[0].text.includes('Total:'), 'with a plain-text version');
+
+  const buyerNote = h.to('buyer_1')[0];
+  assert.ok(buyerNote && buyerNote.body.includes('Tech Shop'), 'the buyer is told which store they ordered from');
+  assert.strictEqual(buyerNote.metadata.action, 'track_order');
+}
+
+async function testOrdinarySellerKeepsTheOldShape() {
+  const h = harness();
+  const order = await h.service.createOrder('buyer_1', { items: [{ listingId: 'l1', quantity: 1 }], shippingAddress: ADDRESS, deliveryMethod: 'HOME_DELIVERY' });
+  const note = h.to('seller_1')[0];
+  // Synchronous, exactly when it used to be: no waiting for anything when the address is complete.
+  assert.ok(note, 'sent by the time the order returns');
+  assert.deepStrictEqual(
+    { type: note.type, tone: note.tone, audience: note.metadata.audience, action: note.metadata.action, orderId: note.metadata.orderId, orderNumber: note.metadata.orderNumber },
+    { type: 'order', tone: 'sale', audience: 'seller', action: 'open_dispatch', orderId: order.id, orderNumber: order.orderNumber }
+  );
+  assert.ok(/^New order .* to deliver/.test(note.title));
+  assert.ok(/1 item/.test(note.body) && /Bonanjo, Douala/.test(note.body) && /Arrange a rider from Deliveries/.test(note.body), 'the old facts are all still there');
+  await h.service.notificationsSettled();
+
+  const p = harness();
+  await p.service.createOrder('buyer_1', { items: [{ listingId: 'l1', quantity: 1 }], deliveryMethod: 'STORE_PICKUP', shippingAddress: ADDRESS });
+  const pn = p.to('seller_1')[0];
+  assert.ok(/^New pickup order/.test(pn.title) && pn.metadata.action === null && /collect/.test(pn.body));
+}
+
+async function testEmailSkippedWhenItShouldBe() {
+  // The seller switched e-mail off.
+  let h = harness({ getNotificationPreferences: async () => ({ channels: { inApp: true, email: false } }) });
+  await h.service.createOrder('buyer_1', { items: BAG, shippingAddress: ADDRESS });
+  await h.service.notificationsSettled();
+  assert.strictEqual(h.emails.length, 0, 'opted out: no e-mail');
+  assert.strictEqual(h.to('seller_1').length, 1, 'but the in-app notification still arrives');
+
+  // No address on file (or the store turned order e-mails off: the resolver answers null).
+  h = harness({ recipients: { sellerEmail: async () => null, buyerContact: async () => null } });
+  await h.service.createOrder('buyer_1', { items: BAG, shippingAddress: ADDRESS });
+  await h.service.notificationsSettled();
+  assert.strictEqual(h.emails.length, 0);
+  assert.strictEqual(h.to('seller_1').length, 1);
+
+  // A preference that cannot be read does not cost the seller their e-mail.
+  h = harness({ getNotificationPreferences: async () => { throw new Error('prefs table down'); } });
+  await h.service.createOrder('buyer_1', { items: BAG, shippingAddress: ADDRESS });
+  await h.service.notificationsSettled();
+  assert.strictEqual(h.emails.length, 1, 'default on when unreadable');
+}
+
+async function testBestEffort() {
+  // The mail transport throws: the order is saved, returned, and the in-app message is unaffected.
+  let h = harness({ sendEmail: async () => { throw new Error('550 mailbox seller@shop.cm rejected, call +237 690 11 22 33'); } });
+  let logs = await capturingLogs(async () => {
+    const order = await h.service.createOrder('buyer_1', { items: BAG, shippingAddress: ADDRESS });
+    await h.service.notificationsSettled();
+    assert.ok(order.id && h.saved.length === 1, 'the order was saved and returned');
+  });
+  assert.strictEqual(h.to('seller_1').length, 1, 'the in-app notification was not affected');
+  const joined = logs.join('\n');
+  assert.ok(/seller e-mail/.test(joined), 'the failure is logged');
+  assert.ok(!/seller@shop\.cm|690 11 22 33|Awa|622222222/.test(joined), `with no personal data: ${joined}`);
+
+  // The transport answers "not sent" (no provider configured) instead of throwing.
+  h = harness({ sendEmail: async () => ({ sent: false, reason: 'No active email transport available' }) });
+  logs = await capturingLogs(async () => {
+    await h.service.createOrder('buyer_1', { items: BAG, shippingAddress: ADDRESS });
+    await h.service.notificationsSettled();
+  });
+  assert.ok(logs.some((l) => /was not sent/.test(l)), 'an unsent e-mail is reported');
+
+  // The notification service throws synchronously, then rejects: the order still stands and the e-mail still goes.
+  for (const failure of [
+    () => { throw new Error('sync boom'); },
+    () => Promise.reject(new Error('async boom'))
+  ]) {
+    h = harness({ notificationService: { create: failure } });
+    let order;
+    await capturingLogs(async () => {
+      order = await h.service.createOrder('buyer_1', { items: BAG, shippingAddress: ADDRESS });
+      await h.service.notificationsSettled();
+    });
+    assert.ok(order && order.id && h.saved.length === 1, 'the order is saved and returned');
+    assert.strictEqual(h.emails.length, 1, 'the e-mail is independent of the in-app channel');
+  }
+
+  // Every recipient lookup fails: still no exception, the in-app message goes out.
+  h = harness({ recipients: { sellerEmail: async () => { throw new Error('db down'); }, buyerContact: async () => { throw new Error('db down'); } } });
+  await capturingLogs(async () => {
+    await h.service.createOrder('buyer_1', { items: BAG, shippingAddress: { city: 'Douala' } });
+    await h.service.notificationsSettled();
+  });
+  assert.strictEqual(h.to('seller_1').length, 1);
+  assert.ok(h.to('seller_1')[0].body.includes('Name: Customer'), 'with what the order itself says');
+}
+
+async function testNeverDelaysTheOrder() {
+  // A mail transport that never answers must not hold the order response.
+  const h = harness({ sendEmail: () => new Promise(() => {}) });
+  const started = Date.now();
+  const order = await h.service.createOrder('buyer_1', { items: BAG, shippingAddress: ADDRESS });
+  assert.ok(order.id);
+  assert.ok(Date.now() - started < 1500, 'the order returns without waiting for the e-mail');
+  assert.strictEqual(h.to('seller_1').length, 1, 'and the in-app message is already there');
+}
+
+async function testBuyerProfileFillsGaps() {
+  const h = harness();
+  await h.service.createOrder('buyer_1', { items: [{ listingId: 'l1', quantity: 1 }], deliveryMethod: 'STORE_PICKUP' });
+  await h.service.notificationsSettled();
+  const note = h.to('seller_1')[0];
+  assert.ok(note.body.includes('Name: Profile Buyer') && note.body.includes('wa.me/237690000000'), 'a pickup with no address names the buyer from their profile');
+
+  // A profile lookup that hangs only delays THIS message by the bound, and then it goes out.
+  const slow = harness({ recipients: { sellerEmail: async () => null, buyerContact: () => new Promise(() => {}) } });
+  const t0 = Date.now();
+  await slow.service.createOrder('buyer_1', { items: [{ listingId: 'l1', quantity: 1 }], deliveryMethod: 'STORE_PICKUP' });
+  await slow.service.notificationsSettled();
+  assert.ok(Date.now() - t0 >= 1500 && Date.now() - t0 < 6000, `bounded wait, took ${Date.now() - t0}ms`);
+  assert.ok(slow.to('seller_1')[0].body.includes('Name: Customer'));
+}
+
+async function testRecipientResolver() {
+  assert.strictEqual(usableEmail(' owner@shop.cm '), 'owner@shop.cm');
+  for (const bad of ['', null, 'nope', 'a@b', 'a b@c.cm', 'x@y.cm\r\nBcc: z@y.cm', '<a@b.cm>', '"a"@b.cm', 'a@b.cm,c@d.cm']) {
+    assert.strictEqual(usableEmail(bad), null, `rejects ${JSON.stringify(bad)}`);
+  }
+
+  const tables = {
+    store_settings: { s1: { notification_settings: { new_order_email: true } }, s_off: { notification_settings: { new_order_email: false } } },
+    stores: { s1: { email: 'store@shop.cm' }, s_off: { email: 'off@shop.cm' }, s_bad: { email: 'not an email' }, s_none: { email: null } }
+  };
+  const db = {
+    from(table) {
+      const f = {};
+      const q = {
+        select() { return q; },
+        eq(c, v) { f[c] = v; return q; },
+        async maybeSingle() {
+          const rows = tables[table] || {};
+          return { data: rows[f.store_id || f.id] || null, error: null };
+        }
+      };
+      return q;
+    }
+  };
+  const people = {
+    seller_1: { email: 'profile@shop.cm' },
+    buyer_1: { first_name: 'Awa', last_name: 'Njoya', phone_number: '690111111', email: 'awa@mail.cm' }
+  };
+  const r = new OrderRecipients({ db, profiles: { findById: async (id) => people[id] || null } });
+
+  assert.strictEqual(await r.sellerEmail({ sellerId: 'seller_1', storeId: 's1' }), 'store@shop.cm', 'the store address comes first');
+  assert.strictEqual(await r.sellerEmail({ sellerId: 'seller_1', storeId: 's_none' }), 'profile@shop.cm', 'then the seller profile');
+  assert.strictEqual(await r.sellerEmail({ sellerId: 'seller_1', storeId: 's_bad' }), 'profile@shop.cm', 'an unusable store address is skipped');
+  assert.strictEqual(await r.sellerEmail({ sellerId: 'seller_1', storeId: 's_off' }), null, 'a store that turned new-order e-mails off gets none');
+  assert.strictEqual(await r.sellerEmail({ sellerId: 'nobody', storeId: 's_none' }), null);
+  assert.deepStrictEqual(await r.buyerContact('buyer_1'), { name: 'Awa Njoya', phone: '690111111', email: 'awa@mail.cm' });
+  assert.strictEqual(await r.buyerContact('missing'), null);
+  assert.strictEqual(await r.buyerContact(null), null);
+
+  const broken = new OrderRecipients({ db: null, profiles: { findById: async () => { throw new Error('down'); } } });
+  await capturingLogs(async () => {
+    assert.strictEqual(await broken.sellerEmail({ sellerId: 's', storeId: 'x' }), null, 'a failing lookup answers null');
+    assert.strictEqual(await broken.buyerContact('b'), null);
+  });
+}
+
 async function run() {
   testHomeDeliveryContent();
   testPickupContent();
@@ -303,7 +555,14 @@ async function run() {
   testWhatsappLinks();
   testNoSecrets();
   testBuyerNotification();
-  console.log('order_seller_message: message-builder checks passed');
+  await testSellerGetsMessageAndEmail();
+  await testOrdinarySellerKeepsTheOldShape();
+  await testEmailSkippedWhenItShouldBe();
+  await testBestEffort();
+  await testNeverDelaysTheOrder();
+  await testBuyerProfileFillsGaps();
+  await testRecipientResolver();
+  console.log('order_seller_message: message, delivery and best-effort checks passed');
 }
 
 if (require.main === module) {
