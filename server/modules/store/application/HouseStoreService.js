@@ -54,7 +54,13 @@ class HouseStoreService {
    * The house store as the order path needs it, or null when it has not been
    * provisioned (or cannot be read). The store's own status is returned as-is so
    * the caller can refuse a suspended boutique with the usual message.
-   * @returns {Promise<{storeId:string, slug:string, name:string, ownerId:string, status:string, phone:string|null}|null>}
+   * Besides what the order path needs (owner, status, phone) it carries the public
+   * facts the product page shows about the seller (logo, verification, rating,
+   * city), so the catalogue can present the REAL provisioned store rather than a
+   * hard-coded one.
+   * @returns {Promise<{storeId:string, slug:string, name:string, ownerId:string, status:string, phone:string|null,
+   *   email:string|null, logoUrl:string|null, isVerified:boolean, verificationTier:string|null,
+   *   rating:number|null, ratingCount:number, city:string|null}|null>}
    */
   async resolve({ force = false } = {}) {
     const now = this._now();
@@ -66,7 +72,7 @@ class HouseStoreService {
       try {
         const { data, error } = await db
           .from('stores')
-          .select('id, owner_id, name, slug, status, phone_number, metadata, deleted_at')
+          .select('id, owner_id, name, slug, status, phone_number, email, logo_url, is_verified, verification_tier, rating, rating_count, metadata, deleted_at')
           .eq('id', HOUSE_STORE.id)
           .is('deleted_at', null)
           .maybeSingle();
@@ -79,8 +85,18 @@ class HouseStoreService {
             name: data.name,
             ownerId: data.owner_id,
             status: data.status,
-            phone: data.phone_number || (data.metadata && data.metadata.phone) || null
+            phone: data.phone_number || (data.metadata && data.metadata.phone) || null,
+            email: data.email || null,
+            logoUrl: data.logo_url || null,
+            isVerified: Boolean(data.is_verified),
+            verificationTier: data.verification_tier || null,
+            rating: data.rating != null ? Number(data.rating) : null,
+            ratingCount: Number(data.rating_count) || 0,
+            city: (data.metadata && data.metadata.city) || null
           };
+          // The seller edits the store's city through its location, not its
+          // metadata, so the location row is the better source when it exists.
+          value.city = (await this._readLocationCity(db, data.id)) || value.city;
         }
       } catch (err) {
         handleDatabaseFailure(err, 'HouseStoreService.resolve');
@@ -89,6 +105,15 @@ class HouseStoreService {
 
     this._cache = { value, expiresAt: now + (value ? HIT_TTL_MS : MISS_TTL_MS) };
     return value;
+  }
+
+  async _readLocationCity(db, storeId) {
+    try {
+      const { data, error } = await db.from('store_locations').select('city').eq('store_id', storeId).maybeSingle();
+      return !error && data && data.city ? data.city : null;
+    } catch (_) {
+      return null;
+    }
   }
 
   /**
