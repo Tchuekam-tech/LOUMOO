@@ -67,7 +67,7 @@ const LOOKUP_TIMEOUT_MS = 2000;
 
 function bounded(promise, ms = LOOKUP_TIMEOUT_MS) {
   let timer;
-  const timeout = new Promise((resolve) => { timer = setTimeout(() => resolve(null), ms); if (timer.unref) timer.unref(); });
+  const timeout = new Promise((resolve) => { timer = setTimeout(() => resolve(null), ms); });
   return Promise.race([Promise.resolve(promise).catch(() => null), timeout]).finally(() => clearTimeout(timer));
 }
 
