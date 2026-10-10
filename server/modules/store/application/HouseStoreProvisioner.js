@@ -77,6 +77,13 @@ function maskEmail(email) {
   return `${head}${'*'.repeat(Math.max(3, local.length - head.length))}@${domain}`;
 }
 
+/** What a step shows about the values it writes: emails masked, nothing else altered. */
+function display(fields) {
+  const out = {};
+  for (const [k, v] of Object.entries(fields)) out[k] = k === 'email' ? maskEmail(v) : v;
+  return out;
+}
+
 function fullName(profile) {
   return `${profile.first_name || ''} ${profile.last_name || ''}`.trim();
 }
@@ -312,7 +319,7 @@ class HouseStoreProvisioner {
       steps.push({
         table: 'stores', key: HOUSE_STORE.id, action: 'create',
         note: `${HOUSE_STORE.name}, ACTIVE + PUBLIC, verified (${HOUSE_STORE_VERIFICATION_TIER}), seller type ${HOUSE_STORE_SELLER_TYPE}, ${productCount} curated products`,
-        fields: { owner_id: owner.id, phone_number: phone, email: storeEmail },
+        fields: display({ owner_id: owner.id, phone_number: phone, email: storeEmail }),
         run: async () => must(await db.from('stores').insert(storeRow), 'create store')
       });
     } else if (existingStore.owner_id !== owner.id || existingStore.deleted_at) {
@@ -333,7 +340,7 @@ class HouseStoreProvisioner {
       }
       if (Object.keys(patch).length) {
         steps.push({
-          table: 'stores', key: HOUSE_STORE.id, action: 'update', note: 'fills blank fields and refreshes the product count only', fields: patch,
+          table: 'stores', key: HOUSE_STORE.id, action: 'update', note: 'fills blank fields and refreshes the product count only', fields: display(patch),
           run: async () => must(await db.from('stores').update({ ...patch, updated_at: nowIso }).eq('id', HOUSE_STORE.id), 'update store')
         });
       } else {
@@ -460,7 +467,7 @@ class HouseStoreProvisioner {
       }
       if (Object.keys(patch).length) {
         steps.push({
-          table: 'organizations', key: HOUSE_AGENCY.organizationId, action: 'update', note: 'fills blank fields only', fields: patch,
+          table: 'organizations', key: HOUSE_AGENCY.organizationId, action: 'update', note: 'fills blank fields only', fields: display(patch),
           run: async () => must(await db.from('organizations').update({ ...patch, updated_at: nowIso }).eq('id', HOUSE_AGENCY.organizationId), 'update organization')
         });
       } else {
