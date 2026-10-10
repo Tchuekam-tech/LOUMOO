@@ -117,6 +117,36 @@ class HouseStoreService {
   }
 
   /**
+   * Creates (or completes) NanoAfrica and nanoDelivery for a named owner. Operator
+   * tooling, run from scripts/provision_nanoafrica.js; see HouseStoreProvisioner for
+   * the rules (dry run by default, verified email only, idempotent, second
+   * confirmation before any write). When something was written the cached lookups
+   * are dropped so this process sees the new store at once.
+   * @param {object} opts See HouseStoreProvisioner#run.
+   */
+  async provision(opts = {}) {
+    const db = this.db;
+    if (!db) {
+      throw new Error('No database connection: set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY (or run through "railway run").');
+    }
+    const { HouseStoreProvisioner } = require('./HouseStoreProvisioner');
+    const provisioner = new HouseStoreProvisioner({
+      db,
+      now: () => new Date(this._now()),
+      invalidateProfile: async (clerkUserId, userId) => {
+        // The running server caches a signed-in profile for a few minutes; drop what we can reach.
+        const ProfileRepository = require('../../identity/infrastructure/ProfileRepository');
+        await ProfileRepository.invalidate(clerkUserId, userId);
+      }
+    });
+    try {
+      return await provisioner.run(opts);
+    } finally {
+      this.invalidate();
+    }
+  }
+
+  /**
    * nanoDelivery as a delivery provider (the shape DeliveryRepository.findDriver
    * returns), or null when the store or the agency is not provisioned. The agency
    * is the provider record that belongs to the store owner's account AND names the
