@@ -21,6 +21,8 @@ const {
   IdempotencyError
 } = require('../../../shared/errors/AppError');
 const logger = require('../../../shared/logging/logger');
+const Messages = require('./OrderNotificationBuilder');
+const { OrderRecipients } = require('./OrderRecipients');
 
 // Optional cross-cutting services (loaded lazily to avoid circular dependencies)
 let UserActivityUseCase = null;
@@ -47,6 +49,42 @@ function buildDroppedPreferenceNotice(reason, effectiveFeeXaf) {
   };
 }
 
+/**
+ * Whether a delivery provider takes orders for a city: no declared service areas
+ * means everywhere, otherwise the order's city (accent- and punctuation-folded
+ * like the tariff table) must be one of them. One rule for a buyer's chosen
+ * provider and for the house default.
+ */
+function providerServes(provider, city) {
+  const areas = provider && Array.isArray(provider.serviceAreas) ? provider.serviceAreas : [];
+  const folded = city ? foldCity(city) : '';
+  return areas.length === 0 || Boolean(folded && areas.includes(folded));
+}
+
+// How long a best-effort lookup for an order message may take before the message
+// goes out with what the order already says.
+const LOOKUP_TIMEOUT_MS = 2000;
+
+function bounded(promise, ms = LOOKUP_TIMEOUT_MS) {
+  let timer;
+  const timeout = new Promise((resolve) => { timer = setTimeout(() => resolve(null), ms); if (timer.unref) timer.unref(); });
+  return Promise.race([Promise.resolve(promise).catch(() => null), timeout]).finally(() => clearTimeout(timer));
+}
+
+/**
+ * An error as it may be logged: class and code, plus the message with anything
+ * that looks like an e-mail address or a phone number removed. Transport errors
+ * routinely quote the recipient.
+ */
+function describeError(err) {
+  const head = [err && err.name, err && err.code].filter(Boolean).join(':') || 'Error';
+  const message = String((err && err.message) || '')
+    .replace(/[^\s@<>"']+@[^\s@<>"']+/g, '[email]')
+    .replace(/\+?\d[\d\s().-]{5,}\d/g, '[number]')
+    .slice(0, 200);
+  return message ? `${head} ${message}` : head;
+}
+
 class OrderCreationService {
   constructor(repository = null, deps = {}) {
     this.repository = repository || new OrderRepository();
@@ -60,6 +98,29 @@ class OrderCreationService {
       const { getSharedDeliveryService } = require('../../delivery/application/DeliveryService');
       return getSharedDeliveryService().repo.findDriver(profileId);
     });
+    // The house store (NanoAfrica) and its agency (nanoDelivery), resolved from the
+    // database: { resolve(), resolveDefaultProvider() }. Lazy for the same reason.
+    this._houseStore = deps.houseStore || null;
+    // Who the order messages go to and how. All injectable, all best effort.
+    this._recipients = deps.recipients || new OrderRecipients();
+    this._sendEmail = deps.sendEmail || ((message) => require('../../../clients/resend').sendEmail(message));
+    this._getNotificationPreferences = deps.getNotificationPreferences
+      || ((userId) => require('../../identity/application/NotificationPreferencesUseCase').getPreferences(userId));
+    this._notifications = deps.notificationService || null;
+    // Notification dispatches still running (they are never awaited by an order).
+    this._pendingNotifications = new Set();
+  }
+
+  /** Resolves once every notification dispatched so far has finished (tests, graceful shutdown). */
+  async notificationsSettled() {
+    while (this._pendingNotifications.size) await Promise.all([...this._pendingNotifications]);
+  }
+
+  get houseStore() {
+    if (!this._houseStore) {
+      this._houseStore = require('../../store/application/HouseStoreService').getSharedHouseStore();
+    }
+    return this._houseStore;
   }
 
   /**
@@ -253,14 +314,18 @@ class OrderCreationService {
       // city rate — but the buyer is TOLD (deliveryNotice below), not silently
       // switched. Stays null while nothing was dropped. (Integration spec item E.)
       let droppedPreferenceReason = null;
+      // The provider the order ends up with, for the seller's message: the buyer's
+      // pick, or (house store only) the default below. { id, name, source }.
+      let messageProvider = effectivePreferredDriverId
+        ? { id: effectivePreferredDriverId, name: null, source: 'buyer' }
+        : null;
       if (effectivePreferredDriverId) {
         try {
           const provider = await this._resolveProvider(effectivePreferredDriverId);
-          const folded = orderCity ? foldCity(orderCity) : '';
-          const areas = provider && Array.isArray(provider.serviceAreas) ? provider.serviceAreas : [];
-          const serves = provider && (areas.length === 0 || (folded && areas.includes(folded)));
+          const serves = provider && providerServes(provider, orderCity);
           const active = provider && provider.status === 'active';
           if (active && serves) {
+            messageProvider = { id: effectivePreferredDriverId, name: provider.name || null, source: 'buyer' };
             if (provider.baseFeeXaf != null) standardShippingFeeXaf = provider.baseFeeXaf;
             // else the provider quotes the standard city rate: leave it as resolved.
           } else {
@@ -268,8 +333,22 @@ class OrderCreationService {
             // preference on the order, and price at the city rate.
             droppedPreferenceReason = !provider ? 'gone' : (!active ? 'suspended' : 'out_of_area');
             effectivePreferredDriverId = null;
+            messageProvider = null;
           }
         } catch (_) { /* delivery module unavailable: keep the hint, price at city rate */ }
+      }
+
+      // House store only: a home delivery whose buyer chose nobody defaults to the
+      // store's own agency (nanoDelivery), so the owner's dispatch board starts on
+      // "Offer to nanoDelivery". It is a default, not a choice: it changes no price,
+      // never replaces a pick the buyer made (even one that was dropped above), and
+      // the buyer is not told they switched anything.
+      if (data.deliveryMethod === DELIVERY_METHOD.HOME_DELIVERY && !data.preferredDriverId) {
+        const house = await this._houseDefaultProvider(evaluatedItems[0].sellerId, orderCity);
+        if (house) {
+          effectivePreferredDriverId = house.id;
+          messageProvider = { id: house.id, name: house.name || null, source: 'default' };
+        }
       }
 
       const clientSuppliedTotal = data.totalAmountXaf ?? data.totalXaf ?? null;
@@ -372,7 +451,12 @@ class OrderCreationService {
         }).catch(e => logger.warn(`[OrderCreation] Activity log error: ${e.message}`));
       }
 
-      this._notifyParties(savedOrder);
+      this._notifyParties(savedOrder, {
+        storeName: evaluatedItems[0].storeName || null,
+        storeId: evaluatedItems[0].storeId || null,
+        provider: messageProvider,
+        droppedProviderReason: droppedPreferenceReason
+      });
 
       return savedOrder;
     } catch (err) {
@@ -386,44 +470,118 @@ class OrderCreationService {
   }
 
   /**
-   * Tells both sides of a new order. The buyer gets their confirmation; the seller
-   * gets the order itself, which is what starts the delivery circuit: for a home
-   * delivery it is their cue to arrange a rider. `audience` and `action` in the
-   * metadata tell the client which screen to open when the notification is tapped
-   * (the same vocabulary as DeliveryService; see docs/DELIVERY_API.md).
-   * Best effort: a notification that fails never fails an order that was saved.
+   * nanoDelivery as the default provider of an order, or null. It applies only
+   * when the order's seller is the house store's owner (the seller is the
+   * database's answer, never the request's) and the agency can take the order
+   * WITHOUT changing what the buyer was shown: it is active, it serves the order's
+   * city (the rule a buyer's own pick must pass), and it has no tariff of its own
+   * (baseFeeXaf null: it quotes the standard city rate). Anything else, including
+   * any lookup failure, answers null and the order simply has no default.
    */
-  _notifyParties(order) {
-    if (!NotificationService || typeof NotificationService.create !== 'function') return;
-    const warn = (who) => (e) => logger.warn(`[OrderCreation] ${who} notification error: ${e.message}`);
-    const home = order.deliveryMethod === DELIVERY_METHOD.HOME_DELIVERY;
-    const lines = order.items.reduce((n, it) => n + it.quantity, 0);
-    const what = `${lines} ${lines === 1 ? 'item' : 'items'}`;
+  async _houseDefaultProvider(sellerId, city) {
+    try {
+      const house = await this.houseStore.resolve();
+      if (!house || !sellerId || house.ownerId !== sellerId) return null;
+      const provider = await this.houseStore.resolveDefaultProvider();
+      if (!provider || !provider.id) return null;
+      if (provider.status !== 'active' || provider.baseFeeXaf != null || !providerServes(provider, city)) return null;
+      return provider;
+    } catch (err) {
+      logger.warn(`[OrderCreation] default delivery provider unavailable: ${describeError(err)}`);
+      return null;
+    }
+  }
 
-    NotificationService.create(order.buyerId, {
-      type: 'order',
-      tone: 'accent',
-      title: `Order ${order.orderNumber} placed`,
-      body: `Your order is confirmed — pay on delivery. Total XAF ${order.totalAmountXaf}.`,
-      metadata: { orderId: order.id, orderNumber: order.orderNumber, audience: 'buyer', action: 'track_order' }
-    }).catch(warn('Buyer'));
+  /**
+   * Tells both sides of a new order. The buyer gets their confirmation (naming the
+   * store and, for a home delivery, the delivery provider); the seller gets the
+   * order itself, with every detail needed to act on it, which is what starts the
+   * delivery circuit: for a home delivery it is their cue to arrange a rider.
+   * `audience` and `action` in the metadata tell the client which screen to open
+   * when the notification is tapped (the same vocabulary as DeliveryService; see
+   * docs/DELIVERY_API.md). The message itself is built by OrderNotificationBuilder.
+   *
+   * The seller is reached on two channels: the in-app notification (the guaranteed
+   * one) and an e-mail. Both are best effort and asynchronous: nothing here is
+   * awaited by the order, a failure of either is logged without personal data and
+   * never touches the order that was saved, and one channel failing does not stop
+   * the other. Returns the dispatch promise (it never rejects) for callers that
+   * need to wait, such as tests; createOrder does not.
+   *
+   * @param {Order} order The saved order.
+   * @param {object} [context] { storeName, storeId, provider, droppedProviderReason }
+   */
+  _notifyParties(order, context = {}) {
+    const dispatch = this._dispatchNotifications(order, context || {});
+    this._pendingNotifications.add(dispatch);
+    dispatch.finally(() => this._pendingNotifications.delete(dispatch));
+    return dispatch;
+  }
 
-    const ship = order.shippingAddress || {};
-    const area = [ship.neighbourhood, ship.city].filter(Boolean).join(', ');
-    NotificationService.create(order.sellerId, {
-      type: 'order',
-      tone: 'sale',
-      title: home ? `New order ${order.orderNumber} to deliver` : `New pickup order ${order.orderNumber}`,
-      body: home
-        ? `${what} · XAF ${order.totalAmountXaf}${area ? ` · to ${area}` : ''}. Arrange a rider from Deliveries.`
-        : `${what} · XAF ${order.totalAmountXaf}. Get it ready for the customer to collect.`,
-      metadata: {
-        orderId: order.id,
-        orderNumber: order.orderNumber,
-        audience: 'seller',
-        action: home ? 'open_dispatch' : null
+  async _dispatchNotifications(order, context) {
+    const notifier = this._notifications || NotificationService;
+    const label = order.orderNumber;
+    // Starts the work immediately (so a notification that can be sent at once is
+    // sent at once), and turns a throw, synchronous or not, into a log line.
+    const guard = (what, fn) => {
+      const failed = (err) => logger.warn(`[OrderCreation] ${what} for ${label} failed: ${describeError(err)}`);
+      try {
+        return Promise.resolve(fn()).catch(failed);
+      } catch (err) {
+        failed(err);
+        return Promise.resolve();
       }
-    }).catch(warn('Seller'));
+    };
+
+    const tasks = [];
+    if (notifier && typeof notifier.create === 'function') {
+      tasks.push(guard('buyer notification', () => notifier.create(order.buyerId, Messages.buildBuyerNotification(order, context))));
+    }
+
+    // The buyer's profile fills in what the shipping address left out. It is only
+    // needed for the in-app message when the address has no name or phone; the
+    // e-mail always uses it (it adds the buyer's e-mail address, which the order
+    // does not carry). One lookup, shared, bounded.
+    const ship = (order.shippingAddress && typeof order.shippingAddress === 'object') ? order.shippingAddress : {};
+    const addressIncomplete = !Messages.clean(ship.fullName) || !Messages.clean(ship.phone);
+    let buyerLookup = null;
+    const buyerContact = () => {
+      if (!buyerLookup) buyerLookup = bounded(this._recipients.buyerContact(order.buyerId));
+      return buyerLookup;
+    };
+
+    if (notifier && typeof notifier.create === 'function') {
+      tasks.push(guard('seller notification', async () => {
+        const buyer = addressIncomplete ? await buyerContact() : null;
+        await notifier.create(order.sellerId, Messages.buildSellerNotification(order, { ...context, buyer }));
+      }));
+    }
+
+    tasks.push(guard('seller e-mail', async () => {
+      // The seller's own switch for e-mail. If the preference cannot be read the
+      // e-mail is still sent: the default is on, and a missed order costs more
+      // than one e-mail the seller can turn off.
+      let emailAllowed = true;
+      try {
+        const prefs = await this._getNotificationPreferences(order.sellerId);
+        if (prefs && prefs.channels && prefs.channels.email === false) emailAllowed = false;
+      } catch (_) { /* keep the default */ }
+      if (!emailAllowed) return;
+
+      const to = await this._recipients.sellerEmail({ sellerId: order.sellerId, storeId: context.storeId || null });
+      if (!to) {
+        logger.info(`[OrderCreation] no e-mail address for the seller of ${label}; the in-app notification stands.`);
+        return;
+      }
+      const buyer = await buyerContact();
+      const mail = Messages.buildSellerEmail(order, { ...context, buyer });
+      const result = await this._sendEmail({ to, subject: mail.subject, html: mail.html, text: mail.text });
+      if (result && result.sent === false) {
+        logger.warn(`[OrderCreation] seller e-mail for ${label} was not sent${result.reason ? ` (${describeError({ message: result.reason })})` : ''}.`);
+      }
+    }));
+
+    await Promise.all(tasks);
   }
 }
 
