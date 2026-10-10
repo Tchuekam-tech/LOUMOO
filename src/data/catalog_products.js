@@ -15,7 +15,8 @@ export const catalogProducts = {
     "soldCount": 45,
     "price": "XAF 187.200",
     "salePrice": "XAF 208.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -41,7 +42,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Tecno Camon 50 Pro 5G 256GB / 12GB RAM. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Orca Electronics avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Tecno Camon 50 Pro 5G 256GB / 12GB RAM. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -63,7 +64,8 @@ export const catalogProducts = {
     "soldCount": 58,
     "price": "XAF 522.000",
     "salePrice": "XAF 580.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -89,7 +91,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Apple iPhone 15 128GB Noir Minuit (#2). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Digital Corner avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Apple iPhone 15 128GB Noir Minuit (#2). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -111,7 +113,8 @@ export const catalogProducts = {
     "soldCount": 71,
     "price": "XAF 121.500",
     "salePrice": "XAF 135.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -137,7 +140,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Tecno Spark 20 Pro+ 256GB / 8GB RAM (#3). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par SmartTech Cameroun avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Tecno Spark 20 Pro+ 256GB / 8GB RAM (#3). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -159,7 +162,8 @@ export const catalogProducts = {
     "soldCount": 84,
     "price": "XAF 324.000",
     "salePrice": "XAF 360.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -185,7 +189,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8a 128GB Bay Blue (#4). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Apple Hub Douala avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8a 128GB Bay Blue (#4). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -207,7 +211,8 @@ export const catalogProducts = {
     "soldCount": 97,
     "price": "XAF 148.500",
     "salePrice": "XAF 165.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -233,7 +238,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Samsung Galaxy A25 5G 128GB Blue Black (#5). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Galaxy Center Yaoundé avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Samsung Galaxy A25 5G 128GB Blue Black (#5). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -255,7 +260,8 @@ export const catalogProducts = {
     "soldCount": 110,
     "price": "XAF 175.500",
     "salePrice": "XAF 195.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -281,7 +287,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Infinix Zero 30 5G 256GB Rome Green (#6). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Oraimo Official Store avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Infinix Zero 30 5G 256GB Rome Green (#6). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -303,7 +309,8 @@ export const catalogProducts = {
     "soldCount": 123,
     "price": "XAF 522.000",
     "salePrice": "XAF 580.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -329,7 +336,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Samsung Galaxy S24+ 5G 256GB Onyx Black (#7). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par TechPro Omnisports avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Samsung Galaxy S24+ 5G 256GB Onyx Black (#7). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -351,7 +358,8 @@ export const catalogProducts = {
     "soldCount": 136,
     "price": "XAF 522.000",
     "salePrice": "XAF 580.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -377,7 +385,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Apple iPhone 15 128GB Noir Minuit (#8). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Cameroon Gadgets Express avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Apple iPhone 15 128GB Noir Minuit (#8). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -399,7 +407,8 @@ export const catalogProducts = {
     "soldCount": 149,
     "price": "XAF 121.500",
     "salePrice": "XAF 135.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -425,7 +434,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Tecno Spark 20 Pro+ 256GB / 8GB RAM (#9). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Orca Electronics avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Tecno Spark 20 Pro+ 256GB / 8GB RAM (#9). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -447,7 +456,8 @@ export const catalogProducts = {
     "soldCount": 162,
     "price": "XAF 324.000",
     "salePrice": "XAF 360.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -473,7 +483,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8a 128GB Bay Blue (#10). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Digital Corner avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8a 128GB Bay Blue (#10). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -495,7 +505,8 @@ export const catalogProducts = {
     "soldCount": 175,
     "price": "XAF 148.500",
     "salePrice": "XAF 165.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -521,7 +532,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Samsung Galaxy A25 5G 128GB Blue Black (#11). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par SmartTech Cameroun avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Samsung Galaxy A25 5G 128GB Blue Black (#11). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -543,7 +554,8 @@ export const catalogProducts = {
     "soldCount": 188,
     "price": "XAF 175.500",
     "salePrice": "XAF 195.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -569,7 +581,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Infinix Zero 30 5G 256GB Rome Green (#12). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Apple Hub Douala avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Infinix Zero 30 5G 256GB Rome Green (#12). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -591,7 +603,8 @@ export const catalogProducts = {
     "soldCount": 201,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -617,7 +630,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Galaxy Center Yaoundé avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -639,7 +652,8 @@ export const catalogProducts = {
     "soldCount": 214,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -665,7 +679,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Oraimo Official Store avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -687,7 +701,8 @@ export const catalogProducts = {
     "soldCount": 227,
     "price": "XAF 342.000",
     "salePrice": "XAF 380.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -713,7 +728,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme OnePlus Ace 2 Pro 5G 512GB / 16GB RAM Flagship. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par TechPro Omnisports avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme OnePlus Ace 2 Pro 5G 512GB / 16GB RAM Flagship. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -735,7 +750,8 @@ export const catalogProducts = {
     "soldCount": 240,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -761,7 +777,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Cameroon Gadgets Express avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -783,7 +799,8 @@ export const catalogProducts = {
     "soldCount": 253,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -809,7 +826,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Orca Electronics avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -831,7 +848,8 @@ export const catalogProducts = {
     "soldCount": 266,
     "price": "XAF 216.000",
     "salePrice": "XAF 240.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -857,7 +875,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Samsung Galaxy A55 5G 256GB Awesome Navy (#18). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Digital Corner avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Samsung Galaxy A55 5G 256GB Awesome Navy (#18). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -879,7 +897,8 @@ export const catalogProducts = {
     "soldCount": 279,
     "price": "XAF 801.000",
     "salePrice": "XAF 890.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -905,7 +924,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Apple iPhone 15 Pro Max 256GB Titanium Naturel (#19). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par SmartTech Cameroun avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Apple iPhone 15 Pro Max 256GB Titanium Naturel (#19). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -927,7 +946,8 @@ export const catalogProducts = {
     "soldCount": 292,
     "price": "XAF 801.000",
     "salePrice": "XAF 890.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -953,7 +973,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Apple iPhone 15 Pro Max 256GB Titanium Naturel (#20). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Apple Hub Douala avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Apple iPhone 15 Pro Max 256GB Titanium Naturel (#20). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -975,7 +995,8 @@ export const catalogProducts = {
     "soldCount": 55,
     "price": "XAF 801.000",
     "salePrice": "XAF 890.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -1001,7 +1022,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Apple iPhone 15 Pro Max 256GB Titanium Naturel (#21). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Galaxy Center Yaoundé avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Apple iPhone 15 Pro Max 256GB Titanium Naturel (#21). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1023,7 +1044,8 @@ export const catalogProducts = {
     "soldCount": 68,
     "price": "XAF 193.500",
     "salePrice": "XAF 215.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -1049,7 +1071,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#22). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Oraimo Official Store avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#22). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1071,7 +1093,8 @@ export const catalogProducts = {
     "soldCount": 81,
     "price": "XAF 342.000",
     "salePrice": "XAF 380.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -1097,7 +1120,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme OnePlus Ace 2 Pro 5G 512GB / 16GB RAM Flagship. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par TechPro Omnisports avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme OnePlus Ace 2 Pro 5G 512GB / 16GB RAM Flagship. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1119,7 +1142,8 @@ export const catalogProducts = {
     "soldCount": 94,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -1145,7 +1169,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Cameroon Gadgets Express avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1167,7 +1191,8 @@ export const catalogProducts = {
     "soldCount": 107,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -1193,7 +1218,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Orca Electronics avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1215,7 +1240,8 @@ export const catalogProducts = {
     "soldCount": 120,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -1241,7 +1267,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Digital Corner avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1263,7 +1289,8 @@ export const catalogProducts = {
     "soldCount": 133,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -1289,7 +1316,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par SmartTech Cameroun avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1311,7 +1338,8 @@ export const catalogProducts = {
     "soldCount": 146,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -1337,7 +1365,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Apple Hub Douala avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1359,7 +1387,8 @@ export const catalogProducts = {
     "soldCount": 159,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -1385,7 +1414,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Galaxy Center Yaoundé avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1407,7 +1436,8 @@ export const catalogProducts = {
     "soldCount": 172,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -1433,7 +1463,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Oraimo Official Store avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1455,7 +1485,8 @@ export const catalogProducts = {
     "soldCount": 185,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -1481,7 +1512,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par TechPro Omnisports avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1503,7 +1534,8 @@ export const catalogProducts = {
     "soldCount": 198,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -1529,7 +1561,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Cameroon Gadgets Express avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1551,7 +1583,8 @@ export const catalogProducts = {
     "soldCount": 211,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -1577,7 +1610,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Orca Electronics avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1599,7 +1632,8 @@ export const catalogProducts = {
     "soldCount": 224,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -1625,7 +1659,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Digital Corner avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1647,7 +1681,8 @@ export const catalogProducts = {
     "soldCount": 237,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -1673,7 +1708,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par SmartTech Cameroun avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1695,7 +1730,8 @@ export const catalogProducts = {
     "soldCount": 250,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -1721,7 +1757,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Apple Hub Douala avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1743,7 +1779,8 @@ export const catalogProducts = {
     "soldCount": 263,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -1769,7 +1806,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Galaxy Center Yaoundé avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1791,7 +1828,8 @@ export const catalogProducts = {
     "soldCount": 276,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -1817,7 +1855,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Oraimo Official Store avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1839,7 +1877,8 @@ export const catalogProducts = {
     "soldCount": 289,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -1865,7 +1904,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par TechPro Omnisports avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1887,7 +1926,8 @@ export const catalogProducts = {
     "soldCount": 52,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -1913,7 +1953,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Cameroon Gadgets Express avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1935,7 +1975,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -1961,7 +2002,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Orca Electronics avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -1983,7 +2024,8 @@ export const catalogProducts = {
     "soldCount": 78,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -2009,7 +2051,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Digital Corner avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2031,7 +2073,8 @@ export const catalogProducts = {
     "soldCount": 91,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -2057,7 +2100,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par SmartTech Cameroun avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2079,7 +2122,8 @@ export const catalogProducts = {
     "soldCount": 104,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -2105,7 +2149,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Apple Hub Douala avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2127,7 +2171,8 @@ export const catalogProducts = {
     "soldCount": 117,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -2153,7 +2198,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Galaxy Center Yaoundé avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2175,7 +2220,8 @@ export const catalogProducts = {
     "soldCount": 130,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -2201,7 +2247,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Oraimo Official Store avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2223,7 +2269,8 @@ export const catalogProducts = {
     "soldCount": 143,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -2249,7 +2296,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par TechPro Omnisports avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2271,7 +2318,8 @@ export const catalogProducts = {
     "soldCount": 156,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -2297,7 +2345,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Cameroon Gadgets Express avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2319,7 +2367,8 @@ export const catalogProducts = {
     "soldCount": 169,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -2345,7 +2394,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Orca Electronics avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2367,7 +2416,8 @@ export const catalogProducts = {
     "soldCount": 182,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -2393,7 +2443,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Digital Corner avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2415,7 +2465,8 @@ export const catalogProducts = {
     "soldCount": 195,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -2441,7 +2492,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par SmartTech Cameroun avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2463,7 +2514,8 @@ export const catalogProducts = {
     "soldCount": 208,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -2489,7 +2541,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Apple Hub Douala avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2511,7 +2563,8 @@ export const catalogProducts = {
     "soldCount": 221,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -2537,7 +2590,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Galaxy Center Yaoundé avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2559,7 +2612,8 @@ export const catalogProducts = {
     "soldCount": 234,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -2585,7 +2639,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Oraimo Official Store avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2607,7 +2661,8 @@ export const catalogProducts = {
     "soldCount": 247,
     "price": "XAF 522.000",
     "salePrice": "XAF 580.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -2633,7 +2688,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Samsung Galaxy S24+ 5G 256GB Onyx Black (#55). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par TechPro Omnisports avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Samsung Galaxy S24+ 5G 256GB Onyx Black (#55). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2655,7 +2710,8 @@ export const catalogProducts = {
     "soldCount": 260,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -2681,7 +2737,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Cameroon Gadgets Express avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2703,7 +2759,8 @@ export const catalogProducts = {
     "soldCount": 273,
     "price": "XAF 121.500",
     "salePrice": "XAF 135.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -2729,7 +2786,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Tecno Spark 20 Pro+ 256GB / 8GB RAM (#57). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Orca Electronics avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Tecno Spark 20 Pro+ 256GB / 8GB RAM (#57). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2751,7 +2808,8 @@ export const catalogProducts = {
     "soldCount": 286,
     "price": "XAF 324.000",
     "salePrice": "XAF 360.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -2777,7 +2835,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8a 128GB Bay Blue (#58). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Digital Corner avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8a 128GB Bay Blue (#58). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2799,7 +2857,8 @@ export const catalogProducts = {
     "soldCount": 49,
     "price": "XAF 148.500",
     "salePrice": "XAF 165.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -2825,7 +2884,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Samsung Galaxy A25 5G 128GB Blue Black (#59). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par SmartTech Cameroun avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Samsung Galaxy A25 5G 128GB Blue Black (#59). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2847,7 +2906,8 @@ export const catalogProducts = {
     "soldCount": 62,
     "price": "XAF 193.500",
     "salePrice": "XAF 215.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -2873,7 +2933,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#60). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Apple Hub Douala avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#60). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2895,7 +2955,8 @@ export const catalogProducts = {
     "soldCount": 75,
     "price": "XAF 193.500",
     "salePrice": "XAF 215.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -2921,7 +2982,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#61). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Galaxy Center Yaoundé avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#61). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2943,7 +3004,8 @@ export const catalogProducts = {
     "soldCount": 88,
     "price": "XAF 193.500",
     "salePrice": "XAF 215.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -2969,7 +3031,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#62). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Oraimo Official Store avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#62). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -2991,7 +3053,8 @@ export const catalogProducts = {
     "soldCount": 101,
     "price": "XAF 193.500",
     "salePrice": "XAF 215.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -3017,7 +3080,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#63). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par TechPro Omnisports avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#63). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3039,7 +3102,8 @@ export const catalogProducts = {
     "soldCount": 114,
     "price": "XAF 193.500",
     "salePrice": "XAF 215.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -3065,7 +3129,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#64). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Cameroon Gadgets Express avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#64). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3087,7 +3151,8 @@ export const catalogProducts = {
     "soldCount": 127,
     "price": "XAF 193.500",
     "salePrice": "XAF 215.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -3113,7 +3178,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#65). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Orca Electronics avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#65). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3135,7 +3200,8 @@ export const catalogProducts = {
     "soldCount": 140,
     "price": "XAF 193.500",
     "salePrice": "XAF 215.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -3161,7 +3227,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#66). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Digital Corner avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#66). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3183,7 +3249,8 @@ export const catalogProducts = {
     "soldCount": 153,
     "price": "XAF 193.500",
     "salePrice": "XAF 215.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -3209,7 +3276,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#67). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par SmartTech Cameroun avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#67). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3231,7 +3298,8 @@ export const catalogProducts = {
     "soldCount": 166,
     "price": "XAF 193.500",
     "salePrice": "XAF 215.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -3257,7 +3325,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#68). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Apple Hub Douala avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#68). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3279,7 +3347,8 @@ export const catalogProducts = {
     "soldCount": 179,
     "price": "XAF 193.500",
     "salePrice": "XAF 215.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -3305,7 +3374,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#69). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Galaxy Center Yaoundé avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#69). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3327,7 +3396,8 @@ export const catalogProducts = {
     "soldCount": 192,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -3353,7 +3423,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Oraimo Official Store avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3375,7 +3445,8 @@ export const catalogProducts = {
     "soldCount": 205,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -3401,7 +3472,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par TechPro Omnisports avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3423,7 +3494,8 @@ export const catalogProducts = {
     "soldCount": 218,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -3449,7 +3521,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Cameroon Gadgets Express avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3471,7 +3543,8 @@ export const catalogProducts = {
     "soldCount": 231,
     "price": "XAF 522.000",
     "salePrice": "XAF 580.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -3497,7 +3570,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Samsung Galaxy S24+ 5G 256GB Onyx Black (#73). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Orca Electronics avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Samsung Galaxy S24+ 5G 256GB Onyx Black (#73). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3519,7 +3592,8 @@ export const catalogProducts = {
     "soldCount": 244,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -3545,7 +3619,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Digital Corner avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3567,7 +3641,8 @@ export const catalogProducts = {
     "soldCount": 257,
     "price": "XAF 121.500",
     "salePrice": "XAF 135.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -3593,7 +3668,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Tecno Spark 20 Pro+ 256GB / 8GB RAM (#75). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par SmartTech Cameroun avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Tecno Spark 20 Pro+ 256GB / 8GB RAM (#75). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3615,7 +3690,8 @@ export const catalogProducts = {
     "soldCount": 270,
     "price": "XAF 342.000",
     "salePrice": "XAF 380.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -3641,7 +3717,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme OnePlus Ace 2 Pro 5G 512GB / 16GB RAM Flagship. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Apple Hub Douala avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme OnePlus Ace 2 Pro 5G 512GB / 16GB RAM Flagship. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3663,7 +3739,8 @@ export const catalogProducts = {
     "soldCount": 283,
     "price": "XAF 342.000",
     "salePrice": "XAF 380.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -3689,7 +3766,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme OnePlus Ace 2 Pro 5G 512GB / 16GB RAM Flagship. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Galaxy Center Yaoundé avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme OnePlus Ace 2 Pro 5G 512GB / 16GB RAM Flagship. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3711,7 +3788,8 @@ export const catalogProducts = {
     "soldCount": 46,
     "price": "XAF 342.000",
     "salePrice": "XAF 380.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -3737,7 +3815,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme OnePlus Ace 2 Pro 5G 512GB / 16GB RAM Flagship. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Oraimo Official Store avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme OnePlus Ace 2 Pro 5G 512GB / 16GB RAM Flagship. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3759,7 +3837,8 @@ export const catalogProducts = {
     "soldCount": 59,
     "price": "XAF 522.000",
     "salePrice": "XAF 580.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -3785,7 +3864,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Samsung Galaxy S24+ 5G 256GB Onyx Black (#79). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par TechPro Omnisports avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Samsung Galaxy S24+ 5G 256GB Onyx Black (#79). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3807,7 +3886,8 @@ export const catalogProducts = {
     "soldCount": 72,
     "price": "XAF 522.000",
     "salePrice": "XAF 580.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -3833,7 +3913,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Apple iPhone 15 128GB Noir Minuit (#80). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Cameroon Gadgets Express avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Apple iPhone 15 128GB Noir Minuit (#80). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3855,7 +3935,8 @@ export const catalogProducts = {
     "soldCount": 85,
     "price": "XAF 121.500",
     "salePrice": "XAF 135.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -3881,7 +3962,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Tecno Spark 20 Pro+ 256GB / 8GB RAM (#81). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Orca Electronics avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Tecno Spark 20 Pro+ 256GB / 8GB RAM (#81). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3903,7 +3984,8 @@ export const catalogProducts = {
     "soldCount": 98,
     "price": "XAF 324.000",
     "salePrice": "XAF 360.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -3929,7 +4011,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8a 128GB Bay Blue (#82). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Digital Corner avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8a 128GB Bay Blue (#82). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3951,7 +4033,8 @@ export const catalogProducts = {
     "soldCount": 111,
     "price": "XAF 148.500",
     "salePrice": "XAF 165.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -3977,7 +4060,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Samsung Galaxy A25 5G 128GB Blue Black (#83). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par SmartTech Cameroun avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Samsung Galaxy A25 5G 128GB Blue Black (#83). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -3999,7 +4082,8 @@ export const catalogProducts = {
     "soldCount": 124,
     "price": "XAF 175.500",
     "salePrice": "XAF 195.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -4025,7 +4109,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Infinix Zero 30 5G 256GB Rome Green (#84). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Apple Hub Douala avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Infinix Zero 30 5G 256GB Rome Green (#84). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4047,7 +4131,8 @@ export const catalogProducts = {
     "soldCount": 137,
     "price": "XAF 522.000",
     "salePrice": "XAF 580.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -4073,7 +4158,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Samsung Galaxy S24+ 5G 256GB Onyx Black (#85). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Galaxy Center Yaoundé avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Samsung Galaxy S24+ 5G 256GB Onyx Black (#85). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4095,7 +4180,8 @@ export const catalogProducts = {
     "soldCount": 150,
     "price": "XAF 522.000",
     "salePrice": "XAF 580.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -4121,7 +4207,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Apple iPhone 15 128GB Noir Minuit (#86). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Oraimo Official Store avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Apple iPhone 15 128GB Noir Minuit (#86). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4143,7 +4229,8 @@ export const catalogProducts = {
     "soldCount": 163,
     "price": "XAF 121.500",
     "salePrice": "XAF 135.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -4169,7 +4256,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Tecno Spark 20 Pro+ 256GB / 8GB RAM (#87). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par TechPro Omnisports avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Tecno Spark 20 Pro+ 256GB / 8GB RAM (#87). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4191,7 +4278,8 @@ export const catalogProducts = {
     "soldCount": 176,
     "price": "XAF 324.000",
     "salePrice": "XAF 360.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -4217,7 +4305,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8a 128GB Bay Blue (#88). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Cameroon Gadgets Express avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8a 128GB Bay Blue (#88). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4239,7 +4327,8 @@ export const catalogProducts = {
     "soldCount": 189,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -4265,7 +4354,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Orca Electronics avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4287,7 +4376,8 @@ export const catalogProducts = {
     "soldCount": 202,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -4313,7 +4403,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Digital Corner avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4335,7 +4425,8 @@ export const catalogProducts = {
     "soldCount": 215,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -4361,7 +4452,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par SmartTech Cameroun avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4383,7 +4474,8 @@ export const catalogProducts = {
     "soldCount": 228,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -4409,7 +4501,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#92). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Apple Hub Douala avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#92). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4431,7 +4523,8 @@ export const catalogProducts = {
     "soldCount": 241,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -4457,7 +4550,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#93). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Galaxy Center Yaoundé avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#93). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4479,7 +4572,8 @@ export const catalogProducts = {
     "soldCount": 254,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -4505,7 +4599,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#94). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Oraimo Official Store avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#94). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4527,7 +4621,8 @@ export const catalogProducts = {
     "soldCount": 267,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -4553,7 +4648,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#95). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par TechPro Omnisports avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#95). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4575,7 +4670,8 @@ export const catalogProducts = {
     "soldCount": 280,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -4601,7 +4697,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#96). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Cameroon Gadgets Express avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#96). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4623,7 +4719,8 @@ export const catalogProducts = {
     "soldCount": 293,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -4649,7 +4746,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#97). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Orca Electronics avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#97). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4671,7 +4768,8 @@ export const catalogProducts = {
     "soldCount": 56,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -4697,7 +4795,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#98). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Digital Corner avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#98). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4719,7 +4817,8 @@ export const catalogProducts = {
     "soldCount": 69,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -4745,7 +4844,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#99). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par SmartTech Cameroun avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#99). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4767,7 +4866,8 @@ export const catalogProducts = {
     "soldCount": 82,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -4793,7 +4893,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#100). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Apple Hub Douala avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#100). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4815,7 +4915,8 @@ export const catalogProducts = {
     "soldCount": 95,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -4841,7 +4942,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#101). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Galaxy Center Yaoundé avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#101). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4863,7 +4964,8 @@ export const catalogProducts = {
     "soldCount": 108,
     "price": "XAF 702.000",
     "salePrice": "XAF 780.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -4889,7 +4991,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Samsung Galaxy S24 Ultra 5G 256GB Titanium Gray. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Oraimo Official Store avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Samsung Galaxy S24 Ultra 5G 256GB Titanium Gray. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4911,7 +5013,8 @@ export const catalogProducts = {
     "soldCount": 121,
     "price": "XAF 702.000",
     "salePrice": "XAF 780.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -4937,7 +5040,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Samsung Galaxy S24 Ultra 5G 256GB Titanium Gray. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par TechPro Omnisports avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Samsung Galaxy S24 Ultra 5G 256GB Titanium Gray. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -4959,7 +5062,8 @@ export const catalogProducts = {
     "soldCount": 134,
     "price": "XAF 193.500",
     "salePrice": "XAF 215.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -4985,7 +5089,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#104). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Cameroon Gadgets Express avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#104). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5007,7 +5111,8 @@ export const catalogProducts = {
     "soldCount": 147,
     "price": "XAF 121.500",
     "salePrice": "XAF 135.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -5033,7 +5138,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Tecno Spark 20 Pro+ 256GB / 8GB RAM (#105). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Orca Electronics avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Tecno Spark 20 Pro+ 256GB / 8GB RAM (#105). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5055,7 +5160,8 @@ export const catalogProducts = {
     "soldCount": 160,
     "price": "XAF 167.800",
     "salePrice": "XAF 186.500",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -5081,7 +5187,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Tecno Camon 50 5G 256GB / 8GB RAM. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Digital Corner avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Tecno Camon 50 5G 256GB / 8GB RAM. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5103,7 +5209,8 @@ export const catalogProducts = {
     "soldCount": 173,
     "price": "XAF 148.500",
     "salePrice": "XAF 165.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -5129,7 +5236,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Samsung Galaxy A25 5G 128GB Blue Black (#107). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par SmartTech Cameroun avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Samsung Galaxy A25 5G 128GB Blue Black (#107). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5151,7 +5258,8 @@ export const catalogProducts = {
     "soldCount": 186,
     "price": "XAF 187.200",
     "salePrice": "XAF 208.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -5177,7 +5285,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Tecno Camon 50 Pro 5G 256GB / 12GB RAM. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Apple Hub Douala avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Tecno Camon 50 Pro 5G 256GB / 12GB RAM. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5199,7 +5307,8 @@ export const catalogProducts = {
     "soldCount": 199,
     "price": "XAF 187.200",
     "salePrice": "XAF 208.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -5225,7 +5334,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Tecno Camon 50 Pro 5G 256GB / 12GB RAM. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Galaxy Center Yaoundé avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Tecno Camon 50 Pro 5G 256GB / 12GB RAM. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5247,7 +5356,8 @@ export const catalogProducts = {
     "soldCount": 212,
     "price": "XAF 187.200",
     "salePrice": "XAF 208.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -5273,7 +5383,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Tecno Camon 50 Pro 5G 256GB / 12GB RAM. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Oraimo Official Store avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Tecno Camon 50 Pro 5G 256GB / 12GB RAM. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5295,7 +5405,8 @@ export const catalogProducts = {
     "soldCount": 225,
     "price": "XAF 187.200",
     "salePrice": "XAF 208.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -5321,7 +5432,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Tecno Camon 50 Pro 5G 256GB / 12GB RAM. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par TechPro Omnisports avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Tecno Camon 50 Pro 5G 256GB / 12GB RAM. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5343,7 +5454,8 @@ export const catalogProducts = {
     "soldCount": 238,
     "price": "XAF 324.000",
     "salePrice": "XAF 360.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -5369,7 +5481,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8a 128GB Bay Blue (#112). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Cameroon Gadgets Express avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8a 128GB Bay Blue (#112). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5391,7 +5503,8 @@ export const catalogProducts = {
     "soldCount": 251,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -5417,7 +5530,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Orca Electronics avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5439,7 +5552,8 @@ export const catalogProducts = {
     "soldCount": 264,
     "price": "XAF 175.500",
     "salePrice": "XAF 195.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -5465,7 +5579,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Infinix Zero 30 5G 256GB Rome Green (#114). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Digital Corner avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Infinix Zero 30 5G 256GB Rome Green (#114). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5487,7 +5601,8 @@ export const catalogProducts = {
     "soldCount": 277,
     "price": "XAF 522.000",
     "salePrice": "XAF 580.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -5513,7 +5628,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Samsung Galaxy S24+ 5G 256GB Onyx Black (#115). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par SmartTech Cameroun avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Samsung Galaxy S24+ 5G 256GB Onyx Black (#115). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5535,7 +5650,8 @@ export const catalogProducts = {
     "soldCount": 290,
     "price": "XAF 522.000",
     "salePrice": "XAF 580.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -5561,7 +5677,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Apple iPhone 15 128GB Noir Minuit (#116). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Apple Hub Douala avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Apple iPhone 15 128GB Noir Minuit (#116). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5583,7 +5699,8 @@ export const catalogProducts = {
     "soldCount": 53,
     "price": "XAF 121.500",
     "salePrice": "XAF 135.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -5609,7 +5726,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Tecno Spark 20 Pro+ 256GB / 8GB RAM (#117). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Galaxy Center Yaoundé avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Tecno Spark 20 Pro+ 256GB / 8GB RAM (#117). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5631,7 +5748,8 @@ export const catalogProducts = {
     "soldCount": 66,
     "price": "XAF 324.000",
     "salePrice": "XAF 360.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -5657,7 +5775,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8a 128GB Bay Blue (#118). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Oraimo Official Store avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8a 128GB Bay Blue (#118). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5679,7 +5797,8 @@ export const catalogProducts = {
     "soldCount": 79,
     "price": "XAF 148.500",
     "salePrice": "XAF 165.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -5705,7 +5824,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Samsung Galaxy A25 5G 128GB Blue Black (#119). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par TechPro Omnisports avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Samsung Galaxy A25 5G 128GB Blue Black (#119). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5727,7 +5846,8 @@ export const catalogProducts = {
     "soldCount": 92,
     "price": "XAF 175.500",
     "salePrice": "XAF 195.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -5753,7 +5873,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Infinix Zero 30 5G 256GB Rome Green (#120). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Cameroon Gadgets Express avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Infinix Zero 30 5G 256GB Rome Green (#120). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5775,7 +5895,8 @@ export const catalogProducts = {
     "soldCount": 105,
     "price": "XAF 522.000",
     "salePrice": "XAF 580.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -5801,7 +5922,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Samsung Galaxy S24+ 5G 256GB Onyx Black (#121). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Orca Electronics avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Samsung Galaxy S24+ 5G 256GB Onyx Black (#121). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5823,7 +5944,8 @@ export const catalogProducts = {
     "soldCount": 118,
     "price": "XAF 522.000",
     "salePrice": "XAF 580.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -5849,7 +5971,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Apple iPhone 15 128GB Noir Minuit (#122). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Digital Corner avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Apple iPhone 15 128GB Noir Minuit (#122). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5871,7 +5993,8 @@ export const catalogProducts = {
     "soldCount": 131,
     "price": "XAF 121.500",
     "salePrice": "XAF 135.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -5897,7 +6020,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Tecno Spark 20 Pro+ 256GB / 8GB RAM (#123). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par SmartTech Cameroun avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Tecno Spark 20 Pro+ 256GB / 8GB RAM (#123). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5919,7 +6042,8 @@ export const catalogProducts = {
     "soldCount": 144,
     "price": "XAF 324.000",
     "salePrice": "XAF 360.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -5945,7 +6069,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8a 128GB Bay Blue (#124). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Apple Hub Douala avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8a 128GB Bay Blue (#124). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -5967,7 +6091,8 @@ export const catalogProducts = {
     "soldCount": 157,
     "price": "XAF 148.500",
     "salePrice": "XAF 165.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -5993,7 +6118,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Samsung Galaxy A25 5G 128GB Blue Black (#125). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Galaxy Center Yaoundé avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Samsung Galaxy A25 5G 128GB Blue Black (#125). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6015,7 +6140,8 @@ export const catalogProducts = {
     "soldCount": 170,
     "price": "XAF 175.500",
     "salePrice": "XAF 195.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -6041,7 +6167,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Infinix Zero 30 5G 256GB Rome Green (#126). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Oraimo Official Store avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Infinix Zero 30 5G 256GB Rome Green (#126). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6063,7 +6189,8 @@ export const catalogProducts = {
     "soldCount": 183,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -6089,7 +6216,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par TechPro Omnisports avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6111,7 +6238,8 @@ export const catalogProducts = {
     "soldCount": 196,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -6137,7 +6265,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#128). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Cameroon Gadgets Express avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#128). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6159,7 +6287,8 @@ export const catalogProducts = {
     "soldCount": 209,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -6185,7 +6314,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#129). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Orca Electronics avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#129). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6207,7 +6336,8 @@ export const catalogProducts = {
     "soldCount": 222,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -6233,7 +6363,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#130). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Digital Corner avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#130). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6255,7 +6385,8 @@ export const catalogProducts = {
     "soldCount": 235,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -6281,7 +6412,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#131). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par SmartTech Cameroun avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#131). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6303,7 +6434,8 @@ export const catalogProducts = {
     "soldCount": 248,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -6329,7 +6461,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#132). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Apple Hub Douala avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#132). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6351,7 +6483,8 @@ export const catalogProducts = {
     "soldCount": 261,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -6377,7 +6510,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#133). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Galaxy Center Yaoundé avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#133). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6399,7 +6532,8 @@ export const catalogProducts = {
     "soldCount": 274,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -6425,7 +6559,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#134). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Oraimo Official Store avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#134). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6447,7 +6581,8 @@ export const catalogProducts = {
     "soldCount": 287,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -6473,7 +6608,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#135). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par TechPro Omnisports avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#135). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6495,7 +6630,8 @@ export const catalogProducts = {
     "soldCount": 50,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -6521,7 +6657,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#136). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Cameroon Gadgets Express avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#136). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6543,7 +6679,8 @@ export const catalogProducts = {
     "soldCount": 63,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -6569,7 +6706,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#137). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Orca Electronics avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#137). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6591,7 +6728,8 @@ export const catalogProducts = {
     "soldCount": 76,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -6617,7 +6755,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#138). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Digital Corner avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#138). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6639,7 +6777,8 @@ export const catalogProducts = {
     "soldCount": 89,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -6665,7 +6804,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#139). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par SmartTech Cameroun avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#139). 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6687,7 +6826,8 @@ export const catalogProducts = {
     "soldCount": 102,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -6713,7 +6853,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Apple Hub Douala avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6735,7 +6875,8 @@ export const catalogProducts = {
     "soldCount": 115,
     "price": "XAF 449.100",
     "salePrice": "XAF 499.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -6761,7 +6902,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Galaxy Center Yaoundé avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 8 Pro 128GB Unlocked Android 14. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6783,7 +6924,8 @@ export const catalogProducts = {
     "soldCount": 128,
     "price": "XAF 1.035.000",
     "salePrice": "XAF 1.150.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -6809,7 +6951,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et main d'œuvre officielle"
       }
     ],
-    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par Oraimo Official Store avec LOUMOO Escrow.",
+    "description": "Smartphone haut de gamme Google Pixel 10 Pro Fold 512GB Jade Unlocked. 100% authentique sous emballage d'origine. Prix compétitif avec 10% de réduction garantie par NanoAfrica avec LOUMOO Escrow.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6831,7 +6973,8 @@ export const catalogProducts = {
     "soldCount": 24,
     "price": "XAF 702.000",
     "salePrice": "XAF 780.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -6857,7 +7000,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #1). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par SmartTech Cameroun avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #1). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6879,7 +7022,8 @@ export const catalogProducts = {
     "soldCount": 33,
     "price": "XAF 976.500",
     "salePrice": "XAF 1.085.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -6905,7 +7049,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #2). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Apple Hub Douala avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #2). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6927,7 +7071,8 @@ export const catalogProducts = {
     "soldCount": 42,
     "price": "XAF 1.458.000",
     "salePrice": "XAF 1.620.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -6953,7 +7098,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #3). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Galaxy Center Yaoundé avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #3). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -6975,7 +7120,8 @@ export const catalogProducts = {
     "soldCount": 51,
     "price": "XAF 652.500",
     "salePrice": "XAF 725.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -7001,7 +7147,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #4). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Oraimo Official Store avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #4). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7023,7 +7169,8 @@ export const catalogProducts = {
     "soldCount": 60,
     "price": "XAF 765.000",
     "salePrice": "XAF 850.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -7049,7 +7196,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #5). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par TechPro Omnisports avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #5). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7071,7 +7218,8 @@ export const catalogProducts = {
     "soldCount": 69,
     "price": "XAF 715.500",
     "salePrice": "XAF 795.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -7097,7 +7245,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #6). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Cameroon Gadgets Express avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #6). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7119,7 +7267,8 @@ export const catalogProducts = {
     "soldCount": 78,
     "price": "XAF 954.000",
     "salePrice": "XAF 1.060.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -7145,7 +7294,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #7). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Orca Electronics avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #7). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7167,7 +7316,8 @@ export const catalogProducts = {
     "soldCount": 87,
     "price": "XAF 1.084.500",
     "salePrice": "XAF 1.205.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -7193,7 +7343,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #8). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Digital Corner avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #8). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7215,7 +7365,8 @@ export const catalogProducts = {
     "soldCount": 96,
     "price": "XAF 1.152.000",
     "salePrice": "XAF 1.280.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -7241,7 +7392,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #9). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par SmartTech Cameroun avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #9). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7263,7 +7414,8 @@ export const catalogProducts = {
     "soldCount": 105,
     "price": "XAF 859.500",
     "salePrice": "XAF 955.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -7289,7 +7441,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #10). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Apple Hub Douala avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #10). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7311,7 +7463,8 @@ export const catalogProducts = {
     "soldCount": 114,
     "price": "XAF 765.000",
     "salePrice": "XAF 850.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -7337,7 +7490,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #11). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Galaxy Center Yaoundé avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #11). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7359,7 +7512,8 @@ export const catalogProducts = {
     "soldCount": 123,
     "price": "XAF 1.039.500",
     "salePrice": "XAF 1.155.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -7385,7 +7539,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #12). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Oraimo Official Store avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #12). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7407,7 +7561,8 @@ export const catalogProducts = {
     "soldCount": 132,
     "price": "XAF 1.395.000",
     "salePrice": "XAF 1.550.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -7433,7 +7588,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #13). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par TechPro Omnisports avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #13). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7455,7 +7610,8 @@ export const catalogProducts = {
     "soldCount": 141,
     "price": "XAF 589.500",
     "salePrice": "XAF 655.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -7481,7 +7637,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #14). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Cameroon Gadgets Express avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #14). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7503,7 +7659,8 @@ export const catalogProducts = {
     "soldCount": 150,
     "price": "XAF 828.000",
     "salePrice": "XAF 920.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -7529,7 +7686,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #15). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Orca Electronics avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #15). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7551,7 +7708,8 @@ export const catalogProducts = {
     "soldCount": 29,
     "price": "XAF 778.500",
     "salePrice": "XAF 865.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -7577,7 +7735,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #16). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Digital Corner avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #16). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7599,7 +7757,8 @@ export const catalogProducts = {
     "soldCount": 38,
     "price": "XAF 891.000",
     "salePrice": "XAF 990.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -7625,7 +7784,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #17). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par SmartTech Cameroun avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #17). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7647,7 +7806,8 @@ export const catalogProducts = {
     "soldCount": 47,
     "price": "XAF 1.021.500",
     "salePrice": "XAF 1.135.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -7673,7 +7833,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #18). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Apple Hub Douala avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #18). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7695,7 +7855,8 @@ export const catalogProducts = {
     "soldCount": 56,
     "price": "XAF 1.215.000",
     "salePrice": "XAF 1.350.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -7721,7 +7882,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #19). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Galaxy Center Yaoundé avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #19). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7743,7 +7904,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 922.500",
     "salePrice": "XAF 1.025.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -7769,7 +7931,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #20). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Oraimo Official Store avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #20). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7791,7 +7953,8 @@ export const catalogProducts = {
     "soldCount": 74,
     "price": "XAF 702.000",
     "salePrice": "XAF 780.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -7817,7 +7980,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #21). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par TechPro Omnisports avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #21). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7839,7 +8002,8 @@ export const catalogProducts = {
     "soldCount": 83,
     "price": "XAF 976.500",
     "salePrice": "XAF 1.085.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -7865,7 +8029,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #22). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Cameroon Gadgets Express avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #22). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7887,7 +8051,8 @@ export const catalogProducts = {
     "soldCount": 92,
     "price": "XAF 1.458.000",
     "salePrice": "XAF 1.620.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -7913,7 +8078,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #23). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Orca Electronics avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #23). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7935,7 +8100,8 @@ export const catalogProducts = {
     "soldCount": 101,
     "price": "XAF 652.500",
     "salePrice": "XAF 725.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -7961,7 +8127,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #24). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Digital Corner avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #24). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -7983,7 +8149,8 @@ export const catalogProducts = {
     "soldCount": 110,
     "price": "XAF 765.000",
     "salePrice": "XAF 850.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -8009,7 +8176,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #25). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par SmartTech Cameroun avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #25). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8031,7 +8198,8 @@ export const catalogProducts = {
     "soldCount": 119,
     "price": "XAF 715.500",
     "salePrice": "XAF 795.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -8057,7 +8225,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #26). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Apple Hub Douala avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #26). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8079,7 +8247,8 @@ export const catalogProducts = {
     "soldCount": 128,
     "price": "XAF 954.000",
     "salePrice": "XAF 1.060.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -8105,7 +8274,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #27). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Galaxy Center Yaoundé avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #27). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8127,7 +8296,8 @@ export const catalogProducts = {
     "soldCount": 137,
     "price": "XAF 1.084.500",
     "salePrice": "XAF 1.205.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -8153,7 +8323,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #28). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Oraimo Official Store avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #28). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8175,7 +8345,8 @@ export const catalogProducts = {
     "soldCount": 146,
     "price": "XAF 1.152.000",
     "salePrice": "XAF 1.280.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -8201,7 +8372,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #29). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par TechPro Omnisports avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #29). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8223,7 +8394,8 @@ export const catalogProducts = {
     "soldCount": 25,
     "price": "XAF 859.500",
     "salePrice": "XAF 955.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -8249,7 +8421,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #30). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Cameroon Gadgets Express avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #30). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8271,7 +8443,8 @@ export const catalogProducts = {
     "soldCount": 34,
     "price": "XAF 765.000",
     "salePrice": "XAF 850.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -8297,7 +8470,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #31). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Orca Electronics avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #31). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8319,7 +8492,8 @@ export const catalogProducts = {
     "soldCount": 43,
     "price": "XAF 1.039.500",
     "salePrice": "XAF 1.155.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -8345,7 +8519,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #32). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Digital Corner avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #32). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8367,7 +8541,8 @@ export const catalogProducts = {
     "soldCount": 52,
     "price": "XAF 1.395.000",
     "salePrice": "XAF 1.550.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -8393,7 +8568,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #33). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par SmartTech Cameroun avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #33). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8415,7 +8590,8 @@ export const catalogProducts = {
     "soldCount": 61,
     "price": "XAF 589.500",
     "salePrice": "XAF 655.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -8441,7 +8617,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #34). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Apple Hub Douala avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #34). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8463,7 +8639,8 @@ export const catalogProducts = {
     "soldCount": 70,
     "price": "XAF 828.000",
     "salePrice": "XAF 920.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -8489,7 +8666,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #35). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Galaxy Center Yaoundé avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #35). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8511,7 +8688,8 @@ export const catalogProducts = {
     "soldCount": 79,
     "price": "XAF 778.500",
     "salePrice": "XAF 865.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -8537,7 +8715,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #36). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Oraimo Official Store avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #36). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8559,7 +8737,8 @@ export const catalogProducts = {
     "soldCount": 88,
     "price": "XAF 891.000",
     "salePrice": "XAF 990.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -8585,7 +8764,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #37). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par TechPro Omnisports avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #37). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8607,7 +8786,8 @@ export const catalogProducts = {
     "soldCount": 97,
     "price": "XAF 1.021.500",
     "salePrice": "XAF 1.135.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -8633,7 +8813,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #38). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Cameroon Gadgets Express avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #38). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8655,7 +8835,8 @@ export const catalogProducts = {
     "soldCount": 106,
     "price": "XAF 1.215.000",
     "salePrice": "XAF 1.350.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -8681,7 +8862,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #39). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Orca Electronics avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #39). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8703,7 +8884,8 @@ export const catalogProducts = {
     "soldCount": 115,
     "price": "XAF 922.500",
     "salePrice": "XAF 1.025.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -8729,7 +8911,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #40). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Digital Corner avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #40). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8751,7 +8933,8 @@ export const catalogProducts = {
     "soldCount": 124,
     "price": "XAF 702.000",
     "salePrice": "XAF 780.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -8777,7 +8960,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #41). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par SmartTech Cameroun avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #41). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8799,7 +8982,8 @@ export const catalogProducts = {
     "soldCount": 133,
     "price": "XAF 976.500",
     "salePrice": "XAF 1.085.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -8825,7 +9009,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #42). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Apple Hub Douala avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #42). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8847,7 +9031,8 @@ export const catalogProducts = {
     "soldCount": 142,
     "price": "XAF 1.458.000",
     "salePrice": "XAF 1.620.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -8873,7 +9058,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #43). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Galaxy Center Yaoundé avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #43). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8895,7 +9080,8 @@ export const catalogProducts = {
     "soldCount": 151,
     "price": "XAF 652.500",
     "salePrice": "XAF 725.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -8921,7 +9107,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #44). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Oraimo Official Store avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #44). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8943,7 +9129,8 @@ export const catalogProducts = {
     "soldCount": 30,
     "price": "XAF 765.000",
     "salePrice": "XAF 850.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -8969,7 +9156,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #45). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par TechPro Omnisports avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #45). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -8991,7 +9178,8 @@ export const catalogProducts = {
     "soldCount": 39,
     "price": "XAF 715.500",
     "salePrice": "XAF 795.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -9017,7 +9205,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #46). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Cameroon Gadgets Express avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #46). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9039,7 +9227,8 @@ export const catalogProducts = {
     "soldCount": 48,
     "price": "XAF 954.000",
     "salePrice": "XAF 1.060.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -9065,7 +9254,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #47). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Orca Electronics avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #47). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9087,7 +9276,8 @@ export const catalogProducts = {
     "soldCount": 57,
     "price": "XAF 1.084.500",
     "salePrice": "XAF 1.205.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -9113,7 +9303,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #48). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Digital Corner avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #48). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9135,7 +9325,8 @@ export const catalogProducts = {
     "soldCount": 66,
     "price": "XAF 1.152.000",
     "salePrice": "XAF 1.280.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -9161,7 +9352,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #49). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par SmartTech Cameroun avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #49). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9183,7 +9374,8 @@ export const catalogProducts = {
     "soldCount": 75,
     "price": "XAF 859.500",
     "salePrice": "XAF 955.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -9209,7 +9401,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #50). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Apple Hub Douala avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #50). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9231,7 +9423,8 @@ export const catalogProducts = {
     "soldCount": 84,
     "price": "XAF 765.000",
     "salePrice": "XAF 850.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -9257,7 +9450,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #51). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Galaxy Center Yaoundé avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #51). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9279,7 +9472,8 @@ export const catalogProducts = {
     "soldCount": 93,
     "price": "XAF 1.039.500",
     "salePrice": "XAF 1.155.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -9305,7 +9499,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #52). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Oraimo Official Store avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #52). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9327,7 +9521,8 @@ export const catalogProducts = {
     "soldCount": 102,
     "price": "XAF 1.395.000",
     "salePrice": "XAF 1.550.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -9353,7 +9548,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #53). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par TechPro Omnisports avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #53). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9375,7 +9570,8 @@ export const catalogProducts = {
     "soldCount": 111,
     "price": "XAF 589.500",
     "salePrice": "XAF 655.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -9401,7 +9597,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #54). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Cameroon Gadgets Express avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #54). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9423,7 +9619,8 @@ export const catalogProducts = {
     "soldCount": 120,
     "price": "XAF 828.000",
     "salePrice": "XAF 920.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -9449,7 +9646,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #55). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Orca Electronics avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #55). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9471,7 +9668,8 @@ export const catalogProducts = {
     "soldCount": 129,
     "price": "XAF 778.500",
     "salePrice": "XAF 865.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -9497,7 +9695,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #56). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Digital Corner avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #56). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9519,7 +9717,8 @@ export const catalogProducts = {
     "soldCount": 138,
     "price": "XAF 891.000",
     "salePrice": "XAF 990.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -9545,7 +9744,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #57). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par SmartTech Cameroun avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #57). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9567,7 +9766,8 @@ export const catalogProducts = {
     "soldCount": 147,
     "price": "XAF 1.021.500",
     "salePrice": "XAF 1.135.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -9593,7 +9793,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #58). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Apple Hub Douala avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #58). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9615,7 +9815,8 @@ export const catalogProducts = {
     "soldCount": 26,
     "price": "XAF 1.215.000",
     "salePrice": "XAF 1.350.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -9641,7 +9842,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #59). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Galaxy Center Yaoundé avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #59). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9663,7 +9864,8 @@ export const catalogProducts = {
     "soldCount": 35,
     "price": "XAF 922.500",
     "salePrice": "XAF 1.025.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -9689,7 +9891,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #60). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Oraimo Official Store avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #60). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9711,7 +9913,8 @@ export const catalogProducts = {
     "soldCount": 44,
     "price": "XAF 702.000",
     "salePrice": "XAF 780.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -9737,7 +9940,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #61). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par TechPro Omnisports avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #61). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9759,7 +9962,8 @@ export const catalogProducts = {
     "soldCount": 53,
     "price": "XAF 976.500",
     "salePrice": "XAF 1.085.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -9785,7 +9989,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #62). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Cameroon Gadgets Express avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #62). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9807,7 +10011,8 @@ export const catalogProducts = {
     "soldCount": 62,
     "price": "XAF 1.458.000",
     "salePrice": "XAF 1.620.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -9833,7 +10038,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #63). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Orca Electronics avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #63). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9855,7 +10060,8 @@ export const catalogProducts = {
     "soldCount": 71,
     "price": "XAF 652.500",
     "salePrice": "XAF 725.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -9881,7 +10087,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #64). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Digital Corner avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #64). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9903,7 +10109,8 @@ export const catalogProducts = {
     "soldCount": 80,
     "price": "XAF 765.000",
     "salePrice": "XAF 850.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -9929,7 +10136,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #65). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par SmartTech Cameroun avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #65). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9951,7 +10158,8 @@ export const catalogProducts = {
     "soldCount": 89,
     "price": "XAF 715.500",
     "salePrice": "XAF 795.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -9977,7 +10185,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #66). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Apple Hub Douala avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #66). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -9999,7 +10207,8 @@ export const catalogProducts = {
     "soldCount": 98,
     "price": "XAF 954.000",
     "salePrice": "XAF 1.060.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -10025,7 +10234,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #67). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Galaxy Center Yaoundé avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #67). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10047,7 +10256,8 @@ export const catalogProducts = {
     "soldCount": 107,
     "price": "XAF 1.084.500",
     "salePrice": "XAF 1.205.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -10073,7 +10283,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #68). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Oraimo Official Store avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #68). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10095,7 +10305,8 @@ export const catalogProducts = {
     "soldCount": 116,
     "price": "XAF 1.152.000",
     "salePrice": "XAF 1.280.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -10121,7 +10332,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #69). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par TechPro Omnisports avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #69). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10143,7 +10354,8 @@ export const catalogProducts = {
     "soldCount": 125,
     "price": "XAF 859.500",
     "salePrice": "XAF 955.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -10169,7 +10381,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #70). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Cameroon Gadgets Express avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #70). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10191,7 +10403,8 @@ export const catalogProducts = {
     "soldCount": 134,
     "price": "XAF 765.000",
     "salePrice": "XAF 850.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -10217,7 +10430,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #71). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Orca Electronics avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #71). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10239,7 +10452,8 @@ export const catalogProducts = {
     "soldCount": 143,
     "price": "XAF 1.039.500",
     "salePrice": "XAF 1.155.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -10265,7 +10479,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #72). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Digital Corner avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #72). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10287,7 +10501,8 @@ export const catalogProducts = {
     "soldCount": 152,
     "price": "XAF 1.395.000",
     "salePrice": "XAF 1.550.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -10313,7 +10528,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #73). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par SmartTech Cameroun avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #73). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10335,7 +10550,8 @@ export const catalogProducts = {
     "soldCount": 31,
     "price": "XAF 589.500",
     "salePrice": "XAF 655.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -10361,7 +10577,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #74). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Apple Hub Douala avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #74). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10383,7 +10599,8 @@ export const catalogProducts = {
     "soldCount": 40,
     "price": "XAF 828.000",
     "salePrice": "XAF 920.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -10409,7 +10626,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #75). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Galaxy Center Yaoundé avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #75). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10431,7 +10648,8 @@ export const catalogProducts = {
     "soldCount": 49,
     "price": "XAF 778.500",
     "salePrice": "XAF 865.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -10457,7 +10675,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #76). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Oraimo Official Store avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #76). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10479,7 +10697,8 @@ export const catalogProducts = {
     "soldCount": 58,
     "price": "XAF 891.000",
     "salePrice": "XAF 990.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -10505,7 +10724,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #77). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par TechPro Omnisports avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #77). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10527,7 +10746,8 @@ export const catalogProducts = {
     "soldCount": 67,
     "price": "XAF 1.021.500",
     "salePrice": "XAF 1.135.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -10553,7 +10773,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #78). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Cameroon Gadgets Express avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #78). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10575,7 +10795,8 @@ export const catalogProducts = {
     "soldCount": 76,
     "price": "XAF 1.215.000",
     "salePrice": "XAF 1.350.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -10601,7 +10822,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #79). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Orca Electronics avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #79). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10623,7 +10844,8 @@ export const catalogProducts = {
     "soldCount": 85,
     "price": "XAF 922.500",
     "salePrice": "XAF 1.025.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -10649,7 +10871,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #80). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Digital Corner avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #80). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10671,7 +10893,8 @@ export const catalogProducts = {
     "soldCount": 94,
     "price": "XAF 702.000",
     "salePrice": "XAF 780.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -10697,7 +10920,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #81). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par SmartTech Cameroun avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #81). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10719,7 +10942,8 @@ export const catalogProducts = {
     "soldCount": 103,
     "price": "XAF 976.500",
     "salePrice": "XAF 1.085.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -10745,7 +10969,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #82). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Apple Hub Douala avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #82). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10767,7 +10991,8 @@ export const catalogProducts = {
     "soldCount": 112,
     "price": "XAF 1.458.000",
     "salePrice": "XAF 1.620.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -10793,7 +11018,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #83). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Galaxy Center Yaoundé avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #83). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10815,7 +11040,8 @@ export const catalogProducts = {
     "soldCount": 121,
     "price": "XAF 652.500",
     "salePrice": "XAF 725.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -10841,7 +11067,7 @@ export const catalogProducts = {
         "val": "24 Mois assistance technique certifiée"
       }
     ],
-    "description": "Ordinateur portable professionnel Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #84). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par Oraimo Official Store avec 10% de remise LOUMOO.",
+    "description": "Ordinateur portable professionnel Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #84). Idéal pour le développement, le graphisme et la bureautique intensive. Vendu par NanoAfrica avec 10% de remise LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10863,7 +11089,8 @@ export const catalogProducts = {
     "soldCount": 55,
     "price": "XAF 355.500",
     "salePrice": "XAF 395.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -10889,7 +11116,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#1). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#1). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10911,7 +11138,8 @@ export const catalogProducts = {
     "soldCount": 67,
     "price": "XAF 124.200",
     "salePrice": "XAF 138.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -10937,7 +11165,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#2). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Oraimo Official Store.",
+    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#2). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -10959,7 +11187,8 @@ export const catalogProducts = {
     "soldCount": 79,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -10985,7 +11214,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#3). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par TechPro Omnisports.",
+    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#3). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11007,7 +11236,8 @@ export const catalogProducts = {
     "soldCount": 91,
     "price": "XAF 54.900",
     "salePrice": "XAF 61.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -11033,7 +11263,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#4). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Cameroon Gadgets Express.",
+    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#4). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11055,7 +11285,8 @@ export const catalogProducts = {
     "soldCount": 103,
     "price": "XAF 55.800",
     "salePrice": "XAF 62.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -11081,7 +11312,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#5). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Orca Electronics.",
+    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#5). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11103,7 +11334,8 @@ export const catalogProducts = {
     "soldCount": 115,
     "price": "XAF 35.100",
     "salePrice": "XAF 39.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -11129,7 +11361,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#6). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Digital Corner.",
+    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#6). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11151,7 +11383,8 @@ export const catalogProducts = {
     "soldCount": 127,
     "price": "XAF 28.800",
     "salePrice": "XAF 32.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -11177,7 +11410,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#7). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par SmartTech Cameroun.",
+    "description": "Équipement audio haute fidélité Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#7). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11199,7 +11432,8 @@ export const catalogProducts = {
     "soldCount": 139,
     "price": "XAF 45.900",
     "salePrice": "XAF 51.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -11225,7 +11459,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#8). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Apple Hub Douala.",
+    "description": "Équipement audio haute fidélité Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#8). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11247,7 +11481,8 @@ export const catalogProducts = {
     "soldCount": 151,
     "price": "XAF 193.500",
     "salePrice": "XAF 215.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -11273,7 +11508,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#9). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Équipement audio haute fidélité DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#9). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11295,7 +11530,8 @@ export const catalogProducts = {
     "soldCount": 163,
     "price": "XAF 241.200",
     "salePrice": "XAF 268.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -11321,7 +11557,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#10). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Oraimo Official Store.",
+    "description": "Équipement audio haute fidélité Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#10). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11343,7 +11579,8 @@ export const catalogProducts = {
     "soldCount": 175,
     "price": "XAF 360.900",
     "salePrice": "XAF 401.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -11369,7 +11606,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#11). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par TechPro Omnisports.",
+    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#11). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11391,7 +11628,8 @@ export const catalogProducts = {
     "soldCount": 187,
     "price": "XAF 129.600",
     "salePrice": "XAF 144.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -11417,7 +11655,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#12). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Cameroon Gadgets Express.",
+    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#12). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11439,7 +11677,8 @@ export const catalogProducts = {
     "soldCount": 199,
     "price": "XAF 66.600",
     "salePrice": "XAF 74.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -11465,7 +11704,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#13). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Orca Electronics.",
+    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#13). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11487,7 +11726,8 @@ export const catalogProducts = {
     "soldCount": 211,
     "price": "XAF 49.500",
     "salePrice": "XAF 55.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -11513,7 +11753,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#14). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Digital Corner.",
+    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#14). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11535,7 +11775,8 @@ export const catalogProducts = {
     "soldCount": 223,
     "price": "XAF 61.200",
     "salePrice": "XAF 68.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -11561,7 +11802,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#15). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par SmartTech Cameroun.",
+    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#15). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11583,7 +11824,8 @@ export const catalogProducts = {
     "soldCount": 235,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -11609,7 +11851,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#16). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Apple Hub Douala.",
+    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#16). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11631,7 +11873,8 @@ export const catalogProducts = {
     "soldCount": 247,
     "price": "XAF 23.400",
     "salePrice": "XAF 26.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -11657,7 +11900,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#17). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Équipement audio haute fidélité Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#17). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11679,7 +11922,8 @@ export const catalogProducts = {
     "soldCount": 259,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -11705,7 +11949,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#18). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Oraimo Official Store.",
+    "description": "Équipement audio haute fidélité Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#18). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11727,7 +11971,8 @@ export const catalogProducts = {
     "soldCount": 271,
     "price": "XAF 198.900",
     "salePrice": "XAF 221.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -11753,7 +11998,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#19). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par TechPro Omnisports.",
+    "description": "Équipement audio haute fidélité DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#19). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11775,7 +12020,8 @@ export const catalogProducts = {
     "soldCount": 283,
     "price": "XAF 246.600",
     "salePrice": "XAF 274.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -11801,7 +12047,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#20). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Cameroon Gadgets Express.",
+    "description": "Équipement audio haute fidélité Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#20). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11823,7 +12069,8 @@ export const catalogProducts = {
     "soldCount": 295,
     "price": "XAF 355.500",
     "salePrice": "XAF 395.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -11849,7 +12096,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#21). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Orca Electronics.",
+    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#21). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11871,7 +12118,8 @@ export const catalogProducts = {
     "soldCount": 307,
     "price": "XAF 124.200",
     "salePrice": "XAF 138.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -11897,7 +12145,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#22). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Digital Corner.",
+    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#22). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11919,7 +12167,8 @@ export const catalogProducts = {
     "soldCount": 319,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -11945,7 +12194,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#23). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par SmartTech Cameroun.",
+    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#23). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -11967,7 +12216,8 @@ export const catalogProducts = {
     "soldCount": 331,
     "price": "XAF 54.900",
     "salePrice": "XAF 61.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -11993,7 +12243,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#24). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Apple Hub Douala.",
+    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#24). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12015,7 +12265,8 @@ export const catalogProducts = {
     "soldCount": 63,
     "price": "XAF 55.800",
     "salePrice": "XAF 62.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -12041,7 +12292,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#25). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#25). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12063,7 +12314,8 @@ export const catalogProducts = {
     "soldCount": 75,
     "price": "XAF 35.100",
     "salePrice": "XAF 39.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -12089,7 +12341,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#26). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Oraimo Official Store.",
+    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#26). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12111,7 +12363,8 @@ export const catalogProducts = {
     "soldCount": 87,
     "price": "XAF 28.800",
     "salePrice": "XAF 32.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -12137,7 +12390,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#27). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par TechPro Omnisports.",
+    "description": "Équipement audio haute fidélité Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#27). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12159,7 +12412,8 @@ export const catalogProducts = {
     "soldCount": 99,
     "price": "XAF 45.900",
     "salePrice": "XAF 51.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -12185,7 +12439,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#28). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Cameroon Gadgets Express.",
+    "description": "Équipement audio haute fidélité Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#28). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12207,7 +12461,8 @@ export const catalogProducts = {
     "soldCount": 111,
     "price": "XAF 193.500",
     "salePrice": "XAF 215.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -12233,7 +12488,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#29). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Orca Electronics.",
+    "description": "Équipement audio haute fidélité DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#29). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12255,7 +12510,8 @@ export const catalogProducts = {
     "soldCount": 123,
     "price": "XAF 241.200",
     "salePrice": "XAF 268.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -12281,7 +12537,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#30). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Digital Corner.",
+    "description": "Équipement audio haute fidélité Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#30). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12303,7 +12559,8 @@ export const catalogProducts = {
     "soldCount": 135,
     "price": "XAF 360.900",
     "salePrice": "XAF 401.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -12329,7 +12586,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#31). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par SmartTech Cameroun.",
+    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#31). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12351,7 +12608,8 @@ export const catalogProducts = {
     "soldCount": 147,
     "price": "XAF 129.600",
     "salePrice": "XAF 144.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -12377,7 +12635,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#32). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Apple Hub Douala.",
+    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#32). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12399,7 +12657,8 @@ export const catalogProducts = {
     "soldCount": 159,
     "price": "XAF 66.600",
     "salePrice": "XAF 74.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -12425,7 +12684,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#33). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#33). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12447,7 +12706,8 @@ export const catalogProducts = {
     "soldCount": 171,
     "price": "XAF 49.500",
     "salePrice": "XAF 55.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -12473,7 +12733,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#34). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Oraimo Official Store.",
+    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#34). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12495,7 +12755,8 @@ export const catalogProducts = {
     "soldCount": 183,
     "price": "XAF 61.200",
     "salePrice": "XAF 68.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -12521,7 +12782,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#35). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par TechPro Omnisports.",
+    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#35). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12543,7 +12804,8 @@ export const catalogProducts = {
     "soldCount": 195,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -12569,7 +12831,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#36). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Cameroon Gadgets Express.",
+    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#36). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12591,7 +12853,8 @@ export const catalogProducts = {
     "soldCount": 207,
     "price": "XAF 23.400",
     "salePrice": "XAF 26.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -12617,7 +12880,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#37). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Orca Electronics.",
+    "description": "Équipement audio haute fidélité Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#37). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12639,7 +12902,8 @@ export const catalogProducts = {
     "soldCount": 219,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -12665,7 +12929,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#38). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Digital Corner.",
+    "description": "Équipement audio haute fidélité Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#38). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12687,7 +12951,8 @@ export const catalogProducts = {
     "soldCount": 231,
     "price": "XAF 198.900",
     "salePrice": "XAF 221.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -12713,7 +12978,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#39). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par SmartTech Cameroun.",
+    "description": "Équipement audio haute fidélité DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#39). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12735,7 +13000,8 @@ export const catalogProducts = {
     "soldCount": 243,
     "price": "XAF 246.600",
     "salePrice": "XAF 274.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -12761,7 +13027,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#40). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Apple Hub Douala.",
+    "description": "Équipement audio haute fidélité Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#40). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12783,7 +13049,8 @@ export const catalogProducts = {
     "soldCount": 255,
     "price": "XAF 355.500",
     "salePrice": "XAF 395.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -12809,7 +13076,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#41). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#41). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12831,7 +13098,8 @@ export const catalogProducts = {
     "soldCount": 267,
     "price": "XAF 124.200",
     "salePrice": "XAF 138.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -12857,7 +13125,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#42). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Oraimo Official Store.",
+    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#42). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12879,7 +13147,8 @@ export const catalogProducts = {
     "soldCount": 279,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -12905,7 +13174,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#43). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par TechPro Omnisports.",
+    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#43). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12927,7 +13196,8 @@ export const catalogProducts = {
     "soldCount": 291,
     "price": "XAF 54.900",
     "salePrice": "XAF 61.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -12953,7 +13223,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#44). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Cameroon Gadgets Express.",
+    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#44). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -12975,7 +13245,8 @@ export const catalogProducts = {
     "soldCount": 303,
     "price": "XAF 55.800",
     "salePrice": "XAF 62.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -13001,7 +13272,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#45). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Orca Electronics.",
+    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#45). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13023,7 +13294,8 @@ export const catalogProducts = {
     "soldCount": 315,
     "price": "XAF 35.100",
     "salePrice": "XAF 39.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -13049,7 +13321,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#46). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Digital Corner.",
+    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#46). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13071,7 +13343,8 @@ export const catalogProducts = {
     "soldCount": 327,
     "price": "XAF 28.800",
     "salePrice": "XAF 32.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -13097,7 +13370,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#47). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par SmartTech Cameroun.",
+    "description": "Équipement audio haute fidélité Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#47). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13119,7 +13392,8 @@ export const catalogProducts = {
     "soldCount": 59,
     "price": "XAF 45.900",
     "salePrice": "XAF 51.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -13145,7 +13419,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#48). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Apple Hub Douala.",
+    "description": "Équipement audio haute fidélité Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#48). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13167,7 +13441,8 @@ export const catalogProducts = {
     "soldCount": 71,
     "price": "XAF 193.500",
     "salePrice": "XAF 215.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -13193,7 +13468,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#49). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Équipement audio haute fidélité DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#49). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13215,7 +13490,8 @@ export const catalogProducts = {
     "soldCount": 83,
     "price": "XAF 241.200",
     "salePrice": "XAF 268.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -13241,7 +13517,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#50). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Oraimo Official Store.",
+    "description": "Équipement audio haute fidélité Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#50). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13263,7 +13539,8 @@ export const catalogProducts = {
     "soldCount": 95,
     "price": "XAF 360.900",
     "salePrice": "XAF 401.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -13289,7 +13566,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#51). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par TechPro Omnisports.",
+    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#51). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13311,7 +13588,8 @@ export const catalogProducts = {
     "soldCount": 107,
     "price": "XAF 129.600",
     "salePrice": "XAF 144.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -13337,7 +13615,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#52). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Cameroon Gadgets Express.",
+    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#52). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13359,7 +13637,8 @@ export const catalogProducts = {
     "soldCount": 119,
     "price": "XAF 66.600",
     "salePrice": "XAF 74.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -13385,7 +13664,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#53). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Orca Electronics.",
+    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#53). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13407,7 +13686,8 @@ export const catalogProducts = {
     "soldCount": 131,
     "price": "XAF 49.500",
     "salePrice": "XAF 55.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -13433,7 +13713,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#54). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Digital Corner.",
+    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#54). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13455,7 +13735,8 @@ export const catalogProducts = {
     "soldCount": 143,
     "price": "XAF 61.200",
     "salePrice": "XAF 68.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -13481,7 +13762,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#55). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par SmartTech Cameroun.",
+    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#55). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13503,7 +13784,8 @@ export const catalogProducts = {
     "soldCount": 155,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -13529,7 +13811,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#56). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Apple Hub Douala.",
+    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#56). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13551,7 +13833,8 @@ export const catalogProducts = {
     "soldCount": 167,
     "price": "XAF 23.400",
     "salePrice": "XAF 26.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -13577,7 +13860,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#57). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Équipement audio haute fidélité Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#57). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13599,7 +13882,8 @@ export const catalogProducts = {
     "soldCount": 179,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -13625,7 +13909,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#58). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Oraimo Official Store.",
+    "description": "Équipement audio haute fidélité Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#58). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13647,7 +13931,8 @@ export const catalogProducts = {
     "soldCount": 191,
     "price": "XAF 198.900",
     "salePrice": "XAF 221.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -13673,7 +13958,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#59). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par TechPro Omnisports.",
+    "description": "Équipement audio haute fidélité DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#59). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13695,7 +13980,8 @@ export const catalogProducts = {
     "soldCount": 203,
     "price": "XAF 246.600",
     "salePrice": "XAF 274.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -13721,7 +14007,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#60). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Cameroon Gadgets Express.",
+    "description": "Équipement audio haute fidélité Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#60). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13743,7 +14029,8 @@ export const catalogProducts = {
     "soldCount": 215,
     "price": "XAF 355.500",
     "salePrice": "XAF 395.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -13769,7 +14056,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#61). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Orca Electronics.",
+    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#61). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13791,7 +14078,8 @@ export const catalogProducts = {
     "soldCount": 227,
     "price": "XAF 124.200",
     "salePrice": "XAF 138.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -13817,7 +14105,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#62). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Digital Corner.",
+    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#62). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13839,7 +14127,8 @@ export const catalogProducts = {
     "soldCount": 239,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -13865,7 +14154,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#63). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par SmartTech Cameroun.",
+    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#63). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13887,7 +14176,8 @@ export const catalogProducts = {
     "soldCount": 251,
     "price": "XAF 54.900",
     "salePrice": "XAF 61.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -13913,7 +14203,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#64). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Apple Hub Douala.",
+    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#64). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13935,7 +14225,8 @@ export const catalogProducts = {
     "soldCount": 263,
     "price": "XAF 55.800",
     "salePrice": "XAF 62.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -13961,7 +14252,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#65). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#65). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -13983,7 +14274,8 @@ export const catalogProducts = {
     "soldCount": 275,
     "price": "XAF 35.100",
     "salePrice": "XAF 39.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -14009,7 +14301,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#66). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Oraimo Official Store.",
+    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#66). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14031,7 +14323,8 @@ export const catalogProducts = {
     "soldCount": 287,
     "price": "XAF 28.800",
     "salePrice": "XAF 32.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -14057,7 +14350,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#67). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par TechPro Omnisports.",
+    "description": "Équipement audio haute fidélité Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#67). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14079,7 +14372,8 @@ export const catalogProducts = {
     "soldCount": 299,
     "price": "XAF 45.900",
     "salePrice": "XAF 51.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -14105,7 +14399,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#68). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Cameroon Gadgets Express.",
+    "description": "Équipement audio haute fidélité Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#68). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14127,7 +14421,8 @@ export const catalogProducts = {
     "soldCount": 311,
     "price": "XAF 193.500",
     "salePrice": "XAF 215.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -14153,7 +14448,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#69). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Orca Electronics.",
+    "description": "Équipement audio haute fidélité DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#69). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14175,7 +14470,8 @@ export const catalogProducts = {
     "soldCount": 323,
     "price": "XAF 241.200",
     "salePrice": "XAF 268.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -14201,7 +14497,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#70). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Digital Corner.",
+    "description": "Équipement audio haute fidélité Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#70). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14223,7 +14519,8 @@ export const catalogProducts = {
     "soldCount": 55,
     "price": "XAF 360.900",
     "salePrice": "XAF 401.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -14249,7 +14546,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#71). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par SmartTech Cameroun.",
+    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#71). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14271,7 +14568,8 @@ export const catalogProducts = {
     "soldCount": 67,
     "price": "XAF 129.600",
     "salePrice": "XAF 144.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -14297,7 +14595,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#72). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Apple Hub Douala.",
+    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#72). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14319,7 +14617,8 @@ export const catalogProducts = {
     "soldCount": 79,
     "price": "XAF 66.600",
     "salePrice": "XAF 74.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -14345,7 +14644,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#73). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#73). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14367,7 +14666,8 @@ export const catalogProducts = {
     "soldCount": 91,
     "price": "XAF 49.500",
     "salePrice": "XAF 55.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -14393,7 +14693,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#74). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Oraimo Official Store.",
+    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#74). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14415,7 +14715,8 @@ export const catalogProducts = {
     "soldCount": 103,
     "price": "XAF 61.200",
     "salePrice": "XAF 68.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -14441,7 +14742,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#75). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par TechPro Omnisports.",
+    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#75). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14463,7 +14764,8 @@ export const catalogProducts = {
     "soldCount": 115,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -14489,7 +14791,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#76). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Cameroon Gadgets Express.",
+    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#76). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14511,7 +14813,8 @@ export const catalogProducts = {
     "soldCount": 127,
     "price": "XAF 23.400",
     "salePrice": "XAF 26.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -14537,7 +14840,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#77). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Orca Electronics.",
+    "description": "Équipement audio haute fidélité Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#77). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14559,7 +14862,8 @@ export const catalogProducts = {
     "soldCount": 139,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -14585,7 +14889,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#78). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Digital Corner.",
+    "description": "Équipement audio haute fidélité Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#78). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14607,7 +14911,8 @@ export const catalogProducts = {
     "soldCount": 151,
     "price": "XAF 198.900",
     "salePrice": "XAF 221.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -14633,7 +14938,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#79). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par SmartTech Cameroun.",
+    "description": "Équipement audio haute fidélité DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#79). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14655,7 +14960,8 @@ export const catalogProducts = {
     "soldCount": 163,
     "price": "XAF 246.600",
     "salePrice": "XAF 274.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -14681,7 +14987,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#80). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Apple Hub Douala.",
+    "description": "Équipement audio haute fidélité Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#80). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14703,7 +15009,8 @@ export const catalogProducts = {
     "soldCount": 175,
     "price": "XAF 355.500",
     "salePrice": "XAF 395.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -14729,7 +15036,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#81). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#81). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14751,7 +15058,8 @@ export const catalogProducts = {
     "soldCount": 187,
     "price": "XAF 124.200",
     "salePrice": "XAF 138.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -14777,7 +15085,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#82). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Oraimo Official Store.",
+    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#82). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14799,7 +15107,8 @@ export const catalogProducts = {
     "soldCount": 199,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -14825,7 +15134,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#83). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par TechPro Omnisports.",
+    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#83). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14847,7 +15156,8 @@ export const catalogProducts = {
     "soldCount": 211,
     "price": "XAF 54.900",
     "salePrice": "XAF 61.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -14873,7 +15183,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#84). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Cameroon Gadgets Express.",
+    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#84). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14895,7 +15205,8 @@ export const catalogProducts = {
     "soldCount": 223,
     "price": "XAF 55.800",
     "salePrice": "XAF 62.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -14921,7 +15232,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#85). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Orca Electronics.",
+    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#85). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14943,7 +15254,8 @@ export const catalogProducts = {
     "soldCount": 235,
     "price": "XAF 35.100",
     "salePrice": "XAF 39.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -14969,7 +15281,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#86). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Digital Corner.",
+    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#86). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -14991,7 +15303,8 @@ export const catalogProducts = {
     "soldCount": 247,
     "price": "XAF 28.800",
     "salePrice": "XAF 32.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -15017,7 +15330,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#87). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par SmartTech Cameroun.",
+    "description": "Équipement audio haute fidélité Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#87). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15039,7 +15352,8 @@ export const catalogProducts = {
     "soldCount": 259,
     "price": "XAF 45.900",
     "salePrice": "XAF 51.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -15065,7 +15379,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#88). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Apple Hub Douala.",
+    "description": "Équipement audio haute fidélité Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#88). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15087,7 +15401,8 @@ export const catalogProducts = {
     "soldCount": 271,
     "price": "XAF 193.500",
     "salePrice": "XAF 215.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -15113,7 +15428,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#89). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Équipement audio haute fidélité DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#89). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15135,7 +15450,8 @@ export const catalogProducts = {
     "soldCount": 283,
     "price": "XAF 241.200",
     "salePrice": "XAF 268.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -15161,7 +15477,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#90). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Oraimo Official Store.",
+    "description": "Équipement audio haute fidélité Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#90). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15183,7 +15499,8 @@ export const catalogProducts = {
     "soldCount": 295,
     "price": "XAF 360.900",
     "salePrice": "XAF 401.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -15209,7 +15526,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#91). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par TechPro Omnisports.",
+    "description": "Équipement audio haute fidélité Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#91). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15231,7 +15548,8 @@ export const catalogProducts = {
     "soldCount": 307,
     "price": "XAF 129.600",
     "salePrice": "XAF 144.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -15257,7 +15575,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#92). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Cameroon Gadgets Express.",
+    "description": "Équipement audio haute fidélité Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#92). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15279,7 +15597,8 @@ export const catalogProducts = {
     "soldCount": 319,
     "price": "XAF 66.600",
     "salePrice": "XAF 74.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -15305,7 +15624,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#93). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Orca Electronics.",
+    "description": "Équipement audio haute fidélité JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#93). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15327,7 +15646,8 @@ export const catalogProducts = {
     "soldCount": 331,
     "price": "XAF 49.500",
     "salePrice": "XAF 55.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -15353,7 +15673,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#94). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Digital Corner.",
+    "description": "Équipement audio haute fidélité JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#94). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15375,7 +15695,8 @@ export const catalogProducts = {
     "soldCount": 63,
     "price": "XAF 61.200",
     "salePrice": "XAF 68.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -15401,7 +15722,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#95). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par SmartTech Cameroun.",
+    "description": "Équipement audio haute fidélité mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#95). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15423,7 +15744,8 @@ export const catalogProducts = {
     "soldCount": 75,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -15449,7 +15771,7 @@ export const catalogProducts = {
         "val": "Universelle iOS, Android, macOS, Windows"
       }
     ],
-    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#96). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par Apple Hub Douala.",
+    "description": "Équipement audio haute fidélité Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#96). Restitution sonore cristalline avec basses profondes. Prix vérifié chez nos concurrents avec 10% de réduction LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15471,7 +15793,8 @@ export const catalogProducts = {
     "soldCount": 70,
     "price": "XAF 414.000",
     "salePrice": "XAF 460.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -15497,7 +15820,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#1). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par TechPro Omnisports.",
+    "description": "Accessoire indispensable DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#1). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15519,7 +15842,8 @@ export const catalogProducts = {
     "soldCount": 84,
     "price": "XAF 23.400",
     "salePrice": "XAF 26.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -15545,7 +15869,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#2). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Cameroon Gadgets Express.",
+    "description": "Accessoire indispensable Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#2). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15567,7 +15891,8 @@ export const catalogProducts = {
     "soldCount": 98,
     "price": "XAF 73.800",
     "salePrice": "XAF 82.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -15593,7 +15918,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#3). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Orca Electronics.",
+    "description": "Accessoire indispensable Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#3). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15615,7 +15940,8 @@ export const catalogProducts = {
     "soldCount": 112,
     "price": "XAF 36.900",
     "salePrice": "XAF 41.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -15641,7 +15967,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#4). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Digital Corner.",
+    "description": "Accessoire indispensable Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#4). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15663,7 +15989,8 @@ export const catalogProducts = {
     "soldCount": 126,
     "price": "XAF 46.800",
     "salePrice": "XAF 52.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -15689,7 +16016,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#5). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par SmartTech Cameroun.",
+    "description": "Accessoire indispensable Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#5). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15711,7 +16038,8 @@ export const catalogProducts = {
     "soldCount": 140,
     "price": "XAF 21.600",
     "salePrice": "XAF 24.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -15737,7 +16065,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#6). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Apple Hub Douala.",
+    "description": "Accessoire indispensable Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#6). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15759,7 +16087,8 @@ export const catalogProducts = {
     "soldCount": 154,
     "price": "XAF 98.100",
     "salePrice": "XAF 109.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -15785,7 +16114,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#7). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Accessoire indispensable Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#7). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15807,7 +16136,8 @@ export const catalogProducts = {
     "soldCount": 168,
     "price": "XAF 79.200",
     "salePrice": "XAF 88.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -15833,7 +16163,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#8). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Oraimo Official Store.",
+    "description": "Accessoire indispensable Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#8). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15855,7 +16185,8 @@ export const catalogProducts = {
     "soldCount": 182,
     "price": "XAF 99.000",
     "salePrice": "XAF 110.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -15881,7 +16212,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#9). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par TechPro Omnisports.",
+    "description": "Accessoire indispensable Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#9). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15903,7 +16234,8 @@ export const catalogProducts = {
     "soldCount": 196,
     "price": "XAF 6.800",
     "salePrice": "XAF 7.500",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -15929,7 +16261,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#10). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Cameroon Gadgets Express.",
+    "description": "Accessoire indispensable Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#10). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15951,7 +16283,8 @@ export const catalogProducts = {
     "soldCount": 210,
     "price": "XAF 417.600",
     "salePrice": "XAF 464.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -15977,7 +16310,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#11). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Orca Electronics.",
+    "description": "Accessoire indispensable DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#11). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -15999,7 +16332,8 @@ export const catalogProducts = {
     "soldCount": 224,
     "price": "XAF 27.000",
     "salePrice": "XAF 30.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -16025,7 +16359,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#12). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Digital Corner.",
+    "description": "Accessoire indispensable Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#12). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16047,7 +16381,8 @@ export const catalogProducts = {
     "soldCount": 238,
     "price": "XAF 70.200",
     "salePrice": "XAF 78.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -16073,7 +16408,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#13). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par SmartTech Cameroun.",
+    "description": "Accessoire indispensable Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#13). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16095,7 +16430,8 @@ export const catalogProducts = {
     "soldCount": 252,
     "price": "XAF 33.300",
     "salePrice": "XAF 37.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -16121,7 +16457,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#14). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Apple Hub Douala.",
+    "description": "Accessoire indispensable Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#14). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16143,7 +16479,8 @@ export const catalogProducts = {
     "soldCount": 266,
     "price": "XAF 50.400",
     "salePrice": "XAF 56.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -16169,7 +16506,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#15). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Accessoire indispensable Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#15). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16191,7 +16528,8 @@ export const catalogProducts = {
     "soldCount": 280,
     "price": "XAF 25.200",
     "salePrice": "XAF 28.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -16217,7 +16555,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#16). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Oraimo Official Store.",
+    "description": "Accessoire indispensable Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#16). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16239,7 +16577,8 @@ export const catalogProducts = {
     "soldCount": 294,
     "price": "XAF 94.500",
     "salePrice": "XAF 105.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -16265,7 +16604,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#17). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par TechPro Omnisports.",
+    "description": "Accessoire indispensable Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#17). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16287,7 +16626,8 @@ export const catalogProducts = {
     "soldCount": 308,
     "price": "XAF 75.600",
     "salePrice": "XAF 84.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -16313,7 +16653,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#18). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Cameroon Gadgets Express.",
+    "description": "Accessoire indispensable Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#18). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16335,7 +16675,8 @@ export const catalogProducts = {
     "soldCount": 322,
     "price": "XAF 102.600",
     "salePrice": "XAF 114.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -16361,7 +16702,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#19). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Orca Electronics.",
+    "description": "Accessoire indispensable Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#19). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16383,7 +16724,8 @@ export const catalogProducts = {
     "soldCount": 336,
     "price": "XAF 10.400",
     "salePrice": "XAF 11.500",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -16409,7 +16751,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#20). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Digital Corner.",
+    "description": "Accessoire indispensable Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#20). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16431,7 +16773,8 @@ export const catalogProducts = {
     "soldCount": 350,
     "price": "XAF 414.000",
     "salePrice": "XAF 460.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -16457,7 +16800,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#21). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par SmartTech Cameroun.",
+    "description": "Accessoire indispensable DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#21). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16479,7 +16822,8 @@ export const catalogProducts = {
     "soldCount": 364,
     "price": "XAF 23.400",
     "salePrice": "XAF 26.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -16505,7 +16849,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#22). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Apple Hub Douala.",
+    "description": "Accessoire indispensable Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#22). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16527,7 +16871,8 @@ export const catalogProducts = {
     "soldCount": 378,
     "price": "XAF 73.800",
     "salePrice": "XAF 82.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -16553,7 +16898,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#23). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Accessoire indispensable Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#23). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16575,7 +16920,8 @@ export const catalogProducts = {
     "soldCount": 392,
     "price": "XAF 36.900",
     "salePrice": "XAF 41.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -16601,7 +16947,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#24). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Oraimo Official Store.",
+    "description": "Accessoire indispensable Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#24). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16623,7 +16969,8 @@ export const catalogProducts = {
     "soldCount": 406,
     "price": "XAF 46.800",
     "salePrice": "XAF 52.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -16649,7 +16996,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#25). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par TechPro Omnisports.",
+    "description": "Accessoire indispensable Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#25). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16671,7 +17018,8 @@ export const catalogProducts = {
     "soldCount": 70,
     "price": "XAF 21.600",
     "salePrice": "XAF 24.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -16697,7 +17045,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#26). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Cameroon Gadgets Express.",
+    "description": "Accessoire indispensable Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#26). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16719,7 +17067,8 @@ export const catalogProducts = {
     "soldCount": 84,
     "price": "XAF 98.100",
     "salePrice": "XAF 109.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -16745,7 +17094,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#27). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Orca Electronics.",
+    "description": "Accessoire indispensable Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#27). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16767,7 +17116,8 @@ export const catalogProducts = {
     "soldCount": 98,
     "price": "XAF 79.200",
     "salePrice": "XAF 88.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -16793,7 +17143,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#28). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Digital Corner.",
+    "description": "Accessoire indispensable Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#28). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16815,7 +17165,8 @@ export const catalogProducts = {
     "soldCount": 112,
     "price": "XAF 99.000",
     "salePrice": "XAF 110.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -16841,7 +17192,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#29). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par SmartTech Cameroun.",
+    "description": "Accessoire indispensable Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#29). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16863,7 +17214,8 @@ export const catalogProducts = {
     "soldCount": 126,
     "price": "XAF 6.800",
     "salePrice": "XAF 7.500",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -16889,7 +17241,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#30). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Apple Hub Douala.",
+    "description": "Accessoire indispensable Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#30). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16911,7 +17263,8 @@ export const catalogProducts = {
     "soldCount": 140,
     "price": "XAF 417.600",
     "salePrice": "XAF 464.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -16937,7 +17290,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#31). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Accessoire indispensable DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#31). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -16959,7 +17312,8 @@ export const catalogProducts = {
     "soldCount": 154,
     "price": "XAF 27.000",
     "salePrice": "XAF 30.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -16985,7 +17339,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#32). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Oraimo Official Store.",
+    "description": "Accessoire indispensable Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#32). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17007,7 +17361,8 @@ export const catalogProducts = {
     "soldCount": 168,
     "price": "XAF 70.200",
     "salePrice": "XAF 78.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -17033,7 +17388,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#33). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par TechPro Omnisports.",
+    "description": "Accessoire indispensable Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#33). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17055,7 +17410,8 @@ export const catalogProducts = {
     "soldCount": 182,
     "price": "XAF 33.300",
     "salePrice": "XAF 37.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -17081,7 +17437,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#34). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Cameroon Gadgets Express.",
+    "description": "Accessoire indispensable Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#34). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17103,7 +17459,8 @@ export const catalogProducts = {
     "soldCount": 196,
     "price": "XAF 50.400",
     "salePrice": "XAF 56.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -17129,7 +17486,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#35). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Orca Electronics.",
+    "description": "Accessoire indispensable Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#35). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17151,7 +17508,8 @@ export const catalogProducts = {
     "soldCount": 210,
     "price": "XAF 25.200",
     "salePrice": "XAF 28.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -17177,7 +17535,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#36). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Digital Corner.",
+    "description": "Accessoire indispensable Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#36). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17199,7 +17557,8 @@ export const catalogProducts = {
     "soldCount": 224,
     "price": "XAF 94.500",
     "salePrice": "XAF 105.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -17225,7 +17584,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#37). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par SmartTech Cameroun.",
+    "description": "Accessoire indispensable Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#37). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17247,7 +17606,8 @@ export const catalogProducts = {
     "soldCount": 238,
     "price": "XAF 75.600",
     "salePrice": "XAF 84.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -17273,7 +17633,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#38). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Apple Hub Douala.",
+    "description": "Accessoire indispensable Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#38). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17295,7 +17655,8 @@ export const catalogProducts = {
     "soldCount": 252,
     "price": "XAF 102.600",
     "salePrice": "XAF 114.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -17321,7 +17682,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#39). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Accessoire indispensable Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#39). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17343,7 +17704,8 @@ export const catalogProducts = {
     "soldCount": 266,
     "price": "XAF 10.400",
     "salePrice": "XAF 11.500",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -17369,7 +17731,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#40). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Oraimo Official Store.",
+    "description": "Accessoire indispensable Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#40). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17391,7 +17753,8 @@ export const catalogProducts = {
     "soldCount": 280,
     "price": "XAF 414.000",
     "salePrice": "XAF 460.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -17417,7 +17780,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#41). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par TechPro Omnisports.",
+    "description": "Accessoire indispensable DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#41). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17439,7 +17802,8 @@ export const catalogProducts = {
     "soldCount": 294,
     "price": "XAF 23.400",
     "salePrice": "XAF 26.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -17465,7 +17829,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#42). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Cameroon Gadgets Express.",
+    "description": "Accessoire indispensable Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#42). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17487,7 +17851,8 @@ export const catalogProducts = {
     "soldCount": 308,
     "price": "XAF 73.800",
     "salePrice": "XAF 82.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -17513,7 +17878,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#43). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Orca Electronics.",
+    "description": "Accessoire indispensable Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#43). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17535,7 +17900,8 @@ export const catalogProducts = {
     "soldCount": 322,
     "price": "XAF 36.900",
     "salePrice": "XAF 41.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -17561,7 +17927,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#44). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Digital Corner.",
+    "description": "Accessoire indispensable Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#44). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17583,7 +17949,8 @@ export const catalogProducts = {
     "soldCount": 336,
     "price": "XAF 46.800",
     "salePrice": "XAF 52.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -17609,7 +17976,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#45). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par SmartTech Cameroun.",
+    "description": "Accessoire indispensable Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#45). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17631,7 +17998,8 @@ export const catalogProducts = {
     "soldCount": 350,
     "price": "XAF 21.600",
     "salePrice": "XAF 24.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -17657,7 +18025,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#46). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Apple Hub Douala.",
+    "description": "Accessoire indispensable Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#46). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17679,7 +18047,8 @@ export const catalogProducts = {
     "soldCount": 364,
     "price": "XAF 98.100",
     "salePrice": "XAF 109.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -17705,7 +18074,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#47). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Accessoire indispensable Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#47). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17727,7 +18096,8 @@ export const catalogProducts = {
     "soldCount": 378,
     "price": "XAF 79.200",
     "salePrice": "XAF 88.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -17753,7 +18123,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#48). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Oraimo Official Store.",
+    "description": "Accessoire indispensable Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#48). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17775,7 +18145,8 @@ export const catalogProducts = {
     "soldCount": 392,
     "price": "XAF 99.000",
     "salePrice": "XAF 110.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -17801,7 +18172,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#49). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par TechPro Omnisports.",
+    "description": "Accessoire indispensable Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#49). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17823,7 +18194,8 @@ export const catalogProducts = {
     "soldCount": 406,
     "price": "XAF 6.800",
     "salePrice": "XAF 7.500",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -17849,7 +18221,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#50). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Cameroon Gadgets Express.",
+    "description": "Accessoire indispensable Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#50). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17871,7 +18243,8 @@ export const catalogProducts = {
     "soldCount": 70,
     "price": "XAF 417.600",
     "salePrice": "XAF 464.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -17897,7 +18270,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#51). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Orca Electronics.",
+    "description": "Accessoire indispensable DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#51). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17919,7 +18292,8 @@ export const catalogProducts = {
     "soldCount": 84,
     "price": "XAF 27.000",
     "salePrice": "XAF 30.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -17945,7 +18319,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#52). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Digital Corner.",
+    "description": "Accessoire indispensable Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#52). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -17967,7 +18341,8 @@ export const catalogProducts = {
     "soldCount": 98,
     "price": "XAF 70.200",
     "salePrice": "XAF 78.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -17993,7 +18368,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#53). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par SmartTech Cameroun.",
+    "description": "Accessoire indispensable Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#53). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18015,7 +18390,8 @@ export const catalogProducts = {
     "soldCount": 112,
     "price": "XAF 33.300",
     "salePrice": "XAF 37.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -18041,7 +18417,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#54). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Apple Hub Douala.",
+    "description": "Accessoire indispensable Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#54). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18063,7 +18439,8 @@ export const catalogProducts = {
     "soldCount": 126,
     "price": "XAF 50.400",
     "salePrice": "XAF 56.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -18089,7 +18466,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#55). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Accessoire indispensable Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#55). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18111,7 +18488,8 @@ export const catalogProducts = {
     "soldCount": 140,
     "price": "XAF 25.200",
     "salePrice": "XAF 28.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -18137,7 +18515,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#56). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Oraimo Official Store.",
+    "description": "Accessoire indispensable Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#56). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18159,7 +18537,8 @@ export const catalogProducts = {
     "soldCount": 154,
     "price": "XAF 94.500",
     "salePrice": "XAF 105.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -18185,7 +18564,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#57). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par TechPro Omnisports.",
+    "description": "Accessoire indispensable Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#57). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18207,7 +18586,8 @@ export const catalogProducts = {
     "soldCount": 168,
     "price": "XAF 75.600",
     "salePrice": "XAF 84.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -18233,7 +18613,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#58). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Cameroon Gadgets Express.",
+    "description": "Accessoire indispensable Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#58). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18255,7 +18635,8 @@ export const catalogProducts = {
     "soldCount": 182,
     "price": "XAF 102.600",
     "salePrice": "XAF 114.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -18281,7 +18662,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#59). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Orca Electronics.",
+    "description": "Accessoire indispensable Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#59). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18303,7 +18684,8 @@ export const catalogProducts = {
     "soldCount": 196,
     "price": "XAF 10.400",
     "salePrice": "XAF 11.500",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -18329,7 +18711,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#60). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Digital Corner.",
+    "description": "Accessoire indispensable Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#60). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18351,7 +18733,8 @@ export const catalogProducts = {
     "soldCount": 210,
     "price": "XAF 414.000",
     "salePrice": "XAF 460.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -18377,7 +18760,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#61). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par SmartTech Cameroun.",
+    "description": "Accessoire indispensable DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#61). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18399,7 +18782,8 @@ export const catalogProducts = {
     "soldCount": 224,
     "price": "XAF 23.400",
     "salePrice": "XAF 26.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -18425,7 +18809,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#62). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Apple Hub Douala.",
+    "description": "Accessoire indispensable Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#62). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18447,7 +18831,8 @@ export const catalogProducts = {
     "soldCount": 238,
     "price": "XAF 73.800",
     "salePrice": "XAF 82.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -18473,7 +18858,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#63). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Accessoire indispensable Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#63). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18495,7 +18880,8 @@ export const catalogProducts = {
     "soldCount": 252,
     "price": "XAF 36.900",
     "salePrice": "XAF 41.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -18521,7 +18907,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#64). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Oraimo Official Store.",
+    "description": "Accessoire indispensable Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#64). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18543,7 +18929,8 @@ export const catalogProducts = {
     "soldCount": 266,
     "price": "XAF 46.800",
     "salePrice": "XAF 52.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -18569,7 +18956,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#65). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par TechPro Omnisports.",
+    "description": "Accessoire indispensable Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#65). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18591,7 +18978,8 @@ export const catalogProducts = {
     "soldCount": 280,
     "price": "XAF 21.600",
     "salePrice": "XAF 24.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -18617,7 +19005,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#66). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Cameroon Gadgets Express.",
+    "description": "Accessoire indispensable Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#66). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18639,7 +19027,8 @@ export const catalogProducts = {
     "soldCount": 294,
     "price": "XAF 98.100",
     "salePrice": "XAF 109.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -18665,7 +19054,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#67). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Orca Electronics.",
+    "description": "Accessoire indispensable Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#67). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18687,7 +19076,8 @@ export const catalogProducts = {
     "soldCount": 308,
     "price": "XAF 79.200",
     "salePrice": "XAF 88.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -18713,7 +19103,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#68). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Digital Corner.",
+    "description": "Accessoire indispensable Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#68). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18735,7 +19125,8 @@ export const catalogProducts = {
     "soldCount": 322,
     "price": "XAF 99.000",
     "salePrice": "XAF 110.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -18761,7 +19152,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#69). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par SmartTech Cameroun.",
+    "description": "Accessoire indispensable Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#69). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18783,7 +19174,8 @@ export const catalogProducts = {
     "soldCount": 336,
     "price": "XAF 6.800",
     "salePrice": "XAF 7.500",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -18809,7 +19201,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#70). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Apple Hub Douala.",
+    "description": "Accessoire indispensable Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#70). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18831,7 +19223,8 @@ export const catalogProducts = {
     "soldCount": 350,
     "price": "XAF 417.600",
     "salePrice": "XAF 464.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -18857,7 +19250,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#71). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Accessoire indispensable DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#71). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18879,7 +19272,8 @@ export const catalogProducts = {
     "soldCount": 364,
     "price": "XAF 27.000",
     "salePrice": "XAF 30.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -18905,7 +19299,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#72). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Oraimo Official Store.",
+    "description": "Accessoire indispensable Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#72). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18927,7 +19321,8 @@ export const catalogProducts = {
     "soldCount": 378,
     "price": "XAF 70.200",
     "salePrice": "XAF 78.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -18953,7 +19348,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#73). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par TechPro Omnisports.",
+    "description": "Accessoire indispensable Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#73). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -18975,7 +19370,8 @@ export const catalogProducts = {
     "soldCount": 392,
     "price": "XAF 33.300",
     "salePrice": "XAF 37.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -19001,7 +19397,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#74). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Cameroon Gadgets Express.",
+    "description": "Accessoire indispensable Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#74). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19023,7 +19419,8 @@ export const catalogProducts = {
     "soldCount": 406,
     "price": "XAF 50.400",
     "salePrice": "XAF 56.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -19049,7 +19446,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#75). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Orca Electronics.",
+    "description": "Accessoire indispensable Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#75). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19071,7 +19468,8 @@ export const catalogProducts = {
     "soldCount": 70,
     "price": "XAF 25.200",
     "salePrice": "XAF 28.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -19097,7 +19495,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#76). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Digital Corner.",
+    "description": "Accessoire indispensable Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#76). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19119,7 +19517,8 @@ export const catalogProducts = {
     "soldCount": 84,
     "price": "XAF 94.500",
     "salePrice": "XAF 105.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -19145,7 +19544,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#77). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par SmartTech Cameroun.",
+    "description": "Accessoire indispensable Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#77). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19167,7 +19566,8 @@ export const catalogProducts = {
     "soldCount": 98,
     "price": "XAF 75.600",
     "salePrice": "XAF 84.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -19193,7 +19593,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#78). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Apple Hub Douala.",
+    "description": "Accessoire indispensable Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#78). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19215,7 +19615,8 @@ export const catalogProducts = {
     "soldCount": 112,
     "price": "XAF 102.600",
     "salePrice": "XAF 114.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -19241,7 +19642,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#79). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Accessoire indispensable Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#79). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19263,7 +19664,8 @@ export const catalogProducts = {
     "soldCount": 126,
     "price": "XAF 10.400",
     "salePrice": "XAF 11.500",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -19289,7 +19691,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#80). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Oraimo Official Store.",
+    "description": "Accessoire indispensable Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#80). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19311,7 +19713,8 @@ export const catalogProducts = {
     "soldCount": 140,
     "price": "XAF 414.000",
     "salePrice": "XAF 460.000",
-    "storeName": "TechPro Omnisports",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -19337,7 +19740,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#81). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par TechPro Omnisports.",
+    "description": "Accessoire indispensable DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#81). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19359,7 +19762,8 @@ export const catalogProducts = {
     "soldCount": 154,
     "price": "XAF 23.400",
     "salePrice": "XAF 26.000",
-    "storeName": "Cameroon Gadgets Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -19385,7 +19789,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#82). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Cameroon Gadgets Express.",
+    "description": "Accessoire indispensable Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#82). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19407,7 +19811,8 @@ export const catalogProducts = {
     "soldCount": 168,
     "price": "XAF 73.800",
     "salePrice": "XAF 82.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -19433,7 +19838,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#83). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Orca Electronics.",
+    "description": "Accessoire indispensable Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#83). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19455,7 +19860,8 @@ export const catalogProducts = {
     "soldCount": 182,
     "price": "XAF 36.900",
     "salePrice": "XAF 41.000",
-    "storeName": "Digital Corner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -19481,7 +19887,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#84). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Digital Corner.",
+    "description": "Accessoire indispensable Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#84). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19503,7 +19909,8 @@ export const catalogProducts = {
     "soldCount": 196,
     "price": "XAF 46.800",
     "salePrice": "XAF 52.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -19529,7 +19936,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#85). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par SmartTech Cameroun.",
+    "description": "Accessoire indispensable Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#85). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19551,7 +19958,8 @@ export const catalogProducts = {
     "soldCount": 210,
     "price": "XAF 21.600",
     "salePrice": "XAF 24.000",
-    "storeName": "Apple Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -19577,7 +19985,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#86). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Apple Hub Douala.",
+    "description": "Accessoire indispensable Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#86). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19599,7 +20007,8 @@ export const catalogProducts = {
     "soldCount": 224,
     "price": "XAF 98.100",
     "salePrice": "XAF 109.000",
-    "storeName": "Galaxy Center Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Mokolo, Yaoundé",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -19625,7 +20034,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#87). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Galaxy Center Yaoundé.",
+    "description": "Accessoire indispensable Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#87). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19647,7 +20056,8 @@ export const catalogProducts = {
     "soldCount": 238,
     "price": "XAF 79.200",
     "salePrice": "XAF 88.000",
-    "storeName": "Oraimo Official Store",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bld de la Liberté, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -19673,7 +20083,7 @@ export const catalogProducts = {
         "val": "12 Mois remplacement à neuf immédiat"
       }
     ],
-    "description": "Accessoire indispensable Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#88). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par Oraimo Official Store.",
+    "description": "Accessoire indispensable Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#88). Qualité de fabrication certifiée pour durer. Bénéficiez du prix le plus bas du marché avec notre réduction de 10% sur LOUMOO par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19695,7 +20105,8 @@ export const catalogProducts = {
     "soldCount": 42,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -19721,7 +20132,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#1). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#1). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19743,7 +20154,8 @@ export const catalogProducts = {
     "soldCount": 53,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -19769,7 +20181,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#2). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#2). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19791,7 +20203,8 @@ export const catalogProducts = {
     "soldCount": 64,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -19817,7 +20230,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#3). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#3). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19839,7 +20252,8 @@ export const catalogProducts = {
     "soldCount": 75,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -19865,7 +20279,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#4). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#4). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19887,7 +20301,8 @@ export const catalogProducts = {
     "soldCount": 86,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -19913,7 +20328,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#5). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#5). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19935,7 +20350,8 @@ export const catalogProducts = {
     "soldCount": 97,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -19961,7 +20377,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#6). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#6). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -19983,7 +20399,8 @@ export const catalogProducts = {
     "soldCount": 108,
     "price": "XAF 72.400",
     "salePrice": "XAF 80.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -20009,7 +20426,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#7). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#7). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20031,7 +20448,8 @@ export const catalogProducts = {
     "soldCount": 119,
     "price": "XAF 38.700",
     "salePrice": "XAF 43.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -20057,7 +20475,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#8). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#8). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20079,7 +20497,8 @@ export const catalogProducts = {
     "soldCount": 130,
     "price": "XAF 26.600",
     "salePrice": "XAF 29.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -20105,7 +20524,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#9). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#9). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20127,7 +20546,8 @@ export const catalogProducts = {
     "soldCount": 141,
     "price": "XAF 85.500",
     "salePrice": "XAF 95.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -20153,7 +20573,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#10). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#10). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20175,7 +20595,8 @@ export const catalogProducts = {
     "soldCount": 152,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -20201,7 +20622,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#11). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#11). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20223,7 +20644,8 @@ export const catalogProducts = {
     "soldCount": 163,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -20249,7 +20671,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#12). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#12). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20271,7 +20693,8 @@ export const catalogProducts = {
     "soldCount": 174,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -20297,7 +20720,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#13). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#13). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20319,7 +20742,8 @@ export const catalogProducts = {
     "soldCount": 185,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -20345,7 +20769,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#14). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#14). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20367,7 +20791,8 @@ export const catalogProducts = {
     "soldCount": 196,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -20393,7 +20818,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#15). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#15). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20415,7 +20840,8 @@ export const catalogProducts = {
     "soldCount": 207,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -20441,7 +20867,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#16). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#16). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20463,7 +20889,8 @@ export const catalogProducts = {
     "soldCount": 218,
     "price": "XAF 72.400",
     "salePrice": "XAF 80.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -20489,7 +20916,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#17). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#17). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20511,7 +20938,8 @@ export const catalogProducts = {
     "soldCount": 229,
     "price": "XAF 38.700",
     "salePrice": "XAF 43.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -20537,7 +20965,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#18). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#18). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20559,7 +20987,8 @@ export const catalogProducts = {
     "soldCount": 240,
     "price": "XAF 26.600",
     "salePrice": "XAF 29.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -20585,7 +21014,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#19). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#19). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20607,7 +21036,8 @@ export const catalogProducts = {
     "soldCount": 251,
     "price": "XAF 85.500",
     "salePrice": "XAF 95.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -20633,7 +21063,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#20). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#20). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20655,7 +21085,8 @@ export const catalogProducts = {
     "soldCount": 52,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -20681,7 +21112,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#21). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#21). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20703,7 +21134,8 @@ export const catalogProducts = {
     "soldCount": 63,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -20729,7 +21161,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#22). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#22). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20751,7 +21183,8 @@ export const catalogProducts = {
     "soldCount": 74,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -20777,7 +21210,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#23). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#23). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20799,7 +21232,8 @@ export const catalogProducts = {
     "soldCount": 85,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -20825,7 +21259,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#24). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#24). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20847,7 +21281,8 @@ export const catalogProducts = {
     "soldCount": 96,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -20873,7 +21308,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#25). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#25). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20895,7 +21330,8 @@ export const catalogProducts = {
     "soldCount": 107,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -20921,7 +21357,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#26). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#26). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20943,7 +21379,8 @@ export const catalogProducts = {
     "soldCount": 118,
     "price": "XAF 72.400",
     "salePrice": "XAF 80.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -20969,7 +21406,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#27). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#27). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -20991,7 +21428,8 @@ export const catalogProducts = {
     "soldCount": 129,
     "price": "XAF 38.700",
     "salePrice": "XAF 43.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -21017,7 +21455,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#28). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#28). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21039,7 +21477,8 @@ export const catalogProducts = {
     "soldCount": 140,
     "price": "XAF 26.600",
     "salePrice": "XAF 29.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -21065,7 +21504,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#29). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#29). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21087,7 +21526,8 @@ export const catalogProducts = {
     "soldCount": 151,
     "price": "XAF 85.500",
     "salePrice": "XAF 95.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -21113,7 +21553,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#30). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#30). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21135,7 +21575,8 @@ export const catalogProducts = {
     "soldCount": 162,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -21161,7 +21602,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#31). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#31). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21183,7 +21624,8 @@ export const catalogProducts = {
     "soldCount": 173,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -21209,7 +21651,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#32). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#32). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21231,7 +21673,8 @@ export const catalogProducts = {
     "soldCount": 184,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -21257,7 +21700,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#33). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#33). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21279,7 +21722,8 @@ export const catalogProducts = {
     "soldCount": 195,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -21305,7 +21749,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#34). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#34). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21327,7 +21771,8 @@ export const catalogProducts = {
     "soldCount": 206,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -21353,7 +21798,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#35). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#35). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21375,7 +21820,8 @@ export const catalogProducts = {
     "soldCount": 217,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -21401,7 +21847,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#36). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#36). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21423,7 +21869,8 @@ export const catalogProducts = {
     "soldCount": 228,
     "price": "XAF 72.400",
     "salePrice": "XAF 80.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -21449,7 +21896,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#37). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#37). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21471,7 +21918,8 @@ export const catalogProducts = {
     "soldCount": 239,
     "price": "XAF 38.700",
     "salePrice": "XAF 43.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -21497,7 +21945,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#38). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#38). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21519,7 +21967,8 @@ export const catalogProducts = {
     "soldCount": 250,
     "price": "XAF 26.600",
     "salePrice": "XAF 29.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -21545,7 +21994,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#39). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#39). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21567,7 +22016,8 @@ export const catalogProducts = {
     "soldCount": 51,
     "price": "XAF 85.500",
     "salePrice": "XAF 95.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -21593,7 +22043,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#40). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#40). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21615,7 +22065,8 @@ export const catalogProducts = {
     "soldCount": 62,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -21641,7 +22092,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#41). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#41). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21663,7 +22114,8 @@ export const catalogProducts = {
     "soldCount": 73,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -21689,7 +22141,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#42). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#42). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21711,7 +22163,8 @@ export const catalogProducts = {
     "soldCount": 84,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -21737,7 +22190,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#43). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#43). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21759,7 +22212,8 @@ export const catalogProducts = {
     "soldCount": 95,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -21785,7 +22239,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#44). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#44). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21807,7 +22261,8 @@ export const catalogProducts = {
     "soldCount": 106,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -21833,7 +22288,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#45). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#45). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21855,7 +22310,8 @@ export const catalogProducts = {
     "soldCount": 117,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -21881,7 +22337,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#46). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#46). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21903,7 +22359,8 @@ export const catalogProducts = {
     "soldCount": 128,
     "price": "XAF 72.400",
     "salePrice": "XAF 80.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -21929,7 +22386,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#47). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#47). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21951,7 +22408,8 @@ export const catalogProducts = {
     "soldCount": 139,
     "price": "XAF 38.700",
     "salePrice": "XAF 43.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -21977,7 +22435,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#48). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#48). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -21999,7 +22457,8 @@ export const catalogProducts = {
     "soldCount": 150,
     "price": "XAF 26.600",
     "salePrice": "XAF 29.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -22025,7 +22484,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#49). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#49). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22047,7 +22506,8 @@ export const catalogProducts = {
     "soldCount": 161,
     "price": "XAF 85.500",
     "salePrice": "XAF 95.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -22073,7 +22533,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#50). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#50). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22095,7 +22555,8 @@ export const catalogProducts = {
     "soldCount": 172,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -22121,7 +22582,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#51). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#51). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22143,7 +22604,8 @@ export const catalogProducts = {
     "soldCount": 183,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -22169,7 +22631,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#52). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#52). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22191,7 +22653,8 @@ export const catalogProducts = {
     "soldCount": 194,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -22217,7 +22680,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#53). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#53). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22239,7 +22702,8 @@ export const catalogProducts = {
     "soldCount": 205,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -22265,7 +22729,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#54). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#54). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22287,7 +22751,8 @@ export const catalogProducts = {
     "soldCount": 216,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -22313,7 +22778,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#55). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#55). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22335,7 +22800,8 @@ export const catalogProducts = {
     "soldCount": 227,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -22361,7 +22827,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#56). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#56). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22383,7 +22849,8 @@ export const catalogProducts = {
     "soldCount": 238,
     "price": "XAF 72.400",
     "salePrice": "XAF 80.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -22409,7 +22876,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#57). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#57). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22431,7 +22898,8 @@ export const catalogProducts = {
     "soldCount": 249,
     "price": "XAF 38.700",
     "salePrice": "XAF 43.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -22457,7 +22925,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#58). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#58). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22479,7 +22947,8 @@ export const catalogProducts = {
     "soldCount": 50,
     "price": "XAF 26.600",
     "salePrice": "XAF 29.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -22505,7 +22974,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#59). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#59). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22527,7 +22996,8 @@ export const catalogProducts = {
     "soldCount": 61,
     "price": "XAF 85.500",
     "salePrice": "XAF 95.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -22553,7 +23023,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#60). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#60). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22575,7 +23045,8 @@ export const catalogProducts = {
     "soldCount": 72,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -22601,7 +23072,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#61). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#61). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22623,7 +23094,8 @@ export const catalogProducts = {
     "soldCount": 83,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -22649,7 +23121,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#62). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#62). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22671,7 +23143,8 @@ export const catalogProducts = {
     "soldCount": 94,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -22697,7 +23170,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#63). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#63). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22719,7 +23192,8 @@ export const catalogProducts = {
     "soldCount": 105,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -22745,7 +23219,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#64). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#64). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22767,7 +23241,8 @@ export const catalogProducts = {
     "soldCount": 116,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -22793,7 +23268,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#65). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#65). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22815,7 +23290,8 @@ export const catalogProducts = {
     "soldCount": 127,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -22841,7 +23317,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#66). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#66). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22863,7 +23339,8 @@ export const catalogProducts = {
     "soldCount": 138,
     "price": "XAF 72.400",
     "salePrice": "XAF 80.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -22889,7 +23366,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#67). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#67). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22911,7 +23388,8 @@ export const catalogProducts = {
     "soldCount": 149,
     "price": "XAF 38.700",
     "salePrice": "XAF 43.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -22937,7 +23415,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#68). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#68). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -22959,7 +23437,8 @@ export const catalogProducts = {
     "soldCount": 160,
     "price": "XAF 26.600",
     "salePrice": "XAF 29.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -22985,7 +23464,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#69). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#69). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23007,7 +23486,8 @@ export const catalogProducts = {
     "soldCount": 171,
     "price": "XAF 85.500",
     "salePrice": "XAF 95.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -23033,7 +23513,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#70). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#70). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23055,7 +23535,8 @@ export const catalogProducts = {
     "soldCount": 182,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -23081,7 +23562,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#71). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#71). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23103,7 +23584,8 @@ export const catalogProducts = {
     "soldCount": 193,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -23129,7 +23611,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#72). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#72). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23151,7 +23633,8 @@ export const catalogProducts = {
     "soldCount": 204,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -23177,7 +23660,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#73). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#73). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23199,7 +23682,8 @@ export const catalogProducts = {
     "soldCount": 215,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -23225,7 +23709,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#74). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#74). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23247,7 +23731,8 @@ export const catalogProducts = {
     "soldCount": 226,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -23273,7 +23758,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#75). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#75). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23295,7 +23780,8 @@ export const catalogProducts = {
     "soldCount": 237,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -23321,7 +23807,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#76). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#76). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23343,7 +23829,8 @@ export const catalogProducts = {
     "soldCount": 248,
     "price": "XAF 72.400",
     "salePrice": "XAF 80.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -23369,7 +23856,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#77). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#77). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23391,7 +23878,8 @@ export const catalogProducts = {
     "soldCount": 49,
     "price": "XAF 38.700",
     "salePrice": "XAF 43.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -23417,7 +23905,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#78). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#78). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23439,7 +23927,8 @@ export const catalogProducts = {
     "soldCount": 60,
     "price": "XAF 26.600",
     "salePrice": "XAF 29.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -23465,7 +23954,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#79). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#79). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23487,7 +23976,8 @@ export const catalogProducts = {
     "soldCount": 71,
     "price": "XAF 85.500",
     "salePrice": "XAF 95.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -23513,7 +24003,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#80). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#80). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23535,7 +24025,8 @@ export const catalogProducts = {
     "soldCount": 82,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -23561,7 +24052,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#81). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#81). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23583,7 +24074,8 @@ export const catalogProducts = {
     "soldCount": 93,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -23609,7 +24101,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#82). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#82). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23631,7 +24123,8 @@ export const catalogProducts = {
     "soldCount": 104,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -23657,7 +24150,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#83). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#83). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23679,7 +24172,8 @@ export const catalogProducts = {
     "soldCount": 115,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -23705,7 +24199,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#84). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#84). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23727,7 +24221,8 @@ export const catalogProducts = {
     "soldCount": 126,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -23753,7 +24248,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#85). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#85). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23775,7 +24270,8 @@ export const catalogProducts = {
     "soldCount": 137,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -23801,7 +24297,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#86). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#86). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23823,7 +24319,8 @@ export const catalogProducts = {
     "soldCount": 148,
     "price": "XAF 72.400",
     "salePrice": "XAF 80.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -23849,7 +24346,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#87). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#87). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23871,7 +24368,8 @@ export const catalogProducts = {
     "soldCount": 159,
     "price": "XAF 38.700",
     "salePrice": "XAF 43.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -23897,7 +24395,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#88). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#88). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23919,7 +24417,8 @@ export const catalogProducts = {
     "soldCount": 170,
     "price": "XAF 26.600",
     "salePrice": "XAF 29.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -23945,7 +24444,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#89). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#89). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -23967,7 +24466,8 @@ export const catalogProducts = {
     "soldCount": 181,
     "price": "XAF 85.500",
     "salePrice": "XAF 95.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -23993,7 +24493,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#90). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#90). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24015,7 +24515,8 @@ export const catalogProducts = {
     "soldCount": 192,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -24041,7 +24542,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#91). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#91). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24063,7 +24564,8 @@ export const catalogProducts = {
     "soldCount": 203,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -24089,7 +24591,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#92). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#92). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24111,7 +24613,8 @@ export const catalogProducts = {
     "soldCount": 214,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -24137,7 +24640,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#93). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#93). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24159,7 +24662,8 @@ export const catalogProducts = {
     "soldCount": 225,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -24185,7 +24689,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#94). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#94). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24207,7 +24711,8 @@ export const catalogProducts = {
     "soldCount": 236,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -24233,7 +24738,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#95). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#95). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24255,7 +24760,8 @@ export const catalogProducts = {
     "soldCount": 247,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -24281,7 +24787,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#96). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#96). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24303,7 +24809,8 @@ export const catalogProducts = {
     "soldCount": 48,
     "price": "XAF 72.400",
     "salePrice": "XAF 80.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -24329,7 +24836,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#97). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#97). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24351,7 +24858,8 @@ export const catalogProducts = {
     "soldCount": 59,
     "price": "XAF 38.700",
     "salePrice": "XAF 43.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -24377,7 +24885,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#98). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#98). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24399,7 +24907,8 @@ export const catalogProducts = {
     "soldCount": 70,
     "price": "XAF 26.600",
     "salePrice": "XAF 29.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -24425,7 +24934,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#99). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#99). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24447,7 +24956,8 @@ export const catalogProducts = {
     "soldCount": 81,
     "price": "XAF 85.500",
     "salePrice": "XAF 95.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -24473,7 +24983,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#100). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#100). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24495,7 +25005,8 @@ export const catalogProducts = {
     "soldCount": 92,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -24521,7 +25032,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#101). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#101). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24543,7 +25054,8 @@ export const catalogProducts = {
     "soldCount": 103,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -24569,7 +25081,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#102). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#102). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24591,7 +25103,8 @@ export const catalogProducts = {
     "soldCount": 114,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -24617,7 +25130,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#103). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#103). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24639,7 +25152,8 @@ export const catalogProducts = {
     "soldCount": 125,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -24665,7 +25179,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#104). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#104). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24687,7 +25201,8 @@ export const catalogProducts = {
     "soldCount": 136,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -24713,7 +25228,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#105). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#105). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24735,7 +25250,8 @@ export const catalogProducts = {
     "soldCount": 147,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -24761,7 +25277,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#106). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#106). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24783,7 +25299,8 @@ export const catalogProducts = {
     "soldCount": 158,
     "price": "XAF 72.400",
     "salePrice": "XAF 80.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -24809,7 +25326,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#107). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#107). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24831,7 +25348,8 @@ export const catalogProducts = {
     "soldCount": 169,
     "price": "XAF 38.700",
     "salePrice": "XAF 43.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -24857,7 +25375,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#108). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#108). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24879,7 +25397,8 @@ export const catalogProducts = {
     "soldCount": 180,
     "price": "XAF 26.600",
     "salePrice": "XAF 29.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -24905,7 +25424,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#109). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#109). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24927,7 +25446,8 @@ export const catalogProducts = {
     "soldCount": 191,
     "price": "XAF 85.500",
     "salePrice": "XAF 95.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -24953,7 +25473,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#110). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#110). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -24975,7 +25495,8 @@ export const catalogProducts = {
     "soldCount": 202,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -25001,7 +25522,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#111). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#111). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25023,7 +25544,8 @@ export const catalogProducts = {
     "soldCount": 213,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -25049,7 +25571,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#112). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#112). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25071,7 +25593,8 @@ export const catalogProducts = {
     "soldCount": 224,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -25097,7 +25620,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#113). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#113). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25119,7 +25642,8 @@ export const catalogProducts = {
     "soldCount": 235,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -25145,7 +25669,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#114). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#114). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25167,7 +25691,8 @@ export const catalogProducts = {
     "soldCount": 246,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -25193,7 +25718,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#115). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#115). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25215,7 +25740,8 @@ export const catalogProducts = {
     "soldCount": 47,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -25241,7 +25767,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#116). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#116). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25263,7 +25789,8 @@ export const catalogProducts = {
     "soldCount": 58,
     "price": "XAF 72.400",
     "salePrice": "XAF 80.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -25289,7 +25816,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#117). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#117). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25311,7 +25838,8 @@ export const catalogProducts = {
     "soldCount": 69,
     "price": "XAF 38.700",
     "salePrice": "XAF 43.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -25337,7 +25865,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#118). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#118). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25359,7 +25887,8 @@ export const catalogProducts = {
     "soldCount": 80,
     "price": "XAF 26.600",
     "salePrice": "XAF 29.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -25385,7 +25914,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#119). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#119). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25407,7 +25936,8 @@ export const catalogProducts = {
     "soldCount": 91,
     "price": "XAF 85.500",
     "salePrice": "XAF 95.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -25433,7 +25963,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#120). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#120). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25455,7 +25985,8 @@ export const catalogProducts = {
     "soldCount": 102,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -25481,7 +26012,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#121). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#121). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25503,7 +26034,8 @@ export const catalogProducts = {
     "soldCount": 113,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -25529,7 +26061,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#122). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#122). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25551,7 +26083,8 @@ export const catalogProducts = {
     "soldCount": 124,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -25577,7 +26110,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#123). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#123). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25599,7 +26132,8 @@ export const catalogProducts = {
     "soldCount": 135,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -25625,7 +26159,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#124). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#124). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25647,7 +26181,8 @@ export const catalogProducts = {
     "soldCount": 146,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -25673,7 +26208,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#125). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#125). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25695,7 +26230,8 @@ export const catalogProducts = {
     "soldCount": 157,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -25721,7 +26257,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#126). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#126). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25743,7 +26279,8 @@ export const catalogProducts = {
     "soldCount": 168,
     "price": "XAF 72.400",
     "salePrice": "XAF 80.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -25769,7 +26306,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#127). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#127). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25791,7 +26328,8 @@ export const catalogProducts = {
     "soldCount": 179,
     "price": "XAF 38.700",
     "salePrice": "XAF 43.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -25817,7 +26355,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#128). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#128). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25839,7 +26377,8 @@ export const catalogProducts = {
     "soldCount": 190,
     "price": "XAF 26.600",
     "salePrice": "XAF 29.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -25865,7 +26404,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#129). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#129). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25887,7 +26426,8 @@ export const catalogProducts = {
     "soldCount": 201,
     "price": "XAF 85.500",
     "salePrice": "XAF 95.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -25913,7 +26453,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#130). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#130). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25935,7 +26475,8 @@ export const catalogProducts = {
     "soldCount": 212,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -25961,7 +26502,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#131). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#131). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -25983,7 +26524,8 @@ export const catalogProducts = {
     "soldCount": 223,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -26009,7 +26551,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#132). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#132). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26031,7 +26573,8 @@ export const catalogProducts = {
     "soldCount": 234,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -26057,7 +26600,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#133). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#133). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26079,7 +26622,8 @@ export const catalogProducts = {
     "soldCount": 245,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -26105,7 +26649,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#134). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#134). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26127,7 +26671,8 @@ export const catalogProducts = {
     "soldCount": 46,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -26153,7 +26698,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#135). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#135). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26175,7 +26720,8 @@ export const catalogProducts = {
     "soldCount": 57,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -26201,7 +26747,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#136). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#136). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26223,7 +26769,8 @@ export const catalogProducts = {
     "soldCount": 68,
     "price": "XAF 72.400",
     "salePrice": "XAF 80.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -26249,7 +26796,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#137). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#137). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26271,7 +26818,8 @@ export const catalogProducts = {
     "soldCount": 79,
     "price": "XAF 38.700",
     "salePrice": "XAF 43.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -26297,7 +26845,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#138). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#138). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26319,7 +26867,8 @@ export const catalogProducts = {
     "soldCount": 90,
     "price": "XAF 26.600",
     "salePrice": "XAF 29.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -26345,7 +26894,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#139). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#139). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26367,7 +26916,8 @@ export const catalogProducts = {
     "soldCount": 101,
     "price": "XAF 85.500",
     "salePrice": "XAF 95.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -26393,7 +26943,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#140). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#140). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26415,7 +26965,8 @@ export const catalogProducts = {
     "soldCount": 112,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -26441,7 +26992,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#141). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#141). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26463,7 +27014,8 @@ export const catalogProducts = {
     "soldCount": 123,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -26489,7 +27041,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#142). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#142). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26511,7 +27063,8 @@ export const catalogProducts = {
     "soldCount": 134,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -26537,7 +27090,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#143). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#143). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26559,7 +27112,8 @@ export const catalogProducts = {
     "soldCount": 145,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -26585,7 +27139,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#144). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#144). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26607,7 +27161,8 @@ export const catalogProducts = {
     "soldCount": 156,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -26633,7 +27188,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#145). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#145). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26655,7 +27210,8 @@ export const catalogProducts = {
     "soldCount": 167,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -26681,7 +27237,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#146). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#146). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26703,7 +27259,8 @@ export const catalogProducts = {
     "soldCount": 178,
     "price": "XAF 72.400",
     "salePrice": "XAF 80.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -26729,7 +27286,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#147). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#147). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26751,7 +27308,8 @@ export const catalogProducts = {
     "soldCount": 189,
     "price": "XAF 38.700",
     "salePrice": "XAF 43.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -26777,7 +27335,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#148). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#148). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26799,7 +27357,8 @@ export const catalogProducts = {
     "soldCount": 200,
     "price": "XAF 26.600",
     "salePrice": "XAF 29.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -26825,7 +27384,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#149). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#149). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26847,7 +27406,8 @@ export const catalogProducts = {
     "soldCount": 211,
     "price": "XAF 85.500",
     "salePrice": "XAF 95.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -26873,7 +27433,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#150). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#150). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26895,7 +27455,8 @@ export const catalogProducts = {
     "soldCount": 222,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -26921,7 +27482,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#151). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#151). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26943,7 +27504,8 @@ export const catalogProducts = {
     "soldCount": 233,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -26969,7 +27531,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#152). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#152). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -26991,7 +27553,8 @@ export const catalogProducts = {
     "soldCount": 244,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -27017,7 +27580,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#153). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#153). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27039,7 +27602,8 @@ export const catalogProducts = {
     "soldCount": 45,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -27065,7 +27629,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#154). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#154). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27087,7 +27651,8 @@ export const catalogProducts = {
     "soldCount": 56,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -27113,7 +27678,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#155). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#155). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27135,7 +27700,8 @@ export const catalogProducts = {
     "soldCount": 67,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -27161,7 +27727,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#156). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#156). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27183,7 +27749,8 @@ export const catalogProducts = {
     "soldCount": 78,
     "price": "XAF 72.400",
     "salePrice": "XAF 80.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -27209,7 +27776,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#157). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#157). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27231,7 +27798,8 @@ export const catalogProducts = {
     "soldCount": 89,
     "price": "XAF 38.700",
     "salePrice": "XAF 43.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -27257,7 +27825,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#158). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#158). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27279,7 +27847,8 @@ export const catalogProducts = {
     "soldCount": 100,
     "price": "XAF 26.600",
     "salePrice": "XAF 29.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -27305,7 +27874,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#159). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#159). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27327,7 +27896,8 @@ export const catalogProducts = {
     "soldCount": 111,
     "price": "XAF 85.500",
     "salePrice": "XAF 95.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -27353,7 +27923,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#160). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#160). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27375,7 +27945,8 @@ export const catalogProducts = {
     "soldCount": 122,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -27401,7 +27972,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#161). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#161). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27423,7 +27994,8 @@ export const catalogProducts = {
     "soldCount": 133,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -27449,7 +28021,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#162). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#162). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27471,7 +28043,8 @@ export const catalogProducts = {
     "soldCount": 144,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -27497,7 +28070,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#163). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#163). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27519,7 +28092,8 @@ export const catalogProducts = {
     "soldCount": 155,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -27545,7 +28119,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#164). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#164). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27567,7 +28141,8 @@ export const catalogProducts = {
     "soldCount": 166,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -27593,7 +28168,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#165). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#165). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27615,7 +28190,8 @@ export const catalogProducts = {
     "soldCount": 177,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -27641,7 +28217,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#166). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#166). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27663,7 +28239,8 @@ export const catalogProducts = {
     "soldCount": 188,
     "price": "XAF 72.400",
     "salePrice": "XAF 80.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -27689,7 +28266,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#167). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#167). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27711,7 +28288,8 @@ export const catalogProducts = {
     "soldCount": 199,
     "price": "XAF 38.700",
     "salePrice": "XAF 43.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -27737,7 +28315,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#168). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#168). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27759,7 +28337,8 @@ export const catalogProducts = {
     "soldCount": 210,
     "price": "XAF 26.600",
     "salePrice": "XAF 29.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -27785,7 +28364,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#169). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#169). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27807,7 +28386,8 @@ export const catalogProducts = {
     "soldCount": 221,
     "price": "XAF 85.500",
     "salePrice": "XAF 95.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -27833,7 +28413,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#170). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#170). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27855,7 +28435,8 @@ export const catalogProducts = {
     "soldCount": 232,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -27881,7 +28462,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#171). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#171). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27903,7 +28484,8 @@ export const catalogProducts = {
     "soldCount": 243,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -27929,7 +28511,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#172). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#172). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27951,7 +28533,8 @@ export const catalogProducts = {
     "soldCount": 44,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -27977,7 +28560,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#173). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#173). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -27999,7 +28582,8 @@ export const catalogProducts = {
     "soldCount": 55,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -28025,7 +28609,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#174). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#174). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28047,7 +28631,8 @@ export const catalogProducts = {
     "soldCount": 66,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -28073,7 +28658,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#175). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#175). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28095,7 +28680,8 @@ export const catalogProducts = {
     "soldCount": 77,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -28121,7 +28707,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#176). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#176). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28143,7 +28729,8 @@ export const catalogProducts = {
     "soldCount": 88,
     "price": "XAF 72.400",
     "salePrice": "XAF 80.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -28169,7 +28756,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#177). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#177). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28191,7 +28778,8 @@ export const catalogProducts = {
     "soldCount": 99,
     "price": "XAF 38.700",
     "salePrice": "XAF 43.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -28217,7 +28805,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#178). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Armonía Milano.",
+    "description": "Chaussure élégante et confortable Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#178). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28239,7 +28827,8 @@ export const catalogProducts = {
     "soldCount": 110,
     "price": "XAF 26.600",
     "salePrice": "XAF 29.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -28265,7 +28854,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#179). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Sneaker Lounge 237.",
+    "description": "Chaussure élégante et confortable Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#179). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28287,7 +28876,8 @@ export const catalogProducts = {
     "soldCount": 121,
     "price": "XAF 85.500",
     "salePrice": "XAF 95.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -28313,7 +28903,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#180). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par K-Walk Footwear.",
+    "description": "Chaussure élégante et confortable Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#180). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28335,7 +28925,8 @@ export const catalogProducts = {
     "soldCount": 132,
     "price": "XAF 40.500",
     "salePrice": "XAF 45.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -28361,7 +28952,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#181). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Maison de la Haute Couture.",
+    "description": "Chaussure élégante et confortable Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#181). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28383,7 +28974,8 @@ export const catalogProducts = {
     "soldCount": 143,
     "price": "XAF 58.000",
     "salePrice": "XAF 64.500",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -28409,7 +29001,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#182). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par AfroLuxe Paris & Douala.",
+    "description": "Chaussure élégante et confortable Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#182). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28431,7 +29023,8 @@ export const catalogProducts = {
     "soldCount": 154,
     "price": "XAF 72.000",
     "salePrice": "XAF 80.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -28457,7 +29050,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#183). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Horlogerie Suisse Douala.",
+    "description": "Chaussure élégante et confortable Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#183). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28479,7 +29072,8 @@ export const catalogProducts = {
     "soldCount": 165,
     "price": "XAF 47.200",
     "salePrice": "XAF 52.500",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -28505,7 +29099,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#184). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Joaillerie Royale Yaoundé.",
+    "description": "Chaussure élégante et confortable Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#184). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28527,7 +29121,8 @@ export const catalogProducts = {
     "soldCount": 176,
     "price": "XAF 58.500",
     "salePrice": "XAF 65.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -28553,7 +29148,7 @@ export const catalogProducts = {
         "val": "Imperméabilisant & cirage incolore recommandé"
       }
     ],
-    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#185). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par Kraasa Official.",
+    "description": "Chaussure élégante et confortable New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#185). Finitions soignées et maintien irréprochable. Vérifié sur le marché avec notre remise de 10% garantie par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28575,7 +29170,8 @@ export const catalogProducts = {
     "soldCount": 35,
     "price": "XAF 67.500",
     "salePrice": "XAF 75.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -28597,7 +29193,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #1). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez K-Walk Footwear avec LOUMOO.",
+    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #1). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28619,7 +29215,8 @@ export const catalogProducts = {
     "soldCount": 43,
     "price": "XAF 61.600",
     "salePrice": "XAF 68.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -28641,7 +29238,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #2). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Maison de la Haute Couture avec LOUMOO.",
+    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #2). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28663,7 +29260,8 @@ export const catalogProducts = {
     "soldCount": 51,
     "price": "XAF 105.300",
     "salePrice": "XAF 117.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -28685,7 +29283,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #3). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez AfroLuxe Paris & Douala avec LOUMOO.",
+    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #3). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28707,7 +29305,8 @@ export const catalogProducts = {
     "soldCount": 59,
     "price": "XAF 59.000",
     "salePrice": "XAF 65.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -28729,7 +29328,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #4). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Horlogerie Suisse Douala avec LOUMOO.",
+    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #4). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28751,7 +29350,8 @@ export const catalogProducts = {
     "soldCount": 67,
     "price": "XAF 37.800",
     "salePrice": "XAF 42.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -28773,7 +29373,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #5). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Joaillerie Royale Yaoundé avec LOUMOO.",
+    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #5). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28795,7 +29395,8 @@ export const catalogProducts = {
     "soldCount": 75,
     "price": "XAF 115.600",
     "salePrice": "XAF 128.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -28817,7 +29418,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #6). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Kraasa Official avec LOUMOO.",
+    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #6). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28839,7 +29440,8 @@ export const catalogProducts = {
     "soldCount": 83,
     "price": "XAF 73.800",
     "salePrice": "XAF 82.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -28861,7 +29463,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #7). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Armonía Milano avec LOUMOO.",
+    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #7). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28883,7 +29485,8 @@ export const catalogProducts = {
     "soldCount": 91,
     "price": "XAF 68.000",
     "salePrice": "XAF 75.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -28905,7 +29508,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #8). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Sneaker Lounge 237 avec LOUMOO.",
+    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #8). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28927,7 +29530,8 @@ export const catalogProducts = {
     "soldCount": 99,
     "price": "XAF 99.000",
     "salePrice": "XAF 110.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -28949,7 +29553,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #9). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez K-Walk Footwear avec LOUMOO.",
+    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #9). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -28971,7 +29575,8 @@ export const catalogProducts = {
     "soldCount": 107,
     "price": "XAF 52.600",
     "salePrice": "XAF 58.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -28993,7 +29598,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #10). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Maison de la Haute Couture avec LOUMOO.",
+    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #10). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29015,7 +29620,8 @@ export const catalogProducts = {
     "soldCount": 115,
     "price": "XAF 44.100",
     "salePrice": "XAF 49.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -29037,7 +29643,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #11). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez AfroLuxe Paris & Douala avec LOUMOO.",
+    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #11). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29059,7 +29665,8 @@ export const catalogProducts = {
     "soldCount": 123,
     "price": "XAF 122.000",
     "salePrice": "XAF 135.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -29081,7 +29688,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #12). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Horlogerie Suisse Douala avec LOUMOO.",
+    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #12). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29103,7 +29710,8 @@ export const catalogProducts = {
     "soldCount": 131,
     "price": "XAF 67.500",
     "salePrice": "XAF 75.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -29125,7 +29733,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #13). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Joaillerie Royale Yaoundé avec LOUMOO.",
+    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #13). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29147,7 +29755,8 @@ export const catalogProducts = {
     "soldCount": 139,
     "price": "XAF 61.600",
     "salePrice": "XAF 68.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -29169,7 +29778,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #14). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Kraasa Official avec LOUMOO.",
+    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #14). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29191,7 +29800,8 @@ export const catalogProducts = {
     "soldCount": 147,
     "price": "XAF 105.300",
     "salePrice": "XAF 117.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -29213,7 +29823,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #15). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Armonía Milano avec LOUMOO.",
+    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #15). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29235,7 +29845,8 @@ export const catalogProducts = {
     "soldCount": 155,
     "price": "XAF 59.000",
     "salePrice": "XAF 65.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -29257,7 +29868,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #16). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Sneaker Lounge 237 avec LOUMOO.",
+    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #16). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29279,7 +29890,8 @@ export const catalogProducts = {
     "soldCount": 163,
     "price": "XAF 37.800",
     "salePrice": "XAF 42.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -29301,7 +29913,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #17). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez K-Walk Footwear avec LOUMOO.",
+    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #17). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29323,7 +29935,8 @@ export const catalogProducts = {
     "soldCount": 171,
     "price": "XAF 115.600",
     "salePrice": "XAF 128.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -29345,7 +29958,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #18). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Maison de la Haute Couture avec LOUMOO.",
+    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #18). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29367,7 +29980,8 @@ export const catalogProducts = {
     "soldCount": 179,
     "price": "XAF 73.800",
     "salePrice": "XAF 82.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -29389,7 +30003,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #19). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez AfroLuxe Paris & Douala avec LOUMOO.",
+    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #19). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29411,7 +30025,8 @@ export const catalogProducts = {
     "soldCount": 187,
     "price": "XAF 68.000",
     "salePrice": "XAF 75.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -29433,7 +30048,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #20). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Horlogerie Suisse Douala avec LOUMOO.",
+    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #20). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29455,7 +30070,8 @@ export const catalogProducts = {
     "soldCount": 35,
     "price": "XAF 99.000",
     "salePrice": "XAF 110.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -29477,7 +30093,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #21). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Joaillerie Royale Yaoundé avec LOUMOO.",
+    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #21). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29499,7 +30115,8 @@ export const catalogProducts = {
     "soldCount": 43,
     "price": "XAF 52.600",
     "salePrice": "XAF 58.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -29521,7 +30138,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #22). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Kraasa Official avec LOUMOO.",
+    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #22). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29543,7 +30160,8 @@ export const catalogProducts = {
     "soldCount": 51,
     "price": "XAF 44.100",
     "salePrice": "XAF 49.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -29565,7 +30183,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #23). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Armonía Milano avec LOUMOO.",
+    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #23). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29587,7 +30205,8 @@ export const catalogProducts = {
     "soldCount": 59,
     "price": "XAF 122.000",
     "salePrice": "XAF 135.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -29609,7 +30228,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #24). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Sneaker Lounge 237 avec LOUMOO.",
+    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #24). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29631,7 +30250,8 @@ export const catalogProducts = {
     "soldCount": 67,
     "price": "XAF 67.500",
     "salePrice": "XAF 75.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -29653,7 +30273,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #25). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez K-Walk Footwear avec LOUMOO.",
+    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #25). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29675,7 +30295,8 @@ export const catalogProducts = {
     "soldCount": 75,
     "price": "XAF 61.600",
     "salePrice": "XAF 68.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -29697,7 +30318,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #26). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Maison de la Haute Couture avec LOUMOO.",
+    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #26). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29719,7 +30340,8 @@ export const catalogProducts = {
     "soldCount": 83,
     "price": "XAF 105.300",
     "salePrice": "XAF 117.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -29741,7 +30363,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #27). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez AfroLuxe Paris & Douala avec LOUMOO.",
+    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #27). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29763,7 +30385,8 @@ export const catalogProducts = {
     "soldCount": 91,
     "price": "XAF 59.000",
     "salePrice": "XAF 65.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -29785,7 +30408,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #28). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Horlogerie Suisse Douala avec LOUMOO.",
+    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #28). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29807,7 +30430,8 @@ export const catalogProducts = {
     "soldCount": 99,
     "price": "XAF 37.800",
     "salePrice": "XAF 42.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -29829,7 +30453,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #29). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Joaillerie Royale Yaoundé avec LOUMOO.",
+    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #29). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29851,7 +30475,8 @@ export const catalogProducts = {
     "soldCount": 107,
     "price": "XAF 115.600",
     "salePrice": "XAF 128.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -29873,7 +30498,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #30). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Kraasa Official avec LOUMOO.",
+    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #30). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29895,7 +30520,8 @@ export const catalogProducts = {
     "soldCount": 115,
     "price": "XAF 73.800",
     "salePrice": "XAF 82.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -29917,7 +30543,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #31). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Armonía Milano avec LOUMOO.",
+    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #31). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29939,7 +30565,8 @@ export const catalogProducts = {
     "soldCount": 123,
     "price": "XAF 68.000",
     "salePrice": "XAF 75.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -29961,7 +30588,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #32). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Sneaker Lounge 237 avec LOUMOO.",
+    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #32). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -29983,7 +30610,8 @@ export const catalogProducts = {
     "soldCount": 131,
     "price": "XAF 99.000",
     "salePrice": "XAF 110.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -30005,7 +30633,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #33). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez K-Walk Footwear avec LOUMOO.",
+    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #33). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30027,7 +30655,8 @@ export const catalogProducts = {
     "soldCount": 139,
     "price": "XAF 52.600",
     "salePrice": "XAF 58.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -30049,7 +30678,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #34). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Maison de la Haute Couture avec LOUMOO.",
+    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #34). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30071,7 +30700,8 @@ export const catalogProducts = {
     "soldCount": 147,
     "price": "XAF 44.100",
     "salePrice": "XAF 49.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -30093,7 +30723,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #35). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez AfroLuxe Paris & Douala avec LOUMOO.",
+    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #35). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30115,7 +30745,8 @@ export const catalogProducts = {
     "soldCount": 155,
     "price": "XAF 122.000",
     "salePrice": "XAF 135.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -30137,7 +30768,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #36). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Horlogerie Suisse Douala avec LOUMOO.",
+    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #36). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30159,7 +30790,8 @@ export const catalogProducts = {
     "soldCount": 163,
     "price": "XAF 67.500",
     "salePrice": "XAF 75.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -30181,7 +30813,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #37). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Joaillerie Royale Yaoundé avec LOUMOO.",
+    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #37). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30203,7 +30835,8 @@ export const catalogProducts = {
     "soldCount": 171,
     "price": "XAF 61.600",
     "salePrice": "XAF 68.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -30225,7 +30858,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #38). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Kraasa Official avec LOUMOO.",
+    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #38). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30247,7 +30880,8 @@ export const catalogProducts = {
     "soldCount": 179,
     "price": "XAF 105.300",
     "salePrice": "XAF 117.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -30269,7 +30903,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #39). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Armonía Milano avec LOUMOO.",
+    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #39). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30291,7 +30925,8 @@ export const catalogProducts = {
     "soldCount": 187,
     "price": "XAF 59.000",
     "salePrice": "XAF 65.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -30313,7 +30948,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #40). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Sneaker Lounge 237 avec LOUMOO.",
+    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #40). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30335,7 +30970,8 @@ export const catalogProducts = {
     "soldCount": 35,
     "price": "XAF 37.800",
     "salePrice": "XAF 42.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -30357,7 +30993,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #41). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez K-Walk Footwear avec LOUMOO.",
+    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #41). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30379,7 +31015,8 @@ export const catalogProducts = {
     "soldCount": 43,
     "price": "XAF 115.600",
     "salePrice": "XAF 128.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -30401,7 +31038,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #42). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Maison de la Haute Couture avec LOUMOO.",
+    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #42). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30423,7 +31060,8 @@ export const catalogProducts = {
     "soldCount": 51,
     "price": "XAF 73.800",
     "salePrice": "XAF 82.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -30445,7 +31083,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #43). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez AfroLuxe Paris & Douala avec LOUMOO.",
+    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #43). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30467,7 +31105,8 @@ export const catalogProducts = {
     "soldCount": 59,
     "price": "XAF 68.000",
     "salePrice": "XAF 75.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -30489,7 +31128,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #44). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Horlogerie Suisse Douala avec LOUMOO.",
+    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #44). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30511,7 +31150,8 @@ export const catalogProducts = {
     "soldCount": 67,
     "price": "XAF 99.000",
     "salePrice": "XAF 110.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -30533,7 +31173,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #45). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Joaillerie Royale Yaoundé avec LOUMOO.",
+    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #45). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30555,7 +31195,8 @@ export const catalogProducts = {
     "soldCount": 75,
     "price": "XAF 52.600",
     "salePrice": "XAF 58.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -30577,7 +31218,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #46). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Kraasa Official avec LOUMOO.",
+    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #46). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30599,7 +31240,8 @@ export const catalogProducts = {
     "soldCount": 83,
     "price": "XAF 44.100",
     "salePrice": "XAF 49.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -30621,7 +31263,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #47). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Armonía Milano avec LOUMOO.",
+    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #47). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30643,7 +31285,8 @@ export const catalogProducts = {
     "soldCount": 91,
     "price": "XAF 122.000",
     "salePrice": "XAF 135.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -30665,7 +31308,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #48). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Sneaker Lounge 237 avec LOUMOO.",
+    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #48). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30687,7 +31330,8 @@ export const catalogProducts = {
     "soldCount": 99,
     "price": "XAF 67.500",
     "salePrice": "XAF 75.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -30709,7 +31353,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #49). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez K-Walk Footwear avec LOUMOO.",
+    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #49). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30731,7 +31375,8 @@ export const catalogProducts = {
     "soldCount": 107,
     "price": "XAF 61.600",
     "salePrice": "XAF 68.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -30753,7 +31398,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #50). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Maison de la Haute Couture avec LOUMOO.",
+    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #50). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30775,7 +31420,8 @@ export const catalogProducts = {
     "soldCount": 115,
     "price": "XAF 105.300",
     "salePrice": "XAF 117.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -30797,7 +31443,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #51). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez AfroLuxe Paris & Douala avec LOUMOO.",
+    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #51). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30819,7 +31465,8 @@ export const catalogProducts = {
     "soldCount": 123,
     "price": "XAF 59.000",
     "salePrice": "XAF 65.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -30841,7 +31488,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #52). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Horlogerie Suisse Douala avec LOUMOO.",
+    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #52). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30863,7 +31510,8 @@ export const catalogProducts = {
     "soldCount": 131,
     "price": "XAF 37.800",
     "salePrice": "XAF 42.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -30885,7 +31533,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #53). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Joaillerie Royale Yaoundé avec LOUMOO.",
+    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #53). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30907,7 +31555,8 @@ export const catalogProducts = {
     "soldCount": 139,
     "price": "XAF 115.600",
     "salePrice": "XAF 128.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -30929,7 +31578,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #54). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Kraasa Official avec LOUMOO.",
+    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #54). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30951,7 +31600,8 @@ export const catalogProducts = {
     "soldCount": 147,
     "price": "XAF 73.800",
     "salePrice": "XAF 82.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -30973,7 +31623,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #55). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Armonía Milano avec LOUMOO.",
+    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #55). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -30995,7 +31645,8 @@ export const catalogProducts = {
     "soldCount": 155,
     "price": "XAF 68.000",
     "salePrice": "XAF 75.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -31017,7 +31668,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #56). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Sneaker Lounge 237 avec LOUMOO.",
+    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #56). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31039,7 +31690,8 @@ export const catalogProducts = {
     "soldCount": 163,
     "price": "XAF 99.000",
     "salePrice": "XAF 110.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -31061,7 +31713,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #57). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez K-Walk Footwear avec LOUMOO.",
+    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #57). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31083,7 +31735,8 @@ export const catalogProducts = {
     "soldCount": 171,
     "price": "XAF 52.600",
     "salePrice": "XAF 58.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -31105,7 +31758,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #58). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Maison de la Haute Couture avec LOUMOO.",
+    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #58). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31127,7 +31780,8 @@ export const catalogProducts = {
     "soldCount": 179,
     "price": "XAF 44.100",
     "salePrice": "XAF 49.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -31149,7 +31803,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #59). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez AfroLuxe Paris & Douala avec LOUMOO.",
+    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #59). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31171,7 +31825,8 @@ export const catalogProducts = {
     "soldCount": 187,
     "price": "XAF 122.000",
     "salePrice": "XAF 135.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -31193,7 +31848,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #60). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Horlogerie Suisse Douala avec LOUMOO.",
+    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #60). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31215,7 +31870,8 @@ export const catalogProducts = {
     "soldCount": 35,
     "price": "XAF 67.500",
     "salePrice": "XAF 75.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -31237,7 +31893,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #61). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Joaillerie Royale Yaoundé avec LOUMOO.",
+    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #61). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31259,7 +31915,8 @@ export const catalogProducts = {
     "soldCount": 43,
     "price": "XAF 61.600",
     "salePrice": "XAF 68.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -31281,7 +31938,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #62). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Kraasa Official avec LOUMOO.",
+    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #62). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31303,7 +31960,8 @@ export const catalogProducts = {
     "soldCount": 51,
     "price": "XAF 105.300",
     "salePrice": "XAF 117.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -31325,7 +31983,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #63). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Armonía Milano avec LOUMOO.",
+    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #63). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31347,7 +32005,8 @@ export const catalogProducts = {
     "soldCount": 59,
     "price": "XAF 59.000",
     "salePrice": "XAF 65.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -31369,7 +32028,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #64). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Sneaker Lounge 237 avec LOUMOO.",
+    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #64). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31391,7 +32050,8 @@ export const catalogProducts = {
     "soldCount": 67,
     "price": "XAF 37.800",
     "salePrice": "XAF 42.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -31413,7 +32073,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #65). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez K-Walk Footwear avec LOUMOO.",
+    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #65). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31435,7 +32095,8 @@ export const catalogProducts = {
     "soldCount": 75,
     "price": "XAF 115.600",
     "salePrice": "XAF 128.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -31457,7 +32118,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #66). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Maison de la Haute Couture avec LOUMOO.",
+    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #66). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31479,7 +32140,8 @@ export const catalogProducts = {
     "soldCount": 83,
     "price": "XAF 73.800",
     "salePrice": "XAF 82.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -31501,7 +32163,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #67). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez AfroLuxe Paris & Douala avec LOUMOO.",
+    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #67). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31523,7 +32185,8 @@ export const catalogProducts = {
     "soldCount": 91,
     "price": "XAF 68.000",
     "salePrice": "XAF 75.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -31545,7 +32208,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #68). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Horlogerie Suisse Douala avec LOUMOO.",
+    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #68). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31567,7 +32230,8 @@ export const catalogProducts = {
     "soldCount": 99,
     "price": "XAF 99.000",
     "salePrice": "XAF 110.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -31589,7 +32253,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #69). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Joaillerie Royale Yaoundé avec LOUMOO.",
+    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #69). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31611,7 +32275,8 @@ export const catalogProducts = {
     "soldCount": 107,
     "price": "XAF 52.600",
     "salePrice": "XAF 58.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -31633,7 +32298,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #70). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Kraasa Official avec LOUMOO.",
+    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #70). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31655,7 +32320,8 @@ export const catalogProducts = {
     "soldCount": 115,
     "price": "XAF 44.100",
     "salePrice": "XAF 49.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -31677,7 +32343,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #71). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Armonía Milano avec LOUMOO.",
+    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #71). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31699,7 +32365,8 @@ export const catalogProducts = {
     "soldCount": 123,
     "price": "XAF 122.000",
     "salePrice": "XAF 135.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -31721,7 +32388,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #72). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Sneaker Lounge 237 avec LOUMOO.",
+    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #72). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31743,7 +32410,8 @@ export const catalogProducts = {
     "soldCount": 131,
     "price": "XAF 67.500",
     "salePrice": "XAF 75.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -31765,7 +32433,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #73). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez K-Walk Footwear avec LOUMOO.",
+    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #73). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31787,7 +32455,8 @@ export const catalogProducts = {
     "soldCount": 139,
     "price": "XAF 61.600",
     "salePrice": "XAF 68.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -31809,7 +32478,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #74). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Maison de la Haute Couture avec LOUMOO.",
+    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #74). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31831,7 +32500,8 @@ export const catalogProducts = {
     "soldCount": 147,
     "price": "XAF 105.300",
     "salePrice": "XAF 117.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -31853,7 +32523,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #75). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez AfroLuxe Paris & Douala avec LOUMOO.",
+    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #75). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31875,7 +32545,8 @@ export const catalogProducts = {
     "soldCount": 155,
     "price": "XAF 59.000",
     "salePrice": "XAF 65.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -31897,7 +32568,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #76). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Horlogerie Suisse Douala avec LOUMOO.",
+    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #76). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31919,7 +32590,8 @@ export const catalogProducts = {
     "soldCount": 163,
     "price": "XAF 37.800",
     "salePrice": "XAF 42.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -31941,7 +32613,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #77). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Joaillerie Royale Yaoundé avec LOUMOO.",
+    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #77). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -31963,7 +32635,8 @@ export const catalogProducts = {
     "soldCount": 171,
     "price": "XAF 115.600",
     "salePrice": "XAF 128.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -31985,7 +32658,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #78). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Kraasa Official avec LOUMOO.",
+    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #78). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32007,7 +32680,8 @@ export const catalogProducts = {
     "soldCount": 179,
     "price": "XAF 73.800",
     "salePrice": "XAF 82.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -32029,7 +32703,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #79). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Armonía Milano avec LOUMOO.",
+    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #79). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32051,7 +32725,8 @@ export const catalogProducts = {
     "soldCount": 187,
     "price": "XAF 68.000",
     "salePrice": "XAF 75.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -32073,7 +32748,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #80). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Sneaker Lounge 237 avec LOUMOO.",
+    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #80). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32095,7 +32770,8 @@ export const catalogProducts = {
     "soldCount": 35,
     "price": "XAF 99.000",
     "salePrice": "XAF 110.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -32117,7 +32793,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #81). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez K-Walk Footwear avec LOUMOO.",
+    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #81). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32139,7 +32815,8 @@ export const catalogProducts = {
     "soldCount": 43,
     "price": "XAF 52.600",
     "salePrice": "XAF 58.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -32161,7 +32838,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #82). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Maison de la Haute Couture avec LOUMOO.",
+    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #82). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32183,7 +32860,8 @@ export const catalogProducts = {
     "soldCount": 51,
     "price": "XAF 44.100",
     "salePrice": "XAF 49.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -32205,7 +32883,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #83). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez AfroLuxe Paris & Douala avec LOUMOO.",
+    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #83). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32227,7 +32905,8 @@ export const catalogProducts = {
     "soldCount": 59,
     "price": "XAF 122.000",
     "salePrice": "XAF 135.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -32249,7 +32928,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #84). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Horlogerie Suisse Douala avec LOUMOO.",
+    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #84). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32271,7 +32950,8 @@ export const catalogProducts = {
     "soldCount": 67,
     "price": "XAF 67.500",
     "salePrice": "XAF 75.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -32293,7 +32973,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #85). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Joaillerie Royale Yaoundé avec LOUMOO.",
+    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #85). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32315,7 +32995,8 @@ export const catalogProducts = {
     "soldCount": 75,
     "price": "XAF 61.600",
     "salePrice": "XAF 68.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -32337,7 +33018,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #86). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Kraasa Official avec LOUMOO.",
+    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #86). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32359,7 +33040,8 @@ export const catalogProducts = {
     "soldCount": 83,
     "price": "XAF 105.300",
     "salePrice": "XAF 117.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -32381,7 +33063,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #87). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Armonía Milano avec LOUMOO.",
+    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #87). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32403,7 +33085,8 @@ export const catalogProducts = {
     "soldCount": 91,
     "price": "XAF 59.000",
     "salePrice": "XAF 65.500",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -32425,7 +33108,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #88). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Sneaker Lounge 237 avec LOUMOO.",
+    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #88). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32447,7 +33130,8 @@ export const catalogProducts = {
     "soldCount": 99,
     "price": "XAF 37.800",
     "salePrice": "XAF 42.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -32469,7 +33153,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #89). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez K-Walk Footwear avec LOUMOO.",
+    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #89). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32491,7 +33175,8 @@ export const catalogProducts = {
     "soldCount": 107,
     "price": "XAF 115.600",
     "salePrice": "XAF 128.500",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -32513,7 +33198,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #90). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Maison de la Haute Couture avec LOUMOO.",
+    "description": "Création mode Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #90). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32535,7 +33220,8 @@ export const catalogProducts = {
     "soldCount": 115,
     "price": "XAF 73.800",
     "salePrice": "XAF 82.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -32557,7 +33243,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #91). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez AfroLuxe Paris & Douala avec LOUMOO.",
+    "description": "Création mode Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #91). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32579,7 +33265,8 @@ export const catalogProducts = {
     "soldCount": 123,
     "price": "XAF 68.000",
     "salePrice": "XAF 75.500",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -32601,7 +33288,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #92). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Horlogerie Suisse Douala avec LOUMOO.",
+    "description": "Création mode Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #92). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32623,7 +33310,8 @@ export const catalogProducts = {
     "soldCount": 131,
     "price": "XAF 99.000",
     "salePrice": "XAF 110.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -32645,7 +33333,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #93). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Joaillerie Royale Yaoundé avec LOUMOO.",
+    "description": "Création mode Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #93). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32667,7 +33355,8 @@ export const catalogProducts = {
     "soldCount": 139,
     "price": "XAF 52.600",
     "salePrice": "XAF 58.500",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -32689,7 +33378,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #94). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Kraasa Official avec LOUMOO.",
+    "description": "Création mode Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #94). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32711,7 +33400,8 @@ export const catalogProducts = {
     "soldCount": 147,
     "price": "XAF 44.100",
     "salePrice": "XAF 49.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -32733,7 +33423,7 @@ export const catalogProducts = {
         "val": "Atelier partenaire certifié Cameroun & Europe"
       }
     ],
-    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #95). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez Armonía Milano avec LOUMOO.",
+    "description": "Création mode Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #95). Sublimez votre allure pour les cérémonies et réceptions. Profitez de 10% de réduction par rapport au prix boutique chez NanoAfrica avec LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32755,7 +33445,8 @@ export const catalogProducts = {
     "soldCount": 26,
     "price": "XAF 198.000",
     "salePrice": "XAF 220.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -32777,7 +33468,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#1). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Horlogerie Suisse Douala.",
+    "description": "Pièce d'orfèvrerie prestigieuse Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#1). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32799,7 +33490,8 @@ export const catalogProducts = {
     "soldCount": 31,
     "price": "XAF 286.200",
     "salePrice": "XAF 318.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -32821,7 +33513,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Montre Hommage Chronographe Lunette Céramique Acier Oyster (#2). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Joaillerie Royale Yaoundé.",
+    "description": "Pièce d'orfèvrerie prestigieuse Montre Hommage Chronographe Lunette Céramique Acier Oyster (#2). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32843,7 +33535,8 @@ export const catalogProducts = {
     "soldCount": 36,
     "price": "XAF 117.900",
     "salePrice": "XAF 131.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -32865,7 +33558,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#3). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Kraasa Official.",
+    "description": "Pièce d'orfèvrerie prestigieuse Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#3). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32887,7 +33580,8 @@ export const catalogProducts = {
     "soldCount": 41,
     "price": "XAF 76.500",
     "salePrice": "XAF 85.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -32909,7 +33603,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#4). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Armonía Milano.",
+    "description": "Pièce d'orfèvrerie prestigieuse Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#4). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32931,7 +33625,8 @@ export const catalogProducts = {
     "soldCount": 46,
     "price": "XAF 90.000",
     "salePrice": "XAF 100.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -32953,7 +33648,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#5). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Sneaker Lounge 237.",
+    "description": "Pièce d'orfèvrerie prestigieuse Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#5). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -32975,7 +33670,8 @@ export const catalogProducts = {
     "soldCount": 51,
     "price": "XAF 212.400",
     "salePrice": "XAF 236.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -32997,7 +33693,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#6). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par K-Walk Footwear.",
+    "description": "Pièce d'orfèvrerie prestigieuse Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#6). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33019,7 +33715,8 @@ export const catalogProducts = {
     "soldCount": 56,
     "price": "XAF 279.000",
     "salePrice": "XAF 310.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -33041,7 +33738,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Montre Hommage Chronographe Lunette Céramique Acier Oyster (#7). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Maison de la Haute Couture.",
+    "description": "Pièce d'orfèvrerie prestigieuse Montre Hommage Chronographe Lunette Céramique Acier Oyster (#7). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33063,7 +33760,8 @@ export const catalogProducts = {
     "soldCount": 61,
     "price": "XAF 110.700",
     "salePrice": "XAF 123.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -33085,7 +33783,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#8). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par AfroLuxe Paris & Douala.",
+    "description": "Pièce d'orfèvrerie prestigieuse Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#8). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33107,7 +33805,8 @@ export const catalogProducts = {
     "soldCount": 66,
     "price": "XAF 90.900",
     "salePrice": "XAF 101.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -33129,7 +33828,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#9). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Horlogerie Suisse Douala.",
+    "description": "Pièce d'orfèvrerie prestigieuse Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#9). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33151,7 +33850,8 @@ export const catalogProducts = {
     "soldCount": 71,
     "price": "XAF 82.800",
     "salePrice": "XAF 92.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -33173,7 +33873,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#10). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Joaillerie Royale Yaoundé.",
+    "description": "Pièce d'orfèvrerie prestigieuse Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#10). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33195,7 +33895,8 @@ export const catalogProducts = {
     "soldCount": 76,
     "price": "XAF 205.200",
     "salePrice": "XAF 228.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -33217,7 +33918,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#11). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Kraasa Official.",
+    "description": "Pièce d'orfèvrerie prestigieuse Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#11). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33239,7 +33940,8 @@ export const catalogProducts = {
     "soldCount": 81,
     "price": "XAF 293.400",
     "salePrice": "XAF 326.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -33261,7 +33963,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Montre Hommage Chronographe Lunette Céramique Acier Oyster (#12). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Armonía Milano.",
+    "description": "Pièce d'orfèvrerie prestigieuse Montre Hommage Chronographe Lunette Céramique Acier Oyster (#12). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33283,7 +33985,8 @@ export const catalogProducts = {
     "soldCount": 86,
     "price": "XAF 103.500",
     "salePrice": "XAF 115.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -33305,7 +34008,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#13). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Sneaker Lounge 237.",
+    "description": "Pièce d'orfèvrerie prestigieuse Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#13). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33327,7 +34030,8 @@ export const catalogProducts = {
     "soldCount": 91,
     "price": "XAF 83.700",
     "salePrice": "XAF 93.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -33349,7 +34053,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#14). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par K-Walk Footwear.",
+    "description": "Pièce d'orfèvrerie prestigieuse Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#14). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33371,7 +34075,8 @@ export const catalogProducts = {
     "soldCount": 96,
     "price": "XAF 97.200",
     "salePrice": "XAF 108.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -33393,7 +34098,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#15). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Maison de la Haute Couture.",
+    "description": "Pièce d'orfèvrerie prestigieuse Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#15). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33415,7 +34120,8 @@ export const catalogProducts = {
     "soldCount": 101,
     "price": "XAF 198.000",
     "salePrice": "XAF 220.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -33437,7 +34143,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#16). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par AfroLuxe Paris & Douala.",
+    "description": "Pièce d'orfèvrerie prestigieuse Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#16). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33459,7 +34165,8 @@ export const catalogProducts = {
     "soldCount": 106,
     "price": "XAF 286.200",
     "salePrice": "XAF 318.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -33481,7 +34188,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Montre Hommage Chronographe Lunette Céramique Acier Oyster (#17). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Horlogerie Suisse Douala.",
+    "description": "Pièce d'orfèvrerie prestigieuse Montre Hommage Chronographe Lunette Céramique Acier Oyster (#17). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33503,7 +34210,8 @@ export const catalogProducts = {
     "soldCount": 111,
     "price": "XAF 117.900",
     "salePrice": "XAF 131.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -33525,7 +34233,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#18). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Joaillerie Royale Yaoundé.",
+    "description": "Pièce d'orfèvrerie prestigieuse Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#18). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33547,7 +34255,8 @@ export const catalogProducts = {
     "soldCount": 116,
     "price": "XAF 76.500",
     "salePrice": "XAF 85.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -33569,7 +34278,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#19). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Kraasa Official.",
+    "description": "Pièce d'orfèvrerie prestigieuse Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#19). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33591,7 +34300,8 @@ export const catalogProducts = {
     "soldCount": 121,
     "price": "XAF 90.000",
     "salePrice": "XAF 100.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -33613,7 +34323,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#20). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Armonía Milano.",
+    "description": "Pièce d'orfèvrerie prestigieuse Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#20). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33635,7 +34345,8 @@ export const catalogProducts = {
     "soldCount": 126,
     "price": "XAF 212.400",
     "salePrice": "XAF 236.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -33657,7 +34368,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#21). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Sneaker Lounge 237.",
+    "description": "Pièce d'orfèvrerie prestigieuse Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#21). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33679,7 +34390,8 @@ export const catalogProducts = {
     "soldCount": 131,
     "price": "XAF 279.000",
     "salePrice": "XAF 310.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -33701,7 +34413,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Montre Hommage Chronographe Lunette Céramique Acier Oyster (#22). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par K-Walk Footwear.",
+    "description": "Pièce d'orfèvrerie prestigieuse Montre Hommage Chronographe Lunette Céramique Acier Oyster (#22). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33723,7 +34435,8 @@ export const catalogProducts = {
     "soldCount": 26,
     "price": "XAF 110.700",
     "salePrice": "XAF 123.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -33745,7 +34458,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#23). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Maison de la Haute Couture.",
+    "description": "Pièce d'orfèvrerie prestigieuse Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#23). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33767,7 +34480,8 @@ export const catalogProducts = {
     "soldCount": 31,
     "price": "XAF 90.900",
     "salePrice": "XAF 101.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -33789,7 +34503,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#24). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par AfroLuxe Paris & Douala.",
+    "description": "Pièce d'orfèvrerie prestigieuse Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#24). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33811,7 +34525,8 @@ export const catalogProducts = {
     "soldCount": 36,
     "price": "XAF 82.800",
     "salePrice": "XAF 92.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -33833,7 +34548,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#25). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Horlogerie Suisse Douala.",
+    "description": "Pièce d'orfèvrerie prestigieuse Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#25). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33855,7 +34570,8 @@ export const catalogProducts = {
     "soldCount": 41,
     "price": "XAF 205.200",
     "salePrice": "XAF 228.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -33877,7 +34593,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#26). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Joaillerie Royale Yaoundé.",
+    "description": "Pièce d'orfèvrerie prestigieuse Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#26). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33899,7 +34615,8 @@ export const catalogProducts = {
     "soldCount": 46,
     "price": "XAF 293.400",
     "salePrice": "XAF 326.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -33921,7 +34638,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Montre Hommage Chronographe Lunette Céramique Acier Oyster (#27). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Kraasa Official.",
+    "description": "Pièce d'orfèvrerie prestigieuse Montre Hommage Chronographe Lunette Céramique Acier Oyster (#27). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33943,7 +34660,8 @@ export const catalogProducts = {
     "soldCount": 51,
     "price": "XAF 103.500",
     "salePrice": "XAF 115.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -33965,7 +34683,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#28). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Armonía Milano.",
+    "description": "Pièce d'orfèvrerie prestigieuse Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#28). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -33987,7 +34705,8 @@ export const catalogProducts = {
     "soldCount": 56,
     "price": "XAF 83.700",
     "salePrice": "XAF 93.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -34009,7 +34728,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#29). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Sneaker Lounge 237.",
+    "description": "Pièce d'orfèvrerie prestigieuse Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#29). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34031,7 +34750,8 @@ export const catalogProducts = {
     "soldCount": 61,
     "price": "XAF 97.200",
     "salePrice": "XAF 108.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -34053,7 +34773,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#30). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par K-Walk Footwear.",
+    "description": "Pièce d'orfèvrerie prestigieuse Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#30). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34075,7 +34795,8 @@ export const catalogProducts = {
     "soldCount": 66,
     "price": "XAF 198.000",
     "salePrice": "XAF 220.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -34097,7 +34818,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#31). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Maison de la Haute Couture.",
+    "description": "Pièce d'orfèvrerie prestigieuse Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#31). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34119,7 +34840,8 @@ export const catalogProducts = {
     "soldCount": 71,
     "price": "XAF 286.200",
     "salePrice": "XAF 318.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -34141,7 +34863,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Montre Hommage Chronographe Lunette Céramique Acier Oyster (#32). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par AfroLuxe Paris & Douala.",
+    "description": "Pièce d'orfèvrerie prestigieuse Montre Hommage Chronographe Lunette Céramique Acier Oyster (#32). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34163,7 +34885,8 @@ export const catalogProducts = {
     "soldCount": 76,
     "price": "XAF 117.900",
     "salePrice": "XAF 131.000",
-    "storeName": "Horlogerie Suisse Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -34185,7 +34908,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#33). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Horlogerie Suisse Douala.",
+    "description": "Pièce d'orfèvrerie prestigieuse Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#33). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34207,7 +34930,8 @@ export const catalogProducts = {
     "soldCount": 81,
     "price": "XAF 76.500",
     "salePrice": "XAF 85.000",
-    "storeName": "Joaillerie Royale Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -34229,7 +34953,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#34). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Joaillerie Royale Yaoundé.",
+    "description": "Pièce d'orfèvrerie prestigieuse Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#34). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34251,7 +34975,8 @@ export const catalogProducts = {
     "soldCount": 86,
     "price": "XAF 90.000",
     "salePrice": "XAF 100.000",
-    "storeName": "Kraasa Official",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -34273,7 +34998,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#35). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Kraasa Official.",
+    "description": "Pièce d'orfèvrerie prestigieuse Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#35). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34295,7 +35020,8 @@ export const catalogProducts = {
     "soldCount": 91,
     "price": "XAF 212.400",
     "salePrice": "XAF 236.000",
-    "storeName": "Armonía Milano",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -34317,7 +35043,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#36). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Armonía Milano.",
+    "description": "Pièce d'orfèvrerie prestigieuse Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#36). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34339,7 +35065,8 @@ export const catalogProducts = {
     "soldCount": 96,
     "price": "XAF 279.000",
     "salePrice": "XAF 310.000",
-    "storeName": "Sneaker Lounge 237",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -34361,7 +35088,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Montre Hommage Chronographe Lunette Céramique Acier Oyster (#37). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Sneaker Lounge 237.",
+    "description": "Pièce d'orfèvrerie prestigieuse Montre Hommage Chronographe Lunette Céramique Acier Oyster (#37). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34383,7 +35110,8 @@ export const catalogProducts = {
     "soldCount": 101,
     "price": "XAF 110.700",
     "salePrice": "XAF 123.000",
-    "storeName": "K-Walk Footwear",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -34405,7 +35133,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#38). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par K-Walk Footwear.",
+    "description": "Pièce d'orfèvrerie prestigieuse Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#38). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34427,7 +35155,8 @@ export const catalogProducts = {
     "soldCount": 106,
     "price": "XAF 90.900",
     "salePrice": "XAF 101.000",
-    "storeName": "Maison de la Haute Couture",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -34449,7 +35178,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#39). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par Maison de la Haute Couture.",
+    "description": "Pièce d'orfèvrerie prestigieuse Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#39). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34471,7 +35200,8 @@ export const catalogProducts = {
     "soldCount": 111,
     "price": "XAF 82.800",
     "salePrice": "XAF 92.000",
-    "storeName": "AfroLuxe Paris & Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -34493,7 +35223,7 @@ export const catalogProducts = {
         "val": "24 Mois pièces et mouvement"
       }
     ],
-    "description": "Pièce d'orfèvrerie prestigieuse Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#40). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par AfroLuxe Paris & Douala.",
+    "description": "Pièce d'orfèvrerie prestigieuse Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#40). Un bijou d'exception garanti 100% authentique avec 10% d'économie grâce à LOUMOO Escrow par NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34515,7 +35245,8 @@ export const catalogProducts = {
     "soldCount": 42,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -34541,7 +35272,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Robot Pâtissier Multifonction KitchenAid Artisan 4.8L avec Bol Inox (#1). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Maison & Confort Akwa.",
+    "description": "Appareil de cuisine moderne Robot Pâtissier Multifonction KitchenAid Artisan 4.8L avec Bol Inox (#1). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34563,7 +35294,8 @@ export const catalogProducts = {
     "soldCount": 51,
     "price": "XAF 54.000",
     "salePrice": "XAF 60.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -34589,7 +35321,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Extracteur de Jus à Froid ACOQOOS Cold Press Slow Juicer 60 RPM (#2). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Électro Douala Express.",
+    "description": "Appareil de cuisine moderne Extracteur de Jus à Froid ACOQOOS Cold Press Slow Juicer 60 RPM (#2). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34611,7 +35343,8 @@ export const catalogProducts = {
     "soldCount": 60,
     "price": "XAF 73.800",
     "salePrice": "XAF 82.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -34637,7 +35370,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Friteuse Sans Huile Oraimo NutriFry Smart Air Fryer 5L Tactile 1500W (#3). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez K-Kitchen & Déco Bastos.",
+    "description": "Appareil de cuisine moderne Friteuse Sans Huile Oraimo NutriFry Smart Air Fryer 5L Tactile 1500W (#3). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34659,7 +35392,8 @@ export const catalogProducts = {
     "soldCount": 69,
     "price": "XAF 81.900",
     "salePrice": "XAF 91.000",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -34685,7 +35419,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Machine à Expresso & Cappuccino Vintage Pression 15 Bars Buse Vapeur (#4). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Le Comptoir Électroménager.",
+    "description": "Appareil de cuisine moderne Machine à Expresso & Cappuccino Vintage Pression 15 Bars Buse Vapeur (#4). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34707,7 +35441,8 @@ export const catalogProducts = {
     "soldCount": 78,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -34733,7 +35468,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Presse Fruits et Légumes Compact Nutriments Préservés 55 RPM (#5). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Chef Pro Cameroun.",
+    "description": "Appareil de cuisine moderne Presse Fruits et Légumes Compact Nutriments Préservés 55 RPM (#5). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34755,7 +35490,8 @@ export const catalogProducts = {
     "soldCount": 87,
     "price": "XAF 27.000",
     "salePrice": "XAF 30.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -34781,7 +35517,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Mixeur Plongeant 4-en-1 avec Pied Inox, Hachoir 500ml et Fouet (#6). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Art de la Table Yaoundé.",
+    "description": "Appareil de cuisine moderne Mixeur Plongeant 4-en-1 avec Pied Inox, Hachoir 500ml et Fouet (#6). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34803,7 +35539,8 @@ export const catalogProducts = {
     "soldCount": 96,
     "price": "XAF 19.800",
     "salePrice": "XAF 22.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -34829,7 +35566,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Bouilloire Électrique Sans Fil 2L Double Paroi Inox Anti-Brûlure (#7). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Maison & Confort Akwa.",
+    "description": "Appareil de cuisine moderne Bouilloire Électrique Sans Fil 2L Double Paroi Inox Anti-Brûlure (#7). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34851,7 +35588,8 @@ export const catalogProducts = {
     "soldCount": 105,
     "price": "XAF 27.900",
     "salePrice": "XAF 31.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -34877,7 +35615,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Gaufrier & Appareil Croque-Monsieur Plaques Antiadhésives Amovibles (#8). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Électro Douala Express.",
+    "description": "Appareil de cuisine moderne Gaufrier & Appareil Croque-Monsieur Plaques Antiadhésives Amovibles (#8). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34899,7 +35637,8 @@ export const catalogProducts = {
     "soldCount": 114,
     "price": "XAF 10.800",
     "salePrice": "XAF 12.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -34925,7 +35664,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Mousseur à Lait Électrique Rechargeable USB-C Double Tête Inox (#9). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez K-Kitchen & Déco Bastos.",
+    "description": "Appareil de cuisine moderne Mousseur à Lait Électrique Rechargeable USB-C Double Tête Inox (#9). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34947,7 +35686,8 @@ export const catalogProducts = {
     "soldCount": 123,
     "price": "XAF 33.300",
     "salePrice": "XAF 37.000",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -34973,7 +35713,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Presse-Agrumes Électrique Professionnel à Levier Inox 160W (#10). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Le Comptoir Électroménager.",
+    "description": "Appareil de cuisine moderne Presse-Agrumes Électrique Professionnel à Levier Inox 160W (#10). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -34995,7 +35735,8 @@ export const catalogProducts = {
     "soldCount": 132,
     "price": "XAF 237.600",
     "salePrice": "XAF 264.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -35021,7 +35762,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Robot Pâtissier Multifonction KitchenAid Artisan 4.8L avec Bol Inox (#11). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Chef Pro Cameroun.",
+    "description": "Appareil de cuisine moderne Robot Pâtissier Multifonction KitchenAid Artisan 4.8L avec Bol Inox (#11). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35043,7 +35784,8 @@ export const catalogProducts = {
     "soldCount": 141,
     "price": "XAF 57.600",
     "salePrice": "XAF 64.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -35069,7 +35811,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Extracteur de Jus à Froid ACOQOOS Cold Press Slow Juicer 60 RPM (#12). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Art de la Table Yaoundé.",
+    "description": "Appareil de cuisine moderne Extracteur de Jus à Froid ACOQOOS Cold Press Slow Juicer 60 RPM (#12). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35091,7 +35833,8 @@ export const catalogProducts = {
     "soldCount": 150,
     "price": "XAF 70.200",
     "salePrice": "XAF 78.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -35117,7 +35860,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Friteuse Sans Huile Oraimo NutriFry Smart Air Fryer 5L Tactile 1500W (#13). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Maison & Confort Akwa.",
+    "description": "Appareil de cuisine moderne Friteuse Sans Huile Oraimo NutriFry Smart Air Fryer 5L Tactile 1500W (#13). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35139,7 +35882,8 @@ export const catalogProducts = {
     "soldCount": 159,
     "price": "XAF 78.300",
     "salePrice": "XAF 87.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -35165,7 +35909,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Machine à Expresso & Cappuccino Vintage Pression 15 Bars Buse Vapeur (#14). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Électro Douala Express.",
+    "description": "Appareil de cuisine moderne Machine à Expresso & Cappuccino Vintage Pression 15 Bars Buse Vapeur (#14). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35187,7 +35931,8 @@ export const catalogProducts = {
     "soldCount": 168,
     "price": "XAF 46.800",
     "salePrice": "XAF 52.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -35213,7 +35958,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Presse Fruits et Légumes Compact Nutriments Préservés 55 RPM (#15). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez K-Kitchen & Déco Bastos.",
+    "description": "Appareil de cuisine moderne Presse Fruits et Légumes Compact Nutriments Préservés 55 RPM (#15). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35235,7 +35980,8 @@ export const catalogProducts = {
     "soldCount": 177,
     "price": "XAF 30.600",
     "salePrice": "XAF 34.000",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -35261,7 +36007,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Mixeur Plongeant 4-en-1 avec Pied Inox, Hachoir 500ml et Fouet (#16). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Le Comptoir Électroménager.",
+    "description": "Appareil de cuisine moderne Mixeur Plongeant 4-en-1 avec Pied Inox, Hachoir 500ml et Fouet (#16). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35283,7 +36029,8 @@ export const catalogProducts = {
     "soldCount": 186,
     "price": "XAF 16.200",
     "salePrice": "XAF 18.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -35309,7 +36056,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Bouilloire Électrique Sans Fil 2L Double Paroi Inox Anti-Brûlure (#17). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Chef Pro Cameroun.",
+    "description": "Appareil de cuisine moderne Bouilloire Électrique Sans Fil 2L Double Paroi Inox Anti-Brûlure (#17). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35331,7 +36078,8 @@ export const catalogProducts = {
     "soldCount": 195,
     "price": "XAF 24.300",
     "salePrice": "XAF 27.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -35357,7 +36105,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Gaufrier & Appareil Croque-Monsieur Plaques Antiadhésives Amovibles (#18). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Art de la Table Yaoundé.",
+    "description": "Appareil de cuisine moderne Gaufrier & Appareil Croque-Monsieur Plaques Antiadhésives Amovibles (#18). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35379,7 +36127,8 @@ export const catalogProducts = {
     "soldCount": 204,
     "price": "XAF 14.400",
     "salePrice": "XAF 16.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -35405,7 +36154,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Mousseur à Lait Électrique Rechargeable USB-C Double Tête Inox (#19). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Maison & Confort Akwa.",
+    "description": "Appareil de cuisine moderne Mousseur à Lait Électrique Rechargeable USB-C Double Tête Inox (#19). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35427,7 +36176,8 @@ export const catalogProducts = {
     "soldCount": 43,
     "price": "XAF 36.900",
     "salePrice": "XAF 41.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -35453,7 +36203,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Presse-Agrumes Électrique Professionnel à Levier Inox 160W (#20). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Électro Douala Express.",
+    "description": "Appareil de cuisine moderne Presse-Agrumes Électrique Professionnel à Levier Inox 160W (#20). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35475,7 +36225,8 @@ export const catalogProducts = {
     "soldCount": 52,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -35501,7 +36252,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Robot Pâtissier Multifonction KitchenAid Artisan 4.8L avec Bol Inox (#21). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez K-Kitchen & Déco Bastos.",
+    "description": "Appareil de cuisine moderne Robot Pâtissier Multifonction KitchenAid Artisan 4.8L avec Bol Inox (#21). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35523,7 +36274,8 @@ export const catalogProducts = {
     "soldCount": 61,
     "price": "XAF 54.000",
     "salePrice": "XAF 60.000",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -35549,7 +36301,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Extracteur de Jus à Froid ACOQOOS Cold Press Slow Juicer 60 RPM (#22). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Le Comptoir Électroménager.",
+    "description": "Appareil de cuisine moderne Extracteur de Jus à Froid ACOQOOS Cold Press Slow Juicer 60 RPM (#22). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35571,7 +36323,8 @@ export const catalogProducts = {
     "soldCount": 70,
     "price": "XAF 73.800",
     "salePrice": "XAF 82.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -35597,7 +36350,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Friteuse Sans Huile Oraimo NutriFry Smart Air Fryer 5L Tactile 1500W (#23). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Chef Pro Cameroun.",
+    "description": "Appareil de cuisine moderne Friteuse Sans Huile Oraimo NutriFry Smart Air Fryer 5L Tactile 1500W (#23). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35619,7 +36372,8 @@ export const catalogProducts = {
     "soldCount": 79,
     "price": "XAF 81.900",
     "salePrice": "XAF 91.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -35645,7 +36399,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Machine à Expresso & Cappuccino Vintage Pression 15 Bars Buse Vapeur (#24). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Art de la Table Yaoundé.",
+    "description": "Appareil de cuisine moderne Machine à Expresso & Cappuccino Vintage Pression 15 Bars Buse Vapeur (#24). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35667,7 +36421,8 @@ export const catalogProducts = {
     "soldCount": 88,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -35693,7 +36448,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Presse Fruits et Légumes Compact Nutriments Préservés 55 RPM (#25). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Maison & Confort Akwa.",
+    "description": "Appareil de cuisine moderne Presse Fruits et Légumes Compact Nutriments Préservés 55 RPM (#25). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35715,7 +36470,8 @@ export const catalogProducts = {
     "soldCount": 97,
     "price": "XAF 27.000",
     "salePrice": "XAF 30.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -35741,7 +36497,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Mixeur Plongeant 4-en-1 avec Pied Inox, Hachoir 500ml et Fouet (#26). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Électro Douala Express.",
+    "description": "Appareil de cuisine moderne Mixeur Plongeant 4-en-1 avec Pied Inox, Hachoir 500ml et Fouet (#26). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35763,7 +36519,8 @@ export const catalogProducts = {
     "soldCount": 106,
     "price": "XAF 19.800",
     "salePrice": "XAF 22.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -35789,7 +36546,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Bouilloire Électrique Sans Fil 2L Double Paroi Inox Anti-Brûlure (#27). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez K-Kitchen & Déco Bastos.",
+    "description": "Appareil de cuisine moderne Bouilloire Électrique Sans Fil 2L Double Paroi Inox Anti-Brûlure (#27). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35811,7 +36568,8 @@ export const catalogProducts = {
     "soldCount": 115,
     "price": "XAF 27.900",
     "salePrice": "XAF 31.000",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -35837,7 +36595,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Gaufrier & Appareil Croque-Monsieur Plaques Antiadhésives Amovibles (#28). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Le Comptoir Électroménager.",
+    "description": "Appareil de cuisine moderne Gaufrier & Appareil Croque-Monsieur Plaques Antiadhésives Amovibles (#28). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35859,7 +36617,8 @@ export const catalogProducts = {
     "soldCount": 124,
     "price": "XAF 10.800",
     "salePrice": "XAF 12.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -35885,7 +36644,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Mousseur à Lait Électrique Rechargeable USB-C Double Tête Inox (#29). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Chef Pro Cameroun.",
+    "description": "Appareil de cuisine moderne Mousseur à Lait Électrique Rechargeable USB-C Double Tête Inox (#29). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35907,7 +36666,8 @@ export const catalogProducts = {
     "soldCount": 133,
     "price": "XAF 33.300",
     "salePrice": "XAF 37.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -35933,7 +36693,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Presse-Agrumes Électrique Professionnel à Levier Inox 160W (#30). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Art de la Table Yaoundé.",
+    "description": "Appareil de cuisine moderne Presse-Agrumes Électrique Professionnel à Levier Inox 160W (#30). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -35955,7 +36715,8 @@ export const catalogProducts = {
     "soldCount": 142,
     "price": "XAF 237.600",
     "salePrice": "XAF 264.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -35981,7 +36742,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Robot Pâtissier Multifonction KitchenAid Artisan 4.8L avec Bol Inox (#31). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Maison & Confort Akwa.",
+    "description": "Appareil de cuisine moderne Robot Pâtissier Multifonction KitchenAid Artisan 4.8L avec Bol Inox (#31). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36003,7 +36764,8 @@ export const catalogProducts = {
     "soldCount": 151,
     "price": "XAF 57.600",
     "salePrice": "XAF 64.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -36029,7 +36791,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Extracteur de Jus à Froid ACOQOOS Cold Press Slow Juicer 60 RPM (#32). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Électro Douala Express.",
+    "description": "Appareil de cuisine moderne Extracteur de Jus à Froid ACOQOOS Cold Press Slow Juicer 60 RPM (#32). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36051,7 +36813,8 @@ export const catalogProducts = {
     "soldCount": 160,
     "price": "XAF 70.200",
     "salePrice": "XAF 78.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -36077,7 +36840,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Friteuse Sans Huile Oraimo NutriFry Smart Air Fryer 5L Tactile 1500W (#33). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez K-Kitchen & Déco Bastos.",
+    "description": "Appareil de cuisine moderne Friteuse Sans Huile Oraimo NutriFry Smart Air Fryer 5L Tactile 1500W (#33). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36099,7 +36862,8 @@ export const catalogProducts = {
     "soldCount": 169,
     "price": "XAF 78.300",
     "salePrice": "XAF 87.000",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -36125,7 +36889,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Machine à Expresso & Cappuccino Vintage Pression 15 Bars Buse Vapeur (#34). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Le Comptoir Électroménager.",
+    "description": "Appareil de cuisine moderne Machine à Expresso & Cappuccino Vintage Pression 15 Bars Buse Vapeur (#34). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36147,7 +36911,8 @@ export const catalogProducts = {
     "soldCount": 178,
     "price": "XAF 46.800",
     "salePrice": "XAF 52.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -36173,7 +36938,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Presse Fruits et Légumes Compact Nutriments Préservés 55 RPM (#35). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Chef Pro Cameroun.",
+    "description": "Appareil de cuisine moderne Presse Fruits et Légumes Compact Nutriments Préservés 55 RPM (#35). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36195,7 +36960,8 @@ export const catalogProducts = {
     "soldCount": 187,
     "price": "XAF 30.600",
     "salePrice": "XAF 34.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -36221,7 +36987,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Mixeur Plongeant 4-en-1 avec Pied Inox, Hachoir 500ml et Fouet (#36). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Art de la Table Yaoundé.",
+    "description": "Appareil de cuisine moderne Mixeur Plongeant 4-en-1 avec Pied Inox, Hachoir 500ml et Fouet (#36). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36243,7 +37009,8 @@ export const catalogProducts = {
     "soldCount": 196,
     "price": "XAF 16.200",
     "salePrice": "XAF 18.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -36269,7 +37036,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Bouilloire Électrique Sans Fil 2L Double Paroi Inox Anti-Brûlure (#37). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Maison & Confort Akwa.",
+    "description": "Appareil de cuisine moderne Bouilloire Électrique Sans Fil 2L Double Paroi Inox Anti-Brûlure (#37). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36291,7 +37058,8 @@ export const catalogProducts = {
     "soldCount": 205,
     "price": "XAF 24.300",
     "salePrice": "XAF 27.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -36317,7 +37085,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Gaufrier & Appareil Croque-Monsieur Plaques Antiadhésives Amovibles (#38). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Électro Douala Express.",
+    "description": "Appareil de cuisine moderne Gaufrier & Appareil Croque-Monsieur Plaques Antiadhésives Amovibles (#38). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36339,7 +37107,8 @@ export const catalogProducts = {
     "soldCount": 44,
     "price": "XAF 14.400",
     "salePrice": "XAF 16.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -36365,7 +37134,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Mousseur à Lait Électrique Rechargeable USB-C Double Tête Inox (#39). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez K-Kitchen & Déco Bastos.",
+    "description": "Appareil de cuisine moderne Mousseur à Lait Électrique Rechargeable USB-C Double Tête Inox (#39). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36387,7 +37156,8 @@ export const catalogProducts = {
     "soldCount": 53,
     "price": "XAF 36.900",
     "salePrice": "XAF 41.000",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -36413,7 +37183,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Presse-Agrumes Électrique Professionnel à Levier Inox 160W (#40). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Le Comptoir Électroménager.",
+    "description": "Appareil de cuisine moderne Presse-Agrumes Électrique Professionnel à Levier Inox 160W (#40). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36435,7 +37205,8 @@ export const catalogProducts = {
     "soldCount": 62,
     "price": "XAF 234.000",
     "salePrice": "XAF 260.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -36461,7 +37232,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Robot Pâtissier Multifonction KitchenAid Artisan 4.8L avec Bol Inox (#41). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Chef Pro Cameroun.",
+    "description": "Appareil de cuisine moderne Robot Pâtissier Multifonction KitchenAid Artisan 4.8L avec Bol Inox (#41). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36483,7 +37254,8 @@ export const catalogProducts = {
     "soldCount": 71,
     "price": "XAF 54.000",
     "salePrice": "XAF 60.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -36509,7 +37281,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Extracteur de Jus à Froid ACOQOOS Cold Press Slow Juicer 60 RPM (#42). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Art de la Table Yaoundé.",
+    "description": "Appareil de cuisine moderne Extracteur de Jus à Froid ACOQOOS Cold Press Slow Juicer 60 RPM (#42). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36531,7 +37303,8 @@ export const catalogProducts = {
     "soldCount": 80,
     "price": "XAF 73.800",
     "salePrice": "XAF 82.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -36557,7 +37330,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Friteuse Sans Huile Oraimo NutriFry Smart Air Fryer 5L Tactile 1500W (#43). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Maison & Confort Akwa.",
+    "description": "Appareil de cuisine moderne Friteuse Sans Huile Oraimo NutriFry Smart Air Fryer 5L Tactile 1500W (#43). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36579,7 +37352,8 @@ export const catalogProducts = {
     "soldCount": 89,
     "price": "XAF 81.900",
     "salePrice": "XAF 91.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -36605,7 +37379,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Machine à Expresso & Cappuccino Vintage Pression 15 Bars Buse Vapeur (#44). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Électro Douala Express.",
+    "description": "Appareil de cuisine moderne Machine à Expresso & Cappuccino Vintage Pression 15 Bars Buse Vapeur (#44). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36627,7 +37401,8 @@ export const catalogProducts = {
     "soldCount": 98,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -36653,7 +37428,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Presse Fruits et Légumes Compact Nutriments Préservés 55 RPM (#45). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez K-Kitchen & Déco Bastos.",
+    "description": "Appareil de cuisine moderne Presse Fruits et Légumes Compact Nutriments Préservés 55 RPM (#45). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36675,7 +37450,8 @@ export const catalogProducts = {
     "soldCount": 107,
     "price": "XAF 27.000",
     "salePrice": "XAF 30.000",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -36701,7 +37477,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Mixeur Plongeant 4-en-1 avec Pied Inox, Hachoir 500ml et Fouet (#46). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Le Comptoir Électroménager.",
+    "description": "Appareil de cuisine moderne Mixeur Plongeant 4-en-1 avec Pied Inox, Hachoir 500ml et Fouet (#46). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36723,7 +37499,8 @@ export const catalogProducts = {
     "soldCount": 116,
     "price": "XAF 19.800",
     "salePrice": "XAF 22.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -36749,7 +37526,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Bouilloire Électrique Sans Fil 2L Double Paroi Inox Anti-Brûlure (#47). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Chef Pro Cameroun.",
+    "description": "Appareil de cuisine moderne Bouilloire Électrique Sans Fil 2L Double Paroi Inox Anti-Brûlure (#47). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36771,7 +37548,8 @@ export const catalogProducts = {
     "soldCount": 125,
     "price": "XAF 27.900",
     "salePrice": "XAF 31.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -36797,7 +37575,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Gaufrier & Appareil Croque-Monsieur Plaques Antiadhésives Amovibles (#48). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Art de la Table Yaoundé.",
+    "description": "Appareil de cuisine moderne Gaufrier & Appareil Croque-Monsieur Plaques Antiadhésives Amovibles (#48). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36819,7 +37597,8 @@ export const catalogProducts = {
     "soldCount": 134,
     "price": "XAF 10.800",
     "salePrice": "XAF 12.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -36845,7 +37624,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Mousseur à Lait Électrique Rechargeable USB-C Double Tête Inox (#49). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Maison & Confort Akwa.",
+    "description": "Appareil de cuisine moderne Mousseur à Lait Électrique Rechargeable USB-C Double Tête Inox (#49). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36867,7 +37646,8 @@ export const catalogProducts = {
     "soldCount": 143,
     "price": "XAF 33.300",
     "salePrice": "XAF 37.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -36893,7 +37673,7 @@ export const catalogProducts = {
         "val": "12 Mois avec service après-vente local"
       }
     ],
-    "description": "Appareil de cuisine moderne Presse-Agrumes Électrique Professionnel à Levier Inox 160W (#50). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez Électro Douala Express.",
+    "description": "Appareil de cuisine moderne Presse-Agrumes Électrique Professionnel à Levier Inox 160W (#50). Simplifiez la préparation de vos recettes quotidiennes. Prix vérifié chez nos concurrents locaux avec 10% de remise chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36915,7 +37695,8 @@ export const catalogProducts = {
     "soldCount": 44,
     "price": "XAF 67.500",
     "salePrice": "XAF 75.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -36937,7 +37718,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#1). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez K-Kitchen & Déco Bastos via LOUMOO.",
+    "description": "Ustensile culinaire robuste Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#1). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -36959,7 +37740,8 @@ export const catalogProducts = {
     "soldCount": 51,
     "price": "XAF 23.800",
     "salePrice": "XAF 26.500",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -36981,7 +37763,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#2). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Le Comptoir Électroménager via LOUMOO.",
+    "description": "Ustensile culinaire robuste Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#2). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37003,7 +37785,8 @@ export const catalogProducts = {
     "soldCount": 58,
     "price": "XAF 36.900",
     "salePrice": "XAF 41.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -37025,7 +37808,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#3). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Chef Pro Cameroun via LOUMOO.",
+    "description": "Ustensile culinaire robuste Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#3). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37047,7 +37830,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 8.100",
     "salePrice": "XAF 9.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -37069,7 +37853,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#4). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Art de la Table Yaoundé via LOUMOO.",
+    "description": "Ustensile culinaire robuste Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#4). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37091,7 +37875,8 @@ export const catalogProducts = {
     "soldCount": 72,
     "price": "XAF 9.000",
     "salePrice": "XAF 10.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -37113,7 +37898,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Écumoire Araignée en Acier Inoxydable avec Manche Bois Massif (#5). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Maison & Confort Akwa via LOUMOO.",
+    "description": "Ustensile culinaire robuste Écumoire Araignée en Acier Inoxydable avec Manche Bois Massif (#5). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37135,7 +37920,8 @@ export const catalogProducts = {
     "soldCount": 79,
     "price": "XAF 11.200",
     "salePrice": "XAF 12.500",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -37157,7 +37943,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Lot de 4 Allume-Gaz de Cuisine Rechargeables Flamme Réglable (#6). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Électro Douala Express via LOUMOO.",
+    "description": "Ustensile culinaire robuste Lot de 4 Allume-Gaz de Cuisine Rechargeables Flamme Réglable (#6). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37179,7 +37965,8 @@ export const catalogProducts = {
     "soldCount": 86,
     "price": "XAF 67.500",
     "salePrice": "XAF 75.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -37201,7 +37988,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#7). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez K-Kitchen & Déco Bastos via LOUMOO.",
+    "description": "Ustensile culinaire robuste Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#7). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37223,7 +38010,8 @@ export const catalogProducts = {
     "soldCount": 93,
     "price": "XAF 23.800",
     "salePrice": "XAF 26.500",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -37245,7 +38033,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#8). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Le Comptoir Électroménager via LOUMOO.",
+    "description": "Ustensile culinaire robuste Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#8). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37267,7 +38055,8 @@ export const catalogProducts = {
     "soldCount": 100,
     "price": "XAF 36.900",
     "salePrice": "XAF 41.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -37289,7 +38078,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#9). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Chef Pro Cameroun via LOUMOO.",
+    "description": "Ustensile culinaire robuste Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#9). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37311,7 +38100,8 @@ export const catalogProducts = {
     "soldCount": 107,
     "price": "XAF 8.100",
     "salePrice": "XAF 9.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -37333,7 +38123,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#10). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Art de la Table Yaoundé via LOUMOO.",
+    "description": "Ustensile culinaire robuste Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#10). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37355,7 +38145,8 @@ export const catalogProducts = {
     "soldCount": 114,
     "price": "XAF 9.000",
     "salePrice": "XAF 10.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -37377,7 +38168,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Écumoire Araignée en Acier Inoxydable avec Manche Bois Massif (#11). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Maison & Confort Akwa via LOUMOO.",
+    "description": "Ustensile culinaire robuste Écumoire Araignée en Acier Inoxydable avec Manche Bois Massif (#11). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37399,7 +38190,8 @@ export const catalogProducts = {
     "soldCount": 121,
     "price": "XAF 11.200",
     "salePrice": "XAF 12.500",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -37421,7 +38213,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Lot de 4 Allume-Gaz de Cuisine Rechargeables Flamme Réglable (#12). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Électro Douala Express via LOUMOO.",
+    "description": "Ustensile culinaire robuste Lot de 4 Allume-Gaz de Cuisine Rechargeables Flamme Réglable (#12). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37443,7 +38235,8 @@ export const catalogProducts = {
     "soldCount": 128,
     "price": "XAF 67.500",
     "salePrice": "XAF 75.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -37465,7 +38258,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#13). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez K-Kitchen & Déco Bastos via LOUMOO.",
+    "description": "Ustensile culinaire robuste Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#13). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37487,7 +38280,8 @@ export const catalogProducts = {
     "soldCount": 135,
     "price": "XAF 23.800",
     "salePrice": "XAF 26.500",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -37509,7 +38303,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#14). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Le Comptoir Électroménager via LOUMOO.",
+    "description": "Ustensile culinaire robuste Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#14). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37531,7 +38325,8 @@ export const catalogProducts = {
     "soldCount": 142,
     "price": "XAF 36.900",
     "salePrice": "XAF 41.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -37553,7 +38348,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#15). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Chef Pro Cameroun via LOUMOO.",
+    "description": "Ustensile culinaire robuste Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#15). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37575,7 +38370,8 @@ export const catalogProducts = {
     "soldCount": 149,
     "price": "XAF 8.100",
     "salePrice": "XAF 9.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -37597,7 +38393,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#16). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Art de la Table Yaoundé via LOUMOO.",
+    "description": "Ustensile culinaire robuste Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#16). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37619,7 +38415,8 @@ export const catalogProducts = {
     "soldCount": 156,
     "price": "XAF 9.000",
     "salePrice": "XAF 10.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -37641,7 +38438,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Écumoire Araignée en Acier Inoxydable avec Manche Bois Massif (#17). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Maison & Confort Akwa via LOUMOO.",
+    "description": "Ustensile culinaire robuste Écumoire Araignée en Acier Inoxydable avec Manche Bois Massif (#17). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37663,7 +38460,8 @@ export const catalogProducts = {
     "soldCount": 163,
     "price": "XAF 11.200",
     "salePrice": "XAF 12.500",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -37685,7 +38483,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Lot de 4 Allume-Gaz de Cuisine Rechargeables Flamme Réglable (#18). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Électro Douala Express via LOUMOO.",
+    "description": "Ustensile culinaire robuste Lot de 4 Allume-Gaz de Cuisine Rechargeables Flamme Réglable (#18). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37707,7 +38505,8 @@ export const catalogProducts = {
     "soldCount": 170,
     "price": "XAF 67.500",
     "salePrice": "XAF 75.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -37729,7 +38528,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#19). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez K-Kitchen & Déco Bastos via LOUMOO.",
+    "description": "Ustensile culinaire robuste Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#19). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37751,7 +38550,8 @@ export const catalogProducts = {
     "soldCount": 177,
     "price": "XAF 23.800",
     "salePrice": "XAF 26.500",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -37773,7 +38573,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#20). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Le Comptoir Électroménager via LOUMOO.",
+    "description": "Ustensile culinaire robuste Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#20). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37795,7 +38595,8 @@ export const catalogProducts = {
     "soldCount": 184,
     "price": "XAF 36.900",
     "salePrice": "XAF 41.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -37817,7 +38618,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#21). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Chef Pro Cameroun via LOUMOO.",
+    "description": "Ustensile culinaire robuste Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#21). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37839,7 +38640,8 @@ export const catalogProducts = {
     "soldCount": 191,
     "price": "XAF 8.100",
     "salePrice": "XAF 9.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -37861,7 +38663,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#22). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Art de la Table Yaoundé via LOUMOO.",
+    "description": "Ustensile culinaire robuste Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#22). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37883,7 +38685,8 @@ export const catalogProducts = {
     "soldCount": 198,
     "price": "XAF 9.000",
     "salePrice": "XAF 10.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -37905,7 +38708,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Écumoire Araignée en Acier Inoxydable avec Manche Bois Massif (#23). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Maison & Confort Akwa via LOUMOO.",
+    "description": "Ustensile culinaire robuste Écumoire Araignée en Acier Inoxydable avec Manche Bois Massif (#23). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37927,7 +38730,8 @@ export const catalogProducts = {
     "soldCount": 205,
     "price": "XAF 11.200",
     "salePrice": "XAF 12.500",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -37949,7 +38753,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Lot de 4 Allume-Gaz de Cuisine Rechargeables Flamme Réglable (#24). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Électro Douala Express via LOUMOO.",
+    "description": "Ustensile culinaire robuste Lot de 4 Allume-Gaz de Cuisine Rechargeables Flamme Réglable (#24). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -37971,7 +38775,8 @@ export const catalogProducts = {
     "soldCount": 212,
     "price": "XAF 67.500",
     "salePrice": "XAF 75.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -37993,7 +38798,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#25). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez K-Kitchen & Déco Bastos via LOUMOO.",
+    "description": "Ustensile culinaire robuste Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#25). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38015,7 +38820,8 @@ export const catalogProducts = {
     "soldCount": 219,
     "price": "XAF 23.800",
     "salePrice": "XAF 26.500",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -38037,7 +38843,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#26). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Le Comptoir Électroménager via LOUMOO.",
+    "description": "Ustensile culinaire robuste Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#26). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38059,7 +38865,8 @@ export const catalogProducts = {
     "soldCount": 226,
     "price": "XAF 36.900",
     "salePrice": "XAF 41.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -38081,7 +38888,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#27). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Chef Pro Cameroun via LOUMOO.",
+    "description": "Ustensile culinaire robuste Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#27). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38103,7 +38910,8 @@ export const catalogProducts = {
     "soldCount": 233,
     "price": "XAF 8.100",
     "salePrice": "XAF 9.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -38125,7 +38933,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#28). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Art de la Table Yaoundé via LOUMOO.",
+    "description": "Ustensile culinaire robuste Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#28). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38147,7 +38955,8 @@ export const catalogProducts = {
     "soldCount": 50,
     "price": "XAF 9.000",
     "salePrice": "XAF 10.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -38169,7 +38978,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Écumoire Araignée en Acier Inoxydable avec Manche Bois Massif (#29). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Maison & Confort Akwa via LOUMOO.",
+    "description": "Ustensile culinaire robuste Écumoire Araignée en Acier Inoxydable avec Manche Bois Massif (#29). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38191,7 +39000,8 @@ export const catalogProducts = {
     "soldCount": 57,
     "price": "XAF 11.200",
     "salePrice": "XAF 12.500",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -38213,7 +39023,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Lot de 4 Allume-Gaz de Cuisine Rechargeables Flamme Réglable (#30). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Électro Douala Express via LOUMOO.",
+    "description": "Ustensile culinaire robuste Lot de 4 Allume-Gaz de Cuisine Rechargeables Flamme Réglable (#30). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38235,7 +39045,8 @@ export const catalogProducts = {
     "soldCount": 64,
     "price": "XAF 67.500",
     "salePrice": "XAF 75.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -38257,7 +39068,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#31). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez K-Kitchen & Déco Bastos via LOUMOO.",
+    "description": "Ustensile culinaire robuste Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#31). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38279,7 +39090,8 @@ export const catalogProducts = {
     "soldCount": 71,
     "price": "XAF 23.800",
     "salePrice": "XAF 26.500",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -38301,7 +39113,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#32). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Le Comptoir Électroménager via LOUMOO.",
+    "description": "Ustensile culinaire robuste Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#32). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38323,7 +39135,8 @@ export const catalogProducts = {
     "soldCount": 78,
     "price": "XAF 36.900",
     "salePrice": "XAF 41.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -38345,7 +39158,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#33). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Chef Pro Cameroun via LOUMOO.",
+    "description": "Ustensile culinaire robuste Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#33). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38367,7 +39180,8 @@ export const catalogProducts = {
     "soldCount": 85,
     "price": "XAF 8.100",
     "salePrice": "XAF 9.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -38389,7 +39203,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#34). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Art de la Table Yaoundé via LOUMOO.",
+    "description": "Ustensile culinaire robuste Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#34). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38411,7 +39225,8 @@ export const catalogProducts = {
     "soldCount": 92,
     "price": "XAF 9.000",
     "salePrice": "XAF 10.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -38433,7 +39248,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Écumoire Araignée en Acier Inoxydable avec Manche Bois Massif (#35). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Maison & Confort Akwa via LOUMOO.",
+    "description": "Ustensile culinaire robuste Écumoire Araignée en Acier Inoxydable avec Manche Bois Massif (#35). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38455,7 +39270,8 @@ export const catalogProducts = {
     "soldCount": 99,
     "price": "XAF 11.200",
     "salePrice": "XAF 12.500",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -38477,7 +39293,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Lot de 4 Allume-Gaz de Cuisine Rechargeables Flamme Réglable (#36). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Électro Douala Express via LOUMOO.",
+    "description": "Ustensile culinaire robuste Lot de 4 Allume-Gaz de Cuisine Rechargeables Flamme Réglable (#36). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38499,7 +39315,8 @@ export const catalogProducts = {
     "soldCount": 106,
     "price": "XAF 67.500",
     "salePrice": "XAF 75.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -38521,7 +39338,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#37). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez K-Kitchen & Déco Bastos via LOUMOO.",
+    "description": "Ustensile culinaire robuste Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#37). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38543,7 +39360,8 @@ export const catalogProducts = {
     "soldCount": 113,
     "price": "XAF 23.800",
     "salePrice": "XAF 26.500",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -38565,7 +39383,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#38). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Le Comptoir Électroménager via LOUMOO.",
+    "description": "Ustensile culinaire robuste Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#38). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38587,7 +39405,8 @@ export const catalogProducts = {
     "soldCount": 120,
     "price": "XAF 36.900",
     "salePrice": "XAF 41.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -38609,7 +39428,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#39). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Chef Pro Cameroun via LOUMOO.",
+    "description": "Ustensile culinaire robuste Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#39). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38631,7 +39450,8 @@ export const catalogProducts = {
     "soldCount": 127,
     "price": "XAF 8.100",
     "salePrice": "XAF 9.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -38653,7 +39473,7 @@ export const catalogProducts = {
         "val": "Certifié contact alimentaire sans métaux lourds"
       }
     ],
-    "description": "Ustensile culinaire robuste Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#40). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez Art de la Table Yaoundé via LOUMOO.",
+    "description": "Ustensile culinaire robuste Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#40). Cuisson saine sans attachement pour des saveurs authentiques. Vendu avec 10% de réduction chez NanoAfrica via LOUMOO.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38675,7 +39495,8 @@ export const catalogProducts = {
     "soldCount": 50,
     "price": "XAF 22.500",
     "salePrice": "XAF 25.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -38697,7 +39518,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#1). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Chef Pro Cameroun.",
+    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#1). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38719,7 +39540,8 @@ export const catalogProducts = {
     "soldCount": 60,
     "price": "XAF 78.300",
     "salePrice": "XAF 87.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -38741,7 +39563,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#2). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Art de la Table Yaoundé.",
+    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#2). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38763,7 +39585,8 @@ export const catalogProducts = {
     "soldCount": 70,
     "price": "XAF 41.400",
     "salePrice": "XAF 46.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -38785,7 +39608,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#3). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Maison & Confort Akwa.",
+    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#3). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38807,7 +39630,8 @@ export const catalogProducts = {
     "soldCount": 80,
     "price": "XAF 19.800",
     "salePrice": "XAF 22.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -38829,7 +39653,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#4). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Électro Douala Express.",
+    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#4). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38851,7 +39675,8 @@ export const catalogProducts = {
     "soldCount": 90,
     "price": "XAF 25.200",
     "salePrice": "XAF 28.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -38873,7 +39698,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#5). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez K-Kitchen & Déco Bastos.",
+    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#5). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38895,7 +39720,8 @@ export const catalogProducts = {
     "soldCount": 100,
     "price": "XAF 24.300",
     "salePrice": "XAF 27.000",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -38917,7 +39743,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#6). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Le Comptoir Électroménager.",
+    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#6). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38939,7 +39765,8 @@ export const catalogProducts = {
     "soldCount": 110,
     "price": "XAF 80.100",
     "salePrice": "XAF 89.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -38961,7 +39788,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#7). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Chef Pro Cameroun.",
+    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#7). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -38983,7 +39810,8 @@ export const catalogProducts = {
     "soldCount": 120,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -39005,7 +39833,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#8). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Art de la Table Yaoundé.",
+    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#8). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39027,7 +39855,8 @@ export const catalogProducts = {
     "soldCount": 130,
     "price": "XAF 14.400",
     "salePrice": "XAF 16.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -39049,7 +39878,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#9). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Maison & Confort Akwa.",
+    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#9). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39071,7 +39900,8 @@ export const catalogProducts = {
     "soldCount": 140,
     "price": "XAF 27.000",
     "salePrice": "XAF 30.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -39093,7 +39923,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#10). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Électro Douala Express.",
+    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#10). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39115,7 +39945,8 @@ export const catalogProducts = {
     "soldCount": 150,
     "price": "XAF 26.100",
     "salePrice": "XAF 29.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -39137,7 +39968,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#11). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez K-Kitchen & Déco Bastos.",
+    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#11). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39159,7 +39990,8 @@ export const catalogProducts = {
     "soldCount": 160,
     "price": "XAF 81.900",
     "salePrice": "XAF 91.000",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -39181,7 +40013,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#12). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Le Comptoir Électroménager.",
+    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#12). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39203,7 +40035,8 @@ export const catalogProducts = {
     "soldCount": 170,
     "price": "XAF 37.800",
     "salePrice": "XAF 42.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -39225,7 +40058,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#13). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Chef Pro Cameroun.",
+    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#13). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39247,7 +40080,8 @@ export const catalogProducts = {
     "soldCount": 180,
     "price": "XAF 16.200",
     "salePrice": "XAF 18.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -39269,7 +40103,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#14). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Art de la Table Yaoundé.",
+    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#14). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39291,7 +40125,8 @@ export const catalogProducts = {
     "soldCount": 190,
     "price": "XAF 28.800",
     "salePrice": "XAF 32.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -39313,7 +40148,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#15). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Maison & Confort Akwa.",
+    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#15). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39335,7 +40170,8 @@ export const catalogProducts = {
     "soldCount": 200,
     "price": "XAF 27.900",
     "salePrice": "XAF 31.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -39357,7 +40193,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#16). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Électro Douala Express.",
+    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#16). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39379,7 +40215,8 @@ export const catalogProducts = {
     "soldCount": 210,
     "price": "XAF 76.500",
     "salePrice": "XAF 85.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -39401,7 +40238,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#17). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez K-Kitchen & Déco Bastos.",
+    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#17). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39423,7 +40260,8 @@ export const catalogProducts = {
     "soldCount": 220,
     "price": "XAF 39.600",
     "salePrice": "XAF 44.000",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -39445,7 +40283,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#18). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Le Comptoir Électroménager.",
+    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#18). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39467,7 +40305,8 @@ export const catalogProducts = {
     "soldCount": 230,
     "price": "XAF 18.000",
     "salePrice": "XAF 20.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -39489,7 +40328,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#19). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Chef Pro Cameroun.",
+    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#19). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39511,7 +40350,8 @@ export const catalogProducts = {
     "soldCount": 240,
     "price": "XAF 30.600",
     "salePrice": "XAF 34.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -39533,7 +40373,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#20). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Art de la Table Yaoundé.",
+    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#20). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39555,7 +40395,8 @@ export const catalogProducts = {
     "soldCount": 250,
     "price": "XAF 22.500",
     "salePrice": "XAF 25.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -39577,7 +40418,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#21). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Maison & Confort Akwa.",
+    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#21). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39599,7 +40440,8 @@ export const catalogProducts = {
     "soldCount": 50,
     "price": "XAF 78.300",
     "salePrice": "XAF 87.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -39621,7 +40463,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#22). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Électro Douala Express.",
+    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#22). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39643,7 +40485,8 @@ export const catalogProducts = {
     "soldCount": 60,
     "price": "XAF 41.400",
     "salePrice": "XAF 46.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -39665,7 +40508,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#23). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez K-Kitchen & Déco Bastos.",
+    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#23). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39687,7 +40530,8 @@ export const catalogProducts = {
     "soldCount": 70,
     "price": "XAF 19.800",
     "salePrice": "XAF 22.000",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -39709,7 +40553,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#24). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Le Comptoir Électroménager.",
+    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#24). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39731,7 +40575,8 @@ export const catalogProducts = {
     "soldCount": 80,
     "price": "XAF 25.200",
     "salePrice": "XAF 28.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -39753,7 +40598,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#25). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Chef Pro Cameroun.",
+    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#25). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39775,7 +40620,8 @@ export const catalogProducts = {
     "soldCount": 90,
     "price": "XAF 24.300",
     "salePrice": "XAF 27.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -39797,7 +40643,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#26). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Art de la Table Yaoundé.",
+    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#26). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39819,7 +40665,8 @@ export const catalogProducts = {
     "soldCount": 100,
     "price": "XAF 80.100",
     "salePrice": "XAF 89.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -39841,7 +40688,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#27). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Maison & Confort Akwa.",
+    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#27). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39863,7 +40710,8 @@ export const catalogProducts = {
     "soldCount": 110,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -39885,7 +40733,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#28). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Électro Douala Express.",
+    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#28). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39907,7 +40755,8 @@ export const catalogProducts = {
     "soldCount": 120,
     "price": "XAF 14.400",
     "salePrice": "XAF 16.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -39929,7 +40778,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#29). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez K-Kitchen & Déco Bastos.",
+    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#29). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39951,7 +40800,8 @@ export const catalogProducts = {
     "soldCount": 130,
     "price": "XAF 27.000",
     "salePrice": "XAF 30.000",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -39973,7 +40823,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#30). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Le Comptoir Électroménager.",
+    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#30). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -39995,7 +40845,8 @@ export const catalogProducts = {
     "soldCount": 140,
     "price": "XAF 26.100",
     "salePrice": "XAF 29.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -40017,7 +40868,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#31). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Chef Pro Cameroun.",
+    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#31). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40039,7 +40890,8 @@ export const catalogProducts = {
     "soldCount": 150,
     "price": "XAF 81.900",
     "salePrice": "XAF 91.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -40061,7 +40913,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#32). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Art de la Table Yaoundé.",
+    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#32). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40083,7 +40935,8 @@ export const catalogProducts = {
     "soldCount": 160,
     "price": "XAF 37.800",
     "salePrice": "XAF 42.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -40105,7 +40958,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#33). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Maison & Confort Akwa.",
+    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#33). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40127,7 +40980,8 @@ export const catalogProducts = {
     "soldCount": 170,
     "price": "XAF 16.200",
     "salePrice": "XAF 18.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -40149,7 +41003,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#34). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Électro Douala Express.",
+    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#34). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40171,7 +41025,8 @@ export const catalogProducts = {
     "soldCount": 180,
     "price": "XAF 28.800",
     "salePrice": "XAF 32.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -40193,7 +41048,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#35). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez K-Kitchen & Déco Bastos.",
+    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#35). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40215,7 +41070,8 @@ export const catalogProducts = {
     "soldCount": 190,
     "price": "XAF 27.900",
     "salePrice": "XAF 31.000",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -40237,7 +41093,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#36). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Le Comptoir Électroménager.",
+    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#36). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40259,7 +41115,8 @@ export const catalogProducts = {
     "soldCount": 200,
     "price": "XAF 76.500",
     "salePrice": "XAF 85.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -40281,7 +41138,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#37). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Chef Pro Cameroun.",
+    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#37). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40303,7 +41160,8 @@ export const catalogProducts = {
     "soldCount": 210,
     "price": "XAF 39.600",
     "salePrice": "XAF 44.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -40325,7 +41183,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#38). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Art de la Table Yaoundé.",
+    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#38). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40347,7 +41205,8 @@ export const catalogProducts = {
     "soldCount": 220,
     "price": "XAF 18.000",
     "salePrice": "XAF 20.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -40369,7 +41228,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#39). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Maison & Confort Akwa.",
+    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#39). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40391,7 +41250,8 @@ export const catalogProducts = {
     "soldCount": 230,
     "price": "XAF 30.600",
     "salePrice": "XAF 34.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -40413,7 +41273,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#40). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Électro Douala Express.",
+    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#40). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40435,7 +41295,8 @@ export const catalogProducts = {
     "soldCount": 240,
     "price": "XAF 22.500",
     "salePrice": "XAF 25.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -40457,7 +41318,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#41). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez K-Kitchen & Déco Bastos.",
+    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#41). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40479,7 +41340,8 @@ export const catalogProducts = {
     "soldCount": 250,
     "price": "XAF 78.300",
     "salePrice": "XAF 87.000",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -40501,7 +41363,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#42). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Le Comptoir Électroménager.",
+    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#42). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40523,7 +41385,8 @@ export const catalogProducts = {
     "soldCount": 50,
     "price": "XAF 41.400",
     "salePrice": "XAF 46.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -40545,7 +41408,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#43). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Chef Pro Cameroun.",
+    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#43). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40567,7 +41430,8 @@ export const catalogProducts = {
     "soldCount": 60,
     "price": "XAF 19.800",
     "salePrice": "XAF 22.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -40589,7 +41453,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#44). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Art de la Table Yaoundé.",
+    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#44). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40611,7 +41475,8 @@ export const catalogProducts = {
     "soldCount": 70,
     "price": "XAF 25.200",
     "salePrice": "XAF 28.000",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -40633,7 +41498,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#45). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Maison & Confort Akwa.",
+    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#45). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40655,7 +41520,8 @@ export const catalogProducts = {
     "soldCount": 80,
     "price": "XAF 24.300",
     "salePrice": "XAF 27.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -40677,7 +41543,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#46). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Électro Douala Express.",
+    "description": "Service de table élégant Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#46). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40699,7 +41565,8 @@ export const catalogProducts = {
     "soldCount": 90,
     "price": "XAF 80.100",
     "salePrice": "XAF 89.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -40721,7 +41588,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#47). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez K-Kitchen & Déco Bastos.",
+    "description": "Service de table élégant Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#47). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40743,7 +41610,8 @@ export const catalogProducts = {
     "soldCount": 100,
     "price": "XAF 43.200",
     "salePrice": "XAF 48.000",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -40765,7 +41633,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#48). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Le Comptoir Électroménager.",
+    "description": "Service de table élégant Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#48). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40787,7 +41655,8 @@ export const catalogProducts = {
     "soldCount": 110,
     "price": "XAF 14.400",
     "salePrice": "XAF 16.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -40809,7 +41678,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#49). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Chef Pro Cameroun.",
+    "description": "Service de table élégant Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#49). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40831,7 +41700,8 @@ export const catalogProducts = {
     "soldCount": 120,
     "price": "XAF 27.000",
     "salePrice": "XAF 30.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -40853,7 +41723,7 @@ export const catalogProducts = {
         "val": "Coffret cadeau cartonné avec calage intérieur sécurisé"
       }
     ],
-    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#50). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez Art de la Table Yaoundé.",
+    "description": "Service de table élégant Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#50). Rehaussez le décor de vos repas familiaux et réceptions festives. 10% d'économie garantie par rapport aux prix magasins chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40875,7 +41745,8 @@ export const catalogProducts = {
     "soldCount": 35,
     "price": "XAF 130.500",
     "salePrice": "XAF 145.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -40897,7 +41768,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#1). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Art de la Table Yaoundé.",
+    "description": "Équipement d'entretien Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#1). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40919,7 +41790,8 @@ export const catalogProducts = {
     "soldCount": 41,
     "price": "XAF 27.400",
     "salePrice": "XAF 30.500",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -40941,7 +41813,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#2). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Maison & Confort Akwa.",
+    "description": "Équipement d'entretien Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#2). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -40963,7 +41835,8 @@ export const catalogProducts = {
     "soldCount": 47,
     "price": "XAF 27.000",
     "salePrice": "XAF 30.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -40985,7 +41858,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#3). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Électro Douala Express.",
+    "description": "Équipement d'entretien Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#3). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41007,7 +41880,8 @@ export const catalogProducts = {
     "soldCount": 53,
     "price": "XAF 28.800",
     "salePrice": "XAF 32.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -41029,7 +41903,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Support Télescopique Réglable pour Presse à Repasser Vapeur (#4). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez K-Kitchen & Déco Bastos.",
+    "description": "Équipement d'entretien Support Télescopique Réglable pour Presse à Repasser Vapeur (#4). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41051,7 +41925,8 @@ export const catalogProducts = {
     "soldCount": 59,
     "price": "XAF 22.000",
     "salePrice": "XAF 24.500",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -41073,7 +41948,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#5). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Le Comptoir Électroménager.",
+    "description": "Équipement d'entretien Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#5). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41095,7 +41970,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 135.000",
     "salePrice": "XAF 150.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -41117,7 +41993,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#6). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Chef Pro Cameroun.",
+    "description": "Équipement d'entretien Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#6). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41139,7 +42015,8 @@ export const catalogProducts = {
     "soldCount": 71,
     "price": "XAF 25.200",
     "salePrice": "XAF 28.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -41161,7 +42038,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#7). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Art de la Table Yaoundé.",
+    "description": "Équipement d'entretien Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#7). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41183,7 +42060,8 @@ export const catalogProducts = {
     "soldCount": 77,
     "price": "XAF 24.800",
     "salePrice": "XAF 27.500",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -41205,7 +42083,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#8). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Maison & Confort Akwa.",
+    "description": "Équipement d'entretien Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#8). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41227,7 +42105,8 @@ export const catalogProducts = {
     "soldCount": 83,
     "price": "XAF 33.300",
     "salePrice": "XAF 37.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -41249,7 +42128,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Support Télescopique Réglable pour Presse à Repasser Vapeur (#9). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Électro Douala Express.",
+    "description": "Équipement d'entretien Support Télescopique Réglable pour Presse à Repasser Vapeur (#9). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41271,7 +42150,8 @@ export const catalogProducts = {
     "soldCount": 89,
     "price": "XAF 19.800",
     "salePrice": "XAF 22.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -41293,7 +42173,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#10). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez K-Kitchen & Déco Bastos.",
+    "description": "Équipement d'entretien Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#10). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41315,7 +42195,8 @@ export const catalogProducts = {
     "soldCount": 95,
     "price": "XAF 132.800",
     "salePrice": "XAF 147.500",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -41337,7 +42218,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#11). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Le Comptoir Électroménager.",
+    "description": "Équipement d'entretien Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#11). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41359,7 +42240,8 @@ export const catalogProducts = {
     "soldCount": 101,
     "price": "XAF 29.700",
     "salePrice": "XAF 33.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -41381,7 +42263,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#12). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Chef Pro Cameroun.",
+    "description": "Équipement d'entretien Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#12). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41403,7 +42285,8 @@ export const catalogProducts = {
     "soldCount": 107,
     "price": "XAF 22.500",
     "salePrice": "XAF 25.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -41425,7 +42308,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#13). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Art de la Table Yaoundé.",
+    "description": "Équipement d'entretien Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#13). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41447,7 +42330,8 @@ export const catalogProducts = {
     "soldCount": 113,
     "price": "XAF 31.000",
     "salePrice": "XAF 34.500",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -41469,7 +42353,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Support Télescopique Réglable pour Presse à Repasser Vapeur (#14). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Maison & Confort Akwa.",
+    "description": "Équipement d'entretien Support Télescopique Réglable pour Presse à Repasser Vapeur (#14). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41491,7 +42375,8 @@ export const catalogProducts = {
     "soldCount": 119,
     "price": "XAF 24.300",
     "salePrice": "XAF 27.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -41513,7 +42398,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#15). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Électro Douala Express.",
+    "description": "Équipement d'entretien Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#15). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41535,7 +42420,8 @@ export const catalogProducts = {
     "soldCount": 125,
     "price": "XAF 130.500",
     "salePrice": "XAF 145.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -41557,7 +42443,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#16). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez K-Kitchen & Déco Bastos.",
+    "description": "Équipement d'entretien Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#16). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41579,7 +42465,8 @@ export const catalogProducts = {
     "soldCount": 131,
     "price": "XAF 27.400",
     "salePrice": "XAF 30.500",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -41601,7 +42488,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#17). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Le Comptoir Électroménager.",
+    "description": "Équipement d'entretien Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#17). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41623,7 +42510,8 @@ export const catalogProducts = {
     "soldCount": 137,
     "price": "XAF 27.000",
     "salePrice": "XAF 30.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -41645,7 +42533,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#18). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Chef Pro Cameroun.",
+    "description": "Équipement d'entretien Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#18). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41667,7 +42555,8 @@ export const catalogProducts = {
     "soldCount": 143,
     "price": "XAF 28.800",
     "salePrice": "XAF 32.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -41689,7 +42578,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Support Télescopique Réglable pour Presse à Repasser Vapeur (#19). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Art de la Table Yaoundé.",
+    "description": "Équipement d'entretien Support Télescopique Réglable pour Presse à Repasser Vapeur (#19). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41711,7 +42600,8 @@ export const catalogProducts = {
     "soldCount": 149,
     "price": "XAF 22.000",
     "salePrice": "XAF 24.500",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -41733,7 +42623,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#20). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Maison & Confort Akwa.",
+    "description": "Équipement d'entretien Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#20). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41755,7 +42645,8 @@ export const catalogProducts = {
     "soldCount": 155,
     "price": "XAF 135.000",
     "salePrice": "XAF 150.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -41777,7 +42668,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#21). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Électro Douala Express.",
+    "description": "Équipement d'entretien Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#21). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41799,7 +42690,8 @@ export const catalogProducts = {
     "soldCount": 161,
     "price": "XAF 25.200",
     "salePrice": "XAF 28.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -41821,7 +42713,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#22). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez K-Kitchen & Déco Bastos.",
+    "description": "Équipement d'entretien Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#22). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41843,7 +42735,8 @@ export const catalogProducts = {
     "soldCount": 167,
     "price": "XAF 24.800",
     "salePrice": "XAF 27.500",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -41865,7 +42758,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#23). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Le Comptoir Électroménager.",
+    "description": "Équipement d'entretien Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#23). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41887,7 +42780,8 @@ export const catalogProducts = {
     "soldCount": 173,
     "price": "XAF 33.300",
     "salePrice": "XAF 37.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -41909,7 +42803,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Support Télescopique Réglable pour Presse à Repasser Vapeur (#24). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Chef Pro Cameroun.",
+    "description": "Équipement d'entretien Support Télescopique Réglable pour Presse à Repasser Vapeur (#24). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41931,7 +42825,8 @@ export const catalogProducts = {
     "soldCount": 39,
     "price": "XAF 19.800",
     "salePrice": "XAF 22.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -41953,7 +42848,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#25). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Art de la Table Yaoundé.",
+    "description": "Équipement d'entretien Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#25). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -41975,7 +42870,8 @@ export const catalogProducts = {
     "soldCount": 45,
     "price": "XAF 132.800",
     "salePrice": "XAF 147.500",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -41997,7 +42893,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#26). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Maison & Confort Akwa.",
+    "description": "Équipement d'entretien Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#26). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -42019,7 +42915,8 @@ export const catalogProducts = {
     "soldCount": 51,
     "price": "XAF 29.700",
     "salePrice": "XAF 33.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -42041,7 +42938,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#27). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Électro Douala Express.",
+    "description": "Équipement d'entretien Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#27). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -42063,7 +42960,8 @@ export const catalogProducts = {
     "soldCount": 57,
     "price": "XAF 22.500",
     "salePrice": "XAF 25.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -42085,7 +42983,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#28). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez K-Kitchen & Déco Bastos.",
+    "description": "Équipement d'entretien Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#28). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -42107,7 +43005,8 @@ export const catalogProducts = {
     "soldCount": 63,
     "price": "XAF 31.000",
     "salePrice": "XAF 34.500",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -42129,7 +43028,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Support Télescopique Réglable pour Presse à Repasser Vapeur (#29). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Le Comptoir Électroménager.",
+    "description": "Équipement d'entretien Support Télescopique Réglable pour Presse à Repasser Vapeur (#29). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -42151,7 +43050,8 @@ export const catalogProducts = {
     "soldCount": 69,
     "price": "XAF 24.300",
     "salePrice": "XAF 27.000",
-    "storeName": "Chef Pro Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -42173,7 +43073,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#30). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Chef Pro Cameroun.",
+    "description": "Équipement d'entretien Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#30). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -42195,7 +43095,8 @@ export const catalogProducts = {
     "soldCount": 75,
     "price": "XAF 130.500",
     "salePrice": "XAF 145.000",
-    "storeName": "Art de la Table Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Omnisports, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -42217,7 +43118,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#31). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Art de la Table Yaoundé.",
+    "description": "Équipement d'entretien Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#31). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -42239,7 +43140,8 @@ export const catalogProducts = {
     "soldCount": 81,
     "price": "XAF 27.400",
     "salePrice": "XAF 30.500",
-    "storeName": "Maison & Confort Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -42261,7 +43163,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#32). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Maison & Confort Akwa.",
+    "description": "Équipement d'entretien Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#32). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -42283,7 +43185,8 @@ export const catalogProducts = {
     "soldCount": 87,
     "price": "XAF 27.000",
     "salePrice": "XAF 30.000",
-    "storeName": "Électro Douala Express",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Deido, Douala",
     "storeRating": "4.7",
     "storeVerified": true,
@@ -42305,7 +43208,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#33). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Électro Douala Express.",
+    "description": "Équipement d'entretien Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#33). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -42327,7 +43230,8 @@ export const catalogProducts = {
     "soldCount": 93,
     "price": "XAF 28.800",
     "salePrice": "XAF 32.000",
-    "storeName": "K-Kitchen & Déco Bastos",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -42349,7 +43253,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Support Télescopique Réglable pour Presse à Repasser Vapeur (#34). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez K-Kitchen & Déco Bastos.",
+    "description": "Équipement d'entretien Support Télescopique Réglable pour Presse à Repasser Vapeur (#34). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -42371,7 +43275,8 @@ export const catalogProducts = {
     "soldCount": 99,
     "price": "XAF 22.000",
     "salePrice": "XAF 24.500",
-    "storeName": "Le Comptoir Électroménager",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -42393,7 +43298,7 @@ export const catalogProducts = {
         "val": "12 Mois de garantie constructeur"
       }
     ],
-    "description": "Équipement d'entretien Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#35). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez Le Comptoir Électroménager.",
+    "description": "Équipement d'entretien Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#35). Facilitez le soin de votre linge et l'organisation de votre maison. Prix concurrentiel avec 10% de réduction immédiate chez NanoAfrica.",
     "inStock": true,
     "stock": 1000,
     "stockQuantity": 1000,
@@ -42415,7 +43320,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 44.600",
     "salePrice": "XAF 49.500",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -42451,7 +43357,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 63.200",
     "salePrice": "XAF 70.200",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -42487,7 +43394,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 38.900",
     "salePrice": "XAF 43.200",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -42523,7 +43431,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 36.400",
     "salePrice": "XAF 40.500",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -42559,7 +43468,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 13.300",
     "salePrice": "XAF 14.800",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -42595,7 +43505,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 14.600",
     "salePrice": "XAF 16.200",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -42631,7 +43542,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 10.100",
     "salePrice": "XAF 11.200",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -42667,7 +43579,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 17.800",
     "salePrice": "XAF 19.800",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -42703,7 +43616,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 47.000",
     "salePrice": "XAF 52.200",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -42739,7 +43653,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 60.800",
     "salePrice": "XAF 67.500",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -42775,7 +43690,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 38.900",
     "salePrice": "XAF 43.200",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -42811,7 +43727,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 28.400",
     "salePrice": "XAF 31.500",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -42847,7 +43764,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 9.700",
     "salePrice": "XAF 10.800",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -42883,7 +43801,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 12.200",
     "salePrice": "XAF 13.500",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -42919,7 +43838,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 14.900",
     "salePrice": "XAF 16.600",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -42955,7 +43875,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 6.800",
     "salePrice": "XAF 7.600",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -42991,7 +43912,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 9.700",
     "salePrice": "XAF 10.800",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43027,7 +43949,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 11.300",
     "salePrice": "XAF 12.600",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43063,7 +43986,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 22.700",
     "salePrice": "XAF 25.200",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43099,7 +44023,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 7.700",
     "salePrice": "XAF 8.600",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43135,7 +44060,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 5.200",
     "salePrice": "XAF 5.800",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43171,7 +44097,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 2.900",
     "salePrice": "XAF 3.200",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43207,7 +44134,8 @@ export const catalogProducts = {
     "soldCount": 245,
     "price": "XAF 12.500",
     "salePrice": "XAF 16.000",
-    "storeName": "AfriPure Botanicals Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43251,7 +44179,8 @@ export const catalogProducts = {
     "soldCount": 110,
     "price": "XAF 35.000",
     "salePrice": "XAF 45.000",
-    "storeName": "Parfumerie Royale Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43299,7 +44228,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 145.800",
     "salePrice": "XAF 162.000",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43335,7 +44265,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 8.100",
     "salePrice": "XAF 9.000",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43371,7 +44302,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 60.800",
     "salePrice": "XAF 67.500",
-    "storeName": "LOUMOO Verified Partner",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43407,7 +44339,8 @@ export const catalogProducts = {
     "soldCount": 88,
     "price": "XAF 155.000",
     "salePrice": "XAF 175.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43455,7 +44388,8 @@ export const catalogProducts = {
     "soldCount": 164,
     "price": "XAF 680.000",
     "salePrice": "XAF 750.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43503,7 +44437,8 @@ export const catalogProducts = {
     "soldCount": 72,
     "price": "XAF 820.000",
     "salePrice": "XAF 900.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43551,7 +44486,8 @@ export const catalogProducts = {
     "soldCount": 210,
     "price": "XAF 950.000",
     "salePrice": "XAF 1.050.000",
-    "storeName": "Apple Premium Reseller Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43599,7 +44535,8 @@ export const catalogProducts = {
     "soldCount": 138,
     "price": "XAF 650.000",
     "salePrice": "XAF 720.000",
-    "storeName": "Apple Premium Reseller Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43643,7 +44580,8 @@ export const catalogProducts = {
     "soldCount": 182,
     "price": "XAF 745.000",
     "salePrice": "XAF 820.000",
-    "storeName": "Orca Electronics",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43695,7 +44633,8 @@ export const catalogProducts = {
     "soldCount": 94,
     "price": "XAF 685.000",
     "salePrice": "XAF 760.000",
-    "storeName": "Digital Corner Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -43743,7 +44682,8 @@ export const catalogProducts = {
     "soldCount": 315,
     "price": "XAF 380.000",
     "salePrice": "XAF 420.000",
-    "storeName": "GamerZone Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43787,7 +44727,8 @@ export const catalogProducts = {
     "soldCount": 109,
     "price": "XAF 350.000",
     "salePrice": "XAF 395.000",
-    "storeName": "Apple Premium Reseller Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43835,7 +44776,8 @@ export const catalogProducts = {
     "soldCount": 178,
     "price": "XAF 150.000",
     "salePrice": "XAF 175.000",
-    "storeName": "Apple Premium Reseller Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43883,7 +44825,8 @@ export const catalogProducts = {
     "soldCount": 240,
     "price": "XAF 89.000",
     "salePrice": "XAF 105.000",
-    "storeName": "Acoustic Pro Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -43931,7 +44874,8 @@ export const catalogProducts = {
     "soldCount": 130,
     "price": "XAF 32.000",
     "salePrice": "XAF 40.000",
-    "storeName": "Smart Living Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -43975,7 +44919,8 @@ export const catalogProducts = {
     "soldCount": 210,
     "price": "XAF 75.000",
     "salePrice": "XAF 89.000",
-    "storeName": "Apple Premium Reseller Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44019,7 +44964,8 @@ export const catalogProducts = {
     "soldCount": 98,
     "price": "XAF 420.000",
     "salePrice": "XAF 480.000",
-    "storeName": "CineGear Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44067,7 +45013,8 @@ export const catalogProducts = {
     "soldCount": 85,
     "price": "XAF 85.000",
     "salePrice": "XAF 98.000",
-    "storeName": "Adventure Hub Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -44111,7 +45058,8 @@ export const catalogProducts = {
     "soldCount": 215,
     "price": "XAF 18.000",
     "salePrice": "XAF 25.000",
-    "storeName": "CreatorTech Bonanjo",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonanjo, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44155,7 +45103,8 @@ export const catalogProducts = {
     "soldCount": 142,
     "price": "XAF 65.000",
     "salePrice": "XAF 78.000",
-    "storeName": "Acoustic Pro Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44203,7 +45152,8 @@ export const catalogProducts = {
     "soldCount": 290,
     "price": "XAF 22.000",
     "salePrice": "XAF 28.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44251,7 +45201,8 @@ export const catalogProducts = {
     "soldCount": 350,
     "price": "XAF 65.000",
     "salePrice": "XAF 75.000",
-    "storeName": "SneakerLab Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44295,7 +45246,8 @@ export const catalogProducts = {
     "soldCount": 112,
     "price": "XAF 42.000",
     "salePrice": "XAF 52.000",
-    "storeName": "Armonía Milano · Bonapriso",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44339,7 +45291,8 @@ export const catalogProducts = {
     "soldCount": 89,
     "price": "XAF 48.000",
     "salePrice": "XAF 60.000",
-    "storeName": "Armonía Milano · Bonapriso",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44383,7 +45336,8 @@ export const catalogProducts = {
     "soldCount": 115,
     "price": "XAF 55.000",
     "salePrice": "XAF 70.000",
-    "storeName": "Maison Blanche Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44427,7 +45381,8 @@ export const catalogProducts = {
     "soldCount": 97,
     "price": "XAF 38.000",
     "salePrice": "XAF 48.000",
-    "storeName": "Maison Blanche Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44471,7 +45426,8 @@ export const catalogProducts = {
     "soldCount": 128,
     "price": "XAF 22.000",
     "salePrice": "XAF 30.000",
-    "storeName": "AfroChic Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bali, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44515,7 +45471,8 @@ export const catalogProducts = {
     "soldCount": 82,
     "price": "XAF 15.000",
     "salePrice": "XAF 20.000",
-    "storeName": "Artisan Cuir Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Centre Ville, Yaoundé",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -44559,7 +45516,8 @@ export const catalogProducts = {
     "soldCount": 160,
     "price": "XAF 12.000",
     "salePrice": "XAF 18.000",
-    "storeName": "Zulu Heritage Akwa",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44603,7 +45561,8 @@ export const catalogProducts = {
     "soldCount": 96,
     "price": "XAF 245.000",
     "salePrice": "XAF 285.000",
-    "storeName": "ElectroHome Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44647,7 +45606,8 @@ export const catalogProducts = {
     "soldCount": 81,
     "price": "XAF 48.000",
     "salePrice": "XAF 60.000",
-    "storeName": "ElectroHome Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44691,7 +45651,8 @@ export const catalogProducts = {
     "soldCount": 118,
     "price": "XAF 58.000",
     "salePrice": "XAF 72.000",
-    "storeName": "ElectroHome Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44735,7 +45696,8 @@ export const catalogProducts = {
     "soldCount": 210,
     "price": "XAF 62.000",
     "salePrice": "XAF 75.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44779,7 +45741,8 @@ export const catalogProducts = {
     "soldCount": 65,
     "price": "XAF 85.000",
     "salePrice": "XAF 115.000",
-    "storeName": "Armonía Milano · Bonapriso",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44823,7 +45786,8 @@ export const catalogProducts = {
     "soldCount": 84,
     "price": "XAF 42.000",
     "salePrice": "XAF 55.000",
-    "storeName": "Maison Blanche Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44867,7 +45831,8 @@ export const catalogProducts = {
     "soldCount": 95,
     "price": "XAF 68.000",
     "salePrice": "XAF 85.000",
-    "storeName": "City Sport Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.8",
     "storeVerified": true,
@@ -44911,7 +45876,8 @@ export const catalogProducts = {
     "soldCount": 132,
     "price": "XAF 45.000",
     "salePrice": "XAF 58.000",
-    "storeName": "Acoustic Pro Yaoundé",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bastos, Yaoundé",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -44955,7 +45921,8 @@ export const catalogProducts = {
     "soldCount": 145,
     "price": "XAF 650.000",
     "salePrice": "XAF 720.000",
-    "storeName": "SmartTech Cameroun",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -45003,7 +45970,8 @@ export const catalogProducts = {
     "soldCount": 51,
     "price": "XAF 125.000",
     "salePrice": "XAF 160.000",
-    "storeName": "Luxury Club Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -45047,7 +46015,8 @@ export const catalogProducts = {
     "soldCount": 38,
     "price": "XAF 195.000",
     "salePrice": "XAF 250.000",
-    "storeName": "Luxury Club Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -45091,7 +46060,8 @@ export const catalogProducts = {
     "soldCount": 78,
     "price": "XAF 38.000",
     "salePrice": "XAF 50.000",
-    "storeName": "Maison Blanche Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -45135,7 +46105,8 @@ export const catalogProducts = {
     "soldCount": 62,
     "price": "XAF 75.000",
     "salePrice": "XAF 95.000",
-    "storeName": "Armonía Milano · Bonapriso",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Bonapriso, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
@@ -45179,7 +46150,8 @@ export const catalogProducts = {
     "soldCount": 92,
     "price": "XAF 55.000",
     "salePrice": "XAF 75.000",
-    "storeName": "Bijouterie du Centre Douala",
+    "storeName": "NanoAfrica",
+    "storeId": "store_nanoafrica",
     "storeCity": "Akwa, Douala",
     "storeRating": "4.9",
     "storeVerified": true,
