@@ -286,6 +286,38 @@ async function run() {
     const roster2 = await getSharedDeliveryService().listAgencyRiders({ userId: 'usr_owner', userRole: 'seller' }, 'usr_owner');
     assert.deepStrictEqual(roster2.riders.map((r) => r.id).sort(), ['usr_rider_1', 'usr_rider_2']);
 
+    // ---- a curated product is orderable, and the order lands under the owner ----
+    // This is the foreign key that failed in production (orders_seller_id_fkey), checked on the real schema.
+    const { OrderRepository } = require('../../server/modules/commerce/infrastructure/OrderRepository');
+    const { OrderCreationService } = require('../../server/modules/commerce/application/OrderCreationService');
+    const { catalogProducts } = require('../../server/modules/catalog/dataLoader');
+    await db.query(`INSERT INTO iam.profiles (id, clerk_user_id, email, email_verified_at, first_name, last_name, city) VALUES ('usr_buyer', 'c-buyer', 'buyer@example.com', now(), 'Bo', 'Buyer', 'Douala')`);
+    const curatedId = 'phone_tecno_tecno_spark_20_pro_256gb_8gb_ram_';
+    const unit = Math.min(...[catalogProducts[curatedId].price, catalogProducts[curatedId].salePrice].map((v) => parseInt(String(v).replace(/[^0-9]/g, ''), 10)));
+    const orders = new OrderRepository({ db: admin, houseStore: service });
+    service.invalidate();
+    const listing = await orders.findListingById(curatedId);
+    assert.ok(listing, 'the provisioned house store makes the curated product orderable');
+    assert.strictEqual(listing.sellerId, 'usr_owner');
+    assert.strictEqual(listing.storeStatus, 'ACTIVE');
+    assert.strictEqual(listing.basePriceMinor, unit);
+    assert.strictEqual(await orders.findListingById('phone_tecno_tecno_spark_20_pro'), null, 'a partial id is not');
+    const creation = new OrderCreationService(orders, { resolveProvider: async () => null });
+    const placed = await creation.createOrder('usr_buyer', {
+      items: [{ id: curatedId, listingId: curatedId, quantity: 1, unitPriceXaf: unit }],
+      shippingAddress: { fullName: 'Bo Buyer', phone: '+237622222222', street: 'Rue 1', city: 'Douala' },
+      deliveryMethod: 'HOME_DELIVERY'
+    });
+    const row = await one(`SELECT seller_id, buyer_id FROM iam.orders WHERE id = $1`, [placed.id]);
+    assert.deepStrictEqual(row, { seller_id: 'usr_owner', buyer_id: 'usr_buyer' }, 'the order is filed under the owner account');
+    // The notification is sent after the order is saved and is not awaited by the checkout.
+    let told = 0;
+    for (let i = 0; i < 30 && !told; i++) {
+      told = await count('notifications', 'user_id = $1', ['usr_owner']);
+      if (!told) await new Promise((r) => setTimeout(r, 100));
+    }
+    assert.ok(told >= 1, 'and the owner has been notified');
+
     // ---- 6. rows that belong to someone else are blockers -----------------
     const hijack = await service.provision({ ownerEmail: 'other.owner@example.com', phone: '+237600000006' });
     assert.ok(hijack.blockers.some((b) => /belongs to another account/.test(b) && /store_nanoafrica/.test(b)), JSON.stringify(hijack.blockers));
