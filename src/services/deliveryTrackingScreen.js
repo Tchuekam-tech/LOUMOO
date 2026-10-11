@@ -80,6 +80,9 @@
     if (document.getElementById('loumoo-dt-styles')) return;
     var css = [
       '#loumoo-dt{position:fixed;inset:0;z-index:4000;background:var(--color-bg,#fff);color:var(--color-text,#111);display:flex;flex-direction:column;font-family:var(--font-body,system-ui,sans-serif);overflow:hidden}',
+      // .dt-eta and .dt-driver set display:flex, which beats the browser's own [hidden] rule: a card
+      // with nothing to say stayed on screen as an empty white bar. Hidden has to mean hidden.
+      '#loumoo-dt [hidden]{display:none !important}',
       '#loumoo-dt .dt-head{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--color-surface,#fff);border-bottom:1px solid var(--color-divider,#e5e5e5);flex-shrink:0}',
       '#loumoo-dt .dt-iconbtn{border:1px solid var(--color-divider,#e5e5e5);background:var(--color-surface,#fff);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--color-text,#111);cursor:pointer;flex-shrink:0}',
       '#loumoo-dt .dt-title{flex:1;min-width:0}',
@@ -322,6 +325,20 @@
     var map = q('[data-dt-map]'); if (map) map.hidden = on;
     var tl = q('[data-dt-timeline]'); if (tl && tl.parentNode) tl.parentNode.hidden = on;
     var note = q('.dt-note'); if (note) note.hidden = on;
+  }
+
+  // No delivery yet is the normal first state: say so, and look again in a few seconds.
+  // (Lost from this file at some point after 056952a; without it a 404 threw inside
+  // load()'s own error handler and the screen sat on "Loading..." for ever.)
+  function waitForSeller(orderId) {
+    setWaiting(true);
+    setSubtitle('Waiting for the seller');
+    setPill('WAITING');
+    renderCircuit(null);
+    clearTimeout(state._waitTimer);
+    state._waitTimer = setTimeout(function () {
+      if (state.mounted && !state.deliveryId) load(orderId, null);
+    }, 8000);
   }
 
   function applyDelivery(d) {
