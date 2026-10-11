@@ -272,6 +272,21 @@
     return api.getByOrder(orderId).then(function (res) { return (res && res.delivery) || null; });
   }
 
+  // The order screen has just read this delivery. Hand it to the tracker so that a tap on
+  // "Track live delivery" paints at once and, only when a rider is on it, so that the map
+  // library starts downloading now rather than after the tap. A rider-less delivery has no
+  // live map worth the data. It is a speculative nicety and must never break the screen.
+  var WARM_STATUSES = ['assigned', 'accepted', 'picked_up', 'arrived'];
+  function speculateTracking(delivery) {
+    if (!delivery) return;
+    try {
+      var tracker = global.LoumooDeliveryTracking;
+      if (!tracker) return;
+      if (typeof tracker.prime === 'function') tracker.prime(delivery);
+      if (typeof tracker.warm === 'function' && WARM_STATUSES.indexOf(delivery.status) !== -1) tracker.warm(true);
+    } catch (e) { /* never break the page */ }
+  }
+
   function paint(host) {
     var el = host.el;
     var orderId = el.getAttribute('data-order-id');
@@ -281,6 +296,7 @@
     host.busy = true;
     fetchDelivery(orderId).then(function (delivery) {
       el.innerHTML = renderStrip(delivery, role);
+      speculateTracking(delivery);
     }, function (err) {
       // 404 means "no delivery yet", the normal first state. Anything else is a
       // real failure: say so rather than imply the order is simply waiting.
@@ -586,6 +602,7 @@
     renderStrip: renderStrip,
     stripCard: stripCard,
     openFromNotification: openFromNotification,
+    speculateTracking: speculateTracking,
     sync: sync,
     money: money,
     groupByStore: groupByStore,

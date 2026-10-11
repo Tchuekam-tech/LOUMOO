@@ -14,6 +14,9 @@
  */
 
 const DELIVERY_API_PATH = '/api/v1/deliveries';
+// A read that has not answered by now is not going to: say so instead of leaving a screen on
+// "Loading...". Generous on purpose: this is mobile data, and the payloads are small.
+const READ_TIMEOUT_MS = 25000;
 
 /**
  * The API base. Same-origin by default, but in production the frontend
@@ -32,6 +35,7 @@ function resolveApiBase() {
 class DeliveryApiClient {
   constructor(baseUrl) {
     this.baseUrl = baseUrl || resolveApiBase();
+    this.readTimeoutMs = READ_TIMEOUT_MS;
   }
 
   /** The same bearer the rest of the app uses (canonical client, then storage). */
@@ -67,11 +71,36 @@ class DeliveryApiClient {
   /** One request. Returns the unwrapped `data` payload; throws a typed Error. */
   async _request(endpoint, options = {}) {
     const token = await this._resolveToken();
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      ...options,
-      headers: this._headers(token, options.headers)
-    });
-    const body = (await response.json().catch(() => null)) || {};
+    // Only a READ is given a deadline. An aborted write may still have happened, and the caller
+    // would then retry it blind.
+    const isRead = String(options.method || 'GET').toUpperCase() === 'GET';
+    let controller = null;
+    let timer = null;
+    let init = options;
+    if (isRead && !options.signal && typeof AbortController !== 'undefined' && this.readTimeoutMs > 0) {
+      controller = new AbortController();
+      init = { ...options, signal: controller.signal };
+      timer = setTimeout(() => controller.abort(), this.readTimeoutMs);
+    }
+    let response;
+    let body;
+    try {
+      response = await fetch(`${this.baseUrl}${endpoint}`, {
+        ...init,
+        headers: this._headers(token, options.headers)
+      });
+      body = (await response.json().catch(() => null)) || {};
+    } catch (e) {
+      if (controller && controller.signal.aborted) {
+        const timeout = new Error('This is taking longer than usual. Check your connection and try again.');
+        timeout.code = 'TIMEOUT';
+        timeout.status = 0;
+        throw timeout;
+      }
+      throw e;
+    } finally {
+      if (timer) clearTimeout(timer);
+    }
     if (!response.ok) {
       const err = new Error(body.error?.message || `Request failed with status ${response.status}`);
       err.code = body.error?.code || 'API_ERROR';

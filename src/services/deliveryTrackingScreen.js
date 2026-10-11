@@ -18,6 +18,13 @@
  * it never weighs on the initial app shell. A street-tile style can be supplied
  * via window.LOUMOO_MAP_STYLE (e.g. a MapTiler/Stadia URL with a key); without
  * one it falls back to the keyless MapLibre demo tiles.
+ *
+ * The map is the slow part on mobile data: it needs the library (cdnjs), then the
+ * tiles (another host), each a cold connection of its own. So nothing waits its
+ * turn that does not have to: warm() starts the library and the connections early
+ * (the order screen calls it when a rider is on the delivery, and open() calls it
+ * the moment it knows there is a delivery), and prime() hands over a delivery the
+ * order screen has just read so the first paint needs no second round trip.
  */
 (function () {
   'use strict';
@@ -80,12 +87,15 @@
     if (document.getElementById('loumoo-dt-styles')) return;
     var css = [
       '#loumoo-dt{position:fixed;inset:0;z-index:4000;background:var(--color-bg,#fff);color:var(--color-text,#111);display:flex;flex-direction:column;font-family:var(--font-body,system-ui,sans-serif);overflow:hidden}',
+      // .dt-eta and .dt-driver set display:flex, which beats the browser's own [hidden] rule: a card
+      // with nothing to say stayed on screen as an empty white bar. Hidden has to mean hidden.
+      '#loumoo-dt [hidden]{display:none !important}',
       '#loumoo-dt .dt-head{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--color-surface,#fff);border-bottom:1px solid var(--color-divider,#e5e5e5);flex-shrink:0}',
       '#loumoo-dt .dt-iconbtn{border:1px solid var(--color-divider,#e5e5e5);background:var(--color-surface,#fff);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--color-text,#111);cursor:pointer;flex-shrink:0}',
       '#loumoo-dt .dt-title{flex:1;min-width:0}',
       '#loumoo-dt .dt-title h4{margin:0;font:700 16px/1.2 var(--font-heading,inherit)}',
       '#loumoo-dt .dt-title .dt-sub{font:400 11px/1.2 var(--font-body,inherit);color:var(--color-text-secondary,#666);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
-      '#loumoo-dt .dt-pill{min-height:22px;padding:3px 10px;border-radius:999px;font:700 10px/1.4 var(--font-body,inherit);letter-spacing:.3px;text-transform:uppercase;background:var(--color-accent-100,#eef);color:var(--color-accent,#3245ff);white-space:nowrap}',
+      '#loumoo-dt .dt-pill{min-height:22px;padding:3px 10px;border-radius:999px;font:700 10px/1.4 var(--font-body,inherit);letter-spacing:.3px;text-transform:uppercase;background:var(--color-accent-100,#eef);color:var(--color-accent,#3245ff);text-align:center;max-width:44%}',
       '#loumoo-dt .dt-pill.ok{background:var(--color-success-100,#e6f7ec);color:var(--color-success,#1a9d4b)}',
       '#loumoo-dt .dt-pill.bad{background:var(--color-danger-100,#fde8e8);color:var(--color-danger,#d32f2f)}',
       '#loumoo-dt .dt-map{position:relative;width:100%;height:42%;min-height:220px;background:var(--color-surface-2,#eef1f5);flex-shrink:0}',
@@ -123,6 +133,7 @@
       '#loumoo-dt .dt-code .dt-code-hint{font:400 11px/1.3 var(--font-body,inherit);color:var(--color-text-secondary,#999)}',
       '#loumoo-dt .dt-note{font:400 12px/1.4 var(--font-body,inherit);color:var(--color-text-secondary,#666)}',
       '#loumoo-dt .dt-error{color:var(--color-danger,#d32f2f);font-size:13px}',
+      '#loumoo-dt .dt-retry{margin-left:8px;min-height:36px;padding:8px 14px;border:1px solid var(--color-divider,#e5e5e5);border-radius:999px;background:var(--color-surface,#fff);color:var(--color-text,#111);font:600 12px/1 var(--font-body,inherit);cursor:pointer}',
       '@media (min-width:720px){#loumoo-dt .dt-map{height:46%}}'
     ].join('\n');
     var el = document.createElement('style');
@@ -179,6 +190,9 @@
     state.mounted = true;
     try { document.body.style.overflow = 'hidden'; } catch (e) {}
 
+    // Open the connections the map will need while the delivery is still being fetched. When
+    // the order screen has just read it, there IS a map to show: start the library as well.
+    if (takePrimed(orderId, deliveryId)) warm(false); else warmConnections();
     load(orderId, deliveryId);
   }
 
@@ -187,6 +201,7 @@
     state.sub = null;
     clearTimeout(state._waitTimer);
     state._waitTimer = null;
+    clearMapMessages();
     if (state._raf) { try { cancelAnimationFrame(state._raf); } catch (e) {} state._raf = null; }
     if (state.map && state.map.remove) { try { state.map.remove(); } catch (e) {} }
     state.map = null;
@@ -219,9 +234,12 @@
   }
   function setSubtitle(text) { var el = q('.dt-sub'); if (el) el.textContent = text; }
 
-  function renderError(msg) {
+  function renderError(msg, retry) {
     var el = q('[data-dt-error]'); if (!el) return;
-    el.textContent = msg; el.hidden = false;
+    el.innerHTML = esc(msg) + (retry ? ' <button type="button" class="dt-retry">Try again</button>' : '');
+    el.hidden = false;
+    var button = retry ? el.querySelector('.dt-retry') : null;
+    if (button) button.addEventListener('click', function () { el.hidden = true; retry(); });
   }
 
   function statusKind(status) {
@@ -324,6 +342,20 @@
     var note = q('.dt-note'); if (note) note.hidden = on;
   }
 
+  // No delivery yet is the normal first state: say so, and look again in a few seconds.
+  // (Lost from this file at some point after 056952a; without it a 404 threw inside
+  // load()'s own error handler and the screen sat on "Loading..." for ever.)
+  function waitForSeller(orderId) {
+    setWaiting(true);
+    setSubtitle('Waiting for the seller');
+    setPill('WAITING');
+    renderCircuit(null);
+    clearTimeout(state._waitTimer);
+    state._waitTimer = setTimeout(function () {
+      if (state.mounted && !state.deliveryId) load(orderId, null);
+    }, 8000);
+  }
+
   function applyDelivery(d) {
     state.delivery = d;
     setSubtitle(d.orderNumber ? 'Order ' + d.orderNumber : (d.orderId ? 'Order ' + d.orderId : ''));
@@ -336,30 +368,57 @@
   }
 
   // --------------------------------------------------------------- data load
+  // The delivery the order screen has just read. Painting it at once means the first
+  // thing on screen is real content, not a second wait on the network; the refresh that
+  // follows (and the live feed) correct anything that moved in between.
+  var PRIME_TTL_MS = 60000;
+  var primed = {};
+  function prime(d) {
+    if (!d || !d.id) return;
+    var entry = { d: d, at: Date.now() };
+    primed['d:' + d.id] = entry;
+    if (d.orderId) primed['o:' + d.orderId] = entry;
+    if (d.orderNumber) primed['o:' + d.orderNumber] = entry;
+  }
+  function takePrimed(orderId, deliveryId) {
+    var e = (deliveryId && primed['d:' + deliveryId]) || (orderId && primed['o:' + orderId]) || null;
+    return e && Date.now() - e.at <= PRIME_TTL_MS ? e.d : null;
+  }
+
   async function load(orderId, deliveryId) {
     if (!window.deliveryApi) { renderError('Delivery service is not available.'); return; }
+    var head = takePrimed(orderId, deliveryId);
+    if (head) { show(head); refreshDelivery(); return; }
     try {
       var res = deliveryId
         ? await window.deliveryApi.get(deliveryId)
         : await window.deliveryApi.getByOrder(orderId);
-      var d = res.delivery;
-      if (!d) { waitForSeller(orderId); return; }
+      var d = res && res.delivery;
       if (!state.mounted) return;
-      var el = q('[data-dt-error]'); if (el) el.hidden = true;
-      setWaiting(false);
-      state.deliveryId = d.id;
-      if (typeof initMap === 'function') initMap(d);
-      applyDelivery(d);
-      loadCode(d);
-      if (typeof startLive === 'function') startLive(d.id);
+      if (!d) { waitForSeller(orderId); return; }
+      show(d);
     } catch (err) {
       if (!state.mounted) return;
       // No delivery for an order the buyer asked about by order: the seller has not
       // arranged one yet. Anything else is a real failure and is said plainly.
       if (err && err.status === 404 && !deliveryId && orderId) { waitForSeller(orderId); return; }
-      renderError((err && err.message) || 'Could not load tracking.');
+      renderError((err && err.message) || 'Could not load tracking.', function () {
+        setPill('\u2026');
+        load(orderId, deliveryId);
+      });
       setPill('UNAVAILABLE', 'bad');
     }
+  }
+
+  /** There is a delivery: fill the screen in and start the map and the live feed. */
+  function show(d) {
+    var el = q('[data-dt-error]'); if (el) el.hidden = true;
+    setWaiting(false);
+    state.deliveryId = d.id;
+    initMap(d);
+    applyDelivery(d);
+    loadCode(d);
+    startLive(d.id);
   }
 
   async function loadCode(d) {
@@ -374,26 +433,106 @@
   }
 
   // --------------------------------------------------------------- map
+  var MAPLIBRE_TIMEOUT_MS = 30000;
+  var mapLibreLoading = null;
+
+  // One download, shared by whoever asks first (warm() or the map itself). A failure
+  // removes the dead script tag and clears the promise, so the next attempt really
+  // downloads again instead of waiting on a tag that already failed.
   function loadMapLibre() {
-    return new Promise(function (resolve, reject) {
-      if (window.maplibregl) return resolve(window.maplibregl);
+    if (window.maplibregl) return Promise.resolve(window.maplibregl);
+    if (mapLibreLoading) return mapLibreLoading;
+    mapLibreLoading = new Promise(function (resolve, reject) {
       if (!document.getElementById('loumoo-dt-maplibre-css')) {
         var link = document.createElement('link');
         link.id = 'loumoo-dt-maplibre-css'; link.rel = 'stylesheet'; link.href = MAPLIBRE_CSS;
         document.head.appendChild(link);
       }
-      var existing = document.getElementById('loumoo-dt-maplibre-js');
-      if (existing) {
-        existing.addEventListener('load', function () { window.maplibregl ? resolve(window.maplibregl) : reject(new Error('maplibre missing')); });
-        existing.addEventListener('error', function () { reject(new Error('maplibre failed')); });
-        return;
-      }
       var s = document.createElement('script');
       s.id = 'loumoo-dt-maplibre-js'; s.src = MAPLIBRE_JS; s.async = true;
-      s.onload = function () { window.maplibregl ? resolve(window.maplibregl) : reject(new Error('maplibre missing')); };
-      s.onerror = function () { reject(new Error('maplibre failed to load')); };
+      var done = false;
+      var timer = null;
+      function finish(error) {
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        if (!error && window.maplibregl) { resolve(window.maplibregl); return; }
+        try { if (s.parentNode) s.parentNode.removeChild(s); } catch (e) {}
+        reject(error || new Error('maplibre missing'));
+      }
+      s.onload = function () { finish(null); };
+      s.onerror = function () { finish(new Error('maplibre failed to load')); };
+      timer = setTimeout(function () { finish(new Error('maplibre timed out')); }, MAPLIBRE_TIMEOUT_MS);
       document.head.appendChild(s);
     });
+    mapLibreLoading.then(null, function () { mapLibreLoading = null; });
+    return mapLibreLoading;
+  }
+
+  // Each host the map uses is a cold connection (DNS, TCP, TLS) before a single byte
+  // moves; on mobile data that is seconds apiece. Opening them early overlaps them.
+  var preconnected = false;
+  function preconnect(url) {
+    try {
+      var link = document.createElement('link');
+      link.rel = 'preconnect'; link.href = new URL(url).origin; link.crossOrigin = 'anonymous';
+      document.head.appendChild(link);
+    } catch (e) { /* a hint: never worth an error */ }
+  }
+  function styleHost(style) {
+    if (typeof style === 'string') return style;
+    var sources = (style && style.sources) || {};
+    for (var k in sources) {
+      if (sources[k] && sources[k].tiles && sources[k].tiles[0]) return sources[k].tiles[0].replace(/\{[^}]*\}/g, '0');
+      if (sources[k] && typeof sources[k].url === 'string') return sources[k].url;
+    }
+    return ESRI_STREET_TILES[0].replace(/\{[^}]*\}/g, '0');
+  }
+
+  /**
+   * Opens the connections the map will need (the library's host and the tiles' host). A
+   * handshake is cheap and carries no data, so it is done on every open, while the delivery
+   * is still being fetched, even if that turns out to be an order with no delivery yet.
+   */
+  function warmConnections() {
+    if (typeof document === 'undefined' || preconnected) return;
+    preconnected = true;
+    preconnect(MAPLIBRE_JS);
+    preconnect(styleHost(mapStyle()));
+  }
+
+  /**
+   * Opens the connections AND starts the map library downloading. `speculative` is the order
+   * screen guessing the buyer may tap Track: it is skipped when the browser says the person is
+   * saving data. Opening the tracker is not a guess.
+   */
+  function warm(speculative) {
+    if (typeof document === 'undefined') return;
+    if (speculative) {
+      try { var c = navigator.connection; if (c && c.saveData) return; } catch (e) {}
+    }
+    warmConnections();
+    loadMapLibre().then(null, function () { /* said on screen if and when the tracker is opened */ });
+  }
+
+  // On a slow link, say what is happening (and that the rest of the screen is fine)
+  // rather than a "Loading map..." that never changes.
+  var SLOW_MAP_MS = 8000;
+  var VERY_SLOW_MAP_MS = 20000;
+  function setMapMsg(text) {
+    var m = q('[data-dt-mapmsg]');
+    if (m && m.style.display !== 'none') m.textContent = text;
+  }
+  function clearMapMessages() {
+    (state._mapMsgTimers || []).forEach(clearTimeout);
+    state._mapMsgTimers = null;
+  }
+  function armMapMessages() {
+    clearMapMessages();
+    state._mapMsgTimers = [
+      setTimeout(function () { setMapMsg('Still loading the map\u2026'); }, SLOW_MAP_MS),
+      setTimeout(function () { setMapMsg('The map is slow on this connection. The status and ETA below are up to date.'); }, VERY_SLOW_MAP_MS)
+    ];
   }
 
   function riderMarkerEl() {
@@ -425,6 +564,7 @@
     var container = q('[data-dt-map]');
     var msg = q('[data-dt-mapmsg]');
     if (!container) return;
+    armMapMessages();
     loadMapLibre().then(function (ml) {
       if (!state.mounted || state.map) return;
       state._ml = ml;
@@ -442,12 +582,13 @@
       var chosenStyle = mapStyle();
       function onStyleLoad() {
         state._styleOk = true;
+        clearMapMessages();
         if (msg) msg.style.display = 'none';
         ensureRoute();
         updateMap(state.delivery || d);
       }
       state.map.on('style.load', onStyleLoad);
-      state.map.on('load', function () { if (msg) msg.style.display = 'none'; });
+      state.map.on('load', function () { clearMapMessages(); if (msg) msg.style.display = 'none'; });
       // Only count genuine user gestures as "took control" of the camera.
       state.map.on('dragstart', function () { state._userMovedMap = true; });
       state.map.on('zoomstart', function (e) { if (e && e.originalEvent) state._userMovedMap = true; });
@@ -462,6 +603,7 @@
 
       geocodeDestIfNeeded(d);
     }).catch(function () {
+      clearMapMessages();
       if (msg) msg.textContent = 'Live map unavailable. The status and ETA below are up to date.';
     });
   }
@@ -641,5 +783,5 @@
   // Close on Escape, for parity with a back gesture.
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && state.mounted) close(); });
 
-  window.LoumooDeliveryTracking = { open: open, close: close, _state: state };
+  window.LoumooDeliveryTracking = { open: open, close: close, warm: warm, prime: prime, _state: state };
 })();
