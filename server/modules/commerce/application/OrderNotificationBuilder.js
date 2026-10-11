@@ -328,6 +328,36 @@ function buildSellerNotification(order, ctx = {}) {
   };
 }
 
+/**
+ * What every seller who is NOT the house store's owner is told: the same short
+ * notification the platform has always sent. It carries the item count, the total
+ * and the delivery area, never the customer's name, phone or street (those stay
+ * behind the order screen, and out of lock screens and notification feeds). The
+ * full message above is for the house store, whose owner has no other way to know
+ * who ordered.
+ */
+function buildPlainSellerNotification(order) {
+  const home = order.deliveryMethod === DELIVERY_METHOD.HOME_DELIVERY;
+  const lines = (order.items || []).reduce((n, it) => n + it.quantity, 0);
+  const what = `${lines} ${lines === 1 ? 'item' : 'items'}`;
+  const ship = (order.shippingAddress && typeof order.shippingAddress === 'object') ? order.shippingAddress : {};
+  const area = [ship.neighbourhood, ship.city].filter(Boolean).join(', ');
+  return {
+    type: 'order',
+    tone: 'sale',
+    title: clean(home ? `New order ${order.orderNumber} to deliver` : `New pickup order ${order.orderNumber}`, MAX_TITLE),
+    body: home
+      ? `${what} · XAF ${order.totalAmountXaf}${area ? ` · to ${clean(area, CAPS.name)}` : ''}. Arrange a rider from Deliveries.`
+      : `${what} · XAF ${order.totalAmountXaf}. Get it ready for the customer to collect.`,
+    metadata: {
+      orderId: order.id,
+      orderNumber: order.orderNumber,
+      audience: 'seller',
+      action: home ? 'open_dispatch' : null
+    }
+  };
+}
+
 /* ------------------------------------------------------------- seller e-mail */
 
 const MONEY_ROW = 'padding:4px 0;color:#444';
@@ -419,6 +449,7 @@ function buildBuyerNotification(order, ctx = {}) {
 
 module.exports = {
   buildSellerNotification,
+  buildPlainSellerNotification,
   buildSellerEmail,
   buildBuyerNotification,
   // exposed for reuse and for tests
