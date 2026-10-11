@@ -23,6 +23,7 @@ const {
 const logger = require('../../../shared/logging/logger');
 const Messages = require('./OrderNotificationBuilder');
 const { OrderRecipients } = require('./OrderRecipients');
+const { isHouseStoreId } = require('../../store/domain/HouseStore');
 
 // Optional cross-cutting services (loaded lazily to avoid circular dependencies)
 let UserActivityUseCase = null;
@@ -550,14 +551,26 @@ class OrderCreationService {
       return buyerLookup;
     };
 
+    // The full message (customer's name, phone and address, by notification and by
+    // e-mail) is for orders of the house store (its owner) only. Every other seller gets the short
+    // notification they always had: a customer's contact details do not go to
+    // lock screens and mailboxes of sellers who never asked for them.
+    // Decided from the order's own store, which came from the server-side listing and
+    // never from the request, so there is nothing to look up and nothing to wait for.
+    const houseOrder = isHouseStoreId(context.storeId);
+
     if (notifier && typeof notifier.create === 'function') {
       tasks.push(guard('seller notification', async () => {
+        if (!houseOrder) {
+          await notifier.create(order.sellerId, Messages.buildPlainSellerNotification(order));
+          return;
+        }
         const buyer = addressIncomplete ? await buyerContact() : null;
         await notifier.create(order.sellerId, Messages.buildSellerNotification(order, { ...context, buyer }));
       }));
     }
 
-    tasks.push(guard('seller e-mail', async () => {
+    if (houseOrder) tasks.push(guard('seller e-mail', async () => {
       // The seller's own switch for e-mail. If the preference cannot be read the
       // e-mail is still sent: the default is on, and a missed order costs more
       // than one e-mail the seller can turn off.
