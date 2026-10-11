@@ -288,6 +288,9 @@ async function testHiddenReallyHides() {
     // .dt-eta and .dt-driver set display:flex, which beats the browser's [hidden] rule, so a
     // card with nothing in it stayed on screen as an empty white bar.
     assert.ok(/#loumoo-dt \[hidden\]\s*\{\s*display:\s*none\s*!important/.test(style.textContent), 'an element marked hidden is hidden, whatever display it sets');
+    // A long status ("RIDER ON THE WAY TO PICK UP") must wrap inside its pill, not squeeze the title to "Ord...".
+    const pill = /#loumoo-dt \.dt-pill\{[^}]*\}/.exec(style.textContent);
+    assert.ok(pill && !/white-space:\s*nowrap/.test(pill[0]) && /max-width:\s*44%/.test(pill[0]), 'the status pill wraps instead of crushing the title');
   } finally { env.restore(); }
 }
 
