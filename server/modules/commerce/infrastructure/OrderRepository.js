@@ -10,11 +10,18 @@ const { SupabaseDatabase, handleDatabaseFailure } = require('../../../infrastruc
 const { Order, OrderItem, FULFILLMENT_STATUS, PAYMENT_STATUS, DELIVERY_METHOD } = require('../domain/Order');
 const { ConflictError, NotFoundError, InfrastructureError } = require('../../../shared/errors/AppError');
 const logger = require('../../../shared/logging/logger');
+const { findCuratedProduct, payablePriceXaf } = require('../../catalog/domain/CuratedCatalog');
+const { getSharedHouseStore } = require('../../store/application/HouseStoreService');
 
 class OrderRepository {
   constructor(options = {}) {
     const opts = options || {};
     this._customDb = opts.db;
+    // Resolves the house store (NanoAfrica), which is the seller of every curated
+    // product. Injectable so a test needs neither a database nor the shared cache.
+    this._houseStore = opts.houseStore || null;
+    // The curated dataset, keyed by product id. Injectable for the same reason.
+    this._curatedCatalog = opts.curatedCatalog || null;
     // In-memory fallback for local unit tests when DB credentials are absent
     this._inMemoryOrders = new Map();
     this._inMemoryListings = new Map();
@@ -44,7 +51,7 @@ class OrderRepository {
       return this._inMemoryListings.get(listingId);
     }
 
-    if (!this.db) return null;
+    if (!this.db) return this._findCuratedListing(listingId);
 
     try {
       const { data, error } = await this.db
@@ -88,13 +95,68 @@ class OrderRepository {
       handleDatabaseFailure(err, 'OrderRepository.findListingById');
     }
 
-    // Not a listing in iam.listings: nothing can be ordered. In particular, a curated
-    // storefront product (src/data) is NOT resolved through the catalogue here. It has
-    // no seller account, and filing its order under an invented seller
-    // ('usr_seller_default') broke every such checkout with a foreign-key 500
-    // ("LOUMOO is temporarily unavailable") and would have sent an order nobody
-    // receives. The caller answers 404, which the checkout explains as a showcase item.
-    return null;
+    // Not a listing in iam.listings. The only other thing that can be ordered is a
+    // product of the curated storefront dataset, which belongs to the house store.
+    return this._findCuratedListing(listingId);
+  }
+
+  /**
+   * A curated storefront product (src/data/catalog_products.js) as an orderable
+   * listing, or null.
+   *
+   * Every curated product belongs to the house store (NanoAfrica). Its seller is
+   * therefore the owner of that store's DATABASE ROW: never the request, never the
+   * dataset. Filing these orders under an invented seller ('usr_seller_default')
+   * is what broke every such checkout with a foreign-key 500 until 2026-10-07, so
+   * the rules here are strict:
+   *   - the id must be an EXACT key of the dataset. The catalogue's own lookup
+   *     fabricates a placeholder product for unknown ids and fuzzy-matches partial
+   *     ones; it must never decide what can be bought;
+   *   - the house store must be provisioned (HouseStoreService.resolve). If it is
+   *     not, nothing is orderable and the caller refuses the line as a showcase
+   *     item, exactly as before;
+   *   - the price is the PAYABLE one (the lower of price and salePrice), never the
+   *     compare-at "was" price.
+   * @param {string} listingId
+   * @returns {Promise<object|null>}
+   */
+  async _findCuratedListing(listingId) {
+    const product = findCuratedProduct(listingId, this._curatedCatalog || undefined);
+    if (!product) return null;
+    const priceXaf = payablePriceXaf(product);
+    if (!(priceXaf > 0)) return null;
+
+    const houseService = this._houseStore || getSharedHouseStore();
+    let house = null;
+    try {
+      house = await houseService.resolve();
+    } catch (err) {
+      // Not being able to read the store is not a reason to invent one.
+      logger.warn('[OrderRepository] house store lookup failed; curated product left un-orderable', {
+        message: err && err.message
+      });
+    }
+    if (!house || !house.ownerId) return null;
+
+    return {
+      id: listingId,
+      storeId: house.storeId,
+      sellerId: house.ownerId,
+      storeName: house.name,
+      storeStatus: house.status,
+      storePhone: house.phone || null,
+      sellerPhone: house.phone || null,
+      title: product.title,
+      status: 'PUBLISHED',
+      visibility: 'PUBLIC',
+      currency: 'XAF',
+      basePriceMinor: priceXaf,
+      salePriceMinor: null,
+      hasVariants: false,
+      fulfillment: null,
+      curated: true,
+      deletedAt: null
+    };
   }
 
   /**

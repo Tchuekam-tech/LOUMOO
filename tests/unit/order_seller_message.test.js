@@ -1,0 +1,581 @@
+/**
+ * LOUMOO Unit Tests - The message a seller receives when someone orders
+ * ---------------------------------------------------------------------------
+ * A new order reaches the seller twice: an in-app notification (the guaranteed
+ * channel) and an e-mail (best effort). Both carry everything needed to act on
+ * the order, and neither can be turned against the seller by what the customer
+ * typed.
+ *
+ *   1. CONTENT. A home delivery and a pickup each carry every required detail:
+ *      order number and local time, customer name / phone / WhatsApp link, delivery
+ *      method and full address (or "Customer collects at the store"), the delivery
+ *      provider and fee, every line as "N x title - XAF total", subtotal, delivery
+ *      fee, total, and a payment line that says pay on delivery / pickup and never
+ *      claims money is held or paid. The structured metadata.details mirrors it.
+ *   2. UNTRUSTED TEXT. A name like <script>alert(1)</script> or an address with
+ *      HTML never reaches the e-mail markup raw; control characters are stripped
+ *      and every field is capped (iam.notifications.title is varchar 255).
+ *   3. WHATSAPP. Links are https://wa.me/<digits> from the platform's own Cameroon
+ *      number rule, never doubled (+237 237...), and omitted for a bad number.
+ *   4. SECRETS. No handover code or token enters any message.
+ *   5. DELIVERY. Through the real OrderCreationService: the seller gets the full
+ *      message AND an e-mail; the e-mail is skipped when the seller opted out, has
+ *      no address, or the store turned order e-mails off; a transport or a
+ *      notification service that throws never fails (or delays) an order that was
+ *      saved; and an ordinary seller gets the richer message in the same shape.
+ */
+
+require('../setup');
+const assert = require('assert');
+
+const { Order, OrderItem, DELIVERY_METHOD } = require('../../server/modules/commerce/domain/Order');
+const Builder = require('../../server/modules/commerce/application/OrderNotificationBuilder');
+
+function item(title, unitPriceXaf, quantity) {
+  return new OrderItem({
+    listingId: `l_${title.length}_${unitPriceXaf}`, title, unitPriceXaf, quantity,
+    sellerId: 'seller_1', storeId: 'store_1', storeName: 'Tech Shop'
+  });
+}
+
+function makeOrder(overrides = {}) {
+  return new Order({
+    id: 'ord_1',
+    orderNumber: 'KM-ABC123-DEF456',
+    buyerId: 'buyer_1',
+    sellerId: 'seller_1',
+    items: [item('Wireless Mouse', 8500, 2), item('USB-C Cable', 3000, 1)],
+    subtotalXaf: 20000,
+    shippingFeeXaf: 1500,
+    totalAmountXaf: 21500,
+    shippingAddress: { fullName: 'Awa Njoya', phone: '+237 622 22 22 22', street: 'Rue 1', city: 'Douala', neighbourhood: 'Bonanjo' },
+    deliveryMethod: DELIVERY_METHOD.HOME_DELIVERY,
+    createdAt: '2026-10-10T13:32:00.000Z',
+    ...overrides
+  });
+}
+
+// --------------------------------------------------------------------- 1. content
+
+function testHomeDeliveryContent() {
+  const order = makeOrder();
+  const n = Builder.buildSellerNotification(order, {
+    storeName: 'Tech Shop',
+    provider: { id: 'rider_9', name: 'Speedy Riders', source: 'buyer' }
+  });
+
+  assert.strictEqual(n.type, 'order');
+  assert.strictEqual(n.tone, 'sale');
+  assert.ok(/New order KM-ABC123-DEF456 to deliver/.test(n.title), 'the title carries the order number');
+  assert.ok(n.title.includes('XAF 21,500'), 'and the total');
+
+  const body = n.body;
+  for (const needle of [
+    'KM-ABC123-DEF456',
+    '10 Oct 2026, 14:32 (Cameroon time)',            // UTC+1
+    'Name: Awa Njoya',
+    'Phone: +237 622 22 22 22',
+    'WhatsApp: https://wa.me/237622222222',
+    'Method: Home delivery',
+    'Address: Rue 1, Bonanjo, Douala',
+    'Delivery provider: Speedy Riders (chosen by the customer)',
+    '2 x Wireless Mouse - XAF 17,000',
+    '1 x USB-C Cable - XAF 3,000',
+    'Subtotal: XAF 20,000',
+    'Delivery fee: XAF 1,500',
+    'Total: XAF 21,500',
+    'Pay on delivery',
+    'Store: Tech Shop',
+    '3 items'
+  ]) {
+    assert.ok(body.includes(needle), `the body carries "${needle}":\n${body}`);
+  }
+  assert.ok(/Arrange a rider|Offer it to Speedy Riders/.test(body), 'it says what to do next');
+  assert.ok(!/\b(held|escrow|paid online|has been paid)\b/i.test(body.replace('has not paid online', '')), 'it never claims money is held or paid');
+
+  const md = n.metadata;
+  assert.strictEqual(md.audience, 'seller');
+  assert.strictEqual(md.action, 'open_dispatch');
+  assert.strictEqual(md.orderId, 'ord_1');
+  assert.strictEqual(md.orderNumber, 'KM-ABC123-DEF456');
+  const d = md.details;
+  assert.deepStrictEqual(
+    { name: d.buyer.name, phone: d.buyer.phone, wa: d.buyer.whatsappUrl },
+    { name: 'Awa Njoya', phone: '+237 622 22 22 22', wa: 'https://wa.me/237622222222' }
+  );
+  assert.strictEqual(d.address, 'Rue 1, Bonanjo, Douala');
+  assert.strictEqual(d.deliveryMethod, 'HOME_DELIVERY');
+  assert.deepStrictEqual({ id: d.provider.id, name: d.provider.name }, { id: 'rider_9', name: 'Speedy Riders' });
+  assert.deepStrictEqual(d.items.map((i) => [i.title, i.quantity, i.unitPriceXaf, i.lineTotalXaf]),
+    [['Wireless Mouse', 2, 8500, 17000], ['USB-C Cable', 1, 3000, 3000]]);
+  assert.deepStrictEqual([d.subtotalXaf, d.shippingFeeXaf, d.totalXaf], [20000, 1500, 21500]);
+  assert.strictEqual(d.paymentStatus, 'pending');
+  JSON.parse(JSON.stringify(md)); // plain data: it goes into a jsonb column
+}
+
+function testPickupContent() {
+  const order = makeOrder({
+    deliveryMethod: DELIVERY_METHOD.STORE_PICKUP,
+    shippingFeeXaf: 0,
+    totalAmountXaf: 20000,
+    shippingAddress: { fullName: 'Awa Njoya', phone: '622222222', street: 'Rue 1', city: 'Douala' }
+  });
+  const n = Builder.buildSellerNotification(order, { storeName: 'Tech Shop' });
+  assert.ok(/New pickup order KM-ABC123-DEF456/.test(n.title));
+  assert.ok(n.body.includes('Customer collects at the store'), 'no street address is shown for a pickup');
+  assert.ok(!n.body.includes('Rue 1'), 'the customer address is irrelevant to a pickup');
+  assert.ok(n.body.includes('Method: Store pickup'));
+  assert.ok(/Pay on pickup/.test(n.body), 'payment says pickup');
+  assert.ok(!/Delivery provider/.test(n.body), 'no delivery provider for a pickup');
+  assert.ok(n.body.includes('WhatsApp: https://wa.me/237622222222'), 'a bare 9-digit number gets the country code once');
+  assert.ok(n.body.includes('Total: XAF 20,000'));
+  assert.strictEqual(n.metadata.action, null, 'nothing to dispatch');
+  assert.strictEqual(n.metadata.details.address, null);
+  assert.strictEqual(n.metadata.details.pickup, true);
+}
+
+function testProviderWording() {
+  const order = makeOrder();
+  const chosen = Builder.buildSellerNotification(order, { provider: { id: 'p1', name: 'Speedy Riders', source: 'buyer' } }).body;
+  const defaulted = Builder.buildSellerNotification(order, { provider: { id: 'p2', name: 'nanoDelivery', source: 'default' } }).body;
+  const none = Builder.buildSellerNotification(order, {}).body;
+  const dropped = Builder.buildSellerNotification(order, { droppedProviderReason: 'suspended' }).body;
+
+  assert.ok(chosen.includes('Delivery provider: Speedy Riders (chosen by the customer)'));
+  assert.ok(defaulted.includes('Delivery provider: nanoDelivery (default: the customer did not choose one)'),
+    'a defaulted provider is labelled as such, not as the customer\'s choice');
+  assert.ok(!/chosen by the customer/.test(defaulted));
+  assert.ok(defaulted.includes('Offer it to nanoDelivery from Deliveries.'));
+  assert.ok(none.includes('Delivery provider: None chosen by the customer'));
+  assert.ok(none.includes('Arrange a rider from Deliveries.'));
+  assert.ok(dropped.includes('no longer available'), 'a provider that fell away is explained');
+}
+
+function testBuyerFallbacksAndProfile() {
+  // No name or phone on the address (a pickup placed with an empty form): the
+  // buyer's profile fills the gaps, but never overrides what the order says.
+  const bare = makeOrder({ deliveryMethod: DELIVERY_METHOD.STORE_PICKUP, shippingAddress: {} });
+  const filled = Builder.buildSellerNotification(bare, { buyer: { name: 'Profile Name', phone: '690123456', email: 'buyer@example.com' } });
+  assert.ok(filled.body.includes('Name: Profile Name'));
+  assert.ok(filled.body.includes('WhatsApp: https://wa.me/237690123456'));
+  assert.ok(filled.body.includes('Email: buyer@example.com'));
+  assert.strictEqual(filled.metadata.details.buyer.email, 'buyer@example.com');
+
+  const typed = Builder.buildSellerNotification(makeOrder(), { buyer: { name: 'Profile Name', phone: '690123456' } });
+  assert.ok(typed.body.includes('Name: Awa Njoya'), 'the name typed for this order wins');
+  assert.ok(typed.body.includes('wa.me/237622222222'));
+
+  const nobody = Builder.buildSellerNotification(bare, {});
+  assert.ok(nobody.body.includes('Name: Customer') && nobody.body.includes('Phone: not given'));
+  assert.ok(!nobody.body.includes('WhatsApp'), 'no link without a number');
+}
+
+function testEmailContent() {
+  const order = makeOrder();
+  const mail = Builder.buildSellerEmail(order, {
+    storeName: 'Tech Shop',
+    provider: { id: 'rider_9', name: 'Speedy Riders', source: 'buyer' }
+  });
+  assert.ok(/New order KM-ABC123-DEF456/.test(mail.subject) && mail.subject.includes('XAF 21,500'));
+  for (const needle of ['Awa Njoya', '+237 622 22 22 22', 'https://wa.me/237622222222', 'Rue 1, Bonanjo, Douala',
+    'Speedy Riders', '2 x Wireless Mouse', 'XAF 17,000', 'Subtotal', 'Delivery fee', 'XAF 1,500', 'XAF 21,500', 'Pay on delivery']) {
+    assert.ok(mail.html.includes(needle), `the e-mail HTML carries "${needle}"`);
+  }
+  assert.ok(mail.text.includes('Total: XAF 21,500') && mail.text.includes('1 x USB-C Cable - XAF 3,000'), 'and the text part is the full message');
+  assert.ok(mail.html.includes('href="https://wa.me/237622222222"'));
+}
+
+// ------------------------------------------------------------- 2. untrusted text
+
+function testEscapingAndCaps() {
+  const evil = makeOrder({
+    items: [item('<img src=x onerror=alert(2)>Phone & "Case"', 5000, 1)],
+    subtotalXaf: 5000, shippingFeeXaf: 0, totalAmountXaf: 5000,
+    shippingAddress: {
+      fullName: '<script>alert(1)</script>',
+      phone: '+237622222222',
+      street: '<b onmouseover=alert(3)>12 Rue</b>',
+      city: 'Douala"><svg/onload=alert(4)>',
+      neighbourhood: 'Akwa',
+      notes: 'Ring twice\r\nBcc: attacker@example.com‮gnp.exe'
+    }
+  });
+  const mail = Builder.buildSellerEmail(evil, { storeName: 'Tech <i>Shop</i>', buyer: { email: 'x"><script>1</script>@example.com' } });
+
+  for (const raw of ['<script>', '<img', '<svg', '<b onmouseover', '<i>Shop', '"><script']) {
+    assert.ok(!mail.html.includes(raw), `raw markup "${raw}" never reaches the e-mail HTML`);
+  }
+  assert.ok(mail.html.includes('&lt;script&gt;alert(1)&lt;/script&gt;'), 'it is shown as text instead');
+  assert.ok(mail.html.includes('&lt;b onmouseover=alert(3)&gt;12 Rue&lt;/b&gt;'));
+  assert.ok(mail.html.includes('Phone &amp; &quot;Case&quot;'));
+  assert.ok(!/[\r\n]Bcc:/.test(mail.subject), 'nothing typed by the customer can add a header line to the subject');
+  assert.ok(!/[\u0000-\u001F]/.test(mail.subject), 'no control character in the subject');
+  assert.ok(!mail.html.includes('‮') && !mail.text.includes('‮'), 'bidi overrides are stripped');
+  assert.ok(!/[\r]/.test(mail.text), 'no stray carriage returns in the text part');
+
+  const n = Builder.buildSellerNotification(evil, {});
+  assert.ok(!n.body.includes('‮'));
+  assert.ok(n.body.includes('Customer note: Ring twice Bcc: attacker@example.com'), 'a multi-line note becomes one harmless line');
+}
+
+function testCaps() {
+  const long = 'A'.repeat(5000);
+  const big = makeOrder({
+    items: [item(long, 1000, 1)],
+    subtotalXaf: 1000, shippingFeeXaf: 0, totalAmountXaf: 1000,
+    shippingAddress: { fullName: long, phone: '9'.repeat(200), street: long, city: long, neighbourhood: long, notes: long }
+  });
+  const n = Builder.buildSellerNotification(big, { storeName: long, provider: { id: 'p', name: long, source: 'buyer' } });
+  assert.ok(n.title.length <= 255, `the title fits varchar(255), got ${n.title.length}`);
+  assert.ok(n.body.length < 2500, `the body stays bounded, got ${n.body.length}`);
+  assert.ok(n.metadata.details.buyer.name.length <= Builder.CAPS.name);
+  assert.ok(n.metadata.details.items[0].title.length <= Builder.CAPS.itemTitle);
+  assert.ok(Builder.buildSellerEmail(big, {}).subject.length <= 255);
+
+  // A very long order lists a bounded number of lines and says how many it left out.
+  const many = Array.from({ length: 80 }, (_, i) => item(`Thing ${i}`, 100, 1));
+  const huge = makeOrder({ items: many, subtotalXaf: 8000, totalAmountXaf: 9500 });
+  const hn = Builder.buildSellerNotification(huge, {});
+  assert.strictEqual(hn.metadata.details.items.length, 50);
+  assert.ok(hn.body.includes('+ 30 more lines'), 'the omission is stated');
+  assert.ok(hn.body.includes('80 items'), 'while the headline count is the real one');
+}
+
+// ---------------------------------------------------------------- 3. WhatsApp
+
+function testWhatsappLinks() {
+  const cases = [
+    ['+237 690 12 34 56', 'https://wa.me/237690123456'],
+    ['690123456', 'https://wa.me/237690123456'],
+    ['237690123456', 'https://wa.me/237690123456'],        // already has the country code: not doubled
+    ['00237690123456', 'https://wa.me/237690123456'],      // international 00 prefix
+    ['+237 237 690 12', null],                              // too short once the prefix is read once
+    ['+237 6 9012-3456', 'https://wa.me/237690123456'],
+    ['(237) 690.123.456', 'https://wa.me/237690123456'],
+    ['237123456', 'https://wa.me/237237123456'],            // a 9-digit landline that merely STARTS with 237
+    ['12345', null],
+    ['', null],
+    [null, null],
+    ['not a number', null],
+    ['+33 6 12 34 56 78', null]                             // a foreign number is not a Cameroon contact
+  ];
+  for (const [input, expected] of cases) {
+    assert.strictEqual(Builder.whatsappUrl(input), expected, `whatsappUrl(${JSON.stringify(input)})`);
+  }
+  assert.ok(!/237237/.test(Builder.buildSellerNotification(makeOrder({ shippingAddress: { fullName: 'A B', phone: '237690123456', city: 'Douala' } }), {}).body),
+    'no doubled country code in a message');
+  const bad = Builder.buildSellerNotification(makeOrder({ shippingAddress: { fullName: 'A B', phone: '12345', city: 'Douala' } }), {});
+  assert.ok(!bad.body.includes('wa.me') && bad.metadata.details.buyer.whatsappUrl === null, 'an unusable number gets no link');
+  assert.ok(bad.body.includes('Phone: 12345'), 'but the number as typed is still shown');
+}
+
+// ----------------------------------------------------------------- 4. secrets
+
+function testNoSecrets() {
+  const order = makeOrder({ shippingAddress: { fullName: 'Awa', phone: '622222222', city: 'Douala', _handoverCode: '123456', _sellerPhone: '611111111', _preferredDriverId: 'rider_9' } });
+  const all = JSON.stringify([
+    Builder.buildSellerNotification(order, {}),
+    Builder.buildSellerEmail(order, {}),
+    Builder.buildBuyerNotification(order, {})
+  ]);
+  assert.ok(!all.includes('123456'), 'a handover code is never in a message');
+  assert.ok(!all.includes('_handoverCode') && !all.includes('_sellerPhone') && !all.includes('_preferredDriverId'), 'internal address keys never leak');
+}
+
+function testBuyerNotification() {
+  const b = Builder.buildBuyerNotification(makeOrder(), { storeName: 'NanoAfrica', provider: { id: 'p', name: 'nanoDelivery', source: 'default' } });
+  assert.strictEqual(b.tone, 'accent');
+  assert.strictEqual(b.title, 'Order KM-ABC123-DEF456 placed');
+  assert.ok(b.body.includes('NanoAfrica') && b.body.includes('nanoDelivery') && b.body.includes('XAF 21,500') && /pay on delivery/.test(b.body), b.body);
+  assert.deepStrictEqual(b.metadata, { orderId: 'ord_1', orderNumber: 'KM-ABC123-DEF456', audience: 'buyer', action: 'track_order' }, 'the routing metadata is unchanged');
+  const plain = Builder.buildBuyerNotification(makeOrder(), {});
+  assert.ok(/Your order is confirmed — pay on delivery\. Total XAF 21,500\./.test(plain.body), 'without context it reads as before');
+}
+
+// ------------------------------------------------- 5. delivery, through the service
+
+const { OrderCreationService } = require('../../server/modules/commerce/application/OrderCreationService');
+const { OrderRecipients, usableEmail } = require('../../server/modules/commerce/application/OrderRecipients');
+const logger = require('../../server/shared/logging/logger');
+const { HOUSE_STORE } = require('../../server/modules/store/domain/HouseStore');
+
+function listing(id, sellerId, storeName, storeId) {
+  return {
+    id, title: `Item ${id}`, status: 'PUBLISHED', visibility: 'PUBLIC', deletedAt: null, storeStatus: 'ACTIVE',
+    basePriceMinor: 10000, salePriceMinor: null, sku: null, sellerId, storeId: storeId || `store_${sellerId}`, storeName,
+    storePhone: '+237611111111'
+  };
+}
+
+/**
+ * A creation service over an in-memory repository with every outside dependency
+ * replaced by a recorder, so nothing here can reach a database, a mailbox or a
+ * notification table.
+ */
+function harness(overrides = {}) {
+  const saved = [];
+  // By default the order is the house store's, which gets the full message. { ordinary: true } is a
+  // real seller's store, which keeps the short notification and gets no e-mail.
+  const storeId = overrides.ordinary ? undefined : HOUSE_STORE.id;
+  const listings = { l1: listing('l1', 'seller_1', 'Tech Shop', storeId), l2: listing('l2', 'seller_1', 'Tech Shop', storeId) };
+  const repository = {
+    findListingById: async (id) => listings[id] || null,
+    findVariantById: async () => null,
+    checkInventory: async () => ({ isAvailable: true, availableQuantity: 99 }),
+    saveOrder: async (order) => { order.id = `ord_${saved.length + 1}`; saved.push(order); return order; }
+  };
+  const sent = [];
+  const emails = [];
+  const notificationService = overrides.notificationService || {
+    create: async (userId, payload) => { sent.push({ userId, ...payload }); return null; }
+  };
+  const deps = {
+    notificationService,
+    sendEmail: overrides.sendEmail || (async (message) => { emails.push(message); return { sent: true }; }),
+    getNotificationPreferences: overrides.getNotificationPreferences || (async () => ({ channels: { inApp: true, email: true } })),
+    recipients: overrides.recipients || {
+      sellerEmail: async () => 'seller@shop.cm',
+      buyerContact: async () => ({ name: 'Profile Buyer', phone: '690000000', email: 'buyer@mail.cm' })
+    },
+    houseStore: { resolve: async () => null, resolveDefaultProvider: async () => null },
+    ...(overrides.deps || {})
+  };
+  const service = new OrderCreationService(repository, deps);
+  return { service, saved, sent, emails, to: (id) => sent.filter((n) => n.userId === id) };
+}
+
+const ADDRESS = { fullName: 'Awa Njoya', phone: '+237622222222', street: 'Rue 1', city: 'Douala', neighbourhood: 'Bonanjo' };
+const BAG = [{ listingId: 'l1', quantity: 2 }, { listingId: 'l2', quantity: 1 }];
+
+/** Captures what the logger is asked to write while fn runs. */
+async function capturingLogs(fn) {
+  const lines = [];
+  const originals = { warn: logger.warn, info: logger.info, error: logger.error };
+  logger.warn = (m) => { lines.push(String(m)); };
+  logger.info = (m) => { lines.push(String(m)); };
+  logger.error = (m) => { lines.push(String(m)); };
+  try { await fn(); } finally { Object.assign(logger, originals); }
+  return lines;
+}
+
+async function testSellerGetsMessageAndEmail() {
+  const h = harness();
+  const order = await h.service.createOrder('buyer_1', { items: BAG, shippingAddress: ADDRESS, deliveryMethod: 'HOME_DELIVERY' });
+  await h.service.notificationsSettled();
+
+  const note = h.to('seller_1')[0];
+  assert.ok(note, 'the seller is notified in-app');
+  assert.strictEqual(note.metadata.orderId, order.id);
+  assert.strictEqual(note.metadata.audience, 'seller');
+  assert.strictEqual(note.metadata.action, 'open_dispatch');
+  for (const needle of ['Awa Njoya', '+237622222222', 'https://wa.me/237622222222', 'Rue 1, Bonanjo, Douala',
+    'Item l1', 'Subtotal:', 'Delivery fee:', 'Total:', 'Pay on delivery', order.orderNumber, 'Store: Tech Shop']) {
+    assert.ok(note.body.includes(needle), `the in-app message carries "${needle}"`);
+  }
+  assert.strictEqual(note.metadata.details.buyer.name, 'Awa Njoya');
+  assert.strictEqual(note.metadata.details.items.length, 2);
+  assert.strictEqual(note.metadata.details.totalXaf, order.totalAmountXaf);
+
+  assert.strictEqual(h.emails.length, 1, 'and the seller is e-mailed');
+  assert.strictEqual(h.emails[0].to, 'seller@shop.cm');
+  assert.ok(h.emails[0].subject.includes(order.orderNumber));
+  assert.ok(h.emails[0].html.includes('Awa Njoya') && h.emails[0].html.includes('wa.me/237622222222'));
+  assert.ok(h.emails[0].html.includes('buyer@mail.cm'), 'the e-mail also carries the buyer address from their profile');
+  assert.ok(h.emails[0].text.includes('Total:'), 'with a plain-text version');
+
+  const buyerNote = h.to('buyer_1')[0];
+  assert.ok(buyerNote && buyerNote.body.includes('Tech Shop'), 'the buyer is told which store they ordered from');
+  assert.strictEqual(buyerNote.metadata.action, 'track_order');
+}
+
+async function testOrdinarySellerKeepsTheOldShape() {
+  const h = harness({ ordinary: true });
+  const order = await h.service.createOrder('buyer_1', { items: [{ listingId: 'l1', quantity: 1 }], shippingAddress: ADDRESS, deliveryMethod: 'HOME_DELIVERY' });
+  const note = h.to('seller_1')[0];
+  // Synchronous, exactly when it used to be: no waiting for anything.
+  assert.ok(note, 'sent by the time the order returns');
+  assert.deepStrictEqual(
+    { type: note.type, tone: note.tone, audience: note.metadata.audience, action: note.metadata.action, orderId: note.metadata.orderId, orderNumber: note.metadata.orderNumber },
+    { type: 'order', tone: 'sale', audience: 'seller', action: 'open_dispatch', orderId: order.id, orderNumber: order.orderNumber }
+  );
+  assert.strictEqual(note.title, `New order ${order.orderNumber} to deliver`);
+  assert.strictEqual(note.body, `1 item · XAF ${order.totalAmountXaf} · to Bonanjo, Douala. Arrange a rider from Deliveries.`, 'word for word what sellers have always been sent');
+  assert.ok(!/Awa|622222222|wa\.me|Rue 1/.test(note.title + note.body + JSON.stringify(note.metadata)), 'no customer name, phone or street in an ordinary seller notification');
+  assert.strictEqual(note.metadata.details, undefined, 'and no details block');
+  await h.service.notificationsSettled();
+  assert.strictEqual(h.emails.length, 0, 'an ordinary seller is not e-mailed the customer details');
+
+  const p = harness({ ordinary: true });
+  await p.service.createOrder('buyer_1', { items: [{ listingId: 'l1', quantity: 1 }], deliveryMethod: 'STORE_PICKUP', shippingAddress: ADDRESS });
+  const pn = p.to('seller_1')[0];
+  assert.strictEqual(pn.title.startsWith('New pickup order'), true);
+  assert.strictEqual(pn.metadata.action, null);
+  assert.ok(/^1 item · XAF \d+\. Get it ready for the customer to collect\.$/.test(pn.body), pn.body);
+}
+
+async function testEmailSkippedWhenItShouldBe() {
+  // The seller switched e-mail off.
+  let h = harness({ getNotificationPreferences: async () => ({ channels: { inApp: true, email: false } }) });
+  await h.service.createOrder('buyer_1', { items: BAG, shippingAddress: ADDRESS });
+  await h.service.notificationsSettled();
+  assert.strictEqual(h.emails.length, 0, 'opted out: no e-mail');
+  assert.strictEqual(h.to('seller_1').length, 1, 'but the in-app notification still arrives');
+
+  // No address on file (or the store turned order e-mails off: the resolver answers null).
+  h = harness({ recipients: { sellerEmail: async () => null, buyerContact: async () => null } });
+  await h.service.createOrder('buyer_1', { items: BAG, shippingAddress: ADDRESS });
+  await h.service.notificationsSettled();
+  assert.strictEqual(h.emails.length, 0);
+  assert.strictEqual(h.to('seller_1').length, 1);
+
+  // A preference that cannot be read does not cost the seller their e-mail.
+  h = harness({ getNotificationPreferences: async () => { throw new Error('prefs table down'); } });
+  await h.service.createOrder('buyer_1', { items: BAG, shippingAddress: ADDRESS });
+  await h.service.notificationsSettled();
+  assert.strictEqual(h.emails.length, 1, 'default on when unreadable');
+}
+
+async function testBestEffort() {
+  // The mail transport throws: the order is saved, returned, and the in-app message is unaffected.
+  let h = harness({ sendEmail: async () => { throw new Error('550 mailbox seller@shop.cm rejected, call +237 690 11 22 33'); } });
+  let logs = await capturingLogs(async () => {
+    const order = await h.service.createOrder('buyer_1', { items: BAG, shippingAddress: ADDRESS });
+    await h.service.notificationsSettled();
+    assert.ok(order.id && h.saved.length === 1, 'the order was saved and returned');
+  });
+  assert.strictEqual(h.to('seller_1').length, 1, 'the in-app notification was not affected');
+  const joined = logs.join('\n');
+  assert.ok(/seller e-mail/.test(joined), 'the failure is logged');
+  assert.ok(!/seller@shop\.cm|690 11 22 33|Awa|622222222/.test(joined), `with no personal data: ${joined}`);
+
+  // The transport answers "not sent" (no provider configured) instead of throwing.
+  h = harness({ sendEmail: async () => ({ sent: false, reason: 'No active email transport available' }) });
+  logs = await capturingLogs(async () => {
+    await h.service.createOrder('buyer_1', { items: BAG, shippingAddress: ADDRESS });
+    await h.service.notificationsSettled();
+  });
+  assert.ok(logs.some((l) => /was not sent/.test(l)), 'an unsent e-mail is reported');
+
+  // The notification service throws synchronously, then rejects: the order still stands and the e-mail still goes.
+  for (const failure of [
+    () => { throw new Error('sync boom'); },
+    () => Promise.reject(new Error('async boom'))
+  ]) {
+    h = harness({ notificationService: { create: failure } });
+    let order;
+    await capturingLogs(async () => {
+      order = await h.service.createOrder('buyer_1', { items: BAG, shippingAddress: ADDRESS });
+      await h.service.notificationsSettled();
+    });
+    assert.ok(order && order.id && h.saved.length === 1, 'the order is saved and returned');
+    assert.strictEqual(h.emails.length, 1, 'the e-mail is independent of the in-app channel');
+  }
+
+  // Every recipient lookup fails: still no exception, the in-app message goes out.
+  h = harness({ recipients: { sellerEmail: async () => { throw new Error('db down'); }, buyerContact: async () => { throw new Error('db down'); } } });
+  await capturingLogs(async () => {
+    await h.service.createOrder('buyer_1', { items: BAG, shippingAddress: { city: 'Douala' } });
+    await h.service.notificationsSettled();
+  });
+  assert.strictEqual(h.to('seller_1').length, 1);
+  assert.ok(h.to('seller_1')[0].body.includes('Name: Customer'), 'with what the order itself says');
+}
+
+async function testNeverDelaysTheOrder() {
+  // A mail transport that never answers must not hold the order response.
+  const h = harness({ sendEmail: () => new Promise(() => {}) });
+  const started = Date.now();
+  const order = await h.service.createOrder('buyer_1', { items: BAG, shippingAddress: ADDRESS });
+  assert.ok(order.id);
+  assert.ok(Date.now() - started < 1500, 'the order returns without waiting for the e-mail');
+  assert.strictEqual(h.to('seller_1').length, 1, 'and the in-app message is already there');
+}
+
+async function testBuyerProfileFillsGaps() {
+  const h = harness();
+  await h.service.createOrder('buyer_1', { items: [{ listingId: 'l1', quantity: 1 }], deliveryMethod: 'STORE_PICKUP' });
+  await h.service.notificationsSettled();
+  const note = h.to('seller_1')[0];
+  assert.ok(note.body.includes('Name: Profile Buyer') && note.body.includes('wa.me/237690000000'), 'a pickup with no address names the buyer from their profile');
+
+  // A profile lookup that hangs only delays THIS message by the bound, and then it goes out.
+  const slow = harness({ recipients: { sellerEmail: async () => null, buyerContact: () => new Promise(() => {}) } });
+  const t0 = Date.now();
+  await slow.service.createOrder('buyer_1', { items: [{ listingId: 'l1', quantity: 1 }], deliveryMethod: 'STORE_PICKUP' });
+  await slow.service.notificationsSettled();
+  assert.ok(Date.now() - t0 >= 1500 && Date.now() - t0 < 6000, `bounded wait, took ${Date.now() - t0}ms`);
+  assert.ok(slow.to('seller_1')[0].body.includes('Name: Customer'));
+}
+
+async function testRecipientResolver() {
+  assert.strictEqual(usableEmail(' owner@shop.cm '), 'owner@shop.cm');
+  for (const bad of ['', null, 'nope', 'a@b', 'a b@c.cm', 'x@y.cm\r\nBcc: z@y.cm', '<a@b.cm>', '"a"@b.cm', 'a@b.cm,c@d.cm']) {
+    assert.strictEqual(usableEmail(bad), null, `rejects ${JSON.stringify(bad)}`);
+  }
+
+  const tables = {
+    store_settings: { s1: { notification_settings: { new_order_email: true } }, s_off: { notification_settings: { new_order_email: false } } },
+    stores: { s1: { email: 'store@shop.cm' }, s_off: { email: 'off@shop.cm' }, s_bad: { email: 'not an email' }, s_none: { email: null } }
+  };
+  const db = {
+    from(table) {
+      const f = {};
+      const q = {
+        select() { return q; },
+        eq(c, v) { f[c] = v; return q; },
+        async maybeSingle() {
+          const rows = tables[table] || {};
+          return { data: rows[f.store_id || f.id] || null, error: null };
+        }
+      };
+      return q;
+    }
+  };
+  const people = {
+    seller_1: { email: 'profile@shop.cm' },
+    buyer_1: { first_name: 'Awa', last_name: 'Njoya', phone_number: '690111111', email: 'awa@mail.cm' }
+  };
+  const r = new OrderRecipients({ db, profiles: { findById: async (id) => people[id] || null } });
+
+  assert.strictEqual(await r.sellerEmail({ sellerId: 'seller_1', storeId: 's1' }), 'store@shop.cm', 'the store address comes first');
+  assert.strictEqual(await r.sellerEmail({ sellerId: 'seller_1', storeId: 's_none' }), 'profile@shop.cm', 'then the seller profile');
+  assert.strictEqual(await r.sellerEmail({ sellerId: 'seller_1', storeId: 's_bad' }), 'profile@shop.cm', 'an unusable store address is skipped');
+  assert.strictEqual(await r.sellerEmail({ sellerId: 'seller_1', storeId: 's_off' }), null, 'a store that turned new-order e-mails off gets none');
+  assert.strictEqual(await r.sellerEmail({ sellerId: 'nobody', storeId: 's_none' }), null);
+  assert.deepStrictEqual(await r.buyerContact('buyer_1'), { name: 'Awa Njoya', phone: '690111111', email: 'awa@mail.cm' });
+  assert.strictEqual(await r.buyerContact('missing'), null);
+  assert.strictEqual(await r.buyerContact(null), null);
+
+  const broken = new OrderRecipients({ db: null, profiles: { findById: async () => { throw new Error('down'); } } });
+  await capturingLogs(async () => {
+    assert.strictEqual(await broken.sellerEmail({ sellerId: 's', storeId: 'x' }), null, 'a failing lookup answers null');
+    assert.strictEqual(await broken.buyerContact('b'), null);
+  });
+}
+
+async function run() {
+  testHomeDeliveryContent();
+  testPickupContent();
+  testProviderWording();
+  testBuyerFallbacksAndProfile();
+  testEmailContent();
+  testEscapingAndCaps();
+  testCaps();
+  testWhatsappLinks();
+  testNoSecrets();
+  testBuyerNotification();
+  await testSellerGetsMessageAndEmail();
+  await testOrdinarySellerKeepsTheOldShape();
+  await testEmailSkippedWhenItShouldBe();
+  await testBestEffort();
+  await testNeverDelaysTheOrder();
+  await testBuyerProfileFillsGaps();
+  await testRecipientResolver();
+  console.log('order_seller_message: message, delivery and best-effort checks passed');
+}
+
+if (require.main === module) {
+  run().then(() => process.exit(0), (e) => { console.error(e); process.exit(1); });
+}
+
+module.exports = { run };

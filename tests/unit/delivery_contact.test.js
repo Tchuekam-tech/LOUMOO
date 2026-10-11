@@ -122,7 +122,10 @@ async function testOrderPlacement() {
       assert.ok(/3 items/.test(sellerNote.body), 'it says what was ordered');
       assert.ok(/Bonanjo, Douala/.test(sellerNote.body), 'it says where to');
       assert.ok(/Arrange a rider/i.test(sellerNote.body), 'it says what to do next');
+      // An ordinary seller's notification never carries the customer's contact details; the
+      // full message is for the house store only (order_seller_message.test.js).
       assert.ok(!/Awa|622222222|Rue 1/.test(sellerNote.body + sellerNote.title), 'no customer phone or street in a notification');
+      assert.ok(!/Awa|622222222|Rue 1/.test(buyerNote.body + buyerNote.title), 'the confirmation to the buyer does not repeat their details');
     }
 
     // A pickup order does not tell the seller to find a rider.
@@ -130,6 +133,9 @@ async function testOrderPlacement() {
       rec.clear();
       const { service } = makeCreationService();
       await service.createOrder('buyer_1', { items: [{ listingId: 'l1', quantity: 1 }], deliveryMethod: 'STORE_PICKUP' });
+      // No shipping address: the seller's message waits for a (bounded) look at the
+      // buyer's profile, so it is sent just after the order returns.
+      await service.notificationsSettled();
       const sellerNote = rec.to('seller_1')[0];
       assert.ok(sellerNote && /pickup/i.test(sellerNote.title));
       assert.strictEqual(sellerNote.metadata.action, null, 'nothing to dispatch for a pickup');

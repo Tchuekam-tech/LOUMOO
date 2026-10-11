@@ -65,7 +65,8 @@ function isMissingTable(err) {
  * a failed `findDriver` became "you are not a rider" (the rider's heartbeat
  * stopped), a failed `findById` became a 404 the clients treat as final. A visible
  * 5xx is recoverable (the screens offer a retry); a wrong "nothing here" is not.
- * Development and test keep the in-memory fallback.
+ * The exceptions are the reads that pass DEGRADE_ON_FAILURE (below): housekeeping the next
+ * sweep repeats. Development and test keep the in-memory fallback.
  */
 function handleDatabaseFailure(err, context, options) {
   if (err instanceof DeliveryNotReadyError) throw err;
@@ -74,9 +75,19 @@ function handleDatabaseFailure(err, context, options) {
     throw new DeliveryNotReadyError();
   }
   const handled = baseHandleDatabaseFailure(err, context, options);
-  if (config.isProduction) throw new InfrastructureError('Supabase', context, err);
+  if (config.isProduction && !(options && options.allowFallback)) throw new InfrastructureError('Supabase', context, err);
   return handled;
 }
+
+/**
+ * Passed by the few reads whose caller simply tries again, so a failure there is logged and
+ * answered "none" instead of thrown: the sweeper's housekeeping reads (an offer that is not
+ * released this round is released by the next sweep) and the single-rider presence read (a
+ * rider with no row reads as offline, which is the safe direction). Every read that decides
+ * what a user sees or who is offered a job still throws in production, and a missing table
+ * is still a 503 on all of them.
+ */
+const DEGRADE_ON_FAILURE = Object.freeze({ allowFallback: true });
 const MAX_MEMORY_LOCATIONS_PER_DELIVERY = 500;
 // Rows read to count rider workload and recent lapses. Equal to Supabase's default
 // API row limit (db-max-rows = 1000): PostgREST silently truncates any larger
@@ -403,10 +414,10 @@ class DeliveryRepository {
           .lte('assigned_at', new Date(cutoff).toISOString())
           .order('assigned_at', { ascending: true })
           .limit(limit);
-        if (error) handleDatabaseFailure(error, 'DeliveryRepository.findStaleOffers');
+        if (error) handleDatabaseFailure(error, 'DeliveryRepository.findStaleOffers', DEGRADE_ON_FAILURE);
         else return (data || []).map(fromRow);
       } catch (err) {
-        handleDatabaseFailure(err, 'DeliveryRepository.findStaleOffers');
+        handleDatabaseFailure(err, 'DeliveryRepository.findStaleOffers', DEGRADE_ON_FAILURE);
       }
     }
     return [...this._deliveries.values()]
@@ -757,10 +768,10 @@ class DeliveryRepository {
     if (db) {
       try {
         const { data, error } = await db.from('rider_presence').select('*').eq('rider_id', riderId).maybeSingle();
-        if (error) handleDatabaseFailure(error, 'DeliveryRepository.findPresence');
+        if (error) handleDatabaseFailure(error, 'DeliveryRepository.findPresence', DEGRADE_ON_FAILURE);
         else return presenceFromRow(data);
       } catch (err) {
-        handleDatabaseFailure(err, 'DeliveryRepository.findPresence');
+        handleDatabaseFailure(err, 'DeliveryRepository.findPresence', DEGRADE_ON_FAILURE);
       }
     }
     const row = this._presence.get(riderId);
@@ -911,10 +922,10 @@ class DeliveryRepository {
           .lte('last_seen_at', new Date(cutoff).toISOString())
           .order('last_seen_at', { ascending: true })
           .limit(limit);
-        if (error) handleDatabaseFailure(error, 'DeliveryRepository.findStalePresence');
+        if (error) handleDatabaseFailure(error, 'DeliveryRepository.findStalePresence', DEGRADE_ON_FAILURE);
         else return (data || []).map(presenceFromRow);
       } catch (err) {
-        handleDatabaseFailure(err, 'DeliveryRepository.findStalePresence');
+        handleDatabaseFailure(err, 'DeliveryRepository.findStalePresence', DEGRADE_ON_FAILURE);
       }
     }
     return [...this._presence.values()]
@@ -940,10 +951,10 @@ class DeliveryRepository {
           .lte('updated_at', new Date(cutoff).toISOString())
           .order('updated_at', { ascending: true })
           .limit(limit);
-        if (error) handleDatabaseFailure(error, 'DeliveryRepository.findStaleBusyPresence');
+        if (error) handleDatabaseFailure(error, 'DeliveryRepository.findStaleBusyPresence', DEGRADE_ON_FAILURE);
         else return (data || []).map(presenceFromRow);
       } catch (err) {
-        handleDatabaseFailure(err, 'DeliveryRepository.findStaleBusyPresence');
+        handleDatabaseFailure(err, 'DeliveryRepository.findStaleBusyPresence', DEGRADE_ON_FAILURE);
       }
     }
     return [...this._presence.values()]

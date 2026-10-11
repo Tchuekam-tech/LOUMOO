@@ -16,6 +16,9 @@ const { SupabaseDatabase } = require('../../../infrastructure/database/SupabaseC
 const { InfrastructureError } = require('../../../shared/errors/AppError');
 const MediaStorageService = require('../../../infrastructure/storage/MediaStorageService');
 const { config } = require('../../../config/env');
+const { HOUSE_STORE } = require('../../store/domain/HouseStore');
+const { getSharedHouseStore } = require('../../store/application/HouseStoreService');
+const { priceToNumber } = require('../domain/CuratedCatalog');
 
 const CATALOG_SELECT_COLUMNS = [
   'id', 'store_id', 'seller_id', 'listing_type', 'category_id', 'title', 'slug',
@@ -205,13 +208,19 @@ class CatalogRepository {
     let items = dbItems;
     let total = dbTotal;
     if (dbItems.length < limitNum) {
-      let curated = this._filterCurated(this._curatedCards(), { category, vertical, search, brand, storeId, city, verified });
+      // Every curated product belongs to the house store. When it is provisioned
+      // its real facts (verified, phone) replace the static ones.
+      const house = await this._houseStore();
+      let curated = this._filterCurated(this._curatedCards(), {
+        category, vertical, search, brand, storeId, city, verified,
+        houseVerified: house ? house.isVerified : undefined
+      });
       curated = this._sortCurated(curated, sortBy);
       const seen = new Set(dbItems.map(i => i.id));
       curated = curated.filter(c => !seen.has(c.id));
       const curatedOffset = Math.max(0, offset - dbTotal);
       const need = limitNum - dbItems.length;
-      items = dbItems.concat(curated.slice(curatedOffset, curatedOffset + need));
+      items = dbItems.concat(curated.slice(curatedOffset, curatedOffset + need).map(c => this._presentWithHouse(c, house)));
       total = dbTotal + curated.length;
     }
 
@@ -256,7 +265,7 @@ class CatalogRepository {
     }
 
     // No live listing? Fall back to the curated storefront product of that id.
-    if (!row) return this._curatedDetail(idOrSlug);
+    if (!row) return this._enrichCuratedDetail(this._curatedDetail(idOrSlug));
 
     const [mediaRows, storeRows, attributes] = await Promise.all([
       this._loadMediaForListings([row.id]),
@@ -444,9 +453,75 @@ class CatalogRepository {
   // from PRODUCTS_DATA). They back discovery/search/detail until — and
   // alongside — real seller listings exist.
   static _priceToNumber(str) {
-    if (typeof str === 'number') return str;
-    const digits = String(str || '').replace(/[^0-9]/g, '');
-    return digits ? parseInt(digits, 10) : 0;
+    return priceToNumber(str);
+  }
+
+  // The house store (NanoAfrica) as the database holds it, or null when it is not
+  // provisioned or cannot be read. Never throws: browsing must not depend on it.
+  // `_houseService` is a seam for tests.
+  static async _houseStore() {
+    try {
+      return await (this._houseService || getSharedHouseStore()).resolve();
+    } catch (_) {
+      return null;
+    }
+  }
+
+  // A curated card as the buyer should see it once the house store is known: the
+  // store's own verification and contact replace the dataset's static values, so
+  // the cart and the product page reach the real owner. Real listings and the
+  // unprovisioned case pass through untouched.
+  static _presentWithHouse(card, house) {
+    if (!house || !card || card.storeId !== HOUSE_STORE.id) return card;
+    return {
+      ...card,
+      merchant: house.name,
+      storeName: house.name,
+      verified: Boolean(house.isVerified),
+      phoneNumber: house.phone || null,
+      storePhone: house.phone || null,
+      sellerPhone: house.phone || null
+    };
+  }
+
+  // The product page's seller block for a curated product, from the provisioned
+  // store row (logo, contact, rating, city). Without the row the detail keeps the
+  // static block, exactly as before it was provisioned.
+  static async _enrichCuratedDetail(detail) {
+    if (!detail || detail.storeId !== HOUSE_STORE.id) return detail;
+    const house = await this._houseStore();
+    if (!house) return detail;
+    return {
+      ...this._presentWithHouse(detail, house),
+      store: {
+        id: house.storeId,
+        name: house.name,
+        slug: house.slug,
+        logoUrl: house.logoUrl,
+        phoneNumber: house.phone,
+        whatsapp: house.phone,
+        isVerified: Boolean(house.isVerified),
+        verificationTier: house.verificationTier,
+        rating: Number(house.rating) || 5.0,
+        ratingCount: house.ratingCount || 0,
+        city: house.city || (detail.store && detail.store.city) || 'Douala'
+      }
+    };
+  }
+
+  // How many curated products the house store sells (what its store page should
+  // say instead of 0 real listings).
+  static curatedProductCount() {
+    return this._curatedCards().length;
+  }
+
+  // The house store's curated products as catalogue cards, for a store page that
+  // lists a store's products from iam.listings only.
+  static async curatedStorefront({ limit = 100 } = {}) {
+    const house = await this._houseStore();
+    const cards = this._curatedCards();
+    const n = Math.max(0, Math.min(Number(limit) || 0, cards.length));
+    return { items: cards.slice(0, n).map(c => this._presentWithHouse(c, house)), total: cards.length };
   }
 
   static _curatedCards() {
@@ -522,9 +597,11 @@ class CatalogRepository {
       image: CatalogRepository._enc(cover),
       imageUrl: CatalogRepository._enc(cover),
       images: (Array.isArray(p.images) ? p.images : (cover ? [cover] : [])).map((u) => CatalogRepository._enc(u)),
-      merchant: p.storeName || 'LOUMOO seller',
-      storeName: p.storeName || 'LOUMOO seller',
-      storeId: null,
+      // Every curated product belongs to the house store, whatever seller name the
+      // dataset still carries from before it had one.
+      merchant: HOUSE_STORE.name,
+      storeName: HOUSE_STORE.name,
+      storeId: HOUSE_STORE.id,
       merchantCity: p.storeCity || 'Douala',
       verified: Boolean(p.storeVerified),
       rating: Number(p.rating) || 5.0,
@@ -542,16 +619,18 @@ class CatalogRepository {
     };
   }
 
-  static _filterCurated(cards, { category, vertical, search, brand, storeId, city, verified } = {}) {
-    // Curated products have no store id, so a store-scoped query excludes them.
-    if (storeId) return [];
+  static _filterCurated(cards, { category, vertical, search, brand, storeId, city, verified, houseVerified } = {}) {
+    // Curated products all belong to the house store: a query scoped to any other
+    // store has none of them.
+    if (storeId && storeId !== HOUSE_STORE.id) return [];
     let out = cards;
     const cityMatch = CatalogRepository._cityMatcher(city);
     if (cityMatch) {
       out = out.filter((p) => cityMatch(p.merchantCity));
     }
     if (verified === true || verified === 'true' || verified === '1') {
-      out = out.filter((p) => p.verified === true);
+      // Once the house store exists its own verification decides, for all of them.
+      out = out.filter((p) => (houseVerified !== undefined && p.storeId === HOUSE_STORE.id ? houseVerified : p.verified) === true);
     }
     if (category && category !== 'all') {
       const c = String(category).toLowerCase();
@@ -651,9 +730,9 @@ class CatalogRepository {
       tags: [],
       specs: raw.attributes || [],
       store: {
-        id: null,
+        id: card.storeId || null,
         name: card.storeName,
-        slug: null,
+        slug: card.storeId === HOUSE_STORE.id ? HOUSE_STORE.slug : null,
         logoUrl: null,
         phoneNumber: card.phoneNumber || card.storePhone || null,
         whatsapp: card.phoneNumber || card.storePhone || null,
