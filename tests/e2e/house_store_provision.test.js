@@ -334,6 +334,19 @@ async function run() {
     const asRider = await service.provision({ ownerEmail: 'rider.one@example.com' });
     assert.ok(asRider.blockers.some((b) => /already registered as a delivery provider/.test(b) || /belongs to another account/.test(b)));
 
+    // ---- the documented rollback really works (docs/NANOAFRICA.md, "Undoing it") ----
+    // The runbook says it is only safe before the first real order, so clear the test order first.
+    await db.query(`DELETE FROM iam.orders`);
+    const doc = require('fs').readFileSync(path.join(REPO, 'docs', 'NANOAFRICA.md'), 'utf8').replace(/\r\n/g, '\n');
+    const rollback = /```sql\n(BEGIN;[\s\S]*?COMMIT;)\n```/.exec(doc.slice(doc.indexOf('## Undoing it')));
+    assert.ok(rollback, 'the runbook carries the rollback SQL');
+    let riderIds = ['usr_rider_1', 'usr_rider_2'];
+    await db.exec(rollback[1].replace(/<rider id>/g, () => riderIds.shift() || 'usr_rider_2'));
+    assert.deepStrictEqual(await snapshot(), empty, 'the rollback removes every row the provisioning created');
+    assert.strictEqual((await one(`SELECT primary_store_id FROM iam.profiles WHERE id = 'usr_owner'`)).primary_store_id, null);
+    assert.strictEqual(await service.resolve({ force: true }), null, 'curated products are un-orderable again after the rollback');
+    assert.strictEqual(await new OrderRepository({ db: admin, houseStore: service }).findListingById(curatedId), null);
+
     console.log('    ✓ house_store_provision: dry run, refusals, apply, idempotence, edits kept, runtime lookups, conflicts');
   } finally {
     SupabaseDatabase.getAdmin = originalAdmin;
