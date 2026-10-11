@@ -33,7 +33,10 @@ const { createDocument, createClock } = require('./support/fakeDom');
 
 const MODULE = path.resolve(__dirname, '../../src/services/deliveryTrackingScreen.js');
 const CIRCUIT = path.resolve(__dirname, '../../src/services/deliveryCircuit.js');
-const settle = () => new Promise((resolve) => setImmediate(resolve));
+// Let every promise chain run to its end, and NOTHING ELSE: awaiting only microtasks keeps the
+// event loop from turning, so no foreign timer or immediate (a leftover request from an earlier
+// suite in the same process) can run while this test has a fake clock installed.
+const settle = async () => { for (let i = 0; i < 200; i++) await Promise.resolve(); };
 
 const DELIVERY = {
   id: 'dlv_1', orderId: 'ord_1', orderNumber: 'KM-1', status: 'accepted', timeline: [],
@@ -84,6 +87,13 @@ function boot(responses = {}) {
   delete global.maplibregl;
   delete global.LoumooDeliveryTracking;
   delete global.LoumooCircuit;
+
+  // The fake clock stands in for the global one, so it must behave like it for callers we do not own.
+  assert.doesNotThrow(() => {
+    const handle = global.setTimeout(() => {}, 1);
+    handle.unref();
+    global.clearTimeout(handle);
+  }, 'a fake timer has the Timeout methods foreign code calls, and clearTimeout takes the handle');
 
   delete require.cache[MODULE];
   require(MODULE);

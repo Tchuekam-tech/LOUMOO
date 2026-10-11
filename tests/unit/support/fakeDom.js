@@ -165,14 +165,30 @@ function createDocument() {
   return doc;
 }
 
-/** Timers a test drives by hand: nothing runs until `advance` says time has passed. */
+/**
+ * Timers a test drives by hand: nothing runs until `advance` says time has passed.
+ *
+ * `setTimeout` is global, so while a test has this installed EVERY caller gets it, including
+ * code that is not under test: Node's own fetch (undici) calls `setTimeout(...).unref()`, and
+ * the delivery gate runs its suites in one process, so a request left over from an earlier suite
+ * can resume in the middle of a later one. The handle is therefore shaped like a real Timeout
+ * (ref/unref/hasRef/refresh) and clearTimeout takes either the handle or its id.
+ */
 function createClock() {
   let now = 0;
   let seq = 0;
   const pending = new Map();
+  const handle = (id) => ({
+    id,
+    ref() { return this; },
+    unref() { return this; },
+    hasRef() { return true; },
+    refresh() { return this; },
+    [Symbol.toPrimitive]() { return id; }
+  });
   return {
-    setTimeout(fn, ms) { const id = ++seq; pending.set(id, { fn, at: now + (ms || 0) }); return id; },
-    clearTimeout(id) { pending.delete(id); },
+    setTimeout(fn, ms) { const id = ++seq; pending.set(id, { fn, at: now + (ms || 0) }); return handle(id); },
+    clearTimeout(h) { pending.delete(h && typeof h === 'object' ? h.id : h); },
     /** Delays (ms) of the timers still waiting, soonest first. */
     delays() { return [...pending.values()].map((t) => t.at - now).sort((a, b) => a - b); },
     advance(ms) {
