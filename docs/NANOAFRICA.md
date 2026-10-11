@@ -123,6 +123,8 @@ does not send them a notification.
 ## Undoing it
 
 Only safe before the first real order: once orders and deliveries reference the owner, delete nothing.
+It also deletes anything the owner has added to the store since (their own listings, announcements,
+uploads), because deleting the store row cascades to them: check Seller Studio first.
 Keep the dry-run output of the first run: it shows the owner's role and seller status *before* the change.
 Children before parents:
 
