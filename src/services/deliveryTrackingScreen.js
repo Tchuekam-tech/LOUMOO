@@ -99,6 +99,7 @@
       '#loumoo-dt .dt-pill.ok{background:var(--color-success-100,#e6f7ec);color:var(--color-success,#1a9d4b)}',
       '#loumoo-dt .dt-pill.bad{background:var(--color-danger-100,#fde8e8);color:var(--color-danger,#d32f2f)}',
       '#loumoo-dt .dt-map{position:relative;width:100%;height:42%;min-height:220px;background:var(--color-surface-2,#eef1f5);flex-shrink:0}',
+      '#loumoo-dt .dt-map .dt-map-caption{position:absolute;left:12px;right:64px;top:12px;z-index:3;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.94);color:var(--color-text,#111);font:600 12.5px/1.35 var(--font-body,inherit);box-shadow:0 2px 10px rgba(0,0,0,.12);pointer-events:none}',
       '#loumoo-dt .dt-map .dt-map-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;color:var(--color-text-secondary,#666);font-size:13px}',
       '#loumoo-dt .dt-body{flex:1;overflow-y:auto;padding:16px;max-width:680px;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:14px}',
       '#loumoo-dt .dt-card{background:var(--color-surface,#fff);border:1px solid var(--color-divider,#e5e5e5);border-radius:var(--radius-md,14px);padding:14px 16px;box-shadow:var(--shadow-sm,0 1px 2px rgba(0,0,0,.05))}',
@@ -160,7 +161,8 @@
         '<div class="dt-title"><h4>Track delivery</h4><div class="dt-sub">' + (subtitle || 'Loading…') + '</div></div>' +
         '<span class="dt-pill" data-dt-pill>…</span>' +
       '</div>' +
-      '<div class="dt-map" data-dt-map><div class="dt-map-fallback" data-dt-mapmsg>Loading map…</div></div>' +
+      '<div class="dt-map" data-dt-map><div class="dt-map-fallback" data-dt-mapmsg>Loading map…</div>' +
+        '<div class="dt-map-caption" data-dt-mapcap hidden>Your rider will appear on this map as soon as the seller arranges one.</div></div>' +
       '<div class="dt-body">' +
         '<div class="dt-card" data-dt-circuit hidden></div>' +
         '<div class="dt-card dt-eta" data-dt-eta hidden></div>' +
@@ -202,6 +204,7 @@
     clearTimeout(state._waitTimer);
     state._waitTimer = null;
     clearMapMessages();
+    state._waitMap = false;
     if (state._raf) { try { cancelAnimationFrame(state._raf); } catch (e) {} state._raf = null; }
     if (state.map && state.map.remove) { try { state.map.remove(); } catch (e) {} }
     state.map = null;
@@ -336,8 +339,10 @@
   // An order with no delivery yet is the NORMAL first state, not an error: the
   // seller has been told and is arranging a rider. Show the buyer's place in the
   // circuit instead of a map with nothing on it, and keep checking.
+  // The map stays: with no delivery yet it shows where the order is going, and says the rider
+  // will appear on it. Only the timeline and the live-feed note (nothing to say yet) go.
   function setWaiting(on) {
-    var map = q('[data-dt-map]'); if (map) map.hidden = on;
+    var cap = q('[data-dt-mapcap]'); if (cap) cap.hidden = !on;
     var tl = q('[data-dt-timeline]'); if (tl && tl.parentNode) tl.parentNode.hidden = on;
     var note = q('.dt-note'); if (note) note.hidden = on;
   }
@@ -350,6 +355,7 @@
     setSubtitle('Waiting for the seller');
     setPill('WAITING');
     renderCircuit(null);
+    showWaitingMap(orderId);
     clearTimeout(state._waitTimer);
     state._waitTimer = setTimeout(function () {
       if (state.mounted && !state.deliveryId) load(orderId, null);
@@ -689,19 +695,57 @@
   }
 
   function geocodeDestIfNeeded(d) {
-    if (destCoords(d)) return;
-    var addr = d && d.dropoff && (d.dropoff.address || d.dropoff.area);
-    if (!addr) return;
-    try {
-      fetch(GEOCODER + encodeURIComponent(addr), { headers: { Accept: 'application/json' } })
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (arr) {
-          if (!arr || !arr.length || !state.mounted) return;
-          var lat = parseFloat(arr[0].lat), lng = parseFloat(arr[0].lon);
-          if (isFinite(lat) && isFinite(lng)) { state.destGeocoded = { lat: lat, lng: lng }; updateMap(state.delivery || d); }
-        })
-        .catch(function () {});
-    } catch (e) {}
+    if (!d || !d.dropoff || destCoords(d)) return;
+    // The full address first, then just the area: a street Nominatim does not know should
+    // still put the pin in the right neighbourhood.
+    var seen = {};
+    var queries = [d.dropoff.address, d.dropoff.area].filter(function (text) {
+      text = String(text || '').trim();
+      if (!text || seen[text]) return false;
+      seen[text] = true;
+      return true;
+    });
+    (function next(i) {
+      if (i >= queries.length || !state.mounted) return;
+      var again = function () { next(i + 1); };
+      try {
+        fetch(GEOCODER + encodeURIComponent(queries[i]), { headers: { Accept: 'application/json' } })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (arr) {
+            if (!state.mounted) return;
+            var hit = arr && arr.length ? arr[0] : null;
+            var lat = hit ? parseFloat(hit.lat) : NaN;
+            var lng = hit ? parseFloat(hit.lon) : NaN;
+            if (isFinite(lat) && isFinite(lng)) { state.destGeocoded = { lat: lat, lng: lng }; updateMap(state.delivery || d); } else again();
+          })
+          .catch(again);
+      } catch (e) { again(); }
+    })(0);
+  }
+
+  // No delivery yet, so no rider to follow, but the buyer still gets the map: it opens on their
+  // delivery address with the pin on it, and the rider appears on it the moment one is arranged.
+  // The order's address is read from the order itself (text only: orders carry no coordinates),
+  // then placed by the same geocoder the live map uses.
+  function showWaitingMap(orderId) {
+    if (state._waitMap || !state.mounted) return;
+    state._waitMap = true;
+    var seed = { id: null, dropoff: {} };
+    initMap(seed); // the library and the map start now, on the default centre
+    var api = window.LoumooAPI || window.loumooApi;
+    var read = null;
+    try { read = api && typeof api.getOrder === 'function' ? api.getOrder(orderId) : null; } catch (e) { read = null; }
+    Promise.resolve(read).then(null, function () { return null; }).then(function (order) {
+      if (!state.mounted || state.deliveryId || !order) return;
+      var ship = order.shippingAddress || {};
+      var area = [ship.neighbourhood, ship.city].filter(Boolean);
+      if (!area.length) return;
+      seed.dropoff = {
+        address: [ship.street].concat(area, 'Cameroon').filter(Boolean).join(', '),
+        area: area.concat('Cameroon').join(', ')
+      };
+      geocodeDestIfNeeded(seed);
+    });
   }
 
   function updateMap(d) {
@@ -710,6 +754,9 @@
     if (dest) {
       if (!state.destMarker) state.destMarker = new state._ml.Marker({ element: destMarkerEl(), anchor: 'bottom' }).setLngLat([dest.lng, dest.lat]).addTo(state.map);
       else state.destMarker.setLngLat([dest.lng, dest.lat]);
+    }
+    if (dest && !state.delivery && !state._userMovedMap) {
+      try { state.map.easeTo({ center: [dest.lng, dest.lat], zoom: 15, duration: 0 }); } catch (e) { /* not ready */ }
     }
     if (d.lastLocation) animateDriver(d.lastLocation, d.lastLocation.heading != null ? d.lastLocation.heading : null);
     if (dest && d.lastLocation) setRoute(d.lastLocation, dest);
