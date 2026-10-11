@@ -122,10 +122,9 @@ async function testOrderPlacement() {
       assert.ok(/3 items/.test(sellerNote.body), 'it says what was ordered');
       assert.ok(/Bonanjo, Douala/.test(sellerNote.body), 'it says where to');
       assert.ok(/Arrange a rider/i.test(sellerNote.body), 'it says what to do next');
-      // The seller needs the customer's name, number and address to arrange the rider
-      // (the full message is covered in order_seller_message.test.js).
-      assert.ok(/Awa Njoya/.test(sellerNote.body) && /622222222/.test(sellerNote.body), 'it says who the customer is and how to reach them');
-      assert.ok(/Rue 1, Bonanjo, Douala/.test(sellerNote.body), 'it carries the full address');
+      // An ordinary seller's notification never carries the customer's contact details; the
+      // full message is for the house store only (order_seller_message.test.js).
+      assert.ok(!/Awa|622222222|Rue 1/.test(sellerNote.body + sellerNote.title), 'no customer phone or street in a notification');
       assert.ok(!/Awa|622222222|Rue 1/.test(buyerNote.body + buyerNote.title), 'the confirmation to the buyer does not repeat their details');
     }
 

@@ -297,6 +297,7 @@ function testBuyerNotification() {
 const { OrderCreationService } = require('../../server/modules/commerce/application/OrderCreationService');
 const { OrderRecipients, usableEmail } = require('../../server/modules/commerce/application/OrderRecipients');
 const logger = require('../../server/shared/logging/logger');
+const { HOUSE_STORE } = require('../../server/modules/store/domain/HouseStore');
 
 function listing(id, sellerId, storeName, storeId) {
   return {
@@ -313,7 +314,10 @@ function listing(id, sellerId, storeName, storeId) {
  */
 function harness(overrides = {}) {
   const saved = [];
-  const listings = { l1: listing('l1', 'seller_1', 'Tech Shop'), l2: listing('l2', 'seller_1', 'Tech Shop') };
+  // By default the order is the house store's, which gets the full message. { ordinary: true } is a
+  // real seller's store, which keeps the short notification and gets no e-mail.
+  const storeId = overrides.ordinary ? undefined : HOUSE_STORE.id;
+  const listings = { l1: listing('l1', 'seller_1', 'Tech Shop', storeId), l2: listing('l2', 'seller_1', 'Tech Shop', storeId) };
   const repository = {
     findListingById: async (id) => listings[id] || null,
     findVariantById: async () => null,
@@ -385,23 +389,28 @@ async function testSellerGetsMessageAndEmail() {
 }
 
 async function testOrdinarySellerKeepsTheOldShape() {
-  const h = harness();
+  const h = harness({ ordinary: true });
   const order = await h.service.createOrder('buyer_1', { items: [{ listingId: 'l1', quantity: 1 }], shippingAddress: ADDRESS, deliveryMethod: 'HOME_DELIVERY' });
   const note = h.to('seller_1')[0];
-  // Synchronous, exactly when it used to be: no waiting for anything when the address is complete.
+  // Synchronous, exactly when it used to be: no waiting for anything.
   assert.ok(note, 'sent by the time the order returns');
   assert.deepStrictEqual(
     { type: note.type, tone: note.tone, audience: note.metadata.audience, action: note.metadata.action, orderId: note.metadata.orderId, orderNumber: note.metadata.orderNumber },
     { type: 'order', tone: 'sale', audience: 'seller', action: 'open_dispatch', orderId: order.id, orderNumber: order.orderNumber }
   );
-  assert.ok(/^New order .* to deliver/.test(note.title));
-  assert.ok(/1 item/.test(note.body) && /Bonanjo, Douala/.test(note.body) && /Arrange a rider from Deliveries/.test(note.body), 'the old facts are all still there');
+  assert.strictEqual(note.title, `New order ${order.orderNumber} to deliver`);
+  assert.strictEqual(note.body, `1 item · XAF ${order.totalAmountXaf} · to Bonanjo, Douala. Arrange a rider from Deliveries.`, 'word for word what sellers have always been sent');
+  assert.ok(!/Awa|622222222|wa\.me|Rue 1/.test(note.title + note.body + JSON.stringify(note.metadata)), 'no customer name, phone or street in an ordinary seller notification');
+  assert.strictEqual(note.metadata.details, undefined, 'and no details block');
   await h.service.notificationsSettled();
+  assert.strictEqual(h.emails.length, 0, 'an ordinary seller is not e-mailed the customer details');
 
-  const p = harness();
+  const p = harness({ ordinary: true });
   await p.service.createOrder('buyer_1', { items: [{ listingId: 'l1', quantity: 1 }], deliveryMethod: 'STORE_PICKUP', shippingAddress: ADDRESS });
   const pn = p.to('seller_1')[0];
-  assert.ok(/^New pickup order/.test(pn.title) && pn.metadata.action === null && /collect/.test(pn.body));
+  assert.strictEqual(pn.title.startsWith('New pickup order'), true);
+  assert.strictEqual(pn.metadata.action, null);
+  assert.ok(/^1 item · XAF \d+\. Get it ready for the customer to collect\.$/.test(pn.body), pn.body);
 }
 
 async function testEmailSkippedWhenItShouldBe() {
