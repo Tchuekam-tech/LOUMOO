@@ -27,6 +27,8 @@ const SUITES = [
   'delivery_dispatch',
   'delivery_contact',
   'delivery_circuit',
+  // The buyer's tracking screen (browser code, run on a fake DOM): waits for the seller, retries, loads the map early.
+  'delivery_tracking_screen',
   'delivery_circuit_e2e',
   'delivery_geocoder',
   'delivery_nudge',
