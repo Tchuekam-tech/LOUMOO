@@ -522,7 +522,11 @@ class HouseStoreProvisioner {
 
     // ---- riders ----------------------------------------------------------
     for (const rider of riders) {
-      const name = fullName(rider) || String(rider.email).split('@')[0];
+      // A rider's name is shown to buyers at checkout, so it is never built from their e-mail
+      // address; a profile with no name gets a neutral one the operator is told about.
+      const profileName = fullName(rider);
+      const name = profileName || `${HOUSE_AGENCY.name} rider`;
+      if (!profileName) warnings.push(`The rider ${maskEmail(rider.email)} has no name on their profile; they are shown to buyers as "${name}" until they set one.`);
       const driver = await this._one('delivery_drivers', 'profile_id', rider.id);
       if (!driver) {
         if (blank(rider.phone_number) || String(rider.phone_number).trim().length < 6) {

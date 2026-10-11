@@ -103,6 +103,7 @@ async function run() {
         ('usr_owner',   'c-owner',   'Nano_Owner@Example.com', now(), '+237699111222', 'Ama', 'Owner', 'Douala'),
         ('usr_rider_1', 'c-rider-1', 'rider.one@example.com',  now(), '+237677000001', 'Rik', 'One',   'Douala'),
         ('usr_rider_2', 'c-rider-2', 'rider.two@example.com',  now(), NULL,            'Rin', 'Two',   'Douala'),
+        ('usr_rider_3', 'c-rider-3', 'jean.dupont85@example.com', now(), '+237677000003', '', '', 'Douala'),
         ('usr_unverified', 'c-unv',  'unverified@example.com', NULL,  '+237600000003', 'Una', 'Verified', 'Douala'),
         ('usr_twin_a',  'c-twin-a',  'twin@example.com',       now(), '+237600000004', 'Twin', 'A', 'Douala'),
         ('usr_twin_b',  'c-twin-b',  'twin@example.com',       now(), '+237600000005', 'Twin', 'B', 'Douala'),
@@ -128,6 +129,13 @@ async function run() {
     const dry = await service.provision({ ...base, riderEmails: ['rider.one@example.com'] });
     assert.strictEqual(dry.mode, 'dry-run');
     assert.strictEqual(dry.applied, false);
+    // A rider whose profile has no name is not shown to buyers under their e-mail address.
+    const nameless = await service.provision({ ...base, riderEmails: ['jean.dupont85@example.com'] });
+    const namelessStep = nameless.steps.find((st) => st.table === 'delivery_drivers' && st.key === 'usr_rider_3');
+    assert.ok(namelessStep, 'the nameless rider would be registered');
+    assert.strictEqual(namelessStep.fields.display_name, 'nanoDelivery rider');
+    assert.ok(nameless.warnings.some((w) => /no name on their profile/.test(w)), 'and the operator is told');
+    assert.ok(!/jean\.dupont85/.test(JSON.stringify(nameless)), 'the e-mail local part appears nowhere in the report');
     assert.strictEqual(dry.owner.id, 'usr_owner');
     assert.ok(/^Na\*+@Example\.com$/.test(dry.owner.email), `masked, got ${dry.owner.email}`);
     assert.ok(!/nano_owner@/i.test(JSON.stringify(dry)), 'the owner email is only ever shown masked');
