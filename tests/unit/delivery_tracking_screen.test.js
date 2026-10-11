@@ -13,7 +13,8 @@
  * map never loaded because nothing ever asked for it.
  *
  *   1. No delivery yet (a 404, or an empty answer) is a waiting screen that checks
- *      again, never an error and never a hang, and downloads no map for nothing.
+ *      again, never an error and never a hang, and still shows the map: on the
+ *      delivery address, with a pin, and a caption saying the rider will appear.
  *   2. A real failure is said plainly and can be retried in place.
  *   3. Once there is a delivery, the map library starts downloading at once, in
  *      parallel with whatever else is loading; a delivery the order screen has just
@@ -46,7 +47,7 @@ const notFound = () => Object.assign(new Error('Delivery was not found.'), { sta
 const failure = (message) => Object.assign(new Error(message), { status: 500, code: 'API_ERROR' });
 
 const GLOBALS = ['window', 'document', 'setTimeout', 'clearTimeout', 'requestAnimationFrame', 'cancelAnimationFrame',
-  'deliveryApi', 'maplibregl', 'LoumooDeliveryTracking', 'LoumooCircuit'];
+  'deliveryApi', 'maplibregl', 'LoumooDeliveryTracking', 'LoumooCircuit', 'LoumooAPI', 'loumooApi', 'fetch'];
 
 /**
  * A fresh page: the overlay module loaded into a fake document, with `responses`
@@ -87,6 +88,17 @@ function boot(responses = {}) {
   delete global.maplibregl;
   delete global.LoumooDeliveryTracking;
   delete global.LoumooCircuit;
+  delete global.LoumooAPI;
+  delete global.loumooApi;
+  // The geocoder (Nominatim) and the order API, as far as a scenario wants them.
+  const geocodes = [];
+  global.fetch = (url) => {
+    const query = decodeURIComponent(String(url).split('&q=')[1] || '');
+    geocodes.push(query);
+    const answer = responses.geocode ? responses.geocode(query) : [];
+    return Promise.resolve({ ok: true, json: async () => answer });
+  };
+  if (responses.order !== undefined) global.LoumooAPI = { getOrder: responses.order };
 
   // The fake clock stands in for the global one, so it must behave like it for callers we do not own.
   assert.doesNotThrow(() => {
@@ -99,7 +111,7 @@ function boot(responses = {}) {
   require(MODULE);
 
   return {
-    doc, clock, api, calls, scripts, unhandled,
+    doc, clock, api, calls, scripts, unhandled, geocodes,
     preconnects: () => doc.head.children.filter((c) => c.rel === 'preconnect').map((c) => c.href),
     tracking: global.LoumooDeliveryTracking,
     root: () => global.LoumooDeliveryTracking._state.root,
@@ -116,8 +128,9 @@ function boot(responses = {}) {
 /** MapLibre as far as the overlay uses it, recording every map it is asked for. */
 function installMapLibre() {
   const maps = [];
+  const markers = [];
   class Map {
-    constructor(opts) { this.opts = opts; this.handlers = {}; maps.push(this); }
+    constructor(opts) { this.opts = opts; this.handlers = {}; this.moves = []; maps.push(this); }
     on(evt, fn) { (this.handlers[evt] = this.handlers[evt] || []).push(fn); }
     fire(evt) { (this.handlers[evt] || []).forEach((fn) => fn()); }
     addControl() {}
@@ -126,15 +139,17 @@ function installMapLibre() {
     addLayer() {}
     remove() { this.removed = true; }
     fitBounds() {}
-    easeTo() {}
+    easeTo(o) { this.moves.push(o); }
     setStyle() {}
   }
   class Marker {
-    setLngLat() { return this; }
+    constructor() { markers.push(this); }
+    setLngLat(p) { this.lngLat = p; return this; }
     addTo() { return this; }
     setRotation() { return this; }
   }
   global.maplibregl = { Map, Marker, NavigationControl: class {}, LngLatBounds: class { extend() { return this; } } };
+  maps.markers = markers;
   return maps;
 }
 
@@ -147,17 +162,20 @@ async function testNoDeliveryYetIsAWaitingScreen() {
     assert.deepStrictEqual(env.unhandled.map(String), [], 'nothing blew up behind the screen (it used to: waitForSeller was not defined)');
     assert.strictEqual(env.sel('.dt-sub').textContent, 'Waiting for the seller', 'a 404 for an order with no delivery yet says so');
     assert.strictEqual(env.sel('[data-dt-pill]').textContent, 'WAITING');
-    assert.strictEqual(env.sel('[data-dt-map]').hidden, true, 'no empty map for a delivery that does not exist yet');
+    assert.strictEqual(env.sel('[data-dt-map]').hidden, false, 'the map is on screen even before there is a rider');
+    assert.strictEqual(env.sel('[data-dt-mapcap]').hidden, false, 'with a caption that says the rider will appear on it');
+    assert.ok(/rider will appear on this map/i.test(env.sel('[data-dt-mapcap]').textContent || '') || /rider will appear/i.test(env.root().innerHTML), 'and says what it is waiting for');
     assert.strictEqual(env.sel('[data-dt-error]').hidden, true, 'and it is not presented as an error');
-    assert.deepStrictEqual(env.clock.delays(), [8000], 'it checks again in a few seconds');
-    assert.strictEqual(env.scripts.length, 0, 'and downloads no map library for a delivery that does not exist');
+    assert.ok(env.clock.delays().includes(8000), 'it checks again in a few seconds');
+    assert.strictEqual(env.scripts.length, 1, 'and the map library is requested now, so the map is there when the screen is');
 
     // The seller arranges a rider: the next check finds it and the screen comes alive.
     env.clock.advance(8000);
     await settle();
     assert.strictEqual(env.sel('.dt-sub').textContent, 'Order KM-1');
-    assert.strictEqual(env.sel('[data-dt-map]').hidden, false, 'the map appears once there is something to show');
-    assert.strictEqual(env.scripts.length, 1, 'and only then is the map library requested');
+    assert.strictEqual(env.sel('[data-dt-map]').hidden, false);
+    assert.strictEqual(env.sel('[data-dt-mapcap]').hidden, true, 'the "rider will appear" caption goes once there is a delivery');
+    assert.strictEqual(env.scripts.length, 1, 'the library is not requested a second time');
     assert.strictEqual(env.sel('[data-dt-error]').hidden, true);
   } finally { env.restore(); }
 
@@ -176,8 +194,95 @@ async function testNoDeliveryYetIsAWaitingScreen() {
     closed.tracking.open({ orderId: 'ord_1' });
     await settle();
     closed.tracking.close();
-    assert.deepStrictEqual(closed.clock.delays(), [], 'no timer survives close()');
+    // The screen's own timers (the 8 s poll, the slow-map messages) go with it. What remains is the shared
+    // library download's 30 s limit, which outlives the screen on purpose: the next open finds it loaded.
+    assert.deepStrictEqual(closed.clock.delays(), [30000], 'no timer of the screen survives close()');
+    assert.strictEqual(closed.tracking._state.root, null, 'and the screen is gone');
   } finally { closed.restore(); }
+}
+
+const ORDER = { id: 'ord_1', shippingAddress: { street: 'Rue 1', neighbourhood: 'Bonanjo', city: 'Douala' } };
+
+async function testTheWaitingMapShowsWhereTheOrderIsGoing() {
+  // The address is read from the order, geocoded, and the pin and the camera go there.
+  const env = boot({
+    getByOrder: [() => Promise.reject(notFound()), () => Promise.resolve({ delivery: DELIVERY })],
+    order: () => Promise.resolve(ORDER),
+    geocode: (q) => (/Rue 1/.test(q) ? [{ lat: '4.0449', lon: '9.6951' }] : [])
+  });
+  try {
+    env.tracking.open({ orderId: 'ord_1' });
+    await settle();
+    const maps = installMapLibre();
+    env.scripts[0].onload();
+    await settle();
+    assert.strictEqual(maps.length, 1, 'a map is built while the screen is waiting');
+    assert.deepStrictEqual(env.geocodes, ['Rue 1, Bonanjo, Douala, Cameroon'], 'the delivery address is looked up');
+    maps[0].fire('style.load');
+    await settle();
+    assert.deepStrictEqual(maps.markers.map((m) => m.lngLat), [[9.6951, 4.0449]], 'and the pin is on it');
+    assert.deepStrictEqual(maps[0].moves.pop().center, [9.6951, 4.0449], 'with the camera there');
+
+    // The seller arranges a rider: the SAME map takes the rider on, it is not rebuilt.
+    env.clock.advance(8000);
+    await settle();
+    assert.strictEqual(maps.length, 1, 'one map for the whole journey');
+    assert.strictEqual(env.sel('[data-dt-mapcap]').hidden, true);
+    assert.strictEqual(env.sel('.dt-sub').textContent, 'Order KM-1');
+  } finally { env.restore(); }
+
+  // A street the geocoder does not know still puts the pin in the right neighbourhood.
+  const fallback = boot({
+    getByOrder: [() => Promise.reject(notFound())],
+    order: () => Promise.resolve(ORDER),
+    geocode: (q) => (q === 'Bonanjo, Douala, Cameroon' ? [{ lat: '4.05', lon: '9.69' }] : [])
+  });
+  try {
+    fallback.tracking.open({ orderId: 'ord_1' });
+    await settle();
+    const maps = installMapLibre();
+    fallback.scripts[0].onload();
+    await settle();
+    maps[0].fire('style.load');
+    await settle();
+    assert.deepStrictEqual(fallback.geocodes, ['Rue 1, Bonanjo, Douala, Cameroon', 'Bonanjo, Douala, Cameroon'], 'the full address first, then the area');
+    assert.deepStrictEqual(maps.markers.map((m) => m.lngLat), [[9.69, 4.05]]);
+  } finally { fallback.restore(); }
+
+  // Nothing can be placed (no order API, or an order with no address): still a map, no pin, no error.
+  for (const order of [undefined, () => Promise.reject(new Error('offline')), () => Promise.resolve({ id: 'ord_1', shippingAddress: {} })]) {
+    const bare = boot({ getByOrder: [() => Promise.reject(notFound())], order });
+    try {
+      bare.tracking.open({ orderId: 'ord_1' });
+      await settle();
+      const maps = installMapLibre();
+      bare.scripts[0].onload();
+      await settle();
+      maps[0].fire('style.load');
+      await settle();
+      assert.strictEqual(maps.length, 1, 'the map is still there');
+      assert.deepStrictEqual(maps.markers, [], 'with no invented pin');
+      assert.deepStrictEqual(bare.geocodes, [], 'and nothing is looked up');
+      assert.strictEqual(bare.sel('[data-dt-error]').hidden, true, 'and it is not an error');
+      assert.strictEqual(bare.sel('[data-dt-mapcap]').hidden, false);
+      assert.deepStrictEqual(bare.unhandled.map(String), []);
+    } finally { bare.restore(); }
+  }
+
+  // The waiting poll runs every few seconds; the map and the order lookup happen once.
+  let reads = 0;
+  const poll = boot({
+    getByOrder: [() => Promise.reject(notFound()), () => Promise.reject(notFound()), () => Promise.reject(notFound())],
+    order: () => { reads += 1; return Promise.resolve(ORDER); }
+  });
+  try {
+    poll.tracking.open({ orderId: 'ord_1' });
+    await settle();
+    for (let i = 0; i < 2; i++) { poll.clock.advance(8000); await settle(); }
+    assert.strictEqual(poll.calls.getByOrder, 3, 'it kept checking');
+    assert.strictEqual(reads, 1, 'the order is read once');
+    assert.strictEqual(poll.scripts.length, 1, 'and the library is requested once');
+  } finally { poll.restore(); }
 }
 
 async function testARealFailureCanBeRetriedInPlace() {
@@ -372,6 +477,7 @@ async function testTheOrderScreenPrimesAndWarmsOnlyWhenItCanPayOff() {
 async function run() {
   console.log('  Testing the buyer\'s delivery tracking screen...');
   await testNoDeliveryYetIsAWaitingScreen();
+  await testTheWaitingMapShowsWhereTheOrderIsGoing();
   await testARealFailureCanBeRetriedInPlace();
   await testTheMapStartsEarlyAndTheFirstPaintIsInstant();
   await testAFailedDownloadIsRetriedAndASlowOneExplained();
