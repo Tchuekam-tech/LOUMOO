@@ -1,5 +1,10 @@
 # LOUMOO — Production Deployment Runbook
 
+> **Frontend URLs and hosting rewrites** (which host is live, what `vercel.json` rewrites, the 404 behaviour,
+> `<base href="/">`, how to add a route and the post-deploy checklist) are in [ROUTING.md](ROUTING.md).
+> Note that `loumoo.store` is currently served by **Vercel** (static `public/` + the `api/index.js` function);
+> the Railway container described below is a complete second deployment of the same app.
+
 This document is the single source of truth for taking LOUMOO from this repo
 to a live production deployment on **Railway** (Node container). Everything
 else in the repo is already configured:

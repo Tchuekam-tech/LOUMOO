@@ -27,6 +27,8 @@ npm run test:security       # direct API bypass suite only
 npm run test:journey        # end-to-end seller journey only
 npm run build:frontend      # regenerate Commerce App.dc.html from src/views
 npm run verify:runtime      # frontend state-machine matrix
+npm run routes:check         # hosting config + route docs match the route registry
+npm run test:routing        # backend authorization matrix + the real app in Chromium (local, no network)
 npm run db:purge-test-data  # reclaim rows the integration suites created
 ```
 
@@ -109,3 +111,4 @@ The frontend is generated: edit `src/views/*.py` and the component logic in
 | [04_API_SPEC](docs/architecture/04_API_SPEC.md) | Endpoint reference |
 | [05_AUTH_AND_SECURITY](docs/architecture/05_AUTH_AND_SECURITY.md) | Security posture |
 | [13_ACCOUNT_STATE_AND_LISTING_GATE](docs/architecture/13_ACCOUNT_STATE_AND_LISTING_GATE.md) | **Account state, verification, onboarding, the listing gate** |
+| [ROUTING](docs/ROUTING.md) | **Every URL (`/rider`, `/store/:slug`, `/delivery/:id`, `/admin` …), access rules, deep links, hosting rewrites, how to test them** |
