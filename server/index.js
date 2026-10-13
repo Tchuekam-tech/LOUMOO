@@ -17,6 +17,9 @@ const compression = require('compression');
 const fs = require('fs');
 const path = require('path');
 const config = require('./config/env');
+// The single source of truth for the frontend's URLs (also read by the browser router,
+// the hosting-config generator and the tests): docs/ROUTING.md.
+const FrontendRoutes = require('../src/routing/routes');
 const { assertProductionConfig, validateProductionConfig } = require('./config/env');
 const logger = require('./shared/logging/logger');
 const requestContext = require('./shared/middleware/requestContext');
@@ -316,11 +319,17 @@ if (fs.existsSync(superAdminRoot)) {
   app.use('/superadmin', express.static(superAdminRoot, {
     dotfiles: 'deny',
     index: false,
+    // '/admin' and '/superadmin' are the canonical addresses (docs/ROUTING.md): serve the
+    // page there instead of bouncing to a trailing-slash twin.
+    redirect: false,
     fallthrough: true
   }));
   app.use('/admin', express.static(superAdminRoot, {
     dotfiles: 'deny',
     index: false,
+    // '/admin' and '/superadmin' are the canonical addresses (docs/ROUTING.md): serve the
+    // page there instead of bouncing to a trailing-slash twin.
+    redirect: false,
     fallthrough: true
   }));
   app.use('/css', express.static(path.join(superAdminRoot, 'css'), {
@@ -339,9 +348,62 @@ app.get(['/superadmin', '/superadmin/', '/admin', '/admin/'], (req, res) => {
   res.sendFile(superAdminIndex);
 });
 
-app.get(['/', '/index.html', '/app'], (req, res) => {
-  res.sendFile(appShell);
+// ── Frontend routes (docs/ROUTING.md) ─────────────────────────────────────────
+// The app is one document whose screens the browser router picks from the URL, so
+// the gateway's job is to hand that document to every URL the registry knows, say
+// 404 (with the same document, so the app can draw its not-found screen) for the
+// ones it does not, and never let a missing FILE pass for a page.
+//
+// Cached read of the shell: re-read only when the file changes (a deploy), so a
+// 1 MB document is not read from disk on every navigation.
+let shellCache = { mtimeMs: 0, body: null };
+function readShell() {
+  const stat = fs.statSync(appShell);
+  if (!shellCache.body || stat.mtimeMs !== shellCache.mtimeMs) {
+    shellCache = { mtimeMs: stat.mtimeMs, body: fs.readFileSync(appShell) };
+  }
+  return shellCache.body;
+}
+
+function sendShell(req, res, status) {
+  let body;
+  try { body = readShell(); } catch (err) {
+    return res.status(503).type('text/plain').send('The application is starting. Please retry in a moment.');
+  }
+  res.status(status);
+  res.set('Content-Type', 'text/html; charset=utf-8');
+  // The shell names the current build's assets and carries no private data: always
+  // revalidate it so a deploy is picked up at once, and never index an error page.
+  res.set('Cache-Control', 'no-cache');
+  if (status !== 200) res.set('X-Robots-Tag', 'noindex');
+  return req.method === 'HEAD' ? res.end() : res.send(body);
+}
+
+// Is this a request the application should answer with the application? A browser
+// navigation, yes; and so is the DC runtime's own boot re-fetch of the page URL
+// (support.js boot()), a plain fetch() that accepts anything: if that were answered
+// with a bare 404 the runtime could not recover the template and every lazily-loaded
+// screen of an unknown-route page, including the not-found screen, would stay blank.
+// Only a request that clearly wants something else (a script, an image, JSON) gets a
+// plain 404.
+function isDocumentRequest(req) {
+  const dest = req.headers['sec-fetch-dest'];
+  if (dest && dest !== 'empty') return dest === 'document' || dest === 'iframe';
+  return /text\/html|\*\/\*/.test(req.headers.accept || '*/*');
+}
+
+// Legacy addresses ('/index.html', '/app', '/Commerce App.dc.html', '/seller/onboarding')
+// and wrong casing ('/Rider') answer with a redirect to the canonical URL, query kept.
+// This runs BEFORE the static files so '/index.html' and the old shell file redirect
+// instead of being served as a second copy of the home page.
+app.use((req, res, next) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+  const resolved = FrontendRoutes.resolve(req.originalUrl.split('#')[0]);
+  if (resolved.type === 'redirect') return res.redirect(308, resolved.to);
+  return next();
 });
+
+app.get('/', (req, res) => sendShell(req, res, 200));
 
 // 7. Static frontend assets. Only the generated public directory is exposed;
 // never mount the repository root, which contains manifests, source, tests,
@@ -357,6 +419,29 @@ if (fs.existsSync(publicRoot)) {
     maxAge: config.isProduction ? '1d' : 0
   }));
 }
+
+// 7b. Application routes. After the static files, so a real file always wins, and
+// before the error handlers. 200 for a known route; 404 + the app (so it can render
+// its not-found screen) for an unknown route or a named area that is not built; a plain
+// 404 for anything that is not a page request.
+app.use((req, res, next) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+  const resolved = FrontendRoutes.resolve(req.originalUrl.split('#')[0]);
+  switch (resolved.type) {
+    case 'route':
+      // 'page' routes are separate documents (the control center) served above.
+      return resolved.route.kind === 'page' ? next() : sendShell(req, res, 200);
+    case 'unavailable':
+    case 'notfound':
+      return isDocumentRequest(req)
+        ? sendShell(req, res, 404)
+        : res.status(404).type('text/plain').send('Not found');
+    case 'file':
+      return res.status(404).type('text/plain').send('Not found');
+    default:
+      return next();
+  }
+});
 
 // 8. Sentry error handler
 if (Sentry && Sentry.setupExpressErrorHandler) {
