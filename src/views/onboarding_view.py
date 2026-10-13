@@ -983,7 +983,7 @@ def get_onboarding_view():
   <!-- Dynamic Next Action CTAs -->
   <div style="display:flex;flex-direction:column;gap:10px">
     <sc-if value="{{ userRole === 'buyer' }}">
-      <button onClick="{{ on.home }}" class="btn btn-primary btn-block" style="height:48px;font-size:14px;cursor:pointer">
+      <button onClick="{{ on.onboardContinue }}" class="btn btn-primary btn-block" style="height:48px;font-size:14px;cursor:pointer">
         START EXPLORING MARKETPLACE <span>→</span>
       </button>
     </sc-if>

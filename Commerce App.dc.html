@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<base href="/">
 <title>LOUMOO Universal Commerce Marketplace</title>
 <link rel="icon" href="./favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="./Assets/brand/favicon-32.png">
@@ -10,6 +12,8 @@
 <link rel="apple-touch-icon" sizes="180x180" href="./Assets/brand/apple-touch-icon.png">
 <meta name="theme-color" content="#0025E5">
 <script src="./support.js"></script>
+<script defer src="./src/routing/routes.js"></script>
+<script defer src="./src/services/appRouter.js"></script>
 
 <script defer src="./src/services/loumooApi.js"></script>
 <script defer src="./src/services/searchExperience.js"></script>
@@ -9164,7 +9168,7 @@ html, body {
   <dc-import name="SearchScreens" dcProps="{{ viewProps }}"></dc-import>
 </sc-if>
 
-<sc-if value="{{ is.chat || is.threadAi || is.threadSeller || is.notifications || is.profile || is.saved || is.settings || is.loading || is.networkError }}">
+<sc-if value="{{ is.chat || is.threadAi || is.threadSeller || is.notifications || is.profile || is.saved || is.settings || is.loading || is.networkError || is.notFound }}">
   <dc-import name="ChatProfileScreens" dcProps="{{ viewProps }}"></dc-import>
 </sc-if>
 
@@ -9427,7 +9431,8 @@ const SCREENS = [
   'createStore','storeOnboarding','storeSettings','storeVerification','storeAnalytics',
   'publishIntent','publishStudio','publishReview','publishSuccess',
   'publicUserProfile','sellerPublicPage',
-  'superAdmin'
+  'superAdmin',
+  'notFound'
 ];
 const SELLER_WHATSAPP_DEFAULT = '237690123456';
 const SELLER_WHATSAPP = {
@@ -9543,6 +9548,9 @@ function getGuard() {
     if (typeof globalThis !== 'undefined' && globalThis && globalThis.LoumooGuard) return globalThis.LoumooGuard;
   } catch (e) {  }
   return null;
+}
+function getRouter() {
+  return (typeof window !== 'undefined' && window.LoumooRouter) || null;
 }
 
 
@@ -9673,7 +9681,7 @@ if (typeof window !== 'undefined') {
 
 class Component extends DCLogic {
   state = {
-    screen: 'home', stack: [], cart: 0, cartItems: [], orders: [], lastOrder: null, lastOrders: [], placingOrder: false, orderError: '', orderErrorItemIds: [], vs: 2, toast: '', following: false, saved: false,
+    screen: (typeof window !== 'undefined' && window.LoumooRouter && window.LoumooRouter.initialScreen) ? window.LoumooRouter.initialScreen() : 'home', stack: [], cart: 0, cartItems: [], orders: [], lastOrder: null, lastOrders: [], placingOrder: false, orderError: '', orderErrorItemIds: [], vs: 2, toast: '', following: false, saved: false,
     sidebarCollapsed: true,
     vsFilterMode: 'all',
     vsPriority: 'perf',
@@ -9723,6 +9731,7 @@ class Component extends DCLogic {
     signInBusy: false,
     signInError: '',
     postAuthRedirect: '',
+    routeNotFound: null,
 
     resetEmail: '',
     resetCode: '',
@@ -10203,6 +10212,10 @@ class Component extends DCLogic {
   go = (s) => {
     if (this._searchExperience) this._searchExperience.enter(s);
     this.setState(st => ({ screen: s, stack: [...st.stack, st.screen], toast: '' }));
+    this._ensurePublishingFor(s);
+    this._onScreenEnter(s);
+  };
+  _ensurePublishingFor(s) {
     if (s === 'publishIntent' || s === 'publishStudio' || s === 'publishReview' || s === 'publishSuccess') {
       this._ensurePublishingEngine().then((pub) => {
         if (this._unmounted || !pub) return;
@@ -10210,9 +10223,10 @@ class Component extends DCLogic {
         if (this.state.screen === 'publishIntent') this.checkResumableDraft();
       }).catch(() => {});
     }
-    this._onScreenEnter(s);
-  };
+  }
   back = () => {
+    const R = getRouter();
+    if (R && R.isActive() && R.back()) return;
     const stack = this.state.stack.slice();
     const prev = stack.pop() || 'home';
     if (this._searchExperience) this._searchExperience.enter(prev);
@@ -10986,6 +11000,7 @@ class Component extends DCLogic {
     }
     setTimeout(() => { if (!this._unmounted) this.loadServerNotifications(); }, 2000);
     this._startCircuitPolling();
+    this._startRouter();
     if (typeof window !== 'undefined') {
       window._loumooHeroComponent = this;
       window.heroNextSlide = () => {
@@ -11083,6 +11098,7 @@ class Component extends DCLogic {
     clearInterval(this._resetTimer);
     clearInterval(this._emailTimer);
     this._stopCircuitPolling();
+    this._stopRouter();
     if (typeof window !== 'undefined' && this._handleKeyDown) {
       window.removeEventListener('keydown', this._handleKeyDown);
     }
@@ -11681,8 +11697,16 @@ class Component extends DCLogic {
         storeLogoUrl: store.logoUrl || store.logo_url || this.state.storeLogoUrl,
         storeProfileLoading: false
       });
+      const R = getRouter();
+      if (R && R.isActive() && store.slug && this.state.screen === 'business') R.canonicalize('/store/' + store.slug);
     }).catch(err => {
       if (this._unmounted) return;
+      if (err && err.status === 404) {
+        this.setState({ storeProfileLoading: false, storeProfileError: '' });
+        const R = getRouter();
+        if (R && R.isActive() && this.state.screen === 'business') R.notFound({ kind: 'notfound', resource: 'store' });
+        return;
+      }
       const msg = (err && err.message) || '';
       if (/permission|authorized|authorization|forbidden|manage/i.test(msg)) {
         this.setState({ storeProfileLoading: false, storeProfileError: '' });
@@ -12235,6 +12259,7 @@ class Component extends DCLogic {
     }
     if (prevScreen !== this.state.screen) this._onScreenEnter(this.state.screen);
     this._prevScreen = this.state.screen;
+    this._syncRouter();
     if (this.state.screen && this.state.screen.startsWith('onboard') && typeof localStorage !== 'undefined') {
       try {
         localStorage.setItem('loumoo_onboarding_draft', JSON.stringify({
@@ -13068,9 +13093,10 @@ class Component extends DCLogic {
   sharePublication(id, kind, title) {
     if (!id) { this.toast('That is not published yet'); return; }
 
-    const path = kind === 'BROADCAST'
-      ? '/announce/' + encodeURIComponent(id)
-      : '/listing/' + encodeURIComponent(id);
+    const Reg = (typeof window !== 'undefined' && window.LoumooRoutes) || null;
+    const routeId = kind === 'BROADCAST' ? 'announcement' : 'product';
+    const path = (Reg && Reg.build(routeId, { id: String(id) }))
+      || ((kind === 'BROADCAST' ? '/announcements/' : '/product/') + encodeURIComponent(id));
 
     let url = path;
     try {
@@ -14427,6 +14453,107 @@ class Component extends DCLogic {
     return keys.includes(this.state.screen) ? 'var(--color-accent)' : 'var(--color-neutral-700)';
   }
 
+  _startRouter() {
+    const R = getRouter();
+    if (!R) return;
+    this._routerStartTimer = setTimeout(() => {
+      if (this._unmounted) return;
+      R.start(this._routerAdapter()).catch(() => {
+        if (!this._unmounted && this.state.screen === 'loading') this.setState({ screen: 'home' });
+      });
+    }, 0);
+  }
+
+  _stopRouter() {
+    clearTimeout(this._routerStartTimer);
+    const R = getRouter();
+    if (R && R.isActive()) R.stop();
+  }
+
+  _syncRouter() {
+    const R = getRouter();
+    if (R && R.isActive()) R.syncFromState(this.state);
+  }
+
+  _routerAdapter() {
+    return {
+      currentScreen: () => this.state.screen,
+      toast: (m) => this.toast(m),
+      ensureBase: () => {
+        const s = this.state.screen;
+        if (!s || s === 'loading' || s === 'notFound') {
+          this.setState({ screen: 'home', routeNotFound: null });
+          return 'home';
+        }
+        return s;
+      },
+      showNotFound: (info) => {
+        this.setState({ screen: 'notFound', routeNotFound: info || null, toast: '' });
+      },
+      showScreen: (screen, route, params, ctx) => this._routerShow(screen, route, params, ctx)
+    };
+  }
+
+  _routerShow(screen, route, params, ctx) {
+    const bind = route.bind || {};
+    const names = Object.keys(bind);
+    const patch = { toast: '', routeNotFound: null };
+    let needsResource = false;
+    names.forEach(n => {
+      const key = bind[n];
+      if (key.indexOf('.') === -1) patch[key] = params[n];
+      else needsResource = true;
+    });
+    if (route.fixed) Object.keys(route.fixed).forEach(k => { if (k.indexOf('.') === -1) patch[k] = route.fixed[k]; });
+    const first = names.length ? params[names[0]] : undefined;
+    const enter = route.enter && typeof this[route.enter] === 'function' ? this[route.enter] : null;
+    const finalScreen = needsResource && enter ? 'loading' : screen;
+    const direction = ctx && ctx.direction;
+
+    this.setState(st => {
+      const next = Object.assign({}, patch, { screen: finalScreen });
+      const prev = st.screen;
+      if (direction === 'pop') next.stack = st.stack.length ? st.stack.slice(0, -1) : st.stack;
+      else if (direction === 'push' && prev && prev !== finalScreen && prev !== 'loading' && prev !== 'notFound') next.stack = [...st.stack, prev];
+      return next;
+    });
+    if (this._searchExperience) this._searchExperience.enter(screen);
+    this._ensurePublishingFor(screen);
+    if (!enter) return undefined;
+    const out = enter.call(this, first, params, route);
+    if (!needsResource) return out;
+    return Promise.resolve(out).then(r => {
+      if (this._unmounted) return r;
+      if (r && (r.notFound || r.error)) return r;
+      this.setState({ screen });
+      return r;
+    });
+  }
+
+  _enterOrder(id) {
+    const wanted = String(id);
+    const hit = (this.state.orders || []).find(o => o && String(o.id) === wanted);
+    if (hit) { this.setState({ currentOrder: hit }); return { found: true }; }
+    const api = getApi();
+    const circuit = typeof window !== 'undefined' ? window.LoumooCircuit : null;
+    if (!api || !api.getOrder || !circuit) return { error: true };
+    return api.getOrder(wanted).then(raw => {
+      if (this._unmounted) return { found: false };
+      if (!raw) return { notFound: true };
+      const order = circuit.orderFromServer(raw, {});
+      this.setState(st => ({ currentOrder: order, orders: circuit.mergeOrders(st.orders || [], [order]) }));
+      return { found: true };
+    }).catch(err => {
+      const status = err && err.status;
+      if (status === 404 || status === 403) return { notFound: true };
+      return { error: true };
+    });
+  }
+
+  _enterStorefront(slug) {
+    this.setState({ currentStoreId: slug, currentStore: null, storeProfileError: '' });
+  }
+
   requireAuth(screen) {
     return this.requireCapability(screen, null);
   }
@@ -14463,6 +14590,13 @@ class Component extends DCLogic {
   }
 
   _afterAuthRedirect(fallback) {
+    const R = getRouter();
+    const returnTo = R && R.isActive() ? R.takeReturnTo() : null;
+    if (returnTo) {
+      this.setState({ postAuthRedirect: '' });
+      R.replace(returnTo);
+      return;
+    }
     const guard = getGuard();
     const remembered = guard ? guard.takeIntent(SCREENS) : null;
 
@@ -14548,6 +14682,8 @@ class Component extends DCLogic {
       } catch (_) {}
     }
     this.setState({ cartItems: [] });
+    const guard = getGuard();
+    if (guard && typeof guard.invalidate === 'function') guard.invalidate();
     this._applyAnonymous();
     this.toast('Signed out of LOUMOO');
     this.go('home');
@@ -14598,6 +14734,20 @@ class Component extends DCLogic {
     on.openReviewModal = () => { this.go('writeReview'); };
     on.shareProfile = () => { this.toast('Profile link copied to clipboard'); };
     on.shareSeller = () => { this.toast('Store link copied to clipboard'); };
+    const navTo = (path) => () => {
+      const R = getRouter();
+      if (R && R.isActive()) R.navigate(path); else this.go('home');
+    };
+    on.notFoundHome = navTo('/');
+    on.notFoundMarketplace = navTo('/marketplace');
+    on.notFoundSignIn = navTo('/sign-in');
+    on.notFoundBack = () => {
+      const R = getRouter();
+      if (R && R.isActive() && R.back()) return;
+      this.go('home');
+    };
+    on.notFoundReload = () => { if (typeof window !== 'undefined' && window.location) window.location.reload(); };
+    on.onboardContinue = () => this._afterAuthRedirect('home');
 
     const handleSellClick = () => {
       if (this.state.authStatus !== 'authenticated' && !this.state.isLoggedIn) {
@@ -15069,8 +15219,22 @@ class Component extends DCLogic {
     const strength = passwordStrength(this.state.resetNewPassword || '');
     const regStrength = passwordStrength(this.state.regPassword || '');
 
+    const nf = this.state.routeNotFound || {};
+    const nfKind = nf.kind || 'notfound';
+    const nfCopy = {
+      notfound: ['Page not found', 'We could not find this page. It may have moved, or the link may be mistyped.'],
+      forbidden: ['You do not have access', nf.message || 'This area is not available to your account.'],
+      unavailable: [(nf.title || 'This area') + ' is not available yet', 'This part of LOUMOO has not been built yet. Nothing is hidden here.'],
+      error: ['We could not load this page', 'Check your connection and try again.']
+    }[nfKind] || ['Page not found', 'We could not find this page.'];
     const viewProps = {
       is, on, st, pick,
+      notFoundKind: nfKind,
+      notFoundIsError: nfKind === 'error',
+      notFoundIsForbidden: nfKind === 'forbidden',
+      notFoundTitle: nfCopy[0],
+      notFoundMessage: nfCopy[1],
+      notFoundPath: nf.path || '',
       sidebarCollapsed: Boolean(this.state.sidebarCollapsed),
       sidebarNavClass: Boolean(this.state.sidebarCollapsed) ? 'collapsed' : '',
       toggleSidebar: () => this.toggleSidebar(),

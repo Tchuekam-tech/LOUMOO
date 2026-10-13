@@ -38,6 +38,10 @@ header_and_styles = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Every relative reference below (./src, ./Assets, ./support.js, the route-level *Screens chunks the DC
+     runtime fetches, data/catalog.json...) is resolved against this base, so a nested URL such as
+     /store/acme or /delivery/dlv_1 can never turn them into /store/src/... (docs/ROUTING.md). -->
+<base href="/">
 <title>LOUMOO Universal Commerce Marketplace</title>
 <link rel="icon" href="./favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="./Assets/brand/favicon-32.png">
@@ -45,6 +49,8 @@ header_and_styles = """<!DOCTYPE html>
 <link rel="apple-touch-icon" sizes="180x180" href="./Assets/brand/apple-touch-icon.png">
 <meta name="theme-color" content="#0025E5">
 <script src="./support.js"></script>
+<script defer src="./src/routing/routes.js"></script>
+<script defer src="./src/services/appRouter.js"></script>
 <!-- Keep the critical API/auth bridges non-blocking; they execute before
      DOMContentLoaded, which is when the DC runtime mounts the app. The
      publishing engine is a route-level chunk loaded only when Sell is used. -->
@@ -6629,7 +6635,9 @@ const SCREENS = [
   'publishIntent','publishStudio','publishReview','publishSuccess',
   'publicUserProfile','sellerPublicPage',
   // Phase 4 — SuperAdmin Executive Console
-  'superAdmin'
+  'superAdmin',
+  // URL routing: the router's own screen for a URL that has no page (docs/ROUTING.md)
+  'notFound'
 ];
 // ── Seller WhatsApp lines (Cameroon) ──
 // Real deep-link messaging: contacting a seller opens WhatsApp with a
@@ -6774,6 +6782,9 @@ function getGuard() {
     if (typeof globalThis !== 'undefined' && globalThis && globalThis.LoumooGuard) return globalThis.LoumooGuard;
   } catch (e) { /* sandboxed */ }
   return null;
+}
+function getRouter() {
+  return (typeof window !== 'undefined' && window.LoumooRouter) || null;
 }
 
 
@@ -6953,7 +6964,7 @@ if (typeof window !== 'undefined') {
 
 class Component extends DCLogic {
   state = {
-    screen: 'home', stack: [], cart: 0, cartItems: [], orders: [], lastOrder: null, lastOrders: [], placingOrder: false, orderError: '', orderErrorItemIds: [], vs: 2, toast: '', following: false, saved: false,
+    screen: (typeof window !== 'undefined' && window.LoumooRouter && window.LoumooRouter.initialScreen) ? window.LoumooRouter.initialScreen() : 'home', stack: [], cart: 0, cartItems: [], orders: [], lastOrder: null, lastOrders: [], placingOrder: false, orderError: '', orderErrorItemIds: [], vs: 2, toast: '', following: false, saved: false,
     sidebarCollapsed: true,
     vsFilterMode: 'all',
     vsPriority: 'perf',
@@ -7015,6 +7026,7 @@ class Component extends DCLogic {
     // that exists in SCREENS (validated in requireAuth) — never a raw string
     // from user input or a URL, so it cannot be used as an open redirect.
     postAuthRedirect: '',
+    routeNotFound: null,
 
     // ── Phase A: Password reset ──
     resetEmail: '',
@@ -7536,8 +7548,12 @@ class Component extends DCLogic {
   go = (s) => {
     if (this._searchExperience) this._searchExperience.enter(s);
     this.setState(st => ({ screen: s, stack: [...st.stack, st.screen], toast: '' }));
-    // The publishing studio is a feature chunk. Start loading it on intent,
-    // while the route transition remains immediate for all other screens.
+    this._ensurePublishingFor(s);
+    this._onScreenEnter(s);
+  };
+  // The publishing studio is a feature chunk. Start loading it on intent,
+  // while the route transition remains immediate for all other screens.
+  _ensurePublishingFor(s) {
     if (s === 'publishIntent' || s === 'publishStudio' || s === 'publishReview' || s === 'publishSuccess') {
       this._ensurePublishingEngine().then((pub) => {
         if (this._unmounted || !pub) return;
@@ -7545,9 +7561,13 @@ class Component extends DCLogic {
         if (this.state.screen === 'publishIntent') this.checkResumableDraft();
       }).catch(() => {});
     }
-    this._onScreenEnter(s);
-  };
+  }
   back = () => {
+    // The address bar is the source of truth for "where was I": one history step
+    // back, or up to the parent place when this tab has no earlier entry. The
+    // screen stack below stays as the fallback for screens that have no URL.
+    const R = getRouter();
+    if (R && R.isActive() && R.back()) return;
     const stack = this.state.stack.slice();
     const prev = stack.pop() || 'home';
     if (this._searchExperience) this._searchExperience.enter(prev);
@@ -8422,6 +8442,7 @@ class Component extends DCLogic {
     // Keep the feed (and an open order) live: sellers and riders learn of the next
     // step from it. See _startCircuitPolling.
     this._startCircuitPolling();
+    this._startRouter();
     if (typeof window !== 'undefined') {
       window._loumooHeroComponent = this;
       window.heroNextSlide = () => {
@@ -8532,6 +8553,7 @@ class Component extends DCLogic {
     clearInterval(this._resetTimer);
     clearInterval(this._emailTimer);
     this._stopCircuitPolling();
+    this._stopRouter();
     if (typeof window !== 'undefined' && this._handleKeyDown) {
       window.removeEventListener('keydown', this._handleKeyDown);
     }
@@ -9226,8 +9248,18 @@ class Component extends DCLogic {
         storeLogoUrl: store.logoUrl || store.logo_url || this.state.storeLogoUrl,
         storeProfileLoading: false
       });
+      // Reached by id (search, a link) or by a differently-cased slug: show the canonical address.
+      const R = getRouter();
+      if (R && R.isActive() && store.slug && this.state.screen === 'business') R.canonicalize('/store/' + store.slug);
     }).catch(err => {
       if (this._unmounted) return;
+      // A storefront that does not exist (or is not public) is a 404, not a banner on an empty page.
+      if (err && err.status === 404) {
+        this.setState({ storeProfileLoading: false, storeProfileError: '' });
+        const R = getRouter();
+        if (R && R.isActive() && this.state.screen === 'business') R.notFound({ kind: 'notfound', resource: 'store' });
+        return;
+      }
       const msg = (err && err.message) || '';
       // Silently suppress permission/authorization/management errors on the public
       // storefront — they are management-only concerns and confuse visitors.
@@ -9797,6 +9829,7 @@ class Component extends DCLogic {
     }
     if (prevScreen !== this.state.screen) this._onScreenEnter(this.state.screen);
     this._prevScreen = this.state.screen;
+    this._syncRouter();
     if (this.state.screen && this.state.screen.startsWith('onboard') && typeof localStorage !== 'undefined') {
       try {
         localStorage.setItem('loumoo_onboarding_draft', JSON.stringify({
@@ -10763,9 +10796,12 @@ class Component extends DCLogic {
   sharePublication(id, kind, title) {
     if (!id) { this.toast('That is not published yet'); return; }
 
-    const path = kind === 'BROADCAST'
-      ? '/announce/' + encodeURIComponent(id)
-      : '/listing/' + encodeURIComponent(id);
+    // The registry's canonical address for the record (/announcements/:id or /product/:id).
+    // This used to be '/announce/:id' and '/listing/:id', which no page ever served.
+    const Reg = (typeof window !== 'undefined' && window.LoumooRoutes) || null;
+    const routeId = kind === 'BROADCAST' ? 'announcement' : 'product';
+    const path = (Reg && Reg.build(routeId, { id: String(id) }))
+      || ((kind === 'BROADCAST' ? '/announcements/' : '/product/') + encodeURIComponent(id));
 
     let url = path;
     try {
@@ -12185,6 +12221,126 @@ class Component extends DCLogic {
    * Guards a destination that merely needs a session.
    * Equivalent to requireCapability(screen, null).
    */
+  // ── URL routing (docs/ROUTING.md) ────────────────────────────────────────────
+  // The registry (src/routing/routes.js) says which URL means what; the router
+  // (src/services/appRouter.js) owns the History API. This block is only the
+  // adapter that lets the router drive this component.
+  _startRouter() {
+    const R = getRouter();
+    if (!R) return;
+    // One macrotask after mount: the first commit (and the lazily-fetched screen chunks it
+    // mounts) must finish before the router changes the screen, or a chunk whose first
+    // render is the not-found state stays blank.
+    this._routerStartTimer = setTimeout(() => {
+      if (this._unmounted) return;
+      R.start(this._routerAdapter()).catch(() => {
+        // A router that cannot start must never leave the visitor on the skeleton.
+        if (!this._unmounted && this.state.screen === 'loading') this.setState({ screen: 'home' });
+      });
+    }, 0);
+  }
+
+  _stopRouter() {
+    clearTimeout(this._routerStartTimer);
+    const R = getRouter();
+    if (R && R.isActive()) R.stop();
+  }
+
+  _syncRouter() {
+    const R = getRouter();
+    if (R && R.isActive()) R.syncFromState(this.state);
+  }
+
+  _routerAdapter() {
+    return {
+      currentScreen: () => this.state.screen,
+      toast: (m) => this.toast(m),
+      // An overlay (rider hub, tracking...) needs a real screen under it.
+      ensureBase: () => {
+        const s = this.state.screen;
+        if (!s || s === 'loading' || s === 'notFound') {
+          this.setState({ screen: 'home', routeNotFound: null });
+          return 'home';
+        }
+        return s;
+      },
+      showNotFound: (info) => {
+        this.setState({ screen: 'notFound', routeNotFound: info || null, toast: '' });
+      },
+      showScreen: (screen, route, params, ctx) => this._routerShow(screen, route, params, ctx)
+    };
+  }
+
+  // Make the shell show `screen` for a route. Flat route parameters are written
+  // straight into the state key the registry binds them to (e.g. :id -> currentProductId);
+  // nested ones (currentOrder.id) and anything that has to be fetched go through the
+  // route's `enter` loader, which may answer { notFound } or { error }.
+  _routerShow(screen, route, params, ctx) {
+    const bind = route.bind || {};
+    const names = Object.keys(bind);
+    const patch = { toast: '', routeNotFound: null };
+    let needsResource = false;
+    names.forEach(n => {
+      const key = bind[n];
+      if (key.indexOf('.') === -1) patch[key] = params[n];
+      else needsResource = true;
+    });
+    if (route.fixed) Object.keys(route.fixed).forEach(k => { if (k.indexOf('.') === -1) patch[k] = route.fixed[k]; });
+    const first = names.length ? params[names[0]] : undefined;
+    const enter = route.enter && typeof this[route.enter] === 'function' ? this[route.enter] : null;
+    const finalScreen = needsResource && enter ? 'loading' : screen;
+    const direction = ctx && ctx.direction;
+
+    this.setState(st => {
+      const next = Object.assign({}, patch, { screen: finalScreen });
+      const prev = st.screen;
+      if (direction === 'pop') next.stack = st.stack.length ? st.stack.slice(0, -1) : st.stack;
+      else if (direction === 'push' && prev && prev !== finalScreen && prev !== 'loading' && prev !== 'notFound') next.stack = [...st.stack, prev];
+      return next;
+    });
+    if (this._searchExperience) this._searchExperience.enter(screen);
+    this._ensurePublishingFor(screen);
+    if (!enter) return undefined;
+    const out = enter.call(this, first, params, route);
+    if (!needsResource) return out;
+    return Promise.resolve(out).then(r => {
+      if (this._unmounted) return r;
+      if (r && (r.notFound || r.error)) return r;
+      this.setState({ screen });
+      return r;
+    });
+  }
+
+  // /orders/:id -- the order may not be in memory (a refresh, a shared link), so
+  // fetch it. The server answers 404 for an order the caller does not own, which
+  // is exactly what the visitor is told: nothing distinguishes "not yours" from
+  // "does not exist".
+  _enterOrder(id) {
+    const wanted = String(id);
+    const hit = (this.state.orders || []).find(o => o && String(o.id) === wanted);
+    if (hit) { this.setState({ currentOrder: hit }); return { found: true }; }
+    const api = getApi();
+    const circuit = typeof window !== 'undefined' ? window.LoumooCircuit : null;
+    if (!api || !api.getOrder || !circuit) return { error: true };
+    return api.getOrder(wanted).then(raw => {
+      if (this._unmounted) return { found: false };
+      if (!raw) return { notFound: true };
+      const order = circuit.orderFromServer(raw, {});
+      this.setState(st => ({ currentOrder: order, orders: circuit.mergeOrders(st.orders || [], [order]) }));
+      return { found: true };
+    }).catch(err => {
+      const status = err && err.status;
+      if (status === 404 || status === 403) return { notFound: true };
+      return { error: true };
+    });
+  }
+
+  // /store/:slug -- the shell's own loader (loadStoreProfile, run when the
+  // 'business' screen is entered) fetches the storefront from the slug.
+  _enterStorefront(slug) {
+    this.setState({ currentStoreId: slug, currentStore: null, storeProfileError: '' });
+  }
+
   requireAuth(screen) {
     return this.requireCapability(screen, null);
   }
@@ -12240,6 +12396,15 @@ class Component extends DCLogic {
    * redirect to an arbitrary URL.
    */
   _afterAuthRedirect(fallback) {
+    // The address the visitor was heading to (carried by ?returnTo= and by the
+    // remembered intent) wins: it already names the exact record, e.g. /orders/42.
+    const R = getRouter();
+    const returnTo = R && R.isActive() ? R.takeReturnTo() : null;
+    if (returnTo) {
+      this.setState({ postAuthRedirect: '' });
+      R.replace(returnTo);
+      return;
+    }
     const guard = getGuard();
     const remembered = guard ? guard.takeIntent(SCREENS) : null;
 
@@ -12341,6 +12506,8 @@ class Component extends DCLogic {
       } catch (_) {}
     }
     this.setState({ cartItems: [] });
+    const guard = getGuard();
+    if (guard && typeof guard.invalidate === 'function') guard.invalidate();
     this._applyAnonymous();
     this.toast('Signed out of LOUMOO');
     this.go('home');
@@ -12392,6 +12559,20 @@ class Component extends DCLogic {
     on.openReviewModal = () => { this.go('writeReview'); };
     on.shareProfile = () => { this.toast('Profile link copied to clipboard'); };
     on.shareSeller = () => { this.toast('Store link copied to clipboard'); };
+    const navTo = (path) => () => {
+      const R = getRouter();
+      if (R && R.isActive()) R.navigate(path); else this.go('home');
+    };
+    on.notFoundHome = navTo('/');
+    on.notFoundMarketplace = navTo('/marketplace');
+    on.notFoundSignIn = navTo('/sign-in');
+    on.notFoundBack = () => {
+      const R = getRouter();
+      if (R && R.isActive() && R.back()) return;
+      this.go('home');
+    };
+    on.notFoundReload = () => { if (typeof window !== 'undefined' && window.location) window.location.reload(); };
+    on.onboardContinue = () => this._afterAuthRedirect('home');
 
     const handleSellClick = () => {
       if (this.state.authStatus !== 'authenticated' && !this.state.isLoggedIn) {
@@ -12909,8 +13090,22 @@ class Component extends DCLogic {
     const strength = passwordStrength(this.state.resetNewPassword || '');
     const regStrength = passwordStrength(this.state.regPassword || '');
 
+    const nf = this.state.routeNotFound || {};
+    const nfKind = nf.kind || 'notfound';
+    const nfCopy = {
+      notfound: ['Page not found', 'We could not find this page. It may have moved, or the link may be mistyped.'],
+      forbidden: ['You do not have access', nf.message || 'This area is not available to your account.'],
+      unavailable: [(nf.title || 'This area') + ' is not available yet', 'This part of LOUMOO has not been built yet. Nothing is hidden here.'],
+      error: ['We could not load this page', 'Check your connection and try again.']
+    }[nfKind] || ['Page not found', 'We could not find this page.'];
     const viewProps = {
       is, on, st, pick,
+      notFoundKind: nfKind,
+      notFoundIsError: nfKind === 'error',
+      notFoundIsForbidden: nfKind === 'forbidden',
+      notFoundTitle: nfCopy[0],
+      notFoundMessage: nfCopy[1],
+      notFoundPath: nf.path || '',
       sidebarCollapsed: Boolean(this.state.sidebarCollapsed),
       sidebarNavClass: Boolean(this.state.sidebarCollapsed) ? 'collapsed' : '',
       toggleSidebar: () => this.toggleSidebar(),
@@ -18348,7 +18543,7 @@ _emit_catalog_assets()
 
 _screen_chunks = [
     ('SearchScreens', 'is.search || is.filters || is.voice || is.visual || is.visualScan || is.visualResults', get_search_and_ai_view()),
-    ('ChatProfileScreens', 'is.chat || is.threadAi || is.threadSeller || is.notifications || is.profile || is.saved || is.settings || is.loading || is.networkError', get_chat_and_profile_view()),
+    ('ChatProfileScreens', 'is.chat || is.threadAi || is.threadSeller || is.notifications || is.profile || is.saved || is.settings || is.loading || is.networkError || is.notFound', get_chat_and_profile_view()),
     ('OnboardingScreens', 'is.onboardWelcome || is.onboardType || is.onboardIdentity || is.onboardOtp || is.onboardAdaptive || is.onboardBuyer || is.onboardSeller || is.onboardBusiness || is.onboardVerify || is.onboardReview || is.onboardSuccess', get_onboarding_view()),
     ('AccountAccessScreens', 'is.signIn || is.forgotPassword || is.resetPassword || is.verifyEmail', get_account_access_view()),
     ('AccountHubScreens', 'is.accountDashboard || is.editProfile || is.addresses || is.addAddress || is.editAddress || is.notificationPreferences || is.privacySettings || is.securitySettings || is.followedStores || is.userActivity || is.deleteAccount', get_account_hub_view()),
