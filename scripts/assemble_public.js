@@ -11,6 +11,10 @@
  * shell) so it runs identically on the Windows dev machine and the Linux build
  * image, with no line-ending pitfalls.
  *
+ * The same shell is published three times (index.html, 404.html and the legacy
+ * 'Commerce App.dc.html'); the route-level chunks and every asset are resolved against
+ * <base href="/"> in the shell, so none of them depends on the URL being served.
+ *
  * Two deploy-blocking issues are fixed here at build time so the source tree is
  * left untouched:
  *   1. src/backend is Python server code the static site never loads, and its
@@ -34,6 +38,11 @@ fs.mkdirSync(out, { recursive: true });
 const app = path.join(root, 'Commerce App.dc.html');
 fs.copyFileSync(app, path.join(out, 'index.html'));
 fs.copyFileSync(app, path.join(out, 'Commerce App.dc.html'));
+// 404.html is the same application shell. A static host serves it, with a real 404
+// status, for every URL that is not a file and not a route in src/routing/routes.js
+// (docs/ROUTING.md); the router then draws the not-found screen. Without it an unknown
+// URL would have no deliberate answer at all.
+fs.copyFileSync(app, path.join(out, '404.html'));
 
 // Secondary Design Component screens are route-level frontend chunks. Keep
 // them beside the shell so the browser can fetch them on demand from the same
@@ -59,6 +68,14 @@ for (const dir of ['Assets', 'src', '_ds', 'data']) {
   if (fs.existsSync(from)) {
     fs.cpSync(from, path.join(out, dir), { recursive: true });
   }
+}
+
+// The SuperAdmin control center is its own document (not part of the shell). The gateway
+// serves it at /admin and /superadmin; a static host needs the files in the publish
+// directory and a rewrite (vercel.json / netlify.toml, generated from the route registry).
+const controlCenter = path.join(root, 'SuperAdmin', 'frontend');
+if (fs.existsSync(controlCenter)) {
+  fs.cpSync(controlCenter, path.join(out, 'superadmin'), { recursive: true });
 }
 
 // (1) Drop the Python backend — not used by the static frontend, and it embeds
@@ -124,6 +141,7 @@ function rewriteRefs(file) {
   if (after !== before) fs.writeFileSync(file, after);
 }
 rewriteRefs(path.join(out, 'index.html'));
+rewriteRefs(path.join(out, '404.html'));
 rewriteRefs(path.join(out, 'Commerce App.dc.html'));
 for (const file of routeChunks) rewriteRefs(file);
 // CSS under the design-system folder may also reference assets by URL.
