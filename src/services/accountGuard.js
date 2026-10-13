@@ -30,6 +30,7 @@
     state: null,       // the last server answer
     fetchedAt: 0,
     inflight: null,
+    denial: null,      // why the server refused the session: { status, code, message } or null
     generation: 0      // bumped by invalidate() so a late answer is discarded
   };
 
@@ -73,6 +74,7 @@
         if (!token) {
           if (generation === cache.generation) {
             cache.state = null;
+            cache.denial = null;
             cache.fetchedAt = Date.now();
             cache.inflight = null;
           }
@@ -83,6 +85,7 @@
         .then(function (state) {
           if (generation !== cache.generation) return state;
           cache.state = state;
+          cache.denial = null;
           cache.fetchedAt = Date.now();
           cache.inflight = null;
           return state;
@@ -94,6 +97,9 @@
           if (err && (err.status === 401 || err.status === 403)) {
             if (current) {
               cache.state = null;
+              // 401 = no valid session (signed out / expired). 403 = a session that is
+              // valid but refused (a suspended account): callers must tell them apart.
+              cache.denial = { status: err.status, code: err.code || null, message: err.message || null };
               cache.fetchedAt = Date.now();
             }
             return null;
@@ -112,9 +118,15 @@
       return cache.state;
     },
 
+    /** Why the last state request was refused ({ status, code, message }), or null. */
+    denial: function () {
+      return cache.denial;
+    },
+
     /** Drops the cache — call after sign-out or any state-changing action. */
     invalidate: function () {
       cache.state = null;
+      cache.denial = null;
       cache.fetchedAt = 0;
       cache.inflight = null;
       cache.generation += 1;
@@ -214,13 +226,16 @@
      * Remembers where the user was heading, so completing a requirement
      * returns them there instead of dumping them on the home screen.
      */
-    rememberIntent: function (screen, capability) {
-      if (!screen) return;
+    rememberIntent: function (screen, capability, path) {
+      if (!screen && !path) return;
       var store = safeStorage();
       if (!store) return;
       try {
         store.setItem(INTENT_KEY, JSON.stringify({
-          screen: screen,
+          screen: screen || null,
+          // The full address (path + query) the user was heading to. It is only ever
+          // honoured after the router has validated it against the route registry.
+          path: typeof path === 'string' ? path.slice(0, 2048) : null,
           capability: capability || null,
           at: Date.now()
         }));
@@ -230,7 +245,8 @@
     /**
      * Consumes the remembered destination.
      *
-     * @param {string[]} allowedScreens  The application's screen whitelist.
+     * @param {string[]} allowedScreens  The application's screen whitelist (optional when only
+     *        the validated `path` is wanted; the router validates that against its registry).
      *        Validating against it means a tampered localStorage value can
      *        never become an open redirect to an arbitrary destination.
      * @param {number} maxAgeMs  Ignore stale intents (default 1 hour).
@@ -249,8 +265,8 @@
 
       try {
         var intent = JSON.parse(raw);
-        if (!intent || !intent.screen) return null;
-        if (Array.isArray(allowedScreens) && allowedScreens.indexOf(intent.screen) === -1) return null;
+        if (!intent || (!intent.screen && !intent.path)) return null;
+        if (intent.screen && Array.isArray(allowedScreens) && allowedScreens.indexOf(intent.screen) === -1) return null;
         var age = Date.now() - (intent.at || 0);
         if (age > (maxAgeMs || 3600000)) return null;
         return intent;
