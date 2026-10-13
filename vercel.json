@@ -8,13 +8,461 @@
       "includeFiles": "{src/data/**,data/**}"
     }
   },
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/app",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/Commerce App.dc.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/Commerce%20App.dc.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/seller",
+      "destination": "/sell",
+      "permanent": true
+    },
+    {
+      "source": "/seller/onboarding",
+      "destination": "/sell/onboarding",
+      "permanent": true
+    },
+    {
+      "source": "/seller/create-store",
+      "destination": "/sell/create-store",
+      "permanent": true
+    },
+    {
+      "source": "/login",
+      "destination": "/sign-in",
+      "permanent": true
+    },
+    {
+      "source": "/signin",
+      "destination": "/sign-in",
+      "permanent": true
+    },
+    {
+      "source": "/signup",
+      "destination": "/onboarding",
+      "permanent": true
+    },
+    {
+      "source": "/sign-up",
+      "destination": "/onboarding",
+      "permanent": true
+    },
+    {
+      "source": "/listing/:id([A-Za-z0-9_-]+)",
+      "destination": "/product/:id",
+      "permanent": true
+    },
+    {
+      "source": "/announce/:id([A-Za-z0-9_-]+)",
+      "destination": "/announcements/:id",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
       "destination": "/api/index.js"
     },
     {
-      "source": "/((?!api/|Assets/|_ds/|src/|data/|favicon.ico|robots.txt).*)",
+      "source": "/admin",
+      "destination": "/superadmin/index.html"
+    },
+    {
+      "source": "/superadmin",
+      "destination": "/superadmin/index.html"
+    },
+    {
+      "source": "/marketplace",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/marketplace/filters",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/marketplace/voice",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/marketplace/visual",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/marketplace/visual/scan",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/marketplace/visual/results",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/marketplace/categories",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/marketplace/category/:category([A-Za-z0-9_-]+)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/marketplace/best-picks",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/marketplace/free-day",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/compare",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/compare/results",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/product/:id([A-Za-z0-9_-]+)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/stores",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/brand",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/store/:slug([A-Za-z0-9_-]+)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/announcements",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/announcements/campaigns",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/announcements/:id([A-Za-z0-9_-]+)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/travel",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/travel/bus",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/travel/packages",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/travel/visa",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/travel/results",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/travel/details",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/travel/passenger",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/travel/tickets",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/hotels",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/hotels/voucher",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/hotels/:id([A-Za-z0-9_-]+)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/hotels/:id([A-Za-z0-9_-]+)/book",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/cart",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/checkout",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/checkout/success",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/orders",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/orders/:id([A-Za-z0-9_-]+)/refund",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/orders/:id([A-Za-z0-9_-]+)/review",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/orders/:id([A-Za-z0-9_-]+)/tracking",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/orders/:id([A-Za-z0-9_-]+)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/chat",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/chat/assistant",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/chat/seller",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/notifications",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/account",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/account/profile",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/account/profile/edit",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/account/addresses",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/account/addresses/new",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/account/addresses/edit",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/account/notification-preferences",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/account/privacy",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/account/security",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/account/following",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/account/following/providers",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/account/activity",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/account/delete",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/account/saved",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/account/settings",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/account/transactions",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/account/suspended",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sign-in",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/forgot-password",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/reset-password",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/verify",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/onboarding",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/onboarding/type",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/onboarding/identity",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/onboarding/code",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/onboarding/profile",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/onboarding/buyer",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/onboarding/seller",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/onboarding/business",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/onboarding/verification",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/onboarding/review",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/onboarding/done",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sell",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sell/listings",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sell/deliveries",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sell/deliveries/:orderId([A-Za-z0-9_-]+)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sell/orders/:id([A-Za-z0-9_-]+)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sell/payouts",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sell/analytics",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sell/settings",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sell/verification",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sell/onboarding",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sell/create-store",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sell/new",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sell/new/studio",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sell/new/review",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sell/new/done",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/rider",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/delivery/:id([A-Za-z0-9_-]+)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/providers/:id([A-Za-z0-9_-]+)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/admin/riders",
       "destination": "/index.html"
     }
   ],
