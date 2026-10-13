@@ -51,10 +51,19 @@
 
   // ------------------------------------------------------------------ entry
   function open(opts) {
+    // Compatibility entry point: with URL routing active this navigates to the
+    // canonical address (the route then calls mount()); without it, it opens directly.
+    var R = window.LoumooRouter;
+    if (R && R.isActive()) return R.openOverlay('sellerDispatch', opts || {});
+    return mount(opts);
+  }
+
+  /** Opens the board (and one order if asked). Called by the router; use open() everywhere else. */
+  function mount(opts) {
     var ui = UI(), api = API();
     if (!ui || !api) { console.warn('[SellerDispatch] the UI kit or the delivery API is missing'); return null; }
     var o = opts || {};
-    var nav = ui.openStack({ label: 'Deliveries' });
+    var nav = ui.openStack({ label: 'Deliveries', onClose: o.onClose });
     var board = boardView(nav);
     nav.push(board);
     if (o.orderId) openOrderById(nav, o.orderId);
@@ -698,5 +707,5 @@
     open({ orderId: t.getAttribute('data-order-id') || null });
   });
 
-  window.LoumooSellerDispatch = { open: open, _bucketOf: bucketOf };
+  window.LoumooSellerDispatch = { open: open, mount: mount, _bucketOf: bucketOf };
 })();

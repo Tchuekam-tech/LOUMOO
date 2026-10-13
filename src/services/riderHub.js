@@ -71,12 +71,21 @@
   }
 
   // ------------------------------------------------------------------ entry
-  function open() {
+  function open(opts) {
+    // Compatibility entry point: with URL routing active this navigates to the
+    // canonical address (the route then calls mount()); without it, it opens directly.
+    var R = window.LoumooRouter;
+    if (R && R.isActive()) return R.openOverlay('rider', {});
+    return mount(opts);
+  }
+
+  /** Opens the hub. Called by the router for /rider; use open() everywhere else. */
+  function mount(opts) {
     var ui = UI(), api = API();
     if (!ui || !api) { console.warn('[RiderHub] the UI kit or the delivery API is missing'); return null; }
     var ctl = presenceController();
     if (ctl) ctl.start(); // arms the heartbeat if the server says this rider is online
-    var nav = ui.openStack({ label: 'Rider deliveries' });
+    var nav = ui.openStack({ label: 'Rider deliveries', onClose: opts && opts.onClose });
     nav.push(inboxView(nav));
     return nav;
   }
@@ -830,5 +839,5 @@
     open();
   });
 
-  window.LoumooRiderHub = { open: open };
+  window.LoumooRiderHub = { open: open, mount: mount };
 })();

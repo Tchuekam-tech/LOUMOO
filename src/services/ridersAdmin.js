@@ -20,10 +20,19 @@
   function UI() { return window.LoumooDispatchUI; }
   function API() { return window.deliveryApi; }
 
-  function open() {
+  function open(opts) {
+    // Compatibility entry point: with URL routing active this navigates to the
+    // canonical address (the route then calls mount()); without it, it opens directly.
+    var R = window.LoumooRouter;
+    if (R && R.isActive()) return R.openOverlay('ridersAdmin', {});
+    return mount(opts);
+  }
+
+  /** Opens the roster. Called by the router for /admin/riders; use open() everywhere else. */
+  function mount(opts) {
     var ui = UI(), api = API();
     if (!ui || !api) { console.warn('[RidersAdmin] the UI kit or the delivery API is missing'); return null; }
-    var nav = ui.openStack({ label: 'Riders' });
+    var nav = ui.openStack({ label: 'Riders', onClose: opts && opts.onClose });
     nav.push(rosterView(nav));
     return nav;
   }
@@ -274,5 +283,5 @@
     open();
   });
 
-  window.LoumooRidersAdmin = { open: open };
+  window.LoumooRidersAdmin = { open: open, mount: mount };
 })();

@@ -179,12 +179,29 @@
   function q(sel) { return state.root ? state.root.querySelector(sel) : null; }
 
   // --------------------------------------------------------------- lifecycle
+  /**
+   * Compatibility entry point: with URL routing active this navigates to the canonical
+   * address (/delivery/:id or /orders/:id/tracking) and the route calls mount(); without
+   * it, it opens the overlay directly.
+   */
   function open(opts) {
     opts = opts || {};
     var orderId = opts.orderId || opts.order || null;
     var deliveryId = opts.deliveryId || opts.id || null;
     if (!orderId && !deliveryId) { console.warn('[DeliveryTracking] open() needs orderId or deliveryId'); return; }
-    if (state.mounted) close();
+    var R = window.LoumooRouter;
+    if (R && R.isActive()) { R.openOverlay('tracking', { orderId: orderId, deliveryId: deliveryId }); return; }
+    return mount(opts);
+  }
+
+  /** Opens the overlay. Called by the router; the handle's close() does not call onClose. */
+  function mount(opts) {
+    opts = opts || {};
+    var orderId = opts.orderId || opts.order || null;
+    var deliveryId = opts.deliveryId || opts.id || null;
+    if (!orderId && !deliveryId) { console.warn('[DeliveryTracking] mount() needs orderId or deliveryId'); return null; }
+    if (state.mounted) close('reopen');
+    state.onClose = typeof opts.onClose === 'function' ? opts.onClose : null;
 
     injectStyles();
     state.root = buildOverlay(opts.subtitle);
@@ -196,9 +213,14 @@
     // the order screen has just read it, there IS a map to show: start the library as well.
     if (takePrimed(orderId, deliveryId)) warm(false); else warmConnections();
     load(orderId, deliveryId);
+    return { close: function () { close('router'); } };
   }
 
-  function close() {
+  function close(reason) {
+    // The visitor's own Close (the click passes an Event) tells the router, so it can
+    // leave /delivery/:id. A close the router asked for, or a re-open, does not.
+    var onClose = state.onClose;
+    state.onClose = null;
     if (state.sub && state.sub.close) { try { state.sub.close(); } catch (e) {} }
     state.sub = null;
     clearTimeout(state._waitTimer);
@@ -222,6 +244,7 @@
     state.delivery = null;
     state.deliveryId = null;
     try { document.body.style.overflow = ''; } catch (e) {}
+    if (onClose && reason !== 'router' && reason !== 'reopen') { try { onClose(); } catch (e) {} }
   }
 
   // --------------------------------------------------------------- rendering
@@ -830,5 +853,5 @@
   // Close on Escape, for parity with a back gesture.
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && state.mounted) close(); });
 
-  window.LoumooDeliveryTracking = { open: open, close: close, warm: warm, prime: prime, _state: state };
+  window.LoumooDeliveryTracking = { open: open, mount: mount, close: close, warm: warm, prime: prime, _state: state };
 })();
