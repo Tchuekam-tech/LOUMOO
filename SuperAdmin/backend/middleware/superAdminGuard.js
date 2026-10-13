@@ -95,7 +95,24 @@ async function requireSuperAdminRole(req, res, next) {
   return next(new AuthorizationError('Super Administrator access is required.'));
 }
 
+/**
+ * Stricter than requireSuperAdminRole: only `super_admin`. It runs AFTER
+ * requireSuperAdminRole (the router applies that to every route), which has already
+ * authenticated the caller and attached `req.principal`.
+ *
+ * `admin` and `super_admin` used to be interchangeable on /api/v1/admin/*, so an `admin`
+ * could promote any account (itself included) to `super_admin`, rewrite platform
+ * settings or switch maintenance mode on. The operations that make someone a platform
+ * owner now require the platform owner (docs/ROUTING.md, "Admin vs super admin").
+ */
+function requireSuperAdminOnly(req, res, next) {
+  const role = (req.principal && (req.principal.primaryRole || req.principal.role)) || 'customer';
+  if (Role.hasRole(role, ROLES.SUPER_ADMIN)) return next();
+  return next(new AuthorizationError('Super administrator privileges required.'));
+}
+
 module.exports = {
   requireSuperAdminRole,
+  requireSuperAdminOnly,
   TEST_SUPER_ADMIN_SUBJECT
 };

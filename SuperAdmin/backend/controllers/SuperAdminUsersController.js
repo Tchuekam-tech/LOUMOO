@@ -6,6 +6,18 @@
  */
 
 const SuperAdminService = require('../services/SuperAdminService');
+const { ValidationError, AuthorizationError } = require('../../../server/shared/errors/AppError');
+const { Role, ROLES } = require('../../../server/modules/identity/value-objects/Role');
+
+/**
+ * What the generic "edit this user" endpoint may change. It used to spread the request
+ * body straight into the profile row, so `{ "primary_role": "super_admin" }` (or any
+ * other column: clerk_user_id, status, seller_status...) was accepted from any admin.
+ * Role changes have their own super-admin-only route; KYC has its own route; everything
+ * that is not a plain moderation edit is refused rather than silently ignored.
+ */
+const EDITABLE_USER_FIELDS = Object.freeze(['first_name', 'last_name', 'city', 'avatar_url', 'phone_number', 'status']);
+const VALID_STATUSES = Object.freeze(['active', 'suspended', 'deactivated']);
 
 class SuperAdminUsersController {
   static async listUsers(req, res, next) {
@@ -47,13 +59,34 @@ class SuperAdminUsersController {
   static async updateUser(req, res, next) {
     try {
       const { id } = req.params;
-      const updates = req.body;
+      const body = req.body && typeof req.body === 'object' ? req.body : {};
+      const { reason, ...updates } = body;
       const adminId = (req.principal && req.principal.id) || 'super_admin';
       const ipAddress = req.ip || req.connection.remoteAddress;
 
+      const rejected = Object.keys(updates).filter(k => !EDITABLE_USER_FIELDS.includes(k));
+      if (rejected.length) {
+        throw new ValidationError(
+          `These fields cannot be changed here: ${rejected.join(', ')}. Editable: ${EDITABLE_USER_FIELDS.join(', ')}. ` +
+          'Roles are changed by a super administrator on /users/:id/role.'
+        );
+      }
+      if (!Object.keys(updates).length) throw new ValidationError('Nothing to update.');
+      if ('status' in updates && !VALID_STATUSES.includes(updates.status)) {
+        throw new ValidationError(`Invalid status [${updates.status}]. Allowed: ${VALID_STATUSES.join(', ')}`);
+      }
+
+      // An administrator cannot act on an account that outranks them (e.g. suspend a super admin).
+      const actorRole = (req.principal && (req.principal.primaryRole || req.principal.role)) || 'customer';
+      const target = await SuperAdminService.getUserDetail(id);
+      const targetRole = target.primary_role || target.primaryRole || 'customer';
+      if (Role.hasRole(targetRole, ROLES.ADMIN) && !Role.hasRole(actorRole, ROLES.SUPER_ADMIN)) {
+        throw new AuthorizationError('Only a super administrator can change an administrator account.');
+      }
+
       const user = await SuperAdminService.updateUser(id, updates, {
         adminId,
-        reason: req.body.reason || null,
+        reason: reason || null,
         ipAddress
       });
 
@@ -76,6 +109,7 @@ class SuperAdminUsersController {
 
       const user = await SuperAdminService.updateUserRole(id, role, {
         adminId,
+        actorRole: (req.principal && (req.principal.primaryRole || req.principal.role)) || 'customer',
         reason: req.body.reason || null,
         ipAddress
       });
