@@ -1713,7 +1713,7 @@
     card.tagline = firstLine(v.shortDescription || v.description);
     card.subtitle = card.tagline;
     card.ctaLabel = v.priceMode === 'QUOTE' ? 'Request a price' : 'Buy now';
-    card.href = draft.remoteId ? '/listing/' + draft.remoteId : '';
+    card.href = draft.remoteId ? '/product/' + draft.remoteId : '';
   }
 
   function buildServiceCard(card, draft, ctx) {
@@ -1754,7 +1754,7 @@
     card.subtitle = firstLine(v.description);
     card.ctaLabel = v.bookingMode === 'INSTANT' ? 'Book now'
       : v.bookingMode === 'ENQUIRY' ? 'Send an enquiry' : 'Request a booking';
-    card.href = draft.remoteId ? '/listing/' + draft.remoteId : '';
+    card.href = draft.remoteId ? '/product/' + draft.remoteId : '';
   }
 
   function buildBroadcastCard(card, draft, ctx) {
@@ -1810,7 +1810,7 @@
 
     card.ctaLabel = trim(v.ctaLabel)
       || labelFor(CTA_TYPES, v.ctaType || (def ? def.defaultCta : 'VIEW_STORE'));
-    card.href = draft.remoteId ? '/announce/' + draft.remoteId : '';
+    card.href = draft.remoteId ? '/announcements/' + draft.remoteId : '';
 
     if (ctx.attachedListing) {
       card.attached = {
@@ -1933,7 +1933,7 @@
     var methods = (listing.trust && listing.trust.paymentMethods) || [];
     card.trustNote = methods.indexOf('ESCROW') !== -1 ? 'Escrow protected' : '';
     card.ctaLabel = card.kind === 'SERVICE' ? 'Book now' : 'Buy now';
-    card.href = '/listing/' + listing.id;
+    card.href = '/product/' + listing.id;
     card.statusLabel = listing.status || '';
     card.specifications = listing.specifications || [];
     card.attributes = listing.attributes || {};
@@ -2010,7 +2010,7 @@
       };
     }
 
-    card.href = '/announce/' + (ann.slug || ann.id);
+    card.href = '/announcements/' + (ann.slug || ann.id);
     card.statusLabel = ann.status || '';
     card.id = ann.id;
     return card;
