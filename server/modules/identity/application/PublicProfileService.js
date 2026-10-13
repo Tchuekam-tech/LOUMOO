@@ -154,6 +154,20 @@ class PublicProfileService {
       throw new NotFoundError('Seller', slugOrId);
     }
 
+    // A storefront is public only while it is live: ACTIVE and not PRIVATE - the same rule the
+    // marketplace applies to its listings (CatalogRepository joins stores on ACTIVE). A draft,
+    // pending, suspended or closed store, or one its owner made private, answers exactly like a
+    // store that does not exist, so changing the slug in the URL reveals nothing. The owner and
+    // platform staff still see it (previewing their own page). docs/ROUTING.md, "/store/:slug".
+    const isLive = String(store.status || '').toUpperCase() === 'ACTIVE'
+      && String(store.visibility || 'PUBLIC').toUpperCase() !== 'PRIVATE';
+    if (!isLive) {
+      const role = requestingPrincipal && (requestingPrincipal.primaryRole || requestingPrincipal.role);
+      const isOwner = Boolean(requestingPrincipal && requestingPrincipal.id && store.owner_id === requestingPrincipal.id);
+      const isStaff = role === 'admin' || role === 'super_admin';
+      if (!isOwner && !isStaff) throw new NotFoundError('Seller', slugOrId);
+    }
+
     // Hydrate store profile
     let storeProfile = null;
     let storeHours = null;
