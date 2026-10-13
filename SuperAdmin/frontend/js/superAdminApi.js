@@ -20,18 +20,18 @@
       if (typeof localStorage !== 'undefined') {
         return localStorage.getItem('loumoo_token') ||
                localStorage.getItem('loumoo_supabase_session_token') ||
-               'admin_token';
+               '';
       }
     } catch (e) {}
-    return 'admin_token';
+    return '';
   }
 
   async function request(endpoint, options = {}) {
     const url = endpoint.startsWith('http') ? endpoint : endpoint;
+    const token = getAuthToken();
     const headers = {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${getAuthToken()}`,
-      'X-Admin-Key': 'loumoo_dev_admin',
+      ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
       ...(options.headers || {})
     };
 
