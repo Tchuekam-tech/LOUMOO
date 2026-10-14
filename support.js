@@ -1,5 +1,12 @@
 // GENERATED from dc-runtime/src/*.ts — do not edit. Rebuild with `cd dc-runtime && bun run build`.
 //
+// LOCAL PATCH 2 (keep on regeneration): boot() re-fetches the page to recover its
+// exact template text. It used to ignore any response that was not 2xx, but a URL the
+// application has no page for is served WITH the application and a 404 status
+// (docs/ROUTING.md), and ignoring that body left every lazily-loaded child screen
+// (the not-found screen itself!) blank. The body is parsed whatever the status; a body
+// that is not a DC document parses to null and is skipped, as before.
+//
 // LOCAL PATCH (keep on regeneration): `resolve()` sends any expression with a
 // top-level &&, || or ternary ?: straight to JavaScript. The hand-rolled `!` and equality
 // branches below it do not implement operator precedence, so `!a && b` was
@@ -164,7 +171,7 @@
     runtime.setRootName(rootName);
     runtime.adoptParsed(rootName, parsed);
     if (!window.__resources) {
-      fetch(location.href).then((res) => res.ok ? res.text() : "").then((t) => {
+      fetch(location.href).then((res) => res.text()).then((t) => {
         const raw = t ? parseDcText(t) : null;
         if (raw?.template) runtime.updateHtml(rootName, raw.template);
       }).catch(() => {

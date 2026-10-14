@@ -621,6 +621,37 @@
 </div>
 </sc-if>
 
+<!-- ══════════════════════════════════════════════════════════════════════════
+     NO PAGE FOR THIS URL (is.notFound)
+     Rendered by the URL router (src/services/appRouter.js, docs/ROUTING.md) in
+     place of a blank or broken page: an address no route matches, a record that
+     does not exist or is not yours, an area the account may not open, or a named
+     area that has not been built yet. The visitor's address is left untouched.
+     ══════════════════════════════════════════════════════════════════════ -->
+<sc-if value="{{ is.notFound }}">
+<div role="alert" data-testid="route-state" data-route-state="{{ notFoundKind }}" style="padding:56px 16px;max-width:540px;margin:0 auto;text-align:center">
+  <div aria-hidden="true" style="width:64px;height:64px;border-radius:50%;background:var(--color-neutral-200);color:var(--color-text);display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M8.5 8.5l5 5M13.5 8.5l-5 5"/></svg>
+  </div>
+  <h3 data-testid="route-state-title" style="margin:0 0 8px;font-size:22px">{{ notFoundTitle }}</h3>
+  <p data-testid="route-state-message" style="font-size:13.5px;color:var(--color-text-secondary);margin:0 auto 12px">{{ notFoundMessage }}</p>
+  <sc-if value="{{ notFoundPath }}">
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:0 auto 20px;word-break:break-all"><code>{{ notFoundPath }}</code></p>
+  </sc-if>
+  <div style="display:flex;flex-direction:column;gap:10px;align-items:stretch">
+    <sc-if value="{{ notFoundIsError }}">
+      <button onClick="{{ on.notFoundReload }}" class="btn btn-primary btn-block" style="height:44px">TRY AGAIN</button>
+    </sc-if>
+    <sc-if value="{{ notFoundIsForbidden }}">
+      <button onClick="{{ on.notFoundSignIn }}" class="btn btn-secondary btn-block" style="height:44px">SIGN IN WITH ANOTHER ACCOUNT</button>
+    </sc-if>
+    <button onClick="{{ on.notFoundMarketplace }}" class="btn btn-primary btn-block" style="height:44px">BROWSE THE MARKETPLACE</button>
+    <button onClick="{{ on.notFoundHome }}" class="btn btn-secondary btn-block" style="height:44px">GO TO THE HOMEPAGE</button>
+    <button onClick="{{ on.notFoundBack }}" style="border:none;background:transparent;padding:10px;font:700 12px/1 var(--font-heading);color:var(--color-text-secondary);cursor:pointer">Go back</button>
+  </div>
+</div>
+</sc-if>
+
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {

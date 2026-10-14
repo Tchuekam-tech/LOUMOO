@@ -749,9 +749,19 @@
   el('sysStatus').addEventListener('click', function () { probeHealth(true); });
 
   /* ------------------------------ init --------------------------------- */
-  el('adminMail').textContent = 'admin@loumoo.cm';
-  el('adminAvatar').textContent = 'A';
-  var initial = (location.hash || '#overview').replace('#', '');
-  go(SECTIONS[initial] ? initial : 'overview');
-  probeHealth(false);
+  // Boot only once superAdminGate.js has let the visitor in (docs/ROUTING.md): a
+  // visitor without the role sees why, not a wall of failed requests.
+  function boot() {
+    el('adminMail').textContent = 'admin@loumoo.cm';
+    el('adminAvatar').textContent = 'A';
+    var initial = (location.hash || '#overview').replace('#', '');
+    go(SECTIONS[initial] ? initial : 'overview');
+    probeHealth(false);
+  }
+  var gate = window.SuperAdminGate;
+  if (gate && gate.ready && typeof gate.ready.then === 'function') {
+    gate.ready.then(function (open) { if (open) boot(); });
+  } else {
+    boot();
+  }
 })();

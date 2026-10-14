@@ -70,8 +70,8 @@ async function run() {
     throw new Error('Neither "python" nor "python3" is on PATH; verify_screens.py cannot run.');
   })();
   const verifyOut = execSync(`${pythonBin} -X utf8 verify_screens.py`, { cwd: root, encoding: 'utf-8' });
-  assert.ok(verifyOut.includes('Total unique screen conditionals found: 90'), 'Must find 90 screen conditionals');
-  assert.ok(verifyOut.includes('Total screens declared in SCREENS: 90'), 'Must match 90 declared screens');
+  assert.ok(verifyOut.includes('Total unique screen conditionals found: 91'), 'Must find 91 screen conditionals');
+  assert.ok(verifyOut.includes('Total screens declared in SCREENS: 91'), 'Must match 91 declared screens');
   assert.ok(verifyOut.includes('Missing screens count: 0'), 'Missing screens count must be 0');
   // The exact tag count shifts as screens evolve (e.g. the premium hotel
   // redesign added conditional sections); what must hold is that every
@@ -80,7 +80,7 @@ async function run() {
   const scIfMatch = verifyOut.match(/Open sc-if:\s*(\d+),\s*Close sc-if:\s*(\d+)/);
   assert.ok(scIfMatch, 'verify_screens must report the sc-if tag counts');
   assert.strictEqual(scIfMatch[1], scIfMatch[2], 'sc-if tags must be perfectly balanced');
-  console.log('    ✓ 5. 90/90 screens verified with balanced sc-if tags');
+  console.log('    ✓ 5. 91/91 screens verified with balanced sc-if tags');
 
   console.log('  All SuperAdmin Phase 4 tests passed successfully!');
 }

@@ -7,7 +7,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { requireSuperAdminRole } = require('../middleware/superAdminGuard');
+const { requireSuperAdminRole, requireSuperAdminOnly } = require('../middleware/superAdminGuard');
 const SuperAdminSettingsController = require('../controllers/SuperAdminSettingsController');
 const SuperAdminOverviewController = require('../controllers/SuperAdminOverviewController');
 const SuperAdminStoresController = require('../controllers/SuperAdminStoresController');
@@ -15,7 +15,9 @@ const SuperAdminListingsController = require('../controllers/SuperAdminListingsC
 const SuperAdminUsersController = require('../controllers/SuperAdminUsersController');
 const SuperAdminOrdersController = require('../controllers/SuperAdminOrdersController');
 
-// All admin endpoints strictly enforce RBAC
+// All admin endpoints strictly enforce RBAC: an authenticated `admin` or `super_admin`.
+// The few operations that decide who owns the platform, or how it behaves for everyone,
+// additionally require `super_admin` (requireSuperAdminOnly) - see docs/ROUTING.md.
 router.use(requireSuperAdminRole);
 
 // System Overview, Deep Health & Real-time Metrics
@@ -23,7 +25,7 @@ router.get('/overview', SuperAdminOverviewController.getOverview);
 router.get('/health/deep', SuperAdminOverviewController.getDeepHealth);
 
 // Emergency Platform Maintenance Toggle
-router.post('/maintenance', SuperAdminSettingsController.setMaintenance);
+router.post('/maintenance', requireSuperAdminOnly, SuperAdminSettingsController.setMaintenance);
 
 // Stores & Merchant KYC Moderation (Phase 2)
 router.get('/stores', SuperAdminStoresController.listStores);
@@ -44,8 +46,8 @@ router.patch('/listings/:id', SuperAdminListingsController.moderateListing);
 router.get('/users', SuperAdminUsersController.listUsers);
 router.get('/users/:id', SuperAdminUsersController.getUser);
 router.patch('/users/:id', SuperAdminUsersController.updateUser);
-router.patch('/users/:id/role', SuperAdminUsersController.updateUserRole);
-router.put('/users/:id/role', SuperAdminUsersController.updateUserRole);
+router.patch('/users/:id/role', requireSuperAdminOnly, SuperAdminUsersController.updateUserRole);
+router.put('/users/:id/role', requireSuperAdminOnly, SuperAdminUsersController.updateUserRole);
 router.patch('/users/:id/kyc', SuperAdminUsersController.updateUserKyc);
 router.put('/users/:id/kyc', SuperAdminUsersController.updateUserKyc);
 
@@ -58,12 +60,12 @@ router.post('/orders/:id/escrow', SuperAdminOrdersController.resolveEscrow);
 router.get('/config', SuperAdminSettingsController.getAll);
 router.get('/settings/categories', SuperAdminSettingsController.getCategories);
 router.get('/settings/category/:category', SuperAdminSettingsController.getByCategory);
-router.post('/settings/reset/:key', SuperAdminSettingsController.resetByKey);
+router.post('/settings/reset/:key', requireSuperAdminOnly, SuperAdminSettingsController.resetByKey);
 router.get('/settings', SuperAdminSettingsController.getAll);
-router.put('/settings', SuperAdminSettingsController.updateSettings);
-router.patch('/settings', SuperAdminSettingsController.updateSettings);
+router.put('/settings', requireSuperAdminOnly, SuperAdminSettingsController.updateSettings);
+router.patch('/settings', requireSuperAdminOnly, SuperAdminSettingsController.updateSettings);
 router.get('/settings/:key', SuperAdminSettingsController.getByKey);
-router.put('/settings/:key', SuperAdminSettingsController.updateByKey);
+router.put('/settings/:key', requireSuperAdminOnly, SuperAdminSettingsController.updateByKey);
 
 // Immutable Administrative Audit Logs & Export
 router.get('/audit-logs/actions', SuperAdminOverviewController.getAuditActions);

@@ -6,7 +6,7 @@
  */
 
 const SuperAdminRepository = require('../repositories/SuperAdminRepository');
-const { ValidationError } = require('../../../server/shared/errors/AppError');
+const { ValidationError, AuthorizationError } = require('../../../server/shared/errors/AppError');
 const logger = require('../../../server/shared/logging/logger');
 const CacheService = require('../../../server/infrastructure/cache/CacheService');
 
@@ -646,6 +646,14 @@ class SuperAdminService {
   }
 
   static async updateUserRole(id, role, context = {}) {
+    // The route already requires a super administrator; this is the same rule one layer down,
+    // so a future caller cannot reach it by another path. Internal callers (no actorRole) are trusted.
+    if (context.actorRole && String(context.actorRole).toLowerCase() !== 'super_admin') {
+      throw new AuthorizationError('Only a super administrator can change a role.');
+    }
+    if (context.adminId && String(context.adminId) === String(id)) {
+      throw new ValidationError('You cannot change your own role.');
+    }
     const targetRole = typeof role === 'object' && role.role ? role.role : role;
     if (!targetRole || typeof targetRole !== 'string') {
       throw new ValidationError('A valid user role must be specified.');

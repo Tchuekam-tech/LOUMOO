@@ -21,6 +21,24 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:search:ui
 
+  # URL routing (docs/ROUTING.md): the generated hosting config and the route map cannot drift
+  # from the registry, the backend authorizes every protected route's data (real server + real
+  # Postgres via PGlite, seeded personas, no network), and the real app opens every URL in Chromium.
+  routing:
+    name: Routing - config, backend authorization, browser
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run routes:check
+      - run: node scripts/assemble_public.js
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:routing
+
   test:
     name: Tests (Node 22)
     runs-on: ubuntu-latest

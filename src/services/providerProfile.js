@@ -35,20 +35,36 @@
   function kindLine(p) { return (p.isAgency ? 'Agency' : (vehicleLabel(p.vehicleType) || 'Rider')) + ' · ' + ratingText(p.rating); }
 
   // ------------------------------------------------------------------ entry
+  // open() / openFollowed() are the compatibility entry points: with URL routing active
+  // they navigate to the canonical address and the route calls mount() / mountFollowed().
   function open(opts) {
+    var o = opts || {};
+    if (!o.providerId) return null;
+    var R = window.LoumooRouter;
+    if (R && R.isActive()) return R.openOverlay('providerProfile', o);
+    return mount(o);
+  }
+
+  function mount(opts) {
     var ui = UI(), api = API();
     if (!ui || !api) { console.warn('[ProviderProfile] the UI kit or the delivery API is missing'); return null; }
     var o = opts || {};
     if (!o.providerId) return null;
-    var nav = ui.openStack({ label: 'Provider' });
+    var nav = ui.openStack({ label: 'Provider', onClose: o.onClose });
     nav.push(profileView(nav, o.providerId, o.city || null));
     return nav;
   }
 
-  function openFollowed() {
+  function openFollowed(opts) {
+    var R = window.LoumooRouter;
+    if (R && R.isActive()) return R.openOverlay('providerFollowed', {});
+    return mountFollowed(opts);
+  }
+
+  function mountFollowed(opts) {
     var ui = UI(), api = API();
     if (!ui || !api) { console.warn('[ProviderProfile] the UI kit or the delivery API is missing'); return null; }
-    var nav = ui.openStack({ label: 'Following' });
+    var nav = ui.openStack({ label: 'Following', onClose: opts && opts.onClose });
     nav.push(followedView(nav));
     return nav;
   }
@@ -210,5 +226,5 @@
     if (f) { e.preventDefault(); openFollowed(); }
   });
 
-  window.LoumooProviderProfile = { open: open, openFollowed: openFollowed };
+  window.LoumooProviderProfile = { open: open, openFollowed: openFollowed, mount: mount, mountFollowed: mountFollowed };
 })();
