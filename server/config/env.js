@@ -176,6 +176,12 @@ const trustProxyRaw = typeof process.env.TRUST_PROXY === 'string'
   ? process.env.TRUST_PROXY.trim()
   : '';
 
+// Split a comma/whitespace-separated secret into a de-duplicated key list.
+// One provider may hold several keys; the search chain rotates through them on
+// rate-limit/failure before falling over to the next provider.
+const splitList = (v) =>
+  [...new Set(String(v || '').split(/[\s,]+/).map(s => s.trim()).filter(Boolean))];
+
 const config = {
   port: env.PORT || 8080,
   nodeEnv,
@@ -246,15 +252,14 @@ const config = {
   elevenlabs: { apiKey: env.ELEVENLABS_API_KEY || '', agentId: env.ELEVENLABS_AGENT_ID || '' },
   search: {
     enabled: env.SEARCH_ENABLED === 'true',
-    // Anthropic (primary)
-    aiKey: env.ANTHROPIC_API_KEY || '',
+    // Each provider may hold several keys (comma/space separated) that the chain
+    // rotates through on failure. Anthropic (primary) → Gemini → Groq by default.
+    aiKeys: splitList(env.ANTHROPIC_API_KEY),
     aiModel: env.SEARCH_AI_MODEL || 'claude-haiku-5-5',
-    // Gemini (fallback)
-    geminiKey: env.GEMINI_API_KEY || env.GOOGLE_API_KEY || '',
-    geminiModel: env.GEMINI_MODEL || 'gemini-2.0-flash',
-    // Groq (fallback)
-    groqKey: env.GROQ_API_KEY || '',
-    groqModel: env.GROQ_MODEL || 'llama-3.3-70b-versatile',
+    geminiKeys: splitList(env.GEMINI_API_KEY || env.GOOGLE_API_KEY),
+    geminiModel: env.GEMINI_MODEL || 'gemini-3.8-flash',
+    groqKeys: splitList(env.GROQ_API_KEY),
+    groqModel: env.GROQ_MODEL || 'openai/gpt-oss-20b',
     providerOrder: (env.SEARCH_AI_PROVIDERS || 'anthropic,gemini,groq')
       .split(',')
       .map((p) => p.trim().toLowerCase())

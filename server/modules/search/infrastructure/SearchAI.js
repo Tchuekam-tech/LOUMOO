@@ -76,50 +76,104 @@ function validateImage(value) {
   return value;
 }
 
-// Each provider turns the shared context into its own request and returns the
-// raw intent object { q, city, type, minPrice, maxPrice, message }. It throws on
-// any failure (HTTP error, missing structure, bad JSON) so the chain can fall
-// over to the next provider. The returned object is NEVER trusted directly — the
-// caller re-validates it through parseSearch (the untrusted-query parser).
-const anthropicProvider = (s, fetcher) => ({
-  name: 'anthropic',
-  vision: true,
-  ready: Boolean(s.aiKey && s.aiModel),
-  async call({ message, previous, image }) {
-    const res = await fetcher('https://api.anthropic.com/v1/messages', {
+// A provider may hold several API keys; the chain rotates through them on any
+// failure (rate-limit, auth, bad output) before falling over to the next
+// provider. Each `send` returns the raw intent object; the caller re-validates
+// it through parseSearch (the untrusted-query parser) — a model's output is
+// never trusted directly.
+const keyList = (...vals) =>
+  vals
+    .flatMap((v) =>
+      Array.isArray(v) ? v : typeof v === 'string' ? v.split(/[\s,]+/) : [],
+    )
+    .map((s) => s.trim())
+    .filter(Boolean);
+async function rotate(keys, send) {
+  let err;
+  for (const key of keys) {
+    try {
+      return await send(key);
+    } catch (e) {
+      err = e;
+    }
+  }
+  throw err || new Error('no api key');
+}
+async function anthropicSend(fetcher, key, model, { message, previous, image }) {
+  const res = await fetcher('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'x-api-key': key,
+      'anthropic-version': '2023-06-01',
+      'content-type': 'application/json',
+    },
+    signal: AbortSignal.timeout(PER_PROVIDER_TIMEOUT_MS),
+    body: JSON.stringify({
+      model,
+      max_tokens: 600,
+      thinking: { type: 'disabled' },
+      system: `${INSTRUCTION} Report it by calling the search_intent tool.`,
+      tools: [
+        {
+          name: 'search_intent',
+          description:
+            'Report the structured catalog search parsed from the shopper request.',
+          input_schema: intentSchema,
+        },
+      ],
+      tool_choice: { type: 'tool', name: 'search_intent' },
+      messages: [
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: userPayload(message, previous) },
+            ...(image
+              ? [
+                  {
+                    type: 'image',
+                    source: {
+                      type: 'base64',
+                      media_type: `image/${image.ext}`,
+                      data: image.data,
+                    },
+                  },
+                ]
+              : []),
+          ],
+        },
+      ],
+    }),
+  });
+  if (!res.ok) throw new Error('anthropic http');
+  const d = await res.json(),
+    block = (Array.isArray(d.content) ? d.content : []).find(
+      (b) => b && b.type === 'tool_use' && b.name === 'search_intent',
+    );
+  if (!block || typeof block.input !== 'object')
+    throw new Error('anthropic shape');
+  return block.input;
+}
+async function geminiSend(fetcher, key, model, { message, previous, image }) {
+  const res = await fetcher(
+    `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
+      model,
+    )}:generateContent`,
+    {
       method: 'POST',
-      headers: {
-        'x-api-key': s.aiKey,
-        'anthropic-version': '2023-06-01',
-        'content-type': 'application/json',
-      },
+      headers: { 'x-goog-api-key': key, 'content-type': 'application/json' },
       signal: AbortSignal.timeout(PER_PROVIDER_TIMEOUT_MS),
       body: JSON.stringify({
-        model: s.aiModel,
-        max_tokens: 600,
-        thinking: { type: 'disabled' },
-        system: `${INSTRUCTION} Report it by calling the search_intent tool.`,
-        tools: [
-          {
-            name: 'search_intent',
-            description:
-              'Report the structured catalog search parsed from the shopper request.',
-            input_schema: intentSchema,
-          },
-        ],
-        tool_choice: { type: 'tool', name: 'search_intent' },
-        messages: [
+        systemInstruction: { parts: [{ text: INSTRUCTION }] },
+        contents: [
           {
             role: 'user',
-            content: [
-              { type: 'text', text: userPayload(message, previous) },
+            parts: [
+              { text: userPayload(message, previous) },
               ...(image
                 ? [
                     {
-                      type: 'image',
-                      source: {
-                        type: 'base64',
-                        media_type: `image/${image.ext}`,
+                      inlineData: {
+                        mimeType: `image/${image.ext}`,
                         data: image.data,
                       },
                     },
@@ -128,113 +182,87 @@ const anthropicProvider = (s, fetcher) => ({
             ],
           },
         ],
-      }),
-    });
-    if (!res.ok) throw new Error('anthropic http');
-    const d = await res.json(),
-      block = (Array.isArray(d.content) ? d.content : []).find(
-        (b) => b && b.type === 'tool_use' && b.name === 'search_intent',
-      );
-    if (!block || typeof block.input !== 'object') throw new Error('anthropic shape');
-    return block.input;
-  },
-});
-const geminiProvider = (s, fetcher) => ({
-  name: 'gemini',
-  vision: true,
-  ready: Boolean(s.geminiKey && s.geminiModel),
-  async call({ message, previous, image }) {
-    const res = await fetcher(
-      `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
-        s.geminiModel,
-      )}:generateContent`,
-      {
-        method: 'POST',
-        headers: {
-          'x-goog-api-key': s.geminiKey,
-          'content-type': 'application/json',
-        },
-        signal: AbortSignal.timeout(PER_PROVIDER_TIMEOUT_MS),
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: INSTRUCTION }] },
-          contents: [
-            {
-              role: 'user',
-              parts: [
-                { text: userPayload(message, previous) },
-                ...(image
-                  ? [
-                      {
-                        inlineData: {
-                          mimeType: `image/${image.ext}`,
-                          data: image.data,
-                        },
-                      },
-                    ]
-                  : []),
-              ],
-            },
-          ],
-          generationConfig: {
-            responseMimeType: 'application/json',
-            responseSchema: geminiSchema,
-            temperature: 0,
-            maxOutputTokens: 600,
-          },
-        }),
-      },
-    );
-    if (!res.ok) throw new Error('gemini http');
-    const d = await res.json(),
-      text = (d.candidates?.[0]?.content?.parts || [])
-        .map((p) => p.text)
-        .filter(Boolean)
-        .join('');
-    return JSON.parse(text);
-  },
-});
-const groqProvider = (s, fetcher) => ({
-  name: 'groq',
-  // Groq's default text models do not accept images; photo search skips it.
-  vision: false,
-  ready: Boolean(s.groqKey && s.groqModel),
-  async call({ message, previous }) {
-    const res = await fetcher(
-      'https://api.groq.com/openai/v1/chat/completions',
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${s.groqKey}`,
-          'content-type': 'application/json',
-        },
-        signal: AbortSignal.timeout(PER_PROVIDER_TIMEOUT_MS),
-        body: JSON.stringify({
-          model: s.groqModel,
+        generationConfig: {
+          responseMimeType: 'application/json',
+          responseSchema: geminiSchema,
           temperature: 0,
-          max_tokens: 600,
-          response_format: { type: 'json_object' },
-          messages: [
-            {
-              role: 'system',
-              content: `${INSTRUCTION} Respond with ONLY a JSON object with keys q (string), city (string), type (one of: ${TYPES.join(
-                ', ',
-              )}), minPrice (number or null), maxPrice (number or null), message (string).`,
-            },
-            { role: 'user', content: userPayload(message, previous) },
-          ],
-        }),
-      },
-    );
-    if (!res.ok) throw new Error('groq http');
-    const d = await res.json(),
-      text = d.choices?.[0]?.message?.content || '';
-    return JSON.parse(text);
-  },
+          maxOutputTokens: 600,
+          // gemini-3.x flash is a thinking model; disable it so a fast parse
+          // doesn't spend the output budget on reasoning and truncate the JSON.
+          thinkingConfig: { thinkingBudget: 0 },
+        },
+      }),
+    },
+  );
+  if (!res.ok) throw new Error('gemini http');
+  const d = await res.json(),
+    text = (d.candidates?.[0]?.content?.parts || [])
+      .map((p) => p.text)
+      .filter(Boolean)
+      .join('');
+  return JSON.parse(text);
+}
+async function groqSend(fetcher, key, model, { message, previous }) {
+  const res = await fetcher('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${key}`,
+      'content-type': 'application/json',
+    },
+    signal: AbortSignal.timeout(PER_PROVIDER_TIMEOUT_MS),
+    body: JSON.stringify({
+      model,
+      temperature: 0,
+      max_tokens: 600,
+      response_format: { type: 'json_object' },
+      messages: [
+        {
+          role: 'system',
+          content: `${INSTRUCTION} Respond with ONLY a JSON object with keys q (string), city (string), type (one of: ${TYPES.join(
+            ', ',
+          )}), minPrice (number or null), maxPrice (number or null), message (string).`,
+        },
+        { role: 'user', content: userPayload(message, previous) },
+      ],
+    }),
+  });
+  if (!res.ok) throw new Error('groq http');
+  const d = await res.json(),
+    text = d.choices?.[0]?.message?.content || '';
+  return JSON.parse(text);
+}
+const makeProvider = (name, vision, keys, model, send) => ({
+  name,
+  vision,
+  keys,
+  ready: keys.length > 0 && Boolean(model),
+  call: (ctx, fetcher) => rotate(keys, (key) => send(fetcher, key, model, ctx)),
 });
 const BUILDERS = {
-  anthropic: anthropicProvider,
-  gemini: geminiProvider,
-  groq: groqProvider,
+  anthropic: (s) =>
+    makeProvider(
+      'anthropic',
+      true,
+      keyList(s.aiKeys, s.aiKey),
+      s.aiModel,
+      anthropicSend,
+    ),
+  gemini: (s) =>
+    makeProvider(
+      'gemini',
+      true,
+      keyList(s.geminiKeys, s.geminiKey),
+      s.geminiModel,
+      geminiSend,
+    ),
+  groq: (s) =>
+    makeProvider(
+      'groq',
+      false,
+      keyList(s.groqKeys, s.groqKey),
+      s.groqModel,
+      groqSend,
+    ),
 };
 class SearchAI {
   constructor({
@@ -250,10 +278,10 @@ class SearchAI {
     this.providers = order
       .map((name) => BUILDERS[name])
       .filter(Boolean)
-      .map((build) => build(settings, this.fetcher));
+      .map((build) => build(settings));
   }
-  // The assistant is "ready" (and advertised in /capabilities) when ANY provider
-  // has a key — so one configured fallback keeps AI search alive.
+  // Ready (and advertised in /capabilities) when ANY provider has a key — one
+  // configured provider keeps AI search alive.
   get ready() {
     return this.providers.some((p) => p.ready);
   }
@@ -277,12 +305,13 @@ class SearchAI {
       image = { ext: m[1], data: m[2] };
     }
     const ctx = { message, previous, image };
-    // Try each ready provider in order; fall over on any failure. A provider that
-    // cannot see images is skipped for photo search. If none succeeds, fail closed.
+    // Try each ready provider in order; a provider rotates its own keys on
+    // failure. Non-vision providers are skipped for photo search. Fail closed if
+    // nothing succeeds.
     for (const p of this.providers) {
       if (!p.ready || (image && !p.vision)) continue;
       try {
-        const value = await p.call(ctx);
+        const value = await p.call(ctx, this.fetcher);
         if (!value || typeof value !== 'object') continue;
         const parsed = parseSearch(value);
         if (typeof value.message !== 'string' || value.message.length > 600)
