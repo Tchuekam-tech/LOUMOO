@@ -101,10 +101,18 @@ const envSchema = z.object({
   ELEVENLABS_API_KEY: z.string().optional(),
   ELEVENLABS_AGENT_ID: z.string().optional(),
   SEARCH_ENABLED: z.enum(['true', 'false']).default('false'),
-  // AI search (natural-language intent parsing) is served by the Anthropic
-  // Messages API. SEARCH_AI_MODEL overrides the default model.
+  // AI search intent parsing runs through a provider fallback chain so it stays
+  // up as long as at least one key is configured. Default order: Anthropic →
+  // Gemini → Groq (override with SEARCH_AI_PROVIDERS). Each *_MODEL overrides the
+  // provider's default model.
   ANTHROPIC_API_KEY: z.string().optional(),
   SEARCH_AI_MODEL: z.string().optional(),
+  GEMINI_API_KEY: z.string().optional(),
+  GOOGLE_API_KEY: z.string().optional(),
+  GEMINI_MODEL: z.string().optional(),
+  GROQ_API_KEY: z.string().optional(),
+  GROQ_MODEL: z.string().optional(),
+  SEARCH_AI_PROVIDERS: z.string().optional(),
 
   // PostHog
   POSTHOG_API_KEY: z.string().optional(),
@@ -236,7 +244,22 @@ const config = {
   },
   google: { appPassword: env.GOOGLE_APP_PASSWORD || '' },
   elevenlabs: { apiKey: env.ELEVENLABS_API_KEY || '', agentId: env.ELEVENLABS_AGENT_ID || '' },
-  search: { enabled: env.SEARCH_ENABLED === 'true', aiKey: env.ANTHROPIC_API_KEY || '', aiModel: env.SEARCH_AI_MODEL || 'claude-haiku-5-5' },
+  search: {
+    enabled: env.SEARCH_ENABLED === 'true',
+    // Anthropic (primary)
+    aiKey: env.ANTHROPIC_API_KEY || '',
+    aiModel: env.SEARCH_AI_MODEL || 'claude-haiku-5-5',
+    // Gemini (fallback)
+    geminiKey: env.GEMINI_API_KEY || env.GOOGLE_API_KEY || '',
+    geminiModel: env.GEMINI_MODEL || 'gemini-2.0-flash',
+    // Groq (fallback)
+    groqKey: env.GROQ_API_KEY || '',
+    groqModel: env.GROQ_MODEL || 'llama-3.3-70b-versatile',
+    providerOrder: (env.SEARCH_AI_PROVIDERS || 'anthropic,gemini,groq')
+      .split(',')
+      .map((p) => p.trim().toLowerCase())
+      .filter(Boolean),
+  },
 
   posthog: {
     apiKey: env.POSTHOG_API_KEY || '',
