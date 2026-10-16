@@ -101,7 +101,9 @@ const envSchema = z.object({
   ELEVENLABS_API_KEY: z.string().optional(),
   ELEVENLABS_AGENT_ID: z.string().optional(),
   SEARCH_ENABLED: z.enum(['true', 'false']).default('false'),
-  OPENAI_API_KEY: z.string().optional(),
+  // AI search (natural-language intent parsing) is served by the Anthropic
+  // Messages API. SEARCH_AI_MODEL overrides the default model.
+  ANTHROPIC_API_KEY: z.string().optional(),
   SEARCH_AI_MODEL: z.string().optional(),
 
   // PostHog
@@ -234,7 +236,7 @@ const config = {
   },
   google: { appPassword: env.GOOGLE_APP_PASSWORD || '' },
   elevenlabs: { apiKey: env.ELEVENLABS_API_KEY || '', agentId: env.ELEVENLABS_AGENT_ID || '' },
-  search: { enabled: env.SEARCH_ENABLED === 'true', aiKey: env.OPENAI_API_KEY || '', aiModel: env.SEARCH_AI_MODEL || '' },
+  search: { enabled: env.SEARCH_ENABLED === 'true', aiKey: env.ANTHROPIC_API_KEY || '', aiModel: env.SEARCH_AI_MODEL || 'claude-haiku-5-5' },
 
   posthog: {
     apiKey: env.POSTHOG_API_KEY || '',
