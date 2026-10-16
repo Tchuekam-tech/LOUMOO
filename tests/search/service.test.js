@@ -139,6 +139,97 @@ module.exports = async () => {
     visualPayload.messages[0].content[1].source.media_type,
     'image/png',
   );
+  // Provider fallback chain: Anthropic → Gemini → Groq, auto-failover.
+  const geminiReply = (obj) => ({
+    ok: true,
+    json: async () => ({
+      candidates: [{ content: { parts: [{ text: JSON.stringify(obj) }] } }],
+    }),
+  });
+  const groqReply = (obj) => ({
+    ok: true,
+    json: async () => ({
+      choices: [{ message: { content: JSON.stringify(obj) } }],
+    }),
+  });
+  // Anthropic down → Gemini answers; Gemini is sent a JSON responseSchema.
+  let geminiBody;
+  const chainUrls = [];
+  const gemini = await new SearchAI({
+    settings: {
+      aiKey: 'a',
+      aiModel: 'm',
+      geminiKey: 'g',
+      geminiModel: 'gm',
+      providerOrder: ['anthropic', 'gemini', 'groq'],
+    },
+    fetcher: async (url, r) => {
+      chainUrls.push(url);
+      if (url.includes('anthropic'))
+        return { ok: false, status: 500, json: async () => ({}) };
+      geminiBody = JSON.parse(r.body);
+      return geminiReply({
+        q: 'telephone',
+        type: 'product',
+        city: '',
+        minPrice: null,
+        maxPrice: null,
+        message: 'Gemini.',
+      });
+    },
+  }).intent({ message: 'un phone' });
+  assert.equal(gemini.q, 'telephone');
+  assert.ok(chainUrls[0].includes('anthropic'), 'anthropic is tried first');
+  assert.ok(
+    chainUrls[1].includes('generativelanguage'),
+    'gemini is tried next',
+  );
+  assert.equal(geminiBody.generationConfig.responseMimeType, 'application/json');
+  // Anthropic + Gemini down → Groq answers (OpenAI-compatible json_object).
+  let groqBody;
+  const groq = await new SearchAI({
+    settings: {
+      aiKey: 'a',
+      aiModel: 'm',
+      geminiKey: 'g',
+      geminiModel: 'gm',
+      groqKey: 'q',
+      groqModel: 'qm',
+      providerOrder: ['anthropic', 'gemini', 'groq'],
+    },
+    fetcher: async (url, r) => {
+      if (url.includes('groq')) {
+        groqBody = JSON.parse(r.body);
+        return groqReply({
+          q: 'sac',
+          type: 'all',
+          city: '',
+          minPrice: null,
+          maxPrice: null,
+          message: 'Groq.',
+        });
+      }
+      return { ok: false, status: 503, json: async () => ({}) };
+    },
+  }).intent({ message: 'un sac' });
+  assert.equal(groq.q, 'sac');
+  assert.equal(groqBody.response_format.type, 'json_object');
+  // Photo search skips the text-only Groq: image + only Groq ready → 503.
+  await assert.rejects(
+    new SearchAI({
+      settings: { groqKey: 'q', groqModel: 'qm', providerOrder: ['groq'] },
+      fetcher: async () => {
+        throw new Error('groq must be skipped for images');
+      },
+    }).intent({ message: 'ceci', imageData: png }),
+    (e) => e.statusCode === 503,
+  );
+  // "Always active": ready is true with any single provider key, false with none.
+  assert.equal(
+    new SearchAI({ settings: { groqKey: 'q', groqModel: 'qm' } }).ready,
+    true,
+  );
+  assert.equal(new SearchAI({ settings: {} }).ready, false);
   const voice = new CombiProvider({
     settings: { apiKey: 'test-private', agentId: 'test-agent' },
     fetcher: async (url, r) => {
