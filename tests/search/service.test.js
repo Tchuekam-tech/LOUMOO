@@ -230,6 +230,30 @@ module.exports = async () => {
     true,
   );
   assert.equal(new SearchAI({ settings: {} }).ready, false);
+  // Key rotation within a provider: a rate-limited key rolls to the next.
+  const usedKeys = [];
+  const rotated = await new SearchAI({
+    settings: {
+      geminiKeys: ['g1', 'g2'],
+      geminiModel: 'gm',
+      providerOrder: ['gemini'],
+    },
+    fetcher: async (url, r) => {
+      usedKeys.push(r.headers['x-goog-api-key']);
+      if (r.headers['x-goog-api-key'] === 'g1')
+        return { ok: false, status: 429, json: async () => ({}) };
+      return geminiReply({
+        q: 'montre',
+        type: 'product',
+        city: '',
+        minPrice: null,
+        maxPrice: null,
+        message: 'ok',
+      });
+    },
+  }).intent({ message: 'une montre' });
+  assert.equal(rotated.q, 'montre');
+  assert.deepEqual(usedKeys, ['g1', 'g2']);
   const voice = new CombiProvider({
     settings: { apiKey: 'test-private', agentId: 'test-agent' },
     fetcher: async (url, r) => {
