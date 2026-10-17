@@ -7542,7 +7542,25 @@ class Component extends DCLogic {
     catalogPage: 1,
     catalogHasMore: true,
     categoryFeedLimit: 24,
-    homeFeedLimit: 24
+    homeFeedLimit: 24,
+
+    // ── In-app messaging (buyer ↔ boutique). Private: never kept on the device. ──
+    conversations: [],
+    conversationsLoaded: false,
+    conversationsLoading: false,
+    conversationsError: '',
+    convFilter: 'all',
+    convQuery: '',
+    activeConversationId: null,
+    activeConversation: null,
+    threadMessages: [],
+    threadLoading: false,
+    threadError: '',
+    threadHasMore: false,
+    threadLoadingOlder: false,
+    threadDraft: '',
+    messagingUnread: 0,
+    convStarting: false
   };
 
   go = (s) => {
