@@ -12,7 +12,7 @@ require('../setup');
 const assert = require('assert');
 const SuperAdminRepository = require('../../SuperAdmin/backend/repositories/SuperAdminRepository');
 const SuperAdminService = require('../../SuperAdmin/backend/services/SuperAdminService');
-const { requireSuperAdminRole } = require('../../SuperAdmin/backend/middleware/superAdminGuard');
+const { requireSuperAdminRole, requireModeratorRole } = require('../../SuperAdmin/backend/middleware/superAdminGuard');
 const { ROLES } = require('../../server/modules/identity/value-objects/Role');
 
 async function run() {
@@ -141,7 +141,20 @@ async function run() {
   await requireSuperAdminRole(mockReqToken, {}, (err) => { if (!err) testTokenPassed = true; });
   assert.strictEqual(testTokenPassed, true, 'Harness super-admin test token must pass guard when test auth is enabled');
   assert.strictEqual(mockReqToken.principal.primaryRole, ROLES.SUPER_ADMIN);
-  console.log('    ✓ 7. RBAC security guard verification passed');
+
+  // Moderator tier: requireModeratorRole admits moderator+, requireSuperAdminRole does not.
+  let modPassedModerator = false;
+  requireModeratorRole({ principal: { id: 'mod_1', primaryRole: ROLES.MODERATOR }, headers: {} }, {}, (err) => { if (!err) modPassedModerator = true; });
+  assert.strictEqual(modPassedModerator, true, 'Moderator must pass requireModeratorRole');
+
+  let modBlockedFromAdmin = false;
+  requireSuperAdminRole({ principal: { id: 'mod_1', primaryRole: ROLES.MODERATOR }, headers: {} }, {}, (err) => { if (err) modBlockedFromAdmin = true; });
+  assert.strictEqual(modBlockedFromAdmin, true, 'Moderator must be blocked by requireSuperAdminRole (admin+)');
+
+  let customerBlockedFromModeration = false;
+  requireModeratorRole({ principal: { id: 'cust_1', primaryRole: ROLES.CUSTOMER }, headers: {} }, {}, (err) => { if (err) customerBlockedFromModeration = true; });
+  assert.strictEqual(customerBlockedFromModeration, true, 'Customer must be blocked by requireModeratorRole');
+  console.log('    ✓ 7. RBAC security guard verification passed (super-admin, admin, moderator tiers)');
 
   // ── 8. HTTP Endpoint Integration via Harness ──
   const adminToken = harness.superAdminToken();

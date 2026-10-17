@@ -326,12 +326,29 @@ async function run() {
     assert.strictEqual(healthHttp.status, 200);
     assert.ok(healthJson.data.services);
 
+    // H2. Moderator tier: content moderation is allowed; admin/owner surfaces are not.
+    testPrincipal = { id: 'mod_http_test', role: ROLES.MODERATOR };
+    assert.strictEqual((await fetch(`${httpUrl}/listings`)).status, 200, 'moderator may list listings for moderation');
+    assert.strictEqual((await fetch(`${httpUrl}/stores`)).status, 200, 'moderator may view stores');
+    assert.strictEqual((await fetch(`${httpUrl}/settings`)).status, 403, 'moderator must NOT read platform settings (admin+)');
+    assert.strictEqual((await fetch(`${httpUrl}/overview`)).status, 403, 'moderator must NOT see financial overview (admin+)');
+    const modMaint = await fetch(`${httpUrl}/maintenance`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ enabled: false })
+    });
+    assert.strictEqual(modMaint.status, 403, 'moderator must NOT toggle maintenance (owner only)');
+    const modEscrow = await fetch(`${httpUrl}/orders/ord_1001/escrow`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'RELEASE' })
+    });
+    assert.strictEqual(modEscrow.status, 403, 'moderator must NOT resolve escrow (admin+)');
+
     // I. RBAC guard test: unauthenticated / non-admin refusal
     testPrincipal = { id: 'usr_normal', role: ROLES.CUSTOMER };
     const forbiddenHttp = await fetch(`${httpUrl}/audit-logs`);
     assert.strictEqual(forbiddenHttp.status, 403);
+    // A customer is below moderator, so even a moderation surface is refused.
+    assert.strictEqual((await fetch(`${httpUrl}/listings`)).status, 403, 'customer must be blocked from moderation routes');
 
-    console.log('    ✓ 14. All 8 new SuperAdmin REST endpoints verified over HTTP with strict RBAC');
+    console.log('    ✓ 14. REST endpoints verified over HTTP with tiered RBAC (moderator / admin / owner)');
   } finally {
     server.close();
   }
