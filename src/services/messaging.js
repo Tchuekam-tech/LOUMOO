@@ -272,25 +272,38 @@
     el.scrollTop = el.scrollHeight;
   }
 
-  /** After a render: keep the reading position, or go to the newest message. */
-  function afterRender(cmp, prevState) {
+  // The thread is drawn by a lazily mounted child (a screen chunk) that commits
+  // after the shell's componentDidUpdate, so measuring has to wait a frame.
+  function nextFrame(fn) {
+    if (typeof requestAnimationFrame === 'function') requestAnimationFrame(function () { requestAnimationFrame(fn); });
+    else setTimeout(fn, 32);
+  }
+
+  /**
+   * After a render: keep the reading position, or go to the newest message.
+   * Compares with its own snapshot of the previous render (this component's
+   * componentDidUpdate is not guaranteed a prevState).
+   */
+  function afterRender(cmp) {
     var el = cmp._threadEl;
     var st = cmp.state;
-    if (!el || st.screen !== 'threadSeller' || !prevState) return;
+    var list = st.threadMessages || [];
+    var last = list[list.length - 1];
+    var prev = cmp._msgSnap || {};
+    cmp._msgSnap = { screen: st.screen, id: st.activeConversationId, last: last ? last.id : null, failed: Boolean(last && last.failed), count: list.length };
+    if (!el || st.screen !== 'threadSeller') return;
     if (cmp._olderAnchor != null) {
-      el.scrollTop = el.scrollHeight - cmp._olderAnchor;
+      var anchor = cmp._olderAnchor;
       cmp._olderAnchor = null;
+      nextFrame(function () { el.scrollTop = el.scrollHeight - anchor; });
       return;
     }
-    var list = st.threadMessages || [];
-    var prev = prevState.threadMessages || [];
-    var last = list[list.length - 1];
-    var prevLast = prev[prev.length - 1];
-    var entered = prevState.screen !== 'threadSeller' || prevState.activeConversationId !== st.activeConversationId;
-    var grew = last && (!prevLast || last.id !== prevLast.id);
-    if (entered || (grew && (cmp._threadStick || !prev.length || last.mine))) {
-      el.scrollTop = el.scrollHeight;
+    var entered = prev.screen !== 'threadSeller' || prev.id !== st.activeConversationId;
+    // A new last message, or the last one growing a "Not sent" row.
+    var grew = last && (last.id !== prev.last || (last.failed && !prev.failed));
+    if (entered || (grew && (cmp._threadStick || !prev.count || last.mine))) {
       cmp._threadStick = true;
+      nextFrame(function () { if (cmp._threadEl === el) el.scrollTop = el.scrollHeight; });
     }
   }
 
