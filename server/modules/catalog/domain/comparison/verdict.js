@@ -68,12 +68,13 @@ const T = {
     conflict: (title, dim, range) => `Listings of ${title} disagree on ${dim} (${range}); treat that figure with caution.`,
     approximate: 'Processor performance uses an approximate benchmark index (order of magnitude, not an exact score).',
     uniform: (dim, plural) => `${dim} is the same template value on most ${plural} listings, so it was not used to rank.`,
+    uniformBool: (dim, plural) => `Every ${plural.replace(/s$/, '')} listing on LOUMOO states ${dim}, so it does not separate them.`,
     partial: (dim, titles) => `${dim} is only known for ${titles}, so it was not used to rank.`,
-    limited: 'These products are from different categories: only price, warranty, ratings and seller are compared.',
+    limited: 'These are different kinds of product, so they are shown side by side without a ranking.',
     partialLevel: 'These products are related but not the same kind: only the specs they share are compared.',
     none: 'Products cannot be ranked against stores or stays; they are shown side by side only.',
+    withheld: 'These listings share no verified specification, so no product is recommended; compare price and seller below.',
     noBasis: 'Not enough shared, reliable information to rank these products.',
-    lowCoverage: 'Few specifications could be verified for these listings; the ranking leans mostly on price and ratings.',
     bestFor: 'Best for',
     yes: 'Yes',
     no: 'No',
@@ -95,13 +96,14 @@ const T = {
     unitCost: (a, cost, label) => `${a} : ${cost} ${label}`,
     conflict: (title, dim, range) => `Les annonces de ${title} ne s'accordent pas sur ${dim} (${range}) ; prudence sur ce chiffre.`,
     approximate: 'La performance du processeur repose sur un indice de benchmark approximatif (ordre de grandeur, pas un score exact).',
-    uniform: (dim, plural) => `${dim} est la même valeur type sur la plupart des annonces de ${plural} ; non utilisé pour classer.`,
+    uniform: (dim) => `${dim} affiche la même valeur type sur la plupart des annonces de cette catégorie ; non utilisé pour classer.`,
+    uniformBool: (dim) => `${dim} : toutes les annonces de cette catégorie l'indiquent ; ce point ne les départage pas.`,
     partial: (dim, titles) => `${dim} n'est connu que pour ${titles} ; non utilisé pour classer.`,
-    limited: 'Ces produits sont de catégories différentes : seuls le prix, la garantie, les avis et le vendeur sont comparés.',
+    limited: 'Ces produits ne sont pas du même type : affichage côte à côte, sans classement.',
     partialLevel: 'Ces produits sont proches mais pas du même type : seules les caractéristiques communes sont comparées.',
     none: 'Un produit ne se classe pas face à une boutique ou un séjour ; affichage côte à côte uniquement.',
+    withheld: "Ces annonces n'ont aucune caractéristique vérifiée en commun : aucun produit n'est recommandé ; comparez le prix et le vendeur ci-dessous.",
     noBasis: 'Pas assez d’informations communes et fiables pour classer ces produits.',
-    lowCoverage: 'Peu de caractéristiques vérifiables pour ces annonces ; le classement repose surtout sur le prix et les avis.',
     bestFor: 'Idéal pour',
     yes: 'Oui',
     no: 'Non',
@@ -153,8 +155,9 @@ function advantageFact(dim, winnerId, ids, cellsById, l) {
   if (dim.type === 'number' && typeof win.value === 'number' && typeof pick.cell.value === 'number' && pick.cell.value !== 0) {
     delta = (win.value - pick.cell.value) / Math.abs(pick.cell.value);
   }
-  // The chip index is approximate: name the chips, never quote a % gap.
-  const deltaText = delta !== null && dim.unit !== 'index' ? ` (${F.percent(delta, l, true)})` : '';
+  // The chip index is approximate: name the chips, never quote a % gap. A
+  // percentage of a star rating means nothing either.
+  const deltaText = delta !== null && dim.unit !== 'index' && dim.unit !== '/5' ? ` (${F.percent(delta, l, true)})` : '';
   const text = `${label}${sep(l)}${wv} ${T[l].vs} ${ov}${deltaText}`;
   return {
     kind: 'advantage',
@@ -180,6 +183,7 @@ function buildVerdict(a, locale) {
   if (a.comparability.level === 'none') warnings.push(t.none);
   else if (a.comparability.level === 'limited') warnings.push(t.limited);
   else if (a.comparability.level === 'partial') warnings.push(t.partialLevel);
+  if (a.rankingWithheld) warnings.push(t.withheld);
 
   const winnerId = a.ranking.length ? a.ranking[0][0] : null;
 
@@ -204,9 +208,9 @@ function buildVerdict(a, locale) {
       const d = a.scores[id].byDim[dim.key];
       if (!d || d.basis !== 'category' || dim.section === 'commerce') continue;
       if (d.score >= 85) {
-        facts.push({ kind: 'categoryTop', productId: id, dimension: dim.key, text: `${titleOf(id)}${sep(l)}${t.categoryTop(dim.label[l].toLowerCase(), Math.max(1, Math.round(100 - d.score)), plural(a.type, l))}`, data: { percentile: d.score } });
+        facts.push({ kind: 'categoryTop', productId: id, dimension: dim.key, text: `${titleOf(id)}${sep(l)}${t.categoryTop(dim.label[l], Math.max(1, Math.round(100 - d.score)), plural(a.type, l))}`, data: { percentile: d.score } });
       } else if (d.score <= 15) {
-        facts.push({ kind: 'categoryBottom', productId: id, dimension: dim.key, text: `${titleOf(id)}${sep(l)}${t.categoryBottom(dim.label[l].toLowerCase(), Math.max(1, Math.round(d.score)), plural(a.type, l))}`, data: { percentile: d.score } });
+        facts.push({ kind: 'categoryBottom', productId: id, dimension: dim.key, text: `${titleOf(id)}${sep(l)}${t.categoryBottom(dim.label[l], Math.max(1, Math.round(d.score)), plural(a.type, l))}`, data: { percentile: d.score } });
       }
     }
   }
@@ -235,8 +239,9 @@ function buildVerdict(a, locale) {
     facts.push({ kind: 'marketValue', productId: id, text: `${titleOf(id)}${sep(l)}${text}`, data: v });
   }
 
-  // Pareto dominance.
-  for (const d of a.dominance) {
+  // Pareto dominance — only meaningful across at least two spec dimensions.
+  const specBasis = a.basisDims.filter(d => d.section !== 'commerce').length;
+  for (const d of specBasis >= 2 ? a.dominance : []) {
     facts.push({ kind: 'dominance', productId: d.dominantId, text: t.dominates(titleOf(d.dominantId), titleOf(d.dominatedId), d.dimensionsBetter, d.dimensionsCompared), data: d });
   }
 
@@ -254,19 +259,18 @@ function buildVerdict(a, locale) {
       if (!dim || dim.section === 'commerce' || dimKey === 'rating') continue;
       const lo = F.value(dim, { value: Math.min(...range) }, l);
       const hi = F.value(dim, { value: Math.max(...range) }, l);
-      warnings.push(t.conflict(titleOf(id), dim.label[l].toLowerCase(), `${lo} – ${hi}`));
+      warnings.push(t.conflict(titleOf(id), dim.label[l], `${lo} – ${hi}`));
     }
   }
   if (a.basisDims.some(d => d.approximate)) warnings.push(t.approximate);
   for (const dim of a.uniformDims) {
     if (dim.section === 'commerce') continue;
-    warnings.push(t.uniform(dim.label[l], plural(a.type, l)));
+    warnings.push(dim.type === 'boolean' ? t.uniformBool(dim.label[l], plural(a.type, l)) : t.uniform(dim.label[l], plural(a.type, l)));
   }
   for (const p of a.partialDims) {
     warnings.push(t.partial(p.dim.label[l], joinTitles(p.knownFor.map(titleOf), l)));
   }
-  if (a.comparability.ranked && !a.basisDims.length) warnings.push(t.noBasis);
-  else if (a.comparability.ranked && !a.basisDims.some(d => d.section !== 'commerce')) warnings.push(t.lowCoverage);
+  if (!a.rankingWithheld && a.comparability.ranked && !a.basisDims.length) warnings.push(t.noBasis);
 
   // Sensitivity sentence.
   let summary = null;
@@ -319,8 +323,12 @@ function buildVerdict(a, locale) {
     return { productId: id, title: titleOf(id), pros: pros.slice(0, 5), cons: cons.slice(0, 5) };
   });
 
+  // Reasons a buyer would act on: specs, price, market value. Ratings and the
+  // seller badge are near-identical across the catalogue and make weak reasons.
+  const WEAK = new Set(['rating', 'sellerVerified', 'inStock']);
   const topReasons = winnerId
     ? facts.filter(f => f.productId === winnerId && ['advantage', 'marketValue', 'categoryTop', 'dominance'].includes(f.kind))
+      .filter(f => !WEAK.has(f.dimension))
       .filter(f => f.kind !== 'marketValue' || f.data.deviation <= -0.1)
       .slice(0, 3)
       .map(f => f.text)
