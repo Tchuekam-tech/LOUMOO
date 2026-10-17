@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 LOUMOO MESSAGING, PROFILE & SYSTEM VIEWS
-WhatsApp messaging engine, voice note waveform player, LOUMOO Combi assistant, notifications, upgraded user profile with onboarding entry point, saved items, settings, and skeleton states with Lucide SVG icons.
+In-app messages (inbox + conversations with boutiques), LOUMOO Combi assistant, notifications, upgraded user profile with onboarding entry point, saved items, settings, and skeleton states with Lucide SVG icons.
 """
 
 from .search_shared import get_combi_view
@@ -9,156 +9,264 @@ from .search_shared import get_combi_view
 def get_chat_and_profile_view():
     return """
 <!-- ══════════════════════════════════════════════════════════════════════════
-     WHATSAPP DISCUSSIONS HUB (is.chat)
+     MESSAGES — inbox (is.chat) and a conversation (is.threadSeller)
+     Real buyer ↔ boutique conversations (/api/v1/conversations). One layout for
+     both screens: on a phone the inbox and the thread are separate pages; from
+     1024px wide they sit side by side, like Messages on a Mac.
      ══════════════════════════════════════════════════════════════════════ -->
-<sc-if value="{{ is.chat }}">
-<div style="padding-bottom:32px">
-  
-  <div class="page-head" style="justify-content:space-between">
-    <div style="display:flex;align-items:center;gap:12px">
-      <button onClick="{{ back }}" aria-label="Go back" style="border:1px solid var(--color-divider);background:var(--color-surface);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--color-text)">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m15 18-6-6 6-6"/></svg>
-      </button>
-      <div>
-        <h4 style="margin:0;font-size:16px">Discussions</h4>
-        <div style="font:400 11.5px/1 var(--font-body);color:var(--color-text-secondary)">WhatsApp-verified merchant &amp; AI chats</div>
-      </div>
-    </div>
-  </div>
+<sc-if value="{{ is.chat || is.threadSeller }}">
+<div class="msg-app {{ is.threadSeller ? 'is-thread' : 'is-inbox' }}">
 
-  <div style="padding:16px;max-width:800px;margin:0 auto">
-    
-    <!-- Filter Tabs -->
-    <div class="hs" style="gap:8px;margin-bottom:16px">
-      <button class="tag tag-accent">All (4)</button>
-      <button class="tag tag-neutral">Buying (2)</button>
-      <button class="tag tag-neutral">Selling (1)</button>
-      <button class="tag tag-neutral">Support</button>
-    </div>
-
-    <!-- Chat Threads List -->
-    <div style="display:flex;flex-direction:column;gap:8px">
-      
-      <!-- Thread 1: Mr Toukam / Orca Electronics -->
-      <button onClick="{{ on.threadSeller }}" aria-label="Open conversation with Mr Toukam" class="card-premium" style="display:flex;align-items:center;gap:14px;padding:14px 16px;text-align:left;cursor:pointer">
-        <div style="width:46px;height:46px;border-radius:50%;background:var(--color-wa-teal);color:#fff;display:flex;align-items:center;justify-content:center;font:800 16px/1 var(--font-heading);flex-shrink:0">T</div>
-        <div style="flex:1;min-width:0">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <span style="font:800 14.5px/1.2 var(--font-heading);color:var(--color-text)">Mr Toukam (Orca Electronics)</span>
-            <span style="font:500 11px/1 var(--font-body);color:var(--color-accent)">11:46</span>
-          </div>
-          <div style="font:400 12.5px/1.4 var(--font-body);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:4px;display:flex;align-items:center;gap:4px">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-            <span>Voice message (0:05) · "The unit is ready for delivery..."</span>
-          </div>
-        </div>
-        <span style="width:18px;height:18px;border-radius:50%;background:var(--color-wa-green);color:#fff;display:flex;align-items:center;justify-content:center;font:800 10px/1 var(--font-heading);flex-shrink:0">2</span>
-      </button>
-
-      <!-- Thread 2: LOUMOO Combi Assistant -->
-      <button onClick="{{ on.threadAi }}" aria-label="Open conversation with LOUMOO Combi" class="card-premium" style="display:flex;align-items:center;gap:14px;padding:14px 16px;text-align:left;cursor:pointer">
-        <div style="width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--color-accent),#003d8a);color:#fff;display:flex;align-items:center;justify-content:center;font:800 14px/1 var(--font-heading);flex-shrink:0">AI</div>
-        <div style="flex:1;min-width:0">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <span style="font:800 14.5px/1.2 var(--font-heading);color:var(--color-text)">LOUMOO Combi</span>
-            <span style="font:500 11px/1 var(--font-body);color:var(--color-text-muted)">11:41</span>
-          </div>
-          <div style="font:400 12.5px/1.4 var(--font-body);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:4px">
-            Ask a question or find options for your budget and city.
-          </div>
-        </div>
-      </button>
-
-    </div>
-
-  </div>
-</div>
-</sc-if>
-
-<!-- ══════════════════════════════════════════════════════════════════════════
-     WHATSAPP CONVERSATION THREAD (is.threadSeller)
-     ══════════════════════════════════════════════════════════════════════ -->
-<sc-if value="{{ is.threadSeller }}">
-<div class="wa-chat-container">
-  
-  <!-- WhatsApp Top Header -->
-  <div class="wa-chat-header">
-    <div style="display:flex;align-items:center;gap:10px">
-      <button onClick="{{ on.chat }}" aria-label="Return to chat list" style="border:none;background:transparent;padding:4px;color:var(--color-text);cursor:pointer">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m15 18-6-6 6-6"/></svg>
-      </button>
-      <div style="width:38px;height:38px;border-radius:50%;background:#607d8b;color:#fff;display:flex;align-items:center;justify-content:center;font:800 14px/1 var(--font-heading)">T</div>
-      <div>
-        <div style="font:700 14px/1.1 var(--font-heading);color:var(--color-text)">Mr Toukam · Orca</div>
-        <div style="font:400 10.5px/1 var(--font-body);color:var(--color-wa-teal);margin-top:2px">online</div>
-      </div>
-    </div>
-    <button onClick="{{ on.product }}" class="btn btn-secondary" style="height:32px;padding:0 12px;font-size:11px;border-radius:var(--radius-pill)">VIEW PRODUCT</button>
-  </div>
-
-  <!-- Messages Body -->
-  <div class="wa-chat-body">
-    
-    <div style="align-self:center;background:rgba(255,255,255,0.9);box-shadow:0 1px 2px rgba(0,0,0,0.08);border-radius:6px;padding:4px 12px;font-size:11px;color:#54656f">
-      TODAY
-    </div>
-
-    <!-- Message 1 (User) -->
-    <div style="display:flex;justify-content:flex-end">
-      <div class="wa-bubble-sent">
-        Hello Mr Toukam, is the MacBook Air M2 13” 256GB sealed in box and ready for delivery to Bonanjo?
-        <div style="font-size:9.5px;color:#667781;float:right;margin-left:8px;margin-top:4px">11:42 ✓✓</div>
-      </div>
-    </div>
-
-    <!-- Message 2 (Seller Voice Note) -->
-    <div style="display:flex;justify-content:flex-start">
-      <div class="wa-audio-card">
-        <button aria-label="Play voice note" style="border:none;background:transparent;padding:0;color:var(--color-text);cursor:pointer">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+  <!-- ── Inbox pane ── -->
+  <section class="msg-inbox" aria-label="Conversations">
+    <header class="msg-inbox-head">
+      <div class="msg-inbox-bar">
+        <button onClick="{{ back }}" class="msg-icon-btn msg-only-phone" aria-label="Go back">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
         </button>
-        <div style="flex:1">
-          <div class="wa-waveform-container">
-            <span class="wa-bar played" style="height:8px"></span>
-            <span class="wa-bar played" style="height:14px"></span>
-            <span class="wa-bar played" style="height:18px"></span>
-            <span class="wa-bar played" style="height:12px"></span>
-            <span class="wa-audio-dot"></span>
-            <span class="wa-bar" style="height:16px"></span>
-            <span class="wa-bar" style="height:20px"></span>
-            <span class="wa-bar" style="height:14px"></span>
-            <span class="wa-bar" style="height:10px"></span>
-            <span class="wa-bar" style="height:16px"></span>
-            <span class="wa-bar" style="height:18px"></span>
-            <span class="wa-bar" style="height:12px"></span>
-            <span class="wa-bar" style="height:8px"></span>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:10px;color:#667781;margin-top:2px">
-            <span>0:05</span>
-            <span>11:44</span>
+      </div>
+      <h1 class="msg-large-title">Messages</h1>
+      <sc-if value="{{ convSignedIn && convHasAny }}">
+        <label class="msg-search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="search" value="{{ convQuery }}" onInput="{{ updateConvQuery }}" placeholder="Search" aria-label="Search conversations" autocomplete="off" maxlength="80" enterkeyhint="search">
+          <sc-if value="{{ convQuery }}">
+            <button onClick="{{ clearConvQuery }}" class="msg-search-clear" aria-label="Clear search">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm3.54 12.12-1.42 1.42L12 13.41l-2.12 2.13-1.42-1.42L10.59 12 8.46 9.88l1.42-1.42L12 10.59l2.12-2.13 1.42 1.42L13.41 12Z"/></svg>
+            </button>
+          </sc-if>
+        </label>
+        <div class="msg-segments" role="tablist" aria-label="Filter conversations">
+          <sc-for list="{{ convFilterTabs }}" as="tab">
+            <button role="tab" aria-selected="{{ tab.active }}" onClick="{{ tab.select }}" class="msg-segment {{ tab.active ? 'is-active' : '' }}">{{ tab.label }}</button>
+          </sc-for>
+        </div>
+      </sc-if>
+    </header>
+
+    <div class="msg-inbox-body">
+
+      <!-- The assistant is always one tap away, above the conversations. -->
+      <button onClick="{{ on.threadAi }}" class="msg-row msg-row-assistant" aria-label="Open LOUMOO Combi, the shopping assistant">
+        <span class="msg-avatar msg-avatar-ai" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>
+        </span>
+        <span class="msg-row-main">
+          <span class="msg-row-top">
+            <span class="msg-row-name">LOUMOO Combi</span>
+            <span class="msg-tag">Assistant</span>
+          </span>
+          <span class="msg-row-preview">Find products for your budget and city</span>
+        </span>
+      </button>
+
+      <!-- Signed out -->
+      <sc-if value="{{ !convSignedIn && !convAuthPending }}">
+        <div class="msg-state">
+          <span class="msg-state-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg>
+          </span>
+          <h2 class="msg-state-title">Talk to boutiques directly</h2>
+          <p class="msg-state-text">Sign in to ask about products, delivery and prices, and to answer your own buyers.</p>
+          <div class="msg-state-actions">
+            <button onClick="{{ signIn }}" class="msg-btn-primary">Sign in</button>
+            <button onClick="{{ on.onboardWelcome }}" class="msg-btn-ghost">Create account</button>
           </div>
         </div>
-      </div>
+      </sc-if>
+
+      <!-- First load -->
+      <sc-if value="{{ convLoadingFirst || convAuthPending }}">
+        <div class="msg-skeleton" aria-busy="true" aria-label="Loading conversations">
+          <div class="msg-skel-row"><span class="msg-skel-avatar"></span><span class="msg-skel-lines"><span></span><span></span></span></div>
+          <div class="msg-skel-row"><span class="msg-skel-avatar"></span><span class="msg-skel-lines"><span></span><span></span></span></div>
+          <div class="msg-skel-row"><span class="msg-skel-avatar"></span><span class="msg-skel-lines"><span></span><span></span></span></div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ convSignedIn && convError }}">
+        <div class="msg-state msg-state-compact" role="alert">
+          <p class="msg-state-text">{{ convError }}</p>
+          <button onClick="{{ retryConversations }}" class="msg-btn-ghost">Try again</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ convSignedIn && !convLoadingFirst && !convError }}">
+        <sc-if value="{{ convHasRows }}">
+          <ul class="msg-list">
+            <sc-for list="{{ convRows }}" as="row">
+              <li>
+                <button onClick="{{ row.open }}" class="msg-row {{ row.active ? 'is-active' : '' }} {{ row.hasUnread ? 'is-unread' : '' }}" aria-label="{{ row.ariaLabel }}" aria-current="{{ row.active ? 'true' : 'false' }}">
+                  <span class="msg-avatar" aria-hidden="true">
+                    <sc-if value="{{ row.hasAvatar }}"><img src="{{ row.avatarUrl }}" alt="" loading="lazy"></sc-if>
+                    <sc-if value="{{ !row.hasAvatar }}">{{ row.initials }}</sc-if>
+                  </span>
+                  <span class="msg-row-main">
+                    <span class="msg-row-top">
+                      <span class="msg-row-name">{{ row.title }}</span>
+                      <sc-if value="{{ row.verified }}">
+                        <svg class="msg-verified" width="15" height="15" viewBox="0 0 24 24" aria-label="Verified boutique" role="img"><path fill="currentColor" d="M12 1.5l2.6 1.9 3.2-.1 1 3 2.6 1.9-1 3.1 1 3.1-2.6 1.9-1 3-3.2-.1L12 22.5l-2.6-1.9-3.2.1-1-3-2.6-1.9 1-3.1-1-3.1 2.6-1.9 1-3 3.2.1z"/><path d="m8 12.2 2.7 2.6L16.2 9.3" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </sc-if>
+                      <span class="msg-row-time">{{ row.timeLabel }}</span>
+                    </span>
+                    <sc-if value="{{ row.context }}"><span class="msg-row-context">{{ row.context }}</span></sc-if>
+                    <span class="msg-row-bottom">
+                      <sc-if value="{{ row.showTick }}">
+                        <svg class="msg-tick {{ row.tickRead ? 'is-read' : '' }}" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-label="{{ row.tickRead ? 'Read' : 'Sent' }}" role="img"><path d="m2 12.5 4.5 4.5L15 8.5"/><sc-if value="{{ row.tickRead }}"><path d="m10 16.5.5.5L21 6.5"/></sc-if></svg>
+                      </sc-if>
+                      <span class="msg-row-preview {{ row.previewIsCard ? 'is-card' : '' }}">{{ row.preview }}</span>
+                      <sc-if value="{{ row.hasUnread }}"><span class="msg-badge" aria-hidden="true">{{ row.unreadLabel }}</span></sc-if>
+                    </span>
+                  </span>
+                </button>
+              </li>
+            </sc-for>
+          </ul>
+        </sc-if>
+        <sc-if value="{{ !convHasRows }}">
+          <div class="msg-state">
+            <span class="msg-state-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/><path d="M8.5 11.5h7M8.5 14.5h4"/></svg>
+            </span>
+            <h2 class="msg-state-title">{{ convEmptyTitle }}</h2>
+            <p class="msg-state-text">{{ convEmptyText }}</p>
+            <sc-if value="{{ convShowBrowse }}">
+              <div class="msg-state-actions"><button onClick="{{ on.home }}" class="msg-btn-primary">Browse products</button></div>
+            </sc-if>
+          </div>
+        </sc-if>
+      </sc-if>
     </div>
+  </section>
 
-    <!-- Message 3 (Seller Text) -->
-    <div style="display:flex;justify-content:flex-start">
-      <div class="wa-bubble-received">
-        Yes brother, 100% sealed Apple official warranty. You can order via escrow and we dispatch with our rider right now!
-        <div style="font-size:9.5px;color:#667781;float:right;margin-left:8px;margin-top:4px">11:45</div>
+  <!-- ── Thread pane ── -->
+  <section class="msg-thread" aria-label="Conversation">
+    <sc-if value="{{ is.chat }}">
+      <div class="msg-thread-placeholder msg-only-wide">
+        <span class="msg-state-icon" aria-hidden="true">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg>
+        </span>
+        <p class="msg-state-text">Choose a conversation to read it here.</p>
       </div>
-    </div>
+    </sc-if>
 
-  </div>
+    <sc-if value="{{ is.threadSeller }}">
+      <header class="msg-thread-head">
+        <button onClick="{{ closeThread }}" class="msg-icon-btn msg-back" aria-label="Back to messages">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          <sc-if value="{{ messagingHasUnread }}"><span class="msg-back-count">{{ messagingBadge }}</span></sc-if>
+        </button>
+        <span class="msg-avatar msg-avatar-sm" aria-hidden="true">
+          <sc-if value="{{ threadHasAvatar }}"><img src="{{ threadAvatarUrl }}" alt=""></sc-if>
+          <sc-if value="{{ !threadHasAvatar }}">{{ threadInitials }}</sc-if>
+        </span>
+        <div class="msg-thread-id">
+          <h2 class="msg-thread-title" tabindex="-1" id="msgThreadTitle">
+            <span>{{ threadTitle }}</span>
+            <sc-if value="{{ threadVerified }}">
+              <svg class="msg-verified" width="15" height="15" viewBox="0 0 24 24" aria-label="Verified boutique" role="img"><path fill="currentColor" d="M12 1.5l2.6 1.9 3.2-.1 1 3 2.6 1.9-1 3.1 1 3.1-2.6 1.9-1 3-3.2-.1L12 22.5l-2.6-1.9-3.2.1-1-3-2.6-1.9 1-3.1-1-3.1 2.6-1.9 1-3 3.2.1z"/><path d="m8 12.2 2.7 2.6L16.2 9.3" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </sc-if>
+          </h2>
+          <sc-if value="{{ threadSubtitle }}"><div class="msg-thread-sub">{{ threadSubtitle }}</div></sc-if>
+        </div>
+        <sc-if value="{{ threadIsBuyer && threadCanWhatsApp }}">
+          <button onClick="{{ continueOnWhatsApp }}" class="msg-icon-btn msg-wa" aria-label="Continue on WhatsApp" title="Continue on WhatsApp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.4 5 5.1-1.3A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3a8.2 8.2 0 1 1 6.9 3.8Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></svg>
+          </button>
+        </sc-if>
+      </header>
 
-  <!-- WhatsApp Bottom Input Bar -->
-  <div class="wa-input-bar">
-    <input type="text" class="wa-input-box" placeholder="Type a message or question…">
-    <button aria-label="Send message" style="width:38px;height:38px;border-radius:50%;border:none;background:var(--color-wa-teal);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-    </button>
-  </div>
+      <div class="msg-scroll" ref="{{ setThreadScroller }}">
+        <sc-if value="{{ threadHasMore }}">
+          <div class="msg-older">
+            <button onClick="{{ loadOlderMessages }}" class="msg-btn-text" disabled="{{ threadLoadingOlder }}">{{ threadLoadingOlder ? 'Loading…' : 'Load earlier messages' }}</button>
+          </div>
+        </sc-if>
 
+        <sc-if value="{{ threadLoadingFirst }}">
+          <div class="msg-thread-loading" aria-busy="true" aria-label="Loading messages">
+            <span class="msg-skel-bubble"></span>
+            <span class="msg-skel-bubble is-mine"></span>
+            <span class="msg-skel-bubble is-short"></span>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ threadErrorText }}">
+          <div class="msg-state msg-state-compact" role="alert">
+            <p class="msg-state-text">{{ threadErrorText }}</p>
+            <button onClick="{{ retryThread }}" class="msg-btn-ghost">Try again</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ threadEmpty }}">
+          <div class="msg-thread-empty">
+            <span class="msg-avatar msg-avatar-lg" aria-hidden="true">
+              <sc-if value="{{ threadHasAvatar }}"><img src="{{ threadAvatarUrl }}" alt=""></sc-if>
+              <sc-if value="{{ !threadHasAvatar }}">{{ threadInitials }}</sc-if>
+            </span>
+            <div class="msg-thread-empty-title">{{ threadTitle }}</div>
+            <p class="msg-state-text">{{ threadEmptyText }}</p>
+          </div>
+        </sc-if>
+
+        <ol class="msg-log" role="log" aria-live="polite" aria-relevant="additions" aria-label="Messages">
+          <sc-for list="{{ threadItems }}" as="it">
+            <sc-if value="{{ it.isDay }}">
+              <li class="msg-day"><span>{{ it.dayLabel }}</span></li>
+            </sc-if>
+            <sc-if value="{{ !it.isDay }}">
+              <li class="msg-item {{ it.mine ? 'is-mine' : 'is-theirs' }} {{ it.runStart ? 'run-start' : '' }} {{ it.runEnd ? 'run-end' : '' }} {{ it.pending ? 'is-pending' : '' }} {{ it.failed ? 'is-failed' : '' }}">
+                <sc-if value="{{ it.isText }}">
+                  <div class="msg-bubble">{{ it.body }}</div>
+                </sc-if>
+                <sc-if value="{{ it.isCard }}">
+                  <button onClick="{{ it.openCard }}" class="msg-card" aria-label="{{ it.cardAction }}: {{ it.cardTitle }}">
+                    <sc-if value="{{ it.hasCardImage }}"><img class="msg-card-img" src="{{ it.cardImage }}" alt="" loading="lazy"></sc-if>
+                    <sc-if value="{{ !it.hasCardImage }}">
+                      <span class="msg-card-img msg-card-img-empty" aria-hidden="true">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
+                      </span>
+                    </sc-if>
+                    <span class="msg-card-body">
+                      <span class="msg-card-kicker">{{ it.cardKicker }}</span>
+                      <span class="msg-card-title">{{ it.cardTitle }}</span>
+                      <sc-if value="{{ it.cardMeta }}"><span class="msg-card-meta">{{ it.cardMeta }}</span></sc-if>
+                      <span class="msg-card-link">{{ it.cardAction }}</span>
+                    </span>
+                  </button>
+                </sc-if>
+                <sc-if value="{{ it.failed }}">
+                  <div class="msg-failed" role="alert">
+                    <span>{{ it.errorText }}</span>
+                    <button onClick="{{ it.retry }}" class="msg-btn-text">Retry</button>
+                    <button onClick="{{ it.discard }}" class="msg-btn-text is-muted">Delete</button>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ it.runEnd && !it.failed }}">
+                  <div class="msg-meta">
+                    <span>{{ it.timeLabel }}</span>
+                    <sc-if value="{{ it.showTick }}">
+                      <svg class="msg-tick {{ it.read ? 'is-read' : '' }}" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-label="{{ it.read ? 'Read' : 'Sent' }}" role="img"><path d="m2 12.5 4.5 4.5L15 8.5"/><sc-if value="{{ it.read }}"><path d="m10 16.5.5.5L21 6.5"/></sc-if></svg>
+                    </sc-if>
+                  </div>
+                </sc-if>
+              </li>
+            </sc-if>
+          </sc-for>
+        </ol>
+      </div>
+
+      <footer class="msg-composer">
+        <div class="msg-composer-field">
+          <textarea id="msgComposer" rows="1" value="{{ threadDraft }}" onInput="{{ updateThreadDraft }}" onKeyDown="{{ threadKeyDown }}" placeholder="Message" aria-label="Write a message" maxlength="2000" enterkeyhint="send"></textarea>
+          <sc-if value="{{ threadDraftNearLimit }}"><span class="msg-count" aria-live="polite">{{ threadDraftCount }}</span></sc-if>
+        </div>
+        <button onClick="{{ sendThreadMessage }}" class="msg-send" disabled="{{ !threadCanSend }}" aria-label="Send message">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+        </button>
+      </footer>
+    </sc-if>
+  </section>
 </div>
 </sc-if>
 
