@@ -232,6 +232,7 @@ function compare(products, options = {}) {
   const verdict = buildVerdict({
     ids,
     titles,
+    entityTypes: Object.fromEntries(entries.map(e => [e.id, e.product.entityType])),
     type,
     dims,
     comparability,
