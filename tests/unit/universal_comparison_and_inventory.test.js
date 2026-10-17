@@ -12,7 +12,6 @@ const assert = require('assert');
 
 // 1. Data Sources
 const { catalogProducts, products } = require('../../server/modules/catalog/dataLoader');
-const { ComparisonEngine } = require('../../server/modules/catalog/domain/ComparisonEngine');
 const ComparisonService = require('../../server/modules/catalog/application/ComparisonService');
 
 async function run() {
@@ -190,25 +189,28 @@ async function run() {
   const prodComparison = await ComparisonService.getComparison(['elec-1', 'elec-macbook-pro']);
   assert.strictEqual(prodComparison.products.length, 2);
   assert.strictEqual(prodComparison.products[0].inStock, true);
-  assert(prodComparison.products[0].stockUnits >= 1000);
   assert.strictEqual(prodComparison.products[1].inStock, true);
-  assert(prodComparison.products[1].stockUnits >= 1000);
-  assert.ok(prodComparison.recommendation);
+  // The datasets carry a 1000 placeholder, not a count: the comparison reports
+  // availability and says the exact stock is unknown rather than repeating it.
+  assert.strictEqual(prodComparison.products[0].stockKnown, false);
+  assert.strictEqual(prodComparison.products[0].stockUnits, null);
+  assert.ok(prodComparison.recommendation.recommendedProductId);
 
   // 2) Verified Stores Comparison
   const storeComparison = await ComparisonService.getComparison(['store_orca_electronics', 'store_kamertech_direct']);
   assert.strictEqual(storeComparison.products.length, 2);
   assert.strictEqual(storeComparison.products[0].title, 'Orca Electronics');
   assert.strictEqual(storeComparison.products[1].title, 'KamerTech Direct');
-  assert.strictEqual(storeComparison.products[0].inStock, true);
-  assert(storeComparison.products[0].stockUnits >= 1000);
+  // Boutiques are shown side by side; a product count is not a price to rank on.
+  assert.strictEqual(storeComparison.products[0].priceNumeric, null);
+  assert.strictEqual(storeComparison.recommendation.recommendedProductId, null);
 
   // 3) Hotels Comparison
   const hotelComparison = await ComparisonService.getComparison(['hotel-1', 'hotel-2']);
   assert.strictEqual(hotelComparison.products.length, 2);
   assert.strictEqual(hotelComparison.products[0].title, 'Sawa Luxury Hotel');
   assert.strictEqual(hotelComparison.products[1].title, 'Résidence Akwa Palm');
-  assert(hotelComparison.products[0].stockUnits >= 1000);
+  assert.strictEqual(hotelComparison.products[0].entityType, 'hotel');
 
   // 4) Candidates Discovery Filtering
   const storeCandidatesRes = await ComparisonService.getCompareCandidates({ type: 'stores' });
