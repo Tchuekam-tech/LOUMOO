@@ -44,6 +44,7 @@ const travelRoutes = require('./modules/travel/presentation/routes/travelRoutes'
 const orderRoutes = require('./modules/commerce/presentation/routes/orderRoutes');
 const recommendationRoutes = require('./modules/recommendation/presentation/routes/recommendationRoutes');
 const deliveryRoutes = require('./modules/delivery/presentation/routes/deliveryRoutes');
+const messagingRoutes = require('./modules/messaging/presentation/routes/messagingRoutes');
 const { getSharedDeliveryService } = require('./modules/delivery/application/DeliveryService');
 const { startOfferSweeper } = require('./modules/delivery/infrastructure/OfferSweeper');
 const superAdminRoutes = require('../SuperAdmin/backend/routes/superAdminRoutes');
@@ -216,6 +217,7 @@ v1Router.use('/travel', travelRoutes);
 v1Router.use('/orders', orderRoutes);
 v1Router.use('/recommendations', recommendationRoutes);
 v1Router.use('/deliveries', deliveryRoutes);
+v1Router.use('/conversations', messagingRoutes);
 v1Router.use('/admin', superAdminRoutes);
 
 app.use('/api/v1', v1Router);
