@@ -255,6 +255,107 @@
     return 'c_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
   }
 
+  // ── Browser behaviour, kept out of the shell (it has a size budget) ─────────
+  // These take the shell component `cmp` and only touch the fields named here:
+  // cmp.state, cmp._threadEl / _threadStick / _olderAnchor / _msgTimer, and its
+  // _pollThread / loadConversations / loadMessagingUnread methods.
+
+  /** The thread's scroll box: follow new messages only when the reader is at the bottom. */
+  function bindScroller(cmp, el) {
+    if (cmp._threadEl === el) return;
+    if (cmp._threadEl && cmp._onThreadScroll) cmp._threadEl.removeEventListener('scroll', cmp._onThreadScroll);
+    cmp._threadEl = el || null;
+    cmp._threadStick = true;
+    if (!el) return;
+    cmp._onThreadScroll = function () { cmp._threadStick = el.scrollHeight - el.scrollTop - el.clientHeight < 96; };
+    el.addEventListener('scroll', cmp._onThreadScroll, { passive: true });
+    el.scrollTop = el.scrollHeight;
+  }
+
+  /** After a render: keep the reading position, or go to the newest message. */
+  function afterRender(cmp, prevState) {
+    var el = cmp._threadEl;
+    var st = cmp.state;
+    if (!el || st.screen !== 'threadSeller' || !prevState) return;
+    if (cmp._olderAnchor != null) {
+      el.scrollTop = el.scrollHeight - cmp._olderAnchor;
+      cmp._olderAnchor = null;
+      return;
+    }
+    var list = st.threadMessages || [];
+    var prev = prevState.threadMessages || [];
+    var last = list[list.length - 1];
+    var prevLast = prev[prev.length - 1];
+    var entered = prevState.screen !== 'threadSeller' || prevState.activeConversationId !== st.activeConversationId;
+    var grew = last && (!prevLast || last.id !== prevLast.id);
+    if (entered || (grew && (cmp._threadStick || !prev.length || last.mine))) {
+      el.scrollTop = el.scrollHeight;
+      cmp._threadStick = true;
+    }
+  }
+
+  /**
+   * Live updates by polling, while the tab is visible and someone is signed in:
+   * the open thread every 4 s, the inbox every 12 s, the badge every minute.
+   */
+  function startPolling(cmp) {
+    if (typeof document === 'undefined' || cmp._msgTimer) return;
+    var ticks = 0;
+    var tick = function () {
+      if (cmp._unmounted || document.hidden || cmp.state.authStatus !== 'authenticated') return;
+      ticks += 1;
+      var screen = cmp.state.screen;
+      if (screen === 'threadSeller') {
+        cmp._pollThread();
+        if (ticks % 8 === 0) cmp.loadConversations({ quiet: true });
+      } else if (screen === 'chat') {
+        if (ticks % 3 === 0) cmp.loadConversations({ quiet: true });
+      } else if (ticks % 15 === 0) {
+        cmp.loadMessagingUnread();
+      }
+    };
+    cmp._msgTimer = setInterval(tick, 4000);
+    cmp._onMsgVisible = function () { if (!document.hidden) { ticks = -1; tick(); } };
+    document.addEventListener('visibilitychange', cmp._onMsgVisible);
+  }
+
+  function stopPolling(cmp) {
+    clearInterval(cmp._msgTimer);
+    cmp._msgTimer = null;
+    if (cmp._onMsgVisible && typeof document !== 'undefined') document.removeEventListener('visibilitychange', cmp._onMsgVisible);
+    cmp._onMsgVisible = null;
+    bindScroller(cmp, null);
+  }
+
+  /** The composer grows with what is typed, up to about six lines, then scrolls. */
+  function growComposer(el, reset) {
+    if (!el || !el.style) return;
+    el.style.height = reset ? '' : 'auto';
+    if (!reset) el.style.height = Math.min(el.scrollHeight, 148) + 'px';
+  }
+
+  function coarsePointer() {
+    return typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  }
+
+  /**
+   * Enter sends on a computer (Shift+Enter: a new line); on a phone Enter is a
+   * new line and the button sends, as in every messaging app.
+   */
+  function isSendKey(e) {
+    if (!e || e.key !== 'Enter' || e.shiftKey || e.isComposing || e.keyCode === 229) return false;
+    return !coarsePointer();
+  }
+
+  /** Only where a keyboard is already out: on a phone it would cover the thread. */
+  function focusComposer() {
+    if (typeof window === 'undefined' || coarsePointer()) return;
+    setTimeout(function () {
+      var el = document.getElementById('msgComposer');
+      if (el) el.focus({ preventScroll: true });
+    }, 60);
+  }
+
   return {
     MAX_BODY: MAX_BODY,
     errorText: errorText,
@@ -269,6 +370,13 @@
     filterTabs: filterTabs,
     emptyCopy: emptyCopy,
     threadItems: threadItems,
-    newClientId: newClientId
+    newClientId: newClientId,
+    bindScroller: bindScroller,
+    afterRender: afterRender,
+    startPolling: startPolling,
+    stopPolling: stopPolling,
+    growComposer: growComposer,
+    isSendKey: isSendKey,
+    focusComposer: focusComposer
   };
 });
