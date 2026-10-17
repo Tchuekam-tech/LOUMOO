@@ -58,6 +58,7 @@ header_and_styles = """<!DOCTYPE html>
 <script defer src="./src/services/messaging.js"></script>
 <script defer src="./src/services/searchExperience.js"></script>
 <link rel="stylesheet" href="./src/styles/search.css">
+<link rel="stylesheet" href="./src/styles/messages.css">
 <script defer src="./src/services/travelApi.js"></script>
 <script defer src="./src/services/deliveryCircuit.js"></script>
 <script defer src="./src/services/deliveryApi.js"></script>
@@ -16389,6 +16390,7 @@ class Component extends DCLogic {
         });
         this.go('business');
       },
+      businessStoreId: (this.state.currentStore && this.state.currentStore.id) || '',
       businessStoreName: (this.state.currentStore && this.state.currentStore.name) || 'Storefront',
       businessStoreLogoUrl: (this.state.currentStore && (this.state.currentStore.logoUrl || this.state.currentStore.logo_url || this.state.currentStore.logo)) || (this.state.primaryStoreId && this.state.currentStore && this.state.currentStore.id === this.state.primaryStoreId ? this.state.storeLogoUrl : '') || '',
       businessStoreDescription: (this.state.currentStore && (this.state.currentStore.description || (this.state.currentStore.profile && (this.state.currentStore.profile.tagline || this.state.currentStore.profile.bio)))) || '',
@@ -17885,7 +17887,7 @@ class Component extends DCLogic {
         const o = this.state.currentOrder;
         const money = (n) => 'XAF ' + fmt(n || 0);
         if (!o) {
-          return { id: '', orderNumber: '', placedAt: '', statusLabel: '', totalLabel: '', payVia: '', items: [], subtotalLabel: '', shippingLabel: '', cityLabel: '', seller: '', sellerPhone: '', canTrack: false, noTrackNote: '', escrowTitle: 'Pay on delivery', escrowNote: '', escrowOk: true };
+          return { id: '', orderNumber: '', placedAt: '', statusLabel: '', totalLabel: '', payVia: '', items: [], subtotalLabel: '', shippingLabel: '', cityLabel: '', seller: '', sellerPhone: '', canTrack: false, canMessage: false, noTrackNote: '', escrowTitle: 'Pay on delivery', escrowNote: '', escrowOk: true };
         }
         const circuit = typeof window !== 'undefined' ? window.LoumooCircuit : null;
         const sent = Boolean(o.id) && o.serverSynced !== false;
@@ -17936,6 +17938,7 @@ class Component extends DCLogic {
           seller: o.seller || 'the seller',
           sellerPhone: o.sellerPhone || o.sellerWhatsapp || '',
           canTrack: sent && home && !cancelled,
+          canMessage: sent,
           noTrackNote: noTrackNote,
           // Buyer-protection attestation (item D).
           escrowTitle: escrow.title,
