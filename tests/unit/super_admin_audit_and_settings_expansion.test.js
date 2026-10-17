@@ -196,7 +196,33 @@ async function run() {
   }, { adminId: 'admin_ops' });
   assert.strictEqual(maintRes.success, true);
   assert.strictEqual(maintRes.value.enabled, true);
-  console.log('    ✓ 12. Dedicated maintenance mode toggle verified');
+  assert.strictEqual(maintRes.value.banner_text, 'LOUMOO maintenance test in progress.', 'camelCase bannerText must be applied');
+
+  // Regression: the frontend clients send snake_case banner_text / allow_admin_bypass.
+  // These were previously dropped (service only read camelCase), so a custom banner
+  // fell back to the default and "disable admin bypass" never took effect.
+  const maintSnake = await SuperAdminService.setMaintenanceMode({
+    enabled: true,
+    banner_text: 'Maintenance critique en cours.',
+    allow_admin_bypass: false
+  }, { adminId: 'admin_ops' });
+  assert.strictEqual(maintSnake.value.banner_text, 'Maintenance critique en cours.', 'snake_case banner_text must be applied');
+  assert.strictEqual(maintSnake.value.allow_admin_bypass, false, 'explicit allow_admin_bypass:false must be honoured');
+
+  // An unspecified bypass still defaults to true (admins keep access).
+  const maintDefault = await SuperAdminService.setMaintenanceMode({ enabled: true }, { adminId: 'admin_ops' });
+  assert.strictEqual(maintDefault.value.allow_admin_bypass, true, 'unspecified bypass defaults to true');
+
+  // A non-boolean bypass is rejected.
+  await assert.rejects(
+    () => SuperAdminService.setMaintenanceMode({ enabled: true, allow_admin_bypass: 'yes' }, { adminId: 'admin_ops' }),
+    /allow_admin_bypass/,
+    'non-boolean allow_admin_bypass must be rejected'
+  );
+
+  // Reset to a clean (disabled) state for the remaining steps.
+  await SuperAdminService.setMaintenanceMode({ enabled: false }, { adminId: 'admin_ops' });
+  console.log('    ✓ 12. Dedicated maintenance mode toggle verified (snake_case + camelCase, explicit bypass)');
 
   // ── 12. Deep Health Diagnostic Probe ──
   const health = await SuperAdminService.getDeepHealth();

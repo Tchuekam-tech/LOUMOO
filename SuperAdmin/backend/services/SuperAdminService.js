@@ -231,8 +231,19 @@ class SuperAdminService {
 
   /**
    * Dedicated emergency maintenance mode toggle.
+   *
+   * Accepts both the HTTP wire format (snake_case `banner_text` /
+   * `allow_admin_bypass`, as the frontend clients send) and internal camelCase
+   * callers (`bannerText` / `allowAdminBypass`). Earlier revisions destructured
+   * only the camelCase names, so a banner text or a "disable admin bypass"
+   * toggle sent by the UI (snake_case) was silently dropped — the banner fell
+   * back to the default and bypass stayed enabled.
    */
-  static async setMaintenanceMode({ enabled, bannerText = null, allowAdminBypass = true } = {}, { adminId = 'super_admin', ipAddress = null } = {}) {
+  static async setMaintenanceMode(payload = {}, { adminId = 'super_admin', ipAddress = null } = {}) {
+    const { enabled } = payload;
+    const bannerText = payload.bannerText !== undefined ? payload.bannerText : payload.banner_text;
+    const allowAdminBypass = payload.allowAdminBypass !== undefined ? payload.allowAdminBypass : payload.allow_admin_bypass;
+
     if (typeof enabled !== 'boolean') {
       throw new ValidationError('Maintenance status must be specified as a boolean (enabled: true/false).');
     }
@@ -241,12 +252,17 @@ class SuperAdminService {
         throw new ValidationError('Maintenance banner text must be a string up to 500 characters.');
       }
     }
+    if (allowAdminBypass !== null && allowAdminBypass !== undefined && typeof allowAdminBypass !== 'boolean') {
+      throw new ValidationError('allow_admin_bypass must be a boolean flag.');
+    }
     const current = (await SuperAdminRepository.getSetting('maintenance_mode')) || {};
     const updated = {
       ...current,
       enabled,
       banner_text: bannerText || current.banner_text || 'LOUMOO platform upgrade in progress.',
-      allow_admin_bypass: allowAdminBypass !== undefined ? Boolean(allowAdminBypass) : true
+      // Default to true (admins keep access) only when the caller says nothing;
+      // an explicit false must be honoured.
+      allow_admin_bypass: (allowAdminBypass === undefined || allowAdminBypass === null) ? true : Boolean(allowAdminBypass)
     };
 
     const result = await this.updateSystemSetting('maintenance_mode', updated, {
