@@ -74,6 +74,11 @@
       "source": "/announce/:id([A-Za-z0-9_-]+)",
       "destination": "/announcements/:id",
       "permanent": true
+    },
+    {
+      "source": "/chat/seller",
+      "destination": "/chat",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -254,7 +259,7 @@
       "destination": "/index.html"
     },
     {
-      "source": "/chat/seller",
+      "source": "/chat/:id([A-Za-z0-9_-]+)",
       "destination": "/index.html"
     },
     {
