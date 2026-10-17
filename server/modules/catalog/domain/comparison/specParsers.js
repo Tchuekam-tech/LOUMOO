@@ -16,6 +16,8 @@ function parseNumberFr(raw) {
   if (!s) return null;
   if (/^\d{1,3}([. ]\d{3})+(,\d+)?$/.test(s)) {
     s = s.replace(/[. ]/g, '').replace(',', '.');
+  } else if (/^\d{1,3}(,\d{3})+$/.test(s)) {
+    s = s.replace(/,/g, ''); // English thousands: "30,000"
   } else {
     s = s.replace(/\s+/g, '').replace(',', '.');
   }
@@ -96,9 +98,9 @@ function parseMemory(text) {
 
 /* ── Power, battery, charging ───────────────────────────────────────────── */
 
-// "5100 mAh", "30 000 mAh", "30000mAh"
+// "5100 mAh", "30 000 mAh", "30,000mAh", "30000mAh"
 function parseMah(text) {
-  return maxMatch(text, /(\d{1,3}(?:[ . ]\d{3})+|\d+)\s*mAh\b/i);
+  return maxMatch(text, /(\d{1,3}(?:[ ., ]\d{3})+|\d+)\s*mAh\b/i);
 }
 
 function parseWh(text) {
