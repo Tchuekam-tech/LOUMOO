@@ -202,6 +202,7 @@ async function testUnreadReceiptsAndNotifications() {
   assert.strictEqual(notifications[0].title, 'New message from Amina K.');
   assert.deepStrictEqual(notifications[0].metadata.conversationId, id);
   assert.strictEqual(notifications[0].type, 'message');
+  assert.strictEqual(notifications[0].metadata.action, 'open_conversation', 'the notification opens the thread');
 
   await service.sendMessage(BUYER, id, { body: 'Also, is it new?' });
   assert.strictEqual(notifications.length, 1, 'one notification per unread streak, not per message');

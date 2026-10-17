@@ -255,7 +255,8 @@ class MessagingService {
         tone: 'accent',
         title: `New message from ${from}`.slice(0, 255),
         body: conversation.lastMessagePreview || '',
-        metadata: { kind: 'conversation', conversationId: conversation.id, messageId: message.id }
+        // `action` is how the notification feed knows what its button opens.
+        metadata: { action: 'open_conversation', conversationId: conversation.id, messageId: message.id }
       });
     } catch (err) {
       // The message is stored either way; the badge and the inbox still show it.
