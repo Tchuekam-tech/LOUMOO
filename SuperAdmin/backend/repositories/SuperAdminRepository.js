@@ -752,13 +752,30 @@ class SuperAdminRepository {
   /**
    * Aggregates live system overview metrics for the executive dashboard.
    */
+  /**
+   * Sum of order value currently held in escrow ("in flight") — i.e. funds
+   * neither released to the seller nor refunded to the buyer yet. Pure and
+   * static so the aggregation logic can be unit-tested without a database.
+   */
+  static sumEscrowInFlight(orders) {
+    if (!Array.isArray(orders)) return 0;
+    return orders.reduce((acc, o) => {
+      const held = String(o && o.escrow_status).toUpperCase() === 'HELD';
+      return held ? acc + (Number(o.total_amount) || 0) : acc;
+    }, 0);
+  }
+
   static async getOverviewMetrics() {
     let storesCount = 18;
     let pendingKycCount = 3;
     let usersCount = 142;
-    let totalOrders = 86;
-    let gmvXaf = 14850000;
-    let escrowInFlightXaf = 2340000;
+
+    // Order-derived KPIs (count, GMV, escrow-in-flight) are ALWAYS computed from
+    // real order rows — the DB when available, the in-memory seed otherwise.
+    // Earlier revisions recomputed count and GMV from the DB but left
+    // escrowInFlightXaf pinned to a hardcoded 2,340,000, so the executive
+    // dashboard showed a fabricated escrow figure even against live data.
+    let orders = inMemoryOrders;
 
     const db = this.db;
     if (db) {
@@ -766,7 +783,7 @@ class SuperAdminRepository {
         const [storesRes, profilesRes, ordersRes] = await Promise.allSettled([
           db.from('stores').select('id, status, is_verified', { count: 'exact' }),
           db.from('profiles').select('id, primary_role, kyc_status', { count: 'exact' }),
-          db.from('orders').select('id, total_amount, status', { count: 'exact' })
+          db.from('orders').select('id, total_amount, status, escrow_status', { count: 'exact' })
         ]);
 
         if (storesRes.status === 'fulfilled' && storesRes.value.data) {
@@ -777,15 +794,17 @@ class SuperAdminRepository {
         if (profilesRes.status === 'fulfilled' && profilesRes.value.data) {
           usersCount = profilesRes.value.data.length;
         }
-        if (ordersRes.status === 'fulfilled' && ordersRes.value.data) {
-          const orders = ordersRes.value.data;
-          totalOrders = orders.length;
-          gmvXaf = orders.reduce((acc, o) => acc + (Number(o.total_amount) || 0), 0);
+        if (ordersRes.status === 'fulfilled' && Array.isArray(ordersRes.value.data)) {
+          orders = ordersRes.value.data;
         }
       } catch (err) {
         logger.warn('[SuperAdminRepository] Overview metrics aggregation error:', err.message);
       }
     }
+
+    const totalOrders = orders.length;
+    const gmvXaf = orders.reduce((acc, o) => acc + (Number(o.total_amount) || 0), 0);
+    const escrowInFlightXaf = this.sumEscrowInFlight(orders);
 
     return {
       kpis: {

@@ -98,7 +98,20 @@ async function run() {
   assert.ok(overview.kpis.totalOrders !== undefined);
   assert.ok(overview.kpis.gmvFormatted !== undefined);
   assert.ok(overview.health && overview.health.serverStatus === 'HEALTHY');
-  console.log('    ✓ 6. Real-time overview metrics aggregation verified');
+
+  // Escrow-in-flight must be COMPUTED from orders, not the old hardcoded 2,340,000.
+  assert.strictEqual(typeof overview.kpis.escrowInFlightXaf, 'number', 'escrowInFlightXaf must be numeric');
+  assert.notStrictEqual(overview.kpis.escrowInFlightXaf, 2340000, 'escrowInFlightXaf must not be the legacy hardcoded constant');
+  // Pure aggregation helper: only HELD orders count toward escrow-in-flight.
+  const escrowSample = SuperAdminRepository.sumEscrowInFlight([
+    { total_amount: 100000, escrow_status: 'HELD' },
+    { total_amount: 50000, escrow_status: 'held' },      // case-insensitive
+    { total_amount: 999999, escrow_status: 'RELEASED' },  // settled — excluded
+    { total_amount: 999999, escrow_status: 'REFUNDED' },  // settled — excluded
+    { total_amount: 'nan', escrow_status: 'HELD' }         // non-numeric — treated as 0
+  ]);
+  assert.strictEqual(escrowSample, 150000, 'sumEscrowInFlight must sum only HELD orders with numeric amounts');
+  console.log('    ✓ 6. Real-time overview metrics aggregation verified (escrow computed from orders)');
 
   // ── 7. superAdminGuard RBAC Check ──
   let passed = false;
