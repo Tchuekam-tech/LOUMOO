@@ -163,11 +163,16 @@ function advantageFact(dim, winnerId, ids, cellsById, l) {
   // percentage of a star rating means nothing either.
   const deltaText = delta !== null && dim.unit !== 'index' && dim.unit !== '/5' ? ` (${F.percent(delta, l, true)})` : '';
   const text = `${label}${sep(l)}${wv} ${T[l].vs} ${ov}${deltaText}`;
+  // The same fact from the runner-up's side, for its list of drawbacks.
+  const back = delta !== null && win.value !== 0 ? (pick.cell.value - win.value) / Math.abs(win.value) : null;
+  const backText = back !== null && dim.unit !== 'index' && dim.unit !== '/5' ? ` (${F.percent(back, l, true)})` : '';
+  const loserText = `${label}${sep(l)}${ov} ${T[l].vs} ${wv}${backText}`;
   return {
     kind: 'advantage',
     productId: winnerId,
     dimension: dim.key,
     text,
+    loserText,
     data: { winner: win.value, runnerUp: pick.cell.value, runnerUpId: pick.id, delta: delta !== null ? Math.round(delta * 1000) / 1000 : null }
   };
 }
@@ -214,9 +219,9 @@ function buildVerdict(a, locale) {
       const d = a.scores[id].byDim[dim.key];
       if (!d || d.basis !== 'category' || dim.section === 'commerce') continue;
       if (d.score >= 85) {
-        facts.push({ kind: 'categoryTop', productId: id, dimension: dim.key, text: `${titleOf(id)}${sep(l)}${t.categoryTop(dim.label[l], Math.max(1, Math.round(100 - d.score)), plural(a.type, l))}`, data: { percentile: d.score } });
+        facts.push({ kind: 'categoryTop', productId: id, dimension: dim.key, text: `${titleOf(id)}${sep(l)}${t.categoryTop(dim.label[l], Math.max(1, Math.round(100 - d.score)), plural(a.type, l))}`, localText: t.categoryTop(dim.label[l], Math.max(1, Math.round(100 - d.score)), plural(a.type, l)), data: { percentile: d.score } });
       } else if (d.score <= 15) {
-        facts.push({ kind: 'categoryBottom', productId: id, dimension: dim.key, text: `${titleOf(id)}${sep(l)}${t.categoryBottom(dim.label[l], Math.max(1, Math.round(d.score)), plural(a.type, l))}`, data: { percentile: d.score } });
+        facts.push({ kind: 'categoryBottom', productId: id, dimension: dim.key, text: `${titleOf(id)}${sep(l)}${t.categoryBottom(dim.label[l], Math.max(1, Math.round(d.score)), plural(a.type, l))}`, localText: t.categoryBottom(dim.label[l], Math.max(1, Math.round(d.score)), plural(a.type, l)), data: { percentile: d.score } });
       }
     }
   }
@@ -242,7 +247,7 @@ function buildVerdict(a, locale) {
     if (v.deviation <= -0.1) text = t.valueBelow(F.percent(Math.abs(v.deviation), l), plural(a.type, l), v.fit.n);
     else if (v.deviation >= 0.1) text = t.valueAbove(F.percent(v.deviation, l), plural(a.type, l), v.fit.n);
     else text = t.valueInLine(plural(a.type, l));
-    facts.push({ kind: 'marketValue', productId: id, text: `${titleOf(id)}${sep(l)}${text}`, data: v });
+    facts.push({ kind: 'marketValue', productId: id, text: `${titleOf(id)}${sep(l)}${text}`, localText: text, data: v });
   }
 
   // Pareto dominance — only meaningful across at least two spec dimensions.
@@ -319,19 +324,23 @@ function buildVerdict(a, locale) {
     bestFor.push({ facet, label: `${t.bestFor} ${facetLabel(facet, l)}`, productId: leaders[0][0] });
   }
 
-  // Pros and cons per product.
-  const tradeoffs = a.ids.map(id => {
-    const pros = facts.filter(f => f.productId === id && (f.kind === 'advantage' || f.kind === 'categoryTop' || (f.kind === 'marketValue' && f.data.deviation <= -0.1))).map(f => f.text);
-    const cons = facts.filter(f => (f.kind === 'categoryBottom' && f.productId === id) || (f.kind === 'marketValue' && f.productId === id && f.data.deviation >= 0.1)).map(f => f.text);
-    for (const f of advantages) {
-      if (f.productId !== id && f.data.runnerUpId === id && a.ids.length === 2) cons.push(f.text);
-    }
-    return { productId: id, title: titleOf(id), pros: pros.slice(0, 5), cons: cons.slice(0, 5) };
-  });
-
   // Reasons a buyer would act on: specs, price, market value. Ratings and the
   // seller badge are near-identical across the catalogue and make weak reasons.
   const WEAK = new Set(['rating', 'sellerVerified', 'inStock']);
+
+  // Pros and cons per product, each told from THAT product's side and without
+  // repeating its name (the UI shows them under the product already).
+  const tradeoffs = a.ids.map(id => {
+    const mine = facts.filter(f => f.productId === id && !WEAK.has(f.dimension));
+    const pros = mine.filter(f => f.kind === 'advantage' || f.kind === 'categoryTop' || (f.kind === 'marketValue' && f.data.deviation <= -0.1))
+      .map(f => f.localText || f.text);
+    const cons = mine.filter(f => f.kind === 'categoryBottom' || (f.kind === 'marketValue' && f.data.deviation >= 0.1))
+      .map(f => f.localText || f.text);
+    for (const f of advantages) {
+      if (f.productId !== id && f.data.runnerUpId === id && !WEAK.has(f.dimension)) cons.push(f.loserText);
+    }
+    return { productId: id, title: titleOf(id), pros: pros.slice(0, 5), cons: cons.slice(0, 5) };
+  });
   const topReasons = winnerId
     ? facts.filter(f => f.productId === winnerId && ['advantage', 'marketValue', 'categoryTop', 'dominance'].includes(f.kind))
       .filter(f => !WEAK.has(f.dimension))
