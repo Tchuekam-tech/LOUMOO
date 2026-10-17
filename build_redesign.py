@@ -11161,12 +11161,25 @@ class Component extends DCLogic {
     const sellerName = opts.sellerName || p.storeName || 'LOUMOO Seller';
     const productTitle = opts.productTitle || p.title || '';
     const price = opts.price || p.salePrice || p.price || '';
-    const rawPhone = opts.phone || opts.sellerPhone || opts.whatsapp || p.sellerPhone || p.storePhone || p.phoneNumber || p.phone || (p.store && (p.store.phoneNumber || p.store.phone || p.store.phone_number)) || (typeof resolveSellerWhatsApp === 'function' ? resolveSellerWhatsApp(sellerName) : '') || '+237690000000';
-    let cleanPhone = String(rawPhone || '').replace(/[^0-9]/g, '');
-    if (cleanPhone.length === 9 && (cleanPhone.startsWith('6') || cleanPhone.startsWith('2'))) {
-      cleanPhone = '237' + cleanPhone;
+    const rawPhone = opts.phone || opts.sellerPhone || opts.whatsapp || p.sellerPhone || p.storePhone || p.phoneNumber || p.phone || (p.store && (p.store.phoneNumber || p.store.phone || p.store.phone_number)) || (typeof resolveSellerWhatsApp === 'function' ? resolveSellerWhatsApp(sellerName) : '') || '';
+    // Mirrors the server's ContactVerificationService.normalizePhoneNumber so the
+    // same input dials to the same wa.me/237… on both sides. Returns null for a
+    // number the platform cannot dial — there is no made-up fallback number.
+    const cleanPhone = (function (rawVal) {
+      let d = String(rawVal || '').replace(/[^0-9]/g, '');
+      if (!d) return null;
+      if (d.indexOf('00237') === 0) d = d.slice(2);
+      // A bare 9-digit national number is never already prefixed, even when it
+      // begins with 237 (a valid landline range): treat it as national.
+      if (d.length === 9) d = '237' + d;
+      else if (d.indexOf('237') !== 0) d = '237' + d;
+      return /^237[2368]\d{8}$/.test(d) ? d : null;
+    })(rawPhone);
+
+    if (!cleanPhone) {
+      this.toast('No WhatsApp number is listed for ' + sellerName + '.');
+      return;
     }
-    if (!cleanPhone) cleanPhone = '237690000000';
 
     let msg = '';
     if (opts.orderNumber) {

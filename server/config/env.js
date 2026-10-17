@@ -94,8 +94,15 @@ const envSchema = z.object({
   AISSTREAM_BASE_URL: z.string().optional(),
   AISSTREAM_MODEL: z.string().optional(),
 
-  // Google SMTP / App Password
+  // Google SMTP / App Password. GOOGLE_SMTP_USER is the authenticating mailbox;
+  // the Gmail transport stays disabled until BOTH are set (no account is baked
+  // into source).
   GOOGLE_APP_PASSWORD: z.string().optional(),
+  GOOGLE_SMTP_USER: z.string().optional(),
+
+  // The identity transactional mail is sent AS. One value for every channel so
+  // order, OTP and welcome mail all present the same sender.
+  EMAIL_FROM: z.string().optional(),
 
   // ElevenLabs
   ELEVENLABS_API_KEY: z.string().optional(),
@@ -248,7 +255,8 @@ const config = {
     baseUrl: env.AISSTREAM_BASE_URL || '',
     model: env.AISSTREAM_MODEL || 'gpt-4o-mini'
   },
-  google: { appPassword: env.GOOGLE_APP_PASSWORD || '' },
+  google: { appPassword: env.GOOGLE_APP_PASSWORD || '', smtpUser: env.GOOGLE_SMTP_USER || '' },
+  email: { from: env.EMAIL_FROM || 'LOUMOO <noreply@loumoo.cm>' },
   elevenlabs: { apiKey: env.ELEVENLABS_API_KEY || '', agentId: env.ELEVENLABS_AGENT_ID || '' },
   search: {
     enabled: env.SEARCH_ENABLED === 'true',

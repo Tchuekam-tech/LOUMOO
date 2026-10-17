@@ -8,12 +8,19 @@ const nodemailer = require('nodemailer');
 const config = require('../config');
 
 const appPass = ((config.google && config.google.appPassword) || process.env.GOOGLE_APP_PASSWORD || '').replace(/\s+/g, '');
-const smtpUser = 'rebornedbetalpha@gmail.com';
+// The authenticating mailbox comes from configuration — never hardcoded. Both
+// the password and the user must be present or the Gmail transport stays off.
+const smtpUser = ((config.google && config.google.smtpUser) || process.env.GOOGLE_SMTP_USER || '').trim();
+// The sender identity for every transactional message, so order/OTP/welcome mail
+// all present the same From instead of each client inventing its own.
+const defaultFrom = (config.email && config.email.from) || 'LOUMOO <noreply@loumoo.cm>';
 
 let smtpTransporter = null;
 
 try {
-  if (!appPass) throw new Error('GOOGLE_APP_PASSWORD not configured — Gmail SMTP transport is DISABLED.');
+  if (!appPass || !smtpUser) {
+    throw new Error('GOOGLE_APP_PASSWORD / GOOGLE_SMTP_USER not configured — Gmail SMTP transport is DISABLED.');
+  }
   smtpTransporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -33,7 +40,7 @@ try {
  * Sends transactional email with guaranteed delivery.
  */
 async function sendEmail({ to, subject, html, from }) {
-  const fromAddress = from || `"LOUMOO Verification" <${smtpUser}>`;
+  const fromAddress = from || defaultFrom;
 
   // 1. Try primary Gmail SMTP
   if (smtpTransporter) {
@@ -65,7 +72,7 @@ async function sendEmail({ to, subject, html, from }) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          from: 'onboarding@resend.dev',
+          from: fromAddress,
           to: Array.isArray(to) ? to : [to],
           subject: subject,
           html: html
