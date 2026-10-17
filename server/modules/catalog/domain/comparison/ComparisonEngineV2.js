@@ -163,11 +163,21 @@ function compare(products, options = {}) {
   let specScoreById = null;
   let rankingWithheld = null;
 
+  const winnersByDim = {};
+  for (const dim of dims) {
+    winnersByDim[dim.key] = A.dimensionWinner(dim, ids.map(id => ({ id, cell: cellsById[id][dim.key] })));
+  }
+
   if (comparability.ranked) {
     ({ basisDims, partialDims, scores } = A.scoreSet({ ids, dims, cellsById, typeStats, priorities }));
     // Price and ratings alone do not make a recommendation: "the cheaper one
     // wins" is not analysis. Without one shared verified spec, nobody is ranked.
     if (!basisDims.some(d => d.section !== 'commerce')) rankingWithheld = 'no-shared-specs';
+    // Equivalent products: nobody wins a spec or the price outright, so any
+    // "winner" would come from rating noise. Say they are equivalent instead.
+    else if (!basisDims.some(d => (d.section !== 'commerce' || d.key === 'price') && winnersByDim[d.key].winnerIds.length === 1)) {
+      rankingWithheld = 'equivalent';
+    }
 
     // Market value joins the score only when every product has one.
     if (sameType && stats) {
@@ -200,11 +210,6 @@ function compare(products, options = {}) {
       specScoreById = Object.fromEntries(ids.map(id => [id, neutral[id]]));
     }
     basisDims = scoringDims;
-  }
-
-  const winnersByDim = {};
-  for (const dim of dims) {
-    winnersByDim[dim.key] = A.dimensionWinner(dim, ids.map(id => ({ id, cell: cellsById[id][dim.key] })));
   }
 
   const units = sameType ? unitCosts(type, ids, cellsById) : [];
