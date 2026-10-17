@@ -17858,6 +17858,71 @@ class Component extends DCLogic {
       }),
       retryProviders: () => this._loadProviders(this.state.providersCity || '', true),
 
+      // ── In-app messaging: inbox, thread, badge (view logic: src/services/messaging.js) ──
+      ...(() => {
+        const st = this.state;
+        const M = this._msg();
+        const c = st.activeConversation;
+        const authed = st.authStatus === 'authenticated';
+        const draft = String(st.threadDraft || '');
+        const rows = M ? M.inboxRows(Object.assign({ threadOpen: st.screen === 'threadSeller' }, st), (x) => this.openConversation(x)) : [];
+        const empty = M ? M.emptyCopy(st) : { title: 'No messages yet', text: '', browse: false };
+        const n = st.messagingUnread || 0;
+        return {
+          messagingBadge: n > 99 ? '99+' : (n > 0 ? String(n) : ''),
+          messagingHasUnread: n > 0,
+          convSignedIn: authed,
+          convAuthPending: !authed && st.authStatus !== 'anonymous',
+          convLoadingFirst: authed && !st.conversationsLoaded && !st.conversationsError,
+          convError: st.conversationsLoaded ? '' : (st.conversationsError || ''),
+          retryConversations: () => this.loadConversations(),
+          convFilterTabs: M ? M.filterTabs(st, (key) => this.setState({ convFilter: key })) : [],
+          convRows: rows,
+          convHasRows: rows.length > 0,
+          convHasAny: (st.conversations || []).length > 0,
+          convQuery: st.convQuery || '',
+          updateConvQuery: (e) => this.setState({ convQuery: e && e.target ? e.target.value : '' }),
+          clearConvQuery: () => this.setState({ convQuery: '' }),
+          convEmptyTitle: empty.title,
+          convEmptyText: empty.text,
+          convShowBrowse: empty.browse,
+          threadTitle: (c && c.title) || (st.threadLoading ? 'Loading…' : 'Conversation'),
+          threadSubtitle: !c ? '' : (c.role === 'seller' ? 'Buyer · messaged ' + (c.storeName || 'your boutique') : (c.verified ? 'Verified boutique' : 'Boutique')),
+          threadInitials: (c && c.initials) || '',
+          threadAvatarUrl: (c && c.avatarUrl) || '',
+          threadHasAvatar: Boolean(c && c.avatarUrl),
+          threadVerified: Boolean(c && c.verified),
+          threadIsBuyer: Boolean(c && c.role === 'buyer'),
+          threadCanWhatsApp: Boolean(c && c.role === 'buyer' && c.storePhone),
+          threadItems: M ? M.threadItems(st.threadMessages, {
+            retry: (m) => this.sendThreadMessage({ clientId: m.clientId, body: m.body }),
+            discard: (m) => this.setState((s2) => ({ threadMessages: s2.threadMessages.filter((x) => x.seq || x.clientId !== m.clientId) })),
+            openCard: (m) => this.openThreadCard(m)
+          }) : [],
+          threadLoadingFirst: Boolean(st.threadLoading) && !(st.threadMessages || []).length,
+          threadErrorText: st.threadError || '',
+          threadEmpty: !st.threadLoading && !st.threadError && !(st.threadMessages || []).length,
+          threadEmptyText: c && c.role === 'seller'
+            ? 'Say hello. The buyer will be notified.'
+            : 'Ask about availability, delivery or price. ' + ((c && c.title) || 'The boutique') + ' will be notified.',
+          threadHasMore: Boolean(st.threadHasMore),
+          threadLoadingOlder: Boolean(st.threadLoadingOlder),
+          loadOlderMessages: () => this.loadOlderMessages(),
+          retryThread: () => this.loadThread(st.activeConversationId),
+          threadDraft: draft,
+          threadCanSend: draft.trim().length > 0 && draft.trim().length <= 2000,
+          threadDraftNearLimit: draft.length > 1800,
+          threadDraftCount: draft.length + ' / 2000',
+          updateThreadDraft: (e) => this.updateThreadDraft(e),
+          threadKeyDown: (e) => this.threadKeyDown(e),
+          sendThreadMessage: () => this.sendThreadMessage(),
+          continueOnWhatsApp: () => c && this.contactSellerWhatsApp({ sellerName: c.storeName || c.title, phone: c.storePhone }),
+          closeThread: () => this.closeThread(),
+          messageSeller: (opts) => this.messageSeller(opts),
+          convStarting: Boolean(st.convStarting),
+          setThreadScroller: this._threadRefCb || (this._threadRefCb = (el) => this._setThreadScroller(el))
+        };
+      })(),
       // ── Notifications feed ──
       notifHasItems: (this.state.notifications || []).length > 0,
       notifUnreadCount: (this.state.notifications || []).filter((n) => !n.read).length,
