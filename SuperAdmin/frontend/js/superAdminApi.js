@@ -172,8 +172,7 @@
         // Authenticated browser file download trigger
         const fetchRes = await fetch(url, {
           headers: {
-            'Authorization': `Bearer ${getAuthToken()}`,
-            'X-Admin-Key': 'loumoo_dev_admin'
+            'Authorization': `Bearer ${getAuthToken()}`
           }
         });
         if (!fetchRes.ok) {
