@@ -36,6 +36,10 @@ async function run() {
   assert.strictEqual(bare.storageGb, 128);
   assert.strictEqual(bare.inferred.storageGb, true, 'Bare capacity is flagged as inferred');
 
+  const link = P.parseMemory('USB-C 3.0 ultra rapide (10 Gb/s) · 5G Dual SIM');
+  assert.strictEqual(link.ramGb, null, 'A 10 Gb/s link speed is not 10 GB of RAM');
+  assert.strictEqual(P.parseMemory('Thunderbolt 4 40Gbps').ramGb, null);
+
   const unified = P.parseMemory('Mémoire: 8GB mémoire unifiée ultra rapide');
   assert.strictEqual(unified.ramGb, 8);
   assert.strictEqual(unified.storageGb, null);

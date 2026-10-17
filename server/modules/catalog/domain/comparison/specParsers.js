@@ -78,6 +78,8 @@ function parseMemory(text) {
       const before = seg.slice(Math.max(0, m.index - 12), m.index);
       const ctx = before + ' ' + after;
       if (VRAM_CUES.test(before) || /^\s*(gddr|vram)/i.test(after)) continue;
+      // "10 Gb/s", "40Gbps" are link speeds, not capacities.
+      if (/^\s*(\/\s*s|ps\b)/i.test(after)) continue;
       if (RAM_CUES.test(ctx)) {
         if (out.ramGb === null) out.ramGb = gb;
       } else if (STORAGE_CUES.test(ctx)) {
