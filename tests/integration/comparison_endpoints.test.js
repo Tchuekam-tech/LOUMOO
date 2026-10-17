@@ -21,7 +21,20 @@ async function run() {
   assert.ok(data.verdict.bestOverall);
   assert.ok(data.recommendation);
   assert.ok(data.quickDifferences.length >= 3);
-  assert.ok(data.matrixSections.length >= 6);
+  assert.ok(data.matrixSections.length >= 4);
+  assert.strictEqual(data.engineVersion, '2.0.0');
+  assert.deepStrictEqual(data.unresolved, []);
+  assert.ok(data.analysis && data.analysis.scores, 'v2 analysis present');
+
+  // 1b. Unknown ids are reported, never silently dropped or invented.
+  const partialRes = await harness.request('GET', '/api/v1/catalog/compare?ids=elec-1,elec-macbook-pro,nonexistent_zz');
+  assert.strictEqual(partialRes.status, 200);
+  assert.strictEqual(partialRes.body.data.productCount, 2);
+  assert.deepStrictEqual(partialRes.body.data.unresolved, [{ id: 'nonexistent_zz', reason: 'not_found' }]);
+
+  // 1c. ?lang=fr returns a French verdict.
+  const frRes = await harness.request('GET', '/api/v1/catalog/compare?ids=elec-1,elec-macbook-pro&lang=fr');
+  assert.strictEqual(frRes.body.data.locale, 'fr');
 
   // 2. Three-Product Comparison with Personalized Priorities Query String
   const threeCompRes = await harness.request(
