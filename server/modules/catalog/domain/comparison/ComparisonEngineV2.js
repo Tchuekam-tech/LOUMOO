@@ -138,7 +138,6 @@ function compare(products, options = {}) {
   const titles = Object.fromEntries(entries.map(e => [e.id, shortTitle(e.product.title)]));
 
   const comparability = A.comparability(entries);
-  if (entries.length < 2) comparability.ranked = false;
   const sameType = comparability.types.length === 1 && comparability.level === 'full';
   const type = sameType ? comparability.types[0] : null;
   const typeStats = sameType && stats ? stats.typeStats(type) : null;

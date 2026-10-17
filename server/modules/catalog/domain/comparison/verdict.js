@@ -73,6 +73,7 @@ const T = {
     limited: 'These are different kinds of product, so they are shown side by side without a ranking.',
     partialLevel: 'These products are related but not the same kind: only the specs they share are compared.',
     none: 'Products cannot be ranked against stores or stays; they are shown side by side only.',
+    insufficient: 'Add at least one more product to compare.',
     withheld: 'These listings share no verified specification, so no product is recommended; compare price and seller below.',
     noBasis: 'Not enough shared, reliable information to rank these products.',
     bestFor: 'Best for',
@@ -102,6 +103,7 @@ const T = {
     limited: 'Ces produits ne sont pas du même type : affichage côte à côte, sans classement.',
     partialLevel: 'Ces produits sont proches mais pas du même type : seules les caractéristiques communes sont comparées.',
     none: 'Un produit ne se classe pas face à une boutique ou un séjour ; affichage côte à côte uniquement.',
+    insufficient: 'Ajoutez au moins un autre produit pour comparer.',
     withheld: "Ces annonces n'ont aucune caractéristique vérifiée en commun : aucun produit n'est recommandé ; comparez le prix et le vendeur ci-dessous.",
     noBasis: 'Pas assez d’informations communes et fiables pour classer ces produits.',
     bestFor: 'Idéal pour',
@@ -180,7 +182,8 @@ function buildVerdict(a, locale) {
   const warnings = [];
 
   // Comparability notices first: they frame everything else.
-  if (a.comparability.level === 'none') warnings.push(t.none);
+  if (a.comparability.level === 'insufficient') warnings.push(t.insufficient);
+  else if (a.comparability.level === 'none') warnings.push(t.none);
   else if (a.comparability.level === 'limited') warnings.push(t.limited);
   else if (a.comparability.level === 'partial') warnings.push(t.partialLevel);
   if (a.rankingWithheld) warnings.push(t.withheld);

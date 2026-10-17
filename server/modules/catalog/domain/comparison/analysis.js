@@ -18,6 +18,7 @@ const CLEAR_MARGIN = 5; // points out of 100
  *   limited  unrelated kinds (a phone and a speaker) — side by side, no ranking:
  *            "the speaker is cheaper" is true and useless as a recommendation
  *   none     products mixed with stores/hotels — side by side only, no ranking
+ *   insufficient  fewer than two products resolved
  */
 function comparability(entries) {
   const types = [...new Set(entries.map(e => e.type))];
@@ -25,7 +26,8 @@ function comparability(entries) {
   const categories = [...new Set(entries.map(e => e.product.category || 'general'))];
   const entityTypes = [...new Set(entries.map(e => e.product.entityType))];
   let level;
-  if (entityTypes.length > 1) level = 'none';
+  if (entries.length < 2) level = 'insufficient';
+  else if (entityTypes.length > 1) level = 'none';
   else if (types.length === 1) level = 'full';
   else if (families.length === 1) level = 'partial';
   else level = 'limited';
