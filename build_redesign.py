@@ -8123,6 +8123,11 @@ class Component extends DCLogic {
 
   // Opens the screen a notification is about, for the part the reader plays in it.
   _openNotification(n) {
+    // A message notification opens its thread; the circuit knows the rest.
+    if (n && n.metadata && n.metadata.action === 'open_conversation' && n.metadata.conversationId) {
+      this.openConversation(String(n.metadata.conversationId));
+      return;
+    }
     const circuit = typeof window !== 'undefined' ? window.LoumooCircuit : null;
     if (!n || !circuit) return;
     circuit.openFromNotification(n);
@@ -8461,6 +8466,9 @@ class Component extends DCLogic {
     // Keep the feed (and an open order) live: sellers and riders learn of the next
     // step from it. See _startCircuitPolling.
     this._startCircuitPolling();
+    // Messages: the unread badge, the inbox and an open thread stay live.
+    setTimeout(() => { if (!this._unmounted) this.loadMessagingUnread(); }, 2500);
+    this._startMessagingPolling();
     this._startRouter();
     if (typeof window !== 'undefined') {
       window._loumooHeroComponent = this;
@@ -8572,6 +8580,8 @@ class Component extends DCLogic {
     clearInterval(this._resetTimer);
     clearInterval(this._emailTimer);
     this._stopCircuitPolling();
+    this._stopMessagingPolling();
+    this._setThreadScroller(null);
     this._stopRouter();
     if (typeof window !== 'undefined' && this._handleKeyDown) {
       window.removeEventListener('keydown', this._handleKeyDown);
@@ -8962,7 +8972,19 @@ class Component extends DCLogic {
     // here. The server is the source of truth: the next sign-in loads that account's own.
     try { localStorage.removeItem('loumoo_orders'); localStorage.removeItem('loumoo_notifs'); } catch (e) {}
 
+    // Conversations are private: none of them may outlive the session on screen.
+    this._threadFor = null;
+    this._threadToken = (this._threadToken || 0) + 1;
     this.setState({
+      conversations: [],
+      conversationsLoaded: false,
+      conversationsError: '',
+      activeConversationId: null,
+      activeConversation: null,
+      threadMessages: [],
+      threadDraft: '',
+      threadError: '',
+      messagingUnread: 0,
       orders: [],
       lastOrder: null,
       lastOrders: [],
@@ -9048,6 +9070,8 @@ class Component extends DCLogic {
       if (!this.state.catalogProducts.length && !this.state.catalogLoading) {
         this.loadCatalogProducts({ limit: 16 });
       }
+    } else if (screen === 'chat') {
+      this.loadConversations({ quiet: this.state.conversationsLoaded });
     } else if (screen === 'vsCompare') {
       this.runCompare();
     } else if (screen === 'superAdmin') {
@@ -9847,6 +9871,7 @@ class Component extends DCLogic {
       this._sc.scrollTop = 0;
     }
     if (prevScreen !== this.state.screen) this._onScreenEnter(this.state.screen);
+    this._afterThreadRender(prevState);
     this._prevScreen = this.state.screen;
     this._syncRouter();
     if (this.state.screen && this.state.screen.startsWith('onboard') && typeof localStorage !== 'undefined') {
@@ -17933,7 +17958,7 @@ class Component extends DCLogic {
       })(),
       notifList: (this.state.notifications || []).map((n) => {
         const action = (n.metadata && n.metadata.action) || '';
-        const openLabels = { track_order: 'Track order', open_dispatch: 'Open deliveries', open_rider_hub: 'Open rider jobs', open_riders_admin: 'Open riders' };
+        const openLabels = { track_order: 'Track order', open_dispatch: 'Open deliveries', open_rider_hub: 'Open rider jobs', open_riders_admin: 'Open riders', open_conversation: 'Open conversation' };
         return {
           id: n.id,
           title: n.title,
