@@ -101,8 +101,18 @@ const envSchema = z.object({
   ELEVENLABS_API_KEY: z.string().optional(),
   ELEVENLABS_AGENT_ID: z.string().optional(),
   SEARCH_ENABLED: z.enum(['true', 'false']).default('false'),
-  OPENAI_API_KEY: z.string().optional(),
+  // AI search intent parsing runs through a provider fallback chain so it stays
+  // up as long as at least one key is configured. Default order: Anthropic →
+  // Gemini → Groq (override with SEARCH_AI_PROVIDERS). Each *_MODEL overrides the
+  // provider's default model.
+  ANTHROPIC_API_KEY: z.string().optional(),
   SEARCH_AI_MODEL: z.string().optional(),
+  GEMINI_API_KEY: z.string().optional(),
+  GOOGLE_API_KEY: z.string().optional(),
+  GEMINI_MODEL: z.string().optional(),
+  GROQ_API_KEY: z.string().optional(),
+  GROQ_MODEL: z.string().optional(),
+  SEARCH_AI_PROVIDERS: z.string().optional(),
 
   // PostHog
   POSTHOG_API_KEY: z.string().optional(),
@@ -165,6 +175,12 @@ function parseTrustProxy(rawValue, environment) {
 const trustProxyRaw = typeof process.env.TRUST_PROXY === 'string'
   ? process.env.TRUST_PROXY.trim()
   : '';
+
+// Split a comma/whitespace-separated secret into a de-duplicated key list.
+// One provider may hold several keys; the search chain rotates through them on
+// rate-limit/failure before falling over to the next provider.
+const splitList = (v) =>
+  [...new Set(String(v || '').split(/[\s,]+/).map(s => s.trim()).filter(Boolean))];
 
 const config = {
   port: env.PORT || 8080,
@@ -234,7 +250,21 @@ const config = {
   },
   google: { appPassword: env.GOOGLE_APP_PASSWORD || '' },
   elevenlabs: { apiKey: env.ELEVENLABS_API_KEY || '', agentId: env.ELEVENLABS_AGENT_ID || '' },
-  search: { enabled: env.SEARCH_ENABLED === 'true', aiKey: env.OPENAI_API_KEY || '', aiModel: env.SEARCH_AI_MODEL || '' },
+  search: {
+    enabled: env.SEARCH_ENABLED === 'true',
+    // Each provider may hold several keys (comma/space separated) that the chain
+    // rotates through on failure. Anthropic (primary) → Gemini → Groq by default.
+    aiKeys: splitList(env.ANTHROPIC_API_KEY),
+    aiModel: env.SEARCH_AI_MODEL || 'claude-haiku-5-5',
+    geminiKeys: splitList(env.GEMINI_API_KEY || env.GOOGLE_API_KEY),
+    geminiModel: env.GEMINI_MODEL || 'gemini-3.8-flash',
+    groqKeys: splitList(env.GROQ_API_KEY),
+    groqModel: env.GROQ_MODEL || 'openai/gpt-oss-20b',
+    providerOrder: (env.SEARCH_AI_PROVIDERS || 'anthropic,gemini,groq')
+      .split(',')
+      .map((p) => p.trim().toLowerCase())
+      .filter(Boolean),
+  },
 
   posthog: {
     apiKey: env.POSTHOG_API_KEY || '',

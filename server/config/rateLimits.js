@@ -20,5 +20,16 @@ const PEER_MAX_REQUESTS = 3000;
 module.exports = Object.freeze({
   PEER_MAX_REQUESTS,
   api: Object.freeze({ maxRequests: 120, peerMaxRequests: PEER_MAX_REQUESTS, windowSeconds: 60 }),
-  discovery: Object.freeze({ maxRequests: 180, peerMaxRequests: PEER_MAX_REQUESTS, windowSeconds: 60, keyPrefix: 'discovery' })
+  discovery: Object.freeze({ maxRequests: 180, peerMaxRequests: PEER_MAX_REQUESTS, windowSeconds: 60, keyPrefix: 'discovery' }),
+
+  // AI/voice search tiers. These endpoints call paid providers (Anthropic for
+  // intent/visual, ElevenLabs for the voice agent) so they are metered tightly
+  // PER AUTHENTICATED USER, not per IP — the search router keys them by userId.
+  // No peerMaxRequests: the peer backstop guards IP-keyed limits against spoofed
+  // forwarding headers; a user-keyed budget behind requireAuth has no such hole.
+  // searchAssistant + searchDaily stack on /assistant and /visual (a short burst
+  // window and a daily ceiling); searchVoice caps session mints on /voice/session.
+  searchAssistant: Object.freeze({ maxRequests: 10, windowSeconds: 60, keyPrefix: 'search:paid' }),
+  searchDaily: Object.freeze({ maxRequests: 100, windowSeconds: 86400, keyPrefix: 'search:daily' }),
+  searchVoice: Object.freeze({ maxRequests: 3, windowSeconds: 60, keyPrefix: 'search:voice' })
 });

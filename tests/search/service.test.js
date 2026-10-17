@@ -67,38 +67,193 @@ module.exports = async () => {
     }).search({ q: 'pc' }),
     (e) => e.statusCode === 503 && !e.message.includes('SECRET'),
   );
-  let payload;
+  let payload, lastUrl, lastHeaders;
+  // Anthropic Messages API returns the parse as a forced `search_intent` tool
+  // call; a leading text block is realistic and must be ignored.
+  const aiReply = (input) => ({
+    ok: true,
+    json: async () => ({
+      content: [
+        { type: 'text', text: '' },
+        { type: 'tool_use', name: 'search_intent', input },
+      ],
+    }),
+  });
   const ai = new SearchAI({
     settings: { aiKey: 'test-key', aiModel: 'test-model' },
     fetcher: async (url, r) => {
+      lastUrl = url;
+      lastHeaders = r.headers;
       payload = JSON.parse(r.body);
-      return {
-        ok: true,
-        json: async () => ({
-          output: [
-            {
-              content: [
-                {
-                  type: 'output_text',
-                  text: JSON.stringify({
-                    q: 'ordinateur',
-                    type: 'product',
-                    city: 'Douala',
-                    minPrice: null,
-                    maxPrice: 300000,
-                    message: 'Voici les résultats.',
-                  }),
-                },
-              ],
-            },
-          ],
-        }),
-      };
+      return aiReply({
+        q: 'ordinateur',
+        type: 'product',
+        city: 'Douala',
+        minPrice: null,
+        maxPrice: 300000,
+        message: 'Voici les résultats.',
+      });
     },
   });
-  assert.equal((await ai.intent({ message: 'Un PC' })).maxPrice, 300000);
-  assert.equal(payload.store, false);
-  assert.equal(payload.text.format.strict, true);
+  const intent = await ai.intent({ message: 'Un PC' });
+  assert.equal(intent.maxPrice, 300000);
+  assert.equal(intent.q, 'ordinateur');
+  assert.equal(lastUrl, 'https://api.anthropic.com/v1/messages');
+  assert.equal(lastHeaders['x-api-key'], 'test-key');
+  assert.equal(lastHeaders['anthropic-version'], '2023-06-01');
+  assert.equal(payload.model, 'test-model');
+  assert.equal(payload.thinking.type, 'disabled');
+  assert.equal(payload.tools[0].name, 'search_intent');
+  assert.equal(payload.tool_choice.name, 'search_intent');
+  // A response with no usable tool call fails closed as 503, never crashes.
+  await assert.rejects(
+    new SearchAI({
+      settings: { aiKey: 'k', aiModel: 'm' },
+      fetcher: async () => ({ ok: true, json: async () => ({ content: [] }) }),
+    }).intent({ message: 'x' }),
+    (e) => e.statusCode === 503,
+  );
+  // Visual search attaches the photo as a base64 image block to the same tool.
+  let visualPayload;
+  const png =
+    'data:image/png;base64,' +
+    Buffer.from([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 0]).toString(
+      'base64',
+    );
+  await new SearchAI({
+    settings: { aiKey: 'k', aiModel: 'm' },
+    fetcher: async (url, r) => {
+      visualPayload = JSON.parse(r.body);
+      return aiReply({
+        q: 'sac',
+        type: 'all',
+        city: '',
+        minPrice: null,
+        maxPrice: null,
+        message: 'Objet identifié.',
+      });
+    },
+  }).intent({ message: 'Trouve ceci', imageData: png });
+  assert.equal(visualPayload.messages[0].content[1].type, 'image');
+  assert.equal(
+    visualPayload.messages[0].content[1].source.media_type,
+    'image/png',
+  );
+  // Provider fallback chain: Anthropic → Gemini → Groq, auto-failover.
+  const geminiReply = (obj) => ({
+    ok: true,
+    json: async () => ({
+      candidates: [{ content: { parts: [{ text: JSON.stringify(obj) }] } }],
+    }),
+  });
+  const groqReply = (obj) => ({
+    ok: true,
+    json: async () => ({
+      choices: [{ message: { content: JSON.stringify(obj) } }],
+    }),
+  });
+  // Anthropic down → Gemini answers; Gemini is sent a JSON responseSchema.
+  let geminiBody;
+  const chainUrls = [];
+  const gemini = await new SearchAI({
+    settings: {
+      aiKey: 'a',
+      aiModel: 'm',
+      geminiKey: 'g',
+      geminiModel: 'gm',
+      providerOrder: ['anthropic', 'gemini', 'groq'],
+    },
+    fetcher: async (url, r) => {
+      chainUrls.push(url);
+      if (url.includes('anthropic'))
+        return { ok: false, status: 500, json: async () => ({}) };
+      geminiBody = JSON.parse(r.body);
+      return geminiReply({
+        q: 'telephone',
+        type: 'product',
+        city: '',
+        minPrice: null,
+        maxPrice: null,
+        message: 'Gemini.',
+      });
+    },
+  }).intent({ message: 'un phone' });
+  assert.equal(gemini.q, 'telephone');
+  assert.ok(chainUrls[0].includes('anthropic'), 'anthropic is tried first');
+  assert.ok(
+    chainUrls[1].includes('generativelanguage'),
+    'gemini is tried next',
+  );
+  assert.equal(geminiBody.generationConfig.responseMimeType, 'application/json');
+  // Anthropic + Gemini down → Groq answers (OpenAI-compatible json_object).
+  let groqBody;
+  const groq = await new SearchAI({
+    settings: {
+      aiKey: 'a',
+      aiModel: 'm',
+      geminiKey: 'g',
+      geminiModel: 'gm',
+      groqKey: 'q',
+      groqModel: 'qm',
+      providerOrder: ['anthropic', 'gemini', 'groq'],
+    },
+    fetcher: async (url, r) => {
+      if (url.includes('groq')) {
+        groqBody = JSON.parse(r.body);
+        return groqReply({
+          q: 'sac',
+          type: 'all',
+          city: '',
+          minPrice: null,
+          maxPrice: null,
+          message: 'Groq.',
+        });
+      }
+      return { ok: false, status: 503, json: async () => ({}) };
+    },
+  }).intent({ message: 'un sac' });
+  assert.equal(groq.q, 'sac');
+  assert.equal(groqBody.response_format.type, 'json_object');
+  // Photo search skips the text-only Groq: image + only Groq ready → 503.
+  await assert.rejects(
+    new SearchAI({
+      settings: { groqKey: 'q', groqModel: 'qm', providerOrder: ['groq'] },
+      fetcher: async () => {
+        throw new Error('groq must be skipped for images');
+      },
+    }).intent({ message: 'ceci', imageData: png }),
+    (e) => e.statusCode === 503,
+  );
+  // "Always active": ready is true with any single provider key, false with none.
+  assert.equal(
+    new SearchAI({ settings: { groqKey: 'q', groqModel: 'qm' } }).ready,
+    true,
+  );
+  assert.equal(new SearchAI({ settings: {} }).ready, false);
+  // Key rotation within a provider: a rate-limited key rolls to the next.
+  const usedKeys = [];
+  const rotated = await new SearchAI({
+    settings: {
+      geminiKeys: ['g1', 'g2'],
+      geminiModel: 'gm',
+      providerOrder: ['gemini'],
+    },
+    fetcher: async (url, r) => {
+      usedKeys.push(r.headers['x-goog-api-key']);
+      if (r.headers['x-goog-api-key'] === 'g1')
+        return { ok: false, status: 429, json: async () => ({}) };
+      return geminiReply({
+        q: 'montre',
+        type: 'product',
+        city: '',
+        minPrice: null,
+        maxPrice: null,
+        message: 'ok',
+      });
+    },
+  }).intent({ message: 'une montre' });
+  assert.equal(rotated.q, 'montre');
+  assert.deepEqual(usedKeys, ['g1', 'g2']);
   const voice = new CombiProvider({
     settings: { apiKey: 'test-private', agentId: 'test-agent' },
     fetcher: async (url, r) => {

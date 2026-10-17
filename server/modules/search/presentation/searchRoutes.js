@@ -3,6 +3,7 @@ const express = require('express');
 const { config } = require('../../../config/env');
 const { requireAuth } = require('../../identity/presentation/guards/authGuard');
 const RateLimitService = require('../../../infrastructure/cache/RateLimitService');
+const RATE_LIMITS = require('../../../config/rateLimits');
 const { AppError } = require('../../../shared/errors/AppError');
 const { SearchService } = require('../application/SearchService');
 const { SearchAI, validateImage } = require('../infrastructure/SearchAI');
@@ -14,6 +15,7 @@ function createSearchRouter({
   authenticate = requireAuth,
   settings = config.search,
   production = config.isProduction,
+  limits = RATE_LIMITS,
 } = {}) {
   const router = express.Router(),
     route = (fn) => (req, res, next) =>
@@ -65,19 +67,19 @@ function createSearchRouter({
       }),
     ),
   );
-  const paid = (max, seconds, key) =>
+  const paid = (tier) =>
     RateLimitService.middleware({
-      maxRequests: max,
-      windowSeconds: seconds,
-      keyPrefix: key,
+      maxRequests: tier.maxRequests,
+      windowSeconds: tier.windowSeconds,
+      keyPrefix: tier.keyPrefix,
       requireRedis: production,
       keyGenerator: (req) => String(req.userId || req.principal?.id),
     });
   router.use(
     ['/assistant', '/visual', '/voice/session'],
     authenticate,
-    paid(10, 60, 'search:paid'),
-    paid(100, 86400, 'search:daily'),
+    paid(limits.searchAssistant),
+    paid(limits.searchDaily),
   );
   const assistant = (image) =>
     route(async (req, res) => {
@@ -105,7 +107,7 @@ function createSearchRouter({
   router.post('/visual', assistant(true));
   router.post(
     '/voice/session',
-    paid(3, 60, 'search:voice'),
+    paid(limits.searchVoice),
     route(async (req, res) =>
       res.json({ success: true, data: await voice.session() }),
     ),
