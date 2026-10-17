@@ -239,11 +239,12 @@ app.get('/api/config', async (req, res) => {
   let systemSettings = null;
   try {
     const SuperAdminService = require('../SuperAdmin/backend/services/SuperAdminService');
-    systemSettings = await SuperAdminService.getSystemSettings();
+    // Public, unauthenticated endpoint — deny-by-default projection only.
+    systemSettings = await SuperAdminService.getPublicSystemSettings();
   } catch (err) {
     try {
       const SuperAdminRepository = require('../SuperAdmin/backend/repositories/SuperAdminRepository');
-      systemSettings = await SuperAdminRepository.getAllSettings();
+      systemSettings = await SuperAdminRepository.getPublicSettings();
     } catch (_) {}
   }
 
@@ -280,7 +281,8 @@ app.get('/api/config', async (req, res) => {
 app.get(['/api/v1/config', '/api/config/system'], async (req, res, next) => {
   try {
     const SuperAdminService = require('../SuperAdmin/backend/services/SuperAdminService');
-    const systemSettings = await SuperAdminService.getSystemSettings();
+    // Public, unauthenticated endpoint — deny-by-default projection only.
+    const systemSettings = await SuperAdminService.getPublicSystemSettings();
     res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=120');
     res.json({
       success: true,
