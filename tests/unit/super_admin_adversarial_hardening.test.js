@@ -13,6 +13,14 @@
  *   9. Full SDK method parity across LoumooApiClient and SuperAdminAPI
  */
 
+// Hermetic bootstrap FIRST — sets NODE_ENV=test and scrubs service credentials
+// before any module below loads server config. Without it, a direct
+// `node tests/unit/super_admin_adversarial_hardening.test.js` run resolves the
+// real (production) Supabase admin client, so this suite — which seeds audit
+// rows carrying formula-injection payloads and fake secrets — would write them
+// to the live database and then assert against data that isn't there.
+require('../setup');
+
 const assert = require('assert');
 const express = require('express');
 const http = require('http');
