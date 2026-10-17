@@ -97,6 +97,11 @@ async function run() {
   assert.strictEqual(thin.analysis.rankingWithheld, 'no-shared-specs', 'price alone never makes a recommendation');
   assert.strictEqual(thin.recommendation.recommendedProductId, null);
 
+  // Same laptop listed twice (seed + curated), same price: equivalent, no pick.
+  const twin = compare([byId['macbook_m2'], byId['elec-1']], { stats });
+  assert.strictEqual(twin.analysis.rankingWithheld, 'equivalent', 'no winner from rating noise');
+  assert.strictEqual(twin.recommendation.recommendedProductId, null);
+
   // ── 4. Properties ────────────────────────────────────────────────────────
   // 4a. Order of ids never changes the outcome.
   const a = compare([air, pro, thinkpad], { stats, priorities: { battery: 5 } });
