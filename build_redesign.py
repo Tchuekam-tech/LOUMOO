@@ -11450,9 +11450,12 @@ class Component extends DCLogic {
 
   _startMessagingPolling() {
     const M = this._msg();
-    // The module is a deferred script: if it has not run yet, try again shortly.
+    // The module is a deferred script: if it has not run yet, try again shortly
+    // (a few times only: a page without it simply has no live messaging).
     if (M) M.startPolling(this);
-    else if (!this._unmounted) setTimeout(() => this._startMessagingPolling(), 1000);
+    else if (!this._unmounted && (this._msgStartTries = (this._msgStartTries || 0) + 1) <= 10) {
+      setTimeout(() => this._startMessagingPolling(), 1000);
+    }
   }
 
   _stopMessagingPolling() {
