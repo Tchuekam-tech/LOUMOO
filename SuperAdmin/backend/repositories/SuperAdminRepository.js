@@ -247,6 +247,46 @@ const DEFAULT_ORDERS = [
   }
 ];
 
+/**
+ * Public settings exposure policy.
+ *
+ * The public bootstrap endpoints (/api/config, /api/v1/config) are
+ * UNAUTHENTICATED, so exposure is deny-by-default: only the keys named here are
+ * ever sent to a browser, and for a key listed in PUBLIC_SETTING_FIELDS only
+ * those sub-fields are kept. Everything else stays server-side — most
+ * importantly the internal commission economics (`category_rates`) and the
+ * maintenance admin-bypass policy. A setting whose database row is flagged
+ * `is_secret` is withheld even when it is listed here.
+ */
+const PUBLIC_SETTING_KEYS = Object.freeze([
+  'seller_whatsapp_default',
+  'maintenance_mode',
+  'announcement_banner',
+  'shipping_rates_by_city',
+  'feature_flags',
+  'platform_commission_rate'
+]);
+
+// Per-key sub-field allowlist. A key absent here is exposed whole (after the
+// is_secret and key checks); a key present here is reduced to just these fields
+// before it leaves the server.
+const PUBLIC_SETTING_FIELDS = Object.freeze({
+  platform_commission_rate: ['rate_percent', 'payout_fee_fixed_xaf', 'escrow_hold_days'],
+  maintenance_mode: ['enabled', 'banner_text']
+});
+
+function projectPublicSetting(key, value) {
+  const fields = PUBLIC_SETTING_FIELDS[key];
+  if (!fields || !value || typeof value !== 'object' || Array.isArray(value)) {
+    return value;
+  }
+  const projected = {};
+  for (const f of fields) {
+    if (value[f] !== undefined) projected[f] = value[f];
+  }
+  return projected;
+}
+
 // In-memory audit log storage for fallback / test runs
 const inMemoryAuditLogs = [];
 const inMemorySettings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
@@ -289,6 +329,49 @@ class SuperAdminRepository {
       }
     }
     return { ...inMemorySettings };
+  }
+
+  /**
+   * Returns the browser-safe projection of system settings for the public,
+   * unauthenticated bootstrap endpoints. Deny-by-default: only allowlisted
+   * keys, only their allowlisted sub-fields, and never a key flagged
+   * `is_secret` in the database.
+   *
+   * Distinct from getAllSettings(), which the authenticated admin surfaces use
+   * and which deliberately returns everything (including secrets).
+   */
+  static async getPublicSettings() {
+    const merged = { ...DEFAULT_SETTINGS, ...inMemorySettings };
+    const secretKeys = new Set();
+
+    const db = this.db;
+    if (db) {
+      try {
+        const { data, error } = await db
+          .from('system_settings')
+          .select('key, value, is_secret');
+        if (!error && Array.isArray(data)) {
+          for (const row of data) {
+            if (row.is_secret === true) {
+              secretKeys.add(row.key);
+            } else {
+              merged[row.key] = row.value;
+            }
+          }
+        }
+      } catch (err) {
+        logger.warn('[SuperAdminRepository] Public settings query failed, using in-memory:', err.message);
+      }
+    }
+
+    const result = {};
+    for (const key of PUBLIC_SETTING_KEYS) {
+      if (secretKeys.has(key)) continue;
+      const value = merged[key];
+      if (value === undefined || value === null) continue;
+      result[key] = projectPublicSetting(key, value);
+    }
+    return result;
   }
 
   /**
@@ -1082,6 +1165,8 @@ class SuperAdminRepository {
 }
 
 module.exports = SuperAdminRepository;
+module.exports.PUBLIC_SETTING_KEYS = PUBLIC_SETTING_KEYS;
+module.exports.PUBLIC_SETTING_FIELDS = PUBLIC_SETTING_FIELDS;
 module.exports.DEFAULT_SETTINGS = DEFAULT_SETTINGS;
 module.exports.DEFAULT_STORES = DEFAULT_STORES;
 module.exports.DEFAULT_LISTINGS = DEFAULT_LISTINGS;

@@ -24,6 +24,21 @@ class SuperAdminService {
   }
 
   /**
+   * Browser-safe settings for the public, unauthenticated bootstrap endpoints
+   * (/api/config, /api/v1/config). Deny-by-default projection — see
+   * SuperAdminRepository.getPublicSettings. Never use this for admin surfaces,
+   * and never use getSystemSettings for a public response.
+   */
+  static async getPublicSystemSettings() {
+    try {
+      if (CacheService && typeof CacheService.remember === 'function') {
+        return await CacheService.remember('system_settings:public', 60, () => SuperAdminRepository.getPublicSettings(), 'admin');
+      }
+    } catch (_) {}
+    return await SuperAdminRepository.getPublicSettings();
+  }
+
+  /**
    * Retrieves a single system setting.
    */
   static async getSystemSetting(key) {
@@ -137,6 +152,7 @@ class SuperAdminService {
     try {
       if (CacheService && typeof CacheService.delete === 'function') {
         await CacheService.delete('system_settings:all', 'admin');
+        await CacheService.delete('system_settings:public', 'admin');
         await CacheService.delete(`system_setting:${key}`, 'admin');
       }
     } catch (_) {}
@@ -173,6 +189,7 @@ class SuperAdminService {
     try {
       if (CacheService && typeof CacheService.delete === 'function') {
         await CacheService.delete('system_settings:all', 'admin');
+        await CacheService.delete('system_settings:public', 'admin');
         await CacheService.delete(`system_setting:${key}`, 'admin');
       }
     } catch (err) {
