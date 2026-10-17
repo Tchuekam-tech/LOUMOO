@@ -47,6 +47,9 @@ async function run() {
   // Battery and charging
   assert.strictEqual(P.parseMah('Capacité 30 000 mAh · 4 câbles intégrés'), 30000);
   assert.strictEqual(P.parseMah('5100 mAh Charge Rapide'), 5100);
+  assert.strictEqual(P.parseMah('Batterie Externe Solaire 30,000mAh'), 30000, 'English thousands separator');
+  assert.strictEqual(P.parseNumberFr('30,000'), 30000);
+  assert.strictEqual(P.parseNumberFr('1,5'), 1.5, 'a lone decimal comma stays decimal');
   assert.strictEqual(P.parseMah('Charge rapide'), null);
   assert.strictEqual(P.parseWatts('200MP OIS · 120W HyperCharge · IP68'), 120);
   assert.strictEqual(P.parseWatts('52.6 Wh Lithium-Polymer'), null, 'Wh is energy, not power');
