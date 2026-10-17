@@ -11172,6 +11172,367 @@ class Component extends DCLogic {
     });
   }
 
+  // ── In-app messaging ───────────────────────────────────────────────────────
+  // Buyer ↔ boutique conversations kept on the server (/api/v1/conversations).
+  // State and network live here; the view logic is src/services/messaging.js
+  // (window.LoumooMessaging). An open thread polls for what came after its last
+  // message every 4 s while the tab is visible; the inbox and badge more slowly.
+  _msg() {
+    return (typeof window !== 'undefined' && window.LoumooMessaging) || null;
+  }
+
+  _msgError(err) {
+    const M = this._msg();
+    return M ? M.errorText(err) : "Couldn't reach LOUMOO. Try again.";
+  }
+
+  loadConversations(opts) {
+    const quiet = Boolean(opts && opts.quiet);
+    const api = getApi();
+    if (this.state.authStatus !== 'authenticated' || !api || !api.listConversations) return Promise.resolve();
+    if (this._convRequest) return this._convRequest;
+    if (!quiet) this.setState({ conversationsLoading: true, conversationsError: '' });
+    this._convRequest = api.listConversations({ limit: 50 }).then((list) => {
+      if (this._unmounted) return;
+      const conversations = Array.isArray(list) ? list : [];
+      this.setState({
+        conversations,
+        conversationsLoaded: true,
+        conversationsLoading: false,
+        conversationsError: '',
+        messagingUnread: conversations.reduce((n, c) => n + (c.unread || 0), 0)
+      });
+    }).catch((err) => {
+      if (this._unmounted) return;
+      // A failed background refresh keeps the list; only a first load shows the error.
+      this.setState({ conversationsLoading: false, conversationsError: quiet && this.state.conversationsLoaded ? '' : this._msgError(err) });
+    }).then(() => { this._convRequest = null; });
+    return this._convRequest;
+  }
+
+  loadMessagingUnread() {
+    const api = getApi();
+    if (this.state.authStatus !== 'authenticated' || !api || !api.getConversationUnread) return;
+    api.getConversationUnread().then((u) => {
+      const n = Number(u && u.messages) || 0;
+      if (!this._unmounted && n !== this.state.messagingUnread) this.setState({ messagingUnread: n });
+    }).catch(() => {});
+  }
+
+  _thread(list, conversation) {
+    const M = this._msg();
+    return M ? M.applyReceipts(list, conversation) : list;
+  }
+
+  _merge(existing, incoming) {
+    const M = this._msg();
+    return M ? M.mergeMessages(existing, incoming) : (existing || []).concat(incoming || []);
+  }
+
+  _updateConversationInList(conversation) {
+    if (!conversation || !conversation.id) return;
+    const M = this._msg();
+    const at = (c) => (M ? M.micros(c.lastMessageAt) : Date.parse(c.lastMessageAt)) || 0;
+    this.setState((st) => {
+      const list = (st.conversations || []).filter((c) => c.id !== conversation.id);
+      if (conversation.lastMessageAt) list.push(conversation);
+      list.sort((a, b) => at(b) - at(a));
+      const patch = { conversations: list };
+      if (st.conversationsLoaded) patch.messagingUnread = list.reduce((n, c) => n + (c.unread || 0), 0);
+      if (st.activeConversationId === conversation.id) patch.activeConversation = conversation;
+      return patch;
+    });
+  }
+
+  _markThreadRead(id) {
+    const api = getApi();
+    if (!api || !api.markConversationRead || this._markingRead === id) return;
+    this._markingRead = id;
+    api.markConversationRead(id).then((conversation) => {
+      if (this._unmounted || !conversation) return;
+      this._updateConversationInList(conversation);
+      if (!this.state.conversationsLoaded) this.loadMessagingUnread();
+    }).catch(() => {}).then(() => { this._markingRead = null; });
+  }
+
+  // A whole thread (its newest page). Unsent messages of the same thread survive.
+  loadThread(id) {
+    const api = getApi();
+    if (!id || !api || !api.getConversation) return Promise.resolve({ error: true });
+    if (this.state.authStatus !== 'authenticated') return Promise.resolve({ found: false });
+    const fresh = this._threadFor !== id;
+    this.setState((st) => (fresh
+      ? { threadMessages: [], threadLoading: true, threadError: '', threadHasMore: false }
+      : { threadLoading: !st.threadMessages.length, threadError: '' }));
+    const token = (this._threadToken = (this._threadToken || 0) + 1);
+    return api.getConversation(id, { limit: 50 }).then((data) => {
+      if (this._unmounted || token !== this._threadToken) return { found: true };
+      this._threadFor = id;
+      this.setState((st) => ({
+        activeConversation: data.conversation,
+        threadMessages: this._thread(this._merge(fresh ? [] : st.threadMessages.filter((m) => !m.seq), data.messages || []), data.conversation),
+        threadHasMore: Boolean(data.hasMore),
+        threadLoading: false,
+        threadError: ''
+      }));
+      this._updateConversationInList(data.conversation);
+      if (data.conversation && data.conversation.unread > 0) this._markThreadRead(id);
+      return { found: true };
+    }).catch((err) => {
+      if (this._unmounted || token !== this._threadToken) return { found: false };
+      this.setState({ threadLoading: false, threadError: this._msgError(err) });
+      return err && err.status === 404 ? { notFound: true } : { found: false };
+    });
+  }
+
+  _pollThread() {
+    const id = this.state.activeConversationId;
+    const api = getApi();
+    if (!id || !api || !api.getConversation || this._threadPolling) return;
+    if (this._threadFor !== id) { if (!this.state.threadLoading) this.loadThread(id); return; }
+    const last = this.state.threadMessages.filter((m) => m.seq).slice(-1)[0];
+    this._threadPolling = true;
+    api.getConversation(id, last ? { after: last.seq, limit: 100 } : { limit: 50 }).then((data) => {
+      if (this._unmounted || this.state.activeConversationId !== id) return;
+      this.setState((st) => ({
+        activeConversation: data.conversation,
+        threadMessages: this._thread(this._merge(st.threadMessages, data.messages || []), data.conversation),
+        threadError: ''
+      }));
+      this._updateConversationInList(data.conversation);
+      if (data.conversation && data.conversation.unread > 0) this._markThreadRead(id);
+    }).catch(() => {}).then(() => { this._threadPolling = false; });
+  }
+
+  loadOlderMessages() {
+    const id = this.state.activeConversationId;
+    const api = getApi();
+    const first = this.state.threadMessages.find((m) => m.seq);
+    if (!id || !api || !first || this.state.threadLoadingOlder) return;
+    this.setState({ threadLoadingOlder: true });
+    const el = this._threadEl;
+    api.getConversation(id, { before: first.seq, limit: 50 }).then((data) => {
+      if (this._unmounted || this.state.activeConversationId !== id) return;
+      if (el) this._olderAnchor = el.scrollHeight - el.scrollTop;
+      this.setState((st) => ({
+        threadMessages: this._thread(this._merge(data.messages || [], st.threadMessages), data.conversation),
+        threadHasMore: Boolean(data.hasMore),
+        threadLoadingOlder: false
+      }));
+    }).catch(() => { if (!this._unmounted) this.setState({ threadLoadingOlder: false }); });
+  }
+
+  openConversation(conversation) {
+    const id = conversation && (typeof conversation === 'string' ? conversation : conversation.id);
+    if (!id) return;
+    const known = typeof conversation === 'object' ? conversation : (this.state.conversations || []).find((c) => c.id === id);
+    this.setState({ activeConversationId: id, activeConversation: known || null, threadError: '' });
+    if (this.state.screen !== 'threadSeller') this.go('threadSeller');
+    this.loadThread(id);
+  }
+
+  // /chat/:id: the router has already written activeConversationId.
+  _enterConversation(id) {
+    const wanted = String(id || '');
+    const known = (this.state.conversations || []).find((c) => c.id === wanted);
+    if (known) this.setState({ activeConversation: known });
+    if (!this.state.conversationsLoaded) this.loadConversations({ quiet: true });
+    return this.loadThread(wanted);
+  }
+
+  closeThread() {
+    if ((this.state.stack || []).slice(-1)[0] === 'chat') this.back();
+    else this.go('chat');
+  }
+
+  // "Message" on a product, a boutique or an order: opens (or reopens) the thread
+  // with that boutique. The server decides who the seller is.
+  messageSeller(opts) {
+    opts = (opts && typeof opts === 'object' && !opts.nativeEvent && !opts.target) ? opts : {};
+    const p = this.state.currentProduct || {};
+    const input = {};
+    if (opts.orderId) input.orderId = String(opts.orderId);
+    else if (opts.storeId) input.storeId = String(opts.storeId);
+    else if (opts.listingId || p.id || this.state.currentProductId) input.listingId = String(opts.listingId || p.id || this.state.currentProductId);
+    if (!input.orderId && !input.storeId && !input.listingId) return;
+    if (this.state.authStatus !== 'authenticated') {
+      this.toast('Sign in to message boutiques on LOUMOO.');
+      this.go('signIn');
+      return;
+    }
+    if (input.listingId && p.id === input.listingId) this._recoNote('contact_seller', p, { surface: 'pdp' });
+    const api = getApi();
+    if (!api || !api.startConversation || this.state.convStarting) return;
+    this.setState({ convStarting: true });
+    api.startConversation(input).then((data) => {
+      if (this._unmounted || !data || !data.conversation) return;
+      const id = data.conversation.id;
+      const same = this.state.activeConversationId === id;
+      this._threadFor = id;
+      this.setState({
+        convStarting: false,
+        activeConversationId: id,
+        activeConversation: data.conversation,
+        threadMessages: this._thread(data.messages || [], data.conversation),
+        threadHasMore: Boolean(data.hasMore),
+        threadError: '',
+        threadLoading: false,
+        threadDraft: same ? this.state.threadDraft : ''
+      });
+      this._updateConversationInList(data.conversation);
+      if (this.state.screen !== 'threadSeller') this.go('threadSeller');
+      this._focusComposer();
+    }).catch((err) => {
+      if (this._unmounted) return;
+      this.setState({ convStarting: false });
+      this.toast(this._msgError(err));
+    });
+  }
+
+  // Only where a keyboard is already out: on a phone, opening a thread to read
+  // it must not throw the keyboard over it.
+  _focusComposer() {
+    if (typeof window === 'undefined' || !window.matchMedia || !window.matchMedia('(pointer: fine)').matches) return;
+    setTimeout(() => {
+      const el = document.getElementById('msgComposer');
+      if (el && !this._unmounted) el.focus({ preventScroll: true });
+    }, 60);
+  }
+
+  sendThreadMessage(retry) {
+    const id = this.state.activeConversationId;
+    const api = getApi();
+    const M = this._msg();
+    if (!id || !api || !api.sendConversationMessage || !M) return;
+    let body = retry && retry.body;
+    let clientId = retry && retry.clientId;
+    if (!clientId) {
+      body = String(this.state.threadDraft || '').trim();
+      if (!body) return;
+      if (body.length > M.MAX_BODY) { this.toast('Messages are limited to 2000 characters.'); return; }
+      clientId = M.newClientId();
+    }
+    const local = { id: clientId, clientId, mine: true, kind: 'text', body, pending: true, createdAt: new Date().toISOString() };
+    this.setState((st) => ({
+      threadDraft: retry ? st.threadDraft : '',
+      threadMessages: st.threadMessages.filter((m) => m.seq || m.clientId !== clientId).concat([local])
+    }));
+    if (!retry) {
+      const el = document.getElementById('msgComposer');
+      if (el) el.style.height = '';
+    }
+    api.sendConversationMessage(id, body, clientId).then((msg) => {
+      if (this._unmounted || !msg) return;
+      this.setState((st) => (st.activeConversationId === id ? { threadMessages: this._merge(st.threadMessages, [msg]) } : {}));
+      const c = this.state.activeConversation;
+      if (c && c.id === id) {
+        this._updateConversationInList(Object.assign({}, c, {
+          lastMessageAt: msg.createdAt,
+          lastMessagePreview: body.replace(/\\s+/g, ' ').slice(0, 160),
+          lastMessageKind: 'text',
+          lastFromMe: true,
+          lastReadByPeer: false
+        }));
+      }
+    }).catch((err) => {
+      if (this._unmounted) return;
+      const error = this._msgError(err);
+      this.setState((st) => ({
+        threadMessages: st.threadMessages.map((m) => (!m.seq && m.clientId === clientId ? Object.assign({}, m, { pending: false, failed: true, error }) : m))
+      }));
+    });
+  }
+
+  updateThreadDraft(e) {
+    const el = e && e.target;
+    this.setState({ threadDraft: el ? el.value : '' });
+    // The composer grows with what is typed, up to about six lines, then scrolls.
+    if (el && el.style) {
+      el.style.height = 'auto';
+      el.style.height = Math.min(el.scrollHeight, 148) + 'px';
+    }
+  }
+
+  // Enter sends on a computer (Shift+Enter: new line); on a phone Enter is a new
+  // line and the button sends, as in every messaging app.
+  threadKeyDown(e) {
+    if (!e || e.key !== 'Enter' || e.shiftKey || e.isComposing || e.keyCode === 229) return;
+    if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
+    e.preventDefault();
+    this.sendThreadMessage();
+  }
+
+  openThreadCard(m) {
+    const meta = (m && m.metadata) || {};
+    const c = this.state.activeConversation;
+    if (m.kind === 'product' && meta.listingId) this.openProduct(meta.listingId);
+    else if (m.kind === 'order' && meta.orderId && c && c.role === 'buyer') {
+      const R = getRouter();
+      if (R && R.isActive()) R.navigate('/orders/' + encodeURIComponent(meta.orderId));
+    } else if (m.kind === 'order' && c && c.role === 'seller') this.go('sell');
+  }
+
+  // Follow new messages only when the reader is already at the bottom; keep the
+  // reading position when older ones load above.
+  _setThreadScroller(el) {
+    if (this._threadEl === el) return;
+    if (this._threadEl && this._onThreadScroll) this._threadEl.removeEventListener('scroll', this._onThreadScroll);
+    this._threadEl = el || null;
+    this._threadStick = true;
+    if (!el) return;
+    this._onThreadScroll = () => { this._threadStick = el.scrollHeight - el.scrollTop - el.clientHeight < 96; };
+    el.addEventListener('scroll', this._onThreadScroll, { passive: true });
+    el.scrollTop = el.scrollHeight;
+  }
+
+  _afterThreadRender(prevState) {
+    const el = this._threadEl;
+    if (!el || this.state.screen !== 'threadSeller' || !prevState) return;
+    if (this._olderAnchor != null) {
+      el.scrollTop = el.scrollHeight - this._olderAnchor;
+      this._olderAnchor = null;
+      return;
+    }
+    const list = this.state.threadMessages || [];
+    const prev = prevState.threadMessages || [];
+    const last = list[list.length - 1];
+    const prevLast = prev[prev.length - 1];
+    const entered = prevState.screen !== 'threadSeller' || prevState.activeConversationId !== this.state.activeConversationId;
+    const grew = last && (!prevLast || last.id !== prevLast.id);
+    if (entered || (grew && (this._threadStick || !prev.length || last.mine))) {
+      el.scrollTop = el.scrollHeight;
+      this._threadStick = true;
+    }
+  }
+
+  _startMessagingPolling() {
+    if (typeof document === 'undefined' || this._msgTimer) return;
+    let ticks = 0;
+    const tick = () => {
+      if (this._unmounted || document.hidden || this.state.authStatus !== 'authenticated') return;
+      ticks += 1;
+      const screen = this.state.screen;
+      if (screen === 'threadSeller') {
+        this._pollThread();
+        if (ticks % 8 === 0) this.loadConversations({ quiet: true });
+      } else if (screen === 'chat') {
+        if (ticks % 3 === 0) this.loadConversations({ quiet: true });
+      } else if (ticks % 15 === 0) {
+        this.loadMessagingUnread();
+      }
+    };
+    this._msgTimer = setInterval(tick, 4000);
+    this._onMsgVisible = () => { if (!document.hidden) { ticks = -1; tick(); } };
+    document.addEventListener('visibilitychange', this._onMsgVisible);
+  }
+
+  _stopMessagingPolling() {
+    clearInterval(this._msgTimer);
+    this._msgTimer = null;
+    if (this._onMsgVisible) document.removeEventListener('visibilitychange', this._onMsgVisible);
+    this._onMsgVisible = null;
+  }
+
   contactSellerWhatsApp(opts) {
     opts = (opts && typeof opts === 'object' && !opts.nativeEvent && !opts.target) ? opts : {};
     const p = this.state.currentProduct || {};
