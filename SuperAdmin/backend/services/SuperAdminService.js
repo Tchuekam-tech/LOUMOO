@@ -656,16 +656,19 @@ class SuperAdminService {
     return user;
   }
 
-  static async updateUser(id, updates = {}, { adminId = 'super_admin', reason = null, ipAddress = null } = {}) {
+  static async updateUser(id, updates = {}, { adminId = 'super_admin', reason = null, ipAddress = null, auditAction = 'user.update' } = {}) {
     if (!id) throw new ValidationError('User ID is required.');
     if (!updates || typeof updates !== 'object') throw new ValidationError('Updates must be an object.');
 
     const res = await SuperAdminRepository.updateUser(id, updates, adminId);
     if (!res.success) throw new ValidationError(res.error || 'Failed to update user');
 
+    // Role and KYC changes flow through here but must stay distinguishable in
+    // the audit trail — the caller passes auditAction (user.role_change /
+    // user.kyc_update); a plain profile edit defaults to user.update.
     await SuperAdminRepository.recordAuditLog({
       adminId,
-      action: 'user.update',
+      action: auditAction,
       resourceType: 'user',
       resourceId: id,
       oldValues: res.oldUser,
@@ -674,7 +677,7 @@ class SuperAdminService {
       ipAddress
     });
 
-    logger.info(`[SuperAdminService] User ${id} updated by ${adminId}`);
+    logger.info(`[SuperAdminService] User ${id} updated (${auditAction}) by ${adminId}`);
     return res.user;
   }
 
@@ -699,6 +702,7 @@ class SuperAdminService {
 
     return await this.updateUser(id, { primary_role: targetRole.toLowerCase() }, {
       ...context,
+      auditAction: 'user.role_change',
       reason: context.reason || `Updated user primary role to [${targetRole}]`
     });
   }
@@ -716,6 +720,7 @@ class SuperAdminService {
 
     return await this.updateUser(id, { kyc_status: targetStatus.toLowerCase() }, {
       ...context,
+      auditAction: 'user.kyc_update',
       reason: context.reason || `Updated user KYC status to [${targetStatus}]`
     });
   }

@@ -287,6 +287,31 @@ function projectPublicSetting(key, value) {
   return projected;
 }
 
+// Canonical set of audit action verbs this module can record. Single source of
+// truth for the audit-action filter; keep in exact sync with the `action`
+// strings passed to recordAuditLog across SuperAdminService. Earlier this list
+// advertised verbs that are never written (`order.escrow`, `maintenance.toggle`,
+// and — before role/KYC got their own verbs — `user.role_change`/`user.kyc_update`)
+// while omitting ones that are (`escrow.resolve`, `listing.reject`,
+// `listing.moderate`, `user.update`).
+const AUDIT_ACTIONS = Object.freeze([
+  'setting.update',
+  'setting.reset',
+  'store.moderate',
+  'store.verify',
+  'store.suspend',
+  'store.reactivate',
+  'listing.moderate',
+  'listing.approve',
+  'listing.reject',
+  'listing.suspend',
+  'user.update',
+  'user.role_change',
+  'user.kyc_update',
+  'escrow.resolve',
+  'audit.export'
+]);
+
 // In-memory audit log storage for fallback / test runs
 const inMemoryAuditLogs = [];
 const inMemorySettings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
@@ -671,23 +696,8 @@ class SuperAdminRepository {
         }
       } catch (_) {}
     }
-    const defaultActions = [
-      'setting.update',
-      'setting.reset',
-      'store.verify',
-      'store.suspend',
-      'store.reactivate',
-      'store.moderate',
-      'listing.approve',
-      'listing.suspend',
-      'user.role_change',
-      'user.kyc_update',
-      'order.escrow',
-      'maintenance.toggle',
-      'audit.export'
-    ];
     const memoryActions = inMemoryAuditLogs.map(l => l.action).filter(Boolean);
-    return Array.from(new Set([...defaultActions, ...memoryActions])).sort();
+    return Array.from(new Set([...AUDIT_ACTIONS, ...memoryActions])).sort();
   }
 
   /**
@@ -1184,6 +1194,7 @@ class SuperAdminRepository {
 }
 
 module.exports = SuperAdminRepository;
+module.exports.AUDIT_ACTIONS = AUDIT_ACTIONS;
 module.exports.PUBLIC_SETTING_KEYS = PUBLIC_SETTING_KEYS;
 module.exports.PUBLIC_SETTING_FIELDS = PUBLIC_SETTING_FIELDS;
 module.exports.DEFAULT_SETTINGS = DEFAULT_SETTINGS;

@@ -95,7 +95,23 @@ async function run() {
   assert.ok(distinctActions.includes('store.verify'));
   assert.ok(distinctActions.includes('store.suspend'));
   assert.ok(distinctActions.includes('setting.update'));
-  console.log(`    ✓ 6. Distinct audit actions extracted (${distinctActions.length} actions)`);
+
+  // No taxonomy drift: the default list must match what the code actually records.
+  // Verbs that are never written must be absent; verbs that ARE written must be present.
+  assert.ok(!distinctActions.includes('order.escrow'), 'bogus order.escrow must not be advertised');
+  assert.ok(!distinctActions.includes('maintenance.toggle'), 'bogus maintenance.toggle must not be advertised');
+  for (const real of ['escrow.resolve', 'listing.reject', 'listing.moderate', 'user.update', 'user.role_change', 'user.kyc_update']) {
+    assert.ok(distinctActions.includes(real), `real action [${real}] must be advertised`);
+  }
+
+  // Role and KYC changes must be logged under distinct actions, not generic user.update.
+  await SuperAdminService.updateUserRole('usr_buyer_1', 'seller', { adminId: 'admin_ops', actorRole: 'super_admin' });
+  await SuperAdminService.updateUserKyc('usr_buyer_1', 'verified', { adminId: 'admin_ops' });
+  const roleLogs = await SuperAdminService.getAuditLogs({ action: 'user.role_change' });
+  const kycLogs = await SuperAdminService.getAuditLogs({ action: 'user.kyc_update' });
+  assert.ok(roleLogs.some(l => l.resource_id === 'usr_buyer_1'), 'role change must log action user.role_change');
+  assert.ok(kycLogs.some(l => l.resource_id === 'usr_buyer_1'), 'kyc change must log action user.kyc_update');
+  console.log(`    ✓ 6. Distinct audit actions verified: no drift, role/KYC logged distinctly (${distinctActions.length} actions)`);
 
   // ── 6. Compliance Audit Export (CSV & JSON) ──
   const csvExport = await SuperAdminService.exportAuditLogs({ resourceType: 'store' }, 'csv');
