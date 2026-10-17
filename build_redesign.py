@@ -1160,53 +1160,6 @@ html, body {
 }
 [data-theme="dark"] .desktop-topbar, [data-theme="dark"] .sidebar-nav { background: #0f1118 !important; border-color: var(--color-divider) !important; }
 
-/* ── WhatsApp Themed Chat ── */
-.wa-chat-container {
-  display: flex; flex-direction: column; height: 100%; min-height: 100%;
-  background-color: #efeae2;
-  background-image: radial-gradient(#d3cec6 1px, transparent 1px), radial-gradient(#d3cec6 1px, #efeae2 1px);
-  background-size: 24px 24px; background-position: 0 0, 12px 12px; position: relative; overflow: hidden;
-}
-[data-theme="dark"] .wa-chat-container {
-  background-color: #0b141a;
-  background-image: radial-gradient(#1e2930 1px, transparent 1px), radial-gradient(#1e2930 1px, #0b141a 1px);
-}
-.wa-chat-header {
-  display: flex; align-items: center; justify-content: space-between; padding: 6px 14px;
-  background: #f0f2f5; border-bottom: 1px solid #d1d7db; height: 56px; flex: none; z-index: 10;
-}
-[data-theme="dark"] .wa-chat-header { background: #202c33; border-bottom-color: #2a3942; }
-.wa-chat-body { flex: 1; overflow-y: auto; padding: 14px 16px 20px; display: flex; flex-direction: column; gap: 8px; }
-.wa-bubble-sent {
-  background: #d9fdd3; color: #111b21; border-radius: 8px 8px 0px 8px; padding: 7px 10px 6px 12px;
-  box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13); max-width: min(440px, 82%); font-size: 13.5px; line-height: 1.4;
-}
-[data-theme="dark"] .wa-bubble-sent { background: #005c4b; color: #e9edef; }
-.wa-bubble-received {
-  background: #ffffff; color: #111b21; border-radius: 8px 8px 8px 0px; padding: 7px 10px 6px 12px;
-  box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13); max-width: min(440px, 82%); font-size: 13.5px; line-height: 1.4;
-}
-[data-theme="dark"] .wa-bubble-received { background: #202c33; color: #e9edef; }
-.wa-audio-card {
-  display: flex; align-items: center; gap: 10px; background: #ffffff; border-radius: 8px 8px 8px 0px;
-  padding: 8px 12px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13); width: min(320px, 82%);
-}
-[data-theme="dark"] .wa-audio-card { background: #202c33; }
-.wa-waveform-container { display: flex; align-items: center; gap: 2px; height: 22px; }
-.wa-bar { width: 2.5px; background: #8696a0; border-radius: 1px; }
-.wa-bar.played { background: #53bdeb; }
-.wa-audio-dot { width: 9px; height: 9px; border-radius: 50%; background: #53bdeb; margin-right: 2px; }
-.wa-input-bar {
-  display: flex; align-items: center; gap: 8px; padding: 8px 14px; background: #f0f2f5;
-  border-top: 1px solid #d1d7db; flex: none; z-index: 10;
-}
-[data-theme="dark"] .wa-input-bar { background: #202c33; border-top-color: #2a3942; }
-.wa-input-box {
-  flex: 1; height: 42px; background: #ffffff; border: none; border-radius: 8px;
-  padding: 0 14px; font-family: inherit; font-size: 14px; color: #111b21; outline: none;
-}
-[data-theme="dark"] .wa-input-box { background: #2a3942; color: #e9edef; }
-
 /* ── Checkout Pay Methods ── */
 .checkout-pay-method {
   display: flex; align-items: center; justify-content: space-between; padding: 14px 18px;
@@ -8581,7 +8534,6 @@ class Component extends DCLogic {
     clearInterval(this._emailTimer);
     this._stopCircuitPolling();
     this._stopMessagingPolling();
-    this._setThreadScroller(null);
     this._stopRouter();
     if (typeof window !== 'undefined' && this._handleKeyDown) {
       window.removeEventListener('keydown', this._handleKeyDown);
@@ -11414,14 +11366,9 @@ class Component extends DCLogic {
     });
   }
 
-  // Only where a keyboard is already out: on a phone, opening a thread to read
-  // it must not throw the keyboard over it.
   _focusComposer() {
-    if (typeof window === 'undefined' || !window.matchMedia || !window.matchMedia('(pointer: fine)').matches) return;
-    setTimeout(() => {
-      const el = document.getElementById('msgComposer');
-      if (el && !this._unmounted) el.focus({ preventScroll: true });
-    }, 60);
+    const M = this._msg();
+    if (M) M.focusComposer();
   }
 
   sendThreadMessage(retry) {
@@ -11442,10 +11389,7 @@ class Component extends DCLogic {
       threadDraft: retry ? st.threadDraft : '',
       threadMessages: st.threadMessages.filter((m) => m.seq || m.clientId !== clientId).concat([local])
     }));
-    if (!retry) {
-      const el = document.getElementById('msgComposer');
-      if (el) el.style.height = '';
-    }
+    if (!retry) M.growComposer(document.getElementById('msgComposer'), true);
     api.sendConversationMessage(id, body, clientId).then((msg) => {
       if (this._unmounted || !msg) return;
       this.setState((st) => (st.activeConversationId === id ? { threadMessages: this._merge(st.threadMessages, [msg]) } : {}));
@@ -11471,18 +11415,13 @@ class Component extends DCLogic {
   updateThreadDraft(e) {
     const el = e && e.target;
     this.setState({ threadDraft: el ? el.value : '' });
-    // The composer grows with what is typed, up to about six lines, then scrolls.
-    if (el && el.style) {
-      el.style.height = 'auto';
-      el.style.height = Math.min(el.scrollHeight, 148) + 'px';
-    }
+    const M = this._msg();
+    if (M) M.growComposer(el);
   }
 
-  // Enter sends on a computer (Shift+Enter: new line); on a phone Enter is a new
-  // line and the button sends, as in every messaging app.
   threadKeyDown(e) {
-    if (!e || e.key !== 'Enter' || e.shiftKey || e.isComposing || e.keyCode === 229) return;
-    if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
+    const M = this._msg();
+    if (!M || !M.isSendKey(e)) return;
     e.preventDefault();
     this.sendThreadMessage();
   }
@@ -11497,65 +11436,27 @@ class Component extends DCLogic {
     } else if (m.kind === 'order' && c && c.role === 'seller') this.go('sell');
   }
 
-  // Follow new messages only when the reader is already at the bottom; keep the
-  // reading position when older ones load above.
+  // Scroll-follow and the polling loop live in src/services/messaging.js.
   _setThreadScroller(el) {
-    if (this._threadEl === el) return;
-    if (this._threadEl && this._onThreadScroll) this._threadEl.removeEventListener('scroll', this._onThreadScroll);
-    this._threadEl = el || null;
-    this._threadStick = true;
-    if (!el) return;
-    this._onThreadScroll = () => { this._threadStick = el.scrollHeight - el.scrollTop - el.clientHeight < 96; };
-    el.addEventListener('scroll', this._onThreadScroll, { passive: true });
-    el.scrollTop = el.scrollHeight;
+    const M = this._msg();
+    if (M) M.bindScroller(this, el);
   }
 
   _afterThreadRender(prevState) {
-    const el = this._threadEl;
-    if (!el || this.state.screen !== 'threadSeller' || !prevState) return;
-    if (this._olderAnchor != null) {
-      el.scrollTop = el.scrollHeight - this._olderAnchor;
-      this._olderAnchor = null;
-      return;
-    }
-    const list = this.state.threadMessages || [];
-    const prev = prevState.threadMessages || [];
-    const last = list[list.length - 1];
-    const prevLast = prev[prev.length - 1];
-    const entered = prevState.screen !== 'threadSeller' || prevState.activeConversationId !== this.state.activeConversationId;
-    const grew = last && (!prevLast || last.id !== prevLast.id);
-    if (entered || (grew && (this._threadStick || !prev.length || last.mine))) {
-      el.scrollTop = el.scrollHeight;
-      this._threadStick = true;
-    }
+    const M = this._msg();
+    if (M) M.afterRender(this, prevState);
   }
 
   _startMessagingPolling() {
-    if (typeof document === 'undefined' || this._msgTimer) return;
-    let ticks = 0;
-    const tick = () => {
-      if (this._unmounted || document.hidden || this.state.authStatus !== 'authenticated') return;
-      ticks += 1;
-      const screen = this.state.screen;
-      if (screen === 'threadSeller') {
-        this._pollThread();
-        if (ticks % 8 === 0) this.loadConversations({ quiet: true });
-      } else if (screen === 'chat') {
-        if (ticks % 3 === 0) this.loadConversations({ quiet: true });
-      } else if (ticks % 15 === 0) {
-        this.loadMessagingUnread();
-      }
-    };
-    this._msgTimer = setInterval(tick, 4000);
-    this._onMsgVisible = () => { if (!document.hidden) { ticks = -1; tick(); } };
-    document.addEventListener('visibilitychange', this._onMsgVisible);
+    const M = this._msg();
+    // The module is a deferred script: if it has not run yet, try again shortly.
+    if (M) M.startPolling(this);
+    else if (!this._unmounted) setTimeout(() => this._startMessagingPolling(), 1000);
   }
 
   _stopMessagingPolling() {
-    clearInterval(this._msgTimer);
-    this._msgTimer = null;
-    if (this._onMsgVisible) document.removeEventListener('visibilitychange', this._onMsgVisible);
-    this._onMsgVisible = null;
+    const M = this._msg();
+    if (M) M.stopPolling(this);
   }
 
   contactSellerWhatsApp(opts) {
