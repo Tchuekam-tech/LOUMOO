@@ -27,11 +27,13 @@ function comparability(entries) {
   const entityTypes = [...new Set(entries.map(e => e.product.entityType))];
   let level;
   if (entries.length < 2) level = 'insufficient';
-  else if (entityTypes.length > 1) level = 'none';
+  // Boutiques and stays are never ranked: alone (store vs store) or mixed with
+  // products. The engine has no product-grade evidence about a shop.
+  else if (entityTypes.length > 1 || !entityTypes.includes('product')) level = 'none';
   else if (types.length === 1) level = 'full';
   else if (families.length === 1) level = 'partial';
   else level = 'limited';
-  return { level, types, families, categories, ranked: level === 'full' || level === 'partial' };
+  return { level, types, families, categories, productsOnly: entityTypes.length === 1 && entityTypes[0] === 'product', ranked: level === 'full' || level === 'partial' };
 }
 
 /** Dimensions every product's profile has, in the first profile's order. */
@@ -194,7 +196,9 @@ function sensitivity(basisDims, scoresById, userPriorities, userRanking) {
     const pri = {};
     for (const d of basisDims) pri[d.facet] = d.facet === facet ? 5 : 0;
     const r = rank(totalsUnder(basisDims, scoresById, pri));
-    if (r.length) winnerIf[facet] = r[0][0];
+    // A tie on that facet names nobody: the alphabetical tie-break in rank()
+    // must never read as "if performance matters most, choose X".
+    if (r.length && !(r.length > 1 && Math.abs(r[0][1] - r[1][1]) < 0.5)) winnerIf[facet] = r[0][0];
   }
   const top = userRanking[0];
   const second = userRanking[1];
