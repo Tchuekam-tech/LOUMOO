@@ -42,7 +42,7 @@ function quantile(sorted, q) {
   return sorted[lo] + (sorted[hi] - sorted[lo]) * (pos - lo);
 }
 
-function distribution(values) {
+function distribution(values, kind = 'number') {
   const sorted = values.slice().sort((a, b) => a - b);
   const counts = new Map();
   for (const v of sorted) counts.set(v, (counts.get(v) || 0) + 1);
@@ -58,7 +58,10 @@ function distribution(values) {
     p90: quantile(sorted, 0.9),
     distinct: counts.size,
     modeShare: Math.round(modeShare * 100) / 100,
-    uniform: sorted.length >= MIN_N_UNIFORM && modeShare >= UNIFORM_SHARE
+    // A dominant NUMBER is template text ("Jusqu'à 18h" on every laptop). A rare
+    // yes/no feature is real variation, so a boolean is uniform only when
+    // every product agrees.
+    uniform: sorted.length >= MIN_N_UNIFORM && (kind === 'boolean' ? counts.size === 1 : modeShare >= UNIFORM_SHARE)
   };
 }
 
@@ -108,6 +111,33 @@ function representative(dim, cells) {
   return { cell: present[0], conflict: null };
 }
 
+/**
+ * The real offers for one product: one per seller, at that seller's lowest
+ * payable price. Copies from the same boutique are not extra offers.
+ */
+function offersOf(listings) {
+  const bySeller = new Map();
+  for (const l of listings) {
+    if (!(l.price > 0)) continue;
+    const sellerKey = (l.seller && (l.seller.id || l.seller.name)) || `listing:${l.id}`;
+    const prev = bySeller.get(sellerKey);
+    if (!prev || l.price < prev.price) {
+      bySeller.set(sellerKey, {
+        listingId: l.id,
+        sellerId: (l.seller && l.seller.id) || null,
+        sellerName: (l.seller && l.seller.name) || null,
+        city: (l.seller && l.seller.city) || null,
+        sellerRating: (l.seller && l.seller.rating) || null,
+        verified: Boolean(l.seller && l.seller.verified),
+        price: l.price,
+        fulfillmentLabel: l.fulfillmentLabel || null,
+        inStock: l.inStock
+      });
+    }
+  }
+  return [...bySeller.values()].sort((a, b) => a.price - b.price);
+}
+
 class CategoryStats {
   constructor() {
     this.types = new Map(); // type → { n, dims, ratingPrior, valueCurve }
@@ -151,7 +181,7 @@ class CategoryStats {
       // Price and rating legitimately vary between offers; their median stands.
       const agreed = {};
       for (const k of Object.keys(values)) agreed[k] = conflicts[k] && !OFFER_LEVEL.has(k) ? null : values[k];
-      const identity = { key: g.key, type: g.type, family: g.family, listingIds: g.listings.map(l => l.id), values: agreed, statedValues: values, conflicts, quality: null };
+      const identity = { key: g.key, type: g.type, family: g.family, listingIds: g.listings.map(l => l.id), offers: offersOf(g.listings), values: agreed, statedValues: values, conflicts, quality: null };
       stats.identities.set(g.key, identity);
       if (!byType.has(g.type)) byType.set(g.type, []);
       byType.get(g.type).push(identity);
@@ -172,7 +202,7 @@ class CategoryStats {
           .filter(Boolean)
           .map(c => (dim.type === 'boolean' ? (c.value ? 1 : 0) : c.value))
           .filter(v => typeof v === 'number' && Number.isFinite(v));
-        if (vals.length) dims[dim.key] = distribution(vals);
+        if (vals.length) dims[dim.key] = distribution(vals, dim.type);
       }
 
       const typeStats = { type, n: identities.length, dims, ratingPrior, valueCurve: null };
