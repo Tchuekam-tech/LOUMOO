@@ -67,6 +67,7 @@ function value(dim, cell, locale) {
     case '/5': return `${number(v, l)}/5`;
     case 'IPx': return `IPx${v}`;
     case 'in': return `${number(v, l, 2)}″`;
+    case 'kg': return `${number(v, l, 2)} kg`;
     case '×': return `${number(v, l)}×`;
     case 'index': return number(v, l, 0);
     case null:
