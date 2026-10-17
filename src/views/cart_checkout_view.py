@@ -430,7 +430,7 @@ def get_orders_and_transactions_view():
         <sc-if value="{{ order.canOpen }}">
           <button onClick="{{ () => openOrderById(order.id) }}" class="btn btn-primary btn-block" style="height:38px;font-size:12px;font-weight:700">VIEW &amp; TRACK</button>
         </sc-if>
-        <button onClick="{{ () => contactSellerWhatsApp({ sellerName: order.seller, phone: order.sellerPhone || order.sellerWhatsapp, orderNumber: order.orderNumber, productTitle: order.itemsSummary, price: order.totalLabel }) }}" class="btn btn-secondary btn-block" style="height:38px;font-size:12px;color:var(--color-wa-teal);font-weight:700">CONTACT SELLER</button>
+        <button onClick="{{ () => order.canOpen ? messageSeller({ orderId: order.id }) : contactSellerWhatsApp({ sellerName: order.seller, phone: order.sellerPhone || order.sellerWhatsapp, orderNumber: order.orderNumber, productTitle: order.itemsSummary, price: order.totalLabel }) }}" class="btn btn-secondary btn-block" style="height:38px;font-size:12px;font-weight:700" disabled="{{ convStarting }}">MESSAGE SELLER</button>
       </div>
     </div>
     </sc-for>

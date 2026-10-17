@@ -155,7 +155,10 @@
   /* -- messages ------------------------------------------------------------- */
   def('chat',          '/chat',                      { screen: 'chat', access: cap('canPurchase'), title: 'Messages', parent: 'home' });
   def('chatAssistant', '/chat/assistant',            { screen: 'threadAi', access: cap('canPurchase'), title: 'LOUMOO assistant', direct: 'redirect', fallback: 'chat', parent: 'chat' });
-  def('chatSeller',    '/chat/seller',               { screen: 'threadSeller', access: cap('canPurchase'), title: 'Seller chat', direct: 'redirect', fallback: 'chat', parent: 'chat' });
+  // A conversation with a boutique (or, for a seller, with a buyer). The thread is
+  // fetched by its id, so a refresh or a link opened on another device lands on it;
+  // the server answers 404 to anyone who is not one of its two participants.
+  def('chatThread',    '/chat/:id',                  { screen: 'threadSeller', bind: { id: 'activeConversationId' }, enter: '_enterConversation', access: cap('canPurchase'), title: 'Conversation', parent: 'chat' });
   def('notifications', '/notifications',             { screen: 'notifications', access: cap('canPurchase'), title: 'Notifications', parent: 'home' });
 
   /* -- account -------------------------------------------------------------- */
@@ -248,7 +251,9 @@
     // (sharePublication, the publishing studio's success cards). They never had a page; sellers
     // have already sent them, so they redirect to where those records actually live.
     { from: '/listing/:id',              to: '/product/:id' },
-    { from: '/announce/:id',             to: '/announcements/:id' }
+    { from: '/announce/:id',             to: '/announcements/:id' },
+    // The old mock seller thread's URL. Threads now live at /chat/:id.
+    { from: '/chat/seller',              to: '/chat' }
   ]);
 
   /* --------------------------------------------------- screens with no URL */

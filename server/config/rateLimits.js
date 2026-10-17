@@ -31,5 +31,11 @@ module.exports = Object.freeze({
   // window and a daily ceiling); searchVoice caps session mints on /voice/session.
   searchAssistant: Object.freeze({ maxRequests: 10, windowSeconds: 60, keyPrefix: 'search:paid' }),
   searchDaily: Object.freeze({ maxRequests: 100, windowSeconds: 86400, keyPrefix: 'search:daily' }),
-  searchVoice: Object.freeze({ maxRequests: 3, windowSeconds: 60, keyPrefix: 'search:voice' })
+  searchVoice: Object.freeze({ maxRequests: 3, windowSeconds: 60, keyPrefix: 'search:voice' }),
+
+  // In-app messaging: sends and conversation openings, PER AUTHENTICATED USER.
+  // Generous for a real chat (a message every two seconds), tight enough that a
+  // script cannot flood a seller's inbox. Reading a thread is not metered here;
+  // its polling is covered by the general api budget.
+  messagingSend: Object.freeze({ maxRequests: 30, windowSeconds: 60, keyPrefix: 'messaging:send' })
 });
