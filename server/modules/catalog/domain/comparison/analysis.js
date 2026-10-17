@@ -14,8 +14,9 @@ const CLEAR_MARGIN = 5; // points out of 100
 /**
  * How comparable a set is.
  *   full     same product type — every spec dimension applies
- *   partial  same family or category — shared dimensions only
- *   limited  different departments — price, warranty and seller only, no ranking
+ *   partial  same family (earbuds vs headphones) — shared dimensions only
+ *   limited  unrelated kinds (a phone and a speaker) — side by side, no ranking:
+ *            "the speaker is cheaper" is true and useless as a recommendation
  *   none     products mixed with stores/hotels — side by side only, no ranking
  */
 function comparability(entries) {
@@ -26,9 +27,9 @@ function comparability(entries) {
   let level;
   if (entityTypes.length > 1) level = 'none';
   else if (types.length === 1) level = 'full';
-  else if (families.length === 1 || categories.length === 1) level = 'partial';
+  else if (families.length === 1) level = 'partial';
   else level = 'limited';
-  return { level, types, families, categories, ranked: level !== 'none' };
+  return { level, types, families, categories, ranked: level === 'full' || level === 'partial' };
 }
 
 /** Dimensions every product's profile has, in the first profile's order. */
@@ -170,20 +171,26 @@ function dominance(basisDims, ids, cellsById) {
   return out;
 }
 
+// Facets too thin to steer a purchase on their own (every listing is "verified"
+// and rated 4.7-5.0): they count in the score, never as "if X matters most".
+const MINOR_FACETS = new Set(['reputation', 'trust']);
+
 /**
- * Who would win if the buyer cared mostly about one thing? For every facet on
- * the basis, recompute with that facet at 5 and the rest at 1.
+ * Who would win if the buyer cared about ONE thing only? For every facet on the
+ * basis, rank on that facet alone. A winner is "clear" only if it also leads
+ * every one of those single-facet rankings — the honest meaning of "whatever
+ * you prioritise".
  *   clear    same winner under every emphasis and a ≥ 5-point lead
  *   leaning  the user's winner leads, but another emphasis changes the result
  *            (or the lead is thin)
  *   close    thin lead and the result depends on emphasis
  */
 function sensitivity(basisDims, scoresById, userPriorities, userRanking) {
-  const facets = [...new Set(basisDims.map(d => d.facet).filter(Boolean))];
+  const facets = [...new Set(basisDims.map(d => d.facet).filter(f => f && !MINOR_FACETS.has(f)))];
   const winnerIf = {};
   for (const facet of facets) {
     const pri = {};
-    for (const f of facets) pri[f] = f === facet ? 5 : 1;
+    for (const d of basisDims) pri[d.facet] = d.facet === facet ? 5 : 0;
     const r = rank(totalsUnder(basisDims, scoresById, pri));
     if (r.length) winnerIf[facet] = r[0][0];
   }
