@@ -6374,10 +6374,10 @@ html, body {
       <span>VS Comparison</span>
       <span class="sidebar-badge">{{ vsCount }}</span>
     </button>
-    <button onClick="{{ on.chat }}" class="nav-item {{ (is.chat || is.threadSeller) ? 'active' : '' }}" title="Direct Seller &amp; Merchant Discussions">
+    <button onClick="{{ on.chat }}" class="nav-item {{ (is.chat || is.threadSeller) ? 'active' : '' }}" title="Messages with boutiques and buyers" aria-label="{{ messagingHasUnread ? 'Messages, ' + messagingBadge + ' unread' : 'Messages' }}">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      <span>Discussions</span>
-      <span class="sidebar-badge" style="background:var(--color-wa-green);color:#fff">2</span>
+      <span>Messages</span>
+      <sc-if value="{{ messagingHasUnread }}"><span class="sidebar-badge" style="background:var(--color-accent);color:#fff">{{ messagingBadge }}</span></sc-if>
     </button>
     <button onClick="{{ on.threadAi }}" class="nav-item {{ is.threadAi ? 'active' : '' }}" title="TchueKAM AI Intelligence Engine">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
