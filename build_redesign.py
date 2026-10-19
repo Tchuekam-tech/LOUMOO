@@ -13349,7 +13349,9 @@ class Component extends DCLogic {
     const nf = this.state.routeNotFound || {};
     const nfKind = nf.kind || 'notfound';
     const nfCopy = {
-      notfound: ['Page not found', 'We could not find this page. It may have moved, or the link may be mistyped.'],
+      notfound: nf.resource === 'product'
+        ? ['This product isn’t available', 'We couldn’t find a product at this link. It may have been removed, or the link may be mistyped.']
+        : ['Page not found', 'We could not find this page. It may have moved, or the link may be mistyped.'],
       forbidden: ['You do not have access', nf.message || 'This area is not available to your account.'],
       unavailable: [(nf.title || 'This area') + ' is not available yet', 'This part of LOUMOO has not been built yet. Nothing is hidden here.'],
       error: ['We could not load this page', 'Check your connection and try again.']
