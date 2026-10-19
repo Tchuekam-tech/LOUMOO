@@ -6,6 +6,7 @@
 
 const SuperAdminService = require('../services/SuperAdminService');
 const { ValidationError } = require('../../../server/shared/errors/AppError');
+const { clientIp } = require('../utils/clientIp');
 
 class SuperAdminOverviewController {
   static async getOverview(req, res, next) {
@@ -120,7 +121,7 @@ class SuperAdminOverviewController {
       const search = req.query.search || req.query.q || null;
 
       const callerAdminId = (req.principal && req.principal.id) || 'super_admin';
-      const ipAddress = req.ip || req.connection.remoteAddress;
+      const ipAddress = clientIp(req);
 
       const result = await SuperAdminService.exportAuditLogs(
         { resourceType, action, adminId, resourceId, startDate, endDate, search },

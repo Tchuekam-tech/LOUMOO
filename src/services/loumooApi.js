@@ -646,6 +646,39 @@
     return this.request('/api/v1/users/me/notifications/read-all', { method: 'POST' });
   };
 
+  /* --- In-app messaging (buyer ↔ boutique conversations) --- */
+  LoumooApiClient.prototype.listConversations = function (params) {
+    return this.request('/api/v1/conversations' + qs(params))
+      .then(function (data) { return (data && data.conversations) || []; });
+  };
+
+  LoumooApiClient.prototype.getConversationUnread = function () {
+    return this.request('/api/v1/conversations/unread')
+      .then(function (data) { return data || { messages: 0, conversations: 0 }; });
+  };
+
+  /** input: { listingId | storeId | orderId, body?, clientId? } → { conversation, messages, hasMore, created } */
+  LoumooApiClient.prototype.startConversation = function (input) {
+    return this.request('/api/v1/conversations', { method: 'POST', body: input || {} });
+  };
+
+  /** params: { after?: seq, before?: seq, limit? } → { conversation, messages, hasMore } */
+  LoumooApiClient.prototype.getConversation = function (id, params) {
+    return this.request('/api/v1/conversations/' + encodeURIComponent(id) + qs(params));
+  };
+
+  LoumooApiClient.prototype.sendConversationMessage = function (id, body, clientId) {
+    return this.request('/api/v1/conversations/' + encodeURIComponent(id) + '/messages', {
+      method: 'POST',
+      body: { body: body, clientId: clientId }
+    }).then(function (data) { return (data && data.message) || null; });
+  };
+
+  LoumooApiClient.prototype.markConversationRead = function (id) {
+    return this.request('/api/v1/conversations/' + encodeURIComponent(id) + '/read', { method: 'POST' })
+      .then(function (data) { return (data && data.conversation) || null; });
+  };
+
   /* --- 04.07 Activity history --- */
   LoumooApiClient.prototype.getActivities = function (params) {
     return this.request('/api/v1/users/me/activities' + qs(params));

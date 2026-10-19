@@ -24,6 +24,21 @@ class SuperAdminService {
   }
 
   /**
+   * Browser-safe settings for the public, unauthenticated bootstrap endpoints
+   * (/api/config, /api/v1/config). Deny-by-default projection — see
+   * SuperAdminRepository.getPublicSettings. Never use this for admin surfaces,
+   * and never use getSystemSettings for a public response.
+   */
+  static async getPublicSystemSettings() {
+    try {
+      if (CacheService && typeof CacheService.remember === 'function') {
+        return await CacheService.remember('system_settings:public', 60, () => SuperAdminRepository.getPublicSettings(), 'admin');
+      }
+    } catch (_) {}
+    return await SuperAdminRepository.getPublicSettings();
+  }
+
+  /**
    * Retrieves a single system setting.
    */
   static async getSystemSetting(key) {
@@ -137,6 +152,7 @@ class SuperAdminService {
     try {
       if (CacheService && typeof CacheService.delete === 'function') {
         await CacheService.delete('system_settings:all', 'admin');
+        await CacheService.delete('system_settings:public', 'admin');
         await CacheService.delete(`system_setting:${key}`, 'admin');
       }
     } catch (_) {}
@@ -173,6 +189,7 @@ class SuperAdminService {
     try {
       if (CacheService && typeof CacheService.delete === 'function') {
         await CacheService.delete('system_settings:all', 'admin');
+        await CacheService.delete('system_settings:public', 'admin');
         await CacheService.delete(`system_setting:${key}`, 'admin');
       }
     } catch (err) {
@@ -214,8 +231,19 @@ class SuperAdminService {
 
   /**
    * Dedicated emergency maintenance mode toggle.
+   *
+   * Accepts both the HTTP wire format (snake_case `banner_text` /
+   * `allow_admin_bypass`, as the frontend clients send) and internal camelCase
+   * callers (`bannerText` / `allowAdminBypass`). Earlier revisions destructured
+   * only the camelCase names, so a banner text or a "disable admin bypass"
+   * toggle sent by the UI (snake_case) was silently dropped — the banner fell
+   * back to the default and bypass stayed enabled.
    */
-  static async setMaintenanceMode({ enabled, bannerText = null, allowAdminBypass = true } = {}, { adminId = 'super_admin', ipAddress = null } = {}) {
+  static async setMaintenanceMode(payload = {}, { adminId = 'super_admin', ipAddress = null } = {}) {
+    const { enabled } = payload;
+    const bannerText = payload.bannerText !== undefined ? payload.bannerText : payload.banner_text;
+    const allowAdminBypass = payload.allowAdminBypass !== undefined ? payload.allowAdminBypass : payload.allow_admin_bypass;
+
     if (typeof enabled !== 'boolean') {
       throw new ValidationError('Maintenance status must be specified as a boolean (enabled: true/false).');
     }
@@ -224,12 +252,17 @@ class SuperAdminService {
         throw new ValidationError('Maintenance banner text must be a string up to 500 characters.');
       }
     }
+    if (allowAdminBypass !== null && allowAdminBypass !== undefined && typeof allowAdminBypass !== 'boolean') {
+      throw new ValidationError('allow_admin_bypass must be a boolean flag.');
+    }
     const current = (await SuperAdminRepository.getSetting('maintenance_mode')) || {};
     const updated = {
       ...current,
       enabled,
       banner_text: bannerText || current.banner_text || 'LOUMOO platform upgrade in progress.',
-      allow_admin_bypass: allowAdminBypass !== undefined ? Boolean(allowAdminBypass) : true
+      // Default to true (admins keep access) only when the caller says nothing;
+      // an explicit false must be honoured.
+      allow_admin_bypass: (allowAdminBypass === undefined || allowAdminBypass === null) ? true : Boolean(allowAdminBypass)
     };
 
     const result = await this.updateSystemSetting('maintenance_mode', updated, {
@@ -623,16 +656,19 @@ class SuperAdminService {
     return user;
   }
 
-  static async updateUser(id, updates = {}, { adminId = 'super_admin', reason = null, ipAddress = null } = {}) {
+  static async updateUser(id, updates = {}, { adminId = 'super_admin', reason = null, ipAddress = null, auditAction = 'user.update' } = {}) {
     if (!id) throw new ValidationError('User ID is required.');
     if (!updates || typeof updates !== 'object') throw new ValidationError('Updates must be an object.');
 
     const res = await SuperAdminRepository.updateUser(id, updates, adminId);
     if (!res.success) throw new ValidationError(res.error || 'Failed to update user');
 
+    // Role and KYC changes flow through here but must stay distinguishable in
+    // the audit trail — the caller passes auditAction (user.role_change /
+    // user.kyc_update); a plain profile edit defaults to user.update.
     await SuperAdminRepository.recordAuditLog({
       adminId,
-      action: 'user.update',
+      action: auditAction,
       resourceType: 'user',
       resourceId: id,
       oldValues: res.oldUser,
@@ -641,7 +677,7 @@ class SuperAdminService {
       ipAddress
     });
 
-    logger.info(`[SuperAdminService] User ${id} updated by ${adminId}`);
+    logger.info(`[SuperAdminService] User ${id} updated (${auditAction}) by ${adminId}`);
     return res.user;
   }
 
@@ -666,6 +702,7 @@ class SuperAdminService {
 
     return await this.updateUser(id, { primary_role: targetRole.toLowerCase() }, {
       ...context,
+      auditAction: 'user.role_change',
       reason: context.reason || `Updated user primary role to [${targetRole}]`
     });
   }
@@ -683,6 +720,7 @@ class SuperAdminService {
 
     return await this.updateUser(id, { kyc_status: targetStatus.toLowerCase() }, {
       ...context,
+      auditAction: 'user.kyc_update',
       reason: context.reason || `Updated user KYC status to [${targetStatus}]`
     });
   }

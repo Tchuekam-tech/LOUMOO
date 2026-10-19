@@ -6,6 +6,7 @@
 
 const SuperAdminService = require('../services/SuperAdminService');
 const { ValidationError } = require('../../../server/shared/errors/AppError');
+const { clientIp } = require('../utils/clientIp');
 
 class SuperAdminSettingsController {
   static async getAll(req, res, next) {
@@ -47,7 +48,7 @@ class SuperAdminSettingsController {
       const { key } = req.params;
       const { value, reason } = req.body;
       const adminId = (req.principal && req.principal.id) || 'super_admin';
-      const ipAddress = req.ip || req.connection.remoteAddress;
+      const ipAddress = clientIp(req);
 
       const result = await SuperAdminService.updateSystemSetting(key, value, {
         adminId,
@@ -69,7 +70,7 @@ class SuperAdminSettingsController {
     try {
       const payload = req.body;
       const adminId = (req.principal && req.principal.id) || 'super_admin';
-      const ipAddress = req.ip || req.connection.remoteAddress;
+      const ipAddress = clientIp(req);
 
       const result = await SuperAdminService.updateSystemSettings(payload, {
         adminId,
@@ -125,7 +126,7 @@ class SuperAdminSettingsController {
         throw new ValidationError('A valid setting key parameter is required.');
       }
       const adminId = (req.principal && req.principal.id) || 'super_admin';
-      const ipAddress = req.ip || req.connection.remoteAddress;
+      const ipAddress = clientIp(req);
       const reason = req.body && req.body.reason ? String(req.body.reason).trim() : null;
       if (reason && reason.length > 500) {
         throw new ValidationError('Reset reason must be a string up to 500 characters.');
@@ -157,7 +158,7 @@ class SuperAdminSettingsController {
       }
 
       const adminId = (req.principal && req.principal.id) || 'super_admin';
-      const ipAddress = req.ip || req.connection.remoteAddress;
+      const ipAddress = clientIp(req);
 
       const result = await SuperAdminService.setMaintenanceMode(req.body, {
         adminId,

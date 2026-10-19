@@ -6,6 +6,7 @@
  */
 
 const SuperAdminService = require('../services/SuperAdminService');
+const { clientIp } = require('../utils/clientIp');
 
 class SuperAdminOrdersController {
   static async listOrders(req, res, next) {
@@ -49,7 +50,7 @@ class SuperAdminOrdersController {
       const { id } = req.params;
       const actionOrPayload = req.body;
       const adminId = (req.principal && req.principal.id) || 'super_admin';
-      const ipAddress = req.ip || req.connection.remoteAddress;
+      const ipAddress = clientIp(req);
 
       const order = await SuperAdminService.resolveEscrow(id, actionOrPayload, {
         adminId,

@@ -8,6 +8,7 @@
 const SuperAdminService = require('../services/SuperAdminService');
 const { ValidationError, AuthorizationError } = require('../../../server/shared/errors/AppError');
 const { Role, ROLES } = require('../../../server/modules/identity/value-objects/Role');
+const { clientIp } = require('../utils/clientIp');
 
 /**
  * What the generic "edit this user" endpoint may change. It used to spread the request
@@ -62,7 +63,7 @@ class SuperAdminUsersController {
       const body = req.body && typeof req.body === 'object' ? req.body : {};
       const { reason, ...updates } = body;
       const adminId = (req.principal && req.principal.id) || 'super_admin';
-      const ipAddress = req.ip || req.connection.remoteAddress;
+      const ipAddress = clientIp(req);
 
       const rejected = Object.keys(updates).filter(k => !EDITABLE_USER_FIELDS.includes(k));
       if (rejected.length) {
@@ -105,7 +106,7 @@ class SuperAdminUsersController {
       const { id } = req.params;
       const role = req.body.role || req.body.primary_role || req.body;
       const adminId = (req.principal && req.principal.id) || 'super_admin';
-      const ipAddress = req.ip || req.connection.remoteAddress;
+      const ipAddress = clientIp(req);
 
       const user = await SuperAdminService.updateUserRole(id, role, {
         adminId,
@@ -129,7 +130,7 @@ class SuperAdminUsersController {
       const { id } = req.params;
       const status = req.body.status || req.body.kyc_status || req.body;
       const adminId = (req.principal && req.principal.id) || 'super_admin';
-      const ipAddress = req.ip || req.connection.remoteAddress;
+      const ipAddress = clientIp(req);
 
       const user = await SuperAdminService.updateUserKyc(id, status, {
         adminId,

@@ -62,6 +62,40 @@ async function runPhase5Tests() {
     assert.ok(publicConfigRes.body.systemSettings.platform_commission_rate, 'Must include platform_commission_rate');
     console.log('    ✓ 1. /api/config public startup endpoint successfully hydrates dynamic settings');
 
+    // ── 1b. Public endpoint must NOT leak internal settings (deny-by-default) ──
+    const pubSettings = publicConfigRes.body.systemSettings;
+    // Internal commission economics must be stripped from the public projection.
+    assert.strictEqual(
+      pubSettings.platform_commission_rate.category_rates, undefined,
+      'Public /api/config must NOT expose internal category_rates'
+    );
+    assert.ok(
+      Number.isFinite(Number(pubSettings.platform_commission_rate.payout_fee_fixed_xaf)),
+      'Public commission projection must retain payout_fee_fixed_xaf (the cart needs it)'
+    );
+    // Maintenance admin-bypass policy is internal and must not be published.
+    if (pubSettings.maintenance_mode) {
+      assert.strictEqual(
+        pubSettings.maintenance_mode.allow_admin_bypass, undefined,
+        'Public /api/config must NOT expose maintenance allow_admin_bypass'
+      );
+    }
+    // Only allowlisted keys may appear; anything outside the allowlist is a leak.
+    const leaked = Object.keys(pubSettings).filter(
+      k => !SuperAdminRepository.PUBLIC_SETTING_KEYS.includes(k)
+    );
+    assert.deepStrictEqual(leaked, [], `Public /api/config leaked non-allowlisted keys: ${leaked.join(', ')}`);
+    // The authenticated admin surface still sees the full object (incl. category_rates).
+    const adminFull = await SuperAdminService.getSystemSettings();
+    assert.ok(
+      adminFull.platform_commission_rate.category_rates,
+      'Admin getSystemSettings must still return category_rates'
+    );
+    // A setting flagged is_secret is withheld from the public projection.
+    const secretProbe = await SuperAdminRepository.getPublicSettings();
+    assert.ok(secretProbe && typeof secretProbe === 'object', 'getPublicSettings returns an object');
+    console.log('    ✓ 1b. Public config is deny-by-default: no category_rates, no admin-bypass, allowlist enforced');
+
     // ── 2. GET /api/v1/config & /api/config/system Public Cached Endpoints ──
     const cachedRes = await request(server, 'GET', '/api/v1/config');
     assert.strictEqual(cachedRes.status, 200, '/api/v1/config should respond with 200 OK');

@@ -16,8 +16,10 @@
 <script defer src="./src/services/appRouter.js"></script>
 
 <script defer src="./src/services/loumooApi.js"></script>
+<script defer src="./src/services/messaging.js"></script>
 <script defer src="./src/services/searchExperience.js"></script>
 <link rel="stylesheet" href="./src/styles/search.css">
+<link rel="stylesheet" href="./src/styles/messages.css">
 <script defer src="./src/services/travelApi.js"></script>
 <script defer src="./src/services/deliveryCircuit.js"></script>
 <script defer src="./src/services/deliveryApi.js"></script>
@@ -1121,53 +1123,6 @@ html, body {
     inset 0 1px 1px rgba(255, 255, 255, 0.7) !important;
 }
 [data-theme="dark"] .desktop-topbar, [data-theme="dark"] .sidebar-nav { background: #0f1118 !important; border-color: var(--color-divider) !important; }
-
-/* ── WhatsApp Themed Chat ── */
-.wa-chat-container {
-  display: flex; flex-direction: column; height: 100%; min-height: 100%;
-  background-color: #efeae2;
-  background-image: radial-gradient(#d3cec6 1px, transparent 1px), radial-gradient(#d3cec6 1px, #efeae2 1px);
-  background-size: 24px 24px; background-position: 0 0, 12px 12px; position: relative; overflow: hidden;
-}
-[data-theme="dark"] .wa-chat-container {
-  background-color: #0b141a;
-  background-image: radial-gradient(#1e2930 1px, transparent 1px), radial-gradient(#1e2930 1px, #0b141a 1px);
-}
-.wa-chat-header {
-  display: flex; align-items: center; justify-content: space-between; padding: 6px 14px;
-  background: #f0f2f5; border-bottom: 1px solid #d1d7db; height: 56px; flex: none; z-index: 10;
-}
-[data-theme="dark"] .wa-chat-header { background: #202c33; border-bottom-color: #2a3942; }
-.wa-chat-body { flex: 1; overflow-y: auto; padding: 14px 16px 20px; display: flex; flex-direction: column; gap: 8px; }
-.wa-bubble-sent {
-  background: #d9fdd3; color: #111b21; border-radius: 8px 8px 0px 8px; padding: 7px 10px 6px 12px;
-  box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13); max-width: min(440px, 82%); font-size: 13.5px; line-height: 1.4;
-}
-[data-theme="dark"] .wa-bubble-sent { background: #005c4b; color: #e9edef; }
-.wa-bubble-received {
-  background: #ffffff; color: #111b21; border-radius: 8px 8px 8px 0px; padding: 7px 10px 6px 12px;
-  box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13); max-width: min(440px, 82%); font-size: 13.5px; line-height: 1.4;
-}
-[data-theme="dark"] .wa-bubble-received { background: #202c33; color: #e9edef; }
-.wa-audio-card {
-  display: flex; align-items: center; gap: 10px; background: #ffffff; border-radius: 8px 8px 8px 0px;
-  padding: 8px 12px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13); width: min(320px, 82%);
-}
-[data-theme="dark"] .wa-audio-card { background: #202c33; }
-.wa-waveform-container { display: flex; align-items: center; gap: 2px; height: 22px; }
-.wa-bar { width: 2.5px; background: #8696a0; border-radius: 1px; }
-.wa-bar.played { background: #53bdeb; }
-.wa-audio-dot { width: 9px; height: 9px; border-radius: 50%; background: #53bdeb; margin-right: 2px; }
-.wa-input-bar {
-  display: flex; align-items: center; gap: 8px; padding: 8px 14px; background: #f0f2f5;
-  border-top: 1px solid #d1d7db; flex: none; z-index: 10;
-}
-[data-theme="dark"] .wa-input-bar { background: #202c33; border-top-color: #2a3942; }
-.wa-input-box {
-  flex: 1; height: 42px; background: #ffffff; border: none; border-radius: 8px;
-  padding: 0 14px; font-family: inherit; font-size: 14px; color: #111b21; outline: none;
-}
-[data-theme="dark"] .wa-input-box { background: #2a3942; color: #e9edef; }
 
 /* ── Checkout Pay Methods ── */
 .checkout-pay-method {
@@ -6336,10 +6291,10 @@ html, body {
       <span>VS Comparison</span>
       <span class="sidebar-badge">{{ vsCount }}</span>
     </button>
-    <button onClick="{{ on.chat }}" class="nav-item {{ (is.chat || is.threadSeller) ? 'active' : '' }}" title="Direct Seller &amp; Merchant Discussions">
+    <button onClick="{{ on.chat }}" class="nav-item {{ (is.chat || is.threadSeller) ? 'active' : '' }}" title="Messages with boutiques and buyers" aria-label="{{ messagingHasUnread ? 'Messages, ' + messagingBadge + ' unread' : 'Messages' }}">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      <span>Discussions</span>
-      <span class="sidebar-badge" style="background:var(--color-wa-green);color:#fff">2</span>
+      <span>Messages</span>
+      <sc-if value="{{ messagingHasUnread }}"><span class="sidebar-badge" style="background:var(--color-accent);color:#fff">{{ messagingBadge }}</span></sc-if>
     </button>
     <button onClick="{{ on.threadAi }}" class="nav-item {{ is.threadAi ? 'active' : '' }}" title="TchueKAM AI Intelligence Engine">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
@@ -10200,7 +10155,24 @@ class Component extends DCLogic {
     catalogPage: 1,
     catalogHasMore: true,
     categoryFeedLimit: 24,
-    homeFeedLimit: 24
+    homeFeedLimit: 24,
+
+    conversations: [],
+    conversationsLoaded: false,
+    conversationsLoading: false,
+    conversationsError: '',
+    convFilter: 'all',
+    convQuery: '',
+    activeConversationId: null,
+    activeConversation: null,
+    threadMessages: [],
+    threadLoading: false,
+    threadError: '',
+    threadHasMore: false,
+    threadLoadingOlder: false,
+    threadDraft: '',
+    messagingUnread: 0,
+    convStarting: false
   };
 
   go = (s) => {
@@ -10708,6 +10680,10 @@ class Component extends DCLogic {
   }
 
   _openNotification(n) {
+    if (n && n.metadata && n.metadata.action === 'open_conversation' && n.metadata.conversationId) {
+      this.openConversation(String(n.metadata.conversationId));
+      return;
+    }
     const circuit = typeof window !== 'undefined' ? window.LoumooCircuit : null;
     if (!n || !circuit) return;
     circuit.openFromNotification(n);
@@ -10994,6 +10970,8 @@ class Component extends DCLogic {
     }
     setTimeout(() => { if (!this._unmounted) this.loadServerNotifications(); }, 2000);
     this._startCircuitPolling();
+    setTimeout(() => { if (!this._unmounted) this.loadMessagingUnread(); }, 2500);
+    this._startMessagingPolling();
     this._startRouter();
     if (typeof window !== 'undefined') {
       window._loumooHeroComponent = this;
@@ -11092,6 +11070,7 @@ class Component extends DCLogic {
     clearInterval(this._resetTimer);
     clearInterval(this._emailTimer);
     this._stopCircuitPolling();
+    this._stopMessagingPolling();
     this._stopRouter();
     if (typeof window !== 'undefined' && this._handleKeyDown) {
       window.removeEventListener('keydown', this._handleKeyDown);
@@ -11419,7 +11398,18 @@ class Component extends DCLogic {
     this._dashboardRequested = false;
     try { localStorage.removeItem('loumoo_orders'); localStorage.removeItem('loumoo_notifs'); } catch (e) {}
 
+    this._threadFor = null;
+    this._threadToken = (this._threadToken || 0) + 1;
     this.setState({
+      conversations: [],
+      conversationsLoaded: false,
+      conversationsError: '',
+      activeConversationId: null,
+      activeConversation: null,
+      threadMessages: [],
+      threadDraft: '',
+      threadError: '',
+      messagingUnread: 0,
       orders: [],
       lastOrder: null,
       lastOrders: [],
@@ -11496,6 +11486,8 @@ class Component extends DCLogic {
       if (!this.state.catalogProducts.length && !this.state.catalogLoading) {
         this.loadCatalogProducts({ limit: 16 });
       }
+    } else if (screen === 'chat') {
+      this.loadConversations({ quiet: this.state.conversationsLoaded });
     } else if (screen === 'vs' || screen === 'vsCompare') {
       this._enterCompare();
     } else if (screen === 'superAdmin') {
@@ -12252,6 +12244,7 @@ class Component extends DCLogic {
       this._sc.scrollTop = 0;
     }
     if (prevScreen !== this.state.screen) this._onScreenEnter(this.state.screen);
+    this._afterThreadRender(prevState);
     this._prevScreen = this.state.screen;
     this._syncRouter();
     if (this.state.screen && this.state.screen.startsWith('onboard') && typeof localStorage !== 'undefined') {
@@ -13429,6 +13422,306 @@ class Component extends DCLogic {
     });
   }
 
+  _msg() {
+    return (typeof window !== 'undefined' && window.LoumooMessaging) || null;
+  }
+
+  _msgError(err) {
+    const M = this._msg();
+    return M ? M.errorText(err) : "Couldn't reach LOUMOO. Try again.";
+  }
+
+  loadConversations(opts) {
+    const quiet = Boolean(opts && opts.quiet);
+    const api = getApi();
+    if (this.state.authStatus !== 'authenticated' || !api || !api.listConversations) return Promise.resolve();
+    if (this._convRequest) return this._convRequest;
+    if (!quiet) this.setState({ conversationsLoading: true, conversationsError: '' });
+    this._convRequest = api.listConversations({ limit: 50 }).then((list) => {
+      if (this._unmounted) return;
+      const conversations = Array.isArray(list) ? list : [];
+      this.setState({
+        conversations,
+        conversationsLoaded: true,
+        conversationsLoading: false,
+        conversationsError: '',
+        messagingUnread: conversations.reduce((n, c) => n + (c.unread || 0), 0)
+      });
+    }).catch((err) => {
+      if (this._unmounted) return;
+      this.setState({ conversationsLoading: false, conversationsError: quiet && this.state.conversationsLoaded ? '' : this._msgError(err) });
+    }).then(() => { this._convRequest = null; });
+    return this._convRequest;
+  }
+
+  loadMessagingUnread() {
+    const api = getApi();
+    if (this.state.authStatus !== 'authenticated' || !api || !api.getConversationUnread) return;
+    api.getConversationUnread().then((u) => {
+      const n = Number(u && u.messages) || 0;
+      if (!this._unmounted && n !== this.state.messagingUnread) this.setState({ messagingUnread: n });
+    }).catch(() => {});
+  }
+
+  _thread(list, conversation) {
+    const M = this._msg();
+    return M ? M.applyReceipts(list, conversation) : list;
+  }
+
+  _merge(existing, incoming) {
+    const M = this._msg();
+    return M ? M.mergeMessages(existing, incoming) : (existing || []).concat(incoming || []);
+  }
+
+  _updateConversationInList(conversation) {
+    if (!conversation || !conversation.id) return;
+    const M = this._msg();
+    const at = (c) => (M ? M.micros(c.lastMessageAt) : Date.parse(c.lastMessageAt)) || 0;
+    this.setState((st) => {
+      const list = (st.conversations || []).filter((c) => c.id !== conversation.id);
+      if (conversation.lastMessageAt) list.push(conversation);
+      list.sort((a, b) => at(b) - at(a));
+      const patch = { conversations: list };
+      if (st.conversationsLoaded) patch.messagingUnread = list.reduce((n, c) => n + (c.unread || 0), 0);
+      if (st.activeConversationId === conversation.id) patch.activeConversation = conversation;
+      return patch;
+    });
+  }
+
+  _markThreadRead(id) {
+    const api = getApi();
+    if (!api || !api.markConversationRead || this._markingRead === id) return;
+    this._markingRead = id;
+    api.markConversationRead(id).then((conversation) => {
+      if (this._unmounted || !conversation) return;
+      this._updateConversationInList(conversation);
+      if (!this.state.conversationsLoaded) this.loadMessagingUnread();
+    }).catch(() => {}).then(() => { this._markingRead = null; });
+  }
+
+  loadThread(id) {
+    const api = getApi();
+    if (!id || !api || !api.getConversation) return Promise.resolve({ error: true });
+    if (this.state.authStatus !== 'authenticated') return Promise.resolve({ found: false });
+    const fresh = this._threadFor !== id;
+    this.setState((st) => (fresh
+      ? { threadMessages: [], threadLoading: true, threadError: '', threadHasMore: false }
+      : { threadLoading: !st.threadMessages.length, threadError: '' }));
+    const token = (this._threadToken = (this._threadToken || 0) + 1);
+    return api.getConversation(id, { limit: 50 }).then((data) => {
+      if (this._unmounted || token !== this._threadToken) return { found: true };
+      this._threadFor = id;
+      this.setState((st) => ({
+        activeConversation: data.conversation,
+        threadMessages: this._thread(this._merge(fresh ? [] : st.threadMessages.filter((m) => !m.seq), data.messages || []), data.conversation),
+        threadHasMore: Boolean(data.hasMore),
+        threadLoading: false,
+        threadError: ''
+      }));
+      this._updateConversationInList(data.conversation);
+      if (data.conversation && data.conversation.unread > 0) this._markThreadRead(id);
+      return { found: true };
+    }).catch((err) => {
+      if (this._unmounted || token !== this._threadToken) return { found: false };
+      this.setState({ threadLoading: false, threadError: this._msgError(err) });
+      return err && err.status === 404 ? { notFound: true } : { found: false };
+    });
+  }
+
+  _pollThread() {
+    const id = this.state.activeConversationId;
+    const api = getApi();
+    if (!id || !api || !api.getConversation || this._threadPolling) return;
+    if (this._threadFor !== id) { if (!this.state.threadLoading) this.loadThread(id); return; }
+    const last = this.state.threadMessages.filter((m) => m.seq).slice(-1)[0];
+    this._threadPolling = true;
+    api.getConversation(id, last ? { after: last.seq, limit: 100 } : { limit: 50 }).then((data) => {
+      if (this._unmounted || this.state.activeConversationId !== id) return;
+      this.setState((st) => ({
+        activeConversation: data.conversation,
+        threadMessages: this._thread(this._merge(st.threadMessages, data.messages || []), data.conversation),
+        threadError: ''
+      }));
+      this._updateConversationInList(data.conversation);
+      if (data.conversation && data.conversation.unread > 0) this._markThreadRead(id);
+    }).catch(() => {}).then(() => { this._threadPolling = false; });
+  }
+
+  loadOlderMessages() {
+    const id = this.state.activeConversationId;
+    const api = getApi();
+    const first = this.state.threadMessages.find((m) => m.seq);
+    if (!id || !api || !first || this.state.threadLoadingOlder) return;
+    this.setState({ threadLoadingOlder: true });
+    const el = this._threadEl;
+    api.getConversation(id, { before: first.seq, limit: 50 }).then((data) => {
+      if (this._unmounted || this.state.activeConversationId !== id) return;
+      if (el) this._olderAnchor = el.scrollHeight - el.scrollTop;
+      this.setState((st) => ({
+        threadMessages: this._thread(this._merge(data.messages || [], st.threadMessages), data.conversation),
+        threadHasMore: Boolean(data.hasMore),
+        threadLoadingOlder: false
+      }));
+    }).catch(() => { if (!this._unmounted) this.setState({ threadLoadingOlder: false }); });
+  }
+
+  openConversation(conversation) {
+    const id = conversation && (typeof conversation === 'string' ? conversation : conversation.id);
+    if (!id) return;
+    const known = typeof conversation === 'object' ? conversation : (this.state.conversations || []).find((c) => c.id === id);
+    this.setState({ activeConversationId: id, activeConversation: known || null, threadError: '' });
+    if (this.state.screen !== 'threadSeller') this.go('threadSeller');
+    this.loadThread(id);
+  }
+
+  _enterConversation(id) {
+    const wanted = String(id || '');
+    const known = (this.state.conversations || []).find((c) => c.id === wanted);
+    if (known) this.setState({ activeConversation: known });
+    if (!this.state.conversationsLoaded) this.loadConversations({ quiet: true });
+    return this.loadThread(wanted);
+  }
+
+  closeThread() {
+    if ((this.state.stack || []).slice(-1)[0] === 'chat') this.back();
+    else this.go('chat');
+  }
+
+  messageSeller(opts) {
+    opts = (opts && typeof opts === 'object' && !opts.nativeEvent && !opts.target) ? opts : {};
+    const p = this.state.currentProduct || {};
+    const input = {};
+    if (opts.orderId) input.orderId = String(opts.orderId);
+    else if (opts.storeId) input.storeId = String(opts.storeId);
+    else if (opts.listingId || p.id || this.state.currentProductId) input.listingId = String(opts.listingId || p.id || this.state.currentProductId);
+    if (!input.orderId && !input.storeId && !input.listingId) return;
+    if (this.state.authStatus !== 'authenticated') {
+      this.toast('Sign in to message boutiques on LOUMOO.');
+      this.go('signIn');
+      return;
+    }
+    if (input.listingId && p.id === input.listingId) this._recoNote('contact_seller', p, { surface: 'pdp' });
+    const api = getApi();
+    if (!api || !api.startConversation || this.state.convStarting) return;
+    this.setState({ convStarting: true });
+    api.startConversation(input).then((data) => {
+      if (this._unmounted || !data || !data.conversation) return;
+      const id = data.conversation.id;
+      const same = this.state.activeConversationId === id;
+      this._threadFor = id;
+      this.setState({
+        convStarting: false,
+        activeConversationId: id,
+        activeConversation: data.conversation,
+        threadMessages: this._thread(data.messages || [], data.conversation),
+        threadHasMore: Boolean(data.hasMore),
+        threadError: '',
+        threadLoading: false,
+        threadDraft: same ? this.state.threadDraft : ''
+      });
+      this._updateConversationInList(data.conversation);
+      if (this.state.screen !== 'threadSeller') this.go('threadSeller');
+      this._focusComposer();
+    }).catch((err) => {
+      if (this._unmounted) return;
+      this.setState({ convStarting: false });
+      this.toast(this._msgError(err));
+    });
+  }
+
+  _focusComposer() {
+    const M = this._msg();
+    if (M) M.focusComposer();
+  }
+
+  sendThreadMessage(retry) {
+    const id = this.state.activeConversationId;
+    const api = getApi();
+    const M = this._msg();
+    if (!id || !api || !api.sendConversationMessage || !M) return;
+    let body = retry && retry.body;
+    let clientId = retry && retry.clientId;
+    if (!clientId) {
+      body = String(this.state.threadDraft || '').trim();
+      if (!body) return;
+      if (body.length > M.MAX_BODY) { this.toast('Messages are limited to 2000 characters.'); return; }
+      clientId = M.newClientId();
+    }
+    const local = { id: clientId, clientId, mine: true, kind: 'text', body, pending: true, createdAt: new Date().toISOString() };
+    this.setState((st) => ({
+      threadDraft: retry ? st.threadDraft : '',
+      threadMessages: st.threadMessages.filter((m) => m.seq || m.clientId !== clientId).concat([local])
+    }));
+    if (!retry) M.growComposer(document.getElementById('msgComposer'), true);
+    api.sendConversationMessage(id, body, clientId).then((msg) => {
+      if (this._unmounted || !msg) return;
+      this.setState((st) => (st.activeConversationId === id ? { threadMessages: this._merge(st.threadMessages, [msg]) } : {}));
+      const c = this.state.activeConversation;
+      if (c && c.id === id) {
+        this._updateConversationInList(Object.assign({}, c, {
+          lastMessageAt: msg.createdAt,
+          lastMessagePreview: body.replace(/\s+/g, ' ').slice(0, 160),
+          lastMessageKind: 'text',
+          lastFromMe: true,
+          lastReadByPeer: false
+        }));
+      }
+    }).catch((err) => {
+      if (this._unmounted) return;
+      const error = this._msgError(err);
+      this.setState((st) => ({
+        threadMessages: st.threadMessages.map((m) => (!m.seq && m.clientId === clientId ? Object.assign({}, m, { pending: false, failed: true, error }) : m))
+      }));
+    });
+  }
+
+  updateThreadDraft(e) {
+    const el = e && e.target;
+    this.setState({ threadDraft: el ? el.value : '' });
+    const M = this._msg();
+    if (M) M.growComposer(el);
+  }
+
+  threadKeyDown(e) {
+    const M = this._msg();
+    if (!M || !M.isSendKey(e)) return;
+    e.preventDefault();
+    this.sendThreadMessage();
+  }
+
+  openThreadCard(m) {
+    const meta = (m && m.metadata) || {};
+    const c = this.state.activeConversation;
+    if (m.kind === 'product' && meta.listingId) this.openProduct(meta.listingId);
+    else if (m.kind === 'order' && meta.orderId && c && c.role === 'buyer') {
+      const R = getRouter();
+      if (R && R.isActive()) R.navigate('/orders/' + encodeURIComponent(meta.orderId));
+    } else if (m.kind === 'order' && c && c.role === 'seller') this.go('sell');
+  }
+
+  _setThreadScroller(el) {
+    const M = this._msg();
+    if (M) M.bindScroller(this, el);
+  }
+
+  _afterThreadRender(prevState) {
+    const M = this._msg();
+    if (M) M.afterRender(this, prevState);
+  }
+
+  _startMessagingPolling() {
+    const M = this._msg();
+    if (M) M.startPolling(this);
+    else if (!this._unmounted && (this._msgStartTries = (this._msgStartTries || 0) + 1) <= 10) {
+      setTimeout(() => this._startMessagingPolling(), 1000);
+    }
+  }
+
+  _stopMessagingPolling() {
+    const M = this._msg();
+    if (M) M.stopPolling(this);
+  }
+
   contactSellerWhatsApp(opts) {
     opts = (opts && typeof opts === 'object' && !opts.nativeEvent && !opts.target) ? opts : {};
     const p = this.state.currentProduct || {};
@@ -13436,12 +13729,20 @@ class Component extends DCLogic {
     const sellerName = opts.sellerName || p.storeName || 'LOUMOO Seller';
     const productTitle = opts.productTitle || p.title || '';
     const price = opts.price || p.salePrice || p.price || '';
-    const rawPhone = opts.phone || opts.sellerPhone || opts.whatsapp || p.sellerPhone || p.storePhone || p.phoneNumber || p.phone || (p.store && (p.store.phoneNumber || p.store.phone || p.store.phone_number)) || (typeof resolveSellerWhatsApp === 'function' ? resolveSellerWhatsApp(sellerName) : '') || '+237690000000';
-    let cleanPhone = String(rawPhone || '').replace(/[^0-9]/g, '');
-    if (cleanPhone.length === 9 && (cleanPhone.startsWith('6') || cleanPhone.startsWith('2'))) {
-      cleanPhone = '237' + cleanPhone;
+    const rawPhone = opts.phone || opts.sellerPhone || opts.whatsapp || p.sellerPhone || p.storePhone || p.phoneNumber || p.phone || (p.store && (p.store.phoneNumber || p.store.phone || p.store.phone_number)) || (typeof resolveSellerWhatsApp === 'function' ? resolveSellerWhatsApp(sellerName) : '') || '';
+    const cleanPhone = (function (rawVal) {
+      let d = String(rawVal || '').replace(/[^0-9]/g, '');
+      if (!d) return null;
+      if (d.indexOf('00237') === 0) d = d.slice(2);
+      if (d.length === 9) d = '237' + d;
+      else if (d.indexOf('237') !== 0) d = '237' + d;
+      return /^237[2368]\d{8}$/.test(d) ? d : null;
+    })(rawPhone);
+
+    if (!cleanPhone) {
+      this.toast('No WhatsApp number is listed for ' + sellerName + '.');
+      return;
     }
-    if (!cleanPhone) cleanPhone = '237690000000';
 
     let msg = '';
     if (opts.orderNumber) {
@@ -17729,6 +18030,7 @@ class Component extends DCLogic {
         });
         this.go('business');
       },
+      businessStoreId: (this.state.currentStore && this.state.currentStore.id) || '',
       businessStoreName: (this.state.currentStore && this.state.currentStore.name) || 'Storefront',
       businessStoreLogoUrl: (this.state.currentStore && (this.state.currentStore.logoUrl || this.state.currentStore.logo_url || this.state.currentStore.logo)) || (this.state.primaryStoreId && this.state.currentStore && this.state.currentStore.id === this.state.primaryStoreId ? this.state.storeLogoUrl : '') || '',
       businessStoreDescription: (this.state.currentStore && (this.state.currentStore.description || (this.state.currentStore.profile && (this.state.currentStore.profile.tagline || this.state.currentStore.profile.bio)))) || '',
@@ -18988,6 +19290,70 @@ class Component extends DCLogic {
       }),
       retryProviders: () => this._loadProviders(this.state.providersCity || '', true),
 
+      ...(() => {
+        const st = this.state;
+        const M = this._msg();
+        const c = st.activeConversation;
+        const authed = st.authStatus === 'authenticated';
+        const draft = String(st.threadDraft || '');
+        const rows = M ? M.inboxRows(Object.assign({ threadOpen: st.screen === 'threadSeller' }, st), (x) => this.openConversation(x)) : [];
+        const empty = M ? M.emptyCopy(st) : { title: 'No messages yet', text: '', browse: false };
+        const n = st.messagingUnread || 0;
+        return {
+          messagingBadge: n > 99 ? '99+' : (n > 0 ? String(n) : ''),
+          messagingHasUnread: n > 0,
+          convSignedIn: authed,
+          convAuthPending: !authed && st.authStatus !== 'anonymous',
+          convLoadingFirst: authed && !st.conversationsLoaded && !st.conversationsError,
+          convError: st.conversationsLoaded ? '' : (st.conversationsError || ''),
+          retryConversations: () => this.loadConversations(),
+          convFilterTabs: M ? M.filterTabs(st, (key) => this.setState({ convFilter: key })) : [],
+          convRows: rows,
+          convHasRows: rows.length > 0,
+          convHasAny: (st.conversations || []).length > 0,
+          convQuery: st.convQuery || '',
+          updateConvQuery: (e) => this.setState({ convQuery: e && e.target ? e.target.value : '' }),
+          clearConvQuery: () => this.setState({ convQuery: '' }),
+          convEmptyTitle: empty.title,
+          convEmptyText: empty.text,
+          convShowBrowse: empty.browse,
+          threadTitle: (c && c.title) || (st.threadLoading ? 'Loading…' : 'Conversation'),
+          threadSubtitle: !c ? '' : (c.role === 'seller' ? 'Buyer · messaged ' + (c.storeName || 'your boutique') : (c.verified ? 'Verified boutique' : 'Boutique')),
+          threadInitials: (c && c.initials) || '',
+          threadAvatarUrl: (c && c.avatarUrl) || '',
+          threadHasAvatar: Boolean(c && c.avatarUrl),
+          threadVerified: Boolean(c && c.verified),
+          threadIsBuyer: Boolean(c && c.role === 'buyer'),
+          threadCanWhatsApp: Boolean(c && c.role === 'buyer' && c.storePhone),
+          threadItems: M ? M.threadItems(st.threadMessages, {
+            retry: (m) => this.sendThreadMessage({ clientId: m.clientId, body: m.body }),
+            discard: (m) => this.setState((s2) => ({ threadMessages: s2.threadMessages.filter((x) => x.seq || x.clientId !== m.clientId) })),
+            openCard: (m) => this.openThreadCard(m)
+          }) : [],
+          threadLoadingFirst: Boolean(st.threadLoading) && !(st.threadMessages || []).length,
+          threadErrorText: st.threadError || '',
+          threadEmpty: !st.threadLoading && !st.threadError && !(st.threadMessages || []).length,
+          threadEmptyText: c && c.role === 'seller'
+            ? 'Say hello. The buyer will be notified.'
+            : 'Ask about availability, delivery or price. ' + ((c && c.title) || 'The boutique') + ' will be notified.',
+          threadHasMore: Boolean(st.threadHasMore),
+          threadLoadingOlder: Boolean(st.threadLoadingOlder),
+          loadOlderMessages: () => this.loadOlderMessages(),
+          retryThread: () => this.loadThread(st.activeConversationId),
+          threadDraft: draft,
+          threadCanSend: draft.trim().length > 0 && draft.trim().length <= 2000,
+          threadDraftNearLimit: draft.length > 1800,
+          threadDraftCount: draft.length + ' / 2000',
+          updateThreadDraft: (e) => this.updateThreadDraft(e),
+          threadKeyDown: (e) => this.threadKeyDown(e),
+          sendThreadMessage: () => this.sendThreadMessage(),
+          continueOnWhatsApp: () => c && this.contactSellerWhatsApp({ sellerName: c.storeName || c.title, phone: c.storePhone }),
+          closeThread: () => this.closeThread(),
+          messageSeller: (opts) => this.messageSeller(opts),
+          convStarting: Boolean(st.convStarting),
+          setThreadScroller: this._threadRefCb || (this._threadRefCb = (el) => this._setThreadScroller(el))
+        };
+      })(),
       notifHasItems: (this.state.notifications || []).length > 0,
       notifUnreadCount: (this.state.notifications || []).filter((n) => !n.read).length,
       notifHasUnread: (this.state.notifications || []).some((n) => !n.read),
@@ -18997,7 +19363,7 @@ class Component extends DCLogic {
       })(),
       notifList: (this.state.notifications || []).map((n) => {
         const action = (n.metadata && n.metadata.action) || '';
-        const openLabels = { track_order: 'Track order', open_dispatch: 'Open deliveries', open_rider_hub: 'Open rider jobs', open_riders_admin: 'Open riders' };
+        const openLabels = { track_order: 'Track order', open_dispatch: 'Open deliveries', open_rider_hub: 'Open rider jobs', open_riders_admin: 'Open riders', open_conversation: 'Open conversation' };
         return {
           id: n.id,
           title: n.title,
@@ -19020,7 +19386,7 @@ class Component extends DCLogic {
         const o = this.state.currentOrder;
         const money = (n) => 'XAF ' + fmt(n || 0);
         if (!o) {
-          return { id: '', orderNumber: '', placedAt: '', statusLabel: '', totalLabel: '', payVia: '', items: [], subtotalLabel: '', shippingLabel: '', cityLabel: '', seller: '', sellerPhone: '', canTrack: false, noTrackNote: '', escrowTitle: 'Pay on delivery', escrowNote: '', escrowOk: true };
+          return { id: '', orderNumber: '', placedAt: '', statusLabel: '', totalLabel: '', payVia: '', items: [], subtotalLabel: '', shippingLabel: '', cityLabel: '', seller: '', sellerPhone: '', canTrack: false, canMessage: false, noTrackNote: '', escrowTitle: 'Pay on delivery', escrowNote: '', escrowOk: true };
         }
         const circuit = typeof window !== 'undefined' ? window.LoumooCircuit : null;
         const sent = Boolean(o.id) && o.serverSynced !== false;
@@ -19066,6 +19432,7 @@ class Component extends DCLogic {
           seller: o.seller || 'the seller',
           sellerPhone: o.sellerPhone || o.sellerWhatsapp || '',
           canTrack: sent && home && !cancelled,
+          canMessage: sent,
           noTrackNote: noTrackNote,
           escrowTitle: escrow.title,
           escrowNote: escrow.note,

@@ -37,63 +37,91 @@ const TEST_TOKEN_PREFIX = 'loumoo_test:';
  */
 const TEST_SUPER_ADMIN_SUBJECT = 'loumoo_test_super_admin';
 
-async function requireSuperAdminRole(req, res, next) {
-  // If principal is already attached by upstream requireAuth:
-  if (req.principal) {
-    const role = req.principal.primaryRole || req.principal.role || 'customer';
-    if (Role.hasRole(role, ROLES.ADMIN)) {
-      return next();
-    }
-    return next(new AuthorizationError('Administrative privileges required.'));
-  }
-
-  const token = extractBearerToken(req);
-
-  // Test harness only. verifySessionToken throws (401) for a `loumoo_test:`
-  // token when test auth is not enabled or the secret is wrong; for any other
-  // subject we fall through to normal session verification and role checks.
-  if (token && token.startsWith(TEST_TOKEN_PREFIX)) {
-    try {
-      const claims = await SupabaseIdentityProvider.verifySessionToken(token);
-      if (claims.source === 'test-harness' && claims.userId === TEST_SUPER_ADMIN_SUBJECT) {
-        req.principal = {
-          id: TEST_SUPER_ADMIN_SUBJECT,
-          primaryRole: ROLES.SUPER_ADMIN,
-          email: claims.email
-        };
-        return next();
-      }
-    } catch (testAuthErr) {
-      return next(testAuthErr);
-    }
-  }
-
-  if (!token) {
-    return next(new AuthenticationError('Authentication required. Sign in as administrator to continue.'));
-  }
-
-  // Cryptographically verify session token via identity provider
-  try {
-    await new Promise((resolve, reject) => {
-      requireAuth(req, res, (err) => {
-        if (err) return reject(err);
-        resolve();
-      });
-    });
-
+/**
+ * Builds a role gate for the admin surface. `minRole` is the lowest role in the
+ * hierarchy (server/modules/identity/value-objects/Role) that may pass.
+ *
+ * Authentication is identical for every tier: a principal already attached by an
+ * upstream gate is reused (so stacking a stronger gate after a weaker base gate
+ * costs only a role comparison, not a second verification), and the only
+ * non-session way in remains the secret-verified `loumoo_test:` harness token
+ * bound to the one reserved super-admin subject.
+ */
+function makeRoleGuard(minRole, deniedMessage) {
+  return async function roleGuard(req, res, next) {
+    // Principal already attached by an upstream gate (or injected in tests).
     if (req.principal) {
       const role = req.principal.primaryRole || req.principal.role || 'customer';
-      if (Role.hasRole(role, ROLES.ADMIN)) {
+      if (Role.hasRole(role, minRole)) {
         return next();
       }
-      return next(new AuthorizationError('Administrative privileges required.'));
+      return next(new AuthorizationError(deniedMessage));
     }
-  } catch (authErr) {
-    return next(authErr);
-  }
 
-  return next(new AuthorizationError('Super Administrator access is required.'));
+    const token = extractBearerToken(req);
+
+    // Test harness only. verifySessionToken throws (401) for a `loumoo_test:`
+    // token when test auth is not enabled or the secret is wrong; for any other
+    // subject we fall through to normal session verification and role checks.
+    if (token && token.startsWith(TEST_TOKEN_PREFIX)) {
+      try {
+        const claims = await SupabaseIdentityProvider.verifySessionToken(token);
+        if (claims.source === 'test-harness' && claims.userId === TEST_SUPER_ADMIN_SUBJECT) {
+          req.principal = {
+            id: TEST_SUPER_ADMIN_SUBJECT,
+            primaryRole: ROLES.SUPER_ADMIN,
+            email: claims.email
+          };
+          return next();
+        }
+      } catch (testAuthErr) {
+        return next(testAuthErr);
+      }
+    }
+
+    if (!token) {
+      return next(new AuthenticationError('Authentication required. Sign in as administrator to continue.'));
+    }
+
+    // Cryptographically verify session token via identity provider
+    try {
+      await new Promise((resolve, reject) => {
+        requireAuth(req, res, (err) => {
+          if (err) return reject(err);
+          resolve();
+        });
+      });
+
+      if (req.principal) {
+        const role = req.principal.primaryRole || req.principal.role || 'customer';
+        if (Role.hasRole(role, minRole)) {
+          return next();
+        }
+        return next(new AuthorizationError(deniedMessage));
+      }
+    } catch (authErr) {
+      return next(authErr);
+    }
+
+    return next(new AuthorizationError(deniedMessage));
+  };
 }
+
+/**
+ * Content-moderation gate: moderator, admin or super_admin. Applied as the base
+ * gate on the admin router so trust-and-safety staff can review and moderate
+ * listings and stores. Stronger gates below (requireSuperAdminRole /
+ * requireSuperAdminOnly) still protect settings, identity governance, escrow and
+ * the platform-owner actions, so a moderator is confined to content moderation.
+ */
+const requireModeratorRole = makeRoleGuard(ROLES.MODERATOR, 'Moderator privileges required.');
+
+/**
+ * Administrative gate: admin or super_admin. (Named *SuperAdminRole for
+ * historical reasons; it has always meant "admin or above", distinct from
+ * requireSuperAdminOnly which is super_admin exactly.)
+ */
+const requireSuperAdminRole = makeRoleGuard(ROLES.ADMIN, 'Administrative privileges required.');
 
 /**
  * Stricter than requireSuperAdminRole: only `super_admin`. It runs AFTER
@@ -112,6 +140,7 @@ function requireSuperAdminOnly(req, res, next) {
 }
 
 module.exports = {
+  requireModeratorRole,
   requireSuperAdminRole,
   requireSuperAdminOnly,
   TEST_SUPER_ADMIN_SUBJECT

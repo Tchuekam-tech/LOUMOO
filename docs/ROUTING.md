@@ -92,9 +92,9 @@ trailing slashes are repaired by redirect.
 | `/orders/:id/review` | screen `writeReview`, loader `_enterOrder` | signed in + `canPurchase` | `:id` -> `currentOrder.id` | - | opens directly |
 | `/orders/:id/tracking` | overlay `tracking` | signed in + `canPurchase` | `:id` -> `orderId` | - | opens directly |
 | `/orders/:id` | screen `orderDetail`, loader `_enterOrder` | signed in + `canPurchase` | `:id` -> `currentOrder.id` | - | opens directly |
-| `/chat` | screen `chat` | signed in + `canPurchase` | - | - | opens directly |
+| `/chat` | screen `chat` | signed in + `canPurchase` | - | `/chat/seller` | opens directly |
 | `/chat/assistant` | screen `threadAi` | signed in + `canPurchase` | - | - | redirects to `/chat` |
-| `/chat/seller` | screen `threadSeller` | signed in + `canPurchase` | - | - | redirects to `/chat` |
+| `/chat/:id` | screen `threadSeller`, loader `_enterConversation` | signed in + `canPurchase` | `:id` -> `activeConversationId` | - | opens directly |
 | `/notifications` | screen `notifications` | signed in + `canPurchase` | - | - | opens directly |
 | `/account` | screen `accountDashboard` | signed in + `canManageProfile` | - | - | opens directly |
 | `/account/profile` | screen `profile` | signed in + `canManageProfile` | - | - | opens directly |
@@ -166,6 +166,7 @@ trailing slashes are repaired by redirect.
 - `/sign-up` -> `/onboarding`
 - `/listing/:id` -> `/product/:id`
 - `/announce/:id` -> `/announcements/:id`
+- `/chat/seller` -> `/chat`
 
 **Shell screens deliberately without a URL:**
 

@@ -95,7 +95,23 @@ async function run() {
   assert.ok(distinctActions.includes('store.verify'));
   assert.ok(distinctActions.includes('store.suspend'));
   assert.ok(distinctActions.includes('setting.update'));
-  console.log(`    ✓ 6. Distinct audit actions extracted (${distinctActions.length} actions)`);
+
+  // No taxonomy drift: the default list must match what the code actually records.
+  // Verbs that are never written must be absent; verbs that ARE written must be present.
+  assert.ok(!distinctActions.includes('order.escrow'), 'bogus order.escrow must not be advertised');
+  assert.ok(!distinctActions.includes('maintenance.toggle'), 'bogus maintenance.toggle must not be advertised');
+  for (const real of ['escrow.resolve', 'listing.reject', 'listing.moderate', 'user.update', 'user.role_change', 'user.kyc_update']) {
+    assert.ok(distinctActions.includes(real), `real action [${real}] must be advertised`);
+  }
+
+  // Role and KYC changes must be logged under distinct actions, not generic user.update.
+  await SuperAdminService.updateUserRole('usr_buyer_1', 'seller', { adminId: 'admin_ops', actorRole: 'super_admin' });
+  await SuperAdminService.updateUserKyc('usr_buyer_1', 'verified', { adminId: 'admin_ops' });
+  const roleLogs = await SuperAdminService.getAuditLogs({ action: 'user.role_change' });
+  const kycLogs = await SuperAdminService.getAuditLogs({ action: 'user.kyc_update' });
+  assert.ok(roleLogs.some(l => l.resource_id === 'usr_buyer_1'), 'role change must log action user.role_change');
+  assert.ok(kycLogs.some(l => l.resource_id === 'usr_buyer_1'), 'kyc change must log action user.kyc_update');
+  console.log(`    ✓ 6. Distinct audit actions verified: no drift, role/KYC logged distinctly (${distinctActions.length} actions)`);
 
   // ── 6. Compliance Audit Export (CSV & JSON) ──
   const csvExport = await SuperAdminService.exportAuditLogs({ resourceType: 'store' }, 'csv');
@@ -196,7 +212,33 @@ async function run() {
   }, { adminId: 'admin_ops' });
   assert.strictEqual(maintRes.success, true);
   assert.strictEqual(maintRes.value.enabled, true);
-  console.log('    ✓ 12. Dedicated maintenance mode toggle verified');
+  assert.strictEqual(maintRes.value.banner_text, 'LOUMOO maintenance test in progress.', 'camelCase bannerText must be applied');
+
+  // Regression: the frontend clients send snake_case banner_text / allow_admin_bypass.
+  // These were previously dropped (service only read camelCase), so a custom banner
+  // fell back to the default and "disable admin bypass" never took effect.
+  const maintSnake = await SuperAdminService.setMaintenanceMode({
+    enabled: true,
+    banner_text: 'Maintenance critique en cours.',
+    allow_admin_bypass: false
+  }, { adminId: 'admin_ops' });
+  assert.strictEqual(maintSnake.value.banner_text, 'Maintenance critique en cours.', 'snake_case banner_text must be applied');
+  assert.strictEqual(maintSnake.value.allow_admin_bypass, false, 'explicit allow_admin_bypass:false must be honoured');
+
+  // An unspecified bypass still defaults to true (admins keep access).
+  const maintDefault = await SuperAdminService.setMaintenanceMode({ enabled: true }, { adminId: 'admin_ops' });
+  assert.strictEqual(maintDefault.value.allow_admin_bypass, true, 'unspecified bypass defaults to true');
+
+  // A non-boolean bypass is rejected.
+  await assert.rejects(
+    () => SuperAdminService.setMaintenanceMode({ enabled: true, allow_admin_bypass: 'yes' }, { adminId: 'admin_ops' }),
+    /allow_admin_bypass/,
+    'non-boolean allow_admin_bypass must be rejected'
+  );
+
+  // Reset to a clean (disabled) state for the remaining steps.
+  await SuperAdminService.setMaintenanceMode({ enabled: false }, { adminId: 'admin_ops' });
+  console.log('    ✓ 12. Dedicated maintenance mode toggle verified (snake_case + camelCase, explicit bypass)');
 
   // ── 12. Deep Health Diagnostic Probe ──
   const health = await SuperAdminService.getDeepHealth();
@@ -284,12 +326,29 @@ async function run() {
     assert.strictEqual(healthHttp.status, 200);
     assert.ok(healthJson.data.services);
 
+    // H2. Moderator tier: content moderation is allowed; admin/owner surfaces are not.
+    testPrincipal = { id: 'mod_http_test', role: ROLES.MODERATOR };
+    assert.strictEqual((await fetch(`${httpUrl}/listings`)).status, 200, 'moderator may list listings for moderation');
+    assert.strictEqual((await fetch(`${httpUrl}/stores`)).status, 200, 'moderator may view stores');
+    assert.strictEqual((await fetch(`${httpUrl}/settings`)).status, 403, 'moderator must NOT read platform settings (admin+)');
+    assert.strictEqual((await fetch(`${httpUrl}/overview`)).status, 403, 'moderator must NOT see financial overview (admin+)');
+    const modMaint = await fetch(`${httpUrl}/maintenance`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ enabled: false })
+    });
+    assert.strictEqual(modMaint.status, 403, 'moderator must NOT toggle maintenance (owner only)');
+    const modEscrow = await fetch(`${httpUrl}/orders/ord_1001/escrow`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'RELEASE' })
+    });
+    assert.strictEqual(modEscrow.status, 403, 'moderator must NOT resolve escrow (admin+)');
+
     // I. RBAC guard test: unauthenticated / non-admin refusal
     testPrincipal = { id: 'usr_normal', role: ROLES.CUSTOMER };
     const forbiddenHttp = await fetch(`${httpUrl}/audit-logs`);
     assert.strictEqual(forbiddenHttp.status, 403);
+    // A customer is below moderator, so even a moderation surface is refused.
+    assert.strictEqual((await fetch(`${httpUrl}/listings`)).status, 403, 'customer must be blocked from moderation routes');
 
-    console.log('    ✓ 14. All 8 new SuperAdmin REST endpoints verified over HTTP with strict RBAC');
+    console.log('    ✓ 14. REST endpoints verified over HTTP with tiered RBAC (moderator / admin / owner)');
   } finally {
     server.close();
   }

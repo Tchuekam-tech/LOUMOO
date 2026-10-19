@@ -6,6 +6,7 @@
  */
 
 const SuperAdminService = require('../services/SuperAdminService');
+const { clientIp } = require('../utils/clientIp');
 
 class SuperAdminStoresController {
   static async listStores(req, res, next) {
@@ -49,7 +50,7 @@ class SuperAdminStoresController {
       const { id } = req.params;
       const updates = req.body;
       const adminId = (req.principal && req.principal.id) || 'super_admin';
-      const ipAddress = req.ip || req.connection.remoteAddress;
+      const ipAddress = clientIp(req);
 
       const store = await SuperAdminService.moderateStore(id, updates, {
         adminId,
@@ -73,7 +74,7 @@ class SuperAdminStoresController {
       const tier = req.body.tier || 'pro_merchant';
       const reason = req.body.reason || 'Store KYC verified by SuperAdmin';
       const adminId = (req.principal && req.principal.id) || 'super_admin';
-      const ipAddress = req.ip || req.connection.remoteAddress;
+      const ipAddress = clientIp(req);
 
       const store = await SuperAdminService.verifyStoreKyc(id, { tier, reason }, {
         adminId,
@@ -95,7 +96,7 @@ class SuperAdminStoresController {
       const { id } = req.params;
       const reason = req.body.reason || 'KYC documentation insufficient';
       const adminId = (req.principal && req.principal.id) || 'super_admin';
-      const ipAddress = req.ip || req.connection.remoteAddress;
+      const ipAddress = clientIp(req);
 
       const store = await SuperAdminService.rejectStoreKyc(id, { reason }, {
         adminId,
@@ -117,7 +118,7 @@ class SuperAdminStoresController {
       const { id } = req.params;
       const reason = req.body.reason || 'Store suspended by SuperAdmin';
       const adminId = (req.principal && req.principal.id) || 'super_admin';
-      const ipAddress = req.ip || req.connection.remoteAddress;
+      const ipAddress = clientIp(req);
 
       const store = await SuperAdminService.suspendStore(id, { reason }, {
         adminId,
@@ -139,7 +140,7 @@ class SuperAdminStoresController {
       const { id } = req.params;
       const reason = req.body.reason || 'Store reactivated by SuperAdmin';
       const adminId = (req.principal && req.principal.id) || 'super_admin';
-      const ipAddress = req.ip || req.connection.remoteAddress;
+      const ipAddress = clientIp(req);
 
       const store = await SuperAdminService.reactivateStore(id, { reason }, {
         adminId,

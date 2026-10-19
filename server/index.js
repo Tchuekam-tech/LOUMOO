@@ -44,6 +44,7 @@ const travelRoutes = require('./modules/travel/presentation/routes/travelRoutes'
 const orderRoutes = require('./modules/commerce/presentation/routes/orderRoutes');
 const recommendationRoutes = require('./modules/recommendation/presentation/routes/recommendationRoutes');
 const deliveryRoutes = require('./modules/delivery/presentation/routes/deliveryRoutes');
+const messagingRoutes = require('./modules/messaging/presentation/routes/messagingRoutes');
 const { getSharedDeliveryService } = require('./modules/delivery/application/DeliveryService');
 const { startOfferSweeper } = require('./modules/delivery/infrastructure/OfferSweeper');
 const superAdminRoutes = require('../SuperAdmin/backend/routes/superAdminRoutes');
@@ -216,6 +217,7 @@ v1Router.use('/travel', travelRoutes);
 v1Router.use('/orders', orderRoutes);
 v1Router.use('/recommendations', recommendationRoutes);
 v1Router.use('/deliveries', deliveryRoutes);
+v1Router.use('/conversations', messagingRoutes);
 v1Router.use('/admin', superAdminRoutes);
 
 app.use('/api/v1', v1Router);
@@ -239,11 +241,12 @@ app.get('/api/config', async (req, res) => {
   let systemSettings = null;
   try {
     const SuperAdminService = require('../SuperAdmin/backend/services/SuperAdminService');
-    systemSettings = await SuperAdminService.getSystemSettings();
+    // Public, unauthenticated endpoint — deny-by-default projection only.
+    systemSettings = await SuperAdminService.getPublicSystemSettings();
   } catch (err) {
     try {
       const SuperAdminRepository = require('../SuperAdmin/backend/repositories/SuperAdminRepository');
-      systemSettings = await SuperAdminRepository.getAllSettings();
+      systemSettings = await SuperAdminRepository.getPublicSettings();
     } catch (_) {}
   }
 
@@ -280,7 +283,8 @@ app.get('/api/config', async (req, res) => {
 app.get(['/api/v1/config', '/api/config/system'], async (req, res, next) => {
   try {
     const SuperAdminService = require('../SuperAdmin/backend/services/SuperAdminService');
-    const systemSettings = await SuperAdminService.getSystemSettings();
+    // Public, unauthenticated endpoint — deny-by-default projection only.
+    const systemSettings = await SuperAdminService.getPublicSystemSettings();
     res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=120');
     res.json({
       success: true,
