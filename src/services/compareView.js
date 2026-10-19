@@ -33,6 +33,11 @@
     ['portability', 'Portability'],
     ['warranty', 'Warranty']
   ];
+  var FACET_SHORT = {
+    price: 'Price', performance: 'Performance', battery: 'Battery', display: 'Screen', portability: 'Portability',
+    warranty: 'Warranty', camera: 'Camera', audio: 'Sound', capacity: 'Capacity', durability: 'Durability',
+    connectivity: 'Connectivity', fit: 'Sizes', value: 'Value for money'
+  };
   var TYPE_LABEL = {
     smartphone: 'Smartphone', laptop: 'Laptop', tablet: 'Tablet', headphones: 'Headphones',
     earbuds: 'Earbuds', speaker: 'Speaker', microphone: 'Microphone', power_bank: 'Power bank',
@@ -71,7 +76,7 @@
       priorityChips: [], dataNotes: [], buyRows: [], hasBuyRows: false,
       hasRecommendation: false, recommendTitle: '', matchText: '', decisiveText: '', summary: '',
       topReasons: '', bestValueText: '', marketNote: '', unresolvedText: '',
-      stickyText: '', stickyLabel: '', stickyProductId: null, title: ''
+      stickyText: '', stickyLabel: '', stickyProductId: null, title: '', cols: 'cmp-n-2'
     }, extra || {});
   }
 
@@ -120,7 +125,8 @@
         price: p.priceNumeric ? money(p.priceNumeric) : (p.price || ''),
         wasPrice: p.compareAtPrice ? money(p.compareAtPrice) : '',
         rating: rating,
-        seller: [p.merchant, p.merchantCity].filter(Boolean).join(' · '),
+        // A boutique is its own seller: show where it is, not its name twice.
+        seller: p.entityType === 'store' ? (p.merchantCity || '') : [p.merchant, p.merchantCity].filter(Boolean).join(' · '),
         availability: availability,
         score: p.score !== null && p.score !== undefined && winnerId ? 'Fit ' + Math.round(p.score) + '/100' : '',
         tags: tags,
@@ -143,7 +149,8 @@
     }
 
     var bestFor = (verdict.bestFor || []).map(function (b) {
-      return { label: b.label, title: short[b.productId] || '', dot: 'cmp-dot-' + dot[b.productId] };
+      // One string: the template runtime wraps each interpolation in its own span.
+      return { text: (FACET_SHORT[b.facet] || b.label) + ' — ' + (short[b.productId] || ''), dot: 'cmp-dot-' + dot[b.productId] };
     });
 
     // Pros per product (and cons, shown muted). Two to four columns.
@@ -165,7 +172,10 @@
     var bars = rows.filter(function (r) {
       return r.scored && r.format === 'number' && r.direction !== 'none' &&
         ids.every(function (id) { return typeof (r.raw || {})[id] === 'number' && r.raw[id] > 0; });
-    }).slice(0, 6).map(function (r) {
+    });
+    // One lone measure (a shop's rating) is not a chart.
+    if (bars.length < 2) bars = [];
+    bars = bars.slice(0, 6).map(function (r) {
       var vals = ids.map(function (id) { return r.raw[id]; });
       var max = Math.max.apply(null, vals);
       var min = Math.min.apply(null, vals);
@@ -200,7 +210,9 @@
           note: r.uniformInCategory ? 'Same on most listings — not used to rank' : '',
           cells: ids.map(function (id) {
             var win = r.isDifferent && (r.winnerProductIds || []).indexOf(id) >= 0;
-            var p = r.percentiles && r.percentiles[id];
+            // Percentile chips for specs only: on a price, "Bottom 9%" reads as cheap
+            // when it means dear, and near-identical ratings make the chip noise.
+            var p = s.id !== 'commerce' && r.percentiles ? r.percentiles[id] : null;
             var chip = p === undefined || p === null ? '' : p >= 85 ? 'Top ' + Math.max(1, Math.round(100 - p)) + '%' : p <= 15 ? 'Bottom ' + Math.max(1, Math.round(p)) + '%' : '';
             return { text: r.values[id] || '—', cls: 'cmp-spec-v' + (win ? ' is-win' : '') + (r.values[id] ? '' : ' is-unknown'), chip: chip, hasChip: !!chip };
           })
@@ -228,13 +240,14 @@
       (p.sellers || []).forEach(function (s) {
         buyRows.push({
           key: p.id + '|' + s.id,
-          productId: p.id,
+          // The exact listing behind this offer, so the bag gets the price shown.
+          productId: s.id || p.id,
           seller: s.merchant || 'Seller',
           forTitle: short[p.id],
           dot: 'cmp-dot-' + dot[p.id],
           meta: [s.city, s.rating ? '★ ' + s.rating : '', s.verified ? 'Verified' : '', s.delivery || ''].filter(Boolean).join(' · '),
           price: s.priceNumeric ? money(s.priceNumeric) : (s.price || ''),
-          canBuy: s.inStock !== false && !!s.priceNumeric
+          canBuy: p.orderable === true && s.inStock !== false && !!s.priceNumeric
         });
       });
     });
@@ -254,11 +267,17 @@
 
     var winner = winnerId ? products.filter(function (p) { return p.id === winnerId; })[0] : null;
     var match = rec.matchPercentage;
+    // The winner's best real offer (the engine lists offers cheapest first), so
+    // the sticky bar adds what "Where to buy" shows, not a dearer copy.
+    var canAddWinner = !!(winner && winner.orderable === true && winner.inStock !== false);
+    var bestOffer = canAddWinner ? (winner.sellers || []).filter(function (s) { return s.inStock !== false && s.priceNumeric; })[0] || null : null;
 
     return idle({
       ready: true,
       loading: !!opts.loading,
       hasResult: true,
+      // Column count drives the hero, bar legend and spec grid layouts.
+      cols: 'cmp-n-' + Math.min(4, Math.max(2, products.length)),
       title: products.map(function (p) { return short[p.id]; }).join(' vs '),
       heroCards: heroCards,
       notice: notice,
@@ -280,9 +299,9 @@
       unresolvedText: unresolvedText,
       buyRows: buyRows,
       hasBuyRows: buyRows.length > 0,
-      stickyText: winner ? 'Recommended · ' + short[winnerId] + (winner.priceNumeric ? ' · ' + money(winner.priceNumeric) : '') : products.length + ' compared',
-      stickyLabel: winner && winner.entityType === 'product' && winner.inStock !== false ? 'Add to bag' : 'Add another',
-      stickyProductId: winner && winner.entityType === 'product' && winner.inStock !== false ? winnerId : null
+      stickyText: winner ? 'Recommended · ' + short[winnerId] + (bestOffer ? ' · ' + money(bestOffer.priceNumeric) : winner.priceNumeric ? ' · ' + money(winner.priceNumeric) : '') : products.length + ' compared',
+      stickyLabel: canAddWinner ? 'Add to bag' : 'Add another',
+      stickyProductId: canAddWinner ? (bestOffer ? bestOffer.id : winnerId) : null
     });
   }
 
