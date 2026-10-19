@@ -11833,18 +11833,12 @@ class Component extends DCLogic {
     match = liveCatalog.find(p => p && (p.id === cleanId || p.slug === cleanId || p.sku === cleanId));
     if (match) return match;
 
-    // 4. Normalized & Substring match
-    const norm = cleanId.toLowerCase().replace(/[^a-z0-9]+/g, '');
-    match = poolValues.find(p => {
-      if (!p) return false;
-      const pidNorm = String(p.id || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
-      const pslugNorm = String(p.slug || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
-      const titleNorm = String(p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
-      return pidNorm === norm || pslugNorm === norm || titleNorm.includes(norm) || (norm.length > 5 && pidNorm.includes(norm));
-    });
-    if (match) return match;
+    // No fuzzy or substring matching: a near miss (or a word of a title) would
+    // resolve to a different product, whose page and price the buyer would then
+    // see -- and could put in the bag -- under this id. The server matches
+    // exactly too, so both sides agree on what an id is.
 
-    // 5. Search results pool in state
+    // 4. Search results pool in state
     const searchRes = Array.isArray(this.state.searchResults) ? this.state.searchResults : [];
     match = searchRes.find(p => p && (p.id === cleanId || p.slug === cleanId));
     if (match) return match;
