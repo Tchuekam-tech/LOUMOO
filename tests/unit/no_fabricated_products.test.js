@@ -9,7 +9,8 @@
  * What must hold now:
  *
  *   - Add to bag / Buy now refuse an unknown or unpriced id, leave the bag alone
- *     and say the item isn't available to order;
+ *     and say the item isn't available to order (an id the shell does not hold
+ *     is asked of the API first: a compare offer can be a listing never loaded);
  *   - a curated id and a live listing (even one opened by its slug from a link)
  *     are still added, at their own price, under their own id;
  *   - an id is matched exactly, never by substring or title;
@@ -135,21 +136,25 @@ const LIVE = {
 
 // ── The bag ────────────────────────────────────────────────────────────────
 
-function testSeedIdIsRefusedByAddToBag() {
-  const { comp, toasts } = buildApp({ current: fakeApi() });
+async function testSeedIdIsRefusedByAddToBag() {
+  const api = fakeApi();
+  const { comp, toasts } = buildApp({ current: api });
   comp.setState({ screen: 'home', cartItems: [] });
   comp.renderVals().addToCart(SEED);
+  await sleep(5);
+  assert.deepStrictEqual(api.calls, [SEED], 'an id the shell does not hold is asked of the API');
   assert.strictEqual(comp.state.cartItems.length, 0, 'nothing is put in the bag for a demo seed id');
   assert.ok(NOT_AVAILABLE.test(toasts[toasts.length - 1] || ''), 'and the buyer is told it is not available to order');
   assert.ok(!toasts.some((t) => /Added/i.test(t)), 'never "Added ... to your bag"');
 }
 
-function testUnknownIdIsRefusedEvenIfAStaleLineExists() {
+async function testUnknownIdIsRefusedEvenIfAStaleLineExists() {
   // A bag restored from before this fix may hold a placeholder line for the seed id.
   const { comp, toasts } = buildApp({ current: fakeApi() });
   const stale = { id: SEED, name: 'Elec Macbook Pro', price: 'XAF 85.000', priceXaf: 85000, qty: 1 };
   comp.setState({ screen: 'home', cartItems: [stale] });
   comp.renderVals().addToCart(SEED);
+  await sleep(5);
   assert.strictEqual(comp.state.cartItems[0].qty, 1, 'the placeholder line is not topped up');
   assert.ok(NOT_AVAILABLE.test(toasts[toasts.length - 1] || ''));
 }
@@ -194,6 +199,40 @@ async function testLiveListingOpenedBySlugIsAddedUnderItsId() {
   assert.strictEqual(comp.state.cartItems.length, 1, 'the open live listing can be added');
   assert.strictEqual(comp.state.cartItems[0].id, LIVE.id, 'under the id checkout looks up, not the slug');
   assert.strictEqual(comp.state.cartItems[0].priceXaf, 185000);
+}
+
+async function testCompareOfferForAListingNeverLoadedIsAdded() {
+  // Comparison v2's "Where to buy" adds the exact listing behind an offer; a
+  // seller's database listing need not be in any rail the shell has loaded.
+  const api = fakeApi({ LIVE });
+  const { comp, toasts } = buildApp({ current: api });
+  comp.setState({ screen: 'vsCompare', cartItems: [], catalogProducts: [] });
+  comp.renderVals().addToCart(LIVE.id);
+  await sleep(5);
+  assert.deepStrictEqual(api.calls, [LIVE.id], 'the API is asked about it');
+  assert.strictEqual(comp.state.cartItems.length, 1, 'and the real listing goes in the bag');
+  assert.strictEqual(comp.state.cartItems[0].id, LIVE.id);
+  assert.strictEqual(comp.state.cartItems[0].priceXaf, 185000, 'at its own price');
+  assert.ok(/Added Sac Cuir Sahel/.test(toasts[toasts.length - 1]));
+}
+
+async function testOfflineAddSaysSoAndAddsNothing() {
+  const api = fakeApi();
+  api.failWith = 0;
+  const { comp, toasts } = buildApp({ current: api });
+  comp.setState({ screen: 'vsCompare', cartItems: [] });
+  comp.renderVals().addToCart(LIVE.id);
+  await sleep(5);
+  assert.strictEqual(comp.state.cartItems.length, 0, 'nothing is added while offline');
+  assert.ok(/connection/i.test(toasts[toasts.length - 1] || ''), 'and the buyer is told why, not that it does not exist');
+}
+
+function testNoApiRefusesAtOnce() {
+  const { comp, toasts } = buildApp({ current: null });
+  comp.setState({ screen: 'home', cartItems: [] });
+  comp.renderVals().addToCart(SEED);
+  assert.strictEqual(comp.state.cartItems.length, 0);
+  assert.ok(NOT_AVAILABLE.test(toasts[toasts.length - 1] || ''), 'with no API there is nothing to ask');
 }
 
 // ── Resolving an id ─────────────────────────────────────────────────────────
@@ -403,12 +442,15 @@ function testCatalogueSettledRunsTheCheck() {
 }
 
 (async () => {
-  testSeedIdIsRefusedByAddToBag();
-  testUnknownIdIsRefusedEvenIfAStaleLineExists();
+  await testSeedIdIsRefusedByAddToBag();
+  await testUnknownIdIsRefusedEvenIfAStaleLineExists();
   testUnpricedProductIsRefused();
   testCuratedIdIsAddedAtItsOwnPrice();
   testBuyNowRefusesASeedIdAndStaysPut();
   await testLiveListingOpenedBySlugIsAddedUnderItsId();
+  await testCompareOfferForAListingNeverLoadedIsAdded();
+  await testOfflineAddSaysSoAndAddsNothing();
+  testNoApiRefusesAtOnce();
   testIdsAreMatchedExactly();
   await testUnknownProductIsNotFound();
   await testFailureIsTheRetryState();
@@ -424,7 +466,7 @@ function testCatalogueSettledRunsTheCheck() {
   testOnlyUnavailableLinesPlaceNothing();
   testAddingTheProductAgainRevivesItsLine();
   testCatalogueSettledRunsTheCheck();
-  console.log('no_fabricated_products: 21 checks passed');
+  console.log('no_fabricated_products: 24 checks passed');
   process.exit(0);
 })().catch((err) => {
   console.error(err);
