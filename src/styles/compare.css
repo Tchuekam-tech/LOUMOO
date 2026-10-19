@@ -1,0 +1,97 @@
+/* LOUMOO compare screens — Comparison Engine v2 additions.
+   External so the shell stays within its size budget; the base cmp-* rules
+   (page, header, bars, spec rows, buy rows) live in the shell. Coloured text
+   uses ink shades that reach 4.5:1; bright tones only fill dots and bars. */
+
+/* Third and fourth products */
+.cmp-dot-c { background: #0E7A5A; }
+.cmp-dot-d { background: #B45309; }
+.cmp-bar-fill.cmp-c { background: #0E7A5A; opacity: .3; }
+.cmp-bar-fill.cmp-c.is-win { opacity: 1; }
+.cmp-bar-fill.cmp-d { background: #B45309; opacity: .3; }
+.cmp-bar-fill.cmp-d.is-win { opacity: 1; }
+
+/* Hero: one card per product, any count from 2 to 4 */
+.cmp-hero.cmp-n-2, .cmp-hero.cmp-n-3, .cmp-hero.cmp-n-4 { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 720px) {
+  .cmp-hero.cmp-n-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cmp-hero.cmp-n-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.cmp-hero-img { width: 100%; aspect-ratio: 4 / 3; max-height: 200px; object-fit: contain; border-radius: 12px; background: var(--color-neutral-100); margin-bottom: 12px; }
+.cmp-hero-key { display: flex; align-items: center; gap: 6px; }
+.cmp-hero-was { margin-left: 6px; font: 400 12px/1 var(--font-body); color: var(--color-text-muted); text-decoration: line-through; }
+.cmp-hero-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.cmp-hero-tags .cmp-hero-tag { margin-top: 0; }
+.cmp-hero-tag.is-pick { background: var(--color-text); color: var(--color-surface); }
+.cmp-hero-tag.is-value { background: var(--color-neutral-100); color: var(--color-text); }
+.cmp-hero-avail { margin-top: 6px; font: 500 12px/1.3 var(--font-body); color: var(--color-text-secondary); }
+.cmp-hero-score { margin-top: 10px; font: 600 12px/1 var(--font-heading); color: var(--color-text); }
+
+/* Verdict */
+.cmp-verdict { background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: 20px; padding: 20px; margin-bottom: 28px; }
+.cmp-verdict-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.cmp-verdict-kicker { font: 600 11px/1 var(--font-heading); letter-spacing: .06em; text-transform: uppercase; color: var(--color-text-muted); }
+.cmp-verdict-pill { font: 600 11.5px/1 var(--font-heading); padding: 6px 10px; border-radius: var(--radius-pill); background: var(--color-neutral-100); color: var(--color-text); }
+.cmp-verdict-name { margin: 10px 0 4px; font: 700 clamp(18px, 4.6vw, 22px)/1.2 var(--font-heading); letter-spacing: -.02em; color: var(--color-text); }
+.cmp-verdict-fit { font: 500 13px/1.3 var(--font-body); color: var(--color-text-secondary); }
+.cmp-verdict-summary { margin: 14px 0 0; font: 400 14px/1.55 var(--font-body); color: var(--color-text); }
+.cmp-verdict-rows { margin-top: 16px; border-top: 1px solid var(--color-divider); }
+.cmp-verdict-row { display: flex; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--color-divider); font: 400 13px/1.45 var(--font-body); color: var(--color-text-secondary); }
+.cmp-verdict-row:last-child { border-bottom: none; }
+.cmp-verdict-row b { flex: none; width: 104px; font: 600 12.5px/1.45 var(--font-heading); color: var(--color-text); }
+.cmp-bestfor { display: flex; flex-wrap: wrap; gap: 8px 14px; }
+.cmp-bestfor span { display: inline-flex; align-items: center; gap: 6px; }
+
+/* Notices, loading, errors */
+.cmp-notice { display: flex; gap: 12px; align-items: flex-start; background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: 18px; padding: 16px 18px; margin-bottom: 28px; font: 400 14px/1.5 var(--font-body); color: var(--color-text); }
+.cmp-notice svg { flex: none; margin-top: 2px; color: var(--color-text-secondary); }
+.cmp-status { padding: 28px 20px; text-align: center; font: 400 14px/1.5 var(--font-body); color: var(--color-text-secondary); }
+.cmp-status-actions { margin-top: 14px; display: flex; justify-content: center; gap: 10px; }
+.cmp-skeleton { height: 120px; border-radius: 18px; background: linear-gradient(90deg, var(--color-neutral-100) 25%, var(--color-surface) 50%, var(--color-neutral-100) 75%); background-size: 200% 100%; animation: cmp-shimmer 1.4s ease-in-out infinite; margin-bottom: 14px; }
+@keyframes cmp-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) { .cmp-skeleton { animation: none; } }
+
+/* Reasons: muted drawbacks under each product's strengths */
+.cmp-reasons.cmp-n-3, .cmp-reasons.cmp-n-4 { grid-template-columns: 1fr; }
+@media (min-width: 900px) { .cmp-reasons.cmp-n-3 { grid-template-columns: repeat(3, 1fr); } .cmp-reasons.cmp-n-4 { grid-template-columns: repeat(2, 1fr); } }
+.cmp-reason-sub { margin: 14px 0 8px; font: 600 11px/1 var(--font-heading); letter-spacing: .06em; text-transform: uppercase; color: var(--color-text-muted); }
+.cmp-reason-col li.is-con::before { background: transparent; border: 1.5px solid var(--color-neutral-400); width: 5px; height: 5px; }
+
+/* Spec table for 2 to 4 products */
+.cmp-specs.cmp-n-3 .cmp-spec-headrow, .cmp-specs.cmp-n-3 .cmp-spec-row { grid-template-columns: 1fr repeat(3, 1fr); }
+.cmp-specs.cmp-n-4 .cmp-spec-headrow, .cmp-specs.cmp-n-4 .cmp-spec-row { grid-template-columns: 1fr repeat(4, 1fr); }
+@media (max-width: 560px) {
+  .cmp-specs.cmp-n-3, .cmp-specs.cmp-n-4 { overflow-x: auto; }
+  .cmp-specs.cmp-n-3 .cmp-spec-headrow, .cmp-specs.cmp-n-3 .cmp-spec-row,
+  .cmp-specs.cmp-n-4 .cmp-spec-headrow, .cmp-specs.cmp-n-4 .cmp-spec-row { min-width: 520px; }
+}
+.cmp-spec-v.is-unknown { color: var(--color-text-muted); }
+.cmp-spec-note { display: block; margin-top: 3px; font: 400 11px/1.3 var(--font-body); color: var(--color-text-muted); }
+.cmp-chip { display: inline-block; margin-top: 4px; font: 600 10.5px/1 var(--font-heading); padding: 3px 7px; border-radius: var(--radius-pill); background: var(--color-neutral-100); color: var(--color-text); }
+
+/* Data notes and context */
+.cmp-notes { margin: -12px 0 32px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.cmp-notes li { position: relative; padding-left: 18px; font: 400 12.5px/1.5 var(--font-body); color: var(--color-text-secondary); }
+.cmp-notes li::before { content: "i"; position: absolute; left: 0; top: 2px; width: 13px; height: 13px; border-radius: 50%; border: 1px solid var(--color-neutral-400); font: 600 9px/12px var(--font-heading); text-align: center; color: var(--color-text-secondary); }
+
+/* Tray cards on the setup screen */
+.cmp-pick-img { width: 100%; aspect-ratio: 4 / 3; max-height: 150px; object-fit: contain; border-radius: 12px; background: var(--color-neutral-100); margin-bottom: 12px; }
+
+/* Bar labels: the template runtime wraps each interpolation in a span, so the
+   shell's `.cmp-bar-label span` (hint style) would also hit the name. */
+.cmp-bar-label .cmp-bar-name, .cmp-bar-label .cmp-bar-name span { font: 600 13px/1 var(--font-heading); color: var(--color-text); margin-left: 0; }
+.cmp-bar-label .cmp-bar-hint { font-style: normal; margin-left: 8px; font: 400 11px/1 var(--font-body); color: var(--color-text-muted); }
+.cmp-bar-label .cmp-bar-hint span { margin-left: 0; }
+
+/* Phones and tablets: the floating tab bar (74px, 14px up; hidden from 1024px)
+   covered the sticky action bar. Float the bar above it instead. Scoped under
+   .cmp-page: the shell's own rules load later with equal specificity. */
+@media (max-width: 1023px) {
+  .cmp-page > .cmp-sticky { bottom: calc(max(14px, env(safe-area-inset-bottom, 14px)) + 84px); left: 12px; right: 12px; border: 1px solid var(--color-divider); border-radius: 18px; box-shadow: 0 8px 24px rgba(0, 0, 0, .10); }
+  .scr .cmp-page { padding-bottom: 200px; }
+}
+@media (max-width: 560px) {
+  .cmp-hero-was { display: block; margin: 4px 0 0; }
+  .cmp-verdict-row { flex-direction: column; gap: 4px; }
+  .cmp-verdict-row b { width: auto; }
+}
