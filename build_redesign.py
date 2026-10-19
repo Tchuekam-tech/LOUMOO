@@ -7902,15 +7902,22 @@ class Component extends DCLogic {
   // ── Shopping bag / cart ───────────────────────────────────────────────────
   // Real cart with line items + quantities, persisted to localStorage so it
   // survives reloads (works for guests). Checkout/payment wiring comes later.
+  // A line is only ever built from a product the app actually has -- curated or
+  // a live listing -- with a real price. Anything else (an unknown or demo id, a
+  // product with no price) is null: the caller tells the buyer it can't be
+  // ordered instead of putting a guessed name and price in the bag.
   _cartEntry = (id, name) => {
     const p = this._resolveProduct(id);
+    if (!p || !p.title) return null;
     const priceStr = this._payablePriceLabel(p);
+    const priceXaf = this._priceToXaf(priceStr) || Number(p.priceNumeric) || Number(p.base_price_minor) || 0;
+    if (!(priceXaf > 0)) return null;
     return {
-      id: id,
-      name: name || p.title || 'Item',
+      id: p.id || id,
+      name: name || p.title,
       image: p.coverImage || p.imageUrl || p.image || (p.images && p.images[0]) || '',
       price: priceStr,
-      priceXaf: this._priceToXaf(priceStr) || Number(p.priceNumeric) || Number(p.base_price_minor) || 0,
+      priceXaf: priceXaf,
       store: p.storeName || p.merchant || 'LOUMOO seller',
       storePhone: p.sellerPhone || p.storePhone || p.phoneNumber || p.phone || (p.store && (p.store.phoneNumber || p.store.phone || p.store.phone_number)) || null,
       qty: 1
