@@ -9,7 +9,7 @@
 require('../setup');
 const assert = require('assert');
 const { catalogProducts, products: seed } = require('../../server/modules/catalog/dataLoader');
-const { fromCurated, fromSeed } = require('../../server/modules/catalog/domain/comparison/productAdapter');
+const { fromCurated, fromSeed, fromStore } = require('../../server/modules/catalog/domain/comparison/productAdapter');
 const { CategoryStats } = require('../../server/modules/catalog/domain/comparison/categoryStats');
 const { compare, normalizePriorities } = require('../../server/modules/catalog/domain/comparison/ComparisonEngineV2');
 
@@ -143,6 +143,23 @@ async function run() {
   const partial = compare([noRam, rival], { stats });
   assert(!partial.analysis.basis.dimensions.includes('ramGb'), 'RAM missing for one product is not scored');
   assert.ok(partial.analysis.basis.partial.some(p => p.key === 'ramGb'), 'and is reported as partial');
+
+  // 4f. A tie under one priority names nobody (no alphabetical "winner").
+  const twinA = synthetic('aaa', { price: 300000, attrs: { 'Spécifications': 'Snapdragon 8 Gen 3 · 12GB RAM · 256GB', 'Batterie': '5000 mAh' } });
+  const twinB = synthetic('zzz', { price: 250000, attrs: { 'Spécifications': 'Snapdragon 8 Gen 3 · 12GB RAM · 128GB', 'Batterie': '4500 mAh' } });
+  const tied = compare([twinA, twinB], { stats });
+  assert.ok(tied.analysis.sensitivity, 'sensitivity computed');
+  assert.strictEqual(tied.analysis.sensitivity.winnerIf.performance, undefined, 'same chip and RAM: no performance winner');
+  assert(!/performance/.test(tied.verdict.summary || ''), 'summary never cites a tied priority');
+
+  // 4g. Boutiques are shown side by side, never ranked.
+  const shops = compare([
+    fromStore({ id: 'store_a', title: 'Shop A', rating: 4.9, reviewsCount: 300, merchantCity: 'Douala', verified: true }),
+    fromStore({ id: 'store_b', title: 'Shop B', rating: 4.5, reviewsCount: 40, merchantCity: 'Yaoundé', verified: true })
+  ], { stats });
+  assert.strictEqual(shops.compatibility.level, 'none');
+  assert.strictEqual(shops.recommendation.recommendedProductId, null);
+  assert.ok(/side by side/.test(shops.verdict.warnings[0]), 'shops get the side-by-side notice');
 
   // ── 5. Nothing invented ──────────────────────────────────────────────────
   const json = JSON.stringify(perfFirst);
