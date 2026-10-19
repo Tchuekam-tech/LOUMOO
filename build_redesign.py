@@ -7942,6 +7942,24 @@ class Component extends DCLogic {
     delete next.unavailable;
     return next;
   };
+  // Put `entry` (a line from _cartEntry / _lineFromProduct) in the bag, `qty`
+  // at a time. A line already there for the product is topped up and brought up
+  // to date with it (price, and any unavailable mark from a saved bag, cleared).
+  // Returns the line's name for the caller's message.
+  _putInBag = (entry, qty, surface) => {
+    const list = (this.state.cartItems || []).map((it) => ({ ...it }));
+    const at = list.findIndex((it) => it.id === entry.id);
+    if (at !== -1) {
+      const line = this._refreshCartLine(list[at], entry);
+      list[at] = Object.assign({}, line, { qty: Math.min(99, (Number(line.qty) || 1) + qty) });
+    } else {
+      list.push(Object.assign({}, entry, { qty: qty }));
+    }
+    this.setState({ cartItems: list });
+    this._persistCart(list);
+    this._recoNote('add_to_cart', this._resolveProductItem(entry.id) || { id: entry.id }, { surface: surface });
+    return at !== -1 ? list[at].name : entry.name;
+  };
   // Apply what a re-check found for the saved line `id`: the line its product
   // makes today, or null for "not orderable" (it is kept but marked unavailable).
   _settleCartLine = (id, entry) => {
@@ -17882,24 +17900,8 @@ class Component extends DCLogic {
         // id the app cannot price is refused rather than given a made-up line.
         const entry = this._cartEntry(id);
         if (!entry) { this.toast('Sorry, this item isn’t available to order'); return; }
-        const list = (this.state.cartItems || []).map((it) => ({ ...it }));
         const qtyToAdd = (this.state.screen === 'product') ? Math.max(1, Number(this.state.qty) || 1) : 1;
-        // A line already in the bag is topped up and brought up to date with the
-        // product (price, and any unavailable mark from a saved bag, cleared).
-        const at = list.findIndex((it) => it.id === entry.id);
-        let name;
-        if (at !== -1) {
-          const line = this._refreshCartLine(list[at], entry);
-          list[at] = Object.assign({}, line, { qty: Math.min(99, (Number(line.qty) || 1) + qtyToAdd) });
-          name = list[at].name;
-        } else {
-          entry.qty = qtyToAdd;
-          list.push(entry);
-          name = entry.name;
-        }
-        this.setState({ cartItems: list });
-        this._persistCart(list);
-        this._recoNote('add_to_cart', this._resolveProductItem(entry.id) || { id: entry.id }, { surface: this.state.screen === 'product' ? 'pdp' : 'card' });
+        const name = this._putInBag(entry, qtyToAdd, this.state.screen === 'product' ? 'pdp' : 'card');
         this.toast('Added ' + name + ' to your bag');
       },
       // Buy now: add the open product to the bag and jump straight to checkout.
@@ -17908,16 +17910,7 @@ class Component extends DCLogic {
         if (!id) { this.toast('Open a product to buy it'); return; }
         const entry = this._cartEntry(id);
         if (!entry) { this.toast('Sorry, this item isn’t available to order'); return; }
-        const list = (this.state.cartItems || []).map((it) => ({ ...it }));
-        const qtyToAdd = Math.max(1, Number(this.state.qty) || 1);
-        const at = list.findIndex((it) => it.id === entry.id);
-        if (at !== -1) {
-          const line = this._refreshCartLine(list[at], entry);
-          list[at] = Object.assign({}, line, { qty: Math.min(99, (Number(line.qty) || 1) + qtyToAdd) });
-        } else { entry.qty = qtyToAdd; list.push(entry); }
-        this.setState({ cartItems: list });
-        this._persistCart(list);
-        this._recoNote('add_to_cart', this._resolveProductItem(entry.id) || { id: entry.id }, { surface: 'pdp_buynow' });
+        this._putInBag(entry, Math.max(1, Number(this.state.qty) || 1), 'pdp_buynow');
         this.go('checkout');
       },
       incCartQty: (id) => {
