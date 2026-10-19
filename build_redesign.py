@@ -7702,15 +7702,11 @@ class Component extends DCLogic {
   };
   // Resolve a product by id from the curated catalogue (PRODUCTS_DATA) first,
   // then from the live API catalogue already loaded into state (real seller
-  // listings shown in the home rail / search). Returns {} if unknown.
+  // listings shown in the home rail / search). Returns {} if unknown -- never a
+  // made-up product: callers that need one to exist must check.
   _resolveProduct = (id) => {
     if (!id) return {};
-    let p = this._resolveProductItem ? this._resolveProductItem(id) : null;
-    if (!p) {
-      const pool = (typeof window !== 'undefined' && window.PRODUCTS_DATA) ? window.PRODUCTS_DATA : ((typeof PRODUCTS_DATA !== 'undefined') ? PRODUCTS_DATA : {});
-      p = pool[id] || (this.state.catalogProducts || []).find((x) => x && (x.id === id || x.slug === id)) || null;
-    }
-    return p || (this._synthesizeAvailableListing ? this._synthesizeAvailableListing(id) : {});
+    return this._resolveProductItem(id) || {};
   };
   // The pool of real products (curated data + live catalogue) that belong to a
   // top-level category slug. Powers the category drill-down grid so no category
