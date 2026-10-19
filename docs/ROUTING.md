@@ -63,8 +63,8 @@ trailing slashes are repaired by redirect.
 | `/marketplace/category/:category` | screen `category` | public | `:category` -> `activeCategorySlug` | - | opens directly |
 | `/marketplace/best-picks` | screen `bestpicks` | public | - | - | opens directly |
 | `/marketplace/free-day` | screen `freeday` | public | - | - | opens directly |
-| `/compare` | screen `vs` | public | - | - | opens directly |
-| `/compare/results` | screen `vsCompare` | public | - | - | redirects to `/compare` |
+| `/compare` | screen `vs`, loader `_enterCompare` | public | - | - | opens directly |
+| `/compare/results` | screen `vsCompare`, loader `_enterCompare` | public | - | - | redirects to `/compare` |
 | `/product/:id` | screen `product`, loader `loadProductDetails` | public | `:id` -> `currentProductId` | `/listing/:id` | opens directly |
 | `/stores` | screen `store` | public | - | - | opens directly |
 | `/brand` | screen `brand` | public | - | - | opens directly |

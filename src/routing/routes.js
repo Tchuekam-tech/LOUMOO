@@ -117,8 +117,8 @@
   def('category',      '/marketplace/category/:category', { screen: 'category', bind: { category: 'activeCategorySlug' }, title: 'Category', parent: 'categories' });
   def('bestpicks',     '/marketplace/best-picks',    { screen: 'bestpicks', title: 'Best picks', parent: 'marketplace' });
   def('freeday',       '/marketplace/free-day',      { screen: 'freeday', title: 'Free delivery day', parent: 'marketplace' });
-  def('compare',       '/compare',                   { screen: 'vs', title: 'Compare products', parent: 'marketplace' });
-  def('compareResults', '/compare/results',          { screen: 'vsCompare', title: 'Comparison', direct: 'redirect', fallback: 'compare', parent: 'compare' });
+  def('compare',       '/compare',                   { screen: 'vs', enter: '_enterCompare', title: 'Compare products', parent: 'marketplace' });
+  def('compareResults', '/compare/results',          { screen: 'vsCompare', enter: '_enterCompare', title: 'Comparison', direct: 'redirect', fallback: 'compare', parent: 'compare' });
   def('product',       '/product/:id',               { screen: 'product', bind: { id: 'currentProductId' }, enter: 'loadProductDetails', title: 'Product', parent: 'marketplace' });
   def('stores',        '/stores',                    { screen: 'store', title: 'Verified stores', parent: 'marketplace' });
   def('brand',         '/brand',                     { screen: 'brand', title: 'Official brands', parent: 'stores' });
