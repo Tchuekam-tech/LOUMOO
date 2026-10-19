@@ -17746,7 +17746,9 @@ class Component extends DCLogic {
         image: it.image,
         store: it.store,
         qty: it.qty,
-        lineLabel: 'XAF ' + fmt((Number(it.priceXaf) || 0) * (Number(it.qty) || 1))
+        // Its saved price may have been made up, so an unavailable line shows none.
+        unavailable: Boolean(it.unavailable),
+        lineLabel: it.unavailable ? 'Unavailable' : 'XAF ' + fmt((Number(it.priceXaf) || 0) * (Number(it.qty) || 1))
       })),
       cartLabel: (() => {
         const items = this.state.cartItems || [];
