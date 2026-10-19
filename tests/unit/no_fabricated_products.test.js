@@ -15,7 +15,11 @@
  *   - an id is matched exactly, never by substring or title;
  *   - a 404 from the API is a not-found page (the router's, when it runs);
  *     any other failure is the retryable error state; neither is a product;
- *   - a late answer for a product the buyer already left changes nothing.
+ *   - a late answer for a product the buyer already left changes nothing;
+ *   - a bag saved before the fix is re-checked once the catalogue is in: a
+ *     placeholder line for an id with no product is kept but marked unavailable,
+ *     out of the total and the order; a real product saved at a placeholder
+ *     price gets its real price; offline or no API changes nothing.
  */
 
 require('../setup');
@@ -60,7 +64,8 @@ function buildApp(apiRef, routerRef = { current: null }) {
       open: () => ({}),
       addEventListener: () => {},
       removeEventListener: () => {},
-      Notification: { permission: 'default' }
+      Notification: { permission: 'default' },
+      LoumooCircuit: require('../../src/services/deliveryCircuit')
     },
     localStorage: {
       _data: {},
@@ -256,6 +261,147 @@ async function testLateAnswerForAnotherProductIsIgnored() {
   assert.strictEqual(routerCalls.length, 0, 'nor replace it with the not-found screen');
 }
 
+// ── A bag saved before the fix ──────────────────────────────────────────────
+
+// What an older build put in the bag for the seed id: a made-up line.
+const PLACEHOLDER = { id: SEED, name: 'Elec Macbook Pro', price: 'XAF 85.000', priceXaf: 85000, store: 'Apple · Boutique Officielle', qty: 1 };
+const ADDRESS = { id: 'a1', isDefault: true, recipientName: 'Awa Njoya', phoneNumber: '622222222', streetAddress: 'Rue 1, Bonanjo', city: 'Douala' };
+
+async function testPlaceholderLineIsMarkedUnavailable() {
+  const api = fakeApi();
+  const { comp } = buildApp({ current: api });
+  comp.setState({ cartItems: [Object.assign({}, PLACEHOLDER)] });
+  comp._recheckCartLines();
+  await sleep(5);
+  assert.deepStrictEqual(api.calls, [SEED], 'an id the catalogue lacks is asked of the API');
+  assert.strictEqual(comp.state.cartItems.length, 1, 'the line is kept, not silently deleted');
+  assert.strictEqual(comp.state.cartItems[0].unavailable, true, 'and marked unavailable after the 404');
+  const vals = comp.renderVals();
+  assert.strictEqual(vals.cartItemsList[0].unavailable, true, 'the bag shows it as unavailable');
+  assert.strictEqual(vals.cartItemsList[0].lineLabel, 'Unavailable', 'without its made-up price');
+  assert.strictEqual(vals.cartSubtotalLabel, 'XAF 0', 'and it is not in the total');
+  assert.ok(!/85[ .,]?000/.test(vals.cartTotal), 'the 85,000 is gone from what the buyer is told');
+}
+
+async function testRecheckIsPersistedAndRunsOnce() {
+  const api = fakeApi();
+  const { comp, sandbox } = buildApp({ current: api });
+  comp.setState({ cartItems: [Object.assign({}, PLACEHOLDER)] });
+  comp._recheckCartLines();
+  await sleep(5);
+  const stored = JSON.parse(sandbox.localStorage.getItem('loumoo_cart'));
+  assert.strictEqual(stored[0].unavailable, true, 'the mark is saved with the bag');
+  comp._recheckCartLines();
+  await sleep(5);
+  assert.strictEqual(api.calls.length, 1, 'a second call in the same load asks nothing');
+}
+
+async function testRealProductAtAPlaceholderPriceGetsItsPrice() {
+  // Added before the catalogue had loaded: a real id, priced by the old fallback.
+  const api = fakeApi();
+  const { comp } = buildApp({ current: api });
+  comp.setState({ cartItems: [{ id: CURATED, name: 'Laptop Apple Apple Macbook Pro 14 M3 Pro Gris 2', price: 'XAF 85.000', priceXaf: 85000, store: 'Apple · Boutique Officielle', qty: 2 }] });
+  comp._recheckCartLines();
+  await sleep(5);
+  const line = comp.state.cartItems[0];
+  assert.strictEqual(api.calls.length, 0, 'a curated id is checked against the catalogue, not the API');
+  assert.strictEqual(line.unavailable, undefined, 'it is orderable');
+  assert.strictEqual(line.priceXaf, 1395000, 'at its real price');
+  assert.ok(/MacBook Pro/.test(line.name), 'under its real name');
+  assert.strictEqual(line.qty, 2, 'and the quantity the buyer chose');
+}
+
+async function testLiveListingNotInTheCatalogueIsKept() {
+  const api = fakeApi({ LIVE });
+  const { comp } = buildApp({ current: api });
+  comp.setState({ cartItems: [{ id: LIVE.id, name: 'Sac', price: '185 000 FCFA', priceXaf: 185000, store: 'Sahel Leather Works', qty: 1 }] });
+  comp._recheckCartLines();
+  await sleep(5);
+  assert.deepStrictEqual(api.calls, [LIVE.id]);
+  assert.strictEqual(comp.state.cartItems[0].unavailable, undefined, 'a listing the API still has stays orderable');
+  assert.strictEqual(comp.state.cartItems[0].name, LIVE.title);
+}
+
+async function testOfflineOrNoApiDecidesNothing() {
+  const api = fakeApi();
+  api.failWith = 0;
+  const offline = buildApp({ current: api }).comp;
+  offline.setState({ cartItems: [Object.assign({}, PLACEHOLDER)] });
+  offline._recheckCartLines();
+  await sleep(5);
+  assert.strictEqual(offline.state.cartItems[0].unavailable, undefined, 'offline is not "gone"');
+
+  const noApi = buildApp({ current: null }).comp;
+  noApi.setState({ cartItems: [Object.assign({}, PLACEHOLDER)] });
+  noApi._recheckCartLines();
+  await sleep(5);
+  assert.strictEqual(noApi.state.cartItems[0].unavailable, undefined, 'nor is a missing API client');
+}
+
+function testUnpricedSavedLineIsUnavailableWithoutAsking() {
+  const api = fakeApi();
+  const { comp, sandbox } = buildApp({ current: api });
+  sandbox.window.PRODUCTS_DATA.na_free_thing = { id: 'na_free_thing', title: 'Free thing', price: '', salePrice: '' };
+  comp.setState({ cartItems: [{ id: 'na_free_thing', name: 'Free thing', priceXaf: 85000, qty: 1 }] });
+  comp._recheckCartLines();
+  assert.strictEqual(comp.state.cartItems[0].unavailable, true, 'a product with no price cannot be ordered');
+  assert.strictEqual(api.calls.length, 0, 'and the catalogue already says so');
+}
+
+async function testOrderLeavesUnavailableLinesOut() {
+  const api = fakeApi();
+  const payloads = [];
+  api.createOrder = async (payload) => {
+    payloads.push(JSON.parse(JSON.stringify(payload)));
+    return { id: 'ord_1', orderNumber: 'KM-T-1', items: payload.items, subtotalXaf: 0, shippingFeeXaf: 0, totalAmountXaf: 0, paymentStatus: 'pending', fulfillmentStatus: 'processing', createdAt: new Date().toISOString() };
+  };
+  api.getOrders = async () => ({ orders: [], total: 0 });
+  api.getNotifications = async () => [];
+  const { comp } = buildApp({ current: api });
+  comp.setState({ authStatus: 'authenticated', addressesList: [ADDRESS], screen: 'checkout', cartItems: [
+    Object.assign({}, PLACEHOLDER, { unavailable: true }),
+    { id: CURATED, name: 'MacBook Pro', price: 'XAF 1.395.000', priceXaf: 1395000, store: 'NanoAfrica', qty: 1 }
+  ] });
+  comp.renderVals().placeOrder();
+  await sleep(20);
+  assert.strictEqual(payloads.length, 1, 'one order is placed');
+  assert.deepStrictEqual(payloads[0].items.map((it) => it.listingId), [CURATED], 'with only the orderable line');
+  assert.deepStrictEqual(comp.state.cartItems.map((it) => it.id), [SEED], 'the unavailable line is left in the bag to remove');
+}
+
+function testOnlyUnavailableLinesPlaceNothing() {
+  const api = fakeApi();
+  let sent = 0;
+  api.createOrder = async () => { sent += 1; return null; };
+  const { comp } = buildApp({ current: api });
+  comp.setState({ authStatus: 'guest', screen: 'checkout', cartItems: [Object.assign({}, PLACEHOLDER, { unavailable: true })] });
+  comp.renderVals().placeOrder();
+  assert.strictEqual(sent, 0, 'nothing is sent');
+  assert.strictEqual(comp.state.screen, 'checkout', 'a guest is not sent to sign in for nothing');
+  assert.ok(/Remove the unavailable items/.test(comp.state.orderError), 'the buyer is told why');
+  assert.deepStrictEqual(Array.from(comp.state.orderErrorItemIds), [SEED], 'and offered to remove them');
+  comp.renderVals().removeUnavailableItems();
+  assert.strictEqual(comp.state.cartItems.length, 0, '"Remove them from my bag" empties it');
+}
+
+function testAddingTheProductAgainRevivesItsLine() {
+  const { comp } = buildApp({ current: fakeApi() });
+  comp.setState({ screen: 'home', cartItems: [{ id: CURATED, name: 'old', price: 'XAF 85.000', priceXaf: 85000, store: 'x', qty: 1, unavailable: true }] });
+  comp.renderVals().addToCart(CURATED);
+  const line = comp.state.cartItems[0];
+  assert.strictEqual(comp.state.cartItems.length, 1);
+  assert.strictEqual(line.unavailable, undefined, 'a product that can be ordered clears the mark');
+  assert.strictEqual(line.priceXaf, 1395000, 'and its line takes the real price');
+  assert.strictEqual(line.qty, 2);
+}
+
+function testCatalogueSettledRunsTheCheck() {
+  const { comp } = buildApp({ current: fakeApi() });
+  let ran = 0;
+  comp._ensureCatalogData(() => { ran += 1; });
+  assert.strictEqual(ran, 1, 'with the catalogue already in, the callback runs at once');
+}
+
 (async () => {
   testSeedIdIsRefusedByAddToBag();
   testUnknownIdIsRefusedEvenIfAStaleLineExists();
@@ -268,7 +414,17 @@ async function testLateAnswerForAnotherProductIsIgnored() {
   await testFailureIsTheRetryState();
   testNoApiIsTheRetryState();
   await testLateAnswerForAnotherProductIsIgnored();
-  console.log('no_fabricated_products: 11 checks passed');
+  await testPlaceholderLineIsMarkedUnavailable();
+  await testRecheckIsPersistedAndRunsOnce();
+  await testRealProductAtAPlaceholderPriceGetsItsPrice();
+  await testLiveListingNotInTheCatalogueIsKept();
+  await testOfflineOrNoApiDecidesNothing();
+  testUnpricedSavedLineIsUnavailableWithoutAsking();
+  await testOrderLeavesUnavailableLinesOut();
+  testOnlyUnavailableLinesPlaceNothing();
+  testAddingTheProductAgainRevivesItsLine();
+  testCatalogueSettledRunsTheCheck();
+  console.log('no_fabricated_products: 21 checks passed');
   process.exit(0);
 })().catch((err) => {
   console.error(err);
