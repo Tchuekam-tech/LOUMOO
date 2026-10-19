@@ -18333,8 +18333,18 @@ class Component extends DCLogic {
       // why. Payment is deferred, so the order is "pay on delivery": no charge.
       placeOrder: () => {
         if (this.state.placingOrder || this._placingNow) return;
-        const cart = this.state.cartItems || [];
-        if (!cart.length) { this.toast('Your bag is empty'); return; }
+        const bag = this.state.cartItems || [];
+        if (!bag.length) { this.toast('Your bag is empty'); return; }
+        // A line marked unavailable is never sent: its product is gone or has no
+        // price (and its saved price may be made up). It stays in the bag to remove.
+        const cart = bag.filter((it) => it && !it.unavailable);
+        if (!cart.length) {
+          this.setState({
+            orderError: 'Nothing in your bag can be ordered right now. Remove the unavailable items to continue.',
+            orderErrorItemIds: bag.map((it) => it && it.id).filter(Boolean)
+          });
+          return;
+        }
         if (this.state.authStatus !== 'authenticated') {
           // Orders belong to an account. The bag is kept on this device, and
           // signing in brings the shopper straight back to checkout.
