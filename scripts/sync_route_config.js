@@ -6,13 +6,12 @@
  * (src/routing/routes.js), so the host, the gateway and the router can never disagree
  * about which URLs exist.
  *
- *   node scripts/sync_route_config.js          rewrite vercel.json and netlify.toml
- *   node scripts/sync_route_config.js --check  fail (exit 1) if either file is out of date
+ *   node scripts/sync_route_config.js          rewrite vercel.json
+ *   node scripts/sync_route_config.js --check  fail (exit 1) if it is out of date
  *
  * What is generated:
  *   vercel.json   "redirects" (legacy paths), "rewrites" (the API function, the control
  *                 center, and one entry per application route), "trailingSlash"
- *   netlify.toml  the block between the BEGIN/END GENERATED ROUTES markers
  *
  * What is deliberately NOT generated: a catch-all. A URL that is neither a file nor a
  * registered route has no rewrite, so the host answers it with 404.html (the same
@@ -20,9 +19,9 @@
  * catch-all rewrote every unknown path - including a missing script or image - to the
  * HTML shell with a 200, which hid asset errors (docs/ROUTING.md).
  *
- * Live host: Vercel (loumoo.store answers with `Server: Vercel`). netlify.toml is kept
- * consistent so a Netlify deploy would behave the same; Railway/Express reads the
- * registry directly (server/index.js).
+ * Live hosts: Vercel (loumoo.store answers with `Server: Vercel`) and Railway, whose
+ * Express server reads the registry directly (server/index.js). Netlify is no longer
+ * used, so netlify.toml is not generated (it was removed when it drifted).
  */
 
 const fs = require('fs');
@@ -31,9 +30,6 @@ const Routes = require('../src/routing/routes');
 
 const ROOT = path.resolve(__dirname, '..');
 const VERCEL = path.join(ROOT, 'vercel.json');
-const NETLIFY = path.join(ROOT, 'netlify.toml');
-const BEGIN = '# BEGIN GENERATED ROUTES (scripts/sync_route_config.js - do not edit by hand)';
-const END = '# END GENERATED ROUTES';
 
 const PARAM = '[A-Za-z0-9_-]+';
 
@@ -81,55 +77,26 @@ function buildVercel(existing) {
   return JSON.stringify(sorted, null, 2) + '\n';
 }
 
-function netlifyBlock() {
-  const lines = [BEGIN];
-  lines.push('# Legacy paths -> canonical routes (permanent).');
-  aliasList().forEach(a => {
-    lines.push('[[redirects]]', `  from = "${a.from}"`, `  to = "${a.to}"`, '  status = 301', '  force = true', '');
-  });
-  lines.push('# The control center is its own document.');
-  pageRoutes().forEach(r => {
-    lines.push('[[redirects]]', `  from = "${r.path}"`, `  to = "${r.page}"`, '  status = 200', '');
-  });
-  lines.push('# Application routes: the shell, with a 200. Anything else that is not a file gets 404.html.');
-  shellRoutes().forEach(r => {
-    lines.push('[[redirects]]', `  from = "${r.path}"`, '  to = "/index.html"', '  status = 200', '');
-  });
-  lines.push(END);
-  return lines.join('\n');
-}
-
-function buildNetlify(existing) {
-  const block = netlifyBlock();
-  const re = new RegExp(`${BEGIN.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[\\s\\S]*?${END}`);
-  if (re.test(existing)) return existing.replace(re, () => block);
-  throw new Error('netlify.toml has no GENERATED ROUTES markers; add them where the route redirects belong.');
-}
-
 function main() {
   const check = process.argv.includes('--check');
   const vercelNow = fs.readFileSync(VERCEL, 'utf8');
-  const netlifyNow = fs.readFileSync(NETLIFY, 'utf8');
   const vercelNext = buildVercel(JSON.parse(vercelNow));
-  const netlifyNext = buildNetlify(netlifyNow);
 
   const drift = [];
   if (vercelNow !== vercelNext) drift.push('vercel.json');
-  if (netlifyNow !== netlifyNext) drift.push('netlify.toml');
 
   if (check) {
     if (drift.length) {
       console.error(`Route config is out of date: ${drift.join(', ')}. Run: node scripts/sync_route_config.js`);
       process.exit(1);
     }
-    console.log('Route config is in sync with src/routing/routes.js (vercel.json, netlify.toml).');
+    console.log('Route config is in sync with src/routing/routes.js (vercel.json).');
     return;
   }
   if (vercelNow !== vercelNext) fs.writeFileSync(VERCEL, vercelNext);
-  if (netlifyNow !== netlifyNext) fs.writeFileSync(NETLIFY, netlifyNext);
   console.log(drift.length ? `Updated ${drift.join(', ')}.` : 'Already up to date.');
 }
 
 if (require.main === module) main();
 
-module.exports = { buildVercel, netlifyBlock, buildNetlify, vercelSource, shellRoutes, pageRoutes, aliasList };
+module.exports = { buildVercel, vercelSource, shellRoutes, pageRoutes, aliasList };
