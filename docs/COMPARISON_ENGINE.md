@@ -53,3 +53,19 @@ Facets 0–5 (3 = neutral):
 2. Add a profile in `categoryProfiles.js`, reusing a dimension builder or adding one with a parser in `specParsers.js`.
 3. Optionally add a unit-cost metric in `unitCosts.js` and a plural label in `verdict.js`.
 4. Run the coverage report and the benchmark.
+
+## Compare screens
+
+`/compare` (tray) and `/compare/results` (verdict) render only what the engine returns.
+
+- **Controller** (`build_redesign.py` → shell):
+  - `runCompare` sends the tray, the chosen priority (5, every other facet 1) and the page language, and drops stale answers.
+  - `_enterCompare` is the route loader for both screens, so deep links and refreshes also run the engine.
+  - There is no offline fallback: without the API the screen says the comparison is unavailable.
+- **View model** (`src/services/compareView.js`, outside the shell for its size budget): pure formatting from the response. Unit-tested in `tests/unit/compare_view.test.js`.
+- **Styles**: `src/styles/compare.css`, layered over the shell's `cmp-*` rules.
+- **Buying**:
+  - "Add" appears only for `orderable` products (curated catalogue or live listings) and adds the exact offer listing at the price shown.
+  - The sticky bar adds the winner's cheapest offer.
+  - Demo seed items and shops are never added to the bag.
+- **Presets and default tray** use real catalogue ids.
