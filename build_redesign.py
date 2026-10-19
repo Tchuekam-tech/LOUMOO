@@ -11982,13 +11982,10 @@ class Component extends DCLogic {
     });
 
     if (!api) {
-      const fallback = this._synthesizeAvailableListing(cleanId);
+      // The API client didn't load, so this id can't be looked up at all.
       this.setState({
-        currentProduct: fallback,
         productLoading: false,
-        productNotFound: false,
-        productError: '',
-        currentProductActiveImage: fallback.coverImage || (fallback.images && fallback.images[0]) || null
+        productError: 'We couldn’t load this product. Check your connection and try again.'
       });
       return;
     }
