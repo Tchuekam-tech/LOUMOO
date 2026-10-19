@@ -10562,6 +10562,20 @@ class Component extends DCLogic {
     delete next.unavailable;
     return next;
   };
+  _putInBag = (entry, qty, surface) => {
+    const list = (this.state.cartItems || []).map((it) => ({ ...it }));
+    const at = list.findIndex((it) => it.id === entry.id);
+    if (at !== -1) {
+      const line = this._refreshCartLine(list[at], entry);
+      list[at] = Object.assign({}, line, { qty: Math.min(99, (Number(line.qty) || 1) + qty) });
+    } else {
+      list.push(Object.assign({}, entry, { qty: qty }));
+    }
+    this.setState({ cartItems: list });
+    this._persistCart(list);
+    this._recoNote('add_to_cart', this._resolveProductItem(entry.id) || { id: entry.id }, { surface: surface });
+    return at !== -1 ? list[at].name : entry.name;
+  };
   _settleCartLine = (id, entry) => {
     const list = this.state.cartItems || [];
     let changed = false;
@@ -19563,41 +19577,30 @@ class Component extends DCLogic {
         let id = (typeof arg === 'string' && arg) ? arg : null;
         if (!id && this.state.currentProductId) id = this.state.currentProductId;
         if (!id) { this.toast('Open a product to add it to your bag'); return; }
-        const entry = this._cartEntry(id);
-        if (!entry) { this.toast('Sorry, this item isn’t available to order'); return; }
-        const list = (this.state.cartItems || []).map((it) => ({ ...it }));
+        const NOT_ORDERABLE = 'Sorry, this item isn’t available to order';
         const qtyToAdd = (this.state.screen === 'product') ? Math.max(1, Number(this.state.qty) || 1) : 1;
-        const at = list.findIndex((it) => it.id === entry.id);
-        let name;
-        if (at !== -1) {
-          const line = this._refreshCartLine(list[at], entry);
-          list[at] = Object.assign({}, line, { qty: Math.min(99, (Number(line.qty) || 1) + qtyToAdd) });
-          name = list[at].name;
-        } else {
-          entry.qty = qtyToAdd;
-          list.push(entry);
-          name = entry.name;
-        }
-        this.setState({ cartItems: list });
-        this._persistCart(list);
-        this._recoNote('add_to_cart', this._resolveProductItem(entry.id) || { id: entry.id }, { surface: this.state.screen === 'product' ? 'pdp' : 'card' });
-        this.toast('Added ' + name + ' to your bag');
+        const surface = this.state.screen === 'product' ? 'pdp' : 'card';
+        const entry = this._cartEntry(id);
+        if (entry) { this.toast('Added ' + this._putInBag(entry, qtyToAdd, surface) + ' to your bag'); return; }
+        const api = getApi();
+        if (this._resolveProduct(id).title || !api || typeof api.getProduct !== 'function') { this.toast(NOT_ORDERABLE); return; }
+        api.getProduct(String(id)).then((res) => {
+          if (this._unmounted) return;
+          const prod = (res && res.data) || res;
+          const line = prod && prod.title ? this._lineFromProduct(prod, id) : null;
+          if (!line) { this.toast(NOT_ORDERABLE); return; }
+          this.toast('Added ' + this._putInBag(line, qtyToAdd, surface) + ' to your bag');
+        }).catch((err) => {
+          if (this._unmounted) return;
+          this.toast(err && err.status === 404 ? NOT_ORDERABLE : 'We couldn’t add this item right now. Check your connection and try again.');
+        });
       },
       buyNowProduct: () => {
         const id = this.state.currentProductId;
         if (!id) { this.toast('Open a product to buy it'); return; }
         const entry = this._cartEntry(id);
         if (!entry) { this.toast('Sorry, this item isn’t available to order'); return; }
-        const list = (this.state.cartItems || []).map((it) => ({ ...it }));
-        const qtyToAdd = Math.max(1, Number(this.state.qty) || 1);
-        const at = list.findIndex((it) => it.id === entry.id);
-        if (at !== -1) {
-          const line = this._refreshCartLine(list[at], entry);
-          list[at] = Object.assign({}, line, { qty: Math.min(99, (Number(line.qty) || 1) + qtyToAdd) });
-        } else { entry.qty = qtyToAdd; list.push(entry); }
-        this.setState({ cartItems: list });
-        this._persistCart(list);
-        this._recoNote('add_to_cart', this._resolveProductItem(entry.id) || { id: entry.id }, { surface: 'pdp_buynow' });
+        this._putInBag(entry, Math.max(1, Number(this.state.qty) || 1), 'pdp_buynow');
         this.go('checkout');
       },
       incCartQty: (id) => {
