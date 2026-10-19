@@ -17898,11 +17898,26 @@ class Component extends DCLogic {
         if (!id) { this.toast('Open a product to add it to your bag'); return; }
         // Checked before the bag is touched, also for a line already in it: an
         // id the app cannot price is refused rather than given a made-up line.
-        const entry = this._cartEntry(id);
-        if (!entry) { this.toast('Sorry, this item isn’t available to order'); return; }
+        const NOT_ORDERABLE = 'Sorry, this item isn’t available to order';
         const qtyToAdd = (this.state.screen === 'product') ? Math.max(1, Number(this.state.qty) || 1) : 1;
-        const name = this._putInBag(entry, qtyToAdd, this.state.screen === 'product' ? 'pdp' : 'card');
-        this.toast('Added ' + name + ' to your bag');
+        const surface = this.state.screen === 'product' ? 'pdp' : 'card';
+        const entry = this._cartEntry(id);
+        if (entry) { this.toast('Added ' + this._putInBag(entry, qtyToAdd, surface) + ' to your bag'); return; }
+        // Not held here at all -- a seller's listing offered on the compare screen
+        // or found by search: the API decides, and only its answer is put in the
+        // bag. Known here but with no price, or no API: refused at once.
+        const api = getApi();
+        if (this._resolveProduct(id).title || !api || typeof api.getProduct !== 'function') { this.toast(NOT_ORDERABLE); return; }
+        api.getProduct(String(id)).then((res) => {
+          if (this._unmounted) return;
+          const prod = (res && res.data) || res;
+          const line = prod && prod.title ? this._lineFromProduct(prod, id) : null;
+          if (!line) { this.toast(NOT_ORDERABLE); return; }
+          this.toast('Added ' + this._putInBag(line, qtyToAdd, surface) + ' to your bag');
+        }).catch((err) => {
+          if (this._unmounted) return;
+          this.toast(err && err.status === 404 ? NOT_ORDERABLE : 'We couldn’t add this item right now. Check your connection and try again.');
+        });
       },
       // Buy now: add the open product to the bag and jump straight to checkout.
       buyNowProduct: () => {
