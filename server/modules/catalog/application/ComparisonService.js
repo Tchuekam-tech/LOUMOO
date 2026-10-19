@@ -149,11 +149,9 @@ class ComparisonService {
       }
       try {
         const dbProduct = await CatalogRepository.findPublicProductByIdOrSlug(id);
-        // The repository falls back to curated cards for product pages — by
-        // fuzzy id, and to a synthesised placeholder for an unknown id — so a
-        // page never 404s. A comparison must never rank a made-up product:
-        // only a real marketplace listing counts here (curated products were
-        // already matched by exact id above).
+        // The repository answers null for an unknown id and falls back to a
+        // curated card only on an exact id. Curated products were already
+        // matched above, so only a real marketplace listing counts here.
         if (dbProduct && !dbProduct.curated) resolved.push(fromDatabase(dbProduct));
         else unresolved.push({ id, reason: 'not_found' });
       } catch (err) {
