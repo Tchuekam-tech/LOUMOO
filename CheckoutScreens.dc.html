@@ -72,9 +72,23 @@
               <div style="font:700 14.5px/1.2 var(--font-heading);color:var(--color-text)">{{ item.name }}</div>
               <div style="font:400 12px/1 var(--font-body);color:var(--color-text-secondary);margin-top:4px">Sold by {{ item.store }}</div>
             </div>
-            <div style="font:800 16px/1 var(--font-heading);color:var(--color-text);white-space:nowrap">{{ item.lineLabel }}</div>
+            <sc-if value="{{ !item.unavailable }}">
+              <div style="font:800 16px/1 var(--font-heading);color:var(--color-text);white-space:nowrap">{{ item.lineLabel }}</div>
+            </sc-if>
+            <sc-if value="{{ item.unavailable }}">
+              <span style="font:700 11px/1 var(--font-heading);letter-spacing:.02em;color:var(--color-text-secondary);background:var(--color-neutral-100);border:1px solid var(--color-divider);border-radius:var(--radius-pill);padding:6px 10px;white-space:nowrap">{{ item.lineLabel }}</span>
+            </sc-if>
           </div>
 
+          <!-- A line that names no orderable product (an id the app no longer knows,
+               or one with no price): no stepper, no price, just why and a way out. -->
+          <sc-if value="{{ item.unavailable }}">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px">
+            <div style="font:400 12px/1.4 var(--font-body);color:var(--color-text-secondary)">This item isn’t available to order any more, so it’s not in your total.</div>
+            <button onClick="{{ () => removeCartItem(item.id) }}" aria-label="Remove unavailable item" class="btn btn-secondary btn-sm" style="height:34px;padding:0 14px;flex-shrink:0">Remove</button>
+          </div>
+          </sc-if>
+          <sc-if value="{{ !item.unavailable }}">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px">
             <div style="display:flex;align-items:center;gap:8px;background:var(--color-neutral-100);padding:3px 8px;border-radius:var(--radius-pill);border:1px solid var(--color-divider)">
               <button onClick="{{ () => decCartQty(item.id) }}" aria-label="Decrease quantity" class="stepper-btn" style="width:26px;height:26px;font-size:13px">−</button>
@@ -83,6 +97,7 @@
             </div>
             <button onClick="{{ () => removeCartItem(item.id) }}" aria-label="Remove item" style="border:none;background:transparent;color:var(--color-text-secondary);font:600 11.5px/1 var(--font-body);cursor:pointer">Remove</button>
           </div>
+          </sc-if>
         </div>
       </div>
     </div>

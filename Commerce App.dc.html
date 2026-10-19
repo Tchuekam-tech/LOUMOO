@@ -10531,8 +10531,8 @@ class Component extends DCLogic {
     } catch (e) {}
   };
 
-  _cartEntry = (id, name) => {
-    const p = this._resolveProduct(id);
+  _cartEntry = (id, name) => this._lineFromProduct(this._resolveProduct(id), id, name);
+  _lineFromProduct = (p, id, name) => {
     if (!p || !p.title) return null;
     const priceStr = this._payablePriceLabel(p);
     const priceXaf = this._priceToXaf(priceStr) || Number(p.priceNumeric) || Number(p.base_price_minor) || 0;
@@ -10558,6 +10558,49 @@ class Component extends DCLogic {
       const list = JSON.parse(raw);
       if (Array.isArray(list)) this.setState({ cartItems: list });
     } catch (e) {}
+  };
+  _refreshCartLine = (line, entry) => {
+    const fields = ['name', 'image', 'price', 'priceXaf', 'store', 'storePhone'];
+    const stale = line.unavailable || fields.some((k) => line[k] !== entry[k]);
+    if (!stale) return line;
+    const next = Object.assign({}, line);
+    fields.forEach((k) => { next[k] = entry[k]; });
+    delete next.unavailable;
+    return next;
+  };
+  _settleCartLine = (id, entry) => {
+    const list = this.state.cartItems || [];
+    let changed = false;
+    const next = list.map((it) => {
+      if (!it || it.id !== id) return it;
+      const settled = entry ? this._refreshCartLine(it, entry) : (it.unavailable ? it : Object.assign({}, it, { unavailable: true }));
+      if (settled !== it) changed = true;
+      return settled;
+    });
+    if (!changed) return;
+    this.setState({ cartItems: next });
+    this._persistCart(next);
+  };
+  _recheckCartLines = () => {
+    if (this._cartRechecked) return;
+    this._cartRechecked = true;
+    const api = getApi();
+    (this.state.cartItems || []).forEach((line) => {
+      const id = line && line.id;
+      if (!id) return;
+      const local = this._cartEntry(id);
+      if (local) { this._settleCartLine(id, local); return; }
+      if (this._resolveProduct(id).title) { this._settleCartLine(id, null); return; }
+      if (!api || typeof api.getProduct !== 'function') return;
+      api.getProduct(String(id)).then((res) => {
+        if (this._unmounted) return;
+        const prod = (res && res.data) || res;
+        this._settleCartLine(id, prod && prod.title ? this._lineFromProduct(prod, id) : null);
+      }).catch((err) => {
+        if (this._unmounted) return;
+        if (err && err.status === 404) this._settleCartLine(id, null);
+      });
+    });
   };
 
   _persistOrders = (list) => {
@@ -10967,7 +11010,7 @@ class Component extends DCLogic {
     this._restoreLocalState();
     this._loadSystemSettings();
     this._bootAuth();
-    this._ensureCatalogData();
+    this._ensureCatalogData(() => this._recheckCartLines());
     this.loadCatalogProducts({ limit: 16 });
     if (this.state.screen === 'announce' || this.state.screen === 'announceDetail') {
       this.ensureAnnouncements();
@@ -14573,17 +14616,19 @@ class Component extends DCLogic {
       });
   }
 
-  _ensureCatalogData() {
+  _ensureCatalogData(onSettled) {
+    const settled = () => { if (!this._unmounted && onSettled) onSettled(); };
     if (typeof window !== 'undefined' && (!window.PRODUCTS_DATA || Object.keys(window.PRODUCTS_DATA).length === 0)) {
       const paths = ['./data/catalog.json', '/data/catalog.json', './public/data/catalog.json'];
       const tryFetch = (idx) => {
-        if (idx >= paths.length) return;
+        if (idx >= paths.length) { settled(); return; }
         fetch(paths[idx])
           .then(r => r.ok ? r.json() : null)
           .then(data => {
             if (data && typeof data === 'object' && Object.keys(data).length > 0) {
               window.PRODUCTS_DATA = Object.assign(window.PRODUCTS_DATA || {}, data);
               if (!this._unmounted) this.setState({ _catalogLoaded: true });
+              settled();
             } else {
               tryFetch(idx + 1);
             }
@@ -14591,6 +14636,8 @@ class Component extends DCLogic {
           .catch(() => tryFetch(idx + 1));
       };
       tryFetch(0);
+    } else {
+      settled();
     }
   }
 
@@ -15400,7 +15447,7 @@ class Component extends DCLogic {
     });
     const hotelCards = (list) => (Array.isArray(list) ? list : []).map(hotelCard);
 
-    const cartList = this.state.cartItems || [];
+    const cartList = (this.state.cartItems || []).filter((it) => it && !it.unavailable);
     const cartSubtotal = cartList.reduce((a, it) => a + (Number(it.priceXaf) || 0) * (Number(it.qty) || 1), 0);
     const dynamicSettings = (typeof window !== 'undefined' && window.LOUMOO_SYSTEM_SETTINGS) || this.state.systemSettings || this.state.adminSettings || {};
     const checkoutDest = this._resolveDeliveryDestination();
@@ -19433,7 +19480,8 @@ class Component extends DCLogic {
         image: it.image,
         store: it.store,
         qty: it.qty,
-        lineLabel: 'XAF ' + fmt((Number(it.priceXaf) || 0) * (Number(it.qty) || 1))
+        unavailable: Boolean(it.unavailable),
+        lineLabel: it.unavailable ? 'Unavailable' : 'XAF ' + fmt((Number(it.priceXaf) || 0) * (Number(it.qty) || 1))
       })),
       cartLabel: (() => {
         const items = this.state.cartItems || [];
@@ -19931,11 +19979,12 @@ class Component extends DCLogic {
         if (!entry) { this.toast('Sorry, this item isn’t available to order'); return; }
         const list = (this.state.cartItems || []).map((it) => ({ ...it }));
         const qtyToAdd = (this.state.screen === 'product') ? Math.max(1, Number(this.state.qty) || 1) : 1;
-        const existing = list.find((it) => it.id === entry.id);
+        const at = list.findIndex((it) => it.id === entry.id);
         let name;
-        if (existing) {
-          existing.qty = Math.min(99, (Number(existing.qty) || 1) + qtyToAdd);
-          name = existing.name;
+        if (at !== -1) {
+          const line = this._refreshCartLine(list[at], entry);
+          list[at] = Object.assign({}, line, { qty: Math.min(99, (Number(line.qty) || 1) + qtyToAdd) });
+          name = list[at].name;
         } else {
           entry.qty = qtyToAdd;
           list.push(entry);
@@ -19953,9 +20002,11 @@ class Component extends DCLogic {
         if (!entry) { this.toast('Sorry, this item isn’t available to order'); return; }
         const list = (this.state.cartItems || []).map((it) => ({ ...it }));
         const qtyToAdd = Math.max(1, Number(this.state.qty) || 1);
-        const existing = list.find((it) => it.id === entry.id);
-        if (existing) existing.qty = Math.min(99, (Number(existing.qty) || 1) + qtyToAdd);
-        else { entry.qty = qtyToAdd; list.push(entry); }
+        const at = list.findIndex((it) => it.id === entry.id);
+        if (at !== -1) {
+          const line = this._refreshCartLine(list[at], entry);
+          list[at] = Object.assign({}, line, { qty: Math.min(99, (Number(line.qty) || 1) + qtyToAdd) });
+        } else { entry.qty = qtyToAdd; list.push(entry); }
         this.setState({ cartItems: list });
         this._persistCart(list);
         this._recoNote('add_to_cart', this._resolveProductItem(entry.id) || { id: entry.id }, { surface: 'pdp_buynow' });
@@ -19979,8 +20030,16 @@ class Component extends DCLogic {
       },
       placeOrder: () => {
         if (this.state.placingOrder || this._placingNow) return;
-        const cart = this.state.cartItems || [];
-        if (!cart.length) { this.toast('Your bag is empty'); return; }
+        const bag = this.state.cartItems || [];
+        if (!bag.length) { this.toast('Your bag is empty'); return; }
+        const cart = bag.filter((it) => it && !it.unavailable);
+        if (!cart.length) {
+          this.setState({
+            orderError: 'Nothing in your bag can be ordered right now. Remove the unavailable items to continue.',
+            orderErrorItemIds: bag.map((it) => it && it.id).filter(Boolean)
+          });
+          return;
+        }
         if (this.state.authStatus !== 'authenticated') {
           this.toast('Sign in to place your order');
           this.setState({ postAuthRedirect: 'checkout' });
