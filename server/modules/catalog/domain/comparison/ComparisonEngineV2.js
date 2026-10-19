@@ -268,6 +268,9 @@ function compare(products, options = {}) {
       subCategory: p.subcategory,
       productType: e.type,
       entityType: p.entityType,
+      // Only curated catalogue products and live marketplace listings can be
+      // ordered; seed demo items and shops cannot go in the bag.
+      orderable: p.entityType === 'product' && (p.source === 'curated' || p.source === 'database'),
       price: p.price > 0 ? F.money(p.price, locale) : (p.displayPrice || null),
       priceNumeric: p.price,
       compareAtPrice: p.compareAtPrice,
