@@ -1,18 +1,16 @@
 /**
  * LOUMOO Comprehensive Test Suite:
  * 1. 1,000+ Pcs Guaranteed Inventory Verification across all catalog & dataset products.
- * 2. Clean Empty Comparison Page Lifecycle & Preset Loading.
+ * 2. Empty compare page, real-id presets and tray limits in the shipped controller.
  * 3. Universal Multi-Entity Comparison (Products, Stores/Merchants, Hotels/Lodgings).
  */
 
 require('../setup');
-const fs = require('fs');
-const vm = require('vm');
+const { loadCompareRuntime } = require('../helpers/compareRuntime');
 const assert = require('assert');
 
 // 1. Data Sources
 const { catalogProducts, products } = require('../../server/modules/catalog/dataLoader');
-const { ComparisonEngine } = require('../../server/modules/catalog/domain/ComparisonEngine');
 const ComparisonService = require('../../server/modules/catalog/application/ComparisonService');
 
 async function run() {
@@ -52,137 +50,69 @@ async function run() {
   console.log(`      ✓ All ${verticalItemsChecked} vertical dataset items have verified >= 1,000 pcs in stock.`);
 
   // =========================================================================
-  // TEST SUITE 2: CLEAN EMPTY COMPARISON PAGE & UNIVERSAL PROTOTYPE RUNTIME
+  // TEST SUITE 2: EMPTY STATE, PRESETS AND TRAY IN THE SHIPPED CONTROLLER
   // =========================================================================
-  console.log('    3. Testing Clean Empty Comparison Page in prototype component...');
-  const content = fs.readFileSync('Commerce App.dc.html', 'utf8');
-  const scriptMatch = content.match(/<script type="text\/x-dc" data-dc-script[^>]*>([\s\S]*?)<\/script>/);
-  assert.ok(scriptMatch, 'Found data-dc-script in Commerce App.dc.html');
-
-  class DCLogic {
-    constructor(props) {
-      this.props = props || {};
-      this.state = {};
-    }
-    setState(fnOrObj, cb) {
-      if (typeof fnOrObj === 'function') {
-        this.state = Object.assign({}, this.state, fnOrObj(this.state));
-      } else {
-        this.state = Object.assign({}, this.state, fnOrObj);
-      }
-      if (typeof cb === 'function') cb();
-    }
-  }
-
-  const context = {
-    DCLogic,
-    console,
-    setTimeout: (fn, ms) => {
-      if (ms && ms >= 4000) return 1;
-      if (typeof fn === 'function') fn();
-      return 1;
-    },
-    clearTimeout: () => {},
-    localStorage: { getItem: () => null, setItem: () => {}, removeItem: () => {} },
-    document: { documentElement: { setAttribute: () => {} } }
-  };
-
-  vm.createContext(context);
-  vm.runInContext(scriptMatch[1] + "\nvar comp = new Component({ userName: 'TestBuyer' });", context);
-  const comp = context.comp;
+  console.log('    3. Testing the empty compare page in the shipped controller...');
+  const plain = (x) => JSON.parse(JSON.stringify(x));
+  const rt = loadCompareRuntime({ withView: true });
+  const comp = rt.comp;
   comp.componentDidMount();
 
-  // Test clearing to empty workspace
-  let vals = comp.renderVals();
+  let vals = rt.vals();
   vals.clearVsAll();
-  vals = comp.renderVals();
-
+  vals = rt.vals();
   assert.strictEqual(comp.state.vs, 0, 'Workspace cleared to 0 items');
   assert.strictEqual(vals.vsEmpty, true, 'Clean empty state active when 0 items');
-  assert.strictEqual(vals.vsSlot1Active, false, 'Slot 1 inactive in clean empty state');
-  assert.strictEqual(vals.vsSlot2Active, false, 'Slot 2 inactive in clean empty state');
-  assert.strictEqual(vals.vsSlot3Active, false, 'Slot 3 inactive in clean empty state');
-  assert.strictEqual(vals.vsSlot4Active, false, 'Slot 4 inactive in clean empty state');
+  assert.strictEqual(vals.vsCanCompare, false, 'Nothing to compare yet');
+  assert.strictEqual(comp.state.vsResult, null, 'Clearing drops the previous answer');
+  // Without the live search runtime the picker offers nothing rather than a
+  // fixed list with invented prices and stock.
+  assert.deepStrictEqual(plain(vals.vsPickerResults), [], 'No built-in sample candidates');
 
-  // Verify search and candidates picker
-  assert.ok(Array.isArray(vals.vsPickerResults), 'Candidate search results array provided');
-  assert(vals.vsPickerResults.length > 0, 'Candidates populated for quick addition');
-  const laptopCand = vals.vsPickerResults.find(c => c.id === 'elec-1');
-  assert.ok(laptopCand, 'Laptop candidate found in picker');
-  assert.strictEqual(laptopCand.stockLabel, 'En stock (1 000+ pcs)');
-
-  // Test Curated Presets
-  console.log('    4. Testing Curated Fast-Start Presets...');
-  // Preset 1: Ultrabooks
+  console.log('    4. Testing curated presets use real catalogue ids...');
   vals.loadVsPreset('ultrabooks');
-  vals = comp.renderVals();
-  assert.strictEqual(vals.vsEmpty, false, 'Not empty after loading Ultrabooks preset');
-  assert.strictEqual(comp.state.vs, 2, '2 items in Ultrabooks comparison');
-  assert.strictEqual(vals.vsSlot1Active, true, 'Slot 1 active for MacBook Air');
-  assert.strictEqual(vals.vsSlot2Active, true, 'Slot 2 active for MacBook Pro');
+  vals = rt.vals();
+  assert.strictEqual(vals.vsEmpty, false);
+  assert.deepStrictEqual(plain(comp.state.vsCompareIds), ['laptop_apple_apple_macbook_air_m2_13_6_pouces', 'laptop_apple_apple_macbook_pro_14_m3_pro_gris']);
+  for (const id of comp.state.vsCompareIds) assert.ok(catalogProducts[id], `preset id ${id} exists in the catalogue`);
 
-  // Preset 2: Verified Stores
   vals.loadVsPreset('stores');
-  vals = comp.renderVals();
-  assert.strictEqual(comp.state.vs, 2, '2 stores in Stores comparison');
-  assert.strictEqual(JSON.stringify(comp.state.vsCompareIds), JSON.stringify(['store_orca_electronics', 'store_kamertech_direct']));
-  assert.strictEqual(vals.vsIsCustomComparison, true, 'Flagged as custom multi-entity comparison');
+  vals = rt.vals();
+  assert.deepStrictEqual(plain(comp.state.vsCompareIds), ['store_orca_electronics', 'store_kamertech_direct']);
   assert.strictEqual(vals.vsCompareTitle, 'Orca Electronics vs KamerTech Direct');
 
-  // Preset 3: Stays / Hotels
   vals.loadVsPreset('stays');
-  vals = comp.renderVals();
-  assert.strictEqual(comp.state.vs, 2, '2 stays in Hotels comparison');
-  assert.strictEqual(JSON.stringify(comp.state.vsCompareIds), JSON.stringify(['hotel-1', 'hotel-2']));
+  vals = rt.vals();
+  assert.deepStrictEqual(plain(comp.state.vsCompareIds), ['hotel-1', 'hotel-2']);
   assert.strictEqual(vals.vsCompareTitle, 'Sawa Luxury Hotel vs Résidence Akwa Palm');
 
-  // Preset 4: Smartphones
   vals.loadVsPreset('smartphones');
-  vals = comp.renderVals();
-  assert.strictEqual(comp.state.vs, 2, '2 smartphones in Phones comparison');
-  assert.strictEqual(JSON.stringify(comp.state.vsCompareIds), JSON.stringify(['cat-prod-1', 'cat-prod-2']));
-  assert.strictEqual(vals.vsCompareTitle, 'Tecno Camon 50 Pro 5G vs Google Pixel 8 Pro Unlocked');
+  vals = rt.vals();
+  const phoneIds = plain(comp.state.vsCompareIds);
+  assert.deepStrictEqual(phoneIds, ['phone_tecno_tecno_camon_50_pro_5g_256gb_12gb_', 'phone_google_google_pixel_8_pro_128gb_unlocke']);
+  for (const id of phoneIds) assert.ok(catalogProducts[id], `preset id ${id} exists in the catalogue`);
+  assert.strictEqual(vals.vsCompareTitle, 'Tecno Camon 50 Pro 5G 256GB / 12GB RAM vs Google Pixel 8 Pro 128GB Unlocked Android 14');
 
-  // =========================================================================
-  // TEST SUITE 3: DYNAMIC UNIVERSAL ENTITY COMPARISON & MATRIX RESOLUTION
-  // =========================================================================
-  console.log('    5. Testing universal add, remove, and slot limits...');
+  console.log('    5. Testing tray add, remove and the 4-item limit...');
   vals.clearCompare();
-  vals = comp.renderVals();
+  vals = rt.vals();
   assert.strictEqual(vals.vsEmpty, true);
-
-  // Add a catalog product
-  vals.addToCompare('elec-1');
-  vals = comp.renderVals();
-  assert.strictEqual(comp.state.vs, 1);
-  assert.strictEqual(vals.vsSlot1Active, true);
-
-  // Add a verified store
-  vals.addToCompare('store_orca_electronics');
-  vals = comp.renderVals();
-  assert.strictEqual(comp.state.vs, 2);
-
-  // Add a hotel stay
-  vals.addToCompare('hotel-1');
-  vals = comp.renderVals();
-  assert.strictEqual(comp.state.vs, 3);
-
-  // Add 4th item (laptop)
-  vals.addToCompare('elec-dell-xps');
-  vals = comp.renderVals();
+  for (const id of ['elec-1', 'store_orca_electronics', 'hotel-1', 'elec-dell-xps']) {
+    vals.addToCompare(id);
+    vals = rt.vals();
+  }
   assert.strictEqual(comp.state.vs, 4);
   assert.strictEqual(vals.vsCanAddMore, false, 'vsCanAddMore false at 4 items maximum');
-
-  // Attempt to add 5th item -> blocked by max limit 4
   vals.addToCompare('hotel-2');
-  vals = comp.renderVals();
+  vals = rt.vals();
   assert.strictEqual(comp.state.vs, 4, 'Cannot exceed 4 items in comparison');
-
-  // Remove an item
+  vals.addToCompare('elec-1');
+  assert.strictEqual(rt.vals().vsTrayCards.length, 4, 'An item already in the tray is not added twice');
   vals.removeFromCompare('hotel-1');
-  vals = comp.renderVals();
+  vals = rt.vals();
   assert.strictEqual(comp.state.vs, 3);
   assert.strictEqual(vals.vsCanAddMore, true, 'vsCanAddMore true after removing item');
+  assert(vals.vsTrayCards.every(c => !/1 000\+|1,000\+/.test(JSON.stringify(c))), 'No invented stock on tray cards');
 
   // Backend Comparison Service Integration
   console.log('    6. Testing Backend ComparisonService resolution for universal entities...');
@@ -190,25 +120,28 @@ async function run() {
   const prodComparison = await ComparisonService.getComparison(['elec-1', 'elec-macbook-pro']);
   assert.strictEqual(prodComparison.products.length, 2);
   assert.strictEqual(prodComparison.products[0].inStock, true);
-  assert(prodComparison.products[0].stockUnits >= 1000);
   assert.strictEqual(prodComparison.products[1].inStock, true);
-  assert(prodComparison.products[1].stockUnits >= 1000);
-  assert.ok(prodComparison.recommendation);
+  // The datasets carry a 1000 placeholder, not a count: the comparison reports
+  // availability and says the exact stock is unknown rather than repeating it.
+  assert.strictEqual(prodComparison.products[0].stockKnown, false);
+  assert.strictEqual(prodComparison.products[0].stockUnits, null);
+  assert.ok(prodComparison.recommendation.recommendedProductId);
 
   // 2) Verified Stores Comparison
   const storeComparison = await ComparisonService.getComparison(['store_orca_electronics', 'store_kamertech_direct']);
   assert.strictEqual(storeComparison.products.length, 2);
   assert.strictEqual(storeComparison.products[0].title, 'Orca Electronics');
   assert.strictEqual(storeComparison.products[1].title, 'KamerTech Direct');
-  assert.strictEqual(storeComparison.products[0].inStock, true);
-  assert(storeComparison.products[0].stockUnits >= 1000);
+  // Boutiques are shown side by side; a product count is not a price to rank on.
+  assert.strictEqual(storeComparison.products[0].priceNumeric, null);
+  assert.strictEqual(storeComparison.recommendation.recommendedProductId, null);
 
   // 3) Hotels Comparison
   const hotelComparison = await ComparisonService.getComparison(['hotel-1', 'hotel-2']);
   assert.strictEqual(hotelComparison.products.length, 2);
   assert.strictEqual(hotelComparison.products[0].title, 'Sawa Luxury Hotel');
   assert.strictEqual(hotelComparison.products[1].title, 'Résidence Akwa Palm');
-  assert(hotelComparison.products[0].stockUnits >= 1000);
+  assert.strictEqual(hotelComparison.products[0].entityType, 'hotel');
 
   // 4) Candidates Discovery Filtering
   const storeCandidatesRes = await ComparisonService.getCompareCandidates({ type: 'stores' });

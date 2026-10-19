@@ -1,330 +1,275 @@
 /**
  * Catalog Comparison Service
  * ---------------------------------------------------------------------------
- * Coordinates universal resolution, candidate suggestions, and multi-seller
- * marketplace options across catalog products, curated benchmark datasets,
- * stores/merchants, and database listings.
+ * Resolves the ids a buyer put side by side (curated catalogue, seed dataset,
+ * curated stores, live marketplace listings), adapts them to the engine's one
+ * canonical shape and runs Comparison Engine v2 against market statistics built
+ * once over the whole catalogue.
+ *
+ * Nothing here invents commerce facts: stock is what the listing says (and is
+ * marked unknown where the source only has a placeholder), sellers are the
+ * real offers, and ids that could not be resolved are returned, not dropped.
  */
 
 const { products: rawProducts, catalogProducts = {} } = require('../dataLoader');
-const { ComparisonEngine } = require('../domain/ComparisonEngine');
+const { compare, MAX_PRODUCTS } = require('../domain/comparison/ComparisonEngineV2');
+const { CategoryStats } = require('../domain/comparison/categoryStats');
+const { fromCurated, fromSeed, fromDatabase, fromStore } = require('../domain/comparison/productAdapter');
+const { classify } = require('../domain/comparison/productTypes');
+const { identityKey } = require('../domain/comparison/productIdentity');
+const { qualityIndex } = require('../domain/comparison/scoring');
+const { profileFor } = require('../domain/comparison/categoryProfiles');
+const { extract } = require('../domain/comparison/specExtractor');
 const { NotFoundError, ValidationError } = require('../../../shared/errors/AppError');
 const CatalogRepository = require('../infrastructure/CatalogRepository');
+const logger = require('../../../shared/logging/logger');
 
-// Curated verified stores list for direct store-to-store comparison
+const MAX_CANDIDATES = 50;
+
+// Curated verified stores, kept so the compare screen's store-vs-store preset
+// still resolves. They are boutiques, not products: the engine shows them side
+// by side and never ranks them against products.
 const CURATED_STORES = [
   {
     id: 'store_orca_electronics',
     slug: 'orca-electronics',
     title: 'Orca Electronics',
-    brand: 'Verified Merchant',
-    category: 'Stores',
     subCategory: 'Consumer Electronics & Computing',
-    type: 'store',
     price: '1,420+ Products',
-    priceNumeric: 1420,
     rating: 4.9,
     reviewsCount: 384,
-    merchant: 'Akwa Boulevard, Douala',
     merchantCity: 'Douala',
     verified: true,
-    badge: 'TOP SELLER',
-    badgeClass: 'badge-hot',
-    coverImage: './Assets/telephone&PC/phoneBrands.image/139611657203176408.jfif',
-    inStock: true,
-    stockUnits: 1000,
-    specs: {
-      performance: { processor: 'Tier 1 Official Importer', thermal: '100% Genuine Sealed Stock' },
-      display: { size: 'Flagship Showroom (Akwa)', panelType: 'Open Mon-Sat 8h-19h' },
-      battery: { batteryLife: 'Same-Day Express 2h Delivery', fastCharging: 'Doorstep Courier Fleet' },
-      commerce: { warranty: '24 Months Official Guarantee', escrowTier: 'LOUMOO Tier 1 Full Escrow' }
-    }
+    coverImage: './Assets/telephone&PC/phoneBrands.image/139611657203176408.jfif'
   },
   {
     id: 'store_digital_corner',
     slug: 'digital-corner',
     title: 'Digital Corner',
-    brand: 'Verified Merchant',
-    category: 'Stores',
     subCategory: 'Apple Specialist & Accessories',
-    type: 'store',
     price: '850+ Products',
-    priceNumeric: 850,
     rating: 4.8,
     reviewsCount: 256,
-    merchant: 'Bonapriso, Douala',
     merchantCity: 'Douala',
     verified: true,
-    badge: 'VERIFIED',
-    badgeClass: 'badge-blue',
-    coverImage: './Assets/telephone&PC/phoneBrands.image/139611657203176408.jfif',
-    inStock: true,
-    stockUnits: 1000,
-    specs: {
-      performance: { processor: 'Apple Certified Reseller', thermal: 'Direct Import US/EU Spec' },
-      display: { size: 'Boutique Showroom (Bonapriso)', panelType: 'Open Mon-Sat 9h-20h' },
-      battery: { batteryLife: 'Express Doorstep Delivery 3h', fastCharging: 'Doorstep Courier Fleet' },
-      commerce: { warranty: '12 Months Replacement Warranty', escrowTier: 'LOUMOO Tier 1 Full Escrow' }
-    }
+    coverImage: './Assets/telephone&PC/phoneBrands.image/139611657203176408.jfif'
   },
   {
     id: 'store_kamertech_direct',
     slug: 'kamertech-direct',
     title: 'KamerTech Direct',
-    brand: 'Verified Merchant',
-    category: 'Stores',
     subCategory: 'Computing, Servers & Components',
-    type: 'store',
     price: '620+ Products',
-    priceNumeric: 620,
     rating: 5.0,
     reviewsCount: 194,
-    merchant: 'Bastos, Yaoundé',
     merchantCity: 'Yaoundé',
     verified: true,
-    badge: 'PRO PARTNER',
-    badgeClass: 'badge-new',
-    coverImage: './Assets/telephone&PC/ordinateurPortable.image/dell/dell1.jfif',
-    inStock: true,
-    stockUnits: 1000,
-    specs: {
-      performance: { processor: 'Enterprise IT Solutions', thermal: 'Direct Manufacturer Sealed' },
-      display: { size: 'Tech Center (Bastos)', panelType: 'Open Mon-Sat 8h30-18h30' },
-      battery: { batteryLife: 'Same-Day Yaoundé & Douala', fastCharging: 'VIP Secured Transport' },
-      commerce: { warranty: '36 Months Manufacturer ProSupport', escrowTier: 'LOUMOO Tier 1 Full Escrow' }
-    }
+    coverImage: './Assets/telephone&PC/ordinateurPortable.image/dell/dell1.jfif'
   },
   {
     id: 'store_akwa_palm',
     slug: 'akwa-palm-hospitality',
     title: 'Akwa Palm Commercial & Living',
-    brand: 'Verified Host',
-    category: 'Stores',
     subCategory: 'Hospitality & Commercial Suites',
-    type: 'store',
     price: '48 Suites & Spaces',
-    priceNumeric: 48,
     rating: 4.7,
     reviewsCount: 142,
-    merchant: 'Akwa Commercial Strip, Douala',
     merchantCity: 'Douala',
     verified: true,
-    badge: 'VERIFIED HOST',
-    badgeClass: 'badge-sale',
-    coverImage: './Assets/telephone&PC/phoneBrands.image/139611657203176408.jfif',
-    inStock: true,
-    stockUnits: 1000,
-    specs: {
-      performance: { processor: 'Full Concierge & Security', thermal: 'Dual Generator 24/7 Backup' },
-      display: { size: 'Executive Suites', panelType: 'City View Balconies' },
-      battery: { batteryLife: 'Instant Check-in', fastCharging: 'Fiber Wi-Fi 6 Dedicated' },
-      commerce: { warranty: 'Free Flexible Cancellation', escrowTier: 'LOUMOO Tier 1 Full Escrow' }
-    }
+    coverImage: './Assets/telephone&PC/phoneBrands.image/139611657203176408.jfif'
   }
 ];
 
-// Flatten all products across seed categories, curated catalog, and stores.
-//
-// rawProducts, catalogProducts (the ~1.8MB curated dataset) and CURATED_STORES
-// are all static after boot, so the flattened list is built ONCE and cached at
-// module scope — mirroring CatalogRepository.__curatedCache. Rebuilding ~1000
-// objects on every /compare and /compare/candidates request was pure CPU/GC on
-// the single event loop. Callers treat the returned array read-only (they spread
-// or filter into new structures), so sharing the cached array is safe.
-let _allEntitiesCache = null;
-function getAllEntities() {
-  if (_allEntitiesCache) return _allEntitiesCache;
-  const seedList = [
-    ...(rawProducts.electronics || []).map(p => ({ ...p, vertical: 'electronics', inStock: true, stockUnits: Math.max(1000, Number(p.stockUnits || 1000)) })),
-    ...(rawProducts.hotels || []).map(p => ({ ...p, vertical: 'hotels', inStock: true, stockUnits: Math.max(1000, Number(p.stockUnits || 1000)) })),
-    ...(rawProducts.services || []).map(p => ({ ...p, vertical: 'services', inStock: true, stockUnits: Math.max(1000, Number(p.stockUnits || 1000)) })),
-    ...(rawProducts.universities || []).map(p => ({ ...p, vertical: 'education', inStock: true, stockUnits: Math.max(1000, Number(p.stockUnits || 1000)) }))
-  ];
+// The catalogue is static after boot, so its canonical form, the id/slug index
+// and the market statistics are built ONCE, on first use, and shared.
+let _catalog = null;
 
-  // Map curated catalog products
-  const curatedList = Object.keys(catalogProducts).map(id => {
+function buildCatalog() {
+  const entities = [];
+  const seedVerticals = { electronics: 'electronics', hotels: 'hotels', services: 'services', universities: 'education' };
+  for (const [key, vertical] of Object.entries(seedVerticals)) {
+    for (const p of rawProducts[key] || []) entities.push(fromSeed(p, vertical));
+  }
+  for (const id of Object.keys(catalogProducts)) {
     const cp = catalogProducts[id];
-    const priceNum = CatalogRepository._priceToNumber(cp.price);
-    const cover = cp.coverImage || (Array.isArray(cp.images) && cp.images[0]) || '';
-    return {
-      id: cp.id || id,
-      slug: cp.id || id,
-      title: cp.title,
-      brand: cp.brand || 'LOUMOO Curated',
-      category: cp.category || 'electronics',
-      categoryLabel: cp.categoryLabel || cp.category,
-      subCategory: cp.subcategory || cp.category,
-      vertical: cp.category || 'electronics',
-      price: cp.price,
-      priceNumeric: priceNum,
-      rating: Number(cp.rating) || 4.8,
-      reviewsCount: cp.reviewCount || 24,
-      merchant: cp.storeName || 'LOUMOO Direct',
-      merchantCity: cp.storeCity || 'Douala',
-      verified: Boolean(cp.storeVerified),
-      badge: cp.badge || 'IN STOCK',
-      badgeClass: 'badge-hot',
-      image: CatalogRepository._enc(cover),
-      coverImage: CatalogRepository._enc(cover),
-      inStock: true,
-      stockUnits: Math.max(1000, Number(cp.stock || cp.stockQuantity || cp.stockUnits || 1000)),
-      stockQuantity: 1000,
-      description: cp.description || '',
-      specs: {
-        performance: { processor: (cp.attributes && cp.attributes[0]?.val) || 'Standard Specification' },
-        connectivity: { wifi: (cp.attributes && cp.attributes[1]?.val) || 'Standard Connectivity' },
-        battery: { batteryLife: (cp.attributes && cp.attributes[2]?.val) || 'High Capacity Battery' },
-        commerce: { warranty: (cp.attributes && cp.attributes[3]?.val) || '12 Months LOUMOO Escrow Protection' }
-      }
-    };
-  });
+    if (cp && typeof cp === 'object' && cp.title) entities.push(fromCurated(id, cp));
+  }
+  for (const s of CURATED_STORES) entities.push(fromStore(s));
 
-  _allEntitiesCache = [...seedList, ...curatedList, ...CURATED_STORES];
-  return _allEntitiesCache;
+  const index = new Map();
+  for (const e of entities) {
+    if (!index.has(e.id)) index.set(e.id, e);
+    if (e.slug && !index.has(e.slug)) index.set(e.slug, e);
+  }
+
+  const started = Date.now();
+  const stats = CategoryStats.build(entities);
+  logger.info(`[Comparison] market statistics built over ${entities.length} entities in ${Date.now() - started}ms`);
+  return { entities, index, stats };
+}
+
+function getCatalog() {
+  if (!_catalog) _catalog = buildCatalog();
+  return _catalog;
 }
 
 class ComparisonService {
   /**
-   * Retrieves head-to-head comparison for a list of product or entity IDs
+   * Head-to-head comparison of 2–4 ids.
+   * @param {string[]} productIds
+   * @param {object} [userPriorities] facet → 0..5
+   * @param {{ locale?: string }} [options]
    */
-  static async getComparison(productIds, userPriorities = {}) {
+  static async getComparison(productIds, userPriorities = {}, options = {}) {
     if (!Array.isArray(productIds) || productIds.length === 0) {
       throw new ValidationError('Product IDs are required for comparison.', [
         { field: 'ids', message: 'Provide 2 to 4 product IDs.' }
       ]);
     }
 
-    // The engine compares at most 4 entities (validateCompatibility), so enforce
-    // the limit before resolving: every unresolved id costs one database round
-    // trip, and an uncapped ?ids= turns a single request into an unbounded query
-    // fan-out. Reject rather than silently truncate, so a caller never gets a
-    // comparison of products it did not fully ask for.
-    if (productIds.length > 4) {
+    // Cap before resolving: every unresolved id may cost a database round trip,
+    // so an uncapped ?ids= would be an unbounded query fan-out. Reject rather
+    // than truncate, so a caller never gets a comparison it did not ask for.
+    const requestedIds = [...new Set(productIds.map(id => String(id).trim()).filter(Boolean))];
+    if (productIds.length > MAX_PRODUCTS || requestedIds.length > MAX_PRODUCTS) {
       throw new ValidationError('Comparison is limited to a maximum of 4 products.', [
         { field: 'ids', message: 'Provide 2 to 4 product IDs.' }
       ]);
     }
-    const requestedIds = productIds;
 
-    const allEntities = getAllEntities();
-    const resolvedProducts = [];
+    const { index, stats } = getCatalog();
+    const resolved = [];
+    const unresolved = [];
 
     for (const id of requestedIds) {
-      const found = allEntities.find(p => p.id === id || p.slug === id);
-      if (found) {
-        resolvedProducts.push({
-          ...found,
-          inStock: true,
-          stockUnits: Math.max(1000, Number(found.stockUnits || found.stockQuantity || 1000))
-        });
-      } else {
-        try {
-          const dbProduct = await CatalogRepository.findPublicProductByIdOrSlug(id);
-          if (dbProduct) {
-            resolvedProducts.push({
-              id: dbProduct.id,
-              title: dbProduct.title,
-              brand: dbProduct.brand || 'Bespoke',
-              category: dbProduct.category,
-              price: dbProduct.price,
-              priceNumeric: dbProduct.priceNumeric,
-              rating: dbProduct.rating,
-              reviewsCount: dbProduct.reviewsCount,
-              merchant: dbProduct.merchant,
-              merchantCity: dbProduct.merchantCity,
-              verified: dbProduct.verified,
-              badge: dbProduct.verified ? 'VERIFIED' : null,
-              badgeClass: 'badge-blue',
-              image: dbProduct.image,
-              inStock: true,
-              stockUnits: 1000,
-              specs: dbProduct.specs || {},
-              attributes: dbProduct.attributes || {}
-            });
-          }
-        } catch (e) {
-          // Continue checking remaining IDs
-        }
+      const local = index.get(id);
+      if (local) {
+        resolved.push(local);
+        continue;
+      }
+      try {
+        const dbProduct = await CatalogRepository.findPublicProductByIdOrSlug(id);
+        // The repository falls back to curated cards for product pages — by
+        // fuzzy id, and to a synthesised placeholder for an unknown id — so a
+        // page never 404s. A comparison must never rank a made-up product:
+        // only a real marketplace listing counts here (curated products were
+        // already matched by exact id above).
+        if (dbProduct && !dbProduct.curated) resolved.push(fromDatabase(dbProduct));
+        else unresolved.push({ id, reason: 'not_found' });
+      } catch (err) {
+        logger.warn(`[Comparison] lookup failed for ${id}: ${err.message}`);
+        unresolved.push({ id, reason: 'lookup_failed' });
       }
     }
 
-    if (resolvedProducts.length === 0) {
+    if (resolved.length === 0) {
       throw new NotFoundError('Products', requestedIds.join(', '));
     }
 
-    return ComparisonEngine.run(resolvedProducts, userPriorities);
+    const result = compare(resolved, { priorities: userPriorities, locale: options.locale, stats });
+    result.requestedIds = requestedIds;
+    result.unresolved = unresolved;
+    return result;
   }
 
   /**
-   * Suggests candidate products/stores/hotels to add to comparison
+   * Products (or stores/stays) a buyer can add to the comparison. Copies of the
+   * same product are listed once, and when a current product is given, the
+   * same product type comes first: those are the comparisons that can be ranked.
    */
   static async getCompareCandidates({ category, currentProductId, search, type, limit = 16 } = {}) {
-    const all = getAllEntities();
-    let candidates = [...all];
+    const { entities, index, stats } = getCatalog();
+    const current = currentProductId ? index.get(currentProductId) : null;
+    const currentType = current ? classify(current).type : null;
+    const currentKey = current ? identityKey(current) : null;
 
-    if (currentProductId) {
-      candidates = candidates.filter(p => p.id !== currentProductId && p.slug !== currentProductId);
-    }
+    let candidates = entities.filter(p => p.id !== currentProductId && p.slug !== currentProductId);
 
     if (type && type !== 'all') {
-      if (type === 'stores') {
-        candidates = candidates.filter(p => p.type === 'store');
-      } else if (type === 'hotels') {
-        candidates = candidates.filter(p => p.category?.toLowerCase() === 'hotels' || p.vertical === 'hotels');
-      } else if (type === 'products') {
-        candidates = candidates.filter(p => p.type !== 'store' && p.category?.toLowerCase() !== 'hotels');
-      }
+      if (type === 'stores') candidates = candidates.filter(p => p.entityType === 'store');
+      else if (type === 'hotels') candidates = candidates.filter(p => p.entityType === 'hotel');
+      else if (type === 'products') candidates = candidates.filter(p => p.entityType === 'product');
     }
 
     if (category && category !== 'all') {
-      const catLower = category.toLowerCase();
-      candidates = candidates.filter(p => 
-        p.category?.toLowerCase() === catLower ||
-        p.categoryLabel?.toLowerCase()?.includes(catLower) ||
-        p.subCategory?.toLowerCase().includes(catLower) ||
-        p.vertical?.toLowerCase() === catLower
+      const c = String(category).toLowerCase();
+      candidates = candidates.filter(p =>
+        String(p.category || '').toLowerCase() === c ||
+        String(p.subcategory || '').toLowerCase().includes(c) ||
+        classify(p).type === c
       );
     }
 
     if (search && String(search).trim()) {
       const q = String(search).trim().toLowerCase();
       candidates = candidates.filter(p =>
-        p.title?.toLowerCase().includes(q) ||
-        p.brand?.toLowerCase().includes(q) ||
-        p.merchant?.toLowerCase().includes(q) ||
-        p.subCategory?.toLowerCase().includes(q) ||
-        p.categoryLabel?.toLowerCase()?.includes(q)
+        String(p.title || '').toLowerCase().includes(q) ||
+        String(p.brand || '').toLowerCase().includes(q) ||
+        String((p.seller && p.seller.name) || '').toLowerCase().includes(q) ||
+        String(p.subcategory || '').toLowerCase().includes(q)
       );
     }
 
-    const sliced = candidates.slice(0, Number(limit) || 16);
+    // One entry per product identity (not per copy), never the current product.
+    const seen = new Set(currentKey ? [currentKey] : []);
+    const unique = [];
+    for (const p of candidates) {
+      const key = p.entityType === 'product' ? identityKey(p) : `entity:${p.id}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      unique.push(p);
+    }
+
+    if (currentType) {
+      const rank = (p) => (classify(p).type === currentType ? 0 : 1);
+      unique.sort((a, b) => rank(a) - rank(b));
+    }
+
+    const max = Math.max(1, Math.min(MAX_CANDIDATES, Number(limit) || 16));
+    const sliced = unique.slice(0, max);
 
     return {
-      total: candidates.length,
-      items: sliced.map(p => ({
-        id: p.id,
-        title: p.title,
-        brand: p.brand,
-        category: p.category,
-        subCategory: p.subCategory,
-        price: p.price,
-        priceNumeric: p.priceNumeric,
-        rating: p.rating,
-        reviewsCount: p.reviewsCount,
-        merchant: p.merchant,
-        merchantCity: p.merchantCity,
-        verified: p.verified,
-        badge: p.badge,
-        badgeClass: p.badgeClass,
-        image: p.image || p.coverImage,
-        type: p.type || 'product',
-        inStock: true,
-        stockUnits: Math.max(1000, Number(p.stockUnits || 1000)),
-        valueScore: ComparisonEngine.calculateValueScore(p)
-      }))
+      total: unique.length,
+      items: sliced.map(p => {
+        const { type: productType } = classify(p);
+        let valueScore = null;
+        if (p.entityType === 'product') {
+          const ts = stats.typeStats(productType);
+          if (ts) {
+            const q = qualityIndex(extract(p, profileFor(productType)), profileFor(productType), ts);
+            const v = stats.valueAssessment(productType, p.price, q);
+            valueScore = v ? v.score : null;
+          }
+        }
+        return {
+          id: p.id,
+          title: p.title,
+          brand: p.brand,
+          category: p.category,
+          subCategory: p.subcategory,
+          productType,
+          price: p.price > 0 ? p.price : (p.displayPrice || null),
+          priceNumeric: p.price,
+          rating: p.rating,
+          reviewsCount: p.reviewCount,
+          merchant: p.seller && p.seller.name,
+          merchantCity: p.seller && p.seller.city,
+          verified: Boolean(p.seller && p.seller.verified),
+          image: p.image,
+          type: p.entityType,
+          sameTypeAsCurrent: currentType ? productType === currentType : null,
+          inStock: p.inStock,
+          stockUnits: p.stockKnown ? p.stockUnits : null,
+          valueScore
+        };
+      })
     };
+  }
+
+  /** Test seam: drop the cached catalogue and statistics. */
+  static _resetCache() {
+    _catalog = null;
   }
 }
 
 module.exports = ComparisonService;
-

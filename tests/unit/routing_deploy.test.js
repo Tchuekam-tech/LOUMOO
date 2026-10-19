@@ -70,10 +70,8 @@ async function run() {
 
   /* -------------------------------------------- 1. config is generated, not hand-edited */
   const vercelText = fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8');
-  const netlifyText = fs.readFileSync(path.join(ROOT, 'netlify.toml'), 'utf8');
   assert.strictEqual(sync.buildVercel(JSON.parse(vercelText)), vercelText, 'vercel.json is out of date: run node scripts/sync_route_config.js');
-  assert.strictEqual(sync.buildNetlify(netlifyText), netlifyText, 'netlify.toml is out of date: run node scripts/sync_route_config.js');
-  console.log('    ✓ routing_deploy: vercel.json and netlify.toml are exactly what the route registry generates');
+  console.log('    ✓ routing_deploy: vercel.json is exactly what the route registry generates');
 
   const vercel = JSON.parse(vercelText);
   assert.strictEqual(vercel.trailingSlash, false);
@@ -83,7 +81,6 @@ async function run() {
     assert.ok(!/\(\?!/.test(r.source), `rewrite ${r.source} must not be a negative-lookahead catch-all`);
     assert.ok(r.source !== '/(.*)' && r.source !== '/:path*', 'no catch-all rewrite: it served HTML for missing assets');
   });
-  assert.ok(!/\[\[redirects\]\][^\[]*from\s*=\s*"\/\*"/.test(netlifyText), 'netlify.toml has no /* catch-all');
   ['index.html', '404.html', 'superadmin/index.html', 'support.js'].forEach(f =>
     assert.ok(fs.existsSync(path.join(PUBLIC, f)), `public/${f} must be published`));
   assert.strictEqual(

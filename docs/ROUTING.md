@@ -28,7 +28,7 @@ asset paths, and the rider/seller/tracking tools were overlays no URL could open
         │
         ├── build_redesign.py  ("URL routing" block)   the adapter that lets the router drive the shell
         ├── server/index.js                            the gateway: shell / 404 / redirects (Railway, local)
-        └── scripts/sync_route_config.js               generates vercel.json and netlify.toml
+        └── scripts/sync_route_config.js               generates vercel.json
 ```
 
 Rules the design keeps:
@@ -63,8 +63,8 @@ trailing slashes are repaired by redirect.
 | `/marketplace/category/:category` | screen `category` | public | `:category` -> `activeCategorySlug` | - | opens directly |
 | `/marketplace/best-picks` | screen `bestpicks` | public | - | - | opens directly |
 | `/marketplace/free-day` | screen `freeday` | public | - | - | opens directly |
-| `/compare` | screen `vs` | public | - | - | opens directly |
-| `/compare/results` | screen `vsCompare` | public | - | - | redirects to `/compare` |
+| `/compare` | screen `vs`, loader `_enterCompare` | public | - | - | opens directly |
+| `/compare/results` | screen `vsCompare`, loader `_enterCompare` | public | - | - | redirects to `/compare` |
 | `/product/:id` | screen `product`, loader `loadProductDetails` | public | `:id` -> `currentProductId` | `/listing/:id` | opens directly |
 | `/stores` | screen `store` | public | - | - | opens directly |
 | `/brand` | screen `brand` | public | - | - | opens directly |
@@ -268,7 +268,6 @@ second mechanism to keep in step. Consequences kept on purpose:
 |---|---|---|
 | **Vercel** | `vercel.json` (generated), `api/index.js`, `scripts/assemble_public.js` → `public/` | **The live host.** `loumoo.store` answers `Server: Vercel`; the static output is `public/`, `/api/*` goes to the `api/index.js` serverless function. |
 | Railway / Express | `Dockerfile`, `railway.json`, `.github/workflows/deploy.yml`, `server/index.js` | A complete second deployment of the same app (API + frontend in one container). `server/index.js` reads the registry directly. |
-| Netlify | `netlify.toml` (generated block) | Kept consistent so a Netlify deploy would behave identically. Not the live host. |
 
 > The Vercel and Railway accounts reachable from the engineering session that wrote this did not contain
 > the LOUMOO project, so the production topology above is inferred from HTTP responses
@@ -282,8 +281,8 @@ second mechanism to keep in step. Consequences kept on purpose:
 not-found screen. There is **no catch-all rewrite**: a missing script, stylesheet or image under any
 path is a 404, visible in the browser's network panel, never HTML with a 200.
 
-**Generated, not hand-edited.** `vercel.json`'s `redirects`/`rewrites`/`trailingSlash` and the marked block
-of `netlify.toml` are produced from the registry:
+**Generated, not hand-edited.** `vercel.json`'s `redirects`/`rewrites`/`trailingSlash` are produced from the
+registry. Netlify is no longer used; its `netlify.toml` was removed when it drifted from the registry.
 
 ```bash
 node scripts/sync_route_config.js          # rewrite them
