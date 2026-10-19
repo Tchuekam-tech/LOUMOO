@@ -7906,8 +7906,10 @@ class Component extends DCLogic {
   // a live listing -- with a real price. Anything else (an unknown or demo id, a
   // product with no price) is null: the caller tells the buyer it can't be
   // ordered instead of putting a guessed name and price in the bag.
-  _cartEntry = (id, name) => {
-    const p = this._resolveProduct(id);
+  _cartEntry = (id, name) => this._lineFromProduct(this._resolveProduct(id), id, name);
+  // The bag line for product `p` (already resolved, locally or by the API), or
+  // null when it isn't a product with a real price.
+  _lineFromProduct = (p, id, name) => {
     if (!p || !p.title) return null;
     const priceStr = this._payablePriceLabel(p);
     const priceXaf = this._priceToXaf(priceStr) || Number(p.priceNumeric) || Number(p.base_price_minor) || 0;
