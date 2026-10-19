@@ -672,12 +672,9 @@ class CatalogRepository {
     try { raw = (require('../dataLoader').catalogProducts || {})[card.id] || {}; } catch (e) { raw = {}; }
     return {
       ...card,
-      description: raw.description || card.tagline || 'Official available LOUMOO listing.',
+      description: raw.description || card.tagline || '',
       shortDescription: String(raw.description || card.tagline || '').slice(0, 140),
-      attributes: raw.attributes || [
-        { key: 'Garantie', val: '24 Mois pièces et main d\'œuvre officielle' },
-        { key: 'Disponibilité', val: 'En stock (1 000+ disponibles)' }
-      ],
+      attributes: raw.attributes || [],
       media: (card.images || []).map((u, i) => ({ id: card.id + '_m' + i, url: u, isCover: i === 0, displayOrder: i })),
       coverImage: card.imageUrl,
       condition: raw.conditionLabel || 'new',
