@@ -12011,13 +12011,13 @@ class Component extends DCLogic {
       .catch(err => {
         if (this._unmounted) return;
         if (err && err.status === 404) { this._showProductNotFound(); return; }
-        const fallback = this._synthesizeAvailableListing(cleanId);
+        // Offline, a server error...: the product may well exist, so offer a retry.
         this.setState({
-          currentProduct: fallback,
+          currentProduct: null,
           productLoading: false,
           productNotFound: false,
-          productError: '',
-          currentProductActiveImage: fallback.coverImage || (fallback.images && fallback.images[0]) || null
+          productError: (err && err.message) || 'We couldn’t load this product. Check your connection and try again.',
+          currentProductActiveImage: null
         });
       });
   }
