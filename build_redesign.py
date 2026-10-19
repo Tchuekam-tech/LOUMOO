@@ -11996,10 +11996,8 @@ class Component extends DCLogic {
     api.getProduct(cleanId)
       .then(res => {
         if (this._unmounted) return;
-        let prod = (res && res.data) || res;
-        if (!prod || !prod.title) {
-          prod = this._synthesizeAvailableListing(cleanId);
-        }
+        const prod = (res && res.data) || res;
+        if (!prod || !prod.title) { this._showProductNotFound(); return; }
         const activeImg = prod.coverImage || prod.image || (prod.images && prod.images[0]) || (prod.media && prod.media[0] && prod.media[0].url) || null;
         this._recoNote('view', prod, { surface: 'pdp' });
         this.setState({
@@ -12010,9 +12008,9 @@ class Component extends DCLogic {
           currentProductActiveImage: activeImg
         });
       })
-      .catch(() => {
+      .catch(err => {
         if (this._unmounted) return;
-        // Never show 404 or "Listing Unavailable" — all listings remain available
+        if (err && err.status === 404) { this._showProductNotFound(); return; }
         const fallback = this._synthesizeAvailableListing(cleanId);
         this.setState({
           currentProduct: fallback,
@@ -12022,6 +12020,21 @@ class Component extends DCLogic {
           currentProductActiveImage: fallback.coverImage || (fallback.images && fallback.images[0]) || null
         });
       });
+  }
+
+  // The id names no product (the API answered 404): say so instead of inventing
+  // one. With the router running, the address bar keeps the visitor's URL and
+  // the shared not-found screen explains it, as for a store that doesn't exist.
+  _showProductNotFound() {
+    this.setState({
+      currentProduct: null,
+      productLoading: false,
+      productNotFound: true,
+      productError: '',
+      currentProductActiveImage: null
+    });
+    const R = getRouter();
+    if (R && R.isActive() && this.state.screen === 'product') R.notFound({ kind: 'notfound', resource: 'product' });
   }
 
   selectProductImage(imgUrl) {
