@@ -18294,14 +18294,16 @@ class Component extends DCLogic {
       buyNowProduct: () => {
         const id = this.state.currentProductId;
         if (!id) { this.toast('Open a product to buy it'); return; }
+        const entry = this._cartEntry(id);
+        if (!entry) { this.toast('Sorry, this item isn’t available to order'); return; }
         const list = (this.state.cartItems || []).map((it) => ({ ...it }));
         const qtyToAdd = Math.max(1, Number(this.state.qty) || 1);
-        const existing = list.find((it) => it.id === id);
+        const existing = list.find((it) => it.id === entry.id);
         if (existing) existing.qty = Math.min(99, (Number(existing.qty) || 1) + qtyToAdd);
-        else { const entry = this._cartEntry(id); entry.qty = qtyToAdd; list.push(entry); }
+        else { entry.qty = qtyToAdd; list.push(entry); }
         this.setState({ cartItems: list });
         this._persistCart(list);
-        this._recoNote('add_to_cart', this._resolveProductItem(id) || { id: id }, { surface: 'pdp_buynow' });
+        this._recoNote('add_to_cart', this._resolveProductItem(entry.id) || { id: entry.id }, { surface: 'pdp_buynow' });
         this.go('checkout');
       },
       incCartQty: (id) => {
