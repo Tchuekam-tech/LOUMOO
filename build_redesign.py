@@ -11990,9 +11990,12 @@ class Component extends DCLogic {
       return;
     }
 
+    // An answer for a product the buyer has already left must not replace the
+    // page they are on now (a late 404 would swap it for not-found).
+    const stale = () => this._unmounted || this.state.currentProductId !== cleanId;
     api.getProduct(cleanId)
       .then(res => {
-        if (this._unmounted) return;
+        if (stale()) return;
         const prod = (res && res.data) || res;
         if (!prod || !prod.title) { this._showProductNotFound(); return; }
         const activeImg = prod.coverImage || prod.image || (prod.images && prod.images[0]) || (prod.media && prod.media[0] && prod.media[0].url) || null;
@@ -12006,7 +12009,7 @@ class Component extends DCLogic {
         });
       })
       .catch(err => {
-        if (this._unmounted) return;
+        if (stale()) return;
         if (err && err.status === 404) { this._showProductNotFound(); return; }
         // Offline, a server error...: the product may well exist, so offer a retry.
         this.setState({
