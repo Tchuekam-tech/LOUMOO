@@ -46,7 +46,9 @@ const handleCompare = async (req, res, next) => {
       }
     }
 
-    const comparison = await ComparisonService.getComparison(ids, priorities);
+    // Verdict language: ?lang=fr|en, else the browser's Accept-Language.
+    const locale = req.query.lang || req.query.locale || String(req.headers['accept-language'] || '').slice(0, 2);
+    const comparison = await ComparisonService.getComparison(ids, priorities, { locale });
 
     AnalyticsService.track(req.userId || 'anonymous', 'products_compared', {
       productIds: ids,
@@ -65,11 +67,12 @@ router.get('/products/compare', handleCompare);
 // GET /api/v1/catalog/compare/candidates OR /api/v1/products/compare/candidates
 const handleCompareCandidates = async (req, res, next) => {
   try {
-    const { category, currentId, search, limit } = req.query;
+    const { category, currentId, search, limit, type } = req.query;
     const candidates = await ComparisonService.getCompareCandidates({
       category,
       currentProductId: currentId,
       search,
+      type,
       limit: limit ? parseInt(limit, 10) : 8
     });
 

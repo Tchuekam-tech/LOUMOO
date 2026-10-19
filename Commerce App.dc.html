@@ -44,6 +44,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="./src/styles/hotel.css">
+
+<script defer src="./src/services/compareView.js"></script>
+<link rel="stylesheet" href="./src/styles/compare.css">
 <style>
   /* Anti-flash / unmounted protection: hide raw uncompiled template elements until React mounts */
   x-dc { display: none !important; }
@@ -9639,22 +9642,13 @@ class Component extends DCLogic {
     screen: (typeof window !== 'undefined' && window.LoumooRouter && window.LoumooRouter.initialScreen) ? window.LoumooRouter.initialScreen() : 'home', stack: [], cart: 0, cartItems: [], orders: [], lastOrder: null, lastOrders: [], placingOrder: false, orderError: '', orderErrorItemIds: [], vs: 2, toast: '', following: false, saved: false,
     sidebarCollapsed: true,
     vsFilterMode: 'all',
-    vsPriority: 'perf',
+    vsPriority: 'performance',
     vsResult: null,
     vsResultLoading: false,
-    vsCompareIds: ['elec-1', 'elec-macbook-pro'],
+    vsResultError: '',
+    vsCompareIds: ['laptop_apple_apple_macbook_air_m2_13_6_pouces', 'laptop_apple_apple_macbook_pro_14_m3_pro_gris'],
     vsPickerQuery: '',
     vsPickerCat: 'all',
-    vsSlot1Active: true,
-    vsSlot2Active: true,
-    vsSlot3Active: false,
-    vsSlot4Active: false,
-    vsSecPerfOpen: true,
-    vsSecDispOpen: true,
-    vsSecBattOpen: true,
-    vsSecBuildOpen: true,
-    vsSecPortsOpen: true,
-    vsSecCommOpen: true,
     heroSlide: 0,
     activeVideoModal: null,
     productWishlist: {},
@@ -11494,8 +11488,8 @@ class Component extends DCLogic {
       }
     } else if (screen === 'chat') {
       this.loadConversations({ quiet: this.state.conversationsLoaded });
-    } else if (screen === 'vsCompare') {
-      this.runCompare();
+    } else if (screen === 'vs' || screen === 'vsCompare') {
+      this._enterCompare();
     } else if (screen === 'superAdmin') {
       this.loadAdminData();
     } else if (screen === 'orders' || screen === 'orderDetail') {
@@ -14258,400 +14252,134 @@ class Component extends DCLogic {
 
   _resolveCompareEntity(idOrObj) {
     if (!idOrObj) return null;
-    const live = this._searchExperience && this._searchExperience.compareEntities.get(typeof idOrObj === 'object' ? idOrObj.id : String(idOrObj));
-    if (live) return live;
-    if (typeof idOrObj === 'object' && idOrObj.id) {
-      return Object.assign({
-        inStock: true,
-        stockUnits: 1000,
-        stock: 1000,
-        stockLabel: 'En stock (1 000+ disponibles)',
-        rating: 4.8,
-        merchant: 'Verified Merchant'
-      }, idOrObj);
+    const id = String(typeof idOrObj === 'object' ? idOrObj.id : idOrObj).trim();
+    if (!id) return null;
+    const r = this.state.vsResult;
+    const done = r && Array.isArray(r.products) ? r.products.find(p => p.id === id) : null;
+    const view = typeof LoumooCompareView !== 'undefined' ? LoumooCompareView : null;
+    if (done) {
+      return {
+        id, title: done.shortTitle || done.title,
+        category: view ? view.typeLabel(done.productType) : (done.category || ''),
+        price: done.priceNumeric ? 'XAF ' + Number(done.priceNumeric).toLocaleString('en-US') : (done.price || ''),
+        merchant: [done.merchant, done.merchantCity].filter(Boolean).join(' · '),
+        image: done.image || ''
+      };
     }
-    const id = String(idOrObj).trim();
-    const KNOWN = {
-      'elec-1': {
-        id: 'elec-1',
-        title: 'MacBook Air 13” (M2)',
-        brand: 'Apple',
-        category: 'Apple Laptops',
-        price: 'XAF 745 000',
-        priceNumeric: 745000,
-        spec: 'Apple M2 · 8GB · 1.24 kg · 18h',
-        merchant: 'Orca Electronics',
-        rating: 4.9,
-        badge: 'Best value',
-        image: './Assets/telephone&PC/ordinateurPortable.image/apple/apple1.jfif',
-        inStock: true,
-        stockUnits: 1000,
-        stock: 1000,
-        stockLabel: 'En stock (1 000+ disponibles)'
-      },
-      'elec-macbook-pro': {
-        id: 'elec-macbook-pro',
-        title: 'MacBook Pro 14” (M3 Pro)',
-        brand: 'Apple',
-        category: 'Apple Laptops',
-        price: 'XAF 1 250 000',
-        priceNumeric: 1250000,
-        spec: 'Apple M3 Pro · 18GB · 120Hz XDR',
-        merchant: 'KamerTech Direct',
-        rating: 5.0,
-        badge: 'Best overall',
-        image: './Assets/telephone&PC/ordinateurPortable.image/apple/apple2.jfif',
-        inStock: true,
-        stockUnits: 1000,
-        stock: 1000,
-        stockLabel: 'En stock (1 000+ disponibles)'
-      },
-      'elec-lenovo-x1': {
-        id: 'elec-lenovo-x1',
-        title: 'Lenovo ThinkPad X1 Carbon',
-        brand: 'Lenovo',
-        category: 'Windows Laptops',
-        price: 'XAF 890 000',
-        priceNumeric: 890000,
-        spec: 'Intel i7 · 16GB · 1.12 kg · Carbon',
-        merchant: 'KamerTech Direct',
-        rating: 4.8,
-        badge: 'Ultralight',
-        image: './Assets/telephone&PC/ordinateurPortable.image/lenovo/lenovo1.jfif',
-        inStock: true,
-        stockUnits: 1000,
-        stock: 1000,
-        stockLabel: 'En stock (1 000+ disponibles)'
-      },
-      'elec-dell-xps': {
-        id: 'elec-dell-xps',
-        title: 'Dell XPS 15 (RTX 4060)',
-        brand: 'Dell',
-        category: 'Windows Workstations',
-        price: 'XAF 1 180 000',
-        priceNumeric: 1180000,
-        spec: '32GB · 1TB · RTX 4060 · OLED',
-        merchant: 'KamerTech Direct',
-        rating: 4.9,
-        badge: 'Powerhouse',
-        image: './Assets/telephone&PC/ordinateurPortable.image/dell/dell1.jfif',
-        inStock: true,
-        stockUnits: 1000,
-        stock: 1000,
-        stockLabel: 'En stock (1 000+ disponibles)'
-      },
-      'store_orca_electronics': {
-        id: 'store_orca_electronics',
-        title: 'Orca Electronics',
-        brand: 'Verified Merchant',
-        category: 'Verified Store',
-        price: '1 420+ Products',
-        priceNumeric: 1420,
-        spec: 'Akwa Douala · 2h Express · Tier-1 Escrow',
-        merchant: 'Akwa Boulevard, Douala',
-        rating: 4.9,
-        badge: 'Top Seller',
-        image: './Assets/telephone&PC/phoneBrands.image/139611657203176408.jfif',
-        inStock: true,
-        stockUnits: 1000,
-        stock: 1000,
-        stockLabel: 'Ouvert · Stock garanti (1 000+)'
-      },
-      'store_kamertech_direct': {
-        id: 'store_kamertech_direct',
-        title: 'KamerTech Direct',
-        brand: 'Verified Merchant',
-        category: 'Verified Store',
-        price: '620+ Products',
-        priceNumeric: 620,
-        spec: 'Bastos Yaoundé · Same-Day · 36m ProSupport',
-        merchant: 'Bastos, Yaoundé',
-        rating: 5.0,
-        badge: 'Pro Partner',
-        image: './Assets/telephone&PC/ordinateurPortable.image/dell/dell1.jfif',
-        inStock: true,
-        stockUnits: 1000,
-        stock: 1000,
-        stockLabel: 'Ouvert · Stock garanti (1 000+)'
-      },
-      'store_digital_corner': {
-        id: 'store_digital_corner',
-        title: 'Digital Corner',
-        brand: 'Verified Merchant',
-        category: 'Verified Store',
-        price: '850+ Products',
-        priceNumeric: 850,
-        spec: 'Bonapriso Douala · Apple Specialist · 3h Express',
-        merchant: 'Bonapriso, Douala',
-        rating: 4.8,
-        badge: 'Verified',
-        image: './Assets/telephone&PC/phoneBrands.image/139611657203176408.jfif',
-        inStock: true,
-        stockUnits: 1000,
-        stock: 1000,
-        stockLabel: 'Ouvert · Stock garanti (1 000+)'
-      },
-      'hotel-1': {
-        id: 'hotel-1',
-        title: 'Sawa Luxury Hotel',
-        brand: 'Sawa Hotels Group',
-        category: 'Hotels & Stays',
-        price: 'XAF 65 000 / nuit',
-        priceNumeric: 65000,
-        spec: '5-Star · Ocean & Port View · 24/7 Power',
-        merchant: 'Bonanjo, Douala',
-        rating: 4.8,
-        badge: 'Luxury',
-        image: './Assets/hotel1.jpg',
-        inStock: true,
-        stockUnits: 1000,
-        stock: 1000,
-        stockLabel: 'Chambres disponibles (1 000+)'
-      },
-      'hotel-2': {
-        id: 'hotel-2',
-        title: 'Résidence Akwa Palm',
-        brand: 'Akwa Hospitality',
-        category: 'Hotels & Stays',
-        price: 'XAF 38 500 / nuit',
-        priceNumeric: 38500,
-        spec: 'Executive Suite · Central Akwa · High-speed Wi-Fi',
-        merchant: 'Akwa, Douala',
-        rating: 4.5,
-        badge: 'Value Stay',
-        image: './Assets/hotel2.jpg',
-        inStock: true,
-        stockUnits: 1000,
-        stock: 1000,
-        stockLabel: 'Chambres disponibles (1 000+)'
-      },
-      'cat-prod-1': {
-        id: 'cat-prod-1',
-        title: 'Tecno Camon 50 Pro 5G',
-        brand: 'Tecno',
-        category: 'Smartphones',
-        price: 'XAF 245 000',
-        priceNumeric: 245000,
-        spec: '256GB · 12GB RAM · 50MP OIS · 5000mAh',
-        merchant: 'Orca Electronics',
-        rating: 4.8,
-        badge: 'Hot Seller',
-        image: './Assets/telephone&PC/phoneBrands.image/139611657203176408.jfif',
-        inStock: true,
-        stockUnits: 1000,
-        stock: 1000,
-        stockLabel: 'En stock (1 000+ disponibles)'
-      },
-      'cat-prod-2': {
-        id: 'cat-prod-2',
-        title: 'Google Pixel 8 Pro Unlocked',
-        brand: 'Google',
-        category: 'Smartphones',
-        price: 'XAF 480 000',
-        priceNumeric: 480000,
-        spec: '128GB · Tensor G3 · 50MP Pro Camera · 120Hz LTPO',
-        merchant: 'Digital Corner',
-        rating: 4.9,
-        badge: 'Top Camera',
-        image: './Assets/telephone&PC/phoneBrands.image/139611657203176408.jfif',
-        inStock: true,
-        stockUnits: 1000,
-        stock: 1000,
-        stockLabel: 'En stock (1 000+ disponibles)'
-      }
+    const live = this._searchExperience && this._searchExperience.compareEntities.get(id);
+    if (live) return { id, title: live.title, category: live.categoryLabel || live.category || '', price: live.price || '', merchant: live.merchant || live.merchantCity || '', image: live.image || '' };
+    if (typeof idOrObj === 'object' && idOrObj.title) return { id, title: idOrObj.title, category: idOrObj.category || '', price: idOrObj.price || '', merchant: idOrObj.merchant || '', image: idOrObj.image || '' };
+    const c = typeof window !== 'undefined' && window.PRODUCTS_DATA ? window.PRODUCTS_DATA[id] : null;
+    if (c) return { id, title: c.title, category: c.categoryLabel || c.category || '', price: c.price || '', merchant: c.storeName || '', image: c.coverImage || '' };
+    const PRESET_TITLES = {
+      'laptop_apple_apple_macbook_air_m2_13_6_pouces': 'Apple MacBook Air M2 13.6 pouces Minuit',
+      'laptop_apple_apple_macbook_pro_14_m3_pro_gris': 'Apple MacBook Pro 14 M3 Pro Gris Sidéral',
+      'elec-1': 'MacBook Air 13" (M2)',
+      'elec-macbook-pro': 'MacBook Pro 14" (M3 Pro)',
+      'elec-thinkpad': 'Lenovo ThinkPad X1 Carbon Gen 11',
+      'elec-dell-xps': 'Dell XPS 15 (OLED 3.5K)',
+      'phone_tecno_tecno_camon_50_pro_5g_256gb_12gb_': 'Tecno Camon 50 Pro 5G 256GB / 12GB RAM',
+      'phone_google_google_pixel_8_pro_128gb_unlocke': 'Google Pixel 8 Pro 128GB Unlocked Android 14',
+      'store_orca_electronics': 'Orca Electronics',
+      'store_kamertech_direct': 'KamerTech Direct',
+      'hotel-1': 'Sawa Luxury Hotel',
+      'hotel-2': 'Résidence Akwa Palm'
     };
-    if (KNOWN[id]) return Object.assign({}, KNOWN[id]);
+    return { id, title: PRESET_TITLES[id] || 'Loading details…', category: '', price: '', merchant: '', image: '' };
+  }
 
-    if (typeof window !== 'undefined' && window.PRODUCTS_DATA) {
-      for (const k in window.PRODUCTS_DATA) {
-        const p = window.PRODUCTS_DATA[k];
-        if (p && (p.id === id || p.slug === id || String(p.id) === id)) {
-          return {
-            id: p.id,
-            title: p.title || p.name,
-            brand: p.brand || 'LOUMOO',
-            category: p.category || 'Products',
-            price: typeof p.price === 'number' ? 'XAF ' + p.price.toLocaleString('fr-FR') : (p.price || 'XAF 0'),
-            priceNumeric: Number(p.priceNumeric || p.price || 0),
-            spec: p.specsSummary || (p.brand + ' · Guaranteed Authentic'),
-            merchant: p.storeName || p.merchant || 'Verified Merchant',
-            rating: p.rating || 4.8,
-            badge: p.badge || null,
-            image: p.coverImage || p.image || './Assets/telephone&PC/phoneBrands.image/139611657203176408.jfif',
-            inStock: true,
-            stockUnits: 1000,
-            stock: 1000,
-            stockLabel: 'En stock (1 000+ disponibles)'
-          };
-        }
-      }
-    }
-    return {
-      id: id,
-      title: id.replace(/[-_]/g, ' '),
-      brand: 'LOUMOO',
-      category: 'Catalog',
-      price: 'XAF 150 000',
-      priceNumeric: 150000,
-      spec: '100% Genuine · Escrow Protected',
-      merchant: 'Verified Merchant',
-      rating: 4.8,
-      badge: null,
-      image: './Assets/telephone&PC/phoneBrands.image/139611657203176408.jfif',
-      inStock: true,
-      stockUnits: 1000,
-      stock: 1000,
-      stockLabel: 'En stock (1 000+ disponibles)'
-    };
+  _setCompareIds(ids, note) {
+    const next = ids.slice(0, 4);
+    this.setState({ vsCompareIds: next, vs: next.length, vsResultError: '' }, () => this.runCompare());
+    if (note) this.toast(note);
   }
 
   addToCompare(idOrObj) {
     const item = this._resolveCompareEntity(idOrObj);
-    if (!item || !item.id) return;
+    if (!item) return;
     const current = (this.state.vsCompareIds || []).slice();
-    if (current.includes(item.id)) {
-      this.toast('Item is already in comparison');
-      return;
-    }
-    if (current.length >= 4) {
-      this.toast('Maximum 4 items can be compared side-by-side');
-      return;
-    }
-    current.push(item.id);
-    const nextState = {
-      vsCompareIds: current,
-      vs: current.length
-    };
-    if (item.id === 'elec-1') nextState.vsSlot1Active = true;
-    if (item.id === 'elec-macbook-pro') nextState.vsSlot2Active = true;
-    if (item.id === 'elec-lenovo-x1') nextState.vsSlot3Active = true;
-    if (item.id === 'elec-dell-xps') nextState.vsSlot4Active = true;
-    this.setState(nextState, () => this.runCompare());
-    this.toast('Added ' + (item.title || 'item') + ' to comparison');
+    if (current.includes(item.id)) { this.toast('Already in this comparison'); return; }
+    if (current.length >= 4) { this.toast('You can compare up to 4 items'); return; }
+    this._setCompareIds(current.concat([item.id]), 'Added ' + item.title);
   }
 
   removeFromCompare(id) {
-    const current = (this.state.vsCompareIds || []).filter(x => x !== id);
-    const nextState = {
-      vsCompareIds: current,
-      vs: current.length
-    };
-    if (id === 'elec-1') nextState.vsSlot1Active = false;
-    if (id === 'elec-macbook-pro') nextState.vsSlot2Active = false;
-    if (id === 'elec-lenovo-x1') nextState.vsSlot3Active = false;
-    if (id === 'elec-dell-xps') nextState.vsSlot4Active = false;
-    this.setState(nextState, () => this.runCompare());
-    this.toast('Removed from comparison');
+    this._setCompareIds((this.state.vsCompareIds || []).filter(x => x !== id), 'Removed from comparison');
   }
 
   clearCompare() {
-    this.setState({
-      vs: 0,
-      vsCompareIds: [],
-      vsSlot1Active: false,
-      vsSlot2Active: false,
-      vsSlot3Active: false,
-      vsSlot4Active: false
-    });
-    this.toast('Comparison workspace cleared');
+    this._compareSeq = (this._compareSeq || 0) + 1;
+    this.setState({ vs: 0, vsCompareIds: [], vsResult: null, vsResultLoading: false, vsResultError: '' });
+    this.toast('Comparison cleared');
   }
 
   loadVsPreset(presetKey) {
-    let ids = ['elec-1', 'elec-macbook-pro'];
-    let name = 'Top Ultrabooks';
-    let s1 = false, s2 = false, s3 = false, s4 = false;
-    if (presetKey === 'ultrabooks') {
-      ids = ['elec-1', 'elec-macbook-pro'];
-      s1 = true; s2 = true;
-      name = 'Top Ultrabooks (MacBook Air vs Pro)';
-    } else if (presetKey === 'stores') {
-      ids = ['store_orca_electronics', 'store_kamertech_direct'];
-      name = 'Verified Tech Stores (Orca vs KamerTech)';
-    } else if (presetKey === 'stays') {
-      ids = ['hotel-1', 'hotel-2'];
-      name = 'Douala Luxury Stays (Sawa vs Akwa Palm)';
-    } else if (presetKey === 'smartphones') {
-      ids = ['cat-prod-1', 'cat-prod-2'];
-      name = 'Flagship Smartphones (Tecno Camon vs Pixel 8 Pro)';
-    }
-    this.setState({
-      vsCompareIds: ids,
-      vs: ids.length,
-      vsSlot1Active: s1,
-      vsSlot2Active: s2,
-      vsSlot3Active: s3,
-      vsSlot4Active: s4
-    }, () => this.runCompare());
-    this.toast('Loaded preset: ' + name);
+    const PRESETS = {
+      ultrabooks: ['laptop_apple_apple_macbook_air_m2_13_6_pouces', 'laptop_apple_apple_macbook_pro_14_m3_pro_gris'],
+      stores: ['store_orca_electronics', 'store_kamertech_direct'],
+      stays: ['hotel-1', 'hotel-2'],
+      smartphones: ['phone_tecno_tecno_camon_50_pro_5g_256gb_12gb_', 'phone_google_google_pixel_8_pro_128gb_unlocke']
+    };
+    this._setCompareIds(PRESETS[presetKey] || PRESETS.ultrabooks);
   }
 
-  searchCompareCandidates(query, cat) {
-    const q = (query || '').toLowerCase().trim();
-    const category = cat || this.state.vsPickerCat || 'all';
-    const ALL_CANDIDATES = [
-      { id: 'elec-1', title: 'MacBook Air 13” (M2)', cat: 'laptops', meta: 'Apple M2 · 8GB · 1.24 kg · XAF 745 000', image: './Assets/telephone&PC/ordinateurPortable.image/apple/apple1.jfif', stockLabel: 'En stock (1 000+ pcs)' },
-      { id: 'elec-macbook-pro', title: 'MacBook Pro 14” (M3 Pro)', cat: 'laptops', meta: 'Apple M3 Pro · 18GB · XAF 1 250 000', image: './Assets/telephone&PC/ordinateurPortable.image/apple/apple2.jfif', stockLabel: 'En stock (1 000+ pcs)' },
-      { id: 'elec-lenovo-x1', title: 'Lenovo ThinkPad X1 Carbon', cat: 'laptops', meta: 'Intel i7 · 16GB · 1.12 kg · XAF 890 000', image: './Assets/telephone&PC/ordinateurPortable.image/lenovo/lenovo1.jfif', stockLabel: 'En stock (1 000+ pcs)' },
-      { id: 'elec-dell-xps', title: 'Dell XPS 15 OLED (3.5K)', cat: 'laptops', meta: '32GB · RTX 4060 · XAF 1 180 000', image: './Assets/telephone&PC/ordinateurPortable.image/dell/dell1.jfif', stockLabel: 'En stock (1 000+ pcs)' },
-      { id: 'cat-prod-1', title: 'Tecno Camon 50 Pro 5G', cat: 'phones', meta: '256GB · 12GB RAM · XAF 245 000', image: './Assets/telephone&PC/phoneBrands.image/139611657203176408.jfif', stockLabel: 'En stock (1 000+ pcs)' },
-      { id: 'cat-prod-2', title: 'Google Pixel 8 Pro Unlocked', cat: 'phones', meta: '128GB · Tensor G3 · XAF 480 000', image: './Assets/telephone&PC/phoneBrands.image/139611657203176408.jfif', stockLabel: 'En stock (1 000+ pcs)' },
-      { id: 'store_orca_electronics', title: 'Orca Electronics', cat: 'stores', meta: 'Akwa Douala · ★ 4.9 · 1 420+ Products', image: './Assets/telephone&PC/phoneBrands.image/139611657203176408.jfif', stockLabel: 'Ouvert · Stock 1 000+ pcs' },
-      { id: 'store_kamertech_direct', title: 'KamerTech Direct', cat: 'stores', meta: 'Bastos Yaoundé · ★ 5.0 · 620+ Products', image: './Assets/telephone&PC/ordinateurPortable.image/dell/dell1.jfif', stockLabel: 'Ouvert · Stock 1 000+ pcs' },
-      { id: 'store_digital_corner', title: 'Digital Corner', cat: 'stores', meta: 'Bonapriso Douala · ★ 4.8 · 850+ Products', image: './Assets/telephone&PC/phoneBrands.image/139611657203176408.jfif', stockLabel: 'Ouvert · Stock 1 000+ pcs' },
-      { id: 'hotel-1', title: 'Sawa Luxury Hotel Douala', cat: 'hotels', meta: 'Bonanjo Douala · ★ 4.8 · XAF 65 000 / nuit', image: './Assets/hotel1.jpg', stockLabel: 'Chambres 1 000+ dispos' },
-      { id: 'hotel-2', title: 'Résidence Akwa Palm', cat: 'hotels', meta: 'Akwa Douala · ★ 4.5 · XAF 38 500 / nuit', image: './Assets/hotel2.jpg', stockLabel: 'Chambres 1 000+ dispos' }
-    ];
-    return ALL_CANDIDATES.filter(c => {
-      const matchCat = (category === 'all' || c.cat === category);
-      if (!matchCat) return false;
-      if (!q) return true;
-      return c.title.toLowerCase().includes(q) || c.meta.toLowerCase().includes(q);
-    });
+  searchCompareCandidates() {
+    return [];
   }
 
   runCompare() {
-    const ids = this.state.vsCompareIds || ['elec-1', 'elec-macbook-pro'];
-    if (!ids.length) {
-      this.setState({ vsResult: null, vsResultLoading: false });
+    const ids = (this.state.vsCompareIds || []).slice(0, 4);
+    this._compareSeq = (this._compareSeq || 0) + 1;
+    const seq = this._compareSeq;
+    if (ids.length < 2) {
+      this.setState({ vsResult: null, vsResultLoading: false, vsResultError: '' });
       return;
     }
-    const priMap = { perf: 'performance', price: 'price', display: 'display', battery: 'battery', portability: 'portability', warranty: 'warranty' };
-    const key = priMap[this.state.vsPriority] || 'value';
-    const priorities = { price: 3, performance: 3, battery: 3, display: 3, portability: 3, warranty: 3, delivery: 3, value: 3 };
-    priorities[key] = 5;
-    this.setState({ vsResultLoading: true });
-
-    const fallbackRec = () => {
-      if (this._unmounted) return;
-      const first = this._resolveCompareEntity(ids[0]);
-      this.setState({
-        vsResult: {
-          recommendation: {
-            recommendedId: (first && first.id) || ids[0],
-            recommendedTitle: (first && first.title) || 'Top Match',
-            matchPercentage: 94,
-            topReasons: ['Best balance of performance and value', 'Guaranteed stock (1 000+ pcs available)']
-          }
-        },
-        vsResultLoading: false
-      });
-    };
-
-    let api;
-    try { api = typeof getApi === 'function' ? getApi() : null; } catch(e) {}
+    const facet = this.state.vsPriority === 'perf' ? 'performance' : (this.state.vsPriority || 'performance');
+    const priorities = {};
+    ['price', 'performance', 'battery', 'display', 'portability', 'warranty', 'camera', 'audio', 'capacity', 'durability', 'connectivity', 'fit', 'value', 'reputation', 'trust'].forEach(f => { priorities[f] = 1; });
+    priorities[facet] = 5;
+    let api = null;
+    try { api = typeof getApi === 'function' ? getApi() : null; } catch (e) { api = null; }
     if (!api || !api.compareProducts) {
-      fallbackRec();
+      this.setState({ vsResultLoading: false, vsResultError: 'Comparison is not available right now.' });
       return;
     }
-    api.compareProducts(ids, priorities)
+    const lang = (typeof document !== 'undefined' && document.documentElement && document.documentElement.lang) || 'en';
+    this.setState({ vsResultLoading: true, vsResultError: '' });
+    api.compareProducts(ids, priorities, lang)
       .then((res) => {
-        if (this._unmounted) return;
-        const data = (res && res.recommendation) ? res : (res && res.data) ? res.data : res;
-        this.setState({ vsResult: data || null, vsResultLoading: false });
+        if (this._unmounted || seq !== this._compareSeq) return;
+        const data = res && res.products ? res : (res && res.data) || null;
+        this.setState({ vsResult: data, vsResultLoading: false, vsResultError: data ? '' : 'The comparison came back empty. Try again.' });
       })
-      .catch(() => {
-        fallbackRec();
+      .catch((err) => {
+        if (this._unmounted || seq !== this._compareSeq) return;
+        this.setState({ vsResultLoading: false, vsResultError: (err && err.message) || 'We could not compare these items. Try again.' });
       });
+  }
+
+  _enterCompare() {
+    const ids = (this.state.vsCompareIds || []).slice(0, 4);
+    const r = this.state.vsResult;
+    const answered = r && Array.isArray(r.requestedIds) && r.requestedIds.join('|') === ids.join('|');
+    if (answered || this.state.vsResultLoading) return undefined;
+    this.runCompare();
+    return undefined;
+  }
+
+  _compareView() {
+    const key = [this.state.vsResult, this.state.vsFilterMode, this.state.vsResultLoading, this.state.vsResultError];
+    const c = this._vsViewCache;
+    if (c && c.key.every((v, i) => v === key[i])) return c.view;
+    const view = typeof LoumooCompareView !== 'undefined'
+      ? LoumooCompareView.build(this.state.vsResult, { filter: this.state.vsFilterMode, loading: this.state.vsResultLoading, error: this.state.vsResultError })
+      : { heroCards: [], specHead: [], specGroups: [], bars: [], reasons: [], bestFor: [], priorityChips: [], dataNotes: [], buyRows: [] };
+    view.priorityChips = (view.priorityChips || []).map(ch => Object.assign({}, ch, {
+      cls: 'cmp-pri' + ((this.state.vsPriority === 'perf' ? 'performance' : this.state.vsPriority) === ch.key ? ' is-active' : '')
+    }));
+    this._vsViewCache = { key, view };
+    return view;
   }
 
   _ensureCatalogData() {
@@ -19753,85 +19481,17 @@ class Component extends DCLogic {
       vsFilterAll: this.state.vsFilterMode === 'all',
       vsFilterDiff: this.state.vsFilterMode === 'diff',
       vsFilterWinners: this.state.vsFilterMode === 'winners',
-      setVsFilterAll: () => { this.setState({ vsFilterMode: 'all' }); this.toast('Showing all 9 specification categories'); },
-      setVsFilterDiff: () => { this.setState({ vsFilterMode: 'diff' }); this.toast('Filtered: showing differences only'); },
-      setVsFilterWinners: () => { this.setState({ vsFilterMode: 'winners' }); this.toast('Filtered: highlighting key winners'); },
+      setVsFilterAll: () => this.setState({ vsFilterMode: 'all' }),
+      setVsFilterDiff: () => this.setState({ vsFilterMode: 'diff' }),
+      setVsFilterWinners: () => this.setState({ vsFilterMode: 'winners' }),
 
-      vsPriPerf: this.state.vsPriority === 'perf',
-      vsPriPrice: this.state.vsPriority === 'price',
-      vsPriDisp: this.state.vsPriority === 'display',
-      vsPriBatt: this.state.vsPriority === 'battery',
-      vsPriPort: this.state.vsPriority === 'portability',
-      vsPriWarr: this.state.vsPriority === 'warranty',
-
-      setVsPriorityPerf: () => { this.setState({ vsPriority: 'perf' }, () => this.runCompare()); },
-      setVsPriorityPrice: () => { this.setState({ vsPriority: 'price' }, () => this.runCompare()); },
-      setVsPriorityDisp: () => { this.setState({ vsPriority: 'display' }, () => this.runCompare()); },
-      setVsPriorityBatt: () => { this.setState({ vsPriority: 'battery' }, () => this.runCompare()); },
-      setVsPriorityPort: () => { this.setState({ vsPriority: 'portability' }, () => this.runCompare()); },
-      setVsPriorityWarr: () => { this.setState({ vsPriority: 'warranty' }, () => this.runCompare()); },
-      vsResultLoading: Boolean(this.state.vsResultLoading),
-      vsRecommendTitle: (() => {
-        const r = this.state.vsResult && this.state.vsResult.recommendation;
-        return (r && r.recommendedTitle) ? String(r.recommendedTitle).replace(/\s+\d+GB.*/, '').trim() : '';
-      })(),
-      vsRecommendMatch: (() => {
-        const r = this.state.vsResult && this.state.vsResult.recommendation;
-        return (r && r.matchPercentage != null) ? (r.matchPercentage + '% match') : '';
-      })(),
-      vsRecommendReason: (() => {
-        const r = this.state.vsResult && this.state.vsResult.recommendation;
-        return (r && Array.isArray(r.topReasons) && r.topReasons.length) ? r.topReasons.slice(0, 2).join(' · ') : '';
-      })(),
-
-      vsSlot1Active: this.state.vsSlot1Active !== false,
-      vsSlot2Active: this.state.vsSlot2Active !== false,
-      vsSlot3Active: Boolean(this.state.vsSlot3Active),
-      vsSlot4Active: Boolean(this.state.vsSlot4Active),
-      vsEmpty: !this.state.vsSlot1Active && !this.state.vsSlot2Active && !this.state.vsSlot3Active && !this.state.vsSlot4Active && (!this.state.vsCompareIds || this.state.vsCompareIds.length === 0),
-
-      removeVsSlot1: () => {
-        const nextIds = (this.state.vsCompareIds || []).filter(x => x !== 'elec-1');
-        this.setState(st => ({ vsSlot1Active: false, vs: Math.max(0, st.vs - 1), vsCompareIds: nextIds }));
-        this.toast('Removed MacBook Air from comparison');
-      },
-      removeVsSlot2: () => {
-        const nextIds = (this.state.vsCompareIds || []).filter(x => x !== 'elec-macbook-pro');
-        this.setState(st => ({ vsSlot2Active: false, vs: Math.max(0, st.vs - 1), vsCompareIds: nextIds }));
-        this.toast('Removed MacBook Pro from comparison');
-      },
-      toggleVsSlot3: () => {
-        const next = !this.state.vsSlot3Active;
-        const currentIds = (this.state.vsCompareIds || []).slice();
-        const nextIds = next ? (!currentIds.includes('elec-lenovo-x1') ? currentIds.concat(['elec-lenovo-x1']) : currentIds) : currentIds.filter(x => x !== 'elec-lenovo-x1');
-        this.setState(st => ({ vsSlot3Active: next, vs: next ? st.vs + 1 : Math.max(0, st.vs - 1), vsCompareIds: nextIds }));
-        this.toast(next ? 'Added Lenovo ThinkPad X1 to comparison' : 'Removed ThinkPad X1');
-      },
-      addVsThinkPad: () => {
-        const currentIds = (this.state.vsCompareIds || []).slice();
-        const nextIds = !currentIds.includes('elec-lenovo-x1') ? currentIds.concat(['elec-lenovo-x1']) : currentIds;
-        this.setState(st => ({ vsSlot3Active: true, vs: st.vsSlot3Active ? st.vs : st.vs + 1, vsCompareIds: nextIds }));
-        this.toast('Added Lenovo ThinkPad X1 Carbon Gen 11');
-      },
-      addVsXps: () => {
-        const currentIds = (this.state.vsCompareIds || []).slice();
-        const nextIds = !currentIds.includes('elec-dell-xps') ? currentIds.concat(['elec-dell-xps']) : currentIds;
-        this.setState(st => ({ vsSlot4Active: true, vs: st.vsSlot4Active ? st.vs : st.vs + 1, vsCompareIds: nextIds }));
-        this.toast('Added Dell XPS 15 OLED (3.5K)');
-      },
-      removeVsSlot4: () => {
-        const nextIds = (this.state.vsCompareIds || []).filter(x => x !== 'elec-dell-xps');
-        this.setState(st => ({ vsSlot4Active: false, vs: Math.max(0, st.vs - 1), vsCompareIds: nextIds }));
-        this.toast('Removed Dell XPS 15 from comparison');
-      },
-      clearVsAll: () => {
-        this.setState({ vs: 0, vsSlot1Active: false, vsSlot2Active: false, vsSlot3Active: false, vsSlot4Active: false, vsCompareIds: [] });
-        this.toast('Comparison workspace cleared');
-      },
-      resetVsDefaults: () => {
-        this.setState({ vs: 2, vsSlot1Active: true, vsSlot2Active: true, vsSlot3Active: false, vsSlot4Active: false, vsCompareIds: ['elec-1', 'elec-macbook-pro'] });
-        this.toast('Restored MacBook Air vs MacBook Pro comparison');
-      },
+      vsPriority: this.state.vsPriority === 'perf' ? 'performance' : this.state.vsPriority,
+      setVsPriority: (key) => this.setState({ vsPriority: key }, () => this.runCompare()),
+      vsView: this._compareView(),
+      retryCompare: () => this.runCompare(),
+      vsEmpty: !(this.state.vsCompareIds || []).length,
+      clearVsAll: () => this.clearCompare(),
+      resetVsDefaults: () => this.loadVsPreset('ultrabooks'),
 
       addToCompare: (id) => this.addToCompare(id),
       removeFromCompare: (id) => this.removeFromCompare(id),
@@ -19841,85 +19501,12 @@ class Component extends DCLogic {
       vsPickerCat: this.state.vsPickerCat || 'all',
       setVsPickerCat: (cat) => this.setState({ vsPickerCat: cat }),
       handleVsPickerInput: (e) => this.setState({ vsPickerQuery: (e && e.target && e.target.value) || '' }),
-      vsPickerResults: this.searchCompareCandidates(this.state.vsPickerQuery, this.state.vsPickerCat),
-      vsPickerHasResults: this.searchCompareCandidates(this.state.vsPickerQuery, this.state.vsPickerCat).length > 0,
+      vsPickerResults: this.searchCompareCandidates(),
+      vsPickerHasResults: false,
       vsCanAddMore: (this.state.vsCompareIds || []).length < 4,
-      vsCustomCompareCards: (() => {
-        const ids = this.state.vsCompareIds || [];
-        const standardSlotIds = [];
-        if (this.state.vsSlot1Active) standardSlotIds.push('elec-1');
-        if (this.state.vsSlot2Active) standardSlotIds.push('elec-macbook-pro');
-        if (this.state.vsSlot3Active) standardSlotIds.push('elec-lenovo-x1');
-        if (this.state.vsSlot4Active) standardSlotIds.push('elec-dell-xps');
-        return ids
-          .filter(id => !standardSlotIds.includes(id))
-          .map(id => this._resolveCompareEntity(id))
-          .filter(Boolean);
-      })(),
-      vsActiveCards: (() => {
-        const ids = (this.state.vsCompareIds && this.state.vsCompareIds.length) ? this.state.vsCompareIds.slice() : [];
-        if (!ids.length) {
-          if (this.state.vsSlot1Active) ids.push('elec-1');
-          if (this.state.vsSlot2Active) ids.push('elec-macbook-pro');
-          if (this.state.vsSlot3Active) ids.push('elec-lenovo-x1');
-          if (this.state.vsSlot4Active) ids.push('elec-dell-xps');
-        }
-        return ids.map(id => this._resolveCompareEntity(id)).filter(Boolean);
-      })(),
-      vsIsCustomComparison: (() => {
-        const ids = this.state.vsCompareIds || [];
-        if (ids.length !== 2) return ids.length > 0 && !(ids.length === 2 && ids.includes('elec-1') && ids.includes('elec-macbook-pro'));
-        return !ids.includes('elec-1') || !ids.includes('elec-macbook-pro');
-      })(),
-      vsCompareTitle: (() => {
-        const ids = this.state.vsCompareIds || [];
-        if (ids.length >= 2) {
-          const e1 = this._resolveCompareEntity(ids[0]);
-          const e2 = this._resolveCompareEntity(ids[1]);
-          if (e1 && e2) return (e1.title || 'Item 1') + ' vs ' + (e2.title || 'Item 2');
-        }
-        return 'MacBook Air M2 vs MacBook Pro 14”';
-      })(),
-      vsStickyAction: () => {
-        const ids = this.state.vsCompareIds || ['elec-1', 'elec-macbook-pro'];
-        const first = this._resolveCompareEntity(ids[0]);
-        if (first && first.category === 'Verified Store') {
-          this.toast('Opening ' + first.title + ' storefront');
-        } else if (first && first.category === 'Hotels & Stays') {
-          this.toast('Viewing availability for ' + first.title);
-        } else {
-          this.addToCart('macbook_m2');
-        }
-      },
-      vsStickyActionLabel: (() => {
-        const ids = this.state.vsCompareIds || [];
-        const first = ids.length ? this._resolveCompareEntity(ids[0]) : null;
-        if (first && first.category === 'Verified Store') return 'Visit Store';
-        if (first && first.category === 'Hotels & Stays') return 'Book Stay';
-        return 'Add to bag';
-      })(),
-      vsStickyText: (() => {
-        const ids = this.state.vsCompareIds || [];
-        if (ids.length >= 2) {
-          const best = this._resolveCompareEntity(ids[0]);
-          if (best) return 'Top Match · ' + best.title + ' · ' + best.price;
-        }
-        return 'Recommended · Pro 14” · XAF 1.25M';
-      })(),
-
-      vsSecPerfOpen: this.state.vsSecPerfOpen !== false,
-      vsSecDispOpen: this.state.vsSecDispOpen !== false,
-      vsSecBattOpen: this.state.vsSecBattOpen !== false,
-      vsSecBuildOpen: this.state.vsSecBuildOpen !== false,
-      vsSecPortsOpen: this.state.vsSecPortsOpen !== false,
-      vsSecCommOpen: this.state.vsSecCommOpen !== false,
-
-      toggleVsPerfSec: () => this.setState(st => ({ vsSecPerfOpen: !st.vsSecPerfOpen })),
-      toggleVsDispSec: () => this.setState(st => ({ vsSecDispOpen: !st.vsSecDispOpen })),
-      toggleVsBattSec: () => this.setState(st => ({ vsSecBattOpen: !st.vsSecBattOpen })),
-      toggleVsBuildSec: () => this.setState(st => ({ vsSecBuildOpen: !st.vsSecBuildOpen })),
-      toggleVsPortsSec: () => this.setState(st => ({ vsSecPortsOpen: !st.vsSecPortsOpen })),
-      toggleVsCommSec: () => this.setState(st => ({ vsSecCommOpen: !st.vsSecCommOpen })),
+      vsCanCompare: (this.state.vsCompareIds || []).length >= 2,
+      vsTrayCards: (this.state.vsCompareIds || []).map(id => this._resolveCompareEntity(id)).filter(Boolean),
+      vsCompareTitle: this._compareView().title || (this.state.vsCompareIds || []).map(id => (this._resolveCompareEntity(id) || {}).title).filter(Boolean).join(' vs '),
       toast: this.state.toast,
       back: () => {
         if (this.state.checkoutReturn) {
