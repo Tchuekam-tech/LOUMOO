@@ -10353,12 +10353,7 @@ class Component extends DCLogic {
   };
   _resolveProduct = (id) => {
     if (!id) return {};
-    let p = this._resolveProductItem ? this._resolveProductItem(id) : null;
-    if (!p) {
-      const pool = (typeof window !== 'undefined' && window.PRODUCTS_DATA) ? window.PRODUCTS_DATA : ((typeof PRODUCTS_DATA !== 'undefined') ? PRODUCTS_DATA : {});
-      p = pool[id] || (this.state.catalogProducts || []).find((x) => x && (x.id === id || x.slug === id)) || null;
-    }
-    return p || (this._synthesizeAvailableListing ? this._synthesizeAvailableListing(id) : {});
+    return this._resolveProductItem(id) || {};
   };
   _categoryProductPool = (slug) => {
     if (!slug) return [];
@@ -10538,13 +10533,16 @@ class Component extends DCLogic {
 
   _cartEntry = (id, name) => {
     const p = this._resolveProduct(id);
+    if (!p || !p.title) return null;
     const priceStr = this._payablePriceLabel(p);
+    const priceXaf = this._priceToXaf(priceStr) || Number(p.priceNumeric) || Number(p.base_price_minor) || 0;
+    if (!(priceXaf > 0)) return null;
     return {
-      id: id,
-      name: name || p.title || 'Item',
+      id: p.id || id,
+      name: name || p.title,
       image: p.coverImage || p.imageUrl || p.image || (p.images && p.images[0]) || '',
       price: priceStr,
-      priceXaf: this._priceToXaf(priceStr) || Number(p.priceNumeric) || Number(p.base_price_minor) || 0,
+      priceXaf: priceXaf,
       store: p.storeName || p.merchant || 'LOUMOO seller',
       storePhone: p.sellerPhone || p.storePhone || p.phoneNumber || p.phone || (p.store && (p.store.phoneNumber || p.store.phone || p.store.phone_number)) || null,
       qty: 1
@@ -14073,101 +14071,15 @@ class Component extends DCLogic {
     match = liveCatalog.find(p => p && (p.id === cleanId || p.slug === cleanId || p.sku === cleanId));
     if (match) return match;
 
-    const norm = cleanId.toLowerCase().replace(/[^a-z0-9]+/g, '');
-    match = poolValues.find(p => {
-      if (!p) return false;
-      const pidNorm = String(p.id || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
-      const pslugNorm = String(p.slug || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
-      const titleNorm = String(p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
-      return pidNorm === norm || pslugNorm === norm || titleNorm.includes(norm) || (norm.length > 5 && pidNorm.includes(norm));
-    });
-    if (match) return match;
 
     const searchRes = Array.isArray(this.state.searchResults) ? this.state.searchResults : [];
     match = searchRes.find(p => p && (p.id === cleanId || p.slug === cleanId));
     if (match) return match;
 
+    const open = this.state.currentProduct;
+    if (open && (open.id === cleanId || open.slug === cleanId)) return open;
+
     return null;
-  }
-
-  _synthesizeAvailableListing(productId) {
-    const rawId = String(productId || 'loumoo_product').trim();
-    const lower = rawId.toLowerCase();
-
-    let titleParts = rawId.replace(/^(phone_|laptop_|elec_|fashion_|home_|groc_|beauty_|sport_|na_)/, '')
-      .replace(/[_\-]+/g, ' ')
-      .trim()
-      .split(' ')
-      .filter(Boolean)
-      .map(w => w.charAt(0).toUpperCase() + w.slice(1));
-    let humanTitle = titleParts.join(' ') || 'LOUMOO Official Selection';
-
-    let cat = 'electronics', catLabel = 'Smartphones & Mobile', brand = 'LOUMOO Official';
-    if (lower.includes('phone') || lower.includes('camon') || lower.includes('pixel') || lower.includes('galaxy') || lower.includes('iphone') || lower.includes('tecno') || lower.includes('samsung')) {
-      cat = 'electronics'; catLabel = 'Smartphones & Mobile';
-      if (lower.includes('apple') || lower.includes('iphone')) brand = 'Apple';
-      else if (lower.includes('samsung') || lower.includes('galaxy')) brand = 'Samsung';
-      else if (lower.includes('tecno') || lower.includes('camon')) brand = 'Tecno';
-      else if (lower.includes('google') || lower.includes('pixel')) brand = 'Google';
-    } else if (lower.includes('macbook') || lower.includes('surface') || lower.includes('laptop') || lower.includes('pc') || lower.includes('ordinateur')) {
-      cat = 'electronics'; catLabel = 'Ordinateurs & Portables'; brand = lower.includes('apple') || lower.includes('mac') ? 'Apple' : 'Microsoft';
-    } else if (lower.includes('airpod') || lower.includes('speaker') || lower.includes('audio') || lower.includes('jbl') || lower.includes('mic') || lower.includes('sound') || lower.includes('mifa')) {
-      cat = 'electronics'; catLabel = 'Audio & Casques'; brand = lower.includes('jbl') ? 'JBL' : (lower.includes('airpod') ? 'Apple' : 'Acoustic Pro');
-    } else if (lower.includes('shoe') || lower.includes('heel') || lower.includes('boot') || lower.includes('loafer') || lower.includes('sneaker') || lower.includes('sandals') || lower.includes('monk') || lower.includes('brogue')) {
-      cat = 'fashion'; catLabel = 'Chaussures & Souliers'; brand = 'Armonía Milano';
-    } else if (lower.includes('bag') || lower.includes('satchel') || lower.includes('birkin') || lower.includes('backpack') || lower.includes('tote')) {
-      cat = 'fashion'; catLabel = 'Sacs & Maroquinerie'; brand = 'Maison Blanche Douala';
-    } else if (lower.includes('palazzo') || lower.includes('wax') || lower.includes('ankara') || lower.includes('dress') || lower.includes('clothing')) {
-      cat = 'fashion'; catLabel = 'Mode Africaine & Prêt-à-Porter'; brand = 'AfroChic Atelier';
-    } else if (lower.includes('parfum') || lower.includes('vanille') || lower.includes('lotion') || lower.includes('shea') || lower.includes('beauty') || lower.includes('fragrance')) {
-      cat = 'beauty'; catLabel = 'Beauté & Soins'; brand = 'AfriPure Botanicals';
-    } else if (lower.includes('necklace') || lower.includes('bracelet') || lower.includes('ring') || lower.includes('parure') || lower.includes('jewel') || lower.includes('infinity')) {
-      cat = 'jewelry'; catLabel = 'Bijouterie & Parures'; brand = 'Zulu Heritage';
-    } else if (lower.includes('home') || lower.includes('expresso') || lower.includes('juicer') || lower.includes('airfryer') || lower.includes('coffee') || lower.includes('kitchen')) {
-      cat = 'home'; catLabel = 'Maison & Électroménager'; brand = 'ElectroHome Douala';
-    }
-
-    const pool = (typeof window !== 'undefined' && window.PRODUCTS_DATA) ? window.PRODUCTS_DATA : ((typeof PRODUCTS_DATA !== 'undefined') ? PRODUCTS_DATA : {});
-    const poolVals = Object.values(pool);
-    const sibling = poolVals.find(p => p && p.category === cat && p.coverImage) || poolVals[0] || {};
-    const defaultCover = sibling.coverImage || './Assets/telephone&PC/Macbook.jfif';
-
-    return {
-      id: rawId,
-      slug: rawId,
-      title: humanTitle,
-      brand: brand,
-      category: cat,
-      categoryLabel: catLabel,
-      conditionLabel: "Neuf Scellé d'Origine · Garantie 24 Mois Constructeur",
-      fulfillmentLabel: "Livraison Express Douala / Yaoundé 24h",
-      badge: "LOUMOO VERIFIED",
-      rating: "4.9",
-      reviewCount: 42,
-      soldCount: 98,
-      price: "XAF 85.000",
-      salePrice: "XAF 105.000",
-      priceNumeric: 85000,
-      salePriceNumeric: 105000,
-      storeName: brand + " · Boutique Officielle",
-      storeCity: "Akwa, Douala",
-      storeRating: "4.9",
-      storeVerified: true,
-      coverImage: defaultCover,
-      images: [defaultCover],
-      attributes: [
-        { key: "Garantie", val: "24 Mois pièces et main d'œuvre officielle constructeur" },
-        { key: "Disponibilité", val: "En stock officiel LOUMOO (1 000+ unités disponibles)" },
-        { key: "Livraison", val: "Livraison Express 24h Douala & Yaoundé avec suivi en temps réel" },
-        { key: "Séquestre LOUMOO", val: "Paiement 100% protégé par LOUMOO Escrow jusqu'à validation" }
-      ],
-      description: "Listing officiel LOUMOO disponible immédiatement. " + humanTitle + " rigoureusement testé et certifié conforme par nos inspecteurs partenaires. Garantie d'authenticité et retour gratuit sous 7 jours.",
-      inStock: true,
-      stock: 1000,
-      stockQuantity: 1000,
-      stockUnits: 1000,
-      inStockLabel: "En stock (1 000+ disponibles)"
-    };
   }
 
   openProduct(productId) {
@@ -14211,24 +14123,19 @@ class Component extends DCLogic {
     });
 
     if (!api) {
-      const fallback = this._synthesizeAvailableListing(cleanId);
       this.setState({
-        currentProduct: fallback,
         productLoading: false,
-        productNotFound: false,
-        productError: '',
-        currentProductActiveImage: fallback.coverImage || (fallback.images && fallback.images[0]) || null
+        productError: 'We couldn’t load this product. Check your connection and try again.'
       });
       return;
     }
 
+    const stale = () => this._unmounted || this.state.currentProductId !== cleanId;
     api.getProduct(cleanId)
       .then(res => {
-        if (this._unmounted) return;
-        let prod = (res && res.data) || res;
-        if (!prod || !prod.title) {
-          prod = this._synthesizeAvailableListing(cleanId);
-        }
+        if (stale()) return;
+        const prod = (res && res.data) || res;
+        if (!prod || !prod.title) { this._showProductNotFound(); return; }
         const activeImg = prod.coverImage || prod.image || (prod.images && prod.images[0]) || (prod.media && prod.media[0] && prod.media[0].url) || null;
         this._recoNote('view', prod, { surface: 'pdp' });
         this.setState({
@@ -14239,17 +14146,29 @@ class Component extends DCLogic {
           currentProductActiveImage: activeImg
         });
       })
-      .catch(() => {
-        if (this._unmounted) return;
-        const fallback = this._synthesizeAvailableListing(cleanId);
+      .catch(err => {
+        if (stale()) return;
+        if (err && err.status === 404) { this._showProductNotFound(); return; }
         this.setState({
-          currentProduct: fallback,
+          currentProduct: null,
           productLoading: false,
           productNotFound: false,
-          productError: '',
-          currentProductActiveImage: fallback.coverImage || (fallback.images && fallback.images[0]) || null
+          productError: (err && err.message) || 'We couldn’t load this product. Check your connection and try again.',
+          currentProductActiveImage: null
         });
       });
+  }
+
+  _showProductNotFound() {
+    this.setState({
+      currentProduct: null,
+      productLoading: false,
+      productNotFound: true,
+      productError: '',
+      currentProductActiveImage: null
+    });
+    const R = getRouter();
+    if (R && R.isActive() && this.state.screen === 'product') R.notFound({ kind: 'notfound', resource: 'product' });
   }
 
   selectProductImage(imgUrl) {
@@ -15523,7 +15442,9 @@ class Component extends DCLogic {
     const nf = this.state.routeNotFound || {};
     const nfKind = nf.kind || 'notfound';
     const nfCopy = {
-      notfound: ['Page not found', 'We could not find this page. It may have moved, or the link may be mistyped.'],
+      notfound: nf.resource === 'product'
+        ? ['This product isn’t available', 'We couldn’t find a product at this link. It may have been removed, or the link may be mistyped.']
+        : ['Page not found', 'We could not find this page. It may have moved, or the link may be mistyped.'],
       forbidden: ['You do not have access', nf.message || 'This area is not available to your account.'],
       unavailable: [(nf.title || 'This area') + ' is not available yet', 'This part of LOUMOO has not been built yet. Nothing is hidden here.'],
       error: ['We could not load this page', 'Check your connection and try again.']
@@ -20006,35 +19927,38 @@ class Component extends DCLogic {
         let id = (typeof arg === 'string' && arg) ? arg : null;
         if (!id && this.state.currentProductId) id = this.state.currentProductId;
         if (!id) { this.toast('Open a product to add it to your bag'); return; }
+        const entry = this._cartEntry(id);
+        if (!entry) { this.toast('Sorry, this item isn’t available to order'); return; }
         const list = (this.state.cartItems || []).map((it) => ({ ...it }));
         const qtyToAdd = (this.state.screen === 'product') ? Math.max(1, Number(this.state.qty) || 1) : 1;
-        const existing = list.find((it) => it.id === id);
+        const existing = list.find((it) => it.id === entry.id);
         let name;
         if (existing) {
           existing.qty = Math.min(99, (Number(existing.qty) || 1) + qtyToAdd);
           name = existing.name;
         } else {
-          const entry = this._cartEntry(id);
           entry.qty = qtyToAdd;
           list.push(entry);
           name = entry.name;
         }
         this.setState({ cartItems: list });
         this._persistCart(list);
-        this._recoNote('add_to_cart', this._resolveProductItem(id) || { id: id }, { surface: this.state.screen === 'product' ? 'pdp' : 'card' });
+        this._recoNote('add_to_cart', this._resolveProductItem(entry.id) || { id: entry.id }, { surface: this.state.screen === 'product' ? 'pdp' : 'card' });
         this.toast('Added ' + name + ' to your bag');
       },
       buyNowProduct: () => {
         const id = this.state.currentProductId;
         if (!id) { this.toast('Open a product to buy it'); return; }
+        const entry = this._cartEntry(id);
+        if (!entry) { this.toast('Sorry, this item isn’t available to order'); return; }
         const list = (this.state.cartItems || []).map((it) => ({ ...it }));
         const qtyToAdd = Math.max(1, Number(this.state.qty) || 1);
-        const existing = list.find((it) => it.id === id);
+        const existing = list.find((it) => it.id === entry.id);
         if (existing) existing.qty = Math.min(99, (Number(existing.qty) || 1) + qtyToAdd);
-        else { const entry = this._cartEntry(id); entry.qty = qtyToAdd; list.push(entry); }
+        else { entry.qty = qtyToAdd; list.push(entry); }
         this.setState({ cartItems: list });
         this._persistCart(list);
-        this._recoNote('add_to_cart', this._resolveProductItem(id) || { id: id }, { surface: 'pdp_buynow' });
+        this._recoNote('add_to_cart', this._resolveProductItem(entry.id) || { id: entry.id }, { surface: 'pdp_buynow' });
         this.go('checkout');
       },
       incCartQty: (id) => {
