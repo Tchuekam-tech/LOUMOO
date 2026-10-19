@@ -11886,7 +11886,7 @@ class Component extends DCLogic {
       return;
     }
 
-    // 2. Fetch from Live API with Guaranteed Fallback (Zero 404s Policy)
+    // 2. Not held locally: ask the API. It answers 404 for an id that names no product.
     const api = getApi();
     this.setState({
       screen: 'product',
