@@ -18269,22 +18269,25 @@ class Component extends DCLogic {
         let id = (typeof arg === 'string' && arg) ? arg : null;
         if (!id && this.state.currentProductId) id = this.state.currentProductId;
         if (!id) { this.toast('Open a product to add it to your bag'); return; }
+        // Checked before the bag is touched, also for a line already in it: an
+        // id the app cannot price is refused rather than given a made-up line.
+        const entry = this._cartEntry(id);
+        if (!entry) { this.toast('Sorry, this item isn’t available to order'); return; }
         const list = (this.state.cartItems || []).map((it) => ({ ...it }));
         const qtyToAdd = (this.state.screen === 'product') ? Math.max(1, Number(this.state.qty) || 1) : 1;
-        const existing = list.find((it) => it.id === id);
+        const existing = list.find((it) => it.id === entry.id);
         let name;
         if (existing) {
           existing.qty = Math.min(99, (Number(existing.qty) || 1) + qtyToAdd);
           name = existing.name;
         } else {
-          const entry = this._cartEntry(id);
           entry.qty = qtyToAdd;
           list.push(entry);
           name = entry.name;
         }
         this.setState({ cartItems: list });
         this._persistCart(list);
-        this._recoNote('add_to_cart', this._resolveProductItem(id) || { id: id }, { surface: this.state.screen === 'product' ? 'pdp' : 'card' });
+        this._recoNote('add_to_cart', this._resolveProductItem(entry.id) || { id: entry.id }, { surface: this.state.screen === 'product' ? 'pdp' : 'card' });
         this.toast('Added ' + name + ' to your bag');
       },
       // Buy now: add the open product to the bag and jump straight to checkout.
