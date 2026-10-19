@@ -660,59 +660,14 @@ class CatalogRepository {
     return out;
   }
 
+  // The curated product whose id (or slug, which is the same thing for curated
+  // cards) is exactly `idOrSlug`, or null. No fuzzy or partial matching: a near
+  // miss would show one product's page, price and photos under another's link.
   static _curatedDetail(idOrSlug) {
-    const cards = this._curatedCards();
-    let card = cards.find((c) => c.id === idOrSlug || c.slug === idOrSlug);
-    if (!card) {
-      const clean = String(idOrSlug || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-      card = cards.find((c) => {
-        const cid = String(c.id || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-        const cslug = String(c.slug || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-        return cid === clean || cslug === clean || (clean.length > 4 && (cid.includes(clean) || clean.includes(cid)));
-      });
-    }
-    if (!card) {
-      const tmpl = cards[0] || {};
-      const cleanTitle = String(idOrSlug || 'Product')
-        .replace(/^(phone_|laptop_|elec_|fashion_|home_|groc_|beauty_|sport_|na_)/, '')
-        .replace(/[_\-]+/g, ' ')
-        .trim();
-      const humanTitle = cleanTitle.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') || 'LOUMOO Available Listing';
-      card = {
-        id: String(idOrSlug),
-        slug: String(idOrSlug),
-        title: humanTitle,
-        category: tmpl.category || 'electronics',
-        categoryLabel: tmpl.categoryLabel || 'Smartphones & Electronics',
-        brand: 'LOUMOO Official',
-        model: '',
-        price: '85 000 FCFA',
-        priceNumeric: 85000,
-        salePrice: '105 000 FCFA',
-        salePriceNumeric: 105000,
-        currency: 'XAF',
-        image: tmpl.image || tmpl.imageUrl || './Assets/telephone&PC/Macbook.jfif',
-        imageUrl: tmpl.imageUrl || tmpl.image || './Assets/telephone&PC/Macbook.jfif',
-        images: tmpl.images || [tmpl.image || './Assets/telephone&PC/Macbook.jfif'],
-        merchant: 'LOUMOO Official Store',
-        storeName: 'LOUMOO Official Store',
-        storeId: null,
-        merchantCity: 'Douala',
-        verified: true,
-        rating: 4.9,
-        reviewsCount: 45,
-        soldCount: 120,
-        badge: 'LOUMOO VERIFIED',
-        tagline: 'Official available LOUMOO inventory',
-        status: 'PUBLISHED',
-        visibility: 'PUBLIC',
-        inStock: true,
-        stock: 1000,
-        stockQuantity: 1000,
-        stockUnits: 1000,
-        curated: true
-      };
-    }
+    const wanted = String(idOrSlug == null ? '' : idOrSlug).trim();
+    if (!wanted) return null;
+    const card = this._curatedCards().find((c) => c.id === wanted || c.slug === wanted);
+    if (!card) return null;
     let raw = {};
     try { raw = (require('../dataLoader').catalogProducts || {})[card.id] || {}; } catch (e) { raw = {}; }
     return {
