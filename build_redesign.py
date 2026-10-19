@@ -17753,9 +17753,11 @@ class Component extends DCLogic {
       cartLabel: (() => {
         const items = this.state.cartItems || [];
         const n = items.reduce((a, it) => a + (Number(it.qty) || 1), 0);
-        const sellers = new Set(items.map((it) => it.store)).size;
+        // An unavailable line's store may be made up, so only orderable lines count as sellers.
+        const gone = items.filter((it) => it && it.unavailable).length;
+        const sellers = new Set(items.filter((it) => it && !it.unavailable).map((it) => it.store)).size;
         if (n === 0) return 'Your bag is empty';
-        return n + (n === 1 ? ' item' : ' items') + (sellers > 1 ? (' · ' + sellers + ' sellers') : '');
+        return n + (n === 1 ? ' item' : ' items') + (sellers > 1 ? (' · ' + sellers + ' sellers') : '') + (gone ? ' · ' + gone + ' unavailable' : '');
       })(),
 
       // ── Checkout Delivery Destination ──
