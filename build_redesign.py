@@ -82,6 +82,9 @@ header_and_styles = """<!DOCTYPE html>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <!-- Hotel-scoped experience stylesheet (external so the shell stays in budget). -->
 <link rel="stylesheet" href="./src/styles/hotel.css">
+<!-- Compare screens: view model + styles, external so the shell stays in budget. -->
+<script defer src="./src/services/compareView.js"></script>
+<link rel="stylesheet" href="./src/styles/compare.css">
 <style>
   /* Anti-flash / unmounted protection: hide raw uncompiled template elements until React mounts */
   x-dc { display: none !important; }
