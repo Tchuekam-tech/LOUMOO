@@ -1100,12 +1100,14 @@
      10. PRODUCT COMPARISON & HEAD-TO-HEAD DECISION ENGINE SDK
      ══════════════════════════════════════════════════════════════════════════ */
 
-  LoumooApiClient.prototype.compareProducts = function (productIds, userPriorities) {
+  // `lang` ('en' | 'fr') picks the language of the engine's verdict sentences.
+  LoumooApiClient.prototype.compareProducts = function (productIds, userPriorities, lang) {
     var idsStr = Array.isArray(productIds) ? productIds.join(',') : productIds;
     var query = { ids: idsStr };
     if (userPriorities) {
       query.priorities = typeof userPriorities === 'object' ? JSON.stringify(userPriorities) : userPriorities;
     }
+    if (lang) query.lang = lang;
     return this.request('/api/v1/catalog/compare' + qs(query));
   };
 
