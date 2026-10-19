@@ -7,7 +7,7 @@
  *
  *   - the browser router        src/services/appRouter.js
  *   - the Express gateway       server/index.js            (shell, 404, redirects)
- *   - the hosting config        vercel.json, netlify.toml  (generated from here by
+ *   - the hosting config        vercel.json  (generated from here by
  *                                                           scripts/sync_route_config.js)
  *   - the tests                 tests/unit/routing_*.test.js, tests/routing/*
  *   - the documentation         docs/ROUTING.md
