@@ -8472,7 +8472,8 @@ class Component extends DCLogic {
     this._bootAuth();
     // Load the live marketplace catalogue for the home rail on first paint
     // (_onScreenEnter only fires on subsequent navigation, not initial mount).
-    this._ensureCatalogData();
+    // With the curated catalogue in, the saved bag is checked against it.
+    this._ensureCatalogData(() => this._recheckCartLines());
     this.loadCatalogProducts({ limit: 16 });
     if (this.state.screen === 'announce' || this.state.screen === 'announceDetail') {
       this.ensureAnnouncements();
@@ -12419,17 +12420,21 @@ class Component extends DCLogic {
       });
   }
 
-  _ensureCatalogData() {
+  // onSettled runs once the curated catalogue is in (already, or once fetched)
+  // or every path has failed, i.e. when an id it lacks is really not in it.
+  _ensureCatalogData(onSettled) {
+    const settled = () => { if (!this._unmounted && onSettled) onSettled(); };
     if (typeof window !== 'undefined' && (!window.PRODUCTS_DATA || Object.keys(window.PRODUCTS_DATA).length === 0)) {
       const paths = ['./data/catalog.json', '/data/catalog.json', './public/data/catalog.json'];
       const tryFetch = (idx) => {
-        if (idx >= paths.length) return;
+        if (idx >= paths.length) { settled(); return; }
         fetch(paths[idx])
           .then(r => r.ok ? r.json() : null)
           .then(data => {
             if (data && typeof data === 'object' && Object.keys(data).length > 0) {
               window.PRODUCTS_DATA = Object.assign(window.PRODUCTS_DATA || {}, data);
               if (!this._unmounted) this.setState({ _catalogLoaded: true });
+              settled();
             } else {
               tryFetch(idx + 1);
             }
@@ -12437,6 +12442,8 @@ class Component extends DCLogic {
           .catch(() => tryFetch(idx + 1));
       };
       tryFetch(0);
+    } else {
+      settled();
     }
   }
 
