@@ -18278,11 +18278,14 @@ class Component extends DCLogic {
         if (!entry) { this.toast('Sorry, this item isn’t available to order'); return; }
         const list = (this.state.cartItems || []).map((it) => ({ ...it }));
         const qtyToAdd = (this.state.screen === 'product') ? Math.max(1, Number(this.state.qty) || 1) : 1;
-        const existing = list.find((it) => it.id === entry.id);
+        // A line already in the bag is topped up and brought up to date with the
+        // product (price, and any unavailable mark from a saved bag, cleared).
+        const at = list.findIndex((it) => it.id === entry.id);
         let name;
-        if (existing) {
-          existing.qty = Math.min(99, (Number(existing.qty) || 1) + qtyToAdd);
-          name = existing.name;
+        if (at !== -1) {
+          const line = this._refreshCartLine(list[at], entry);
+          list[at] = Object.assign({}, line, { qty: Math.min(99, (Number(line.qty) || 1) + qtyToAdd) });
+          name = list[at].name;
         } else {
           entry.qty = qtyToAdd;
           list.push(entry);
@@ -18301,9 +18304,11 @@ class Component extends DCLogic {
         if (!entry) { this.toast('Sorry, this item isn’t available to order'); return; }
         const list = (this.state.cartItems || []).map((it) => ({ ...it }));
         const qtyToAdd = Math.max(1, Number(this.state.qty) || 1);
-        const existing = list.find((it) => it.id === entry.id);
-        if (existing) existing.qty = Math.min(99, (Number(existing.qty) || 1) + qtyToAdd);
-        else { entry.qty = qtyToAdd; list.push(entry); }
+        const at = list.findIndex((it) => it.id === entry.id);
+        if (at !== -1) {
+          const line = this._refreshCartLine(list[at], entry);
+          list[at] = Object.assign({}, line, { qty: Math.min(99, (Number(line.qty) || 1) + qtyToAdd) });
+        } else { entry.qty = qtyToAdd; list.push(entry); }
         this.setState({ cartItems: list });
         this._persistCart(list);
         this._recoNote('add_to_cart', this._resolveProductItem(entry.id) || { id: entry.id }, { surface: 'pdp_buynow' });
