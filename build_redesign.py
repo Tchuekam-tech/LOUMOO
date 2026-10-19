@@ -11843,6 +11843,11 @@ class Component extends DCLogic {
     match = searchRes.find(p => p && (p.id === cleanId || p.slug === cleanId));
     if (match) return match;
 
+    // 5. The product open on the PDP. A live listing reached by a link (a
+    // refresh, a share) was fetched by id and is in none of the pools above.
+    const open = this.state.currentProduct;
+    if (open && (open.id === cleanId || open.slug === cleanId)) return open;
+
     return null;
   }
 
