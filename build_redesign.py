@@ -13357,7 +13357,9 @@ class Component extends DCLogic {
     const hotelCards = (list) => (Array.isArray(list) ? list : []).map(hotelCard);
 
     // Real cart totals derived from the line items in the bag and dynamic platform settings.
-    const cartList = this.state.cartItems || [];
+    // A line marked unavailable (_recheckCartLines) stays in the bag but is not
+    // ordered, so it adds nothing to the total or the per-store delivery fees.
+    const cartList = (this.state.cartItems || []).filter((it) => it && !it.unavailable);
     const cartSubtotal = cartList.reduce((a, it) => a + (Number(it.priceXaf) || 0) * (Number(it.qty) || 1), 0);
     const dynamicSettings = (typeof window !== 'undefined' && window.LOUMOO_SYSTEM_SETTINGS) || this.state.systemSettings || this.state.adminSettings || {};
     // The delivery fee follows the city the order will be delivered to (the same
