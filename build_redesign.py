@@ -7936,6 +7936,63 @@ class Component extends DCLogic {
       if (Array.isArray(list)) this.setState({ cartItems: list });
     } catch (e) {}
   };
+  // A saved line brought up to date with `entry`, the line its product makes
+  // today: real name, photo, store and price, and no "unavailable" mark. The
+  // same object when nothing changed.
+  _refreshCartLine = (line, entry) => {
+    const fields = ['name', 'image', 'price', 'priceXaf', 'store', 'storePhone'];
+    const stale = line.unavailable || fields.some((k) => line[k] !== entry[k]);
+    if (!stale) return line;
+    const next = Object.assign({}, line);
+    fields.forEach((k) => { next[k] = entry[k]; });
+    delete next.unavailable;
+    return next;
+  };
+  // Apply what a re-check found for the saved line `id`: the line its product
+  // makes today, or null for "not orderable" (it is kept but marked unavailable).
+  _settleCartLine = (id, entry) => {
+    const list = this.state.cartItems || [];
+    let changed = false;
+    const next = list.map((it) => {
+      if (!it || it.id !== id) return it;
+      const settled = entry ? this._refreshCartLine(it, entry) : (it.unavailable ? it : Object.assign({}, it, { unavailable: true }));
+      if (settled !== it) changed = true;
+      return settled;
+    });
+    if (!changed) return;
+    this.setState({ cartItems: next });
+    this._persistCart(next);
+  };
+  // A bag saved by an older version of the app can hold a line it made up for an
+  // id it didn't know (a demo id at XAF 85.000), or a real product priced with a
+  // placeholder because the catalogue hadn't loaded yet. Once the catalogue has
+  // settled, every saved line is checked against the product it names: an
+  // orderable one is brought up to that product's real price; one that names no
+  // product (the API answers 404) or has no price is marked unavailable, so the
+  // bag shows it but keeps it out of the total and the order. Offline, a server
+  // error or no API decides nothing: the line stays as it was. Runs once a load.
+  _recheckCartLines = () => {
+    if (this._cartRechecked) return;
+    this._cartRechecked = true;
+    const api = getApi();
+    (this.state.cartItems || []).forEach((line) => {
+      const id = line && line.id;
+      if (!id) return;
+      const local = this._cartEntry(id);
+      if (local) { this._settleCartLine(id, local); return; }
+      // Known here but with no price: nothing to ask the server.
+      if (this._resolveProduct(id).title) { this._settleCartLine(id, null); return; }
+      if (!api || typeof api.getProduct !== 'function') return;
+      api.getProduct(String(id)).then((res) => {
+        if (this._unmounted) return;
+        const prod = (res && res.data) || res;
+        this._settleCartLine(id, prod && prod.title ? this._lineFromProduct(prod, id) : null);
+      }).catch((err) => {
+        if (this._unmounted) return;
+        if (err && err.status === 404) this._settleCartLine(id, null);
+      });
+    });
+  };
 
   // ── Orders ────────────────────────────────────────────────────────────────
   // Placing an order snapshots the bag into a real order (payment deferred, so
