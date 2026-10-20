@@ -176,3 +176,57 @@ widen `functions."api/index.js".includeFiles` in `vercel.json` (the glob
   when navigating in-app; entity-level OG/JSON-LD for product/store is written by
   the server prerender (what bots and link previews read). In-app navigation does
   not re-hydrate the head from the loaded entity (follow-up if wanted).
+
+---
+
+## Priority 3 — API hardening  (branch: `fix/p3-api-hardening`, stacked on P2)
+
+### 8. Cap pagination server-side (default 24, max 100; validate page/limit)
+New shared helper `server/shared/http/pagination.js` `clampPagination()` turns
+untrusted `?page`/`?limit`/`?offset` into a safe `{page, limit, offset}`: `limit`
+∈ [1, 100] (default 24), `page` ≥ 1, `offset` ≥ 0. Applied to `GET /api/v1/products`
+(and compare-candidates, default 8/max 50) and `GET /api/v1/orders` (which passed
+a raw `parseInt` into an uncapped `.range()` — fixed, plus a defensive cap in
+`OrderRepository.findOrdersByBuyer`). Already-capped endpoints (`/stores/discovery`
+max 50, seller orders max 100, `/search` fixed at 8) were left as-is.
+
+**Proven by:** `node tests/helpers/run_suite.js tests/unit/api_hardening.test.js`
+— the pure clamp; and over the running app `GET /api/v1/products?limit=999999` →
+`data.limit === 100`, `?limit=0`/`?limit=-5` → 24, `?page=0` → 1.
+
+### 9. Real 404 from GET /api/v1/products/:id (no 200 synthetic fallback)
+The route used `findPublicProductByIdOrSlug`, which **fabricates** a placeholder
+product ("LOUMOO Available Listing", a made-up 85 000 price) for any unknown id —
+so every id returned 200. It now uses the strict `findIndexableProductByIdOrSlug`:
+a real DB listing or a REAL curated product, else a **404**; a DB error is a
+**503** (`PRODUCT_LOOKUP_UNAVAILABLE`) rather than a fabricated 200 or a wrongful
+404. **Fallback kept intentionally** only in `ComparisonService` (comparing a
+possibly-curated id by design).
+
+**Proven by:** `tests/unit/api_hardening.test.js` — with no DB the endpoint is
+503 (never a fabricated 200); a stubbed "no row" is a 404; a real product is 200.
+Also covered on the SEO side by `tests/unit/seo_prerender.test.js` (unknown
+product prerenders a real 404).
+
+### 10. /api/config exposes only public-safe values
+Verified, not trimmed — the endpoint already returns only browser-safe values:
+`supabase.{url,anonKey,publishableKey}`, `clerk.{publishableKey,appId}`,
+`posthog.{apiKey,host}`, `sentry.dsn`, verification provider flags, and
+`systemSettings`. `systemSettings` comes from `SuperAdminRepository.getPublicSettings`,
+which is **deny-by-default**: an allowlist of keys (`PUBLIC_SETTING_KEYS`), a
+per-key sub-field allowlist, and `is_secret` rows skipped — so the public-settings
+leak flagged in a prior audit is already closed. No secret (service-role key,
+Clerk secret, `SUPABASE_JWT_SECRET`, webhook secret) is present.
+
+**Proven by:** `tests/unit/api_hardening.test.js` — `/api/config` exposes the
+public keys and the serialized body contains none of `service_role`, `secretKey`,
+`jwtSecret`, `webhookSecret`.
+
+### Deliberately NOT changed
+- **`findPublicProductByIdOrSlug`** (the fabricating lookup) is kept for
+  `ComparisonService` only; the public product API no longer uses it.
+- **Other list endpoints** already capped (`/stores/discovery`, seller orders,
+  `/search`) were not rewritten onto the shared helper — they are safe and
+  changing them adds risk for no security gain. New list endpoints should use
+  `clampPagination`.
+- **/api/config shape** unchanged — every field is browser-required and public.
