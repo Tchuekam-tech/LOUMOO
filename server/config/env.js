@@ -44,6 +44,16 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'staging', 'production', 'test']).default('development'),
   APP_NAME: z.string().default('LOUMOO Universal Commerce Platform'),
   APP_BASE_URL: z.string().default('http://localhost:8080'),
+  // Public canonical origin used to build robots.txt, sitemap.xml, security.txt
+  // and per-page canonical/OG URLs. Defaults to the apex the route registry
+  // already treats as canonical (src/routing/routes.js ORIGIN). NOTE: the live
+  // apex currently 308-redirects to www; set this to the non-redirecting host
+  // (or stop redirecting the apex) so crawlers are not bounced.
+  PUBLIC_SITE_URL: z.string().optional(),
+  // Monitored address (or https/mailto URL) published in /.well-known/security.txt.
+  SECURITY_CONTACT_EMAIL: z.string().optional(),
+  // ISO-8601 expiry for security.txt. When unset, defaults to ~1 year out at boot.
+  SECURITY_TXT_EXPIRES: z.string().optional(),
   CORS_ORIGINS: z.string().default('*').transform(val => val.split(',').map(o => o.trim()).filter(Boolean)),
   // Express proxy trust policy. Keep this explicit: trusting every proxy lets
   // a direct caller forge X-Forwarded-For and X-Forwarded-Proto.
@@ -198,6 +208,18 @@ const config = {
   appName: env.APP_NAME || 'LOUMOO Universal Commerce Platform',
   baseUrl: env.APP_BASE_URL || 'http://localhost:8080',
   corsOrigins: env.CORS_ORIGINS || ['*'],
+
+  // Public-facing site identity for SEO/crawlability artifacts.
+  site: {
+    // Apex is what src/routing/routes.js ORIGIN already uses and what the brief
+    // asks for in robots.txt. Overridable via PUBLIC_SITE_URL.
+    url: String(env.PUBLIC_SITE_URL || 'https://loumoo.store').replace(/\/+$/, ''),
+    securityContact: env.SECURITY_CONTACT_EMAIL || 'security@loumoo.store',
+    // A concrete future timestamp is required by RFC 9116; default to one year
+    // from boot so an unconfigured deployment still serves a valid file.
+    securityExpires: env.SECURITY_TXT_EXPIRES ||
+      new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
+  },
   proxy: {
     trust: parseTrustProxy(env.TRUST_PROXY, nodeEnv),
     trustRaw: trustProxyRaw || ((isTest || isProduction) ? '1' : 'false'),
