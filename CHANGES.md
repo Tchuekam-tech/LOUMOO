@@ -96,3 +96,83 @@ curl -s  https://<preview>/.well-known/security.txt  # => text/plain, Contact ma
   the route registry `ORIGIN` and the brief) and is overridable via
   `PUBLIC_SITE_URL`. Decide at the infra level whether to stop redirecting the
   apex or flip `PUBLIC_SITE_URL` to `www` so crawlers are not bounced.
+- **Pre-existing:** `npm run routes:check` / `tests/unit/routing_docs.test.js`
+  report `docs/ROUTING.md` is out of date. This drift exists on `main` and is
+  unrelated to these changes (none of its inputs were touched); left as-is. Run
+  `node scripts/sync_route_docs.js` to clear it if desired.
+
+---
+
+## Priority 2 — Per-page SEO / indexability  (branch: `fix/p2-seo-prerender`, stacked on P1)
+
+A single shared model, `src/seo/seoModel.js` (UMD, used by both the browser and
+the server), is the one source for every page's head. Both sides apply it:
+
+### 5. Per-route document head (title/description/canonical/OG/Twitter + JSON-LD)
+The server writes the full head into the initial HTML
+(`server/modules/system/seo/PrerenderService.js` → `seoModel`), and the SPA keeps
+it in sync on in-app navigation (`src/services/appRouter.js` `applyHead()`).
+Product pages carry JSON-LD `Product` (offer, brand, rating); store pages carry
+`Store`. The server-written tags and the client-written tags share the
+`data-loumoo-seo` marker so client navigation never leaves duplicates, and the
+client does not overwrite a freshly prerendered entity page on first load.
+
+**Proven by:** `node tests/helpers/run_suite.js tests/unit/seo_prerender.test.js`
+— a public page has an indexable head + content; a product page has `og:type=product`
++ JSON-LD `Product` with an XAF offer; a store page has JSON-LD `Store`.
+
+### 6. Pre-render crawlable pages (real content + tags in the initial HTML)
+Every application route is served by the Express function, which injects the head
+**and** a small semantic content block (`#loumoo-prerender`) into the shell so a
+crawler or link-preview bot that does not run the SPA still sees real content and
+the right tags. The block is hidden by CSS the instant the SPA mounts (`#dc-root`),
+so humans see the app. The home page `/` — which Vercel serves as a static file
+(filesystem precedence beats rewrites) — is prerendered at **build time** by
+`scripts/assemble_public.js`. `vercel.json` rewrites application routes to the
+function and bundles the shell into it (`includeFiles`).
+
+**Proven by:**
+```
+node scripts/assemble_public.js
+node tests/helpers/run_suite.js tests/unit/routing_deploy.test.js     # Vercel-routing emulator + Express
+node tests/helpers/run_suite.js tests/unit/seo_prerender.test.js      # head + content + status
+```
+The routing emulator (over the real `vercel.json` + `public/`) shows every
+application route resolving to the function and the home page prerendered into
+the static `index.html`; the Express layer serves the prerendered head + content
+with the right status and cache headers.
+
+### 7. robots meta: index,follow on public, noindex on private
+`seoModel` marks a route `noindex,follow` when it is not a public route, is
+guest-only, is under a private prefix (`/account`, `/checkout`, `/cart`,
+`/orders`, `/rider`, `/sell`, `/admin`, …) or is a 404 — and `index,follow`
+otherwise. Written into the initial HTML by the prerender and kept in sync by the
+client. `sendPrerendered` also sets the `X-Robots-Tag: noindex` header on every
+non-indexable response.
+
+**Proven by:** `tests/unit/seo_prerender.test.js` (`/account` and a 404 are
+noindex; `/stores` and a product are `index,follow`) and `routing_deploy`
+(unknown routes carry `X-Robots-Tag: noindex`).
+
+### ⚠ Must be verified on a Vercel preview (not deployed per your instruction)
+The prerender runs and is fully tested in the Express layer (Railway + the
+function) and via the routing emulator. The **Vercel-specific** wiring cannot be
+confirmed without a preview deploy:
+```
+curl -s  https://<preview>/stores | grep -E 'og:title|rel="canonical"|loumoo-prerender'   # prerendered
+curl -sI https://<preview>/product/<real-id>     # 200
+curl -sI https://<preview>/product/<fake-id>     # 404 (no soft-404)
+curl -s  https://<preview>/           | grep og:title                                      # home baked
+```
+If a shell route 503s on the preview, the function could not read the shell —
+widen `functions."api/index.js".includeFiles` in `vercel.json` (the glob
+`Commerce*App.dc.html` matches the spaced filename).
+
+### Deliberately NOT changed
+- **Static pages `/terms`, `/privacy`, `/community-guidelines`** (brief item 6):
+  no such routes exist in the registry; not invented. If wanted, add them to
+  `src/routing/routes.js` and they inherit the prerender automatically.
+- **Per-entity OG on client-side navigation:** the client sets route-level tags
+  when navigating in-app; entity-level OG/JSON-LD for product/store is written by
+  the server prerender (what bots and link previews read). In-app navigation does
+  not re-hydrate the head from the loaded entity (follow-up if wanted).
