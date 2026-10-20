@@ -33,6 +33,7 @@ const { MediaStorageService } = require('./infrastructure/storage/MediaStorageSe
 
 // Domain route modules
 const healthRoutes = require('./modules/system/routes/healthRoutes');
+const seoRoutes = require('./modules/system/routes/seoRoutes');
 const identityRoutes = require('./modules/identity/presentation/routes/identityRoutes');
 const catalogRoutes = require('./modules/catalog/routes/catalogRoutes');
 const storeRoutes = require('./modules/store/presentation/routes/storeRoutes');
@@ -308,6 +309,11 @@ app.use('/api', (req, res) => {
     }
   });
 });
+
+// Crawlability endpoints (robots.txt, sitemap.xml, security.txt). Registered
+// AFTER the /api surface and BEFORE the SPA shell / static middleware so they
+// answer as themselves and are never served the HTML shell with a 200.
+app.use(seoRoutes);
 
 const publicRoot = path.resolve(__dirname, '..', 'public');
 const publicIndex = path.join(publicRoot, 'index.html');
