@@ -87,6 +87,14 @@
       "destination": "/api/index.js"
     },
     {
+      "source": "/sitemap.xml",
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/.well-known/security.txt",
+      "destination": "/api/index.js"
+    },
+    {
       "source": "/admin",
       "destination": "/superadmin/index.html"
     },

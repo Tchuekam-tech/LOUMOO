@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /superadmin
+Disallow: /account
+Disallow: /sell
+Disallow: /rider
+Disallow: /checkout
+Disallow: /cart
+Disallow: /orders
+Disallow: /chat
+Disallow: /notifications
+Disallow: /onboarding
+Disallow: /sign-in
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /verify
+Disallow: /api/
+
+Sitemap: https://loumoo.store/sitemap.xml
