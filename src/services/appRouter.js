@@ -104,6 +104,34 @@
     d.title = title && title !== 'LOUMOO' && title.indexOf('LOUMOO') === -1 ? title + ' — LOUMOO' : (title || 'LOUMOO');
   }
 
+  // Keep the whole document head (title, description, canonical, robots,
+  // OpenGraph, Twitter) in step as the visitor navigates, using the shared
+  // model the server prerender uses (src/seo/seoModel.js). The server already
+  // wrote entity-level tags into the landing HTML; this covers in-app
+  // navigation. Falls back to the minimal title/robots behaviour when the SEO
+  // model is not present (e.g. the Node test harness).
+  function applyHead(resolved, path, titleOverride) {
+    var seo = root.LoumooSeo;
+    var d = docu();
+    if (seo && d && d.head && typeof seo.applyHead === 'function') {
+      try {
+        seo.applyHead(d, resolved, {
+          siteUrl: (Routes && Routes.ORIGIN) || seo.DEFAULT_SITE_URL,
+          path: path || (loc() && loc().pathname) || '/',
+          titleOverride: titleOverride
+        });
+        return;
+      } catch (e) { /* fall through to the minimal path */ }
+    }
+    if (resolved && resolved.type === 'route' && resolved.route) {
+      setRobots(false);
+      setTitle(resolved.route.title || titleOverride);
+    } else {
+      setRobots(true);
+      setTitle(titleOverride || 'Page not found');
+    }
+  }
+
   function toast(msg) {
     if (msg && S.adapter && typeof S.adapter.toast === 'function') {
       try { S.adapter.toast(msg); } catch (e) { /* cosmetic */ }
@@ -351,8 +379,11 @@
   /* ------------------------------------------------------------------ apply */
   function showNotFound(info) {
     closeOverlay();
-    setRobots(true);
-    setTitle(info.kind === 'forbidden' ? 'No access' : (info.kind === 'unavailable' ? (info.title || 'Not available') : 'Page not found'));
+    applyHead(
+      { type: info.kind === 'unavailable' ? 'unavailable' : 'notfound' },
+      (info && info.path) || null,
+      info.kind === 'forbidden' ? 'No access' : (info.kind === 'unavailable' ? (info.title || 'Not available') : 'Page not found')
+    );
     S.applying += 1;
     try { if (S.adapter && S.adapter.showNotFound) S.adapter.showNotFound(info); }
     finally { S.applying -= 1; }
@@ -361,8 +392,13 @@
   function applyRoute(route, params, search, mode) {
     // 'mode' is how the address bar was (or will be) written: push | replace | pop | initial.
     var direction = mode === 'pop' ? 'pop' : (mode === 'push' ? 'push' : 'replace');
-    setRobots(false);
-    setTitle(route.title);
+    // On the very first load of an entity page (product/store) the server
+    // prerender already wrote entity-level tags into the HTML; do not overwrite
+    // them with the route-level fallback. Every other case keeps the head in sync.
+    var isEntityRoute = route.id === 'product' || route.id === 'storefront';
+    if (!(mode === 'initial' && isEntityRoute)) {
+      applyHead({ type: 'route', route: route, params: params }, fullPath(route, params, search));
+    }
 
     if (route.kind === 'overlay') {
       closeOverlay();
@@ -585,8 +621,7 @@
     var path = r.path + keepSearch;
     writeHistory(path, mode);
     S.cur = { routeId: r.route.id, params: r.params, pathname: r.path, search: keepSearch, appliedAt: Date.now(), source: 'state' };
-    setRobots(false);
-    setTitle(r.route.title);
+    applyHead({ type: 'route', route: r.route, params: r.params }, path);
 
     var access = r.route.access;
     if (access && access.kind !== 'public') enforceFromState(r.route, r.params, keepSearch);
