@@ -62,6 +62,12 @@ function buildVercel(existing) {
   const redirects = aliasList().map(a => ({ source: vercelSource(a.from), destination: a.to, permanent: true }));
 
   const rewrites = [{ source: '/api/(.*)', destination: '/api/index.js' }];
+  // Dynamic crawlability endpoints are served by the Express function, not the
+  // static CDN and never the SPA shell: the sitemap is generated from live
+  // listings/stores and security.txt from config. robots.txt is intentionally
+  // NOT here — it is a real static file published to public/ by assemble_public.js.
+  rewrites.push({ source: '/sitemap.xml', destination: '/api/index.js' });
+  rewrites.push({ source: '/.well-known/security.txt', destination: '/api/index.js' });
   pageRoutes().forEach(r => rewrites.push({ source: r.path, destination: r.page }));
   shellRoutes().forEach(r => rewrites.push({ source: vercelSource(r.path), destination: '/index.html' }));
 

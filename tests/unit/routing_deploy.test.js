@@ -141,6 +141,17 @@ async function run() {
   assert.strictEqual(host.get('/api/v1/orders/123?x=1').via, 'function');
   console.log('    ✓ routing_deploy: /api/* still reaches the serverless function');
 
+  // Crawlability endpoints (Priority 1, items 2-4): robots.txt is a REAL static
+  // file (never the SPA shell); sitemap.xml and security.txt reach the function
+  // so they are generated dynamically rather than falling through to the shell.
+  const robots = host.get('/robots.txt');
+  assert.strictEqual(robots.status, 200, '/robots.txt must be served');
+  assert.strictEqual(robots.via, 'static', '/robots.txt must be a real static file, not the SPA shell');
+  assert.strictEqual(path.basename(robots.file), 'robots.txt', `/robots.txt -> ${robots.file}`);
+  assert.strictEqual(host.get('/sitemap.xml').via, 'function', '/sitemap.xml must reach the function (dynamic)');
+  assert.strictEqual(host.get('/.well-known/security.txt').via, 'function', 'security.txt must reach the function');
+  console.log('    ✓ routing_deploy: robots.txt is a static file; sitemap.xml and security.txt reach the function (not the shell)');
+
   // Redirects: legacy aliases keep the query; trailing slash is canonicalised.
   const redir = (u, to) => {
     const r = host.get(u);
