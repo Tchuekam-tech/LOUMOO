@@ -34,6 +34,7 @@ const { MediaStorageService } = require('./infrastructure/storage/MediaStorageSe
 // Domain route modules
 const healthRoutes = require('./modules/system/routes/healthRoutes');
 const seoRoutes = require('./modules/system/routes/seoRoutes');
+const PrerenderService = require('./modules/system/seo/PrerenderService');
 const identityRoutes = require('./modules/identity/presentation/routes/identityRoutes');
 const catalogRoutes = require('./modules/catalog/routes/catalogRoutes');
 const storeRoutes = require('./modules/store/presentation/routes/storeRoutes');
@@ -317,9 +318,11 @@ app.use(seoRoutes);
 
 const publicRoot = path.resolve(__dirname, '..', 'public');
 const publicIndex = path.join(publicRoot, 'index.html');
-const appShell = fs.existsSync(publicIndex)
-  ? publicIndex
-  : path.resolve(__dirname, '..', 'Commerce App.dc.html');
+// The prerender injects a per-route head + content into the shell, so it must
+// read the RAW shell — never a build-time-baked public/index.html (which already
+// carries the home page's injected tags), or non-home routes would double-inject.
+const rawShell = path.resolve(__dirname, '..', 'Commerce App.dc.html');
+const appShell = fs.existsSync(rawShell) ? rawShell : publicIndex;
 
 // Dedicated SuperAdmin control center page
 const superAdminRoot = path.resolve(__dirname, '..', 'SuperAdmin', 'frontend');
@@ -389,6 +392,39 @@ function sendShell(req, res, status) {
   return req.method === 'HEAD' ? res.end() : res.send(body);
 }
 
+// Prerender: hand the application shell with a per-route <head> (title,
+// description, canonical, robots, OpenGraph, Twitter, JSON-LD) and a small
+// crawlable content block written in, and the right HTTP status (404 for an
+// unknown product/store, so there is no 200 soft-404). A render failure falls
+// back to the raw shell at 200 so a page is never lost to an SEO error.
+async function sendPrerendered(req, res) {
+  let shell;
+  try { shell = readShell(); } catch (err) {
+    return res.status(503).type('text/plain').send('The application is starting. Please retry in a moment.');
+  }
+  let result;
+  try {
+    result = await PrerenderService.renderPage({
+      url: req.originalUrl.split('#')[0],
+      shellHtml: shell,
+      siteUrl: (config.site && config.site.url) || undefined
+    });
+  } catch (err) {
+    logger.error(`[Prerender] render failed, serving raw shell: ${err && err.message ? err.message : err}`);
+    res.status(200).set('Content-Type', 'text/html; charset=utf-8').set('Cache-Control', 'no-cache');
+    return req.method === 'HEAD' ? res.end() : res.send(shell);
+  }
+  res.status(result.status);
+  res.set('Content-Type', 'text/html; charset=utf-8');
+  // Public, indexable pages may be cached by the CDN (per-URL body, no private
+  // data); everything else revalidates on every request.
+  res.set('Cache-Control', result.cacheable
+    ? 'public, max-age=0, s-maxage=600, stale-while-revalidate=86400'
+    : 'no-cache');
+  if (!result.descriptor || !result.descriptor.indexable) res.set('X-Robots-Tag', 'noindex');
+  return req.method === 'HEAD' ? res.end() : res.send(result.html);
+}
+
 // Is this a request the application should answer with the application? A browser
 // navigation, yes; and so is the DC runtime's own boot re-fetch of the page URL
 // (support.js boot()), a plain fetch() that accepts anything: if that were answered
@@ -413,7 +449,7 @@ app.use((req, res, next) => {
   return next();
 });
 
-app.get('/', (req, res) => sendShell(req, res, 200));
+app.get('/', (req, res, next) => sendPrerendered(req, res).catch(next));
 
 // 7. Static frontend assets. Only the generated public directory is exposed;
 // never mount the repository root, which contains manifests, source, tests,
@@ -440,11 +476,11 @@ app.use((req, res, next) => {
   switch (resolved.type) {
     case 'route':
       // 'page' routes are separate documents (the control center) served above.
-      return resolved.route.kind === 'page' ? next() : sendShell(req, res, 200);
+      return resolved.route.kind === 'page' ? next() : sendPrerendered(req, res).catch(next);
     case 'unavailable':
     case 'notfound':
       return isDocumentRequest(req)
-        ? sendShell(req, res, 404)
+        ? sendPrerendered(req, res).catch(next)
         : res.status(404).type('text/plain').send('Not found');
     case 'file':
       return res.status(404).type('text/plain').send('Not found');
