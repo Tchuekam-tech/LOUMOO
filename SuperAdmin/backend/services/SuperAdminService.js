@@ -275,29 +275,6 @@ class SuperAdminService {
   }
 
   /**
-   * Updates multiple dynamic system settings in batch, invalidating caches.
-   */
-  static async updateSystemSettings(payload = {}, { adminId = 'super_admin', reason = null, ipAddress = null } = {}) {
-    if (!payload || typeof payload !== 'object') {
-      throw new ValidationError('A settings payload object must be provided.');
-    }
-    const updated = {};
-    for (const [k, v] of Object.entries(payload)) {
-      if (k === 'reason' || k === 'adminId') continue;
-      if (v !== undefined && v !== null && typeof v === 'object') {
-        await this.updateSystemSetting(k, v, { adminId, reason: reason || `Batch update setting [${k}]`, ipAddress });
-        updated[k] = v;
-      }
-    }
-    try {
-      if (CacheService && typeof CacheService.delete === 'function') {
-        await CacheService.delete('system_settings:all', 'admin');
-      }
-    } catch (_) {}
-    return { success: true, updated };
-  }
-
-  /**
    * Retrieves overview KPIs and operational metrics.
    */
   static async getOverviewMetrics() {
