@@ -59,7 +59,7 @@ const PAGES = [
         h2: 'Qu’est-ce que LOUMOO ?',
         blocks: [
           { t: 'p', text: 'LOUMOO est une marketplace en ligne conçue pour le Cameroun. Avec un seul compte, vous pouvez **acheter** des produits auprès de boutiques identifiées, **réserver** un hôtel ou un voyage, ou **vendre** vos propres produits et services depuis votre boutique en ligne.' },
-          { t: 'p', text: 'Les prix sont affichés en francs CFA (FCFA). Chaque commande se gère dans l’application : suivi de la livraison, messagerie avec la boutique, et avis après réception.' }
+          { t: 'p', text: 'Les prix sont affichés en francs CFA (FCFA). Chaque commande se gère dans l’application : suivi de la livraison et messagerie avec la boutique.' }
         ]
       },
       {
@@ -88,7 +88,7 @@ const PAGES = [
               { title: 'Explorez', text: 'Parcourez les [catégories](/marketplace/categories) ou recherchez un produit dans le [marketplace](/marketplace).' },
               { title: 'Comparez', text: 'Ouvrez les fiches produits et utilisez le [comparateur](/compare) pour départager deux ou trois modèles.' },
               { title: 'Commandez', text: 'Ajoutez au panier, indiquez votre adresse de livraison et choisissez le moyen de paiement que vous utiliserez à la livraison.' },
-              { title: 'Recevez et confirmez', text: 'Suivez la livraison, vérifiez votre commande à la réception puis confirmez avec votre code de livraison. Vous pouvez ensuite laisser un avis.' }
+              { title: 'Recevez et confirmez', text: 'Suivez la livraison, vérifiez votre commande à la réception puis confirmez avec votre code de livraison.' }
             ]
           },
           { t: 'p', text: 'Le détail de chaque étape est expliqué dans notre [guide pour acheter en ligne au Cameroun](/acheter-en-ligne-cameroun).' }
@@ -156,8 +156,7 @@ const PAGES = [
               { title: 'Comparez', text: 'Mettez plusieurs produits côte à côte avec le [comparateur](/compare) pour comparer caractéristiques et prix.' },
               { title: 'Passez commande', text: 'Ajoutez au panier, renseignez votre adresse de livraison et choisissez le moyen de paiement que vous utiliserez à la réception (Mobile Money ou carte, selon les options proposées).' },
               { title: 'Suivez la livraison', text: 'Depuis votre compte, suivez l’avancement de la commande et la livraison.' },
-              { title: 'Confirmez à la réception', text: 'Vérifiez votre commande, puis confirmez avec votre code de livraison : c’est à ce moment que vous payez.' },
-              { title: 'Donnez votre avis', text: 'Une fois la commande reçue, vous pouvez laisser un avis sur le produit et la boutique.' }
+              { title: 'Confirmez à la réception', text: 'Vérifiez votre commande, puis confirmez avec votre code de livraison : c’est à ce moment que vous payez.' }
             ]
           }
         ]
@@ -204,8 +203,7 @@ const PAGES = [
       { q: 'Quand est-ce que je paie ?', a: 'À la livraison. Aucun prélèvement n’est fait en ligne au moment de la commande ; le paiement a lieu à la réception, quand vous confirmez avec votre code de livraison.' },
       { q: 'Dans quelle monnaie sont affichés les prix ?', a: 'En francs CFA (FCFA).' },
       { q: 'Comment suivre ma commande ?', a: 'Dans votre compte, la page de la commande indique son avancement et donne accès au suivi de la livraison.' },
-      { q: 'Puis-je poser une question au vendeur avant d’acheter ?', a: 'Oui, avec la messagerie intégrée depuis la fiche produit ou la page de la boutique (connexion requise).' },
-      { q: 'Puis-je annuler une commande ?', a: 'Oui, tant qu’elle est en préparation (avant l’expédition), depuis la page de la commande. Rien n’étant débité avant la livraison, une commande annulée ne vous coûte rien.' }
+      { q: 'Puis-je poser une question au vendeur avant d’acheter ?', a: 'Oui, avec la messagerie intégrée depuis la fiche produit ou la page de la boutique (connexion requise).' }
     ],
     related: ['guideMarketplace', 'guideSell', 'about']
   },
