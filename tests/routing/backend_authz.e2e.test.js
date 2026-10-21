@@ -15,7 +15,8 @@
  *   e. seller routes: the dispatch board and the rider list
  *   f. admin API:     administrator and super_admin only; forged credentials refused
  *   g. public store:  what the public storefront JSON may and may not contain
- *   h. KNOWN_GAPs:    defects found while building this. Logged, never failing.
+ *   h. regressions:   defects found while building this, now fixed and asserted (plus one
+ *                     harness-limitation KNOWN_GAP that is logged, never failing)
  *
  * Run:  node tests/routing/backend_authz.e2e.test.js
  *
@@ -766,10 +767,10 @@ async function run() {
     /* ======================================================================= */
     /* h. KNOWN_GAPs                                                             */
     /* ======================================================================= */
-    heading('h. KNOWN_GAP probes — defects found while building this; logged, never failing');
+    heading('h. regressions — defects found while building this, now fixed and asserted');
 
     // ---- (1) an admin can make someone super_admin --------------------------------
-    await check('probe: can an `admin` (not super_admin) grant the top role?  PATCH /admin/users/:id/role and PATCH /admin/users/:id', async () => {
+    await check('an `admin` (not super_admin) cannot grant the top role: PATCH /admin/users/:id/role and PATCH /admin/users/:id', async () => {
       const t1 = await fx.throwaway('elev');
       const t2 = await fx.throwaway('mass');
       const roleOf = async (id) => (await sql('SELECT primary_role FROM iam.profiles WHERE id = $1', [id]))[0].primary_role;
@@ -777,31 +778,27 @@ async function run() {
       const after1 = await roleOf(t1.profileId);
       const r2 = await call('admin', 'PATCH', `/api/v1/admin/users/${t2.profileId}`, { body: { primary_role: 'super_admin' } });
       const after2 = await roleOf(t2.profileId);
-      counters.assertions += 2;
+      counters.assertions += 4;
       assert.ok(r1.status < 500 && r2.status < 500, `a 5xx here: role ${r1.status}, mass-assign ${r2.status}`);
-      if (after1 === 'super_admin') gap(`an admin can promote any account to super_admin: PATCH /api/v1/admin/users/:id/role {role:"super_admin"} -> ${r1.status}, iam.profiles.primary_role is now "super_admin" (the route guard only requires admin; no super_admin check)`);
-      else gap(`(closed? verify) PATCH /admin/users/:id/role {role:"super_admin"} as admin -> ${r1.status}; primary_role stayed "${after1}"`);
-      if (after2 === 'super_admin') gap(`an admin can mass-assign primary_role: PATCH /api/v1/admin/users/:id {primary_role:"super_admin"} -> ${r2.status}, role is now "super_admin" (SuperAdminRepository.updateUser writes the raw body into profiles)`);
-      else gap(`(closed? verify) PATCH /admin/users/:id {primary_role} as admin -> ${r2.status}; role stayed "${after2}"`);
+      assert.strictEqual(r1.status, 403, `PATCH /api/v1/admin/users/:id/role {role:"super_admin"} as admin -> ${r1.status}`);
+      assert.strictEqual(after1, 'customer', `an admin promoted an account to "${after1}" through the role route`);
+      assert.strictEqual(r2.status, 400, `PATCH /api/v1/admin/users/:id {primary_role} as admin -> ${r2.status}`);
+      assert.strictEqual(after2, 'customer', `an admin mass-assigned primary_role "${after2}"`);
       return `role route ${r1.status} -> ${after1}; mass-assign ${r2.status} -> ${after2}`;
     });
 
-    // ---- (2) a suspended store is still public ------------------------------------
-    await check('probe: is a SUSPENDED store still served publicly?  (admin POST /admin/stores/:id/suspend, then GET /stores/s/:slug)', async () => {
+    // ---- (2) admin store moderation works on a real store, and hides it ----------
+    await check('an admin can suspend a real store, which is then hidden publicly, and reactivate it', async () => {
       const sus = await call('admin', 'POST', `/api/v1/admin/stores/${rival.storeId}/suspend`, { body: { reason: 'fixture probe' } });
       const after = (await sql('SELECT status, visibility FROM iam.stores WHERE id = $1', [rival.storeId]))[0];
-      counters.assertions += 1;
-      assert.ok(sus.status < 500, `suspend answered ${sus.status}`);
-      if (after.status === 'SUSPENDED') {
-        const bySlug = await call('anonymous', 'GET', `/api/v1/stores/s/${rival.storeSlug}`);
-        const byProfile = await call('anonymous', 'GET', `/api/v1/stores/${rival.storeSlug}/profile`);
-        const byId = await call('anonymous', 'GET', `/api/v1/stores/${rival.storeId}/profile`);
-        if (bySlug.status === 200) gap(`a SUSPENDED store is still returned by GET /api/v1/stores/s/:slug -> ${bySlug.status} (PublicProfileService.getSellerPublicProfile only hides ARCHIVED/DELETED); GET /stores/:slug/profile -> ${byProfile.status}, /stores/:id/profile -> ${byId.status}`);
-        else out(`      (closed: a SUSPENDED store answers GET /stores/s/:slug with ${bySlug.status})`);
-        await call('admin', 'POST', `/api/v1/admin/stores/${rival.storeId}/reactivate`, { body: {} });
-      } else {
-        gap(`admin store moderation does not work on a real store: POST /api/v1/admin/stores/:id/suspend -> ${sus.status} ${short(sus.body && sus.body.error ? sus.body.error.message : sus.body, 90)}; the store row stayed "${after.status}" (SuperAdminRepository.getStoreById selects columns the schema does not have, falls back to its built-in demo stores and finds no such store). So "a suspended store is still public" (GET /stores/s/:slug only hides ARCHIVED/DELETED) could not be exercised through the app's routes; not forced with a direct UPDATE`);
-      }
+      counters.assertions += 4;
+      assert.strictEqual(sus.status, 200, `POST /api/v1/admin/stores/:id/suspend on a real store -> ${sus.status} ${short(sus.body)}`);
+      assert.strictEqual(after.status, 'SUSPENDED', `the store row is "${after.status}" after an admin suspension`);
+      const bySlug = await call('anonymous', 'GET', `/api/v1/stores/s/${rival.storeSlug}`);
+      assert.strictEqual(bySlug.status, 404, `a SUSPENDED store is still returned by GET /api/v1/stores/s/:slug -> ${bySlug.status}`);
+      const back = await call('admin', 'POST', `/api/v1/admin/stores/${rival.storeId}/reactivate`, { body: {} });
+      const restored = (await sql('SELECT status FROM iam.stores WHERE id = $1', [rival.storeId]))[0];
+      assert.ok(back.status === 200 && restored.status === 'ACTIVE', `reactivate -> ${back.status}, store row "${restored.status}"`);
       // Not a gap, a design note the router depends on: a store is public from the moment it is created.
       const draft = draftPublic;
       out(`      (note, by design — CreateStoreUseCase: a created store is status ACTIVE / visibility PUBLIC at once, before onboarding: GET /stores/s/:slug -> ${draft.bySlug.status}, GET /stores/:id/profile -> ${draft.profile.status} for a store whose owner is not yet seller-ready)`);
@@ -830,8 +827,8 @@ async function run() {
       return results.join(', ');
     });
 
-    // ---- (4) the admin API serves built-in demo data -------------------------------
-    await check('probe: does the admin API show the real database?', async () => {
+    // ---- (4) the admin API reads the real database --------------------------------
+    await check('the admin API reads the real database (stores, users, orders, listings, overview KPIs)', async () => {
       const stores = dataOf(await call('admin', 'GET', '/api/v1/admin/stores')).stores || [];
       const users = dataOf(await call('admin', 'GET', '/api/v1/admin/users')).users || [];
       const orders = dataOf(await call('admin', 'GET', '/api/v1/admin/orders')).orders || [];
@@ -842,20 +839,18 @@ async function run() {
         orders: orders.some((o) => o.id === I.orderId),
         listings: listings.some((l) => l.id === I.listingId),
       };
-      counters.assertions += 4;
-      const demo = Object.entries(real).filter(([, ok]) => !ok).map(([k]) => k);
-      if (demo.length) {
-        // Evidence: which of the columns the repository selects exist in the schema the migrations built.
-        const wanted = { profiles: ['full_name', 'kyc_status'], orders: ['total_amount', 'status', 'escrow_status', 'user_id', 'store_id'], listings: ['base_price', 'stock_quantity'], stores: ['city', 'product_count'] };
-        const missing = [];
-        for (const [table, cols] of Object.entries(wanted)) {
-          const have = (await sql(`SELECT column_name FROM information_schema.columns WHERE table_schema = 'iam' AND table_name = $1`, [table])).map((r) => r.column_name);
-          const gone = cols.filter((c) => !have.includes(c));
-          if (gone.length) missing.push(`${table}.${gone.join('/')}`);
-        }
-        gap(`GET /api/v1/admin/${demo.join(', /api/v1/admin/')} answer 200 with built-in demo rows (e.g. "${(stores[0] || {}).name || (users[0] || {}).full_name || ''}") instead of the database: SuperAdminRepository selects columns the schema does not have (${missing.join(', ') || 'see Postgres 42703 in dbErrors()'}), swallows the error and serves its built-in demo rows, in every NODE_ENV. The overview KPIs (86 orders, 142 users...) are invented too`);
-      }
-      return `real rows visible: ${JSON.stringify(real)}`;
+      counters.assertions += 6;
+      assert.deepStrictEqual(real, { stores: true, users: true, orders: true, listings: true }, 'the admin API lists the real rows, not built-in demo data');
+      assert.ok(!stores.some((x) => x.name === 'Orca Electronics'), 'no demo store is served against a live database');
+      const user = users.find((u) => u.id === P.customer.profileId);
+      assert.strictEqual(user.full_name, `${P.customer.firstName} ${P.customer.lastName}`, 'a user\'s name comes from first_name/last_name');
+      const order = orders.find((o) => o.id === I.orderId);
+      const row = (await sql('SELECT total_amount_xaf FROM iam.orders WHERE id = $1', [I.orderId]))[0];
+      assert.strictEqual(order.total_amount, Number(row.total_amount_xaf), 'an order\'s total is its real total');
+      const kpis = dataOf(await call('admin', 'GET', '/api/v1/admin/overview')).kpis || {};
+      const [{ n }] = await sql('SELECT count(*)::int AS n FROM iam.profiles');
+      assert.strictEqual(kpis.registeredUsers, n, `the overview counts the real users (${kpis.registeredUsers} vs ${n})`);
+      return `real rows visible: ${JSON.stringify(real)}; ${kpis.totalOrders} order(s), ${kpis.registeredUsers} user(s)`;
     });
 
     // ---- (5) the public storefront drops reviews and recommendations silently ------
@@ -898,7 +893,6 @@ async function run() {
         const msg = String(e.error || '');
         return (/\/auth\/v1\/token/.test(e.path) && /invalid_credentials|email_not_confirmed/.test(msg)) // the harness tries a login before each sign-up; a signed-up account that has not entered its code cannot sign in
           || (/\/auth\/v1\/user/.test(e.path) && /bad_jwt/.test(msg)) // the identity provider asks the auth service about a token it cannot verify itself (the forged/garbage tokens above)
-          || (/\/rest\/v1\/(profiles|orders|stores|listings)\?select=/.test(e.path) && /42703/.test(msg)) // admin read models (KNOWN_GAP: demo data)
           || (/\/rest\/v1\/auth_sessions/.test(e.path) && /PGRST205/.test(msg)) // DELETE /users/me revokes sessions in a table no migration creates (best effort, logged at debug)
           || (/\/rest\/v1\/(reviews|social_recommendations)\?/.test(e.path) && /PGRST200/.test(msg)); // storefront reviews (KNOWN_GAP: harness limitation)
       };
@@ -912,7 +906,7 @@ async function run() {
       // (the one WARN that mentions ERROR is env.js noting that the harness set LOUMOO_TEST_AUTH_SECRET, on purpose)
       const own = stack.errors().filter((l) => !/List reviews|List recommendations|LOUMOO_TEST_AUTH_SECRET/.test(l));
       assert.deepStrictEqual(own.slice(0, 5), [], 'ERROR-level server log lines');
-      return `${errors.length} expected database error(s): ${count(/42703/)} missing-column (admin read models), ${count(/PGRST200/)} missing-relationship (reviews), ${count(/bad_jwt/)} bad_jwt (forged tokens), ${count(/invalid_credentials|email_not_confirmed/)} refused sign-ins (before sign-up / before the code is entered), ${count(/PGRST205/)} missing-table (auth_sessions); 0 unexpected`;
+      return `${errors.length} expected database error(s): ${count(/PGRST200/)} missing-relationship (reviews), ${count(/bad_jwt/)} bad_jwt (forged tokens), ${count(/invalid_credentials|email_not_confirmed/)} refused sign-ins (before sign-up / before the code is entered), ${count(/PGRST205/)} missing-table (auth_sessions); 0 unexpected`;
     });
   } finally {
     await fx.stop();

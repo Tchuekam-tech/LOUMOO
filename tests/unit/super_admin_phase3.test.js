@@ -78,7 +78,7 @@ async function run() {
   // Moderate listing with string action
   const modRes1 = await api.moderateListing(listingToModerate.id, 'APPROVED');
   const modListing1 = modRes1.listing || modRes1;
-  assert.strictEqual(modListing1.status, 'ACTIVE');
+  assert.strictEqual(modListing1.status, 'PUBLISHED', 'approving publishes the listing');
 
   // Moderate listing with structured object
   const modRes2 = await api.moderateListing(listingToModerate.id, {
@@ -86,7 +86,8 @@ async function run() {
     reason: 'Price anomaly investigation'
   });
   const modListing2 = modRes2.listing || modRes2;
-  assert.strictEqual(modListing2.status, 'INACTIVE');
+  assert.strictEqual(modListing2.status, 'PAUSED', 'suspending pauses it');
+  assert.ok(!('is_approved' in modListing2), 'no is_approved flag (a listing has no such column)');
   console.log('    ✓ 4. getAdminListings() and moderateListing() verified (string and object actions)');
 
   // ── 6. getAdminUsers(filter), updateAdminUserRole(id, role), updateAdminUserKyc(id, status) ──
