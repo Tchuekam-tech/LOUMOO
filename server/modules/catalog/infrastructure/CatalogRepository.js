@@ -29,6 +29,16 @@ const CATALOG_SELECT_COLUMNS = [
   'published_at', 'created_at', 'updated_at'
 ].join(', ');
 
+/**
+ * A rating backed by no reviews is not a rating (the comparison engine's rule
+ * too). Unrated listings and stores were shown as 5.0 stars ("★ 5" on search
+ * results) because a missing rating defaulted to 5.0.
+ */
+function ratingOrNull(rating, count) {
+  const r = Number(rating);
+  return Number(count) > 0 && r > 0 ? r : null;
+}
+
 class CatalogRepository {
   static get db() {
     return SupabaseDatabase.getAdmin();
@@ -388,7 +398,7 @@ class CatalogRepository {
         whatsapp: store.phone_number || (store.metadata && store.metadata.phone) || null,
         isVerified: Boolean(store.is_verified),
         verificationTier: store.verification_tier,
-        rating: Number(store.rating) || 5.0,
+        rating: ratingOrNull(store.rating, store.rating_count),
         ratingCount: store.rating_count || 0,
         city: (store.metadata && store.metadata.city) || 'Douala'
       } : null
@@ -512,7 +522,7 @@ class CatalogRepository {
       storePhone: store ? (store.phone_number || (store.metadata && store.metadata.phone) || null) : null,
       sellerPhone: store ? (store.phone_number || (store.metadata && store.metadata.phone) || null) : null,
       verified: store ? Boolean(store.is_verified) : false,
-      rating: Number(listing.rating) || 5.0,
+      rating: ratingOrNull(listing.rating, listing.rating_count),
       reviewsCount: listing.rating_count || 0,
       soldCount: listing.order_count || 0,
       status: listing.status,
@@ -601,7 +611,7 @@ class CatalogRepository {
         whatsapp: house.phone,
         isVerified: Boolean(house.isVerified),
         verificationTier: house.verificationTier,
-        rating: Number(house.rating) || 5.0,
+        rating: ratingOrNull(house.rating, house.ratingCount),
         ratingCount: house.ratingCount || 0,
         city: house.city || (detail.store && detail.store.city) || 'Douala'
       }

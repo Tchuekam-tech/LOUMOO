@@ -178,5 +178,10 @@ assert.deepStrictEqual([someLeft.inStock, someLeft.stockUnits, someLeft.stockKno
 const untracked = CatalogRepository._formatProductCard({ id: 'lst_12', title: 'Lamp', base_price_minor: 5000 }, null, null, [], null);
 assert.deepStrictEqual([untracked.inStock, untracked.stockUnits, untracked.stockKnown], [true, null, false], 'untracked: available, count unknown');
 
+/* 9. An unrated listing has no rating, not five stars ----------------------- */
+assert.strictEqual(untracked.rating, null, 'no reviews, no rating');
+const rated = CatalogRepository._formatProductCard({ id: 'lst_13', title: 'Lamp', base_price_minor: 5000, rating: 4.4, rating_count: 7 }, null, null, [], null);
+assert.strictEqual(rated.rating, 4.4);
+
 console.log('product_page_view: API and curated products, no invented store/price/photos/badge, sign-out empties the bag');
 process.exit(0);
