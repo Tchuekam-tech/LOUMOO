@@ -259,6 +259,16 @@ async function run() {
     /* ======================================================================= */
     heading('b. orders — /api/v1/orders');
 
+    await check('placed orders hold their stock in iam.listing_inventory (reserved = what open orders hold)', async () => {
+      const [inv] = await sql('SELECT on_hand, reserved FROM iam.listing_inventory WHERE listing_id = $1 AND variant_id IS NULL', [I.listingId]);
+      const open = await sql("SELECT items FROM iam.orders WHERE fulfillment_status NOT IN ('cancelled', 'delivered')");
+      const held = open.reduce((n, o) => n + (o.items || []).filter((it) => it.listingId === I.listingId).reduce((m, it) => m + Number(it.quantity || 0), 0), 0);
+      counters.assertions += 2;
+      assert.ok(held > 0, 'the fixture placed orders on the listing');
+      assert.strictEqual(Number(inv.reserved), held, `reserved ${inv.reserved} vs ${held} held by open orders (on_hand ${inv.on_hand})`);
+      return `on_hand ${inv.on_hand}, reserved ${inv.reserved}`;
+    });
+
     const noOrderLeak = (who, r) => {
       const o = dataOf(r).order;
       assert.ok(o && o.id, 'an order is returned');

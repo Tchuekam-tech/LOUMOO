@@ -167,5 +167,16 @@ const card = CatalogRepository._formatProductCard({ id: 'lst_9', title: 'Radio',
 assert.strictEqual(card.verified, false, 'no store record, no verified badge');
 assert.ok(!/verified/i.test(card.storeName), `and no "verified" store name: ${card.storeName}`);
 
+/* 8. A card reports the seller's real stock, not an invented 1000 ------------ */
+const soldOut = CatalogRepository._formatProductCard({ id: 'lst_10', title: 'Lamp', base_price_minor: 5000 }, null, null, [],
+  { track_inventory: true, on_hand: 3, reserved: 3, allow_backorder: false });
+assert.strictEqual(soldOut.inStock, false, 'every unit held by open orders: out of stock');
+assert.strictEqual(soldOut.stockUnits, 0);
+const someLeft = CatalogRepository._formatProductCard({ id: 'lst_11', title: 'Lamp', base_price_minor: 5000 }, null, null, [],
+  { track_inventory: true, on_hand: 5, reserved: 2, allow_backorder: false });
+assert.deepStrictEqual([someLeft.inStock, someLeft.stockUnits, someLeft.stockKnown], [true, 3, true]);
+const untracked = CatalogRepository._formatProductCard({ id: 'lst_12', title: 'Lamp', base_price_minor: 5000 }, null, null, [], null);
+assert.deepStrictEqual([untracked.inStock, untracked.stockUnits, untracked.stockKnown], [true, null, false], 'untracked: available, count unknown');
+
 console.log('product_page_view: API and curated products, no invented store/price/photos/badge, sign-out empties the bag');
 process.exit(0);
