@@ -13358,6 +13358,16 @@ class Component extends DCLogic {
       hasPdpSimilar: this._pdpSimilarList().length > 0,
       catalogProducts: this.state.catalogProducts || [],
       catalogLoading: Boolean(this.state.catalogLoading),
+      // The feeds end with "You've explored all current listings" when this is
+      // false. It was never exposed, so the template read undefined and showed
+      // that line under every page of a catalogue that still had more.
+      catalogHasMore: this.state.catalogHasMore !== false,
+      // The toast's OK button. It was bound to a name nothing defined, so it
+      // did nothing and the banner stayed until its timer ran out.
+      clearToast: () => {
+        if (this._t) clearTimeout(this._t);
+        this.setState({ toast: '' });
+      },
       catalogError: this.state.catalogError || '',
       // Display-ready cards for the home "Live catalogue" rail, from GET /products.
       catalogHasCards: (this.state.catalogProducts || []).length > 0,

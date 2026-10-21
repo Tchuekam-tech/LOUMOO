@@ -15388,6 +15388,11 @@ class Component extends DCLogic {
       hasPdpSimilar: this._pdpSimilarList().length > 0,
       catalogProducts: this.state.catalogProducts || [],
       catalogLoading: Boolean(this.state.catalogLoading),
+      catalogHasMore: this.state.catalogHasMore !== false,
+      clearToast: () => {
+        if (this._t) clearTimeout(this._t);
+        this.setState({ toast: '' });
+      },
       catalogError: this.state.catalogError || '',
       catalogHasCards: (this.state.catalogProducts || []).length > 0,
       catalogCards: (this.state.catalogProducts || []).map((p) => ({
