@@ -12,7 +12,7 @@
  *   - Supports full-text search, category taxonomy drilldown, and pagination.
  */
 
-const { SupabaseDatabase } = require('../../../infrastructure/database/SupabaseClient');
+const { SupabaseDatabase, getAdminClient } = require('../../../infrastructure/database/SupabaseClient');
 const { InfrastructureError } = require('../../../shared/errors/AppError');
 const MediaStorageService = require('../../../infrastructure/storage/MediaStorageService');
 const { config } = require('../../../config/env');
@@ -32,6 +32,12 @@ const CATALOG_SELECT_COLUMNS = [
 class CatalogRepository {
   static get db() {
     return SupabaseDatabase.getAdmin();
+  }
+
+  /** The admin client, or null when no database is configured (dev/demo only:
+   *  production refuses to boot without one). */
+  static get configuredDb() {
+    return getAdminClient();
   }
 
   /**
@@ -302,17 +308,25 @@ class CatalogRepository {
     // A DB ERROR must THROW (so a caller like the prerender can degrade to a
     // route-level 200 shell instead of wrongly 404-ing a real product during an
     // outage). Only a reachable DB that returns no row falls through to curated.
-    const { data, error } = await this.db
-      .from('listings')
-      .select(`${CATALOG_SELECT_COLUMNS}, stores!inner(status)`)
-      .eq('status', 'PUBLISHED')
-      .eq('visibility', 'PUBLIC')
-      .eq('stores.status', 'ACTIVE')
-      .is('deleted_at', null)
-      .or(`id.eq.${cleanId},slug.eq.${cleanId}`)
-      .maybeSingle();
-    if (error) {
-      throw new InfrastructureError('Supabase', `Indexable product lookup failed: ${error.message}`, error);
+    // No database configured at all (local/demo without Supabase) is not an
+    // outage: there are no seller listings to miss, so the curated catalogue is
+    // the whole answer — otherwise every product page, real ones included, 503s.
+    const db = this.configuredDb;
+    let data = null;
+    if (db) {
+      const result = await db
+        .from('listings')
+        .select(`${CATALOG_SELECT_COLUMNS}, stores!inner(status)`)
+        .eq('status', 'PUBLISHED')
+        .eq('visibility', 'PUBLIC')
+        .eq('stores.status', 'ACTIVE')
+        .is('deleted_at', null)
+        .or(`id.eq.${cleanId},slug.eq.${cleanId}`)
+        .maybeSingle();
+      if (result.error) {
+        throw new InfrastructureError('Supabase', `Indexable product lookup failed: ${result.error.message}`, result.error);
+      }
+      data = result.data;
     }
     if (data) {
       const [mediaRows, storeRows, attributes] = await Promise.all([
