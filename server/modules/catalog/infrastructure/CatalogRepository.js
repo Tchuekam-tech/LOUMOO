@@ -12,7 +12,7 @@
  *   - Supports full-text search, category taxonomy drilldown, and pagination.
  */
 
-const { SupabaseDatabase } = require('../../../infrastructure/database/SupabaseClient');
+const { SupabaseDatabase, getAdminClient } = require('../../../infrastructure/database/SupabaseClient');
 const { InfrastructureError } = require('../../../shared/errors/AppError');
 const MediaStorageService = require('../../../infrastructure/storage/MediaStorageService');
 const { config } = require('../../../config/env');
@@ -32,6 +32,13 @@ const CATALOG_SELECT_COLUMNS = [
 class CatalogRepository {
   static get db() {
     return SupabaseDatabase.getAdmin();
+  }
+
+  // Whether a database is configured at all. Without one (a hermetic test, a
+  // static preview) the curated catalogue IS the catalogue. Production refuses to
+  // boot without it (config/env.js assertProductionConfig).
+  static get hasDatabase() {
+    return Boolean(getAdminClient());
   }
 
   /**
@@ -298,20 +305,39 @@ class CatalogRepository {
   static async findIndexableProductByIdOrSlug(idOrSlug) {
     if (!idOrSlug) return null;
     const cleanId = String(idOrSlug).trim().replace(/["(),]/g, '');
+    // A REAL curated product (exact id/slug), never the fabricated placeholder
+    // findPublicProductByIdOrSlug falls back to.
+    const curated = () => {
+      const card = this._curatedCards().find(c => c.id === idOrSlug || c.slug === idOrSlug);
+      return card ? this._enrichCuratedDetail(this._curatedDetail(card.id)) : null;
+    };
 
-    // A DB ERROR must THROW (so a caller like the prerender can degrade to a
-    // route-level 200 shell instead of wrongly 404-ing a real product during an
-    // outage). Only a reachable DB that returns no row falls through to curated.
-    const { data, error } = await this.db
-      .from('listings')
-      .select(`${CATALOG_SELECT_COLUMNS}, stores!inner(status)`)
-      .eq('status', 'PUBLISHED')
-      .eq('visibility', 'PUBLIC')
-      .eq('stores.status', 'ACTIVE')
-      .is('deleted_at', null)
-      .or(`id.eq.${cleanId},slug.eq.${cleanId}`)
-      .maybeSingle();
+    // No database at all: there are no live listings, so the curated answer —
+    // including "no such product" (404) — is final.
+    if (!this.hasDatabase) return curated();
+
+    // A configured database that FAILS cannot say a listing does not exist, so the
+    // error must THROW (the API answers 503, the prerender degrades to a route-level
+    // 200 shell) rather than 404 a real product during an outage. A curated product
+    // is static data, though: it is served through the outage instead.
+    let data = null;
+    let error = null;
+    try {
+      ({ data, error } = await this.db
+        .from('listings')
+        .select(`${CATALOG_SELECT_COLUMNS}, stores!inner(status)`)
+        .eq('status', 'PUBLISHED')
+        .eq('visibility', 'PUBLIC')
+        .eq('stores.status', 'ACTIVE')
+        .is('deleted_at', null)
+        .or(`id.eq.${cleanId},slug.eq.${cleanId}`)
+        .maybeSingle());
+    } catch (err) {
+      error = err;
+    }
     if (error) {
+      const fallback = await curated();
+      if (fallback) return fallback;
       throw new InfrastructureError('Supabase', `Indexable product lookup failed: ${error.message}`, error);
     }
     if (data) {
@@ -332,10 +358,8 @@ class CatalogRepository {
       return this._formatProductDetail(data, storeRows[0] || null, media, attributes);
     }
 
-    // DB reachable, no live listing: a REAL curated product only (exact id/slug),
-    // never the fabricated placeholder findPublicProductByIdOrSlug falls back to.
-    const card = this._curatedCards().find(c => c.id === idOrSlug || c.slug === idOrSlug);
-    return card ? this._enrichCuratedDetail(this._curatedDetail(card.id)) : null;
+    // DB reachable, no live listing: a curated product or nothing.
+    return curated();
   }
 
   static _formatProductDetail(row, store, media = [], attributes = []) {
