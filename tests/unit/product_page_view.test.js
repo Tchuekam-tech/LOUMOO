@@ -155,5 +155,17 @@ comp.renderVals().signOut();
 assert.deepStrictEqual(plain(comp.state.cartItems), [], 'the bag is emptied on sign-out');
 assert.strictEqual(context.localStorage.getItem('loumoo_cart'), null, 'and so is its saved copy');
 
+/* 6. The seller's own boutique card does not call every store verified ------ */
+comp.state.store = { id: 'store_1', name: 'Akwa Phones', categoryId: 'electronics', isVerified: false };
+assert.strictEqual(comp.renderVals().currentStoreIsVerified, false, 'an unverified boutique is not told it is verified');
+comp.state.store = { id: 'store_1', name: 'Akwa Phones', categoryId: 'electronics', is_verified: true };
+assert.strictEqual(comp.renderVals().currentStoreIsVerified, true);
+
+/* 7. A listing whose store record did not load is not advertised as verified -- */
+const CatalogRepository = require('../../server/modules/catalog/infrastructure/CatalogRepository');
+const card = CatalogRepository._formatProductCard({ id: 'lst_9', title: 'Radio', base_price_minor: 5000, store_id: 'store_x' }, null, null, []);
+assert.strictEqual(card.verified, false, 'no store record, no verified badge');
+assert.ok(!/verified/i.test(card.storeName), `and no "verified" store name: ${card.storeName}`);
+
 console.log('product_page_view: API and curated products, no invented store/price/photos/badge, sign-out empties the bag');
 process.exit(0);

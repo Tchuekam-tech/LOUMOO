@@ -16131,6 +16131,7 @@ class Component extends DCLogic {
         return LABELS[c] || 'General Retail';
       })(),
       storeCategory: (this.state.store && (this.state.store.categoryId || this.state.store.category_id || this.state.store.category)) || 'general',
+      currentStoreIsVerified: Boolean(this.state.store && (this.state.store.isVerified || this.state.store.is_verified)),
 
       sellerRevenue: this.state.sellerRevenue || 'XAF 0',
       sellerRevenueDelta: /^[+\-]/.test(String(this.state.sellerRevenueDelta || '')) ? this.state.sellerRevenueDelta : '',

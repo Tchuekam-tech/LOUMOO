@@ -14165,6 +14165,9 @@ class Component extends DCLogic {
         return LABELS[c] || 'General Retail';
       })(),
       storeCategory: (this.state.store && (this.state.store.categoryId || this.state.store.category_id || this.state.store.category)) || 'general',
+      // The owner's own boutique card said "Verified Merchant" to every seller,
+      // verified or not, so an unverified seller had no reason to finish KYC.
+      currentStoreIsVerified: Boolean(this.state.store && (this.state.store.isVerified || this.state.store.is_verified)),
 
       // ── Seller Studio Dynamic Metrics & Empty States ──
       sellerRevenue: this.state.sellerRevenue || 'XAF 0',

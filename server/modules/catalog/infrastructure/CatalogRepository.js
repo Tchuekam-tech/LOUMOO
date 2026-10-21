@@ -433,7 +433,9 @@ class CatalogRepository {
     const priceMinor = Number(listing.base_price_minor) || 0;
     const salePriceMinor = listing.sale_price_minor ? Number(listing.sale_price_minor) : null;
     const formattedPrice = formatXaf(priceMinor);
-    const storeName = store ? store.name : 'Verified Merchant';
+    // Without its store record (it failed to load) a listing has not earned a
+    // "verified" name or badge: both used to default to verified.
+    const storeName = store ? store.name : 'Marketplace seller';
 
     // Seeded/demo listings ship with auto-generated gradient placeholder covers
     // hosted on Supabase Storage. Swap those for a real product photo matched
@@ -478,7 +480,7 @@ class CatalogRepository {
       phoneNumber: store ? (store.phone_number || (store.metadata && store.metadata.phone) || null) : null,
       storePhone: store ? (store.phone_number || (store.metadata && store.metadata.phone) || null) : null,
       sellerPhone: store ? (store.phone_number || (store.metadata && store.metadata.phone) || null) : null,
-      verified: store ? Boolean(store.is_verified) : true,
+      verified: store ? Boolean(store.is_verified) : false,
       rating: Number(listing.rating) || 5.0,
       reviewsCount: listing.rating_count || 0,
       soldCount: listing.order_count || 0,
