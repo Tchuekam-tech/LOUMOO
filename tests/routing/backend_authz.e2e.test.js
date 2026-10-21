@@ -808,8 +808,8 @@ async function run() {
       return `suspend ${sus.status}, store row ${after.status}`;
     });
 
-    // ---- (3) canPurchase is not enforced by POST /orders --------------------------
-    await check('probe: can an account that is not purchase-ready (canPurchase=false) place an order?', async () => {
+    // ---- (3) canPurchase is enforced by POST /orders ------------------------------
+    await check('POST /orders refuses an account that is not purchase-ready (canPurchase=false) with 403', async () => {
       const results = [];
       for (const who of ['unverified', 'onboarding']) {
         const r = await call(who, 'POST', '/api/v1/orders', {
@@ -819,13 +819,12 @@ async function run() {
         assert.ok(r.status < 500, `POST /orders as ${who}: ${r.status} ${short(r.body)}`);
         const caps = (await state(who)).capabilities;
         if (r.status === 201) {
-          const orderId = dataOf(r).order.id;
-          gap(`canPurchase is not enforced server-side: ${who} (state ${P[who].state}, canPurchase ${caps.canPurchase}) can POST /api/v1/orders -> 201 (order ${orderId}); POST /orders only uses requireAuth`);
           // keep the seller's board tidy: the buyer cancels it again
-          await call(who, 'POST', `/api/v1/orders/${orderId}/cancel`, { body: { reason: 'fixture probe' } });
-        } else {
-          out(`      (${who} cannot place an order: ${r.status})`);
+          await call(who, 'POST', `/api/v1/orders/${dataOf(r).order.id}/cancel`, { body: { reason: 'fixture probe' } });
         }
+        counters.assertions += 1;
+        assert.strictEqual(caps.canPurchase, false, `${who} is not purchase-ready`);
+        assert.strictEqual(r.status, 403, `canPurchase is enforced server-side: ${who} (state ${P[who].state}) POST /api/v1/orders -> ${r.status} ${short(r.body)}`);
         results.push(`${who} ${r.status}`);
       }
       return results.join(', ');

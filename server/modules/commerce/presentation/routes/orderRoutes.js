@@ -15,7 +15,7 @@ const { OrderCreationService } = require('../../application/OrderCreationService
 const { OrderQueryService } = require('../../application/OrderQueryService');
 const { OrderLifecycleService } = require('../../application/OrderLifecycleService');
 const { CancelOrderInputSchema } = require('../validators/orderSchemas');
-const { requireAuth } = require('../../../identity/presentation/guards/authGuard');
+const { requireAuth, requireCapability } = require('../../../identity/presentation/guards/authGuard');
 const { ValidationError } = require('../../../../shared/errors/AppError');
 const { clampPagination } = require('../../../../shared/http/pagination');
 
@@ -32,8 +32,11 @@ function getCallerIdentity(req) {
   return { userId, userRole };
 }
 
-// POST /api/v1/orders - Place a new order with server-authoritative pricing
-router.post('/', requireAuth, async (req, res, next) => {
+// POST /api/v1/orders - Place a new order with server-authoritative pricing.
+// Buying is the canPurchase capability (ACCOUNT_READY and up), the same rule the
+// client routes enforce: requireAuth alone let an unverified or mid-onboarding
+// account place real orders by calling the API directly.
+router.post('/', requireAuth, requireCapability('canPurchase'), async (req, res, next) => {
   try {
     const { userId } = getCallerIdentity(req);
     const idempotencyKey = req.headers['idempotency-key'] || req.headers['x-idempotency-key'] || req.body?.idempotencyKey;
