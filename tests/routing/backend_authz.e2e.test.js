@@ -866,17 +866,13 @@ async function run() {
       return `${bad.length} failed reads`;
     });
 
-    // ---- (6) a store without a phone publishes the owner's account phone -----------
-    await check('probe: does a store created without a business phone publish the owner\'s personal phone?', async () => {
+    // ---- (6) a store without a phone never publishes the owner's account phone ----
+    await check('a store created without a business phone does not publish the owner\'s personal phone', async () => {
       const profile = draftPublic.profile;
-      counters.assertions += 1;
+      counters.assertions += 2;
       assert.strictEqual(profile.status, 200, `GET /stores/:id/profile for the rival's store: ${profile.status}`);
       const published = dataOf(profile).phoneNumber;
-      if (published && published === rival.phone) {
-        gap(`a store created without phoneNumber inherits the owner's ACCOUNT phone and publishes it: GET /api/v1/stores/:id/profile -> phoneNumber "${published}" (CreateStoreUseCase: phone_number = input.phoneNumber || principal.phoneNumber)`);
-      } else {
-        out(`      (the rival's published store phone is ${JSON.stringify(published)}, not the owner's ${rival.phone})`);
-      }
+      assert.notStrictEqual(published, rival.phone, `GET /api/v1/stores/:id/profile publishes the owner's account phone "${published}"`);
       return `published phoneNumber ${JSON.stringify(published)}`;
     });
 
