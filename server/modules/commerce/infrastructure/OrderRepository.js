@@ -434,6 +434,11 @@ class OrderRepository {
   async findOrdersByBuyer(buyerId, { status = 'all', limit = 20, offset = 0 } = {}) {
     if (!buyerId) return { orders: [], total: 0 };
 
+    // Defensive cap, independent of the route clamp: no caller can turn this into
+    // an unbounded scan via a huge/negative limit or offset.
+    limit = Math.max(1, Math.min(Number(limit) || 20, 100));
+    offset = Math.max(0, Number(offset) || 0);
+
     let dbOrders = [];
     let dbTotal = 0;
 

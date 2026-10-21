@@ -5,7 +5,7 @@
   "outputDirectory": "public",
   "functions": {
     "api/index.js": {
-      "includeFiles": "{src/data/**,data/**}"
+      "includeFiles": "{src/data/**,data/**,Commerce*App.dc.html}"
     }
   },
   "trailingSlash": false,
@@ -104,379 +104,379 @@
     },
     {
       "source": "/marketplace",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/marketplace/filters",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/marketplace/voice",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/marketplace/visual",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/marketplace/visual/scan",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/marketplace/visual/results",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/marketplace/categories",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/marketplace/category/:category([A-Za-z0-9_-]+)",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/marketplace/best-picks",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/marketplace/free-day",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/compare",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/compare/results",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/product/:id([A-Za-z0-9_-]+)",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/stores",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/brand",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/store/:slug([A-Za-z0-9_-]+)",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/announcements",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/announcements/campaigns",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/announcements/:id([A-Za-z0-9_-]+)",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/travel",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/travel/bus",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/travel/packages",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/travel/visa",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/travel/results",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/travel/details",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/travel/passenger",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/travel/tickets",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/hotels",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/hotels/voucher",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/hotels/:id([A-Za-z0-9_-]+)",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/hotels/:id([A-Za-z0-9_-]+)/book",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/cart",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/checkout",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/checkout/success",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/orders",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/orders/:id([A-Za-z0-9_-]+)/refund",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/orders/:id([A-Za-z0-9_-]+)/review",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/orders/:id([A-Za-z0-9_-]+)/tracking",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/orders/:id([A-Za-z0-9_-]+)",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/chat",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/chat/assistant",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/chat/:id([A-Za-z0-9_-]+)",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/notifications",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/account",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/account/profile",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/account/profile/edit",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/account/addresses",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/account/addresses/new",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/account/addresses/edit",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/account/notification-preferences",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/account/privacy",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/account/security",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/account/following",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/account/following/providers",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/account/activity",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/account/delete",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/account/saved",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/account/settings",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/account/transactions",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/account/suspended",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/sign-in",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/forgot-password",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/reset-password",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/verify",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/onboarding",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/onboarding/type",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/onboarding/identity",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/onboarding/code",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/onboarding/profile",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/onboarding/buyer",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/onboarding/seller",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/onboarding/business",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/onboarding/verification",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/onboarding/review",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/onboarding/done",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/sell",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/sell/listings",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/sell/deliveries",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/sell/deliveries/:orderId([A-Za-z0-9_-]+)",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/sell/orders/:id([A-Za-z0-9_-]+)",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/sell/payouts",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/sell/analytics",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/sell/settings",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/sell/verification",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/sell/onboarding",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/sell/create-store",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/sell/new",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/sell/new/studio",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/sell/new/review",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/sell/new/done",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/rider",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/delivery/:id([A-Za-z0-9_-]+)",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/providers/:id([A-Za-z0-9_-]+)",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     },
     {
       "source": "/admin/riders",
-      "destination": "/index.html"
+      "destination": "/api/index.js"
     }
   ],
   "headers": [

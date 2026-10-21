@@ -287,6 +287,57 @@ class CatalogRepository {
     return this._formatProductDetail(row, store, media, attributes);
   }
 
+  /**
+   * STRICT public lookup for indexable surfaces (prerender, SEO head, 404
+   * decisions). Returns the real published product — a live DB listing or a
+   * REAL curated product — or `null` for an unknown id. Unlike
+   * findPublicProductByIdOrSlug it NEVER fabricates a synthetic placeholder, so
+   * a caller can answer 404 for an id that does not exist. (P3 aligns the public
+   * products API with this same "unknown => not found" rule.)
+   */
+  static async findIndexableProductByIdOrSlug(idOrSlug) {
+    if (!idOrSlug) return null;
+    const cleanId = String(idOrSlug).trim().replace(/["(),]/g, '');
+
+    // A DB ERROR must THROW (so a caller like the prerender can degrade to a
+    // route-level 200 shell instead of wrongly 404-ing a real product during an
+    // outage). Only a reachable DB that returns no row falls through to curated.
+    const { data, error } = await this.db
+      .from('listings')
+      .select(`${CATALOG_SELECT_COLUMNS}, stores!inner(status)`)
+      .eq('status', 'PUBLISHED')
+      .eq('visibility', 'PUBLIC')
+      .eq('stores.status', 'ACTIVE')
+      .is('deleted_at', null)
+      .or(`id.eq.${cleanId},slug.eq.${cleanId}`)
+      .maybeSingle();
+    if (error) {
+      throw new InfrastructureError('Supabase', `Indexable product lookup failed: ${error.message}`, error);
+    }
+    if (data) {
+      const [mediaRows, storeRows, attributes] = await Promise.all([
+        this._loadMediaForListings([data.id]),
+        this._loadStores([data.store_id]),
+        this._loadAttributes(data.id)
+      ]);
+      const media = mediaRows.map(m => ({
+        id: m.id,
+        url: m.url || `/media-fallback/${m.storage_path}`,
+        isCover: m.is_cover,
+        displayOrder: m.display_order,
+        width: m.width,
+        height: m.height,
+        altText: m.alt_text
+      }));
+      return this._formatProductDetail(data, storeRows[0] || null, media, attributes);
+    }
+
+    // DB reachable, no live listing: a REAL curated product only (exact id/slug),
+    // never the fabricated placeholder findPublicProductByIdOrSlug falls back to.
+    const card = this._curatedCards().find(c => c.id === idOrSlug || c.slug === idOrSlug);
+    return card ? this._enrichCuratedDetail(this._curatedDetail(card.id)) : null;
+  }
+
   static _formatProductDetail(row, store, media = [], attributes = []) {
     const cover = (media && media.find(m => m.isCover)) || (media && media[0]) || null;
     return {

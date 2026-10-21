@@ -10,8 +10,9 @@
  *   node scripts/sync_route_config.js --check  fail (exit 1) if it is out of date
  *
  * What is generated:
- *   vercel.json   "redirects" (legacy paths), "rewrites" (the API function, the control
- *                 center, and one entry per application route), "trailingSlash"
+ *   vercel.json   "redirects" (legacy paths), "rewrites" (the API function, the
+ *                 crawlability endpoints, the control center, and one entry per
+ *                 application route pointing at the prerender function), "trailingSlash"
  *
  * What is deliberately NOT generated: a catch-all. A URL that is neither a file nor a
  * registered route has no rewrite, so the host answers it with 404.html (the same
@@ -69,7 +70,12 @@ function buildVercel(existing) {
   rewrites.push({ source: '/sitemap.xml', destination: '/api/index.js' });
   rewrites.push({ source: '/.well-known/security.txt', destination: '/api/index.js' });
   pageRoutes().forEach(r => rewrites.push({ source: r.path, destination: r.page }));
-  shellRoutes().forEach(r => rewrites.push({ source: vercelSource(r.path), destination: '/index.html' }));
+  // Application routes are served by the Express function so it can prerender a
+  // per-route <head> (title/description/canonical/robots/OG/Twitter/JSON-LD) and
+  // a crawlable content block, and answer a real 404 for an unknown product/store.
+  // The home page '/' is NOT rewritten: Vercel serves public/index.html, which
+  // scripts/assemble_public.js prerenders at build time.
+  shellRoutes().forEach(r => rewrites.push({ source: vercelSource(r.path), destination: '/api/index.js' }));
 
   const out = Object.assign({}, existing);
   out.trailingSlash = false;
