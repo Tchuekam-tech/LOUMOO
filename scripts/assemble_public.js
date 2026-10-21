@@ -200,6 +200,21 @@ try {
   console.warn('  [assemble] home prerender skipped:', e && e.message ? e.message : e);
 }
 
+// The French guides and the About page (kind 'content' routes). vercel.json rewrites each
+// route's path to public/pages/<id>.html, so the CDN serves them as static files. Unlike the
+// home prerender above this is NOT best-effort: a rewrite whose file is missing would turn four
+// indexable pages into 404s without any other sign, so a render failure fails the build.
+{
+  const Content = require('../server/modules/system/seo/content');
+  const data = Content.collectData();
+  fs.mkdirSync(path.join(out, 'pages'), { recursive: true });
+  for (const page of Content.listPages()) {
+    const rendered = Content.render(page.path, { siteUrl, data });
+    fs.writeFileSync(path.join(out, 'pages', page.id + '.html'), rendered.html);
+  }
+  console.log('  rendered ' + Content.listPages().length + ' content pages into public/pages/');
+}
+
 function dirSize(p) {
   let bytes = 0;
   for (const entry of fs.readdirSync(p, { withFileTypes: true })) {

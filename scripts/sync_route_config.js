@@ -54,6 +54,10 @@ function shellRoutes() {
 function pageRoutes() {
   return Routes.routes.filter(r => r.kind === 'page');
 }
+/** Public French documents: the build writes each to public<page>, the CDN serves it at the route's path. */
+function contentRoutes() {
+  return Routes.routes.filter(r => r.kind === 'content');
+}
 
 function encodeSpace(p) { return p.replace(/ /g, '%20'); }
 
@@ -78,6 +82,9 @@ function buildVercel(existing) {
   rewrites.push({ source: '/sitemap.xml', destination: '/api/index.js' });
   rewrites.push({ source: '/.well-known/security.txt', destination: '/api/index.js' });
   pageRoutes().forEach(r => rewrites.push({ source: r.path, destination: r.page }));
+  // Content pages are static files built into public/pages/ (scripts/assemble_public.js):
+  // no function invocation, CDN-cached, and the whole document is in the first response.
+  contentRoutes().forEach(r => rewrites.push({ source: r.path, destination: r.page }));
   // Application routes are served by the Express function so it can prerender a
   // per-route <head> (title/description/canonical/robots/OG/Twitter/JSON-LD) and
   // a crawlable content block, and answer a real 404 for an unknown product/store.
@@ -88,6 +95,15 @@ function buildVercel(existing) {
   rewrites.push({ source: '/(.*)', destination: '/api/index.js' });
 
   const out = Object.assign({}, existing);
+  // The content documents are static files, so the CDN (not the gateway's securityHeaders
+  // middleware) must send their Content-Security-Policy: the very rule '/' carries, one entry
+  // for all of them. Regenerated here so a new content route can never be served without it.
+  const content = contentRoutes().map(r => r.path.slice(1)).sort();
+  const base = (existing.headers || []).filter(h => !/^\/\(([a-z0-9|-]+)\)$/.test(h.source));
+  const homeRule = base.find(h => h.source === '/');
+  out.headers = homeRule && content.length
+    ? base.concat([{ source: '/(' + content.join('|') + ')', headers: homeRule.headers }])
+    : base;
   // "Other": no Framework Preset (and so no preset-injected SPA fallback) whatever the dashboard says.
   out.framework = null;
   out.trailingSlash = false;
@@ -123,4 +139,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { buildVercel, vercelSource, shellRoutes, pageRoutes, aliasList };
+module.exports = { buildVercel, vercelSource, shellRoutes, pageRoutes, contentRoutes, aliasList };
