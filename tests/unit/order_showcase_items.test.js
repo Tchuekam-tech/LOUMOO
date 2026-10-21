@@ -229,12 +229,10 @@ async function testProvisionedStoreOwnsTheCuratedProduct() {
 async function testOnlyAnExactCuratedKeyIsOrderable() {
   const repo = new OrderRepository({ db: fakeDb([REAL_ROW]), houseStore: houseService() });
 
-  // The premise: the browsing lookup WOULD accept these, which is why it must not decide orders.
+  // The browsing lookup refuses these too now, but the order path must not rely on it.
   const partial = CURATED_A.slice(0, CURATED_A.length - 4);
-  const fuzzy = await CatalogRepository.findPublicProductByIdOrSlug(partial);
-  assert.ok(fuzzy && fuzzy.title, 'the catalogue fuzzy-matches a partial id');
-  const fabricated = await CatalogRepository.findPublicProductByIdOrSlug('phone_made_up_thing_9000');
-  assert.ok(fabricated && fabricated.title, 'and fabricates a placeholder for an unknown id');
+  assert.strictEqual(await CatalogRepository.findPublicProductByIdOrSlug(partial), null, 'the catalogue does not fuzzy-match a partial id');
+  assert.strictEqual(await CatalogRepository.findPublicProductByIdOrSlug('phone_made_up_thing_9000'), null, 'nor invent a product for an unknown id');
 
   for (const id of [
     partial,

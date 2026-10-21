@@ -123,12 +123,10 @@ async function testVerifiedRefinementFollowsTheHouseStore() {
   });
 }
 
-async function testFabricatedPlaceholderIsNotAHouseProduct() {
+async function testUnknownIdIsNotAProduct() {
   await withHouse(HOUSE, async () => {
     const ghost = await CatalogRepository.findPublicProductByIdOrSlug('phone_made_up_thing_9000');
-    assert.ok(ghost && ghost.title, 'the page still renders something for a stale link');
-    assert.notStrictEqual(ghost.storeId, HOUSE_STORE.id, 'but it is not presented as a NanoAfrica product');
-    assert.strictEqual(ghost.store.phoneNumber, null);
+    assert.strictEqual(ghost, null, 'a stale link finds nothing, so the products route answers 404');
   });
 }
 
@@ -143,7 +141,7 @@ async function run() {
   await testStoreScopedQueries();
   await testProvisionedStoreSuppliesTheSellerBlock();
   await testVerifiedRefinementFollowsTheHouseStore();
-  await testFabricatedPlaceholderIsNotAHouseProduct();
+  await testUnknownIdIsNotAProduct();
   await testRealCardsPassThrough();
   console.log('house_store_catalog: 6 checks passed');
 }

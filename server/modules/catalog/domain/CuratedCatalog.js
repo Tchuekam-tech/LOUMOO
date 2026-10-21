@@ -7,10 +7,9 @@
  *
  *   1. "Is this id a product of the dataset?"  An EXACT key, own property only.
  *      Never a slug, never a partial id, never a fuzzy match. The catalogue
- *      browsing code (CatalogRepository._curatedDetail) deliberately fabricates a
- *      placeholder product for any unknown id so a stale link still renders
- *      something; that is fine for a page and fatal for a checkout, so the order
- *      path must not go through it.
+ *      browsing code (CatalogRepository._curatedDetail) also matches exactly now,
+ *      but it accepts a slug and answers with a presentation card, so the order
+ *      path still does not go through it.
  *   2. "What does the buyer pay?"  In the dataset `price` is what the buyer pays
  *      and `salePrice` is the compare-at (was) price, but the data has been
  *      edited by hand more than once, so the rule is the one the storefront

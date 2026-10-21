@@ -76,17 +76,17 @@ def get_product_view():
       </div>
     </sc-if>
 
-    <!-- ── STATE B: RECOVERY TO VERIFIED AVAILABLE INVENTORY ── -->
+    <!-- ── STATE B: NO SUCH PRODUCT (404; the router shows its not-found screen instead) ── -->
     <sc-if value="{{ !productLoading && productNotFound }}">
-      <div class="card-premium" style="text-align:center;padding:56px 24px;margin:32px auto;max-width:560px;display:flex;flex-direction:column;align-items:center;gap:16px">
-        <div style="width:68px;height:68px;border-radius:50%;background:rgba(30,144,255,0.1);color:var(--color-primary, #007aff);display:flex;align-items:center;justify-content:center">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+      <div role="alert" class="card-premium" style="text-align:center;padding:56px 24px;margin:32px auto;max-width:560px;display:flex;flex-direction:column;align-items:center;gap:16px">
+        <div style="width:68px;height:68px;border-radius:50%;background:var(--color-surface-subtle);color:var(--color-text-secondary);display:flex;align-items:center;justify-content:center">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/><path d="M8.5 8.5l5 5M13.5 8.5l-5 5"/></svg>
         </div>
-        <h2 style="font-size:24px;margin:0">LOUMOO Verified Inventory</h2>
-        <p style="color:var(--color-text-secondary);font-size:14px;max-width:420px;margin:0">All official listings are guaranteed in stock (1,000+ pieces available). Reconnecting you to verified LOUMOO marketplace listings.</p>
-        <div style="display:flex;gap:12px;margin-top:12px">
-          <button onClick="{{ () => openProduct('tecno_camon40') }}" class="btn btn-primary" style="height:44px;padding:0 24px">VIEW VERIFIED LISTING →</button>
-          <button onClick="{{ on.home }}" class="btn btn-secondary" style="height:44px;padding:0 20px">MARKETPLACE HUB</button>
+        <h2 style="font-size:24px;margin:0">This product isn’t available</h2>
+        <p style="color:var(--color-text-secondary);font-size:14px;max-width:420px;margin:0">We couldn’t find a product at this link. It may have been removed, or the link may be mistyped.</p>
+        <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;justify-content:center">
+          <button onClick="{{ on.notFoundMarketplace }}" class="btn btn-primary" style="height:44px;padding:0 24px">BROWSE THE MARKETPLACE</button>
+          <button onClick="{{ on.notFoundHome }}" class="btn btn-secondary" style="height:44px;padding:0 20px">GO TO THE HOMEPAGE</button>
         </div>
       </div>
     </sc-if>

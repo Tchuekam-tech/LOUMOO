@@ -7696,15 +7696,11 @@ class Component extends DCLogic {
   };
   // Resolve a product by id from the curated catalogue (PRODUCTS_DATA) first,
   // then from the live API catalogue already loaded into state (real seller
-  // listings shown in the home rail / search). Returns {} if unknown.
+  // listings shown in the home rail / search). Returns {} if unknown -- never a
+  // made-up product: callers that need one to exist must check.
   _resolveProduct = (id) => {
     if (!id) return {};
-    let p = this._resolveProductItem ? this._resolveProductItem(id) : null;
-    if (!p) {
-      const pool = (typeof window !== 'undefined' && window.PRODUCTS_DATA) ? window.PRODUCTS_DATA : ((typeof PRODUCTS_DATA !== 'undefined') ? PRODUCTS_DATA : {});
-      p = pool[id] || (this.state.catalogProducts || []).find((x) => x && (x.id === id || x.slug === id)) || null;
-    }
-    return p || (this._synthesizeAvailableListing ? this._synthesizeAvailableListing(id) : {});
+    return this._resolveProductItem(id) || {};
   };
   // The pool of real products (curated data + live catalogue) that belong to a
   // top-level category slug. Powers the category drill-down grid so no category
@@ -7900,15 +7896,24 @@ class Component extends DCLogic {
   // ── Shopping bag / cart ───────────────────────────────────────────────────
   // Real cart with line items + quantities, persisted to localStorage so it
   // survives reloads (works for guests). Checkout/payment wiring comes later.
-  _cartEntry = (id, name) => {
-    const p = this._resolveProduct(id);
+  // A line is only ever built from a product the app actually has -- curated or
+  // a live listing -- with a real price. Anything else (an unknown or demo id, a
+  // product with no price) is null: the caller tells the buyer it can't be
+  // ordered instead of putting a guessed name and price in the bag.
+  _cartEntry = (id, name) => this._lineFromProduct(this._resolveProduct(id), id, name);
+  // The bag line for product `p` (already resolved, locally or by the API), or
+  // null when it isn't a product with a real price.
+  _lineFromProduct = (p, id, name) => {
+    if (!p || !p.title) return null;
     const priceStr = this._payablePriceLabel(p);
+    const priceXaf = this._priceToXaf(priceStr) || Number(p.priceNumeric) || Number(p.base_price_minor) || 0;
+    if (!(priceXaf > 0)) return null;
     return {
-      id: id,
-      name: name || p.title || 'Item',
+      id: p.id || id,
+      name: name || p.title,
       image: p.coverImage || p.imageUrl || p.image || (p.images && p.images[0]) || '',
       price: priceStr,
-      priceXaf: this._priceToXaf(priceStr) || Number(p.priceNumeric) || Number(p.base_price_minor) || 0,
+      priceXaf: priceXaf,
       store: p.storeName || p.merchant || 'LOUMOO seller',
       storePhone: p.sellerPhone || p.storePhone || p.phoneNumber || p.phone || (p.store && (p.store.phoneNumber || p.store.phone || p.store.phone_number)) || null,
       qty: 1
@@ -7924,6 +7929,81 @@ class Component extends DCLogic {
       const list = JSON.parse(raw);
       if (Array.isArray(list)) this.setState({ cartItems: list });
     } catch (e) {}
+  };
+  // A saved line brought up to date with `entry`, the line its product makes
+  // today: real name, photo, store and price, and no "unavailable" mark. The
+  // same object when nothing changed.
+  _refreshCartLine = (line, entry) => {
+    const fields = ['name', 'image', 'price', 'priceXaf', 'store', 'storePhone'];
+    const stale = line.unavailable || fields.some((k) => line[k] !== entry[k]);
+    if (!stale) return line;
+    const next = Object.assign({}, line);
+    fields.forEach((k) => { next[k] = entry[k]; });
+    delete next.unavailable;
+    return next;
+  };
+  // Put `entry` (a line from _cartEntry / _lineFromProduct) in the bag, `qty`
+  // at a time. A line already there for the product is topped up and brought up
+  // to date with it (price, and any unavailable mark from a saved bag, cleared).
+  // Returns the line's name for the caller's message.
+  _putInBag = (entry, qty, surface) => {
+    const list = (this.state.cartItems || []).map((it) => ({ ...it }));
+    const at = list.findIndex((it) => it.id === entry.id);
+    if (at !== -1) {
+      const line = this._refreshCartLine(list[at], entry);
+      list[at] = Object.assign({}, line, { qty: Math.min(99, (Number(line.qty) || 1) + qty) });
+    } else {
+      list.push(Object.assign({}, entry, { qty: qty }));
+    }
+    this.setState({ cartItems: list });
+    this._persistCart(list);
+    this._recoNote('add_to_cart', this._resolveProductItem(entry.id) || { id: entry.id }, { surface: surface });
+    return at !== -1 ? list[at].name : entry.name;
+  };
+  // Apply what a re-check found for the saved line `id`: the line its product
+  // makes today, or null for "not orderable" (it is kept but marked unavailable).
+  _settleCartLine = (id, entry) => {
+    const list = this.state.cartItems || [];
+    let changed = false;
+    const next = list.map((it) => {
+      if (!it || it.id !== id) return it;
+      const settled = entry ? this._refreshCartLine(it, entry) : (it.unavailable ? it : Object.assign({}, it, { unavailable: true }));
+      if (settled !== it) changed = true;
+      return settled;
+    });
+    if (!changed) return;
+    this.setState({ cartItems: next });
+    this._persistCart(next);
+  };
+  // A bag saved by an older version of the app can hold a line it made up for an
+  // id it didn't know (a demo id at XAF 85.000), or a real product priced with a
+  // placeholder because the catalogue hadn't loaded yet. Once the catalogue has
+  // settled, every saved line is checked against the product it names: an
+  // orderable one is brought up to that product's real price; one that names no
+  // product (the API answers 404) or has no price is marked unavailable, so the
+  // bag shows it but keeps it out of the total and the order. Offline, a server
+  // error or no API decides nothing: the line stays as it was. Runs once a load.
+  _recheckCartLines = () => {
+    if (this._cartRechecked) return;
+    this._cartRechecked = true;
+    const api = getApi();
+    (this.state.cartItems || []).forEach((line) => {
+      const id = line && line.id;
+      if (!id) return;
+      const local = this._cartEntry(id);
+      if (local) { this._settleCartLine(id, local); return; }
+      // Known here but with no price: nothing to ask the server.
+      if (this._resolveProduct(id).title) { this._settleCartLine(id, null); return; }
+      if (!api || typeof api.getProduct !== 'function') return;
+      api.getProduct(String(id)).then((res) => {
+        if (this._unmounted) return;
+        const prod = (res && res.data) || res;
+        this._settleCartLine(id, prod && prod.title ? this._lineFromProduct(prod, id) : null);
+      }).catch((err) => {
+        if (this._unmounted) return;
+        if (err && err.status === 404) this._settleCartLine(id, null);
+      });
+    });
   };
 
   // ── Orders ────────────────────────────────────────────────────────────────
@@ -8404,7 +8484,8 @@ class Component extends DCLogic {
     this._bootAuth();
     // Load the live marketplace catalogue for the home rail on first paint
     // (_onScreenEnter only fires on subsequent navigation, not initial mount).
-    this._ensureCatalogData();
+    // With the curated catalogue in, the saved bag is checked against it.
+    this._ensureCatalogData(() => this._recheckCartLines());
     this.loadCatalogProducts({ limit: 16 });
     if (this.state.screen === 'announce' || this.state.screen === 'announceDetail') {
       this.ensureAnnouncements();
@@ -11827,105 +11908,22 @@ class Component extends DCLogic {
     match = liveCatalog.find(p => p && (p.id === cleanId || p.slug === cleanId || p.sku === cleanId));
     if (match) return match;
 
-    // 4. Normalized & Substring match
-    const norm = cleanId.toLowerCase().replace(/[^a-z0-9]+/g, '');
-    match = poolValues.find(p => {
-      if (!p) return false;
-      const pidNorm = String(p.id || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
-      const pslugNorm = String(p.slug || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
-      const titleNorm = String(p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
-      return pidNorm === norm || pslugNorm === norm || titleNorm.includes(norm) || (norm.length > 5 && pidNorm.includes(norm));
-    });
-    if (match) return match;
+    // No fuzzy or substring matching: a near miss (or a word of a title) would
+    // resolve to a different product, whose page and price the buyer would then
+    // see -- and could put in the bag -- under this id. The server matches
+    // exactly too, so both sides agree on what an id is.
 
-    // 5. Search results pool in state
+    // 4. Search results pool in state
     const searchRes = Array.isArray(this.state.searchResults) ? this.state.searchResults : [];
     match = searchRes.find(p => p && (p.id === cleanId || p.slug === cleanId));
     if (match) return match;
 
+    // 5. The product open on the PDP. A live listing reached by a link (a
+    // refresh, a share) was fetched by id and is in none of the pools above.
+    const open = this.state.currentProduct;
+    if (open && (open.id === cleanId || open.slug === cleanId)) return open;
+
     return null;
-  }
-
-  _synthesizeAvailableListing(productId) {
-    const rawId = String(productId || 'loumoo_product').trim();
-    const lower = rawId.toLowerCase();
-
-    // Humanize title
-    let titleParts = rawId.replace(/^(phone_|laptop_|elec_|fashion_|home_|groc_|beauty_|sport_|na_)/, '')
-      .replace(/[_\-]+/g, ' ')
-      .trim()
-      .split(' ')
-      .filter(Boolean)
-      .map(w => w.charAt(0).toUpperCase() + w.slice(1));
-    let humanTitle = titleParts.join(' ') || 'LOUMOO Official Selection';
-
-    // Infer category, label, and brand
-    let cat = 'electronics', catLabel = 'Smartphones & Mobile', brand = 'LOUMOO Official';
-    if (lower.includes('phone') || lower.includes('camon') || lower.includes('pixel') || lower.includes('galaxy') || lower.includes('iphone') || lower.includes('tecno') || lower.includes('samsung')) {
-      cat = 'electronics'; catLabel = 'Smartphones & Mobile';
-      if (lower.includes('apple') || lower.includes('iphone')) brand = 'Apple';
-      else if (lower.includes('samsung') || lower.includes('galaxy')) brand = 'Samsung';
-      else if (lower.includes('tecno') || lower.includes('camon')) brand = 'Tecno';
-      else if (lower.includes('google') || lower.includes('pixel')) brand = 'Google';
-    } else if (lower.includes('macbook') || lower.includes('surface') || lower.includes('laptop') || lower.includes('pc') || lower.includes('ordinateur')) {
-      cat = 'electronics'; catLabel = 'Ordinateurs & Portables'; brand = lower.includes('apple') || lower.includes('mac') ? 'Apple' : 'Microsoft';
-    } else if (lower.includes('airpod') || lower.includes('speaker') || lower.includes('audio') || lower.includes('jbl') || lower.includes('mic') || lower.includes('sound') || lower.includes('mifa')) {
-      cat = 'electronics'; catLabel = 'Audio & Casques'; brand = lower.includes('jbl') ? 'JBL' : (lower.includes('airpod') ? 'Apple' : 'Acoustic Pro');
-    } else if (lower.includes('shoe') || lower.includes('heel') || lower.includes('boot') || lower.includes('loafer') || lower.includes('sneaker') || lower.includes('sandals') || lower.includes('monk') || lower.includes('brogue')) {
-      cat = 'fashion'; catLabel = 'Chaussures & Souliers'; brand = 'Armonía Milano';
-    } else if (lower.includes('bag') || lower.includes('satchel') || lower.includes('birkin') || lower.includes('backpack') || lower.includes('tote')) {
-      cat = 'fashion'; catLabel = 'Sacs & Maroquinerie'; brand = 'Maison Blanche Douala';
-    } else if (lower.includes('palazzo') || lower.includes('wax') || lower.includes('ankara') || lower.includes('dress') || lower.includes('clothing')) {
-      cat = 'fashion'; catLabel = 'Mode Africaine & Prêt-à-Porter'; brand = 'AfroChic Atelier';
-    } else if (lower.includes('parfum') || lower.includes('vanille') || lower.includes('lotion') || lower.includes('shea') || lower.includes('beauty') || lower.includes('fragrance')) {
-      cat = 'beauty'; catLabel = 'Beauté & Soins'; brand = 'AfriPure Botanicals';
-    } else if (lower.includes('necklace') || lower.includes('bracelet') || lower.includes('ring') || lower.includes('parure') || lower.includes('jewel') || lower.includes('infinity')) {
-      cat = 'jewelry'; catLabel = 'Bijouterie & Parures'; brand = 'Zulu Heritage';
-    } else if (lower.includes('home') || lower.includes('expresso') || lower.includes('juicer') || lower.includes('airfryer') || lower.includes('coffee') || lower.includes('kitchen')) {
-      cat = 'home'; catLabel = 'Maison & Électroménager'; brand = 'ElectroHome Douala';
-    }
-
-    const pool = (typeof window !== 'undefined' && window.PRODUCTS_DATA) ? window.PRODUCTS_DATA : ((typeof PRODUCTS_DATA !== 'undefined') ? PRODUCTS_DATA : {});
-    const poolVals = Object.values(pool);
-    const sibling = poolVals.find(p => p && p.category === cat && p.coverImage) || poolVals[0] || {};
-    const defaultCover = sibling.coverImage || './Assets/telephone&PC/Macbook.jfif';
-
-    return {
-      id: rawId,
-      slug: rawId,
-      title: humanTitle,
-      brand: brand,
-      category: cat,
-      categoryLabel: catLabel,
-      conditionLabel: "Neuf Scellé d'Origine · Garantie 24 Mois Constructeur",
-      fulfillmentLabel: "Livraison Express Douala / Yaoundé 24h",
-      badge: "LOUMOO VERIFIED",
-      rating: "4.9",
-      reviewCount: 42,
-      soldCount: 98,
-      price: "XAF 85.000",
-      salePrice: "XAF 105.000",
-      priceNumeric: 85000,
-      salePriceNumeric: 105000,
-      storeName: brand + " · Boutique Officielle",
-      storeCity: "Akwa, Douala",
-      storeRating: "4.9",
-      storeVerified: true,
-      coverImage: defaultCover,
-      images: [defaultCover],
-      attributes: [
-        { key: "Garantie", val: "24 Mois pièces et main d'œuvre officielle constructeur" },
-        { key: "Disponibilité", val: "En stock officiel LOUMOO (1 000+ unités disponibles)" },
-        { key: "Livraison", val: "Livraison Express 24h Douala & Yaoundé avec suivi en temps réel" },
-        { key: "Séquestre LOUMOO", val: "Paiement 100% protégé par LOUMOO Escrow jusqu'à validation" }
-      ],
-      description: "Listing officiel LOUMOO disponible immédiatement. " + humanTitle + " rigoureusement testé et certifié conforme par nos inspecteurs partenaires. Garantie d'authenticité et retour gratuit sous 7 jours.",
-      inStock: true,
-      stock: 1000,
-      stockQuantity: 1000,
-      stockUnits: 1000,
-      inStockLabel: "En stock (1 000+ disponibles)"
-    };
   }
 
   /**
@@ -11960,7 +11958,7 @@ class Component extends DCLogic {
       return;
     }
 
-    // 2. Fetch from Live API with Guaranteed Fallback (Zero 404s Policy)
+    // 2. Not held locally: ask the API. It answers 404 for an id that names no product.
     const api = getApi();
     this.setState({
       screen: 'product',
@@ -11974,24 +11972,22 @@ class Component extends DCLogic {
     });
 
     if (!api) {
-      const fallback = this._synthesizeAvailableListing(cleanId);
+      // The API client didn't load, so this id can't be looked up at all.
       this.setState({
-        currentProduct: fallback,
         productLoading: false,
-        productNotFound: false,
-        productError: '',
-        currentProductActiveImage: fallback.coverImage || (fallback.images && fallback.images[0]) || null
+        productError: 'We couldn’t load this product. Check your connection and try again.'
       });
       return;
     }
 
+    // An answer for a product the buyer has already left must not replace the
+    // page they are on now (a late 404 would swap it for not-found).
+    const stale = () => this._unmounted || this.state.currentProductId !== cleanId;
     api.getProduct(cleanId)
       .then(res => {
-        if (this._unmounted) return;
-        let prod = (res && res.data) || res;
-        if (!prod || !prod.title) {
-          prod = this._synthesizeAvailableListing(cleanId);
-        }
+        if (stale()) return;
+        const prod = (res && res.data) || res;
+        if (!prod || !prod.title) { this._showProductNotFound(); return; }
         const activeImg = prod.coverImage || prod.image || (prod.images && prod.images[0]) || (prod.media && prod.media[0] && prod.media[0].url) || null;
         this._recoNote('view', prod, { surface: 'pdp' });
         this.setState({
@@ -12002,18 +11998,33 @@ class Component extends DCLogic {
           currentProductActiveImage: activeImg
         });
       })
-      .catch(() => {
-        if (this._unmounted) return;
-        // Never show 404 or "Listing Unavailable" — all listings remain available
-        const fallback = this._synthesizeAvailableListing(cleanId);
+      .catch(err => {
+        if (stale()) return;
+        if (err && err.status === 404) { this._showProductNotFound(); return; }
+        // Offline, a server error...: the product may well exist, so offer a retry.
         this.setState({
-          currentProduct: fallback,
+          currentProduct: null,
           productLoading: false,
           productNotFound: false,
-          productError: '',
-          currentProductActiveImage: fallback.coverImage || (fallback.images && fallback.images[0]) || null
+          productError: (err && err.message) || 'We couldn’t load this product. Check your connection and try again.',
+          currentProductActiveImage: null
         });
       });
+  }
+
+  // The id names no product (the API answered 404): say so instead of inventing
+  // one. With the router running, the address bar keeps the visitor's URL and
+  // the shared not-found screen explains it, as for a store that doesn't exist.
+  _showProductNotFound() {
+    this.setState({
+      currentProduct: null,
+      productLoading: false,
+      productNotFound: true,
+      productError: '',
+      currentProductActiveImage: null
+    });
+    const R = getRouter();
+    if (R && R.isActive() && this.state.screen === 'product') R.notFound({ kind: 'notfound', resource: 'product' });
   }
 
   selectProductImage(imgUrl) {
@@ -12172,17 +12183,21 @@ class Component extends DCLogic {
     return view;
   }
 
-  _ensureCatalogData() {
+  // onSettled runs once the curated catalogue is in (already, or once fetched)
+  // or every path has failed, i.e. when an id it lacks is really not in it.
+  _ensureCatalogData(onSettled) {
+    const settled = () => { if (!this._unmounted && onSettled) onSettled(); };
     if (typeof window !== 'undefined' && (!window.PRODUCTS_DATA || Object.keys(window.PRODUCTS_DATA).length === 0)) {
       const paths = ['./data/catalog.json', '/data/catalog.json', './public/data/catalog.json'];
       const tryFetch = (idx) => {
-        if (idx >= paths.length) return;
+        if (idx >= paths.length) { settled(); return; }
         fetch(paths[idx])
           .then(r => r.ok ? r.json() : null)
           .then(data => {
             if (data && typeof data === 'object' && Object.keys(data).length > 0) {
               window.PRODUCTS_DATA = Object.assign(window.PRODUCTS_DATA || {}, data);
               if (!this._unmounted) this.setState({ _catalogLoaded: true });
+              settled();
             } else {
               tryFetch(idx + 1);
             }
@@ -12190,6 +12205,8 @@ class Component extends DCLogic {
           .catch(() => tryFetch(idx + 1));
       };
       tryFetch(0);
+    } else {
+      settled();
     }
   }
 
@@ -13103,7 +13120,9 @@ class Component extends DCLogic {
     const hotelCards = (list) => (Array.isArray(list) ? list : []).map(hotelCard);
 
     // Real cart totals derived from the line items in the bag and dynamic platform settings.
-    const cartList = this.state.cartItems || [];
+    // A line marked unavailable (_recheckCartLines) stays in the bag but is not
+    // ordered, so it adds nothing to the total or the per-store delivery fees.
+    const cartList = (this.state.cartItems || []).filter((it) => it && !it.unavailable);
     const cartSubtotal = cartList.reduce((a, it) => a + (Number(it.priceXaf) || 0) * (Number(it.qty) || 1), 0);
     const dynamicSettings = (typeof window !== 'undefined' && window.LOUMOO_SYSTEM_SETTINGS) || this.state.systemSettings || this.state.adminSettings || {};
     // The delivery fee follows the city the order will be delivered to (the same
@@ -13161,7 +13180,9 @@ class Component extends DCLogic {
     const nf = this.state.routeNotFound || {};
     const nfKind = nf.kind || 'notfound';
     const nfCopy = {
-      notfound: ['Page not found', 'We could not find this page. It may have moved, or the link may be mistyped.'],
+      notfound: nf.resource === 'product'
+        ? ['This product isn’t available', 'We couldn’t find a product at this link. It may have been removed, or the link may be mistyped.']
+        : ['Page not found', 'We could not find this page. It may have moved, or the link may be mistyped.'],
       forbidden: ['You do not have access', nf.message || 'This area is not available to your account.'],
       unavailable: [(nf.title || 'This area') + ' is not available yet', 'This part of LOUMOO has not been built yet. Nothing is hidden here.'],
       error: ['We could not load this page', 'Check your connection and try again.']
@@ -17488,14 +17509,18 @@ class Component extends DCLogic {
         image: it.image,
         store: it.store,
         qty: it.qty,
-        lineLabel: 'XAF ' + fmt((Number(it.priceXaf) || 0) * (Number(it.qty) || 1))
+        // Its saved price may have been made up, so an unavailable line shows none.
+        unavailable: Boolean(it.unavailable),
+        lineLabel: it.unavailable ? 'Unavailable' : 'XAF ' + fmt((Number(it.priceXaf) || 0) * (Number(it.qty) || 1))
       })),
       cartLabel: (() => {
         const items = this.state.cartItems || [];
         const n = items.reduce((a, it) => a + (Number(it.qty) || 1), 0);
-        const sellers = new Set(items.map((it) => it.store)).size;
+        // An unavailable line's store may be made up, so only orderable lines count as sellers.
+        const gone = items.filter((it) => it && it.unavailable).length;
+        const sellers = new Set(items.filter((it) => it && !it.unavailable).map((it) => it.store)).size;
         if (n === 0) return 'Your bag is empty';
-        return n + (n === 1 ? ' item' : ' items') + (sellers > 1 ? (' · ' + sellers + ' sellers') : '');
+        return n + (n === 1 ? ' item' : ' items') + (sellers > 1 ? (' · ' + sellers + ' sellers') : '') + (gone ? ' · ' + gone + ' unavailable' : '');
       })(),
 
       // ── Checkout Delivery Destination ──
@@ -17871,36 +17896,36 @@ class Component extends DCLogic {
         let id = (typeof arg === 'string' && arg) ? arg : null;
         if (!id && this.state.currentProductId) id = this.state.currentProductId;
         if (!id) { this.toast('Open a product to add it to your bag'); return; }
-        const list = (this.state.cartItems || []).map((it) => ({ ...it }));
+        // Checked before the bag is touched, also for a line already in it: an
+        // id the app cannot price is refused rather than given a made-up line.
+        const NOT_ORDERABLE = 'Sorry, this item isn’t available to order';
         const qtyToAdd = (this.state.screen === 'product') ? Math.max(1, Number(this.state.qty) || 1) : 1;
-        const existing = list.find((it) => it.id === id);
-        let name;
-        if (existing) {
-          existing.qty = Math.min(99, (Number(existing.qty) || 1) + qtyToAdd);
-          name = existing.name;
-        } else {
-          const entry = this._cartEntry(id);
-          entry.qty = qtyToAdd;
-          list.push(entry);
-          name = entry.name;
-        }
-        this.setState({ cartItems: list });
-        this._persistCart(list);
-        this._recoNote('add_to_cart', this._resolveProductItem(id) || { id: id }, { surface: this.state.screen === 'product' ? 'pdp' : 'card' });
-        this.toast('Added ' + name + ' to your bag');
+        const surface = this.state.screen === 'product' ? 'pdp' : 'card';
+        const entry = this._cartEntry(id);
+        if (entry) { this.toast('Added ' + this._putInBag(entry, qtyToAdd, surface) + ' to your bag'); return; }
+        // Not held here at all -- a seller's listing offered on the compare screen
+        // or found by search: the API decides, and only its answer is put in the
+        // bag. Known here but with no price, or no API: refused at once.
+        const api = getApi();
+        if (this._resolveProduct(id).title || !api || typeof api.getProduct !== 'function') { this.toast(NOT_ORDERABLE); return; }
+        api.getProduct(String(id)).then((res) => {
+          if (this._unmounted) return;
+          const prod = (res && res.data) || res;
+          const line = prod && prod.title ? this._lineFromProduct(prod, id) : null;
+          if (!line) { this.toast(NOT_ORDERABLE); return; }
+          this.toast('Added ' + this._putInBag(line, qtyToAdd, surface) + ' to your bag');
+        }).catch((err) => {
+          if (this._unmounted) return;
+          this.toast(err && err.status === 404 ? NOT_ORDERABLE : 'We couldn’t add this item right now. Check your connection and try again.');
+        });
       },
       // Buy now: add the open product to the bag and jump straight to checkout.
       buyNowProduct: () => {
         const id = this.state.currentProductId;
         if (!id) { this.toast('Open a product to buy it'); return; }
-        const list = (this.state.cartItems || []).map((it) => ({ ...it }));
-        const qtyToAdd = Math.max(1, Number(this.state.qty) || 1);
-        const existing = list.find((it) => it.id === id);
-        if (existing) existing.qty = Math.min(99, (Number(existing.qty) || 1) + qtyToAdd);
-        else { const entry = this._cartEntry(id); entry.qty = qtyToAdd; list.push(entry); }
-        this.setState({ cartItems: list });
-        this._persistCart(list);
-        this._recoNote('add_to_cart', this._resolveProductItem(id) || { id: id }, { surface: 'pdp_buynow' });
+        const entry = this._cartEntry(id);
+        if (!entry) { this.toast('Sorry, this item isn’t available to order'); return; }
+        this._putInBag(entry, Math.max(1, Number(this.state.qty) || 1), 'pdp_buynow');
         this.go('checkout');
       },
       incCartQty: (id) => {
@@ -17927,8 +17952,18 @@ class Component extends DCLogic {
       // why. Payment is deferred, so the order is "pay on delivery": no charge.
       placeOrder: () => {
         if (this.state.placingOrder || this._placingNow) return;
-        const cart = this.state.cartItems || [];
-        if (!cart.length) { this.toast('Your bag is empty'); return; }
+        const bag = this.state.cartItems || [];
+        if (!bag.length) { this.toast('Your bag is empty'); return; }
+        // A line marked unavailable is never sent: its product is gone or has no
+        // price (and its saved price may be made up). It stays in the bag to remove.
+        const cart = bag.filter((it) => it && !it.unavailable);
+        if (!cart.length) {
+          this.setState({
+            orderError: 'Nothing in your bag can be ordered right now. Remove the unavailable items to continue.',
+            orderErrorItemIds: bag.map((it) => it && it.id).filter(Boolean)
+          });
+          return;
+        }
         if (this.state.authStatus !== 'authenticated') {
           // Orders belong to an account. The bag is kept on this device, and
           // signing in brings the shopper straight back to checkout.
