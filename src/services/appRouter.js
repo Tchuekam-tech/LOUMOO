@@ -507,7 +507,7 @@
     var route = res.route;
     var params = res.params;
 
-    if (route.kind === 'page') {
+    if (route.kind === 'page' || route.kind === 'content') {
       return pageNavigation(route, u);
     }
 
