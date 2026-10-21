@@ -130,6 +130,8 @@ class ReviewService {
       }
     } else {
       // ── 4. Prevent Unverified Review Flooding / Duplicates ──
+      // No unique constraint covers order_id IS NULL, so a race can leave two
+      // rows; maybeSingle() then errored, read as "none", and let more in.
       const { data: existingUnverified } = await adminDb
         .from('reviews')
         .select('id')
@@ -137,9 +139,9 @@ class ReviewService {
         .eq('target_type', targetType)
         .eq('target_id', targetId)
         .is('order_id', null)
-        .maybeSingle();
+        .limit(1);
 
-      if (existingUnverified) {
+      if (Array.isArray(existingUnverified) && existingUnverified.length > 0) {
         throw new ConflictError('You have already submitted a review for this entity. Edit your existing review instead.');
       }
     }
