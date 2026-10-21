@@ -161,6 +161,14 @@ async function run() {
   assert.ok(/<meta property="og:title"/.test(homeHtml), 'home must carry OpenGraph tags');
   assert.ok(/<meta name="robots" content="index,follow"/.test(homeHtml), 'home must be indexable');
   assert.ok(/id="loumoo-prerender"/.test(homeHtml), 'home must carry a prerendered content block');
+  // The baked page is what Vercel serves at '/'. It must carry the same home section the gateway
+  // renders on request (assemble_public.js passes home: true), or the two hosts answer differently.
+  const bakedBlock = (homeHtml.match(/<div id="loumoo-prerender"[\s\S]*?<\/div>/) || [''])[0];
+  const baseUrl = (homeHtml.match(/<link rel="canonical" href="(https:\/\/[^"]+)\/"/) || [])[1];
+  assert.ok(/Acheter, vendre et voyager avec un seul compte/.test(bakedBlock), 'the baked home carries the intro section, not only the nav');
+  ['/vendre-en-ligne-cameroun', '/marketplace', '/hotels', '/travel'].forEach(p => {
+    assert.ok(bakedBlock.includes(`href="${baseUrl}${p}"`), `the baked home links to ${p}`);
+  });
   assert.ok((homeHtml.match(/<title>/g) || []).length === 1, 'home must have exactly one <title>');
   console.log('    ✓ routing_deploy: the home page is prerendered (canonical/OG/robots/content) into the static index.html');
 

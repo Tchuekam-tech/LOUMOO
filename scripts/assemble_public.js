@@ -193,7 +193,9 @@ try {
   const head = seoModel.serialize(seoModel.headTags(descriptor));
   // The category directory is static data (no DB), so the baked home page links
   // to every category page that has products, like the function-rendered pages do.
-  const content = contentBlock(descriptor, resolved, null, 200, siteUrl, { categories: categoryLinks(), path: '/' });
+  // home: true is what PrerenderService.hydrate() passes at request time; without it the baked
+  // page (the one Vercel serves at '/') would lack the intro section the gateway serves.
+  const content = contentBlock(descriptor, resolved, null, 200, siteUrl, { categories: categoryLinks(), path: '/', home: true });
   fs.writeFileSync(path.join(out, 'index.html'), inject(rawShell, head, content));
   console.log('  prerendered home SEO into public/index.html');
 } catch (e) {
