@@ -17,4 +17,4 @@ Disallow: /reset-password
 Disallow: /verify
 Disallow: /api/
 
-Sitemap: https://loumoo.store/sitemap.xml
+Sitemap: https://www.loumoo.store/sitemap.xml

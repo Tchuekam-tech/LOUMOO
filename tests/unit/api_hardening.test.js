@@ -63,10 +63,31 @@ async function run() {
     assert.strictEqual(r.body.data.page, 2);
     assert.strictEqual(r.body.data.limit, 10);
 
-    /* ── 9a. Unknown product with DB unavailable → 503, NOT a 200 synthetic ── */
-    r = await getJson('/api/v1/products/this-id-does-not-exist-anywhere');
-    assert.strictEqual(r.status, 503, 'with no DB, the product API is 503 — never a fabricated 200');
-    assert.strictEqual(r.body.error.code, 'PRODUCT_LOOKUP_UNAVAILABLE');
+    /* ── 9a. Unknown product while a CONFIGURED DB fails → 503, NOT a 200 synthetic ──
+       (With no database configured at all the curated catalogue is the whole
+       catalogue, so an unknown id is a 404: tests/unit/product_detail_not_found.test.js.) */
+    const failingQuery = new Proxy({}, {
+      get: (_t, prop) => (prop === 'maybeSingle'
+        ? async () => ({ data: null, error: { message: 'connection refused' } })
+        : () => failingQuery)
+    });
+    const hasDbDesc = Object.getOwnPropertyDescriptor(CatalogRepository, 'hasDatabase');
+    const dbDesc = Object.getOwnPropertyDescriptor(CatalogRepository, 'db');
+    Object.defineProperty(CatalogRepository, 'hasDatabase', { get: () => true, configurable: true });
+    Object.defineProperty(CatalogRepository, 'db', { get: () => ({ from: () => failingQuery }), configurable: true });
+    try {
+      r = await getJson('/api/v1/products/this-id-does-not-exist-anywhere');
+      assert.strictEqual(r.status, 503, 'a failing DB makes the product API 503 — never a fabricated 200 or a wrongful 404');
+      assert.strictEqual(r.body.error.code, 'PRODUCT_LOOKUP_UNAVAILABLE');
+
+      // A curated product is static data: it is still served through the outage.
+      r = await getJson('/api/v1/products/laptop_apple_apple_macbook_pro_14_m3_pro_gris_2');
+      assert.strictEqual(r.status, 200, 'a real curated product survives a DB outage');
+      assert.strictEqual(r.body.data.id, 'laptop_apple_apple_macbook_pro_14_m3_pro_gris_2');
+    } finally {
+      Object.defineProperty(CatalogRepository, 'hasDatabase', hasDbDesc);
+      Object.defineProperty(CatalogRepository, 'db', dbDesc);
+    }
 
     /* ── 9b. Unknown product (DB reachable, no row) → real 404 ──────────────── */
     const orig = CatalogRepository.findIndexableProductByIdOrSlug;
