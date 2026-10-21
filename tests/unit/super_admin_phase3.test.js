@@ -118,7 +118,19 @@ async function run() {
   const escrowRes = await api.resolveAdminEscrow(targetOrder.id, 'RELEASE');
   const resolvedOrder = escrowRes.order || escrowRes;
   assert.strictEqual(resolvedOrder.escrow_status, 'RELEASED');
-  assert.strictEqual(resolvedOrder.status, 'COMPLETED');
+  assert.strictEqual(resolvedOrder.status, 'DELIVERED', 'a release settles the protection; the order stays delivered');
+
+  // Funds are released only after the handover, and a settled order is final.
+  const processing = orders.find((o) => o.status === 'PROCESSING');
+  let refused = null;
+  try { await api.resolveAdminEscrow(processing.id, 'RELEASE'); } catch (e) { refused = e; }
+  assert.ok(refused && /after the handover/.test(refused.message), 'an undelivered order cannot be released');
+  refused = null;
+  try { await api.resolveAdminEscrow(targetOrder.id, 'REFUND'); } catch (e) { refused = e; }
+  assert.ok(refused && /already settled/.test(refused.message), 'a released order cannot then be refunded');
+  const refunded = await api.resolveAdminEscrow(processing.id, 'REFUND');
+  const refundedOrder = refunded.order || refunded;
+  assert.deepStrictEqual([refundedOrder.escrow_status, refundedOrder.status], ['REFUNDED', 'CANCELLED'], 'refunding a processing order cancels it');
   console.log('    ✓ 6. getAdminOrders() and resolveAdminEscrow() verified');
 
   // ── 8. getSystemSettings() & updateSystemSettings(payload) ──

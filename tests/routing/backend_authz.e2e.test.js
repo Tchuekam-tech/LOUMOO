@@ -881,6 +881,24 @@ async function run() {
       return `published phoneNumber ${JSON.stringify(published)}`;
     });
 
+    // ---- (7) admin escrow resolution goes through the order's own lifecycle -------
+    await check('admin escrow: release needs the handover; a refund cancels the order and gives its stock back', async () => {
+      const rel = await call('admin', 'POST', `/api/v1/admin/orders/${I.strangerOrderId}/escrow`, { body: { action: 'RELEASE' } });
+      counters.assertions += 1;
+      assert.strictEqual(rel.status, 409, `releasing an undelivered order: ${rel.status} ${short(rel.body)}`);
+      const [before] = await sql('SELECT reserved FROM iam.listing_inventory WHERE listing_id = $1 AND variant_id IS NULL', [I.listingId]);
+      const [{ items }] = await sql('SELECT items FROM iam.orders WHERE id = $1', [I.strangerOrderId]);
+      const qty = items.filter((it) => it.listingId === I.listingId).reduce((n, it) => n + Number(it.quantity || 0), 0);
+      const ref = await call('admin', 'POST', `/api/v1/admin/orders/${I.strangerOrderId}/escrow`, { body: { action: 'REFUND', reason: 'fixture probe' } });
+      const [row] = await sql('SELECT fulfillment_status, payment_status FROM iam.orders WHERE id = $1', [I.strangerOrderId]);
+      const [after] = await sql('SELECT reserved FROM iam.listing_inventory WHERE listing_id = $1 AND variant_id IS NULL', [I.listingId]);
+      counters.assertions += 3;
+      assert.strictEqual(ref.status, 200, `refund: ${ref.status} ${short(ref.body)}`);
+      assert.deepStrictEqual([row.fulfillment_status, row.payment_status], ['cancelled', 'refunded'], 'the order is cancelled and refunded');
+      assert.strictEqual(Number(after.reserved), Number(before.reserved) - qty, `its ${qty} held unit(s) were released`);
+      return `release ${rel.status}; refund ${ref.status} -> ${row.fulfillment_status}/${row.payment_status}, reserved ${before.reserved} -> ${after.reserved}`;
+    });
+
     /* ======================================================================= */
     /* i. hygiene                                                                */
     /* ======================================================================= */
