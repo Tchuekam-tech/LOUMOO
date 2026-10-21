@@ -130,7 +130,11 @@ async function run() {
     await page.goto(`${base}/marketplace/category/electronics`, { waitUntil: 'load', timeout: 60000 });
     await settle(page);
     h = await headOf(page);
-    assert.ok(/^Electronics & Technology/.test(h.title), `category title kept (got "${h.title}")`);
+    // The category's own title comes from the server (CategoryDirectory: French SEO name); the
+    // mounted app must keep it rather than fall back to a generic title.
+    const electronicsName = require(path.join(ROOT, 'server/modules/system/seo/CategoryDirectory')).find('electronics').name;
+    assert.ok(electronicsName && electronicsName.length > 3, 'fixture: the directory names the electronics category');
+    assert.ok(h.title.startsWith(electronicsName), `category title kept (got "${h.title}", expected it to start with "${electronicsName}")`);
     assert.strictEqual(h.canonical, `${ORIGIN}/marketplace/category/electronics`);
     assert.strictEqual(h.robots, 'index,follow');
     checks += 1;

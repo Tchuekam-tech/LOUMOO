@@ -52,7 +52,8 @@ async function run() {
   assert.strictEqual(SITE, 'https://www.loumoo.store', 'the canonical origin is the host that answers 200 (the apex 308-redirects to www)');
   assert.strictEqual(seoModel.DEFAULT_SITE_URL, SITE, 'seoModel.DEFAULT_SITE_URL equals the registry ORIGIN');
   assert.strictEqual(config.site.url, SITE, 'server config defaults to the registry ORIGIN');
-  assert.strictEqual(fs.readFileSync(path.join(ROOT, 'robots.txt'), 'utf8'), SeoContent.robotsTxt({ siteUrl: SITE }),
+  // (normalise line endings: a Windows checkout with core.autocrlf rewrites the committed LF to CRLF)
+  assert.strictEqual(fs.readFileSync(path.join(ROOT, 'robots.txt'), 'utf8').replace(/\r\n/g, '\n'), SeoContent.robotsTxt({ siteUrl: SITE }),
     'robots.txt in the repository is exactly what the gateway serves');
   const builtRobots = path.join(ROOT, 'public', 'robots.txt');
   if (fs.existsSync(builtRobots)) {
@@ -140,7 +141,7 @@ async function run() {
   r = await render('/marketplace/category/electronics');
   assert.strictEqual(r.status, 200);
   assert.strictEqual(robotsOf(r.html), 'index,follow', 'a category with products is indexable');
-  assert.ok(/<title>Electronics &amp; Technology — LOUMOO<\/title>/.test(r.html), 'a category page has its own title');
+  assert.ok(/<title>Électronique et high-tech — LOUMOO<\/title>/.test(r.html), 'a category page has its own title');
   r = await render('/marketplace/category/real-estate');
   assert.strictEqual(canonicalOf(r.html), `${SITE}/marketplace/category/real_estate`, 'a category alias canonicalises to the category id');
   r = await render('/marketplace/category/not-a-category');

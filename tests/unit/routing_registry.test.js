@@ -40,13 +40,14 @@ async function run() {
   Routes.routes.forEach(r => {
     assert.ok(/^\/[a-z0-9\-/:A-Z]*$/.test(r.path), `${r.id}: path ${r.path} must be lower-case kebab segments and :params`);
     assert.ok(r.title, `${r.id} needs a title`);
-    assert.ok(['screen', 'overlay', 'page', 'unavailable'].includes(r.kind), `${r.id}: unknown kind ${r.kind}`);
+    assert.ok(['screen', 'overlay', 'page', 'content', 'unavailable'].includes(r.kind), `${r.id}: unknown kind ${r.kind}`);
     if (r.parent) assert.ok(Routes.byId(r.parent), `${r.id}: parent '${r.parent}' is not a route`);
     if (r.fallback) assert.ok(Routes.byId(r.fallback), `${r.id}: fallback '${r.fallback}' is not a route`);
     if (r.direct === 'redirect') assert.ok(r.fallback, `${r.id}: direct:'redirect' needs a fallback`);
     if (r.kind === 'screen') assert.ok(r.screen, `${r.id}: a screen route names its screen`);
     if (r.kind === 'overlay') assert.ok(r.overlay, `${r.id}: an overlay route names its overlay`);
     if (r.kind === 'page') assert.ok(r.page && r.page.startsWith('/'), `${r.id}: a page route names its document`);
+    if (r.kind === 'content') assert.ok(r.page && /^\/pages\/[a-z0-9-]+\.html$/.test(r.page), `${r.id}: a content route names its static file under /pages`);
     if (r.kind === 'unavailable') assert.strictEqual(r.status, 'not-implemented', `${r.id}: unavailable areas say so`);
     // Every route parameter is either bound to shell state or consumed by an overlay.
     r.params.forEach(n => {

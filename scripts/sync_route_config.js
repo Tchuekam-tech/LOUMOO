@@ -14,11 +14,19 @@
  *                 crawlability endpoints, the control center, and one entry per
  *                 application route pointing at the prerender function), "trailingSlash"
  *
- * What is deliberately NOT generated: a catch-all. A URL that is neither a file nor a
- * registered route has no rewrite, so the host answers it with 404.html (the same
- * application shell, with a real 404 status, which draws the not-found screen). The old
+ * The LAST rewrite is a catch-all to the SAME function (never to index.html). A URL that
+ * is neither a file nor a registered route reaches the gateway, which answers a document
+ * request with the application shell at a real 404 + noindex (so the router draws the
+ * not-found screen) and anything else (a script, an image) with a plain 404. The old
  * catch-all rewrote every unknown path - including a missing script or image - to the
- * HTML shell with a 200, which hid asset errors (docs/ROUTING.md).
+ * static HTML shell with a 200, which hid asset errors (docs/ROUTING.md).
+ *
+ * Why it must be explicit: with only a static 404.html as the fallback, production
+ * (observed 2026-10-21, www.loumoo.store) still answered `/does-not-exist`,
+ * `/Assets/nope.png` and `/about` with the home page at 200 - a soft 404 for every
+ * unknown URL - because the Vercel project applies an SPA fallback the repository does
+ * not control. `framework: null` stops a dashboard Framework Preset from injecting one,
+ * and the final rewrite makes the answer deterministic whatever the dashboard says.
  *
  * Live hosts: Vercel (loumoo.store answers with `Server: Vercel`) and Railway, whose
  * Express server reads the registry directly (server/index.js). Netlify is no longer
@@ -46,6 +54,10 @@ function shellRoutes() {
 function pageRoutes() {
   return Routes.routes.filter(r => r.kind === 'page');
 }
+/** Public French documents: the build writes each to public<page>, the CDN serves it at the route's path. */
+function contentRoutes() {
+  return Routes.routes.filter(r => r.kind === 'content');
+}
 
 function encodeSpace(p) { return p.replace(/ /g, '%20'); }
 
@@ -70,19 +82,35 @@ function buildVercel(existing) {
   rewrites.push({ source: '/sitemap.xml', destination: '/api/index.js' });
   rewrites.push({ source: '/.well-known/security.txt', destination: '/api/index.js' });
   pageRoutes().forEach(r => rewrites.push({ source: r.path, destination: r.page }));
+  // Content pages are static files built into public/pages/ (scripts/assemble_public.js):
+  // no function invocation, CDN-cached, and the whole document is in the first response.
+  contentRoutes().forEach(r => rewrites.push({ source: r.path, destination: r.page }));
   // Application routes are served by the Express function so it can prerender a
   // per-route <head> (title/description/canonical/robots/OG/Twitter/JSON-LD) and
   // a crawlable content block, and answer a real 404 for an unknown product/store.
   // The home page '/' is NOT rewritten: Vercel serves public/index.html, which
   // scripts/assemble_public.js prerenders at build time.
   shellRoutes().forEach(r => rewrites.push({ source: vercelSource(r.path), destination: '/api/index.js' }));
+  // Everything else that is not a file: the gateway decides (404 + noindex), never the CDN.
+  rewrites.push({ source: '/(.*)', destination: '/api/index.js' });
 
   const out = Object.assign({}, existing);
+  // The content documents are static files, so the CDN (not the gateway's securityHeaders
+  // middleware) must send their Content-Security-Policy: the very rule '/' carries, one entry
+  // for all of them. Regenerated here so a new content route can never be served without it.
+  const content = contentRoutes().map(r => r.path.slice(1)).sort();
+  const base = (existing.headers || []).filter(h => !/^\/\(([a-z0-9|-]+)\)$/.test(h.source));
+  const homeRule = base.find(h => h.source === '/');
+  out.headers = homeRule && content.length
+    ? base.concat([{ source: '/(' + content.join('|') + ')', headers: homeRule.headers }])
+    : base;
+  // "Other": no Framework Preset (and so no preset-injected SPA fallback) whatever the dashboard says.
+  out.framework = null;
   out.trailingSlash = false;
   out.redirects = redirects;
   out.rewrites = rewrites;
   // Keep a stable, readable key order.
-  const order = ['$schema', 'version', 'buildCommand', 'outputDirectory', 'functions', 'trailingSlash', 'redirects', 'rewrites', 'headers'];
+  const order = ['$schema', 'version', 'framework', 'buildCommand', 'outputDirectory', 'functions', 'trailingSlash', 'redirects', 'rewrites', 'headers'];
   const sorted = {};
   order.forEach(k => { if (k in out) sorted[k] = out[k]; });
   Object.keys(out).forEach(k => { if (!(k in sorted)) sorted[k] = out[k]; });
@@ -111,4 +139,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { buildVercel, vercelSource, shellRoutes, pageRoutes, aliasList };
+module.exports = { buildVercel, vercelSource, shellRoutes, pageRoutes, contentRoutes, aliasList };

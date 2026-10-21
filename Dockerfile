@@ -35,6 +35,13 @@ COPY Assets ./Assets
 COPY src ./src
 COPY _ds ./_ds
 COPY data ./data
+# assemble_public.js also renders the home page and the French guides with the SAME server
+# code the gateway runs (server/config/env, SeoContent, PrerenderService, seo/content and
+# the catalogue they read). Without the server tree and the production dependencies in this
+# stage it aborts at its first require ("Cannot find module '../server/config/env'").
+COPY package.json ./package.json
+COPY --from=deps /app/node_modules ./node_modules
+COPY server ./server
 RUN node scripts/assemble_public.js
 
 # ---------- Stage 3: runtime ----------

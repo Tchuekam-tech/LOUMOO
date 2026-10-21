@@ -69,6 +69,10 @@ trailing slashes are repaired by redirect.
 | `/stores` | screen `store` | public | - | - | opens directly |
 | `/brand` | screen `brand` | public | - | - | opens directly |
 | `/store/:slug` | screen `business`, loader `_enterStorefront` | public | `:slug` -> `currentStoreId` | - | opens directly |
+| `/marketplace-cameroun` | static French document `/pages/marketplace-cameroun.html` (rendered by the gateway, built for the CDN) | public | - | - | opens directly |
+| `/acheter-en-ligne-cameroun` | static French document `/pages/acheter-en-ligne-cameroun.html` (rendered by the gateway, built for the CDN) | public | - | - | opens directly |
+| `/vendre-en-ligne-cameroun` | static French document `/pages/vendre-en-ligne-cameroun.html` (rendered by the gateway, built for the CDN) | public | - | - | opens directly |
+| `/a-propos` | static French document `/pages/a-propos.html` (rendered by the gateway, built for the CDN) | public | - | - | opens directly |
 | `/announcements` | screen `announce` | public | - | - | opens directly |
 | `/announcements/campaigns` | screen `announceCampaigns` | seller (sign in, create a boutique, activate it) | - | - | opens directly |
 | `/announcements/:id` | screen `announceDetail`, loader `openAnnouncement` | public | `:id` -> `activeAnnouncementId` | `/announce/:id` | opens directly |

@@ -193,11 +193,28 @@ try {
   const head = seoModel.serialize(seoModel.headTags(descriptor));
   // The category directory is static data (no DB), so the baked home page links
   // to every category page that has products, like the function-rendered pages do.
-  const content = contentBlock(descriptor, resolved, null, 200, siteUrl, { categories: categoryLinks(), path: '/' });
+  // home: true is what PrerenderService.hydrate() passes at request time; without it the baked
+  // page (the one Vercel serves at '/') would lack the intro section the gateway serves.
+  const content = contentBlock(descriptor, resolved, null, 200, siteUrl, { categories: categoryLinks(), path: '/', home: true });
   fs.writeFileSync(path.join(out, 'index.html'), inject(rawShell, head, content));
   console.log('  prerendered home SEO into public/index.html');
 } catch (e) {
   console.warn('  [assemble] home prerender skipped:', e && e.message ? e.message : e);
+}
+
+// The French guides and the About page (kind 'content' routes). vercel.json rewrites each
+// route's path to public/pages/<id>.html, so the CDN serves them as static files. Unlike the
+// home prerender above this is NOT best-effort: a rewrite whose file is missing would turn four
+// indexable pages into 404s without any other sign, so a render failure fails the build.
+{
+  const Content = require('../server/modules/system/seo/content');
+  const data = Content.collectData();
+  fs.mkdirSync(path.join(out, 'pages'), { recursive: true });
+  for (const page of Content.listPages()) {
+    const rendered = Content.render(page.path, { siteUrl, data });
+    fs.writeFileSync(path.join(out, 'pages', page.id + '.html'), rendered.html);
+  }
+  console.log('  rendered ' + Content.listPages().length + ' content pages into public/pages/');
 }
 
 function dirSize(p) {

@@ -32,6 +32,7 @@ function opens(r) {
     case 'screen': return `screen \`${r.screen}\`` + (r.enter ? `, loader \`${r.enter}\`` : '');
     case 'overlay': return `overlay \`${r.overlay}\``;
     case 'page': return `separate document \`${r.page}\``;
+    case 'content': return `static French document \`${r.page}\` (rendered by the gateway, built for the CDN)`;
     case 'unavailable': return '**not built** (honest "not available yet" state, HTTP 404)';
     default: return r.kind;
   }
