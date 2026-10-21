@@ -3,7 +3,7 @@
 
     python scripts/generate_og_image.py
 
-Output: Assets/brand/og-loumoo-1200x630.png
+Output: Assets/brand/og-loumoo-1200x630.png and Assets/brand/loumoo-wordmark-360.png
 
 The default og:image used to be the 192px app icon, which every platform crops or
 refuses (Facebook wants >= 600px, a 1.91:1 card). This composes the REAL wordmark on a
@@ -17,6 +17,7 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 WORDMARK = os.path.join(ROOT, 'Assets', 'brand', 'loumoo-wordmark.png')
 OUT = os.path.join(ROOT, 'Assets', 'brand', 'og-loumoo-1200x630.png')
+SMALL = os.path.join(ROOT, 'Assets', 'brand', 'loumoo-wordmark-360.png')
 
 W, H = 1200, 630
 BLUE = (0, 37, 229)          # theme-color #0025E5
@@ -79,6 +80,14 @@ def main():
 
     img.save(OUT, 'PNG', optimize=True)
     print('wrote', os.path.relpath(OUT, ROOT), os.path.getsize(OUT) // 1024, 'KB')
+
+    # The 265 KB wordmark is far too heavy for a page header: a cropped 360px copy
+    # (the French content pages' logo) is a few KB.
+    small = Image.open(WORDMARK).convert('RGBA')
+    small = small.crop(small.getbbox())
+    small = small.resize((360, round(small.height * 360 / small.width)), Image.LANCZOS)
+    small.save(SMALL, 'PNG', optimize=True)
+    print('wrote', os.path.relpath(SMALL, ROOT), os.path.getsize(SMALL) // 1024, 'KB', small.size)
 
 
 if __name__ == '__main__':
