@@ -77,10 +77,18 @@ async function run() {
   assert.strictEqual(vercel.trailingSlash, false);
   assert.strictEqual(vercel.rewrites[0].source, '/api/(.*)', 'API routes are matched first');
   assert.strictEqual(vercel.rewrites[0].destination, '/api/index.js');
-  vercel.rewrites.forEach(r => {
+  assert.strictEqual(vercel.framework, null, 'framework: null - a dashboard Framework Preset must not inject its own SPA fallback');
+  vercel.rewrites.forEach((r, i) => {
     assert.ok(!/\(\?!/.test(r.source), `rewrite ${r.source} must not be a negative-lookahead catch-all`);
-    assert.ok(r.source !== '/(.*)' && r.source !== '/:path*', 'no catch-all rewrite: it served HTML for missing assets');
+    // The only catch-all is the LAST rewrite and it goes to the gateway function, never to
+    // a static HTML file: a catch-all to index.html served HTML (200) for missing assets and
+    // for every unknown URL (observed live 2026-10-21).
+    if (r.source === '/(.*)' || r.source === '/:path*') {
+      assert.strictEqual(i, vercel.rewrites.length - 1, 'the catch-all must be the last rewrite');
+      assert.strictEqual(r.destination, '/api/index.js', 'the catch-all must reach the gateway, not a static document');
+    }
   });
+  assert.strictEqual(vercel.rewrites[vercel.rewrites.length - 1].source, '/(.*)', 'unknown URLs must reach the gateway (which answers 404 + noindex)');
   ['index.html', '404.html', 'superadmin/index.html', 'support.js'].forEach(f =>
     assert.ok(fs.existsSync(path.join(PUBLIC, f)), `public/${f} must be published`));
   // Both are the application shell (so the router can boot and draw the right
@@ -92,7 +100,7 @@ async function run() {
     '404.html must be the application shell (so the router can draw the not-found screen with a real 404)');
   assert.ok(indexHtml.includes('<x-dc>') && indexHtml.includes('<base href="/">'),
     'index.html must be the application shell');
-  console.log('    ✓ routing_deploy: no catch-all rewrite; API first; 404.html + index.html are the app shell; control center published');
+  console.log('    ✓ routing_deploy: one final catch-all to the gateway (never to a static page); API first; 404.html + index.html are the app shell; control center published');
 
   /* ----------------------------------------------------------- 2. Vercel behaviour */
   const host = createEmulator({ config: vercel, outputDir: PUBLIC });
@@ -121,8 +129,10 @@ async function run() {
       assert.ok(res.file.endsWith(path.join('superadmin', 'index.html')), `${u} -> ${res.file}`);
     } else if (r.kind === 'unavailable') {
       const res = host.get(u);
-      assert.strictEqual(res.status, 404, `${u} is documented as not built and must say so with 404`);
-      assert.strictEqual(res.via, '404.html');
+      // An unbuilt area has no rewrite of its own: it falls to the final catch-all, so the
+      // gateway answers it (404 + noindex; tests below, "Express").
+      assert.strictEqual(res.via, 'function', `${u} must reach the gateway, which answers 404`);
+      assert.strictEqual(res.destination, '/api/index.js');
     }
   });
   console.log(`    ✓ routing_deploy: Vercel prerenders ${shellRoutes} application routes through the function, serves the home page + control center statically, and 404s unbuilt areas`);
@@ -137,19 +147,23 @@ async function run() {
   assert.ok((homeHtml.match(/<title>/g) || []).length === 1, 'home must have exactly one <title>');
   console.log('    ✓ routing_deploy: the home page is prerendered (canonical/OG/robots/content) into the static index.html');
 
-  // Unknown routes: a deliberate 404 that still boots the app.
-  ['/nope', '/a/b/c/d', '/store', '/store/a/b', '/orders/1/2/3', '/rider/extra', '/Rider', '/store/a.b', '/orders/%2e%2e'].forEach(u => {
+  // Unknown routes: never a static 200. They reach the gateway, which answers a real 404
+  // (+ noindex) that still boots the app (the Express tests below pin the status and body).
+  ['/nope', '/a/b/c/d', '/store', '/store/a/b', '/orders/1/2/3', '/rider/extra', '/Rider', '/store/a.b', '/orders/%2e%2e', '/about'].forEach(u => {
     const r = host.get(u);
-    assert.strictEqual(r.status, 404, `${u} must be a 404`);
-    assert.strictEqual(r.via, '404.html', `${u} must get the app shell as its 404 page`);
+    assert.strictEqual(r.via, 'function', `${u} must reach the gateway, not a static page (${r.via})`);
+    assert.strictEqual(r.destination, '/api/index.js');
+    assert.ok(!r.file, `${u} must not be answered with a static file (soft 404)`);
   });
-  console.log('    ✓ routing_deploy: unknown routes get 404.html (the app, with a real 404) - never a 200');
+  console.log('    ✓ routing_deploy: unknown routes reach the gateway (404 + noindex) - never the static home page with a 200');
 
   // THE production defect: a missing file under a nested route used to come back as HTML with a 200.
   ['/rider/src/services/riderHub.js', '/store/acme/src/services/loumooApi.js', '/delivery/x/Assets/brand/favicon-32.png', '/nope.js', '/src/services/does-not-exist.js', '/Assets/does-not-exist.png', '/_ds/missing.css'].forEach(u => {
     const r = host.get(u);
-    assert.notStrictEqual(r.status, 200, `${u}: a missing asset must not be answered with 200 (${r.via})`);
-    assert.strictEqual(r.status, 404, `${u} -> ${r.status}`);
+    // A missing file is handed to the gateway, which answers a plain-text 404 for anything
+    // that is not a document request (tests below); the host must never serve HTML for it.
+    assert.strictEqual(r.via, 'function', `${u}: a missing asset must reach the gateway (${r.via})`);
+    assert.ok(!r.file, `${u}: a missing asset must not be answered with a static page`);
   });
   ['/src/services/riderHub.js', '/src/routing/routes.js', '/src/services/appRouter.js', '/support.js', '/favicon.ico', '/Assets/brand/favicon-32.png', '/ChatProfileScreens.dc.html', '/superadmin/js/superAdminGate.js', '/superadmin/css/super_admin.css'].forEach(u => {
     const r = host.get(u);
