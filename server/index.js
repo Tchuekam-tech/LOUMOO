@@ -35,6 +35,7 @@ const { MediaStorageService } = require('./infrastructure/storage/MediaStorageSe
 const healthRoutes = require('./modules/system/routes/healthRoutes');
 const seoRoutes = require('./modules/system/routes/seoRoutes');
 const PrerenderService = require('./modules/system/seo/PrerenderService');
+const ContentPages = require('./modules/system/seo/content');
 const identityRoutes = require('./modules/identity/presentation/routes/identityRoutes');
 const catalogRoutes = require('./modules/catalog/routes/catalogRoutes');
 const storeRoutes = require('./modules/store/presentation/routes/storeRoutes');
@@ -425,6 +426,24 @@ async function sendPrerendered(req, res) {
   return req.method === 'HEAD' ? res.end() : res.send(result.html);
 }
 
+// The French guides and the About page are standalone documents, not shell screens: the
+// whole page is rendered from the same data and template the build writes into public/pages/
+// for the CDN, so the gateway (Railway, local) and Vercel answer identically.
+function sendContent(req, res, next) {
+  let out = null;
+  try {
+    out = ContentPages.render(req.path, { siteUrl: (config.site && config.site.url) || undefined });
+  } catch (err) {
+    logger.error(`[Content] render failed for ${req.path}: ${err && err.message ? err.message : err}`);
+    return next(err);
+  }
+  if (!out) return next();
+  res.status(200);
+  res.set('Content-Type', 'text/html; charset=utf-8');
+  res.set('Cache-Control', 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400');
+  return req.method === 'HEAD' ? res.end() : res.send(out.html);
+}
+
 // Is this a request the application should answer with the application? A browser
 // navigation, yes; and so is the DC runtime's own boot re-fetch of the page URL
 // (support.js boot()), a plain fetch() that accepts anything: if that were answered
@@ -476,7 +495,9 @@ app.use((req, res, next) => {
   switch (resolved.type) {
     case 'route':
       // 'page' routes are separate documents (the control center) served above.
-      return resolved.route.kind === 'page' ? next() : sendPrerendered(req, res).catch(next);
+      if (resolved.route.kind === 'page') return next();
+      if (resolved.route.kind === 'content') return sendContent(req, res, next);
+      return sendPrerendered(req, res).catch(next);
     case 'unavailable':
     case 'notfound':
       return isDocumentRequest(req)

@@ -56,7 +56,7 @@ for (const file of fs.readdirSync(root)) {
 }
 
 // Copy critical root scripts & static files (support.js is the DC runtime that boots React)
-for (const file of ['support.js', 'robots.txt', 'favicon.ico']) {
+for (const file of ['support.js', 'favicon.ico']) {
   const srcFile = path.join(root, file);
   if (fs.existsSync(srcFile)) {
     fs.copyFileSync(srcFile, path.join(out, file));
@@ -167,6 +167,16 @@ for (const dir of [path.join(out, 'src', 'data'), path.join(out, 'data')]) {
   })(dir);
 }
 
+// The canonical origin, resolved exactly as the server resolves it (PUBLIC_SITE_URL
+// when it is a valid https origin, else the route registry's ORIGIN), so the static
+// files below can never disagree with the function's canonical tags and sitemap.
+const siteUrl = require('../server/config/env').resolveSiteUrl(process.env.PUBLIC_SITE_URL);
+
+// robots.txt is served by the CDN as a static file (no rewrite), so it is generated
+// here from the same builder the gateway's /robots.txt uses: one Disallow list, and a
+// Sitemap line on the canonical origin.
+fs.writeFileSync(path.join(out, 'robots.txt'), require('../server/modules/system/seo/SeoContent').robotsTxt({ siteUrl }));
+
 // Prerender the home page into the published index.html. Vercel serves '/' as a
 // static file (filesystem precedence beats rewrites), so '/' cannot reach the
 // prerender function the way every other route does (vercel.json rewrites those
@@ -176,16 +186,35 @@ try {
   const seoModel = require('../src/seo/seoModel');
   const FrontendRoutes = require('../src/routing/routes');
   const { inject, contentBlock } = require('../server/modules/system/seo/PrerenderService');
-  const siteUrl = process.env.PUBLIC_SITE_URL || 'https://loumoo.store';
   const rawShell = fs.readFileSync(app, 'utf8');
+  const { categoryLinks } = require('../server/modules/system/seo/PrerenderService');
   const resolved = FrontendRoutes.resolve('/');
   const descriptor = seoModel.describe(resolved, { siteUrl, path: '/' });
   const head = seoModel.serialize(seoModel.headTags(descriptor));
-  const content = contentBlock(descriptor, resolved, null, 200, siteUrl);
+  // The category directory is static data (no DB), so the baked home page links
+  // to every category page that has products, like the function-rendered pages do.
+  // home: true is what PrerenderService.hydrate() passes at request time; without it the baked
+  // page (the one Vercel serves at '/') would lack the intro section the gateway serves.
+  const content = contentBlock(descriptor, resolved, null, 200, siteUrl, { categories: categoryLinks(), path: '/', home: true });
   fs.writeFileSync(path.join(out, 'index.html'), inject(rawShell, head, content));
   console.log('  prerendered home SEO into public/index.html');
 } catch (e) {
   console.warn('  [assemble] home prerender skipped:', e && e.message ? e.message : e);
+}
+
+// The French guides and the About page (kind 'content' routes). vercel.json rewrites each
+// route's path to public/pages/<id>.html, so the CDN serves them as static files. Unlike the
+// home prerender above this is NOT best-effort: a rewrite whose file is missing would turn four
+// indexable pages into 404s without any other sign, so a render failure fails the build.
+{
+  const Content = require('../server/modules/system/seo/content');
+  const data = Content.collectData();
+  fs.mkdirSync(path.join(out, 'pages'), { recursive: true });
+  for (const page of Content.listPages()) {
+    const rendered = Content.render(page.path, { siteUrl, data });
+    fs.writeFileSync(path.join(out, 'pages', page.id + '.html'), rendered.html);
+  }
+  console.log('  rendered ' + Content.listPages().length + ' content pages into public/pages/');
 }
 
 function dirSize(p) {

@@ -63,7 +63,8 @@ const DELETED = {
 
   // 2. The shared predicate recognises every deleted shape.
   assert.ok(ProfileRepository.isDeletedProfile(DELETED));
-  assert.ok(ProfileRepository.isDeletedProfile({ clerk_deleted_at: '2026-10-01T00:00:00.000Z' }));
+  // Only the provider identity marked gone (owner never deleted) is restorable, not deleted.
+  assert.ok(!ProfileRepository.isDeletedProfile({ clerk_deleted_at: '2026-10-01T00:00:00.000Z', account_status: 'active' }));
   assert.ok(ProfileRepository.isDeletedProfile({ account_status: 'anonymized' }));
   assert.ok(!ProfileRepository.isDeletedProfile({ account_status: 'active', status: 'active' }));
   assert.ok(!ProfileRepository.isDeletedProfile(null));

@@ -28,6 +28,10 @@
  *     kind 'page'        a separate HTML document served by the gateway (the
  *                        SuperAdmin control center); the router does a real
  *                        navigation to it
+ *     kind 'content'     a public, server-rendered French document (the guides and
+ *                        the About page: server/modules/system/seo/content). Built into
+ *                        a static file for the CDN and rendered on demand by the
+ *                        gateway; the router does a real navigation to it
  *     kind 'unavailable' a named product area that has NO implementation yet.
  *                        Documented, never faked: it renders an honest
  *                        "not available" state with HTTP 404.
@@ -59,7 +63,14 @@
 })(typeof window !== 'undefined' ? window : (typeof globalThis !== 'undefined' ? globalThis : this), function () {
   'use strict';
 
-  var ORIGIN = 'https://loumoo.store';
+  // The canonical public origin: every canonical tag, og:url, sitemap <loc> and the
+  // robots.txt Sitemap line is built on it (server, build and browser). It must be
+  // the host that ANSWERS 200, not one that redirects: the live apex
+  // (https://loumoo.store) 308-redirects to www (a Vercel Domains setting outside
+  // this repository; docs/ROUTING.md "Canonical host"), so the canonical is www.
+  // A deployment overrides it with PUBLIC_SITE_URL; the browser follows the origin
+  // the server wrote into the page (src/services/appRouter.js siteOrigin()).
+  var ORIGIN = 'https://www.loumoo.store';
 
   /* ------------------------------------------------------------------ access */
   var PUBLIC = Object.freeze({ kind: 'public' });
@@ -85,7 +96,7 @@
     DEFS.push({
       id: id,
       path: path,
-      kind: o.kind || (o.overlay ? 'overlay' : (o.page ? 'page' : 'screen')),
+      kind: o.kind || (o.overlay ? 'overlay' : (o.content ? 'content' : (o.page ? 'page' : 'screen'))),
       screen: o.screen || null,
       overlay: o.overlay || null,
       overlayArgs: o.overlayArgs || null,
@@ -123,6 +134,15 @@
   def('stores',        '/stores',                    { screen: 'store', title: 'Verified stores', parent: 'marketplace' });
   def('brand',         '/brand',                     { screen: 'brand', title: 'Official brands', parent: 'stores' });
   def('storefront',    '/store/:slug',               { screen: 'business', bind: { slug: 'currentStoreId' }, enter: '_enterStorefront', title: 'Store', parent: 'stores' });
+  /* -- guides and brand pages: standalone French documents (kind 'content') ---- */
+  // Each needs an entry in server/modules/system/seo/content/pages.js with the same
+  // routeId (tests/unit/seo_search_dominance.test.js enforces both directions). `page` is
+  // where the build writes the static file the CDN serves at the route's path.
+  def('guideMarketplace', '/marketplace-cameroun',       { content: true, page: '/pages/marketplace-cameroun.html', title: 'Marketplace et plateforme e-commerce au Cameroun', parent: 'home' });
+  def('guideBuy',      '/acheter-en-ligne-cameroun',     { content: true, page: '/pages/acheter-en-ligne-cameroun.html', title: 'Acheter en ligne au Cameroun', parent: 'guideMarketplace' });
+  def('guideSell',     '/vendre-en-ligne-cameroun',      { content: true, page: '/pages/vendre-en-ligne-cameroun.html', title: 'Vendre en ligne au Cameroun', parent: 'guideMarketplace' });
+  def('about',         '/a-propos',                      { content: true, page: '/pages/a-propos.html', title: 'À propos de LOUMOO', parent: 'home' });
+
   def('announcements', '/announcements',             { screen: 'announce', title: 'Announcements', parent: 'marketplace' });
   def('announceCampaigns', '/announcements/campaigns', { screen: 'announceCampaigns', access: SELLER, title: 'Announcement campaigns', parent: 'announcements' });
   def('announcement',  '/announcements/:id',         { screen: 'announceDetail', bind: { id: 'activeAnnouncementId' }, enter: 'openAnnouncement', title: 'Announcement', parent: 'announcements' });

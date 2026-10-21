@@ -48,9 +48,9 @@ class ProfileRepository {
     return SupabaseDatabase.getAdmin();
   }
 
-  /** Whether a profile row belongs to a deleted (anonymized) account. */
+  /** Whether a profile row belongs to an account its owner deleted (anonymized). */
   static isDeletedProfile(profile) {
-    return Boolean(profile && (profile.deleted_at || profile.clerk_deleted_at || profile.account_status === 'anonymized'));
+    return Boolean(profile && (profile.deleted_at || profile.account_status === 'anonymized'));
   }
 
   /* ---------------------------------------------------------------- reads */
@@ -136,12 +136,28 @@ class ProfileRepository {
       throw new ConflictError('Cannot provision a profile without a Clerk user id');
     }
 
-    // A deleted (anonymized) profile is returned AS IS, never reactivated:
-    // deletion is final, and un-deleting here ran before every caller's
-    // "deleted account cannot be reopened" check, so a deleted account could
-    // sign straight back in. Callers check `isDeletedProfile` and refuse.
     const existing = await this.findByClerkUserId(identity.clerkUserId, { useCache: false });
     if (existing) {
+      // An account its owner DELETED (DeleteAccountUseCase anonymizes it and sets
+      // deleted_at) is never reopened here. Sign-in, OTP and password reset all
+      // provision through this method, and the credentials can still work at the
+      // identity provider, so reactivating would let a deleted account sign straight
+      // back in. The row is returned as it is; callers and requireAuth refuse it
+      // (state DELETED). Only a profile whose provider identity alone was marked
+      // gone (clerk_deleted_at) is restored.
+      if (!this.isDeletedProfile(existing) && existing.clerk_deleted_at) {
+        const reactivation = {
+          clerk_deleted_at: null,
+          deleted_at: null,
+          status: 'active',
+          account_status: 'active'
+        };
+        await this.db.from('profiles').update(reactivation).eq('id', existing.id);
+        await this.invalidate(identity.clerkUserId, existing.id);
+        // The row we return must reflect the reactivation we just wrote;
+        // returning the pre-update copy reports the account as still deleted.
+        Object.assign(existing, reactivation);
+      }
       return { profile: existing, created: false };
     }
 

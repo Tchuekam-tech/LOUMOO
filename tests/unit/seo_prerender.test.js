@@ -90,7 +90,7 @@ async function run() {
   try {
     r = await render('/store/acme');
     assert.strictEqual(r.status, 200, 'an active store is 200');
-    assert.ok(r.html.includes('"@type":"Store"'), 'store JSON-LD');
+    assert.ok(r.html.includes('"@type":"OnlineStore"'), 'store JSON-LD (an online storefront, not an address-bearing LocalBusiness)');
     assert.ok(r.html.includes('Acme Boutique'), 'store name appears');
   } finally { StoreRepository.findByIdOrSlug = origS; }
 

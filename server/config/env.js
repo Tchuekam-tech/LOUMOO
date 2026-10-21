@@ -45,10 +45,10 @@ const envSchema = z.object({
   APP_NAME: z.string().default('LOUMOO Universal Commerce Platform'),
   APP_BASE_URL: z.string().default('http://localhost:8080'),
   // Public canonical origin used to build robots.txt, sitemap.xml, security.txt
-  // and per-page canonical/OG URLs. Defaults to the apex the route registry
-  // already treats as canonical (src/routing/routes.js ORIGIN). NOTE: the live
-  // apex currently 308-redirects to www; set this to the non-redirecting host
-  // (or stop redirecting the apex) so crawlers are not bounced.
+  // and per-page canonical/OG URLs. Defaults to the route registry's ORIGIN
+  // (src/routing/routes.js), the host that answers 200 (the apex 308-redirects to
+  // www). Must be an absolute https origin with no path; anything else is ignored
+  // in favour of the default, so a typo can never put a bad host in every canonical.
   PUBLIC_SITE_URL: z.string().optional(),
   // Monitored address (or https/mailto URL) published in /.well-known/security.txt.
   SECURITY_CONTACT_EMAIL: z.string().optional(),
@@ -199,6 +199,17 @@ const trustProxyRaw = typeof process.env.TRUST_PROXY === 'string'
 const splitList = (v) =>
   [...new Set(String(v || '').split(/[\s,]+/).map(s => s.trim()).filter(Boolean))];
 
+// The canonical public origin (no trailing slash). Configuration only — never a
+// request's Host header — so a forged header can never become a canonical URL.
+const REGISTRY_ORIGIN = require('../../src/routing/routes').ORIGIN;
+function parseSiteOrigin(value) {
+  const v = String(value || '').trim().replace(/\/+$/, '');
+  return /^https:\/\/[a-z0-9.-]+(?::\d+)?$/i.test(v) ? v.toLowerCase() : null;
+}
+function resolveSiteUrl(value) {
+  return parseSiteOrigin(value) || REGISTRY_ORIGIN;
+}
+
 const config = {
   port: env.PORT || 8080,
   nodeEnv,
@@ -211,9 +222,9 @@ const config = {
 
   // Public-facing site identity for SEO/crawlability artifacts.
   site: {
-    // Apex is what src/routing/routes.js ORIGIN already uses and what the brief
-    // asks for in robots.txt. Overridable via PUBLIC_SITE_URL.
-    url: String(env.PUBLIC_SITE_URL || 'https://loumoo.store').replace(/\/+$/, ''),
+    // The route registry's ORIGIN unless PUBLIC_SITE_URL names a valid https origin.
+    url: resolveSiteUrl(env.PUBLIC_SITE_URL),
+    siteUrlIgnored: Boolean(env.PUBLIC_SITE_URL) && !parseSiteOrigin(env.PUBLIC_SITE_URL),
     securityContact: env.SECURITY_CONTACT_EMAIL || 'security@loumoo.store',
     // A concrete future timestamp is required by RFC 9116; default to one year
     // from boot so an unconfigured deployment still serves a valid file.
@@ -359,6 +370,14 @@ function validateProductionConfig() {
     if (!value) problems.push({ variable: name, reason: why, severity: 'warning' });
   }
 
+  if (config.site.siteUrlIgnored) {
+    problems.push({
+      variable: 'PUBLIC_SITE_URL',
+      reason: `Not an absolute https origin (e.g. https://www.loumoo.store); ignored, canonical URLs use ${config.site.url}.`,
+      severity: 'warning'
+    });
+  }
+
   if (config.corsOrigins.includes('*')) {
     problems.push({
       variable: 'CORS_ORIGINS',
@@ -414,3 +433,4 @@ module.exports.config = config;
 module.exports.envSchema = envSchema;
 module.exports.validateProductionConfig = validateProductionConfig;
 module.exports.assertProductionConfig = assertProductionConfig;
+module.exports.resolveSiteUrl = resolveSiteUrl;

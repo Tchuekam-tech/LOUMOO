@@ -6,11 +6,10 @@
  *      fallback), and 503 when the DB is unavailable — never a fabricated product.
  *  10. GET /api/config exposes only public-safe values; no secret ever leaks.
  *
- * Hermetic: no database is configured, so the catalogue list falls back to the
- * curated set. A configured-but-failing database (the 503 case) is simulated with
- * a client whose query errors; the 404/200 product paths are proven by stubbing
- * the repository. (No database configured at all is dev/demo mode, where the
- * curated catalogue is the whole answer — see product_detail_not_found.test.js.)
+ * Hermetic: no database is configured, so the product lookup's DB branch is
+ * unavailable (503), and the catalogue list falls back to the curated set — both
+ * exactly the behaviours we want to pin. The 404/200 product paths are proven by
+ * stubbing the repository.
  */
 
 require('../setup');
@@ -64,19 +63,31 @@ async function run() {
     assert.strictEqual(r.body.data.page, 2);
     assert.strictEqual(r.body.data.limit, 10);
 
-    /* ── 9a. Unknown product with DB unavailable → 503, NOT a 200 synthetic ── */
+    /* ── 9a. Unknown product while a CONFIGURED DB fails → 503, NOT a 200 synthetic ──
+       (With no database configured at all the curated catalogue is the whole
+       catalogue, so an unknown id is a 404: tests/unit/product_detail_not_found.test.js.) */
     const failingQuery = new Proxy({}, {
       get: (_t, prop) => (prop === 'maybeSingle'
         ? async () => ({ data: null, error: { message: 'connection refused' } })
         : () => failingQuery)
     });
-    const dbDescriptor = Object.getOwnPropertyDescriptor(CatalogRepository, 'configuredDb');
-    Object.defineProperty(CatalogRepository, 'configuredDb', { configurable: true, get: () => failingQuery });
+    const hasDbDesc = Object.getOwnPropertyDescriptor(CatalogRepository, 'hasDatabase');
+    const dbDesc = Object.getOwnPropertyDescriptor(CatalogRepository, 'db');
+    Object.defineProperty(CatalogRepository, 'hasDatabase', { get: () => true, configurable: true });
+    Object.defineProperty(CatalogRepository, 'db', { get: () => ({ from: () => failingQuery }), configurable: true });
     try {
       r = await getJson('/api/v1/products/this-id-does-not-exist-anywhere');
-      assert.strictEqual(r.status, 503, 'with the DB failing, the product API is 503 — never a fabricated 200');
+      assert.strictEqual(r.status, 503, 'a failing DB makes the product API 503 — never a fabricated 200 or a wrongful 404');
       assert.strictEqual(r.body.error.code, 'PRODUCT_LOOKUP_UNAVAILABLE');
-    } finally { Object.defineProperty(CatalogRepository, 'configuredDb', dbDescriptor); }
+
+      // A curated product is static data: it is still served through the outage.
+      r = await getJson('/api/v1/products/laptop_apple_apple_macbook_pro_14_m3_pro_gris_2');
+      assert.strictEqual(r.status, 200, 'a real curated product survives a DB outage');
+      assert.strictEqual(r.body.data.id, 'laptop_apple_apple_macbook_pro_14_m3_pro_gris_2');
+    } finally {
+      Object.defineProperty(CatalogRepository, 'hasDatabase', hasDbDesc);
+      Object.defineProperty(CatalogRepository, 'db', dbDesc);
+    }
 
     /* ── 9b. Unknown product (DB reachable, no row) → real 404 ──────────────── */
     const orig = CatalogRepository.findIndexableProductByIdOrSlug;

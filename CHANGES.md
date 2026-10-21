@@ -236,28 +236,145 @@ public keys and the serialized body contains none of `service_role`, `secretKey`
 
 ---
 
+## Priority 4 — Indexation + security remediation  (branch: `claude/pensive-goodall-zv1636`)
+
+Verified on 2026-10-21 against the repository and local stacks only: the live site
+(`loumoo.store`, `www.loumoo.store`) was **not reachable** from the engineering
+environment (network policy), so nothing below is a statement about production.
+
+### 11. One canonical origin: `https://www.loumoo.store`
+**Finding:** every canonical, `og:url`, JSON-LD URL, sitemap `<loc>` and the robots
+`Sitemap:` line used `https://loumoo.store`, which (documented in this file and
+`docs/ROUTING.md`, observed 2026-10-20) 308-redirects to `www`. A canonical that
+redirects and a sitemap of redirecting URLs are both reported by Search Console as
+"Page with redirect" / "Alternate page with proper canonical" and are not indexed.
+The origin was also hard-coded in three places, and the browser router ignored
+`PUBLIC_SITE_URL`, so an override would have been undone by the first SPA navigation.
+
+**What changed:** `src/routing/routes.js` `ORIGIN` is the single source
+(`https://www.loumoo.store`); `server/config/env.js` defaults to it and validates
+`PUBLIC_SITE_URL` (absolute https origin only, else ignored with a boot warning);
+`scripts/assemble_public.js` resolves it the same way and now **generates**
+`public/robots.txt` from `SeoContent.robotsTxt` (the file Vercel actually serves);
+the browser router follows the canonical origin the server wrote into the page.
+
+### 12. The rendered DOM kept losing the prerendered head  (pre-existing, P2)
+**Finding:** `navigate()` hands the first load to `applyRoute` as `'replace'`, so P2's
+"do not overwrite entity tags on first load" check (`mode === 'initial'`) never ran:
+after the app mounted, every product page's title became "Product — LOUMOO" and its
+Product JSON-LD was removed — which is what Googlebot (a rendering crawler) indexes.
+**What changed:** a one-shot flag keeps the server head on the first route applied
+when the prerender rendered it for that exact path (`data-path` on the content block).
+Generalised to every route, so a 404's `noindex` and a category's title also survive.
+
+### 13. Structured data true to the page
+- `Offer.price` used `salePriceNumeric`, which for the 972 curated products is the
+  compare-at "was" price (e.g. 208 000 instead of the 187 200 checkout charges). Now
+  the payable price (`seoModel.payablePrice`, the lower positive of the two — the rule
+  checkout applies). The prerendered visible price was wrong the same way; fixed.
+- `aggregateRating` was emitted for every curated product from static dataset values
+  no review backs. Now only for live listings with `rating_count >= 1`.
+- Store pages: `Store` (a LocalBusiness that promises an address) → `OnlineStore`.
+- Added `Organization` + `WebSite` (home), `BreadcrumbList` (product, category, store),
+  `Offer.seller`. Image URLs use the published asset path (`./` stripped, `#`/`?`
+  renamed as the build renames them — 11 curated images 404'd otherwise).
+
+### 14. No soft-404s, one URL per entity, crawlable listings
+- `/marketplace/category/<anything>` answered 200 `index,follow`. Now a category
+  directory (`server/modules/system/seo/CategoryDirectory.js`: taxonomy + curated
+  categories, no DB) decides: unknown → **404 noindex**; known → its own title and
+  description; empty → 200 `noindex`. Alias `real-estate` canonicalises to `real_estate`.
+- `/hotels/:id`, `/announcements/:id` (not looked up server-side) → `noindex`.
+- `direct: 'redirect'` routes (`/marketplace/filters`, `/travel/results` …) → `noindex`.
+- A product or store opened by id canonicalises to its slug (the sitemap URL).
+- `/`, `/marketplace`, `/marketplace/categories`, category and store pages now carry
+  crawlable product/category links in the prerendered content.
+
+### 15. Sitemap lists what the marketplace sells
+Added the curated catalogue (972 product pages that answer 200 and are sold through
+the house store) and the category pages that have products. Hermetic: 997 URLs.
+Every URL is on the canonical origin, unique, public, and (sampled, 64 renders)
+answers 200 `index,follow` with itself as canonical.
+
+### 16. Product lookup during a DB outage  (pre-existing red test on `main`)
+`product_detail_not_found` (PR #43) and `api_hardening` (PR #46) contradicted each
+other, leaving `main` red. Resolved by meaning: **no DB configured** → the curated
+catalogue is the catalogue (unknown id 404); **configured DB failing** → an exact
+curated product is still served (static data), anything else is a 503.
+
+### 17. Security
+- **CSP blocked the delivery map and rider hub** (MapLibre from cdnjs; tiles, glyphs
+  and geocoding from 4 hosts) on every page the gateway serves — after P2 that is
+  every app route on Vercel. Added those hosts, nothing broader. `vercel.json` now
+  sends the same CSP on the statically served home page and Permissions-Policy +
+  HSTS on static responses.
+- **`iam.roles` had no RLS** in the API-exposed `iam` schema. Reproduced on the local
+  Supabase-equivalent stack: `anon` could SELECT, UPDATE and INSERT it. Migration
+  `022_roles_row_level_security.sql` (additive, re-runnable) closes it.
+- **A deleted account could sign back in**: `ProfileRepository.getOrCreateForClerkUser`
+  un-deleted the profile before the login route's "deleted account" check. It no
+  longer reopens an owner-deleted (anonymized) profile.
+- **`canPurchase` was not enforced server-side**: unverified / mid-onboarding accounts
+  could `POST /api/v1/orders`. Now `requireCapability('canPurchase')` (403 + resolveAt).
+- **A store created without a phone published the owner's account phone**
+  (`Store.toPublicJSON`). Only a phone typed for the store is published now.
+
+### 18. `npm run build:frontend` silently removed the P2 SEO wiring  (pre-existing)
+P2 added the `seoModel.js` script tag and the CSS that hides the crawler content block
+to the GENERATED `Commerce App.dc.html` by hand; `build_redesign.py` did not emit them,
+so the documented rebuild (also a CI step) dropped both — no head sync on navigation,
+and the crawler block shown to humans above the app. The generator now emits them; a
+rebuild reproduces the committed shell byte for byte (pinned in `seo_indexation`).
+
+### Proven by
+```
+node tests/helpers/run_suite.js tests/unit/seo_indexation.test.js       # 1-8 above, sitemap ⊆ indexable
+node tests/helpers/run_suite.js tests/unit/security_headers_csp.test.js # CSP / vercel.json parity
+node tests/helpers/run_suite.js tests/unit/rls_coverage.test.js         # PGlite: RLS on all 74 tables
+node tests/routing/browser/seo_head.browser.test.js                     # Chromium: head after mount + CSP
+node tests/routing/backend_authz.e2e.test.js                            # persona matrix; gaps now closed
+npm test
+```
+
+### Deploy checklist (after deploying; nothing was deployed from here)
+```
+curl -sI https://loumoo.store/          # confirm: 308 -> https://www.loumoo.store/  (else set PUBLIC_SITE_URL)
+curl -sI https://www.loumoo.store/      # 200, carries Content-Security-Policy
+curl -s  https://www.loumoo.store/robots.txt | tail -1           # Sitemap: https://www.loumoo.store/sitemap.xml
+curl -s  https://www.loumoo.store/sitemap.xml | grep -c '<loc>'  # ~1000+
+curl -s  https://www.loumoo.store/product/phone_tecno_tecno_camon_50_pro_5g_256gb_12gb_ | grep -E 'rel="canonical"|"price"'
+curl -sI https://www.loumoo.store/marketplace/category/not-a-category   # 404
+```
+Apply migration 022 (`node scripts/apply_migration.js 022_roles_row_level_security.sql`)
+with the project's credentials; then in Search Console submit
+`https://www.loumoo.store/sitemap.xml` on a `www` (or Domain) property.
+
+---
+
 ## Bug sweep  (branch: `claude/laughing-babbage-xdmzlk`)
 
 Found by running every suite, turning the routing matrix's KNOWN_GAPs into
 assertions, a correctness-only lint of the server and the compiled app, a
 schema check of every query column, and reading the modules the matrix does
-not cover. Each fix has a test that fails without it.
+not cover. Each fix has a test that fails without it. S1–S4 were also fixed independently on
+`main` (Priority 4); the merge keeps `main`'s versions of those and adds what it
+lacked (password reset and OTP refusals, `recordLogin`, Supabase Auth deletion).
 
 | # | Defect | Fix | Proven by |
 |---|---|---|---|
-| 11 | `GET /products/:id` was 503 for every id with no DB configured (P3 vs no-fabricated-products tests contradicted each other) | no DB → curated catalogue; failing DB → 503 | `product_detail_not_found`, `api_hardening` |
-| 12 | A deleted account signed back in and was silently reactivated | no un-delete in `getOrCreateForClerkUser`/`recordLogin`; one refusal rule on password, OTP and reset; deletion removes the Supabase Auth user | `deleted_account_stays_deleted`, routing matrix |
-| 13 | `POST /orders` ignored `canPurchase` (unverified / mid-onboarding accounts could order) | `requireCapability('canPurchase')`; checkout shows the 403's next step | routing matrix, `delivery_circuit` |
-| 14 | A store created without a phone published the owner's personal phone | only the business phone typed is stored | routing matrix |
-| 15 | Admin API served built-in demo rows against a live DB (columns in no migration); store moderation failed on real stores; listing moderation wrote invalid statuses; admin edits waited 5 min on the identity cache | schema-faithful queries + boundary translation, errors throw, cache invalidation, real listing statuses | routing matrix, `super_admin_phase3`, `query_columns_exist` |
-| 16 | Any signed-in user could edit/publish/delete someone else's personal (store-less) announcement | `_assertCanManage`: author, or the store's team | `announcement_manage_authz` |
-| 17 | An organization ADMIN could promote themselves to OWNER | only the owner grants OWNER; member status validated | `org_owner_escalation` |
-| 18 | A mutual block read as "not blocked" (two rows vs `maybeSingle()`); same flaw let duplicate unverified reviews through | `limit(1)` | `mutual_block` |
-| 19 | Product page: duplicate bindings showed every seller product as verified, MacBook photos for products without images, no specs for API products, demo store/price fallbacks | one `_productDetailView` reading both product shapes, no invented values | `product_page_view` |
-| 20 | Sign-out button skipped emptying the bag (shared devices); "use a different email" kept the old session | one `signOut()`; session cleared | `product_page_view` |
-| 21 | Toast OK button bound to an undefined handler; feeds said "end of listings" under every page | `clearToast`, `catalogHasMore` exposed | `template_bindings_resolve` |
-| 22 | `npm run build:frontend` dropped the SEO head sync and prerender styles (hand-edited into the build output) | moved into `build_redesign.py` | `build_head_in_sync` |
-| 23 | Unknown store shown as "✓ Verified"; every seller's own card said "Verified Merchant"; seller picker never said the customer's pick comes first | real verification only; merged duplicate subtitle | `product_page_view`, `rider_presence_client` |
+| S1 | `GET /products/:id` was 503 for every id with no DB configured (P3 vs no-fabricated-products tests contradicted each other) | no DB → curated catalogue; failing DB → 503 | `product_detail_not_found`, `api_hardening` |
+| S2 | A deleted account signed back in and was silently reactivated | no un-delete in `getOrCreateForClerkUser`/`recordLogin`; one refusal rule on password, OTP and reset; deletion removes the Supabase Auth user | `deleted_account_stays_deleted`, routing matrix |
+| S3 | `POST /orders` ignored `canPurchase` (unverified / mid-onboarding accounts could order) | `requireCapability('canPurchase')`; checkout shows the 403's next step | routing matrix, `delivery_circuit` |
+| S4 | A store created without a phone published the owner's personal phone | only the business phone typed is stored | routing matrix |
+| S5 | Admin API served built-in demo rows against a live DB (columns in no migration); store moderation failed on real stores; listing moderation wrote invalid statuses; admin edits waited 5 min on the identity cache | schema-faithful queries + boundary translation, errors throw, cache invalidation, real listing statuses | routing matrix, `super_admin_phase3`, `query_columns_exist` |
+| S6 | Any signed-in user could edit/publish/delete someone else's personal (store-less) announcement | `_assertCanManage`: author, or the store's team | `announcement_manage_authz` |
+| S7 | An organization ADMIN could promote themselves to OWNER | only the owner grants OWNER; member status validated | `org_owner_escalation` |
+| S8 | A mutual block read as "not blocked" (two rows vs `maybeSingle()`); same flaw let duplicate unverified reviews through | `limit(1)` | `mutual_block` |
+| S9 | Product page: duplicate bindings showed every seller product as verified, MacBook photos for products without images, no specs for API products, demo store/price fallbacks | one `_productDetailView` reading both product shapes, no invented values | `product_page_view` |
+| S10 | Sign-out button skipped emptying the bag (shared devices); "use a different email" kept the old session | one `signOut()`; session cleared | `product_page_view` |
+| S11 | Toast OK button bound to an undefined handler; feeds said "end of listings" under every page | `clearToast`, `catalogHasMore` exposed | `template_bindings_resolve` |
+| S12 | `npm run build:frontend` dropped the SEO head sync and prerender styles (hand-edited into the build output) | moved into `build_redesign.py` | `build_head_in_sync` |
+| S13 | Unknown store shown as "✓ Verified"; every seller's own card said "Verified Merchant"; seller picker never said the customer's pick comes first | real verification only; merged duplicate subtitle | `product_page_view`, `rider_presence_client` |
 
 ### Found, not fixed (needs a product decision)
 - **Inventory is checked but never reserved or decremented**, so a tracked

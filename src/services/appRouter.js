@@ -55,6 +55,7 @@
     redirects: 0,
     readyPromise: null,
     bound: false,
+    headApplied: false,   // set once the first route has been applied (see applyRoute)
     lastSyncSig: ''
   };
 
@@ -110,13 +111,41 @@
   // wrote entity-level tags into the landing HTML; this covers in-app
   // navigation. Falls back to the minimal title/robots behaviour when the SEO
   // model is not present (e.g. the Node test harness).
+  // The canonical origin the SERVER wrote into this page (its canonical link comes
+  // from PUBLIC_SITE_URL / the registry ORIGIN), so in-app navigation keeps the same
+  // host the landing HTML declared. Read once, before applyTags() replaces that
+  // link; never derived from location, which may be a preview or the redirecting apex.
+  var siteOriginCache = null;
+  function siteOrigin(seo) {
+    if (siteOriginCache) return siteOriginCache;
+    var d = docu();
+    var link = d && d.head && d.head.querySelector && d.head.querySelector('link[rel="canonical"][data-loumoo-seo]');
+    var m = link && /^(https:\/\/[A-Za-z0-9.-]+(?::\d+)?)(?:\/|$)/.exec(link.getAttribute('href') || '');
+    siteOriginCache = (m && m[1]) || (Routes && Routes.ORIGIN) || seo.DEFAULT_SITE_URL;
+    return siteOriginCache;
+  }
+
+  /**
+   * True when the server prerendered this document's head FOR `path` (the content
+   * block records the path it rendered; its canonical may differ, e.g. a product
+   * opened by id canonicalises to its slug).
+   */
+  function serverHeadFor(path) {
+    var d = docu();
+    var block = d && d.getElementById && d.getElementById('loumoo-prerender');
+    var rendered = block && block.getAttribute && block.getAttribute('data-path');
+    if (!rendered || !d.head || !d.head.querySelector || !d.head.querySelector('[data-loumoo-seo]')) return false;
+    var p = String(path || '/').split('?')[0].split('#')[0] || '/';
+    return rendered === p;
+  }
+
   function applyHead(resolved, path, titleOverride) {
     var seo = root.LoumooSeo;
     var d = docu();
     if (seo && d && d.head && typeof seo.applyHead === 'function') {
       try {
         seo.applyHead(d, resolved, {
-          siteUrl: (Routes && Routes.ORIGIN) || seo.DEFAULT_SITE_URL,
+          siteUrl: siteOrigin(seo),
           path: path || (loc() && loc().pathname) || '/',
           titleOverride: titleOverride
         });
@@ -392,12 +421,19 @@
   function applyRoute(route, params, search, mode) {
     // 'mode' is how the address bar was (or will be) written: push | replace | pop | initial.
     var direction = mode === 'pop' ? 'pop' : (mode === 'push' ? 'push' : 'replace');
-    // On the very first load of an entity page (product/store) the server
-    // prerender already wrote entity-level tags into the HTML; do not overwrite
-    // them with the route-level fallback. Every other case keeps the head in sync.
-    var isEntityRoute = route.id === 'product' || route.id === 'storefront';
-    if (!(mode === 'initial' && isEntityRoute)) {
-      applyHead({ type: 'route', route: route, params: params }, fullPath(route, params, search));
+    // On the very first route the router applies, the server prerender has already
+    // written this URL's head (entity title/JSON-LD, a 404's noindex, a category's
+    // own title) into the HTML. That is what a rendering crawler must end up with, so
+    // keep it rather than overwrite it with the route-level fallback. (A one-shot
+    // flag, not `mode`: navigate() hands the first load to applyRoute as 'replace',
+    // so a `mode === 'initial'` test here never matched.) In-app navigation, a
+    // client-side redirect to another path, or a page served without a prerendered
+    // head (render failure) keeps the head in sync as before.
+    var landing = fullPath(route, params, search);
+    var keepServerHead = !S.headApplied && serverHeadFor(landing);
+    S.headApplied = true;
+    if (!keepServerHead) {
+      applyHead({ type: 'route', route: route, params: params }, landing);
     }
 
     if (route.kind === 'overlay') {
@@ -471,7 +507,7 @@
     var route = res.route;
     var params = res.params;
 
-    if (route.kind === 'page') {
+    if (route.kind === 'page' || route.kind === 'content') {
       return pageNavigation(route, u);
     }
 

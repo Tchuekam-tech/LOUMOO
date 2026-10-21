@@ -69,6 +69,10 @@ trailing slashes are repaired by redirect.
 | `/stores` | screen `store` | public | - | - | opens directly |
 | `/brand` | screen `brand` | public | - | - | opens directly |
 | `/store/:slug` | screen `business`, loader `_enterStorefront` | public | `:slug` -> `currentStoreId` | - | opens directly |
+| `/marketplace-cameroun` | static French document `/pages/marketplace-cameroun.html` (rendered by the gateway, built for the CDN) | public | - | - | opens directly |
+| `/acheter-en-ligne-cameroun` | static French document `/pages/acheter-en-ligne-cameroun.html` (rendered by the gateway, built for the CDN) | public | - | - | opens directly |
+| `/vendre-en-ligne-cameroun` | static French document `/pages/vendre-en-ligne-cameroun.html` (rendered by the gateway, built for the CDN) | public | - | - | opens directly |
+| `/a-propos` | static French document `/pages/a-propos.html` (rendered by the gateway, built for the CDN) | public | - | - | opens directly |
 | `/announcements` | screen `announce` | public | - | - | opens directly |
 | `/announcements/campaigns` | screen `announceCampaigns` | seller (sign in, create a boutique, activate it) | - | - | opens directly |
 | `/announcements/:id` | screen `announceDetail`, loader `openAnnouncement` | public | `:id` -> `activeAnnouncementId` | `/announce/:id` | opens directly |
@@ -301,11 +305,16 @@ node scripts/sync_route_docs.js            # refresh the route map in this docum
 repository pushes to Vercel. After the first deploy of this change, verify with the checklist in
 section 9.
 
-**Canonical host.** The registry's origin is `https://loumoo.store`, but the apex domain currently
-308-redirects to `www.loumoo.store` (a Vercel *Domains* setting that lives outside this repository). The
-app emits no `<link rel="canonical">` until the project owner decides which host is primary, so it cannot
-contradict the redirect; sign-in is not host-sensitive (the session token is first-party and stored per
-origin, so a visitor who switches between the two hosts is signed out of the other).
+**Canonical host.** The apex `https://loumoo.store` 308-redirects to `https://www.loumoo.store` (a Vercel
+*Domains* setting that lives outside this repository), so the canonical origin is **`https://www.loumoo.store`**:
+the registry's `ORIGIN` (`src/routing/routes.js`), which every `<link rel="canonical">`, `og:url`, JSON-LD
+URL, sitemap `<loc>` and the robots.txt `Sitemap:` line is built on. A canonical must name the URL that
+answers 200, never one that redirects. To make the apex primary instead, change the Vercel Domains
+setting **and** set `PUBLIC_SITE_URL=https://loumoo.store` together (an absolute https origin; anything
+else is ignored with a boot warning). The server, the build (`scripts/assemble_public.js`, which also
+writes `public/robots.txt`) and the browser router (which follows the canonical the server wrote) then
+all switch. Sign-in is not host-sensitive (the session token is first-party and stored per origin, so a
+visitor who switches between the two hosts is signed out of the other).
 
 ## 6. Admin vs super admin
 

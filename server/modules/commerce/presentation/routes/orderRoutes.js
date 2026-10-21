@@ -33,9 +33,9 @@ function getCallerIdentity(req) {
 }
 
 // POST /api/v1/orders - Place a new order with server-authoritative pricing.
-// Buying is the canPurchase capability (ACCOUNT_READY and up), the same rule the
-// client routes enforce: requireAuth alone let an unverified or mid-onboarding
-// account place real orders by calling the API directly.
+// canPurchase (account state machine: ACCOUNT_READY or beyond) is enforced HERE:
+// an account whose contact is unverified or whose onboarding is unfinished is told
+// where to go (403 + resolveAt), never handed an order the client merely hid.
 router.post('/', requireAuth, requireCapability('canPurchase'), async (req, res, next) => {
   try {
     const { userId } = getCallerIdentity(req);
