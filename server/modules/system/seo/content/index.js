@@ -43,6 +43,15 @@ function curatedCards() {
 }
 
 /**
+ * A catalogue title cut off at an elision ("... des Hauts Plateaux de l", "Huile d"): the
+ * dataset has four. It is a crawlable, visible product name on a page about trust, so such a
+ * product is not featured here (its own page is unaffected).
+ */
+function looksTruncated(title) {
+  return /(?:^|\s)[a-zà-ÿ]$|['’]$/.test(String(title).trim());
+}
+
+/**
  * A deterministic, diverse selection of real product pages: one per category (largest
  * categories first), then a second round, each with an image and a payable price.
  */
@@ -50,6 +59,7 @@ function featuredProducts(cards, n) {
   const byCategory = new Map();
   for (const c of cards) {
     if (!c || !c.title || !PARAM_RE.test(String(c.id || '')) || !(c.image || (c.images && c.images[0]))) continue;
+    if (looksTruncated(c.title)) continue;
     if (!seoModel.payablePrice(c)) continue;
     const key = String(c.category || 'other').toLowerCase();
     // Goods only: a stay, a ticket or a service has no product photo worth featuring, and
@@ -86,7 +96,9 @@ function collectData() {
     const { HOUSE_STORE, HOUSE_AGENCY } = require('../../../store/domain/HouseStore');
     const mine = cards.filter((c) => c.storeId === HOUSE_STORE.id);
     if (mine.length) {
-      store = { name: HOUSE_STORE.name, path: `/store/${HOUSE_STORE.slug}`, city: mine[0].merchantCity || '', count: mine.length, agency: HOUSE_AGENCY.name };
+      // No city: merchantCity is a per-product field (the store's 972 products carry eleven
+      // different values), not an attribute of the store, so it can't be stated as its location.
+      store = { name: HOUSE_STORE.name, path: `/store/${HOUSE_STORE.slug}`, count: mine.length, agency: HOUSE_AGENCY.name };
     }
   } catch (_) { store = null; }
 

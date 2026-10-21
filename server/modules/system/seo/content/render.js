@@ -153,7 +153,7 @@ function renderBlock(block, ctx) {
     case 'store': {
       const s = ctx.data.store;
       if (!s) return '';
-      return `<div class="store"><div class="grow"><h3>${esc(s.name)}, la boutique officielle de LOUMOO</h3><p>${esc(s.name)} présente ${s.count > 0 ? `${s.count} produits` : 'un catalogue'}${s.city ? ` et est basée à ${esc(s.city)}` : ''}. Ses commandes sont livrées par l’agence ${esc(s.agency)}.</p></div><a class="btn btn-p" href="${esc(s.path)}">Visiter la boutique</a></div>`;
+      return `<div class="store"><div class="grow"><h3>${esc(s.name)}, la boutique officielle de LOUMOO</h3><p>${esc(s.name)} présente ${s.count > 0 ? `${s.count} produits` : 'un catalogue'}. Ses commandes sont livrées par l’agence ${esc(s.agency)}.</p></div><a class="btn btn-p" href="${esc(s.path)}">Visiter la boutique</a></div>`;
     }
     default:
       throw new Error(`content block type not supported: ${block.t}`);
