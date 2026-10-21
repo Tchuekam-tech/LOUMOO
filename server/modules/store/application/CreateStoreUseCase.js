@@ -112,7 +112,10 @@ class CreateStoreUseCase {
       description: input.description || `Official store for ${input.name} in ${city}, Cameroon.`,
       category_id: input.categoryId.toLowerCase(),
       logo_url: input.logoUrl || input.logo_url || null,
-      phone_number: input.phoneNumber || principal.phoneNumber || '',
+      // The store's phone is PUBLIC (Store.toPublicJSON, the WhatsApp button). Only a
+      // number the seller typed for the store is published; the account's own phone
+      // (given for verification) is never copied onto a public storefront unasked.
+      phone_number: input.phoneNumber || '',
       email: input.email || principal.email || '',
       // A created storefront is immediately discoverable. Onboarding still
       // controls seller readiness and listing capabilities, not whether the

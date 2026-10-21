@@ -15,7 +15,7 @@ const { OrderCreationService } = require('../../application/OrderCreationService
 const { OrderQueryService } = require('../../application/OrderQueryService');
 const { OrderLifecycleService } = require('../../application/OrderLifecycleService');
 const { CancelOrderInputSchema } = require('../validators/orderSchemas');
-const { requireAuth } = require('../../../identity/presentation/guards/authGuard');
+const { requireAuth, requireCapability } = require('../../../identity/presentation/guards/authGuard');
 const { ValidationError } = require('../../../../shared/errors/AppError');
 const { clampPagination } = require('../../../../shared/http/pagination');
 
@@ -32,8 +32,11 @@ function getCallerIdentity(req) {
   return { userId, userRole };
 }
 
-// POST /api/v1/orders - Place a new order with server-authoritative pricing
-router.post('/', requireAuth, async (req, res, next) => {
+// POST /api/v1/orders - Place a new order with server-authoritative pricing.
+// canPurchase (account state machine: ACCOUNT_READY or beyond) is enforced HERE:
+// an account whose contact is unverified or whose onboarding is unfinished is told
+// where to go (403 + resolveAt), never handed an order the client merely hid.
+router.post('/', requireAuth, requireCapability('canPurchase'), async (req, res, next) => {
   try {
     const { userId } = getCallerIdentity(req);
     const idempotencyKey = req.headers['idempotency-key'] || req.headers['x-idempotency-key'] || req.body?.idempotencyKey;

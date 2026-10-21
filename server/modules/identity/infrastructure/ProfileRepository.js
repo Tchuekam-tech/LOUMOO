@@ -133,7 +133,15 @@ class ProfileRepository {
 
     const existing = await this.findByClerkUserId(identity.clerkUserId, { useCache: false });
     if (existing) {
-      if (existing.deleted_at || existing.clerk_deleted_at || existing.account_status === 'anonymized') {
+      // An account its owner DELETED (DeleteAccountUseCase anonymizes it and sets
+      // deleted_at) is never reopened here. Sign-in, OTP and password reset all
+      // provision through this method, and the credentials can still work at the
+      // identity provider, so reactivating would let a deleted account sign straight
+      // back in. The row is returned as it is; callers and requireAuth refuse it
+      // (state DELETED). Only a profile whose provider identity alone was marked
+      // gone (clerk_deleted_at) is restored.
+      const deletedByOwner = Boolean(existing.deleted_at) || existing.account_status === 'anonymized';
+      if (!deletedByOwner && existing.clerk_deleted_at) {
         const reactivation = {
           clerk_deleted_at: null,
           deleted_at: null,
