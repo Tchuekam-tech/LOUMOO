@@ -30,6 +30,7 @@ const SITE_NAV = require('../../src/seo/siteNav.json');
 const Content = require('../../server/modules/system/seo/content');
 const { PAGES } = require('../../server/modules/system/seo/content/pages');
 const SitemapService = require('../../server/modules/system/seo/SitemapService');
+const CategoryDirectory = require('../../server/modules/system/seo/CategoryDirectory');
 const CatalogRepository = require('../../server/modules/catalog/infrastructure/CatalogRepository');
 
 const ROOT = path.resolve(__dirname, '../..');
@@ -109,6 +110,27 @@ async function run() {
   const dups = (key) => { const m = {}; heads.forEach((h) => { (m[h[key]] = m[h[key]] || []).push(h.path); }); return Object.entries(m).filter(([, v]) => v.length > 1); };
   assert.deepStrictEqual(dups('title'), [], 'no two public pages share a title');
   assert.deepStrictEqual(dups('description'), [], 'no two public pages share a description');
+
+  // Category pages are dynamic routes (skipped above) but they are in the sitemap and the nav
+  // points at them: every category carries a snippet-sized French description of its own.
+  const categories = CategoryDirectory.list();
+  assert.ok(categories.length >= 10, `the category directory is loaded (${categories.length})`);
+  categories.forEach((c) => {
+    assert.ok(c.description.length >= 70 && c.description.length <= 160, `category ${c.id}: description is 70-160 chars (${c.description.length}): ${c.description}`);
+  });
+  assert.strictEqual(new Set(categories.map((c) => c.description)).size, categories.length, 'no two categories share a description');
+
+  // A product page's description is never cut mid-word. A curated product's shortDescription is
+  // its description hard-sliced at 140 chars (CatalogRepository); the head must not copy that cut.
+  const apple = await CatalogRepository.findIndexableProductByIdOrSlug('phone_apple_apple_iphone_15_128gb_noir_minuit');
+  assert.ok(apple && apple.shortDescription && apple.description.length > apple.shortDescription.length, 'fixture: a curated product with a truncated shortDescription');
+  const appleHead = seoModel.describe(Routes.resolve('/product/phone_apple_apple_iphone_15_128gb_noir_minuit'), { siteUrl: SITE, path: '/product/phone_apple_apple_iphone_15_128gb_noir_minuit', entity: apple });
+  assert.ok(!appleHead.description.endsWith('rédu'), 'the meta description is not the hard-sliced shortDescription');
+  assert.ok(/[.!?…]$/.test(appleHead.description), `the meta description ends on a sentence or an ellipsis, never mid-word: "${appleHead.description}"`);
+  const prefixed = seoModel.describe(Routes.resolve('/product/x'), { siteUrl: SITE, path: '/product/x', entity: { id: 'x', title: 'X', shortDescription: 'Un texte coupé en plein mo', description: 'Un texte coupé en plein mot puis la suite complète de la description.' } });
+  assert.strictEqual(prefixed.description, 'Un texte coupé en plein mot puis la suite complète de la description.', 'a prefix-truncated shortDescription yields to the full description');
+  const written = seoModel.describe(Routes.resolve('/product/x'), { siteUrl: SITE, path: '/product/x', entity: { id: 'x', title: 'X', shortDescription: 'Un résumé écrit à la main.', description: 'Un texte long et différent.' } });
+  assert.strictEqual(written.description, 'Un résumé écrit à la main.', 'a genuinely written shortDescription is kept');
 
   /* ── 4. Brand entity data ─────────────────────────────────────────────── */
   const org = seoModel.organizationJsonLd(SITE);
@@ -203,7 +225,23 @@ async function run() {
     if (/meilleur/i.test(text)) assert.ok(/classement officiel/i.test(text), `${where}: "meilleur(e)" appears only next to the statement that no official ranking exists`);
     assert.ok(!/\b(?:avis clients?|témoignage|noté\s+\d|\d(?:[.,]\d)?\s*\/\s*5)\b/i.test(text), `${where}: no review or testimonial the repository cannot back`);
     assert.ok(!seoModel.isPrivatePath(page.path), `${where}: not a private path`);
+
+    // Capabilities the app does not offer today are not described. Re-add each only when the
+    // product does it: a buyer cancel control on the order page (the endpoint exists, no screen
+    // calls it), reviews gated on delivery or addressed to a boutique (the review button is
+    // unconditional and product-only), and a store location (merchantCity is per product).
+    assert.ok(!/annul/i.test(text), `${where}: no order-cancellation claim (no screen lets a buyer cancel)`);
+    assert.ok(!/avis apr[eè]s|laisser un avis|donnez votre avis|avis sur (?:le produit et )?la boutique/i.test(text), `${where}: no review claim tied to reception or to a boutique`);
+    assert.ok(!/bas[ée]e? à /i.test(text), `${where}: no store location claim`);
   }
+
+  // A catalogue title cut at an elision is never featured as a product name.
+  const featuredCard = (id, title) => ({ id, title, image: `/Assets/${id}.jpg`, priceNumeric: 1000, category: 'groceries' });
+  const featured = Content.featuredProducts([
+    featuredCard('g_trunc_a', 'Huile d'), featuredCard('g_trunc_b', 'Café Pure Arabica des Hauts Plateaux de l'), featuredCard('g_trunc_c', 'Miel pur de l’'),
+    featuredCard('g_ok_a', 'Huile d’olive 1L'), featuredCard('g_ok_b', 'Vitamine C'), featuredCard('g_ok_c', 'Pack taille S')
+  ], 10).map((p) => p.path);
+  assert.deepStrictEqual(featured.sort(), ['/product/g_ok_a', '/product/g_ok_b', '/product/g_ok_c'], 'truncated titles are skipped, complete ones (even ending in a capital letter) are kept');
 
   /* ── 6. The sitemap lists each guide once, with the copy's review date ─ */
   const xml = await SitemapService.buildSitemap({ siteUrl: SITE });
