@@ -112,6 +112,7 @@ async function run() {
   };
 
   let shellRoutes = 0;
+  let contentPages = 0;
   Routes.routes.forEach(r => {
     const u = sample(r);
     if (r.kind === 'screen' || r.kind === 'overlay') {
@@ -127,6 +128,21 @@ async function run() {
       const res = host.get(u);
       assert.strictEqual(res.status, 200, `${u} (control center) -> ${res.status}`);
       assert.ok(res.file.endsWith(path.join('superadmin', 'index.html')), `${u} -> ${res.file}`);
+    } else if (r.kind === 'content') {
+      // A guide is a static file the build writes: no function invocation, one CDN hop.
+      const res = host.get(u);
+      assert.strictEqual(res.status, 200, `${u} (guide) -> ${res.status} via ${res.via}`);
+      assert.strictEqual(res.via, 'rewrite', `${u} must be a rewrite to its static file (got ${res.via})`);
+      assert.strictEqual(res.destination, r.page, `${u} -> ${res.destination}`);
+      assert.strictEqual(res.file, path.join(PUBLIC, r.page.slice(1)), `${u} -> ${res.file}`);
+      const guide = fs.readFileSync(res.file, 'utf8');
+      assert.ok(/<html lang="fr">/.test(guide) && (guide.match(/<h1[\s>]/g) || []).length === 1, `${u}: the built file is a complete French document`);
+      assert.ok(guide.includes(`<link rel="canonical" href="https://www.loumoo.store${r.path}"`), `${u}: the built file is its own canonical`);
+      // The CDN (not Express) sends the CSP for a static file: one generated rule must cover this path.
+      const rule = (vercel.headers || []).find(h => new RegExp('^/\\(([a-z0-9|-]+)\\)$').test(h.source) && h.source.slice(2, -1).split('|').includes(r.path.slice(1)));
+      assert.ok(rule, `${u}: a headers rule must cover this static guide`);
+      assert.deepStrictEqual(rule.headers, (vercel.headers.find(h => h.source === '/') || {}).headers, `${u}: same security headers as the home page`);
+      contentPages++;
     } else if (r.kind === 'unavailable') {
       const res = host.get(u);
       // An unbuilt area has no rewrite of its own: it falls to the final catch-all, so the
@@ -135,7 +151,8 @@ async function run() {
       assert.strictEqual(res.destination, '/api/index.js');
     }
   });
-  console.log(`    ✓ routing_deploy: Vercel prerenders ${shellRoutes} application routes through the function, serves the home page + control center statically, and 404s unbuilt areas`);
+  assert.ok(contentPages >= 4, `the French guides are checked (${contentPages})`);
+  console.log(`    ✓ routing_deploy: Vercel prerenders ${shellRoutes} application routes through the function, serves the home page + control center + ${contentPages} guides statically, and 404s unbuilt areas`);
 
   // The home page is a static file, but prerendered at build time (assemble_public.js)
   // so '/' — which filesystem precedence keeps off the function — still has real SEO.
