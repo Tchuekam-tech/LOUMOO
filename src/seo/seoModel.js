@@ -168,6 +168,18 @@
     return !!e && e.curated !== true && n >= 1 && r >= 1 && r <= 5;
   }
 
+  /**
+   * The meta description of a product page. A curated product's shortDescription is its
+   * description hard-cut at 140 characters (CatalogRepository), which lands mid-word on most
+   * of them ("... avec 10% de rédu"). When it is only a prefix of the full description, use
+   * the full text and let clip() cut at a word boundary with an ellipsis.
+   */
+  function productDescription(e) {
+    var short = e.shortDescription, full = e.description;
+    if (short && full && String(full).length > String(short).length && String(full).indexOf(String(short)) === 0) return full;
+    return short || full || SCREEN_DESCRIPTIONS.product;
+  }
+
   function productJsonLd(e, url, siteUrl) {
     var ld = { '@context': 'https://schema.org/', '@type': 'Product', name: e.title || 'Product', url: url };
     var desc = e.description || e.shortDescription;
@@ -280,7 +292,7 @@
 
     if (entity && screen === 'product') {
       title = heading = entity.title;
-      description = entity.shortDescription || entity.description || SCREEN_DESCRIPTIONS.product;
+      description = productDescription(entity);
       image = entity.image || entity.coverImage || (entity.images && entity.images[0]) || DEFAULT_IMAGE;
       type = 'product';
       jsonLd = productJsonLd(entity, canonical, siteUrl);
