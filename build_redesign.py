@@ -43,6 +43,8 @@ header_and_styles = """<!DOCTYPE html>
 <!-- Keep the critical API/auth bridges non-blocking; they execute before
      DOMContentLoaded, which is when the DC runtime mounts the app. The
      publishing engine is a route-level chunk loaded only when Sell is used. -->
+<script defer src="./src/data/i18n/fr.js"></script>
+<script defer src="./src/services/i18n.js"></script>
 <script defer src="./src/services/loumooApi.js"></script>
 <script defer src="./src/services/searchExperience.js"></script>
 <link rel="stylesheet" href="./src/styles/search.css">
