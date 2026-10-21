@@ -893,7 +893,6 @@ async function run() {
         const msg = String(e.error || '');
         return (/\/auth\/v1\/token/.test(e.path) && /invalid_credentials|email_not_confirmed/.test(msg)) // the harness tries a login before each sign-up; a signed-up account that has not entered its code cannot sign in
           || (/\/auth\/v1\/user/.test(e.path) && /bad_jwt/.test(msg)) // the identity provider asks the auth service about a token it cannot verify itself (the forged/garbage tokens above)
-          || (/\/rest\/v1\/auth_sessions/.test(e.path) && /PGRST205/.test(msg)) // DELETE /users/me revokes sessions in a table no migration creates (best effort, logged at debug)
           || (/\/rest\/v1\/(reviews|social_recommendations)\?/.test(e.path) && /PGRST200/.test(msg)); // storefront reviews (KNOWN_GAP: harness limitation)
       };
       const unexpected = errors.filter((e) => !expectedError(e));
@@ -906,7 +905,7 @@ async function run() {
       // (the one WARN that mentions ERROR is env.js noting that the harness set LOUMOO_TEST_AUTH_SECRET, on purpose)
       const own = stack.errors().filter((l) => !/List reviews|List recommendations|LOUMOO_TEST_AUTH_SECRET/.test(l));
       assert.deepStrictEqual(own.slice(0, 5), [], 'ERROR-level server log lines');
-      return `${errors.length} expected database error(s): ${count(/PGRST200/)} missing-relationship (reviews), ${count(/bad_jwt/)} bad_jwt (forged tokens), ${count(/invalid_credentials|email_not_confirmed/)} refused sign-ins (before sign-up / before the code is entered), ${count(/PGRST205/)} missing-table (auth_sessions); 0 unexpected`;
+      return `${errors.length} expected database error(s): ${count(/PGRST200/)} missing-relationship (reviews), ${count(/bad_jwt/)} bad_jwt (forged tokens), ${count(/invalid_credentials|email_not_confirmed/)} refused sign-ins (before sign-up / before the code is entered); 0 unexpected`;
     });
   } finally {
     await fx.stop();

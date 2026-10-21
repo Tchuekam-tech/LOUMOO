@@ -158,12 +158,9 @@ class DeleteAccountUseCase {
       logger.warn(`[DeleteAccount] Could not deactivate stores for user ${userId}: ${storeErr.message}`);
     }
 
-    // Revoke local auth sessions
-    try {
-      await db.from('auth_sessions').delete().eq('user_id', userId);
-    } catch (sessionErr) {
-      logger.debug(`[DeleteAccount] Auth session deletion notice: ${sessionErr.message}`);
-    }
+    // Sessions are signed tokens with no server-side table to purge: once the
+    // profile is anonymized, requireAuth refuses every one of them (DELETED).
+    // (This used to delete from an `auth_sessions` table no migration creates.)
 
     // A rider's name and phone live in delivery_drivers (keyed by profile_id, so
     // the table loop above does not reach it). Scrub it, suspend the rider and
