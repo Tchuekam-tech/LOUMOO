@@ -375,13 +375,7 @@ lacked (password reset and OTP refusals, `recordLogin`, Supabase Auth deletion).
 | S11 | Toast OK button bound to an undefined handler; feeds said "end of listings" under every page | `clearToast`, `catalogHasMore` exposed | `template_bindings_resolve` |
 | S12 | `npm run build:frontend` dropped the SEO head sync and prerender styles (hand-edited into the build output) | moved into `build_redesign.py` | `build_head_in_sync` |
 | S13 | Unknown store shown as "✓ Verified"; every seller's own card said "Verified Merchant"; seller picker never said the customer's pick comes first | real verification only; merged duplicate subtitle | `product_page_view`, `rider_presence_client` |
-
-### Found, not fixed (needs a product decision)
-- **Inventory is checked but never reserved or decremented**, so a tracked
-  listing can be oversold. A fix needs an atomic reserve / release / commit
-  across order creation, cancellation and delivery (and a decision on when
-  stock returns).
-- **Admin escrow resolution writes order status directly**, bypassing
-  `OrderLifecycleService` (no delivery cancellation or notifications on a
-  refund).
-
+| S14 | Orders checked stock but never held it: a listing with 1 unit could be sold to every buyer; cancel/deliver never moved stock; every listing was advertised "in stock ×1000" | reserve on placement (all lines or none, 409 when short), release on cancel, consume on delivery, compare-and-swap; cards show on_hand − reserved | `order_inventory_hold`, routing matrix (reserved 2, was 0) |
+| S15 | Admin escrow wrote order status directly: refunds left the rider en route, stock held, buyer uninformed; releases could "deliver" an undelivered order | release only after delivery; refund cancels through `OrderLifecycleService` first; settled is final; CAS updates | `super_admin_phase3`, routing matrix |
+| S16 | Unrated listings and stores shown as 5.0 stars ("★ 5" on search) | a rating needs at least one review | `product_page_view` |
+| S17 | An empty or failed announcement feed was filled with invented "product drops" (fake stores, prices, buy buttons) | feed shows only published broadcasts; empty/error states | `announce_feed_and_store_edit_loading` |
