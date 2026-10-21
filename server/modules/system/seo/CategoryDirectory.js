@@ -39,15 +39,15 @@ const FRENCH = Object.freeze({
   beauty: { name: 'Beauté, parfums et soins', description: 'Parfums, soins du visage, du corps et des cheveux proposés par les boutiques LOUMOO au Cameroun.' },
   sports: { name: 'Sport et fitness', description: 'Chaussures de sport, matériel de fitness et accessoires pour s’entraîner, proposés par les boutiques LOUMOO.' },
   groceries: { name: 'Épicerie et produits frais', description: 'Café, thé, miel, huiles, céréales, confiseries et boissons : des produits d’épicerie à commander sur LOUMOO.' },
-  jewelry: { name: 'Bijoux et parures', description: 'Bijoux, bracelets et parures proposés par les boutiques LOUMOO.' },
+  jewelry: { name: 'Bijoux et parures', description: 'Bijoux, bracelets et parures proposés par les boutiques LOUMOO, la marketplace en ligne du Cameroun.' },
   services: { name: 'Services professionnels', description: 'Prestations et services proposés par des prestataires présents sur LOUMOO.' },
   travel: { name: 'Voyages et transport', description: 'Transport interurbain, voyages et mobilité : les offres à découvrir sur LOUMOO.' },
-  hospitality: { name: 'Hôtellerie et séjours', description: 'Hôtels et séjours à découvrir sur LOUMOO.' },
-  hotels: { name: 'Hôtels et hébergement', description: 'Hôtels et hébergements à découvrir sur LOUMOO.' },
-  automotive: { name: 'Véhicules et automobile', description: 'Véhicules et produits automobiles sur LOUMOO.' },
-  real_estate: { name: 'Immobilier', description: 'Annonces immobilières sur LOUMOO.' },
-  banks: { name: 'Banques et services financiers', description: 'Services bancaires et financiers référencés sur LOUMOO.' },
-  digital: { name: 'Produits numériques et logiciels', description: 'Produits numériques et logiciels sur LOUMOO.' }
+  hospitality: { name: 'Hôtellerie et séjours', description: 'Hôtels et séjours à découvrir sur LOUMOO, la marketplace en ligne du Cameroun qui réunit aussi produits et voyages.' },
+  hotels: { name: 'Hôtels et hébergement', description: 'Hôtels et hébergements à découvrir sur LOUMOO, la marketplace en ligne du Cameroun qui réunit aussi produits et voyages.' },
+  automotive: { name: 'Véhicules et automobile', description: 'Véhicules et produits automobiles présents sur LOUMOO, la marketplace en ligne du Cameroun.' },
+  real_estate: { name: 'Immobilier', description: 'Annonces immobilières présentes sur LOUMOO, la marketplace en ligne du Cameroun.' },
+  banks: { name: 'Banques et services financiers', description: 'Services bancaires et financiers référencés sur LOUMOO, la marketplace en ligne du Cameroun.' },
+  digital: { name: 'Produits numériques et logiciels', description: 'Produits numériques et logiciels présents sur LOUMOO, la marketplace en ligne du Cameroun.' }
 });
 
 let cache = null;
