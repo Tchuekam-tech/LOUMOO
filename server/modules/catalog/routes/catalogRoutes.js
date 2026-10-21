@@ -14,6 +14,7 @@ const { NotFoundError, ValidationError } = require('../../../shared/errors/AppEr
 const CatalogRepository = require('../infrastructure/CatalogRepository');
 const ComparisonService = require('../application/ComparisonService');
 const ListingTaxonomyUseCase = require('../../listing/application/ListingTaxonomyUseCase');
+const { clampPagination } = require('../../../shared/http/pagination');
 
 // GET /api/v1/catalog/compare OR /api/v1/products/compare
 const handleCompare = async (req, res, next) => {
@@ -73,7 +74,7 @@ const handleCompareCandidates = async (req, res, next) => {
       currentProductId: currentId,
       search,
       type,
-      limit: limit ? parseInt(limit, 10) : 8
+      limit: clampPagination({ limit }, { defaultLimit: 8, maxLimit: 50 }).limit
     });
 
     res.json({ success: true, data: candidates });
@@ -93,10 +94,10 @@ router.get('/products', async (req, res, next) => {
     // Verified-store refinement: any explicit truthy value opts in.
     const verified = ['1', 'true', 'yes'].includes(String(req.query.verified || '').toLowerCase());
 
-    const rawLimit = parseInt(req.query.limit, 10);
-    const rawPage = parseInt(req.query.page, 10);
-    const limit = Number.isFinite(rawLimit) && rawLimit >= 1 ? Math.min(rawLimit, 100) : 50;
-    const page = Number.isFinite(rawPage) && rawPage >= 1 ? rawPage : 1;
+    // Clamp pagination server-side: default 24, hard max 100, page >= 1. A
+    // caller cannot pull the whole catalogue with ?limit=999999 or wedge the
+    // query with a negative/zero limit.
+    const { page, limit } = clampPagination(req.query, { defaultLimit: 24, maxLimit: 100 });
 
     const cacheKey = `catalog:list:${category || 'all'}:${vertical || 'all'}:${searchQuery}:${storeId || 'all'}:${brand || 'all'}:${city || 'all'}:${verified ? 'v' : 'all'}:${sortBy || 'recent'}:${page}:${limit}`;
 
@@ -127,9 +128,28 @@ router.get('/products/:id', async (req, res, next) => {
     const { id } = req.params;
     const cacheKey = `catalog:detail:${id}`;
 
-    const product = await CacheService.remember(cacheKey, 120, async () => {
-      return CatalogRepository.findPublicProductByIdOrSlug(id);
-    }, 'catalog');
+    // Strict, exact-id lookup: a real published product (DB listing or a REAL
+    // curated product) or null — it NEVER fabricates a synthetic placeholder, so
+    // an unknown id is an honest 404 instead of a 200 with a made-up product.
+    // A database error throws; we answer 503 rather than fabricate or 404 a
+    // product that may well exist. (The synthetic fallback remains ONLY in
+    // ComparisonService, where comparing a possibly-curated id is intentional.)
+    let product;
+    try {
+      product = await CacheService.remember(cacheKey, 120, async () => {
+        return CatalogRepository.findIndexableProductByIdOrSlug(id);
+      }, 'catalog');
+    } catch (dbErr) {
+      return res.status(503).json({
+        success: false,
+        error: {
+          code: 'PRODUCT_LOOKUP_UNAVAILABLE',
+          message: 'Product lookup is temporarily unavailable. Please retry in a moment.',
+          details: null,
+          requestId: req.requestId || 'req_unknown'
+        }
+      });
+    }
 
     if (!product) {
       throw new NotFoundError('Product', id);
