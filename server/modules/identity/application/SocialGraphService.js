@@ -607,14 +607,17 @@ class SocialGraphService {
 
     const adminDb = SupabaseClient.getAdmin();
     try {
+      // Two users can block EACH OTHER, which is two rows. maybeSingle() errors
+      // on two rows and the catch below answered "not blocked", so a mutual
+      // block let either side follow and recommend the other again.
       const { data, error } = await adminDb
         .from('social_blocks')
         .select('id')
         .or(`and(blocker_id.eq.${userA},blocked_id.eq.${userB}),and(blocker_id.eq.${userB},blocked_id.eq.${userA})`)
-        .maybeSingle();
+        .limit(1);
 
       if (error) throw error;
-      const result = Boolean(data);
+      const result = Array.isArray(data) && data.length > 0;
       await CacheService.set(cacheKey1, result, 300);
       return result;
     } catch (err) {
