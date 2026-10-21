@@ -50,6 +50,7 @@ header_and_styles = """<!DOCTYPE html>
 <meta name="theme-color" content="#0025E5">
 <script src="./support.js"></script>
 <script defer src="./src/routing/routes.js"></script>
+<script defer src="./src/seo/seoModel.js"></script>
 <script defer src="./src/services/appRouter.js"></script>
 <!-- Keep the critical API/auth bridges non-blocking; they execute before
      DOMContentLoaded, which is when the DC runtime mounts the app. The
@@ -95,6 +96,12 @@ header_and_styles = """<!DOCTYPE html>
   #dc-root .video-player-backdrop { display: flex !important; }
   .toast-banner { display: none !important; }
   #dc-root .toast-banner { display: flex !important; }
+  /* Server-prerendered fallback content: real, crawlable content for bots and
+     during load; hidden the moment the SPA mounts (#dc-root) so humans see the app. */
+  #loumoo-prerender { max-width: 1100px; margin: 0 auto; padding: 24px 16px; font-family: Inter, system-ui, sans-serif; color: #111214; line-height: 1.5; }
+  #loumoo-prerender img { max-width: 100%; height: auto; }
+  #loumoo-prerender nav a { color: #0062cc; margin-right: 8px; }
+  body:has(#dc-root) #loumoo-prerender { display: none !important; }
 </style>
 </head>
 <body>

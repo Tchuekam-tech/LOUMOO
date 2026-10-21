@@ -59,7 +59,14 @@
 })(typeof window !== 'undefined' ? window : (typeof globalThis !== 'undefined' ? globalThis : this), function () {
   'use strict';
 
-  var ORIGIN = 'https://loumoo.store';
+  // The canonical public origin: every canonical tag, og:url, sitemap <loc> and the
+  // robots.txt Sitemap line is built on it (server, build and browser). It must be
+  // the host that ANSWERS 200, not one that redirects: the live apex
+  // (https://loumoo.store) 308-redirects to www (a Vercel Domains setting outside
+  // this repository; docs/ROUTING.md "Canonical host"), so the canonical is www.
+  // A deployment overrides it with PUBLIC_SITE_URL; the browser follows the origin
+  // the server wrote into the page (src/services/appRouter.js siteOrigin()).
+  var ORIGIN = 'https://www.loumoo.store';
 
   /* ------------------------------------------------------------------ access */
   var PUBLIC = Object.freeze({ kind: 'public' });
