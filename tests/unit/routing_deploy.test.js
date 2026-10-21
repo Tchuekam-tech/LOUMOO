@@ -83,10 +83,16 @@ async function run() {
   });
   ['index.html', '404.html', 'superadmin/index.html', 'support.js'].forEach(f =>
     assert.ok(fs.existsSync(path.join(PUBLIC, f)), `public/${f} must be published`));
-  assert.strictEqual(
-    fs.readFileSync(path.join(PUBLIC, '404.html'), 'utf8'), fs.readFileSync(path.join(PUBLIC, 'index.html'), 'utf8'),
+  // Both are the application shell (so the router can boot and draw the right
+  // screen). index.html additionally carries the build-time home prerender;
+  // 404.html stays the raw shell and is served with a real 404 status.
+  const shell404 = fs.readFileSync(path.join(PUBLIC, '404.html'), 'utf8');
+  const indexHtml = fs.readFileSync(path.join(PUBLIC, 'index.html'), 'utf8');
+  assert.ok(shell404.includes('<x-dc>') && shell404.includes('<base href="/">'),
     '404.html must be the application shell (so the router can draw the not-found screen with a real 404)');
-  console.log('    ✓ routing_deploy: no catch-all rewrite; API first; 404.html is the app shell; control center published');
+  assert.ok(indexHtml.includes('<x-dc>') && indexHtml.includes('<base href="/">'),
+    'index.html must be the application shell');
+  console.log('    ✓ routing_deploy: no catch-all rewrite; API first; 404.html + index.html are the app shell; control center published');
 
   /* ----------------------------------------------------------- 2. Vercel behaviour */
   const host = createEmulator({ config: vercel, outputDir: PUBLIC });
@@ -101,8 +107,14 @@ async function run() {
   Routes.routes.forEach(r => {
     const u = sample(r);
     if (r.kind === 'screen' || r.kind === 'overlay') {
+      // The home page is served as a static file (prerendered at build time);
+      // every other application route is rewritten to the prerender function.
       if (r.path === '/') { expectShell('/'); return; }
-      expectShell(u); shellRoutes++;
+      const res = host.get(u);
+      assert.strictEqual(res.status, 200, `${u} -> ${res.status} via ${res.via}`);
+      assert.strictEqual(res.via, 'function', `${u} must be prerendered by the function (got ${res.via})`);
+      assert.strictEqual(res.destination, '/api/index.js', `${u} -> ${res.destination}`);
+      shellRoutes++;
     } else if (r.kind === 'page') {
       const res = host.get(u);
       assert.strictEqual(res.status, 200, `${u} (control center) -> ${res.status}`);
@@ -113,7 +125,17 @@ async function run() {
       assert.strictEqual(res.via, '404.html');
     }
   });
-  console.log(`    ✓ routing_deploy: Vercel serves the app shell with 200 for all ${shellRoutes + 1} application routes, the control center for /admin and /superadmin, and 404 for unbuilt areas`);
+  console.log(`    ✓ routing_deploy: Vercel prerenders ${shellRoutes} application routes through the function, serves the home page + control center statically, and 404s unbuilt areas`);
+
+  // The home page is a static file, but prerendered at build time (assemble_public.js)
+  // so '/' — which filesystem precedence keeps off the function — still has real SEO.
+  const homeHtml = fs.readFileSync(path.join(PUBLIC, 'index.html'), 'utf8');
+  assert.ok(/<link rel="canonical" href="https:\/\/[^"]+\/"[^>]*>/.test(homeHtml), 'home must carry a canonical link');
+  assert.ok(/<meta property="og:title"/.test(homeHtml), 'home must carry OpenGraph tags');
+  assert.ok(/<meta name="robots" content="index,follow"/.test(homeHtml), 'home must be indexable');
+  assert.ok(/id="loumoo-prerender"/.test(homeHtml), 'home must carry a prerendered content block');
+  assert.ok((homeHtml.match(/<title>/g) || []).length === 1, 'home must have exactly one <title>');
+  console.log('    ✓ routing_deploy: the home page is prerendered (canonical/OG/robots/content) into the static index.html');
 
   // Unknown routes: a deliberate 404 that still boots the app.
   ['/nope', '/a/b/c/d', '/store', '/store/a/b', '/orders/1/2/3', '/rider/extra', '/Rider', '/store/a.b', '/orders/%2e%2e'].forEach(u => {
@@ -140,6 +162,17 @@ async function run() {
   assert.strictEqual(api.via, 'function');
   assert.strictEqual(host.get('/api/v1/orders/123?x=1').via, 'function');
   console.log('    ✓ routing_deploy: /api/* still reaches the serverless function');
+
+  // Crawlability endpoints (Priority 1, items 2-4): robots.txt is a REAL static
+  // file (never the SPA shell); sitemap.xml and security.txt reach the function
+  // so they are generated dynamically rather than falling through to the shell.
+  const robots = host.get('/robots.txt');
+  assert.strictEqual(robots.status, 200, '/robots.txt must be served');
+  assert.strictEqual(robots.via, 'static', '/robots.txt must be a real static file, not the SPA shell');
+  assert.strictEqual(path.basename(robots.file), 'robots.txt', `/robots.txt -> ${robots.file}`);
+  assert.strictEqual(host.get('/sitemap.xml').via, 'function', '/sitemap.xml must reach the function (dynamic)');
+  assert.strictEqual(host.get('/.well-known/security.txt').via, 'function', 'security.txt must reach the function');
+  console.log('    ✓ routing_deploy: robots.txt is a static file; sitemap.xml and security.txt reach the function (not the shell)');
 
   // Redirects: legacy aliases keep the query; trailing slash is canonicalised.
   const redir = (u, to) => {
@@ -205,7 +238,10 @@ async function run() {
 
     let r = await g('/');
     assert.strictEqual(r.status, 200); assert.ok(/text\/html/.test(r.headers['content-type'])); assert.ok(r.body.includes('<base href="/">'));
-    assert.strictEqual(r.headers['cache-control'], 'no-cache');
+    // Home is prerendered: real head + content block, and CDN-cacheable (public, indexable).
+    assert.ok(/s-maxage=\d+/.test(r.headers['cache-control'] || ''), `home should be CDN-cacheable, got ${r.headers['cache-control']}`);
+    assert.ok(r.body.includes('rel="canonical"') && r.body.includes('og:title'), 'home must carry prerendered SEO tags');
+    assert.ok(r.body.includes('id="loumoo-prerender"'), 'home must carry the prerendered content block');
     for (const u of ['/rider', '/store/acme-1f3a', '/delivery/dlv_1', '/orders/42/tracking', '/marketplace/category/fashion?x=1', '/sell/deliveries/o1']) {
       r = await g(u);
       assert.strictEqual(r.status, 200, `${u} -> ${r.status}`);

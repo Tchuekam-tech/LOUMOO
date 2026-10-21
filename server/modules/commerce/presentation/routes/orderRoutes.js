@@ -17,6 +17,7 @@ const { OrderLifecycleService } = require('../../application/OrderLifecycleServi
 const { CancelOrderInputSchema } = require('../validators/orderSchemas');
 const { requireAuth } = require('../../../identity/presentation/guards/authGuard');
 const { ValidationError } = require('../../../../shared/errors/AppError');
+const { clampPagination } = require('../../../../shared/http/pagination');
 
 const router = express.Router();
 
@@ -58,13 +59,12 @@ router.post('/', requireAuth, async (req, res, next) => {
 router.get('/', requireAuth, async (req, res, next) => {
   try {
     const { userId } = getCallerIdentity(req);
-    const { status = 'all', limit = 20, offset = 0 } = req.query;
+    const { status = 'all' } = req.query;
+    // Clamp server-side (default 24, max 100, offset >= 0) so a caller cannot
+    // pull their entire order history, or wedge the query, with ?limit=999999.
+    const { limit, offset } = clampPagination(req.query, { defaultLimit: 24, maxLimit: 100 });
 
-    const result = await queryService.getUserOrders(userId, {
-      status,
-      limit: parseInt(limit, 10),
-      offset: parseInt(offset, 10)
-    });
+    const result = await queryService.getUserOrders(userId, { status, limit, offset });
 
     res.json({
       success: true,

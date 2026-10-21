@@ -167,6 +167,27 @@ for (const dir of [path.join(out, 'src', 'data'), path.join(out, 'data')]) {
   })(dir);
 }
 
+// Prerender the home page into the published index.html. Vercel serves '/' as a
+// static file (filesystem precedence beats rewrites), so '/' cannot reach the
+// prerender function the way every other route does (vercel.json rewrites those
+// to /api/index.js). Baking the home SEO head + content here gives '/' the same
+// real tags and content. Pure (shared model), no DB, no server config/logger.
+try {
+  const seoModel = require('../src/seo/seoModel');
+  const FrontendRoutes = require('../src/routing/routes');
+  const { inject, contentBlock } = require('../server/modules/system/seo/PrerenderService');
+  const siteUrl = process.env.PUBLIC_SITE_URL || 'https://loumoo.store';
+  const rawShell = fs.readFileSync(app, 'utf8');
+  const resolved = FrontendRoutes.resolve('/');
+  const descriptor = seoModel.describe(resolved, { siteUrl, path: '/' });
+  const head = seoModel.serialize(seoModel.headTags(descriptor));
+  const content = contentBlock(descriptor, resolved, null, 200, siteUrl);
+  fs.writeFileSync(path.join(out, 'index.html'), inject(rawShell, head, content));
+  console.log('  prerendered home SEO into public/index.html');
+} catch (e) {
+  console.warn('  [assemble] home prerender skipped:', e && e.message ? e.message : e);
+}
+
 function dirSize(p) {
   let bytes = 0;
   for (const entry of fs.readdirSync(p, { withFileTypes: true })) {
