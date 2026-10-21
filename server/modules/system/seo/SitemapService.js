@@ -45,17 +45,27 @@ function collectStaticRoutes() {
   const DAILY = new Set(['/', '/marketplace', '/stores', '/announcements']);
 
   return routes
-    .filter((r) => r && r.kind === 'screen')
+    .filter((r) => r && (r.kind === 'screen' || r.kind === 'content'))
     .filter((r) => r.access && r.access.kind === 'public')
     .filter((r) => !r.guestOnly)
     .filter((r) => (r.direct || 'allow') === 'allow')
     .filter((r) => typeof r.path === 'string' && r.path.indexOf(':') === -1)
     .filter((r) => !SeoContent.isPrivatePath(r.path))
-    .map((r) => ({
-      path: r.path,
-      changefreq: DAILY.has(r.path) ? 'daily' : 'weekly',
-      priority: PRIORITY[r.path] != null ? PRIORITY[r.path] : 0.6
-    }));
+    .map((r) => {
+      const entry = {
+        path: r.path,
+        changefreq: DAILY.has(r.path) ? 'daily' : 'weekly',
+        priority: PRIORITY[r.path] != null ? PRIORITY[r.path] : 0.6
+      };
+      if (r.kind === 'content') {
+        // The French guides: the review date of the copy is the only honest lastmod.
+        const page = require('./content').pageForPath(r.path);
+        entry.priority = 0.8;
+        entry.changefreq = 'monthly';
+        if (page && page.updated) entry.lastmod = page.updated;
+      }
+      return entry;
+    });
 }
 
 /** Admin Supabase client, or null when it cannot be obtained (never throws). */
