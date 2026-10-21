@@ -51,6 +51,10 @@ What the site gives Google, what it cannot force, and what has to happen outside
    curl -s -o /dev/null -w "%{http_code}\n" https://www.loumoo.store/a-propos   # 200, and a French <title>
    curl -s https://www.loumoo.store/sitemap.xml | grep -c marketplace-cameroun  # 1
    ```
+   `loumoo.store` is served by **Vercel**; the Railway image (`Dockerfile`) is a second deployment.
+   Its `assets` stage previously could not build (it lacked the server tree `assemble_public.js`
+   needs); that is fixed here, but only checked by reproducing the stage in a scratch directory,
+   not with `docker build`. Run one real build before relying on Railway.
 2. **Verify ownership in Google Search Console** as a *Domain* property (DNS TXT record: covers
    `www` and the apex, and both protocols).
 3. **Submit** `https://www.loumoo.store/sitemap.xml` (Sitemaps report).
@@ -62,6 +66,31 @@ What the site gives Google, what it cannot force, and what has to happen outside
    decides a brand result largely from what the rest of the web says about the name.
 7. **Watch** Search Console → Performance, filter query contains `loumoo`. Expect days to weeks
    after indexing, not hours; sitelinks usually come later than the first brand result.
+
+## Decisions for the owner (found in review, deliberately not changed)
+
+These are product or content calls, not SEO bugs, but Google will index what they say.
+
+1. **"LOUMOO Escrow" in 183 product descriptions.** Those catalogue texts (`data/catalog.json`,
+   `src/data/catalog_products.js`) say e.g. "10% de réduction garantie par NanoAfrica avec LOUMOO
+   Escrow", and the text flows into each product page's meta description and `Product` JSON-LD.
+   The new guides say, truthfully for the current flow, that payment is on delivery with no
+   escrow. Pick one story; if there is no escrow, remove the sentence at the source and regenerate
+   the two derived files (editing only the SEO output would make the head disagree with the page).
+2. **`/marketplace/free-day` is a static demo** (one hard-coded flash-sale product, a fixed
+   countdown, "84% Claimed", "Only 3 units left") but it is indexable and in the sitemap, with a
+   description promising a delivery-free day at participating boutiques. Remove it from the
+   sitemap and noindex it, or build the feature.
+3. **`/marketplace/visual` (search by photo)** is indexable, but the feature is off unless
+   `SEARCH_ENABLED=true` (the screen otherwise says it is not available). Enable it in production or
+   noindex the route.
+4. **Travel and hotel bookings are holds, not paid bookings.** The server has no payment gateway
+   (`confirmPayment` answers 503, a booking stays PENDING). The guides only say "réserver" and never
+   promise a ticket, but the shell's `_confirmTravelBooking` shows "Ticket issued" regardless, and
+   the footer's generic "paiement à la livraison" does not literally fit a hotel stay or a bus seat.
+5. **NanoAfrica must stay provisioned.** The pillar page features its 972 products and links
+   `/store/nanoafrica`; without the provisioned store row those links 404 and checkout refuses the
+   products (`docs/NANOAFRICA.md`). It was provisioned in production on 2026-10-11.
 
 ## Known limits (follow-ups)
 
