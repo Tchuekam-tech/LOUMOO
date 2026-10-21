@@ -203,8 +203,11 @@ a real DB listing or a REAL curated product, else a **404**; a DB error is a
 404. **Fallback kept intentionally** only in `ComparisonService` (comparing a
 possibly-curated id by design).
 
-**Proven by:** `tests/unit/api_hardening.test.js` — with no DB the endpoint is
-503 (never a fabricated 200); a stubbed "no row" is a 404; a real product is 200.
+**Proven by:** `tests/unit/api_hardening.test.js` — with a failing DB the endpoint
+is 503 (never a fabricated 200); a stubbed "no row" is a 404; a real product is 200.
+With NO database configured (dev/demo only — production refuses to boot without
+one) the curated catalogue is the whole answer: curated id 200, unknown id 404
+(`tests/unit/product_detail_not_found.test.js`).
 Also covered on the SEO side by `tests/unit/seo_prerender.test.js` (unknown
 product prerenders a real 404).
 
@@ -230,3 +233,38 @@ public keys and the serialized body contains none of `service_role`, `secretKey`
   changing them adds risk for no security gain. New list endpoints should use
   `clampPagination`.
 - **/api/config shape** unchanged — every field is browser-required and public.
+
+---
+
+## Bug sweep  (branch: `claude/laughing-babbage-xdmzlk`)
+
+Found by running every suite, turning the routing matrix's KNOWN_GAPs into
+assertions, a correctness-only lint of the server and the compiled app, a
+schema check of every query column, and reading the modules the matrix does
+not cover. Each fix has a test that fails without it.
+
+| # | Defect | Fix | Proven by |
+|---|---|---|---|
+| 11 | `GET /products/:id` was 503 for every id with no DB configured (P3 vs no-fabricated-products tests contradicted each other) | no DB → curated catalogue; failing DB → 503 | `product_detail_not_found`, `api_hardening` |
+| 12 | A deleted account signed back in and was silently reactivated | no un-delete in `getOrCreateForClerkUser`/`recordLogin`; one refusal rule on password, OTP and reset; deletion removes the Supabase Auth user | `deleted_account_stays_deleted`, routing matrix |
+| 13 | `POST /orders` ignored `canPurchase` (unverified / mid-onboarding accounts could order) | `requireCapability('canPurchase')`; checkout shows the 403's next step | routing matrix, `delivery_circuit` |
+| 14 | A store created without a phone published the owner's personal phone | only the business phone typed is stored | routing matrix |
+| 15 | Admin API served built-in demo rows against a live DB (columns in no migration); store moderation failed on real stores; listing moderation wrote invalid statuses; admin edits waited 5 min on the identity cache | schema-faithful queries + boundary translation, errors throw, cache invalidation, real listing statuses | routing matrix, `super_admin_phase3`, `query_columns_exist` |
+| 16 | Any signed-in user could edit/publish/delete someone else's personal (store-less) announcement | `_assertCanManage`: author, or the store's team | `announcement_manage_authz` |
+| 17 | An organization ADMIN could promote themselves to OWNER | only the owner grants OWNER; member status validated | `org_owner_escalation` |
+| 18 | A mutual block read as "not blocked" (two rows vs `maybeSingle()`); same flaw let duplicate unverified reviews through | `limit(1)` | `mutual_block` |
+| 19 | Product page: duplicate bindings showed every seller product as verified, MacBook photos for products without images, no specs for API products, demo store/price fallbacks | one `_productDetailView` reading both product shapes, no invented values | `product_page_view` |
+| 20 | Sign-out button skipped emptying the bag (shared devices); "use a different email" kept the old session | one `signOut()`; session cleared | `product_page_view` |
+| 21 | Toast OK button bound to an undefined handler; feeds said "end of listings" under every page | `clearToast`, `catalogHasMore` exposed | `template_bindings_resolve` |
+| 22 | `npm run build:frontend` dropped the SEO head sync and prerender styles (hand-edited into the build output) | moved into `build_redesign.py` | `build_head_in_sync` |
+| 23 | Unknown store shown as "✓ Verified"; every seller's own card said "Verified Merchant"; seller picker never said the customer's pick comes first | real verification only; merged duplicate subtitle | `product_page_view`, `rider_presence_client` |
+
+### Found, not fixed (needs a product decision)
+- **Inventory is checked but never reserved or decremented**, so a tracked
+  listing can be oversold. A fix needs an atomic reserve / release / commit
+  across order creation, cancellation and delivery (and a decision on when
+  stock returns).
+- **Admin escrow resolution writes order status directly**, bypassing
+  `OrderLifecycleService` (no delivery cancellation or notifications on a
+  refund).
+
