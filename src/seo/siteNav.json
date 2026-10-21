@@ -1,0 +1,18 @@
+{
+  "_comment": "The public sitemap-of-the-site: the links every crawler-visible nav and footer offers (prerender block, French content pages, home footer). One source for Node and for build_redesign.py. Every path must be a public, indexable route (tests/unit/seo_search_dominance.test.js).",
+  "primary": [
+    { "label": "Accueil", "path": "/" },
+    { "label": "Explorer les produits", "path": "/marketplace" },
+    { "label": "Catégories", "path": "/marketplace/categories" },
+    { "label": "Boutiques", "path": "/stores" },
+    { "label": "Services", "path": "/marketplace/category/services" },
+    { "label": "Voyages", "path": "/travel" },
+    { "label": "Hôtels", "path": "/hotels" },
+    { "label": "À propos", "path": "/a-propos" }
+  ],
+  "guides": [
+    { "label": "Marketplace au Cameroun", "path": "/marketplace-cameroun" },
+    { "label": "Acheter en ligne au Cameroun", "path": "/acheter-en-ligne-cameroun" },
+    { "label": "Vendre en ligne au Cameroun", "path": "/vendre-en-ligne-cameroun" }
+  ]
+}

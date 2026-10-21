@@ -28,12 +28,13 @@
   var SITE_NAME = 'LOUMOO';
   // An asset the shell already ships, so og:image never 404s even without a
   // dedicated social card. Overridable per entity (product/store image).
-  var DEFAULT_IMAGE = '/Assets/brand/icon-192.png';
+  var DEFAULT_IMAGE = '/Assets/brand/og-loumoo-1200x630.png';
   var ORG_LOGO = '/Assets/brand/icon-512.png';
   var DEFAULT_DESCRIPTION =
     'LOUMOO réunit boutiques, produits, voyages et hôtels au Cameroun : comparez, ' +
     'commandez, payez à la livraison et suivez votre commande.';
   var HOME_TITLE = 'LOUMOO — Marketplace en ligne au Cameroun';
+  var HOME_HEADING = 'LOUMOO, la marketplace pour acheter, vendre et voyager au Cameroun';
 
   // Who the organisation is, in one place for the server, the build and the browser.
   // Only facts the platform can stand behind: no address, phone, registration or award is
@@ -274,17 +275,17 @@
       !route.guestOnly && !isPrivatePath(path) && (route.direct || 'allow') === 'allow';
 
     var entity = opts.entity || null;
-    var title, description, image, type = 'website', jsonLd = null;
+    var title, heading, description, image, type = 'website', jsonLd = null;
     var canonical = absUrl(siteUrl, canonicalPath(path));
 
     if (entity && screen === 'product') {
-      title = entity.title;
+      title = heading = entity.title;
       description = entity.shortDescription || entity.description || SCREEN_DESCRIPTIONS.product;
       image = entity.image || entity.coverImage || (entity.images && entity.images[0]) || DEFAULT_IMAGE;
       type = 'product';
       jsonLd = productJsonLd(entity, canonical, siteUrl);
     } else if (entity && screen === 'business') {
-      title = entity.name || entity.title;
+      title = heading = entity.name || entity.title;
       description = entity.description || SCREEN_DESCRIPTIONS.business;
       image = entity.logoUrl || entity.image || DEFAULT_IMAGE;
       jsonLd = storeJsonLd(entity, canonical, siteUrl);
@@ -294,6 +295,7 @@
       description = page.description || (screen && SCREEN_DESCRIPTIONS[screen]) || DEFAULT_DESCRIPTION;
       image = page.image || DEFAULT_IMAGE;
       if (page.type) type = page.type;
+      heading = page.h1 || (route && route.id === 'home' ? HOME_HEADING : title);
       if (isFound && route && route.id === 'home') jsonLd = siteJsonLd(siteUrl);
     }
     if (opts.extraJsonLd) jsonLd = (jsonLd ? [].concat(jsonLd) : []).concat(opts.extraJsonLd);
@@ -303,6 +305,8 @@
 
     return {
       title: formatTitle(title),
+      // The on-page <h1>: the title without the " — LOUMOO" suffix.
+      heading: heading || title,
       description: clip(description, 160),
       canonical: canonical,
       robots: indexable ? 'index,follow' : 'noindex,follow',
@@ -408,6 +412,7 @@
     ORGANIZATION: ORGANIZATION,
     ROUTE_TITLES: ROUTE_TITLES,
     HOME_TITLE: HOME_TITLE,
+    HOME_HEADING: HOME_HEADING,
     SITE_NAME: SITE_NAME,
     DEFAULT_SITE_URL: DEFAULT_SITE_URL,
     DEFAULT_IMAGE: DEFAULT_IMAGE,

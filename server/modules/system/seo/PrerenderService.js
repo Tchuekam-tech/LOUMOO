@@ -23,6 +23,7 @@
 
 const seoModel = require('../../../../src/seo/seoModel');
 const FrontendRoutes = require('../../../../src/routing/routes');
+const SITE_NAV = require('../../../../src/seo/siteNav.json');
 
 // Lazy logger: keep module load dependency-free (no config/logger graph) so the
 // build script (scripts/assemble_public.js) can require this module's pure
@@ -109,7 +110,7 @@ async function hydrate(resolved) {
       const canonicalPath = productPath(product) || undefined;
       const dir = categoryDirectory();
       const category = dir && dir.find(product.category);
-      const breadcrumbs = [{ name: 'LOUMOO', path: '/' }];
+      const breadcrumbs = [{ name: 'Accueil', path: '/' }];
       if (category) breadcrumbs.push({ name: category.name, path: dir.pathFor(category) });
       breadcrumbs.push({ name: product.title, path: canonicalPath || `/product/${params.id}` });
       return { entity: product, status: 200, canonicalPath, breadcrumbs };
@@ -139,7 +140,7 @@ async function hydrate(resolved) {
         },
         status: 200,
         canonicalPath: s.slug && PRODUCT_PARAM_RE.test(s.slug) ? `/store/${s.slug}` : undefined,
-        breadcrumbs: [{ name: 'LOUMOO', path: '/' }, { name: 'Stores', path: '/stores' }, { name: s.name, path: `/store/${s.slug}` }],
+        breadcrumbs: [{ name: 'Accueil', path: '/' }, { name: 'Boutiques', path: '/stores' }, { name: s.name, path: `/store/${s.slug}` }],
         items: s.id ? await listingItems({ storeId: s.id }) : []
       };
     } catch (err) {
@@ -160,9 +161,9 @@ async function hydrate(resolved) {
       page: {
         title: category.name,
         description: category.description ||
-          `Shop ${category.name} from verified LOUMOO boutiques, with secure delivery across Cameroon.`
+          `Découvrez ${category.name} auprès des boutiques LOUMOO, avec paiement à la livraison au Cameroun.`
       },
-      breadcrumbs: [{ name: 'LOUMOO', path: '/' }, { name: 'Categories', path: '/marketplace/categories' }, { name: category.name, path: dir.pathFor(category) }],
+      breadcrumbs: [{ name: 'Accueil', path: '/' }, { name: 'Catégories', path: '/marketplace/categories' }, { name: category.name, path: dir.pathFor(category) }],
       items,
       // An empty category is a thin page: reachable, but not one to index.
       indexable: items.length > 0 ? undefined : false
@@ -176,7 +177,7 @@ async function hydrate(resolved) {
     return { entity: null, status: 200, categories: categoryLinks() };
   }
   if (route.id === 'home') {
-    return { entity: null, status: 200, categories: categoryLinks() };
+    return { entity: null, status: 200, categories: categoryLinks(), home: true };
   }
 
   // Any other parameterised route (a hotel, an announcement…) is not looked up
@@ -206,7 +207,8 @@ function contentBlock(descriptor, resolved, entity, status, siteUrl, extras) {
   const asset = (p) => esc(seoModel.assetUrl(siteUrl || seoModel.DEFAULT_SITE_URL, p));
   const screen = resolved.route && resolved.route.screen;
   const x = extras || {};
-  const parts = ['<h1>' + esc(descriptor.title) + '</h1>', '<p>' + esc(descriptor.description) + '</p>'];
+  const link = (l) => '<a href="' + abs(l.path) + '">' + esc(l.label) + '</a>';
+  const parts = ['<h1>' + esc(descriptor.heading || descriptor.title) + '</h1>', '<p>' + esc(descriptor.description) + '</p>'];
 
   if (entity && screen === 'product') {
     const img = entity.image || entity.coverImage || (entity.images && entity.images[0]);
@@ -214,24 +216,32 @@ function contentBlock(descriptor, resolved, entity, status, siteUrl, extras) {
     // The price the buyer pays (the same one the JSON-LD offer states).
     const price = formatPrice(seoModel.payablePrice(entity), entity.currency);
     if (price) parts.push('<p data-price>' + esc(price) + '</p>');
-    if (entity.store && entity.store.name) parts.push('<p>Sold by ' + esc(entity.store.name) + '</p>');
+    if (entity.store && entity.store.name) parts.push('<p>Vendu par ' + esc(entity.store.name) + '</p>');
   } else if (entity && screen === 'business') {
     if (entity.logoUrl) parts.push('<img src="' + asset(entity.logoUrl) + '" alt="' + esc(entity.name) + '" width="128" height="128" loading="lazy">');
   }
 
+  if (x.home && status === 200) {
+    parts.push('<h2>Acheter, vendre et voyager avec un seul compte</h2>\n<ul>\n' + [
+      '<li>Explorez les <a href="' + abs('/marketplace') + '">produits</a> et les <a href="' + abs('/marketplace/categories') + '">catégories</a> des boutiques LOUMOO, comparez, puis commandez avec paiement à la livraison.</li>',
+      '<li>Ouvrez votre boutique en ligne pour publier produits et services et suivre vos commandes : le <a href="' + abs('/vendre-en-ligne-cameroun') + '">guide du vendeur</a> détaille les étapes.</li>',
+      '<li>Recherchez un <a href="' + abs('/hotels') + '">hôtel</a> ou consultez les offres de <a href="' + abs('/travel') + '">voyage</a>.</li>'
+    ].join('\n') + '\n</ul>');
+  }
+
   if (status === 200 && x.items && x.items.length) {
-    parts.push('<h2>Products</h2>\n<ul>\n' + x.items.map((it) => {
+    parts.push('<h2>Produits</h2>\n<ul>\n' + x.items.map((it) => {
       const price = formatPrice(it.price, it.currency);
       return '<li><a href="' + abs(it.path) + '">' + esc(it.title) + '</a>' + (price ? ' &middot; ' + esc(price) : '') + '</li>';
     }).join('\n') + '\n</ul>');
   }
   if (status === 200 && x.categories && x.categories.length) {
-    parts.push('<h2>Categories</h2>\n<ul>\n' + x.categories.map((c) =>
+    parts.push('<h2>Catégories</h2>\n<ul>\n' + x.categories.map((c) =>
       '<li><a href="' + abs(c.path) + '">' + esc(c.name) + '</a></li>').join('\n') + '\n</ul>');
   }
 
-  if (status === 404) parts.push('<p>This page could not be found. Explore LOUMOO instead.</p>');
-  parts.push('<nav><a href="' + abs('/') + '">LOUMOO</a> &middot; <a href="' + abs('/marketplace') + '">Marketplace</a> &middot; <a href="' + abs('/marketplace/categories') + '">Categories</a> &middot; <a href="' + abs('/stores') + '">Stores</a> &middot; <a href="' + abs('/travel') + '">Travel</a> &middot; <a href="' + abs('/hotels') + '">Hotels</a></nav>');
+  parts.push('<nav aria-label="Navigation principale">' + SITE_NAV.primary.map(link).join(' &middot; ') + '</nav>');
+  parts.push('<nav aria-label="Guides">' + SITE_NAV.guides.map(link).join(' &middot; ') + '</nav>');
 
   // data-path: the URL this head and content were rendered FOR. The browser router
   // keeps the server head on first load only when it is still on this path.
@@ -288,8 +298,15 @@ async function renderPage({ url, shellHtml, siteUrl }) {
     descriptor.indexable = false;
   }
 
+  if (status === 404) {
+    // An error page says so in the search result and the tab, whatever route it came from.
+    descriptor.title = seoModel.formatTitle('Page introuvable');
+    descriptor.heading = 'Page introuvable';
+    descriptor.description = 'Cette page n’existe pas ou n’est plus disponible. Retrouvez les produits, boutiques et services de LOUMOO.';
+  }
+
   const headHtml = seoModel.serialize(seoModel.headTags(descriptor));
-  const contentHtml = contentBlock(descriptor, resolved, entity, status, siteUrl, { items: h.items, categories: h.categories, path: pathname });
+  const contentHtml = contentBlock(descriptor, resolved, entity, status, siteUrl, { items: h.items, categories: h.categories, path: pathname, home: h.home });
   const html = inject(String(shellHtml), headHtml, contentHtml);
 
   return { html, status, cacheable: status === 200 && descriptor.indexable, descriptor };

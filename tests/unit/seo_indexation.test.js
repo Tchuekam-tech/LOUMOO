@@ -141,7 +141,7 @@ async function run() {
   r = await render('/marketplace/category/electronics');
   assert.strictEqual(r.status, 200);
   assert.strictEqual(robotsOf(r.html), 'index,follow', 'a category with products is indexable');
-  assert.ok(/<title>Electronics &amp; Technology — LOUMOO<\/title>/.test(r.html), 'a category page has its own title');
+  assert.ok(/<title>Électronique et high-tech — LOUMOO<\/title>/.test(r.html), 'a category page has its own title');
   r = await render('/marketplace/category/real-estate');
   assert.strictEqual(canonicalOf(r.html), `${SITE}/marketplace/category/real_estate`, 'a category alias canonicalises to the category id');
   r = await render('/marketplace/category/not-a-category');
