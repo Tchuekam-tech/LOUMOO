@@ -199,6 +199,23 @@ class DeleteAccountUseCase {
       }
     }
 
+    // 2b. Password and OTP sign-in go through Supabase Auth, keyed by the same
+    //     id the profile stores as clerk_user_id. Deleting only the Clerk
+    //     identity left that credential working, so the old password still
+    //     signed in. Remove it too (a 404 means it is already gone).
+    if (clerkUserId && context.identitySource === 'supabase' && db.auth && db.auth.admin) {
+      try {
+        const { error: authDeleteError } = await db.auth.admin.deleteUser(clerkUserId);
+        if (!authDeleteError || authDeleteError.status === 404) {
+          identityRemoved = true;
+        } else {
+          logger.error(`[DeleteAccount] Supabase identity ${clerkUserId} could not be deleted: ${authDeleteError.message}`);
+        }
+      } catch (err) {
+        logger.error(`[DeleteAccount] Supabase identity ${clerkUserId} could not be deleted: ${err.message}`);
+      }
+    }
+
     // 3. Purge every cached copy of the principal and user-scoped caches,
     //    so no request served from cache can still resolve the deleted account.
     await ProfileRepository.invalidate(clerkUserId, userId);

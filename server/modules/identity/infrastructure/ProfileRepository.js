@@ -48,6 +48,11 @@ class ProfileRepository {
     return SupabaseDatabase.getAdmin();
   }
 
+  /** Whether a profile row belongs to a deleted (anonymized) account. */
+  static isDeletedProfile(profile) {
+    return Boolean(profile && (profile.deleted_at || profile.clerk_deleted_at || profile.account_status === 'anonymized'));
+  }
+
   /* ---------------------------------------------------------------- reads */
 
   static async findByClerkUserId(clerkUserId, { useCache = true } = {}) {
@@ -131,21 +136,12 @@ class ProfileRepository {
       throw new ConflictError('Cannot provision a profile without a Clerk user id');
     }
 
+    // A deleted (anonymized) profile is returned AS IS, never reactivated:
+    // deletion is final, and un-deleting here ran before every caller's
+    // "deleted account cannot be reopened" check, so a deleted account could
+    // sign straight back in. Callers check `isDeletedProfile` and refuse.
     const existing = await this.findByClerkUserId(identity.clerkUserId, { useCache: false });
     if (existing) {
-      if (existing.deleted_at || existing.clerk_deleted_at || existing.account_status === 'anonymized') {
-        const reactivation = {
-          clerk_deleted_at: null,
-          deleted_at: null,
-          status: 'active',
-          account_status: 'active'
-        };
-        await this.db.from('profiles').update(reactivation).eq('id', existing.id);
-        await this.invalidate(identity.clerkUserId, existing.id);
-        // The row we return must reflect the reactivation we just wrote;
-        // returning the pre-update copy reports the account as still deleted.
-        Object.assign(existing, reactivation);
-      }
       return { profile: existing, created: false };
     }
 
@@ -283,12 +279,10 @@ class ProfileRepository {
 
   static async recordLogin(userId, clerkUserId) {
     try {
+      // Only the timestamp. Clearing deleted_at / account_status here un-deleted
+      // (and un-suspended) whoever got this far.
       await this.db.from('profiles').update({
-        last_login_at: nowIso(),
-        clerk_deleted_at: null,
-        deleted_at: null,
-        status: 'active',
-        account_status: 'active'
+        last_login_at: nowIso()
       }).eq('id', userId);
       await this.invalidate(clerkUserId, userId);
     } catch (err) {

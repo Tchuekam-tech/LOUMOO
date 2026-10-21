@@ -242,16 +242,14 @@ async function run() {
       counters.assertions += 1;
       assert.strictEqual(after.status, 401, `old session after deletion: ${after.status} ${short(after.body)}`);
       assert.strictEqual(after.body.error.code, 'UNAUTHENTICATED');
-      // Can the deleted account simply sign in again?  (a probe: logged as a KNOWN_GAP, never failing)
+      assert.strictEqual(dataOf(del).identityRemoved, true, 'the Supabase sign-in credential is removed with the account');
+      // The deleted account cannot simply sign in again with its old password.
       const relogin = await fx.api('POST', '/api/v1/auth/login', { body: { email: doomed.email, password: doomed.password }, client: 'doomed#d' });
+      counters.assertions += 2;
+      assert.strictEqual(relogin.status, 401, `sign-in after deletion: ${relogin.status} ${short(relogin.body)}`);
+      const row = (await sql('SELECT deleted_at, account_status FROM iam.profiles WHERE id = $1', [doomed.profileId]))[0];
       counters.assertions += 1;
-      assert.ok(relogin.status < 500, `sign-in after deletion: ${relogin.status} ${short(relogin.body)}`);
-      if (relogin.status === 200) {
-        const back = await fx.api('GET', '/api/v1/me/state', { token: dataOf(relogin).token, client: 'doomed#d' });
-        gap(`a deleted account can sign back in and is silently reactivated: DELETE /api/v1/users/me -> 200 {identityRemoved:${JSON.stringify(dataOf(del).identityRemoved)}} (only the Clerk identity is deleted, and Clerk is not what signs people in), then POST /api/v1/auth/login with the old password -> 200 and GET /me/state -> ${back.status} ${back.status === 200 ? dataOf(back).state : ''} (ProfileRepository.getOrCreateForClerkUser un-deletes the profile BEFORE the login route's "deleted account cannot be reopened" check, so that check never fires)`);
-      } else {
-        out(`      (closed: sign-in after deletion -> ${relogin.status})`);
-      }
+      assert.ok(row.deleted_at && row.account_status === 'anonymized', `the profile stays deleted: ${JSON.stringify(row)}`);
       return `deleted: old session 401; sign-in afterwards ${relogin.status}`;
     });
 
