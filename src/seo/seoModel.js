@@ -31,9 +31,21 @@
   var DEFAULT_IMAGE = '/Assets/brand/icon-192.png';
   var ORG_LOGO = '/Assets/brand/icon-512.png';
   var DEFAULT_DESCRIPTION =
-    'LOUMOO is Cameroon’s universal commerce marketplace: shop verified boutiques, ' +
-    'compare products, book travel and hotels, and get fast, secure delivery across ' +
-    'Douala, Yaoundé and beyond.';
+    'LOUMOO réunit boutiques, produits, voyages et hôtels au Cameroun : comparez, ' +
+    'commandez, payez à la livraison et suivez votre commande.';
+  var HOME_TITLE = 'LOUMOO — Marketplace en ligne au Cameroun';
+
+  // Who the organisation is, in one place for the server, the build and the browser.
+  // Only facts the platform can stand behind: no address, phone, registration or award is
+  // published because none is recorded in this repository. `sameAs` takes the VERIFIED
+  // official profile URLs and `contactEmail` the monitored support address: while they are
+  // empty nothing is emitted (tests/unit/seo_search_dominance.test.js pins both rules).
+  var ORGANIZATION = {
+    description: 'LOUMOO est une marketplace qui met en relation acheteurs, boutiques et prestataires au Cameroun : produits, services, voyages et hôtels.',
+    alternateNames: ['LOUMOO Store', 'LOUMOO Cameroun'],
+    sameAs: [],
+    contactEmail: null
+  };
 
   // Private / non-indexable prefixes. Canonical source; server SeoContent re-exports this.
   var PRIVATE_PREFIXES = [
@@ -43,25 +55,47 @@
   ];
 
   // Route-level descriptions keyed by the registry screen name — the fallback
-  // when there is no hydrated entity (static/listing pages).
+  // when there is no hydrated entity (static/listing pages). French: the primary
+  // search market. (The shell's own chrome is English; see docs/SEO.md.)
   var SCREEN_DESCRIPTIONS = {
     home: DEFAULT_DESCRIPTION,
-    search: 'Discover products and services from verified LOUMOO boutiques across Cameroon — search, filter and compare.',
-    category: 'Browse products by category from verified LOUMOO boutiques, with secure delivery across Cameroon.',
-    visual: 'Search LOUMOO by photo — find products that match an image.',
-    bestpicks: 'The best picks on LOUMOO, chosen from verified boutiques.',
-    freeday: 'LOUMOO free delivery day — shop verified boutiques with delivery on us.',
-    vs: 'Compare products side by side on LOUMOO — specs, prices and value at a glance.',
-    product: 'Buy on LOUMOO with secure, fast delivery across Cameroon.',
-    store: 'Verified boutiques on LOUMOO — discover trusted sellers across Cameroon.',
-    business: 'Shop this verified LOUMOO boutique — real products, secure delivery.',
-    brand: 'Official brands on LOUMOO.',
-    announce: 'The latest announcements and campaigns from LOUMOO boutiques.',
-    travel: 'Book flights, buses, travel packages and visa assistance on LOUMOO.',
-    travelBus: 'Book intercity bus travel across Cameroon on LOUMOO.',
-    travelPackages: 'Curated travel packages, booked on LOUMOO.',
-    travelVisa: 'Visa assistance and guidance, on LOUMOO.',
-    hotelSearch: 'Find and book hotels across Cameroon on LOUMOO.'
+    search: 'Explorez les produits et services des boutiques LOUMOO au Cameroun : recherchez, filtrez et comparez avant de commander.',
+    category: 'Parcourez les produits par catégorie auprès des boutiques LOUMOO, avec paiement à la livraison au Cameroun.',
+    visual: 'Retrouvez un produit LOUMOO à partir d’une photo.',
+    bestpicks: 'Une sélection de produits mis en avant par LOUMOO, issus de ses boutiques.',
+    freeday: 'La journée livraison offerte de LOUMOO : faites votre sélection auprès des boutiques participantes.',
+    vs: 'Comparez des produits côte à côte sur LOUMOO : caractéristiques, prix et rapport qualité-prix en un coup d’œil.',
+    product: 'Commandez sur LOUMOO et payez à la livraison au Cameroun.',
+    store: 'Les boutiques en ligne présentes sur LOUMOO au Cameroun : trouvez des vendeurs identifiés et leurs produits.',
+    business: 'Découvrez cette boutique LOUMOO : ses produits, ses informations et la messagerie pour échanger avec le vendeur.',
+    brand: 'Les marques officielles présentes sur LOUMOO.',
+    announce: 'Les annonces et campagnes publiées par les boutiques LOUMOO.',
+    travel: 'Voyagez depuis le Cameroun : bus, forfaits, assistance visa et hôtels, réservés depuis LOUMOO.',
+    travelBus: 'Réservez vos trajets en bus entre les villes du Cameroun sur LOUMOO.',
+    travelPackages: 'Des forfaits voyage à réserver sur LOUMOO.',
+    travelVisa: 'Assistance et informations pour vos démarches de visa, sur LOUMOO.',
+    hotelSearch: 'Recherchez un hôtel au Cameroun, comparez les chambres et réservez depuis LOUMOO.'
+  };
+
+  // French page titles of the public routes, keyed by route id (the registry's own titles
+  // are the English app-tab labels). formatTitle() appends " — LOUMOO".
+  var ROUTE_TITLES = {
+    home: HOME_TITLE,
+    marketplace: 'Explorer les produits et services au Cameroun',
+    categories: 'Catégories de produits et services',
+    category: 'Catégorie',
+    stores: 'Boutiques en ligne au Cameroun',
+    brand: 'Marques officielles',
+    compare: 'Comparer des produits : prix et caractéristiques',
+    bestpicks: 'Sélection de produits recommandés',
+    freeday: 'Journée livraison offerte',
+    visual: 'Recherche de produits par photo',
+    announcements: 'Annonces des boutiques',
+    travel: 'Voyages : vols, bus, forfaits et visas',
+    travelBus: 'Voyage en bus au Cameroun',
+    travelPackages: 'Forfaits voyage',
+    travelVisa: 'Assistance visa',
+    hotels: 'Hôtels au Cameroun : rechercher et réserver'
   };
 
   function clip(s, n) {
@@ -106,7 +140,7 @@
   }
   function formatTitle(t) {
     t = String(t == null ? '' : t).trim();
-    if (!t || t === SITE_NAME) return 'LOUMOO — Universal Commerce Marketplace';
+    if (!t || t === SITE_NAME) return HOME_TITLE;
     return t.indexOf('LOUMOO') === -1 ? t + ' — ' + SITE_NAME : t;
   }
 
@@ -167,12 +201,45 @@
     if (e.description) ld.description = clip(e.description, 300);
     return ld;
   }
+  /** The stable @id of the organisation / website nodes other pages point at. */
+  function orgId(siteUrl) { return absUrl(siteUrl, '/') + '#organization'; }
+  function siteId(siteUrl) { return absUrl(siteUrl, '/') + '#website'; }
+
+  function organizationJsonLd(siteUrl) {
+    var o = ORGANIZATION;
+    var ld = {
+      '@context': 'https://schema.org/',
+      '@type': 'Organization',
+      '@id': orgId(siteUrl),
+      name: SITE_NAME,
+      url: absUrl(siteUrl, '/'),
+      logo: absUrl(siteUrl, ORG_LOGO),
+      description: o.description,
+      areaServed: { '@type': 'Country', name: 'Cameroun' }
+    };
+    if (o.sameAs && o.sameAs.length) ld.sameAs = o.sameAs.slice();
+    if (o.contactEmail) {
+      ld.contactPoint = { '@type': 'ContactPoint', contactType: 'customer support', email: o.contactEmail, availableLanguage: ['fr', 'en'] };
+    }
+    return ld;
+  }
+  // The homepage's WebSite node carries the site-name signal (name + alternateName).
+  // No SearchAction: Google retired the sitelinks search box, and the marketplace
+  // search is not addressable by a URL template, so the markup would describe nothing.
+  function websiteJsonLd(siteUrl) {
+    return {
+      '@context': 'https://schema.org/',
+      '@type': 'WebSite',
+      '@id': siteId(siteUrl),
+      name: SITE_NAME,
+      alternateName: ORGANIZATION.alternateNames.slice(),
+      url: absUrl(siteUrl, '/'),
+      inLanguage: 'fr',
+      publisher: { '@id': orgId(siteUrl) }
+    };
+  }
   function siteJsonLd(siteUrl) {
-    var home = absUrl(siteUrl, '/');
-    return [
-      { '@context': 'https://schema.org/', '@type': 'Organization', name: SITE_NAME, url: home, logo: absUrl(siteUrl, ORG_LOGO) },
-      { '@context': 'https://schema.org/', '@type': 'WebSite', name: SITE_NAME, url: home }
-    ];
+    return [organizationJsonLd(siteUrl), websiteJsonLd(siteUrl)];
   }
   /** [{name, path}] -> BreadcrumbList (absolute item URLs), or null for fewer than 2 crumbs. */
   function breadcrumbJsonLd(crumbs, siteUrl) {
@@ -223,11 +290,13 @@
       jsonLd = storeJsonLd(entity, canonical, siteUrl);
     } else {
       var page = opts.page || {};
-      title = page.title || (route && route.title) || opts.titleOverride || SITE_NAME;
+      title = page.title || (route && ROUTE_TITLES[route.id]) || (route && route.title) || opts.titleOverride || SITE_NAME;
       description = page.description || (screen && SCREEN_DESCRIPTIONS[screen]) || DEFAULT_DESCRIPTION;
-      image = DEFAULT_IMAGE;
+      image = page.image || DEFAULT_IMAGE;
+      if (page.type) type = page.type;
       if (isFound && route && route.id === 'home') jsonLd = siteJsonLd(siteUrl);
     }
+    if (opts.extraJsonLd) jsonLd = (jsonLd ? [].concat(jsonLd) : []).concat(opts.extraJsonLd);
 
     var crumbs = indexable ? breadcrumbJsonLd(opts.breadcrumbs, siteUrl) : null;
     if (crumbs) jsonLd = (jsonLd ? [].concat(jsonLd) : []).concat(crumbs);
@@ -332,6 +401,13 @@
     hasRealReviews: hasRealReviews,
     PRIVATE_PREFIXES: PRIVATE_PREFIXES,
     SCREEN_DESCRIPTIONS: SCREEN_DESCRIPTIONS,
+    orgId: orgId,
+    siteId: siteId,
+    organizationJsonLd: organizationJsonLd,
+    websiteJsonLd: websiteJsonLd,
+    ORGANIZATION: ORGANIZATION,
+    ROUTE_TITLES: ROUTE_TITLES,
+    HOME_TITLE: HOME_TITLE,
     SITE_NAME: SITE_NAME,
     DEFAULT_SITE_URL: DEFAULT_SITE_URL,
     DEFAULT_IMAGE: DEFAULT_IMAGE,
