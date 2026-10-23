@@ -374,6 +374,10 @@ class OrderCreationService {
       // city rate — but the buyer is TOLD (deliveryNotice below), not silently
       // switched. Stays null while nothing was dropped. (Integration spec item E.)
       let droppedPreferenceReason = null;
+      // The chosen provider's own tariff, when they set one. Kept apart from the
+      // city rate because it outranks a listing's delivery fee and the city rate
+      // does not — see PricingEngine.calculateOrderPricing.
+      let providerTariffXaf = null;
       // The provider the order ends up with, for the seller's message: the buyer's
       // pick, or (house store only) the default below. { id, name, source }.
       let messageProvider = effectivePreferredDriverId
@@ -386,7 +390,11 @@ class OrderCreationService {
           const active = provider && provider.status === 'active';
           if (active && serves) {
             messageProvider = { id: effectivePreferredDriverId, name: provider.name || null, source: 'buyer' };
-            if (provider.baseFeeXaf != null) standardShippingFeeXaf = provider.baseFeeXaf;
+            // The quote the buyer accepted. It goes to the pricing engine as the
+            // provider tariff, not as the city rate: a listing's own delivery fee
+            // outranks the city rate and was therefore silently re-pricing the
+            // order away from the number the picker had shown.
+            if (provider.baseFeeXaf != null) providerTariffXaf = Number(provider.baseFeeXaf);
             // else the provider quotes the standard city rate: leave it as resolved.
           } else {
             // Gone, suspended, or cannot serve this city: do not keep a dead
@@ -415,7 +423,8 @@ class OrderCreationService {
       const pricing = PricingEngine.calculateOrderPricing(evaluatedItems, {
         deliveryMethod: data.deliveryMethod,
         clientSuppliedTotal,
-        standardShippingFeeXaf
+        standardShippingFeeXaf,
+        providerTariffXaf
       });
 
       // 5. Construct Order Aggregate
