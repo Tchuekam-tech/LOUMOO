@@ -89,6 +89,9 @@ function makeCreationService() {
     findListingById: async (id) => listings[id] || null,
     findVariantById: async () => null,
     checkInventory: async () => ({ isAvailable: true, availableQuantity: 99 }),
+    // These listings do not track stock, so there is nothing to hold or give back.
+    reserveInventory: async () => ({ reserved: true, held: 0, trackInventory: false, availableQuantity: 99 }),
+    releaseInventory: async () => false,
     saveOrder: async (order) => { order.id = `ord_${saved.length + 1}`; saved.push(order); return order; }
   };
   return { service: new OrderCreationService(repository), saved };
@@ -190,6 +193,8 @@ async function testPreferredProviderPricing() {
         findListingById: async (id) => listings[id] || null,
         findVariantById: async () => null,
         checkInventory: async () => ({ isAvailable: true, availableQuantity: 99 }),
+        reserveInventory: async () => ({ reserved: true, held: 0, trackInventory: false, availableQuantity: 99 }),
+        releaseInventory: async () => false,
         saveOrder: async (o) => { o.id = 'ord_pp'; return o; }
       };
       const service = new OrderCreationService(repository, { resolveProvider });
