@@ -19,7 +19,7 @@ const NotificationService = require('../../application/NotificationService');
 const AccountSecurityService = require('../../application/AccountSecurityService');
 const DeleteAccountUseCase = require('../../application/DeleteAccountUseCase');
 const PrivacyPreferencesUseCase = require('../../application/PrivacyPreferencesUseCase');
-const { requireAuth, requireCapability } = require('../guards/authGuard');
+const { requireAuth, requireCapability, optionalAuth } = require('../guards/authGuard');
 const ProfileRepository = require('../../infrastructure/ProfileRepository');
 const AccountStateService = require('../../application/AccountStateService');
 const UserProfile = require('../../entities/UserProfile');
@@ -53,10 +53,22 @@ router.get('/me', requireAuth, async (req, res) => {
 // previous revision invented an "Orca Electronics Douala" card for any id
 // containing "orca" and a "LOUMOO Merchant" card for everything else, so this
 // endpoint answered 200 for users who did not exist.
-router.get('/:userId/public', async (req, res, next) => {
+// A profile marked private must be private on EVERY path that serves it.
+// /u/:username (PublicProfileService) has always refused one; this route did
+// not even look, so the same person's card was handed out here regardless of
+// the setting. optionalAuth so the owner can still see their own card.
+router.get('/:userId/public', optionalAuth, async (req, res, next) => {
   try {
     const { userId } = req.params;
     const cacheKey = `identity:public:${userId}`;
+
+    const isSelf = Boolean(req.principal && req.principal.id === userId);
+    // Asked before the cache, not after: a card cached while the profile was
+    // public would otherwise keep being served for the rest of its five
+    // minutes after the owner made it private.
+    if (!isSelf && await PrivacyPreferencesUseCase.isProfilePrivate(userId)) {
+      throw new NotFoundError('User', userId);
+    }
 
     let card = await CacheService.get(cacheKey);
 
