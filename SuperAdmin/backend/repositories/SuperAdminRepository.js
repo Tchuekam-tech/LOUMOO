@@ -7,7 +7,7 @@
 
 const { SupabaseDatabase } = require('../../../server/infrastructure/database/SupabaseClient.js');
 const logger = require('../../../server/shared/logging/logger');
-const { NotFoundError } = require('../../../server/shared/errors/AppError');
+const { NotFoundError, InfrastructureError, ValidationError } = require('../../../server/shared/errors/AppError');
 
 // Default in-memory seed settings for fallback / local testing
 const DEFAULT_SETTINGS = {
@@ -319,6 +319,190 @@ const inMemoryStores = JSON.parse(JSON.stringify(DEFAULT_STORES));
 const inMemoryListings = JSON.parse(JSON.stringify(DEFAULT_LISTINGS));
 const inMemoryUsers = JSON.parse(JSON.stringify(DEFAULT_USERS));
 const inMemoryOrders = JSON.parse(JSON.stringify(DEFAULT_ORDERS));
+
+/*
+ * ── Schema translation (database path only) ──────────────────────────────
+ * The admin API speaks one vocabulary (owner.full_name, kyc_status, an order's
+ * status / escrow_status / total_amount, a listing's base_price) and the
+ * in-memory seed rows above are written in it. The database speaks another:
+ * profiles have first_name/last_name and kyc_doc_status, orders have
+ * fulfillment_status / payment_status / total_amount_xaf and no store_id,
+ * listings have base_price_minor. The queries used to select the admin names
+ * directly, every one of them failed with 42703 (no such column), and the
+ * error was swallowed into the built-in demo rows — so the console showed
+ * "Orca Electronics" and invented KPIs against a live database, and moderating
+ * a real store answered "Store not found". These helpers translate at the
+ * boundary; a database error now throws instead of serving demo data.
+ */
+
+const OWNER_COLUMNS = 'first_name, last_name, email, phone_number, kyc_doc_status';
+const USER_COLUMNS = 'id, clerk_user_id, first_name, last_name, email, phone_number, city, primary_role, kyc_doc_status, status, account_status, created_at, updated_at';
+const STORE_LIST_COLUMNS = 'id, owner_id, name, slug, description, category_id, phone_number, email, status, visibility, is_verified, verification_tier, rating, product_count, metadata, created_at, updated_at';
+const LISTING_LIST_COLUMNS = 'id, store_id, seller_id, title, slug, description, category_id, base_price_minor, currency, status, visibility, published_at, created_at, updated_at';
+const ORDER_LIST_COLUMNS = 'id, order_number, buyer_id, seller_id, total_amount_xaf, items, payment_status, fulfillment_status, created_at, updated_at';
+
+// Columns an admin edit may write. Anything else in an update (a `reason`, the
+// legacy `is_approved`) is not a column and made the whole write fail.
+const STORE_WRITABLE = new Set(['name', 'description', 'category_id', 'logo_url', 'cover_url', 'phone_number', 'email', 'website_url', 'status', 'visibility', 'is_verified', 'verification_tier', 'onboarding_completed', 'onboarding_step', 'metadata']);
+const LISTING_WRITABLE = new Set(['title', 'description', 'short_description', 'category_id', 'brand', 'tags', 'status', 'visibility', 'rejection_reason', 'published_at']);
+const USER_WRITABLE = new Set(['first_name', 'last_name', 'city', 'avatar_url', 'phone_number', 'status', 'primary_role', 'kyc_doc_status']);
+
+const PAYMENT_TO_ESCROW = Object.freeze({
+  pending: 'PENDING', paid: 'PAID', escrow_held: 'HELD', released: 'RELEASED', refundable: 'REFUNDABLE', refunded: 'REFUNDED'
+});
+const ESCROW_TO_PAYMENT = Object.freeze({
+  PENDING: 'pending', PAID: 'paid', HELD: 'escrow_held', RELEASED: 'released', REFUNDABLE: 'refundable', REFUNDED: 'refunded'
+});
+const FULFILLMENT_TO_STATUS = Object.freeze({
+  processing: 'PROCESSING', in_transit: 'IN_TRANSIT', delivered: 'DELIVERED', cancelled: 'CANCELLED'
+});
+const STATUS_TO_FULFILLMENT = Object.freeze({
+  PENDING: 'processing', PROCESSING: 'processing', IN_TRANSIT: 'in_transit', SHIPPED: 'in_transit',
+  DELIVERED: 'delivered', COMPLETED: 'delivered', CANCELLED: 'cancelled'
+});
+
+function dbFailure(context, error) {
+  return new InfrastructureError('Supabase', `${context} failed: ${error && error.message ? error.message : error}`, error);
+}
+
+function pick(updates, writable) {
+  const out = {};
+  for (const [k, v] of Object.entries(updates || {})) {
+    if (writable.has(k)) out[k] = v;
+  }
+  return out;
+}
+
+/** PostgREST parses an or() argument as filter syntax: a comma, parenthesis or quote in it rewrites the filter. */
+function filterSafe(text) {
+  return String(text || '').replace(/["(),]/g, ' ').trim();
+}
+
+function fullName(p) {
+  return p ? ([p.first_name, p.last_name].filter(Boolean).join(' ').trim() || null) : null;
+}
+
+/** The KYC vocabulary the API accepts has `unverified`; the column calls that state `pending`. */
+function toDbKyc(status) {
+  const s = String(status || '').toLowerCase();
+  return s === 'unverified' ? 'pending' : s;
+}
+
+function toAdminOwner(profile) {
+  if (!profile) return null;
+  return {
+    full_name: fullName(profile),
+    email: profile.email || null,
+    phone_number: profile.phone_number || null,
+    kyc_status: profile.kyc_doc_status || 'pending'
+  };
+}
+
+function toAdminStore(row) {
+  if (!row) return null;
+  const { profiles, ...store } = row;
+  return {
+    ...store,
+    city: (store.metadata && store.metadata.city) || null,
+    owner: toAdminOwner(profiles)
+  };
+}
+
+function toAdminUser(row) {
+  if (!row) return null;
+  return { ...row, full_name: fullName(row), kyc_status: row.kyc_doc_status || 'pending' };
+}
+
+function toAdminListing(row) {
+  if (!row) return null;
+  const { stores, ...listing } = row;
+  return {
+    ...listing,
+    base_price: Number(listing.base_price_minor) || 0,
+    store_name: (stores && stores.name) || 'Boutique'
+  };
+}
+
+function toAdminOrder(row, buyerNames = {}) {
+  if (!row) return null;
+  const items = Array.isArray(row.items) ? row.items : [];
+  const first = items[0] || {};
+  const payment = String(row.payment_status || 'pending').toLowerCase();
+  const fulfillment = String(row.fulfillment_status || 'processing').toLowerCase();
+  return {
+    ...row,
+    user_id: row.buyer_id,
+    customer_name: buyerNames[row.buyer_id] || 'Acheteur LOUMOO',
+    store_id: first.storeId || null,
+    store_name: first.storeName || 'Boutique',
+    total_amount: Number(row.total_amount_xaf) || 0,
+    currency: 'XAF',
+    status: FULFILLMENT_TO_STATUS[fulfillment] || fulfillment.toUpperCase(),
+    payment_status: payment.toUpperCase(),
+    escrow_status: PAYMENT_TO_ESCROW[payment] || 'PENDING'
+  };
+}
+
+/** An admin order patch (status / escrow_status) as the columns that hold them. */
+function toDbOrderPatch(updates) {
+  const patch = {};
+  if (updates.escrow_status !== undefined) {
+    const payment = ESCROW_TO_PAYMENT[String(updates.escrow_status).toUpperCase()];
+    if (!payment) throw new ValidationError(`Unknown escrow status [${updates.escrow_status}].`);
+    patch.payment_status = payment;
+  }
+  if (updates.status !== undefined) {
+    const fulfillment = STATUS_TO_FULFILLMENT[String(updates.status).toUpperCase()];
+    if (!fulfillment) throw new ValidationError(`Unknown order status [${updates.status}].`);
+    patch.fulfillment_status = fulfillment;
+  }
+  return patch;
+}
+
+async function buyerNamesFor(db, rows) {
+  const ids = [...new Set((rows || []).map(r => r.buyer_id).filter(Boolean))];
+  if (!ids.length) return {};
+  const { data, error } = await db.from('profiles').select('id, first_name, last_name').in('id', ids);
+  if (error) throw dbFailure('Admin order buyer lookup', error);
+  const names = {};
+  (data || []).forEach(p => { names[p.id] = fullName(p); });
+  return names;
+}
+
+/** Every row of a table, a page at a time (PostgREST caps a single response). */
+async function selectAll(db, table, columns, context, pageSize = 1000) {
+  const rows = [];
+  for (let from = 0; ; from += pageSize) {
+    const { data, error } = await db.from(table).select(columns).order('id', { ascending: true }).range(from, from + pageSize - 1);
+    if (error) throw dbFailure(context, error);
+    const page = data || [];
+    rows.push(...page);
+    if (page.length < pageSize) return rows;
+  }
+}
+
+/** Identity reads are cached; an admin edit must reach the next request, not the one five minutes later. */
+async function invalidateProfile(row) {
+  if (!row) return;
+  try {
+    const ProfileRepository = require('../../../server/modules/identity/infrastructure/ProfileRepository');
+    await ProfileRepository.invalidate(row.clerk_user_id, row.id);
+  } catch (err) {
+    logger.warn(`[SuperAdminRepository] Profile cache invalidation failed for ${row.id}: ${err.message}`);
+  }
+}
+
+async function invalidateStore(row) {
+  if (!row) return;
+  try {
+    const CacheService = require('../../../server/infrastructure/cache/CacheService');
+    await CacheService.del(`store:public:${row.id}`);
+    if (row.slug) await CacheService.del(`store:public:${row.slug}`);
+    await CacheService.delPattern(`listings:store:${row.id}:*`, 'catalog');
+  } catch (err) {
+    logger.warn(`[SuperAdminRepository] Store cache invalidation failed for ${row.id}: ${err.message}`);
+  }
+}
 
 class SuperAdminRepository {
   static get db() {
@@ -776,40 +960,27 @@ class SuperAdminRepository {
   }
 
   static async getOverviewMetrics() {
+    // The seeded figures describe the in-memory demo rows only. With a database
+    // every KPI is computed from it, and a failed read is an error, not a demo.
     let storesCount = 18;
     let pendingKycCount = 3;
     let usersCount = 142;
-
-    // Order-derived KPIs (count, GMV, escrow-in-flight) are ALWAYS computed from
-    // real order rows — the DB when available, the in-memory seed otherwise.
-    // Earlier revisions recomputed count and GMV from the DB but left
-    // escrowInFlightXaf pinned to a hardcoded 2,340,000, so the executive
-    // dashboard showed a fabricated escrow figure even against live data.
     let orders = inMemoryOrders;
 
     const db = this.db;
     if (db) {
-      try {
-        const [storesRes, profilesRes, ordersRes] = await Promise.allSettled([
-          db.from('stores').select('id, status, is_verified', { count: 'exact' }),
-          db.from('profiles').select('id, primary_role, kyc_status', { count: 'exact' }),
-          db.from('orders').select('id, total_amount, status, escrow_status', { count: 'exact' })
-        ]);
+      const [stores, profilesRes, orderRows] = await Promise.all([
+        selectAll(db, 'stores', 'id, status, is_verified', 'Admin overview store count'),
+        db.from('profiles').select('id', { count: 'exact', head: true }),
+        selectAll(db, 'orders', 'id, total_amount_xaf, payment_status, fulfillment_status', 'Admin overview order totals')
+      ]);
+      if (profilesRes.error) throw dbFailure('Admin overview user count', profilesRes.error);
 
-        if (storesRes.status === 'fulfilled' && storesRes.value.data) {
-          const stores = storesRes.value.data;
-          storesCount = stores.length;
-          pendingKycCount = stores.filter(s => s.status === 'PENDING_VERIFICATION' || !s.is_verified).length;
-        }
-        if (profilesRes.status === 'fulfilled' && profilesRes.value.data) {
-          usersCount = profilesRes.value.data.length;
-        }
-        if (ordersRes.status === 'fulfilled' && Array.isArray(ordersRes.value.data)) {
-          orders = ordersRes.value.data;
-        }
-      } catch (err) {
-        logger.warn('[SuperAdminRepository] Overview metrics aggregation error:', err.message);
-      }
+      // "Boutiques actives": live stores, not every row ever created.
+      storesCount = stores.filter(s => s.status === 'ACTIVE').length;
+      pendingKycCount = stores.filter(s => s.status === 'PENDING_VERIFICATION' || !s.is_verified).length;
+      usersCount = Number(profilesRes.count) || 0;
+      orders = orderRows.map(o => toAdminOrder(o));
     }
 
     const totalOrders = orders.length;
@@ -829,7 +1000,7 @@ class SuperAdminRepository {
       },
       health: {
         serverStatus: 'HEALTHY',
-        databaseStatus: 'CONNECTED',
+        databaseStatus: db ? 'CONNECTED' : 'NOT_CONFIGURED',
         uptimeSeconds: Math.floor(process.uptime()),
         timestamp: new Date().toISOString()
       }
@@ -842,33 +1013,25 @@ class SuperAdminRepository {
   static async listStores({ status = null, tier = null, search = null, limit = 50, offset = 0 } = {}) {
     const db = this.db;
     if (db) {
-      try {
-        let query = db
-          .from('stores')
-          .select('id, owner_id, name, slug, description, category_id, phone_number, email, status, visibility, is_verified, verification_tier, rating, product_count, created_at, updated_at, profiles!inner(full_name, email, phone_number, kyc_status)')
-          .order('created_at', { ascending: false })
-          .range(offset, offset + limit - 1);
+      let query = db
+        .from('stores')
+        .select(`${STORE_LIST_COLUMNS}, profiles!inner(${OWNER_COLUMNS})`)
+        .order('created_at', { ascending: false })
+        .range(offset, offset + limit - 1);
 
-        if (status && status !== 'ALL') {
-          query = query.eq('status', status);
-        }
-        if (tier && tier !== 'ALL') {
-          query = query.eq('verification_tier', tier);
-        }
-        if (search) {
-          query = query.ilike('name', `%${search}%`);
-        }
-
-        const { data, error } = await query;
-        if (!error && Array.isArray(data)) {
-          return data.map(s => ({
-            ...s,
-            owner: s.profiles || null
-          }));
-        }
-      } catch (err) {
-        logger.warn('[SuperAdminRepository] listStores query error, using fallback:', err.message);
+      if (status && status !== 'ALL') {
+        query = query.eq('status', status);
       }
+      if (tier && tier !== 'ALL') {
+        query = query.eq('verification_tier', tier);
+      }
+      if (search) {
+        query = query.ilike('name', `%${search}%`);
+      }
+
+      const { data, error } = await query;
+      if (error) throw dbFailure('Admin store list', error);
+      return (data || []).map(toAdminStore);
     }
 
     let results = inMemoryStores;
@@ -896,22 +1059,13 @@ class SuperAdminRepository {
   static async getStoreById(id) {
     const db = this.db;
     if (db) {
-      try {
-        const { data, error } = await db
-          .from('stores')
-          .select('*, profiles!inner(full_name, email, phone_number, kyc_status)')
-          .eq('id', id)
-          .maybeSingle();
-
-        if (!error && data) {
-          return {
-            ...data,
-            owner: data.profiles || null
-          };
-        }
-      } catch (err) {
-        logger.warn(`[SuperAdminRepository] getStoreById error for ${id}:`, err.message);
-      }
+      const { data, error } = await db
+        .from('stores')
+        .select(`*, profiles!inner(${OWNER_COLUMNS})`)
+        .eq('id', id)
+        .maybeSingle();
+      if (error) throw dbFailure(`Admin store lookup ${id}`, error);
+      return toAdminStore(data);
     }
 
     return inMemoryStores.find(s => s.id === id) || null;
@@ -926,33 +1080,40 @@ class SuperAdminRepository {
       return { success: false, error: 'Store not found' };
     }
 
+    const db = this.db;
+    if (db) {
+      const patch = pick(updates, STORE_WRITABLE);
+      if (!Object.keys(patch).length) {
+        return { success: false, error: 'Nothing to update on this store.' };
+      }
+      const { data, error } = await db
+        .from('stores')
+        .update({ ...patch, updated_at: new Date().toISOString() })
+        .eq('id', id)
+        .select(`*, profiles!inner(${OWNER_COLUMNS})`)
+        .single();
+      if (error) throw dbFailure(`Admin store update ${id}`, error);
+
+      // Verifying a store verifies its owner's KYC as well.
+      if (patch.is_verified === true && data.owner_id) {
+        const { data: owner, error: ownerError } = await db
+          .from('profiles')
+          .update({ kyc_doc_status: 'verified', updated_at: new Date().toISOString() })
+          .eq('id', data.owner_id)
+          .select('id, clerk_user_id')
+          .maybeSingle();
+        if (ownerError) throw dbFailure(`Admin owner KYC update for store ${id}`, ownerError);
+        await invalidateProfile(owner);
+        if (data.profiles) data.profiles.kyc_doc_status = 'verified';
+      }
+      await invalidateStore(data);
+      return { success: true, store: toAdminStore(data), oldStore };
+    }
+
     const payload = {
       ...updates,
       updated_at: new Date().toISOString()
     };
-
-    const db = this.db;
-    if (db) {
-      try {
-        const { data, error } = await db
-          .from('stores')
-          .update(payload)
-          .eq('id', id)
-          .select('*, profiles!inner(full_name, email, phone_number, kyc_status)')
-          .single();
-
-        if (!error && data) {
-          // If verifying store, also update owner profile kyc_status
-          if (updates.is_verified === true && data.owner_id) {
-            await db.from('profiles').update({ kyc_status: 'verified' }).eq('id', data.owner_id);
-          }
-          return { success: true, store: data, oldStore };
-        }
-      } catch (err) {
-        logger.warn(`[SuperAdminRepository] updateStore DB error for ${id}:`, err.message);
-      }
-    }
-
     const idx = inMemoryStores.findIndex(s => s.id === id);
     if (idx !== -1) {
       const updated = {
@@ -974,23 +1135,19 @@ class SuperAdminRepository {
   static async listListings({ status = null, search = null, limit = 50, offset = 0 } = {}) {
     const db = this.db;
     if (db) {
-      try {
-        let query = db
-          .from('listings')
-          .select('id, store_id, title, slug, description, category_id, base_price, currency, stock_quantity, status, is_featured, created_at, stores!inner(name)')
-          .order('created_at', { ascending: false })
-          .range(offset, offset + limit - 1);
+      let query = db
+        .from('listings')
+        .select(`${LISTING_LIST_COLUMNS}, stores!inner(name)`)
+        .is('deleted_at', null)
+        .order('created_at', { ascending: false })
+        .range(offset, offset + limit - 1);
 
-        if (status && status !== 'ALL') query = query.eq('status', status);
-        if (search) query = query.ilike('title', `%${search}%`);
+      if (status && status !== 'ALL') query = query.eq('status', status);
+      if (search) query = query.ilike('title', `%${search}%`);
 
-        const { data, error } = await query;
-        if (!error && Array.isArray(data)) {
-          return data.map(l => ({ ...l, store_name: (l.stores && l.stores.name) || 'Boutique' }));
-        }
-      } catch (err) {
-        logger.warn('[SuperAdminRepository] listListings error, using fallback:', err.message);
-      }
+      const { data, error } = await query;
+      if (error) throw dbFailure('Admin listing list', error);
+      return (data || []).map(toAdminListing);
     }
 
     let results = inMemoryListings;
@@ -1005,12 +1162,9 @@ class SuperAdminRepository {
   static async getListingById(id) {
     const db = this.db;
     if (db) {
-      try {
-        const { data, error } = await db.from('listings').select('*, stores(name)').eq('id', id).maybeSingle();
-        if (!error && data) return { ...data, store_name: (data.stores && data.stores.name) || 'Boutique' };
-      } catch (err) {
-        logger.warn(`[SuperAdminRepository] getListingById error for ${id}:`, err.message);
-      }
+      const { data, error } = await db.from('listings').select('*, stores(name)').eq('id', id).maybeSingle();
+      if (error) throw dbFailure(`Admin listing lookup ${id}`, error);
+      return toAdminListing(data);
     }
     return inMemoryListings.find(l => l.id === id) || null;
   }
@@ -1019,17 +1173,28 @@ class SuperAdminRepository {
     const oldListing = await this.getListingById(id);
     if (!oldListing) return { success: false, error: 'Listing not found' };
 
-    const payload = { ...updates, updated_at: new Date().toISOString() };
     const db = this.db;
     if (db) {
-      try {
-        const { data, error } = await db.from('listings').update(payload).eq('id', id).select().single();
-        if (!error && data) return { success: true, listing: data, oldListing };
-      } catch (err) {
-        logger.warn(`[SuperAdminRepository] updateListing DB error:`, err.message);
+      const patch = pick(updates, LISTING_WRITABLE);
+      // An approved listing goes live now if it never had a publication date;
+      // the catalogue sorts by it and buries a NULL published_at.
+      if (patch.status === 'PUBLISHED' && !oldListing.published_at && patch.published_at === undefined) {
+        patch.published_at = new Date().toISOString();
       }
+      if (!Object.keys(patch).length) {
+        return { success: false, error: 'Nothing to update on this listing.' };
+      }
+      const { data, error } = await db
+        .from('listings')
+        .update({ ...patch, updated_at: new Date().toISOString() })
+        .eq('id', id)
+        .select('*, stores(name)')
+        .single();
+      if (error) throw dbFailure(`Admin listing update ${id}`, error);
+      return { success: true, listing: toAdminListing(data), oldListing };
     }
 
+    const payload = { ...updates, updated_at: new Date().toISOString() };
     const idx = inMemoryListings.findIndex(l => l.id === id);
     if (idx !== -1) {
       const updated = { ...inMemoryListings[idx], ...payload };
@@ -1044,24 +1209,22 @@ class SuperAdminRepository {
   static async listUsers({ role = null, kyc = null, search = null, limit = 50, offset = 0 } = {}) {
     const db = this.db;
     if (db) {
-      try {
-        let query = db
-          .from('profiles')
-          .select('id, full_name, email, phone_number, city, primary_role, kyc_status, status, created_at')
-          .order('created_at', { ascending: false })
-          .range(offset, offset + limit - 1);
+      let query = db
+        .from('profiles')
+        .select(USER_COLUMNS)
+        .order('created_at', { ascending: false })
+        .range(offset, offset + limit - 1);
 
-        if (role && role !== 'ALL') query = query.eq('primary_role', role);
-        if (kyc && kyc !== 'ALL') query = query.eq('kyc_status', kyc);
-        if (search) {
-          query = query.or(`full_name.ilike.%${search}%,email.ilike.%${search}%,phone_number.ilike.%${search}%`);
-        }
-
-        const { data, error } = await query;
-        if (!error && Array.isArray(data)) return data;
-      } catch (err) {
-        logger.warn('[SuperAdminRepository] listUsers error, using fallback:', err.message);
+      if (role && role !== 'ALL') query = query.eq('primary_role', role);
+      if (kyc && kyc !== 'ALL') query = query.eq('kyc_doc_status', toDbKyc(kyc));
+      const q = filterSafe(search);
+      if (q) {
+        query = query.or(`first_name.ilike.%${q}%,last_name.ilike.%${q}%,email.ilike.%${q}%,phone_number.ilike.%${q}%`);
       }
+
+      const { data, error } = await query;
+      if (error) throw dbFailure('Admin user list', error);
+      return (data || []).map(toAdminUser);
     }
 
     let results = inMemoryUsers;
@@ -1077,12 +1240,9 @@ class SuperAdminRepository {
   static async getUserById(id) {
     const db = this.db;
     if (db) {
-      try {
-        const { data, error } = await db.from('profiles').select('*').eq('id', id).maybeSingle();
-        if (!error && data) return data;
-      } catch (err) {
-        logger.warn(`[SuperAdminRepository] getUserById error:`, err.message);
-      }
+      const { data, error } = await db.from('profiles').select(USER_COLUMNS).eq('id', id).maybeSingle();
+      if (error) throw dbFailure(`Admin user lookup ${id}`, error);
+      return toAdminUser(data);
     }
     return inMemoryUsers.find(u => u.id === id) || null;
   }
@@ -1091,17 +1251,30 @@ class SuperAdminRepository {
     const oldUser = await this.getUserById(id);
     if (!oldUser) return { success: false, error: 'User not found' };
 
-    const payload = { ...updates, updated_at: new Date().toISOString() };
     const db = this.db;
     if (db) {
-      try {
-        const { data, error } = await db.from('profiles').update(payload).eq('id', id).select().single();
-        if (!error && data) return { success: true, user: data, oldUser };
-      } catch (err) {
-        logger.warn(`[SuperAdminRepository] updateUser DB error:`, err.message);
+      const translated = { ...updates };
+      if (translated.kyc_status !== undefined) {
+        translated.kyc_doc_status = toDbKyc(translated.kyc_status);
+        delete translated.kyc_status;
       }
+      const patch = pick(translated, USER_WRITABLE);
+      if (!Object.keys(patch).length) {
+        return { success: false, error: 'Nothing to update on this user.' };
+      }
+      const { data, error } = await db
+        .from('profiles')
+        .update({ ...patch, updated_at: new Date().toISOString() })
+        .eq('id', id)
+        .select(USER_COLUMNS)
+        .single();
+      if (error) throw dbFailure(`Admin user update ${id}`, error);
+      // A suspension or a role change must hold on the user's very next request.
+      await invalidateProfile(data);
+      return { success: true, user: toAdminUser(data), oldUser };
     }
 
+    const payload = { ...updates, updated_at: new Date().toISOString() };
     const idx = inMemoryUsers.findIndex(u => u.id === id);
     if (idx !== -1) {
       const updated = { ...inMemoryUsers[idx], ...payload };
@@ -1116,27 +1289,25 @@ class SuperAdminRepository {
   static async listOrders({ status = null, escrowStatus = null, search = null, limit = 50, offset = 0 } = {}) {
     const db = this.db;
     if (db) {
-      try {
-        let query = db
-          .from('orders')
-          .select('id, order_number, user_id, store_id, total_amount, currency, status, payment_status, escrow_status, created_at, stores(name), profiles(full_name)')
-          .order('created_at', { ascending: false })
-          .range(offset, offset + limit - 1);
+      let query = db
+        .from('orders')
+        .select(ORDER_LIST_COLUMNS)
+        .order('created_at', { ascending: false })
+        .range(offset, offset + limit - 1);
 
-        if (status && status !== 'ALL') query = query.eq('status', status);
-        if (escrowStatus && escrowStatus !== 'ALL') query = query.eq('escrow_status', escrowStatus);
-
-        const { data, error } = await query;
-        if (!error && Array.isArray(data)) {
-          return data.map(o => ({
-            ...o,
-            customer_name: (o.profiles && o.profiles.full_name) || 'Acheteur LOUMOO',
-            store_name: (o.stores && o.stores.name) || 'Boutique'
-          }));
-        }
-      } catch (err) {
-        logger.warn('[SuperAdminRepository] listOrders error, using fallback:', err.message);
+      if (status && status !== 'ALL') {
+        query = query.eq('fulfillment_status', STATUS_TO_FULFILLMENT[String(status).toUpperCase()] || String(status).toLowerCase());
       }
+      if (escrowStatus && escrowStatus !== 'ALL') {
+        query = query.eq('payment_status', ESCROW_TO_PAYMENT[String(escrowStatus).toUpperCase()] || String(escrowStatus).toLowerCase());
+      }
+      const q = filterSafe(search);
+      if (q) query = query.ilike('order_number', `%${q}%`);
+
+      const { data, error } = await query;
+      if (error) throw dbFailure('Admin order list', error);
+      const names = await buyerNamesFor(db, data);
+      return (data || []).map(o => toAdminOrder(o, names));
     }
 
     let results = inMemoryOrders;
@@ -1152,18 +1323,10 @@ class SuperAdminRepository {
   static async getOrderById(id) {
     const db = this.db;
     if (db) {
-      try {
-        const { data, error } = await db.from('orders').select('*, stores(name), profiles(full_name)').eq('id', id).maybeSingle();
-        if (!error && data) {
-          return {
-            ...data,
-            customer_name: (data.profiles && data.profiles.full_name) || 'Acheteur LOUMOO',
-            store_name: (data.stores && data.stores.name) || 'Boutique'
-          };
-        }
-      } catch (err) {
-        logger.warn(`[SuperAdminRepository] getOrderById error:`, err.message);
-      }
+      const { data, error } = await db.from('orders').select('*').eq('id', id).maybeSingle();
+      if (error) throw dbFailure(`Admin order lookup ${id}`, error);
+      if (!data) return null;
+      return toAdminOrder(data, await buyerNamesFor(db, [data]));
     }
     return inMemoryOrders.find(o => o.id === id) || null;
   }
@@ -1172,17 +1335,23 @@ class SuperAdminRepository {
     const oldOrder = await this.getOrderById(id);
     if (!oldOrder) return { success: false, error: 'Order not found' };
 
-    const payload = { ...updates, updated_at: new Date().toISOString() };
     const db = this.db;
     if (db) {
-      try {
-        const { data, error } = await db.from('orders').update(payload).eq('id', id).select().single();
-        if (!error && data) return { success: true, order: data, oldOrder };
-      } catch (err) {
-        logger.warn(`[SuperAdminRepository] updateOrder DB error:`, err.message);
+      const patch = toDbOrderPatch(updates);
+      if (!Object.keys(patch).length) {
+        return { success: false, error: 'Nothing to update on this order.' };
       }
+      const { data, error } = await db
+        .from('orders')
+        .update({ ...patch, updated_at: new Date().toISOString() })
+        .eq('id', id)
+        .select('*')
+        .single();
+      if (error) throw dbFailure(`Admin order update ${id}`, error);
+      return { success: true, order: toAdminOrder(data, await buyerNamesFor(db, [data])), oldOrder };
     }
 
+    const payload = { ...updates, updated_at: new Date().toISOString() };
     const idx = inMemoryOrders.findIndex(o => o.id === id);
     if (idx !== -1) {
       const updated = { ...inMemoryOrders[idx], ...payload };

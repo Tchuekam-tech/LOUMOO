@@ -48,6 +48,22 @@ class AnnouncementService {
     throw new AuthorizationError('You do not have permission to publish announcements for this store.');
   }
 
+  /**
+   * Who may edit, publish, schedule, archive or delete an announcement: its
+   * author, or the team of the store it was published for. Every mutation used
+   * to call _verifyStoreAndOrgAccess for a non-author, which passes when there
+   * is no store, so ANY signed-in user could change or delete someone else's
+   * personal (store-less) announcement. One with no store is its author's alone
+   * (the analytics view already applied that rule).
+   */
+  static async _assertCanManage(principal, announcement) {
+    if (announcement.author_id === principal.id) return;
+    if (!announcement.store_id) {
+      throw new AuthorizationError('You do not have permission to manage this announcement.');
+    }
+    await this._verifyStoreAndOrgAccess(principal, announcement.store_id);
+  }
+
   static async createAnnouncement(principal, input = {}) {
     Announcement.validate(input, input.status === ANNOUNCEMENT_STATUSES.PUBLISHED);
     const adminDb = SupabaseClient.getAdmin();
@@ -175,9 +191,7 @@ class AnnouncementService {
 
     if (findErr || !existing) throw new NotFoundError('Announcement', id);
 
-    if (existing.author_id !== principal.id) {
-      await this._verifyStoreAndOrgAccess(principal, existing.store_id);
-    }
+    await this._assertCanManage(principal, existing);
 
     const updates = {};
     if (input.title !== undefined) {
@@ -256,9 +270,7 @@ class AnnouncementService {
 
     if (!existing) throw new NotFoundError('Announcement', id);
 
-    if (existing.author_id !== principal.id) {
-      await this._verifyStoreAndOrgAccess(principal, existing.store_id);
-    }
+    await this._assertCanManage(principal, existing);
 
     if (!Announcement.canTransition(existing.status, ANNOUNCEMENT_STATUSES.PUBLISHED)) {
       throw new ConflictError("Cannot publish an announcement currently in '" + existing.status + "' status.");
@@ -313,9 +325,7 @@ class AnnouncementService {
 
     if (!existing) throw new NotFoundError('Announcement', id);
 
-    if (existing.author_id !== principal.id) {
-      await this._verifyStoreAndOrgAccess(principal, existing.store_id);
-    }
+    await this._assertCanManage(principal, existing);
 
     const { data: updated, error } = await adminDb
       .from('announcements')
@@ -343,9 +353,7 @@ class AnnouncementService {
       .maybeSingle();
 
     if (!existing) throw new NotFoundError('Announcement', id);
-    if (existing.author_id !== principal.id) {
-      await this._verifyStoreAndOrgAccess(principal, existing.store_id);
-    }
+    await this._assertCanManage(principal, existing);
 
     if (!Announcement.canTransition(existing.status, ANNOUNCEMENT_STATUSES.DRAFT)) {
       throw new ConflictError("Cannot cancel the schedule of an announcement currently in '" + existing.status + "' status.");
@@ -376,9 +384,7 @@ class AnnouncementService {
       .maybeSingle();
 
     if (!existing) throw new NotFoundError('Announcement', id);
-    if (existing.author_id !== principal.id) {
-      await this._verifyStoreAndOrgAccess(principal, existing.store_id);
-    }
+    await this._assertCanManage(principal, existing);
 
     const { data: updated, error } = await adminDb
       .from('announcements')
@@ -404,9 +410,7 @@ class AnnouncementService {
       .maybeSingle();
 
     if (!existing) throw new NotFoundError('Announcement', id);
-    if (existing.author_id !== principal.id) {
-      await this._verifyStoreAndOrgAccess(principal, existing.store_id);
-    }
+    await this._assertCanManage(principal, existing);
 
     const { error: deleteErr } = await adminDb
       .from('announcements')

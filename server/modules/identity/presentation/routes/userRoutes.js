@@ -530,7 +530,8 @@ router.delete('/me', requireAuth, async (req, res, next) => {
   try {
     const result = await DeleteAccountUseCase.execute(req.userProfile, req.body, {
       ip: req.ip,
-      userAgent: req.get('user-agent')
+      userAgent: req.get('user-agent'),
+      identitySource: req.auth ? req.auth.source : null
     });
     res.json({
       status: 'success',

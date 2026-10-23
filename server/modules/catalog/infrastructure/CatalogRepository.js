@@ -29,6 +29,16 @@ const CATALOG_SELECT_COLUMNS = [
   'published_at', 'created_at', 'updated_at'
 ].join(', ');
 
+/**
+ * A rating backed by no reviews is not a rating (the comparison engine's rule
+ * too). Unrated listings and stores were shown as 5.0 stars ("★ 5" on search
+ * results) because a missing rating defaulted to 5.0.
+ */
+function ratingOrNull(rating, count) {
+  const r = Number(rating);
+  return Number(count) > 0 && r > 0 ? r : null;
+}
+
 class CatalogRepository {
   static get db() {
     return SupabaseDatabase.getAdmin();
@@ -152,9 +162,10 @@ class CatalogRepository {
         const listingIds = listingList.map(l => l.id);
         const storeIds = [...new Set(listingList.map(l => l.store_id).filter(Boolean))];
 
-        const [mediaRows, storeRows] = await Promise.all([
+        const [mediaRows, storeRows, inventoryById] = await Promise.all([
           this._loadMediaForListings(listingIds),
-          this._loadStores(storeIds)
+          this._loadStores(storeIds),
+          this._loadInventory(listingIds)
         ]);
 
         const mediaByListing = mediaRows.reduce((acc, m) => {
@@ -174,7 +185,7 @@ class CatalogRepository {
           const cover = mediaList.find(m => m.is_cover) || mediaList[0] || null;
           const coverUrl = cover ? (cover.url || `/media-fallback/${cover.storage_path}`) : null;
           const store = storesById[l.store_id] || null;
-          return this._formatProductCard(l, coverUrl, store, mediaList);
+          return this._formatProductCard(l, coverUrl, store, mediaList, inventoryById[l.id] || null);
         });
 
         // Keep QA/test boutiques out of the public buyer feed in non-test environments — a shopper must
@@ -274,10 +285,11 @@ class CatalogRepository {
     // No live listing? Fall back to the curated storefront product of that id.
     if (!row) return this._enrichCuratedDetail(this._curatedDetail(idOrSlug));
 
-    const [mediaRows, storeRows, attributes] = await Promise.all([
+    const [mediaRows, storeRows, attributes, inventoryById] = await Promise.all([
       this._loadMediaForListings([row.id]),
       this._loadStores([row.store_id]),
-      this._loadAttributes(row.id)
+      this._loadAttributes(row.id),
+      this._loadInventory([row.id])
     ]);
 
     const store = storeRows[0] || null;
@@ -291,7 +303,7 @@ class CatalogRepository {
       altText: m.alt_text
     }));
 
-    return this._formatProductDetail(row, store, media, attributes);
+    return this._formatProductDetail(row, store, media, attributes, inventoryById[row.id] || null);
   }
 
   /**
@@ -341,10 +353,11 @@ class CatalogRepository {
       throw new InfrastructureError('Supabase', `Indexable product lookup failed: ${error.message}`, error);
     }
     if (data) {
-      const [mediaRows, storeRows, attributes] = await Promise.all([
+      const [mediaRows, storeRows, attributes, inventoryById] = await Promise.all([
         this._loadMediaForListings([data.id]),
         this._loadStores([data.store_id]),
-        this._loadAttributes(data.id)
+        this._loadAttributes(data.id),
+        this._loadInventory([data.id])
       ]);
       const media = mediaRows.map(m => ({
         id: m.id,
@@ -355,17 +368,17 @@ class CatalogRepository {
         height: m.height,
         altText: m.alt_text
       }));
-      return this._formatProductDetail(data, storeRows[0] || null, media, attributes);
+      return this._formatProductDetail(data, storeRows[0] || null, media, attributes, inventoryById[data.id] || null);
     }
 
     // DB reachable, no live listing: a curated product or nothing.
     return curated();
   }
 
-  static _formatProductDetail(row, store, media = [], attributes = []) {
+  static _formatProductDetail(row, store, media = [], attributes = [], inventory = null) {
     const cover = (media && media.find(m => m.isCover)) || (media && media[0]) || null;
     return {
-      ...this._formatProductCard(row, cover ? cover.url : null, store, media),
+      ...this._formatProductCard(row, cover ? cover.url : null, store, media, inventory),
       description: row.description || '',
       shortDescription: row.short_description || '',
       attributes,
@@ -385,7 +398,7 @@ class CatalogRepository {
         whatsapp: store.phone_number || (store.metadata && store.metadata.phone) || null,
         isVerified: Boolean(store.is_verified),
         verificationTier: store.verification_tier,
-        rating: Number(store.rating) || 5.0,
+        rating: ratingOrNull(store.rating, store.rating_count),
         ratingCount: store.rating_count || 0,
         city: (store.metadata && store.metadata.city) || 'Douala'
       } : null
@@ -402,6 +415,18 @@ class CatalogRepository {
 
     if (error) return [];
     return data || [];
+  }
+
+  /** Listing-level stock rows (variant_id IS NULL) by listing id; {} when unreadable. */
+  static async _loadInventory(listingIds) {
+    if (!listingIds.length) return {};
+    const { data, error } = await this.db
+      .from('listing_inventory')
+      .select('listing_id, on_hand, reserved, track_inventory, allow_backorder')
+      .in('listing_id', listingIds)
+      .is('variant_id', null);
+    if (error || !data) return {};
+    return data.reduce((acc, row) => { acc[row.listing_id] = row; return acc; }, {});
   }
 
   static async _loadStores(storeIds) {
@@ -439,11 +464,19 @@ class CatalogRepository {
     return s.replace(/ /g, '%20').replace(/&/g, '%26');
   }
 
-  static _formatProductCard(listing, coverUrl, store, mediaList = []) {
+  static _formatProductCard(listing, coverUrl, store, mediaList = [], inventory = null) {
+    // Real stock from listing_inventory: on_hand less what open orders hold. Every
+    // listing used to be advertised as in stock with 1000 units, whatever the
+    // seller had. An untracked listing is available with an unknown count.
+    const tracked = Boolean(inventory && inventory.track_inventory);
+    const available = tracked ? Math.max(0, (Number(inventory.on_hand) || 0) - (Number(inventory.reserved) || 0)) : null;
+    const inStock = tracked ? (available > 0 || Boolean(inventory.allow_backorder)) : true;
     const priceMinor = Number(listing.base_price_minor) || 0;
     const salePriceMinor = listing.sale_price_minor ? Number(listing.sale_price_minor) : null;
     const formattedPrice = formatXaf(priceMinor);
-    const storeName = store ? store.name : 'Verified Merchant';
+    // Without its store record (it failed to load) a listing has not earned a
+    // "verified" name or badge: both used to default to verified.
+    const storeName = store ? store.name : 'Marketplace seller';
 
     // Seeded/demo listings ship with auto-generated gradient placeholder covers
     // hosted on Supabase Storage. Swap those for a real product photo matched
@@ -488,16 +521,17 @@ class CatalogRepository {
       phoneNumber: store ? (store.phone_number || (store.metadata && store.metadata.phone) || null) : null,
       storePhone: store ? (store.phone_number || (store.metadata && store.metadata.phone) || null) : null,
       sellerPhone: store ? (store.phone_number || (store.metadata && store.metadata.phone) || null) : null,
-      verified: store ? Boolean(store.is_verified) : true,
-      rating: Number(listing.rating) || 5.0,
+      verified: store ? Boolean(store.is_verified) : false,
+      rating: ratingOrNull(listing.rating, listing.rating_count),
       reviewsCount: listing.rating_count || 0,
       soldCount: listing.order_count || 0,
       status: listing.status,
       visibility: listing.visibility,
-      inStock: true,
-      stock: 1000,
-      stockQuantity: 1000,
-      stockUnits: 1000,
+      inStock,
+      stock: available,
+      stockQuantity: available,
+      stockUnits: available,
+      stockKnown: tracked,
       publishedAt: listing.published_at,
       createdAt: listing.created_at
     };
@@ -577,7 +611,7 @@ class CatalogRepository {
         whatsapp: house.phone,
         isVerified: Boolean(house.isVerified),
         verificationTier: house.verificationTier,
-        rating: Number(house.rating) || 5.0,
+        rating: ratingOrNull(house.rating, house.ratingCount),
         ratingCount: house.ratingCount || 0,
         city: house.city || (detail.store && detail.store.city) || 'Douala'
       }
