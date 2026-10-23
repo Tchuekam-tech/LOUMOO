@@ -833,20 +833,38 @@ class SuperAdminRepository {
       try {
         const [storesRes, profilesRes, ordersRes] = await Promise.allSettled([
           db.from('stores').select('id, status, is_verified', { count: 'exact' }),
-          db.from('profiles').select('id, primary_role, kyc_status', { count: 'exact' }),
+          // `kyc_status` is not a column on iam.profiles and never has been, so
+          // this select was refused outright and the user count stayed pinned to
+          // its placeholder. The pending-KYC figure comes from stores below.
+          db.from('profiles').select('id', { count: 'exact', head: true }),
           db.from('orders').select(ORDER_COLUMNS_KPI, { count: 'exact' })
         ]);
 
+        // `.count` is the total the server counted; `.data.length` is only the
+        // page PostgREST returned (1000 by default), so the dashboard silently
+        // stopped counting past that.
         if (storesRes.status === 'fulfilled' && storesRes.value.data) {
           const stores = storesRes.value.data;
-          storesCount = stores.length;
+          storesCount = storesRes.value.count != null ? storesRes.value.count : stores.length;
           pendingKycCount = stores.filter(s => s.status === 'PENDING_VERIFICATION' || !s.is_verified).length;
+        } else if (storesRes.status === 'rejected') {
+          logger.error(`[SuperAdminRepository] overview: stores count unavailable: ${storesRes.reason && storesRes.reason.message}`);
         }
-        if (profilesRes.status === 'fulfilled' && profilesRes.value.data) {
-          usersCount = profilesRes.value.data.length;
+        if (profilesRes.status === 'fulfilled' && !profilesRes.value.error && profilesRes.value.count != null) {
+          usersCount = profilesRes.value.count;
+        } else {
+          const why = profilesRes.status === 'rejected'
+            ? (profilesRes.reason && profilesRes.reason.message)
+            : (profilesRes.value && profilesRes.value.error && profilesRes.value.error.message);
+          if (why) logger.error(`[SuperAdminRepository] overview: user count unavailable: ${why}`);
         }
         if (ordersRes.status === 'fulfilled' && Array.isArray(ordersRes.value.data)) {
           orders = ordersRes.value.data;
+        } else {
+          const why = ordersRes.status === 'rejected'
+            ? (ordersRes.reason && ordersRes.reason.message)
+            : (ordersRes.value && ordersRes.value.error && ordersRes.value.error.message);
+          logger.error(`[SuperAdminRepository] overview: order KPIs fell back to the seed: ${why || 'no rows'}`);
         }
       } catch (err) {
         logger.warn('[SuperAdminRepository] Overview metrics aggregation error:', err.message);
