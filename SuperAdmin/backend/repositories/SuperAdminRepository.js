@@ -9,6 +9,41 @@ const { SupabaseDatabase } = require('../../../server/infrastructure/database/Su
 const logger = require('../../../server/shared/logging/logger');
 const { NotFoundError } = require('../../../server/shared/errors/AppError');
 
+/**
+ * What iam.orders actually holds (migrations 003 and 019). Every order query in
+ * this file used to ask for `user_id`, `total_amount`, `status` and
+ * `escrow_status`, none of which exist, so PostgREST refused the whole select
+ * and each one fell through to the seeded demo array — the owner's console and
+ * its GMV and escrow KPIs were reading fabricated orders against a live
+ * database. Kept as constants so the next query cannot drift from the schema.
+ */
+const ORDER_COLUMNS = 'id, order_number, buyer_id, seller_id, total_amount_xaf, items, shipping_address, payment_status, fulfillment_status, created_at, updated_at';
+const ORDER_COLUMNS_KPI = 'id, total_amount_xaf, payment_status, fulfillment_status';
+
+/**
+ * A real order row in the shape the rest of SuperAdmin reads. The aliases are
+ * derived, never stored: `status` is the fulfillment status, `escrow_status`
+ * the buyer-protection attestation, `total_amount` the XAF total. The customer
+ * and store names come from what the order already carries, because iam.orders
+ * has no store_id and two separate foreign keys into profiles (buyer and
+ * seller), which makes an unqualified PostgREST embed ambiguous.
+ */
+function presentOrder(row) {
+  if (!row) return null;
+  const ship = (row.shipping_address && typeof row.shipping_address === 'object') ? row.shipping_address : {};
+  const items = Array.isArray(row.items) ? row.items : [];
+  return {
+    ...row,
+    user_id: row.buyer_id,
+    total_amount: Number(row.total_amount_xaf) || 0,
+    currency: 'XAF',
+    status: row.fulfillment_status,
+    escrow_status: row.payment_status,
+    customer_name: ship.fullName || 'Acheteur LOUMOO',
+    store_name: (items[0] && items[0].storeName) || 'Boutique'
+  };
+}
+
 // Default in-memory seed settings for fallback / local testing
 const DEFAULT_SETTINGS = {
   platform_commission_rate: {
@@ -217,32 +252,33 @@ const DEFAULT_USERS = [
 
 // Default in-memory orders for fallback / test runs
 const DEFAULT_ORDERS = [
+  // Shaped exactly like an iam.orders row (migrations 003 and 019), because the
+  // console reads these whenever no database is attached. They used to carry a
+  // vocabulary of their own — user_id, total_amount, status 'DELIVERED',
+  // escrow_status 'HELD' — so the fallback and production disagreed about what
+  // an order even looks like, and the fallback is what every test saw.
   {
     id: 'ord_1001',
     order_number: 'LM-2609-8472',
-    user_id: 'usr_buyer_1',
-    customer_name: 'Martine Ngo Yomkil',
-    store_id: 'store_orca_1',
-    store_name: 'Orca Electronics',
-    total_amount: 2450000,
-    currency: 'XAF',
-    status: 'DELIVERED',
-    payment_status: 'PAID',
-    escrow_status: 'HELD',
+    buyer_id: 'usr_buyer_1',
+    seller_id: 'usr_seller_orca',
+    total_amount_xaf: 2450000,
+    items: [{ listingId: 'lst_demo_1', title: 'Demo item', quantity: 1, unitPriceXaf: 2450000, storeName: 'Orca Electronics' }],
+    shipping_address: { fullName: 'Martine Ngo Yomkil', city: 'Douala' },
+    payment_status: 'escrow_held',
+    fulfillment_status: 'delivered',
     created_at: '2026-09-16T15:00:00Z'
   },
   {
     id: 'ord_1002',
     order_number: 'LM-2609-9134',
-    user_id: 'usr_buyer_1',
-    customer_name: 'Martine Ngo Yomkil',
-    store_id: 'store_milano_3',
-    store_name: 'Armonía Milano Boutique',
-    total_amount: 185000,
-    currency: 'XAF',
-    status: 'PROCESSING',
-    payment_status: 'PAID',
-    escrow_status: 'HELD',
+    buyer_id: 'usr_buyer_1',
+    seller_id: 'usr_seller_milano',
+    total_amount_xaf: 185000,
+    items: [{ listingId: 'lst_demo_2', title: 'Demo item', quantity: 1, unitPriceXaf: 185000, storeName: 'Armonía Milano Boutique' }],
+    shipping_address: { fullName: 'Martine Ngo Yomkil', city: 'Douala' },
+    payment_status: 'escrow_held',
+    fulfillment_status: 'processing',
     created_at: '2026-09-17T10:30:00Z'
   }
 ];
@@ -770,8 +806,13 @@ class SuperAdminRepository {
   static sumEscrowInFlight(orders) {
     if (!Array.isArray(orders)) return 0;
     return orders.reduce((acc, o) => {
-      const held = String(o && o.escrow_status).toUpperCase() === 'HELD';
-      return held ? acc + (Number(o.total_amount) || 0) : acc;
+      // Accepts both shapes: the seeded demo rows (escrow_status 'HELD',
+      // total_amount) and a real iam.orders row (payment_status 'escrow_held',
+      // total_amount_xaf), because the overview aggregates whichever it got.
+      const state = String((o && (o.escrow_status || o.payment_status)) || '').toUpperCase();
+      const held = state === 'HELD' || state === 'ESCROW_HELD';
+      const amount = o && (o.total_amount != null ? o.total_amount : o.total_amount_xaf);
+      return held ? acc + (Number(amount) || 0) : acc;
     }, 0);
   }
 
@@ -793,7 +834,7 @@ class SuperAdminRepository {
         const [storesRes, profilesRes, ordersRes] = await Promise.allSettled([
           db.from('stores').select('id, status, is_verified', { count: 'exact' }),
           db.from('profiles').select('id, primary_role, kyc_status', { count: 'exact' }),
-          db.from('orders').select('id, total_amount, status, escrow_status', { count: 'exact' })
+          db.from('orders').select(ORDER_COLUMNS_KPI, { count: 'exact' })
         ]);
 
         if (storesRes.status === 'fulfilled' && storesRes.value.data) {
@@ -1119,29 +1160,30 @@ class SuperAdminRepository {
       try {
         let query = db
           .from('orders')
-          .select('id, order_number, user_id, store_id, total_amount, currency, status, payment_status, escrow_status, created_at, stores(name), profiles(full_name)')
+          .select(ORDER_COLUMNS)
           .order('created_at', { ascending: false })
           .range(offset, offset + limit - 1);
 
-        if (status && status !== 'ALL') query = query.eq('status', status);
-        if (escrowStatus && escrowStatus !== 'ALL') query = query.eq('escrow_status', escrowStatus);
+        // The console's vocabulary is UPPERCASE; the columns store lower case.
+        if (status && status !== 'ALL') query = query.eq('fulfillment_status', String(status).toLowerCase());
+        if (escrowStatus && escrowStatus !== 'ALL') query = query.eq('payment_status', String(escrowStatus).toLowerCase());
+        if (search) query = query.ilike('order_number', `%${String(search).replace(/[%_,]/g, '')}%`);
 
         const { data, error } = await query;
         if (!error && Array.isArray(data)) {
-          return data.map(o => ({
-            ...o,
-            customer_name: (o.profiles && o.profiles.full_name) || 'Acheteur LOUMOO',
-            store_name: (o.stores && o.stores.name) || 'Boutique'
-          }));
+          return data.map(presentOrder);
         }
+        logger.error(`[SuperAdminRepository] listOrders failed: ${error ? error.message : 'no rows returned'}`);
       } catch (err) {
-        logger.warn('[SuperAdminRepository] listOrders error, using fallback:', err.message);
+        logger.error('[SuperAdminRepository] listOrders error:', err.message);
       }
     }
 
-    let results = inMemoryOrders;
-    if (status && status !== 'ALL') results = results.filter(o => o.status === status);
-    if (escrowStatus && escrowStatus !== 'ALL') results = results.filter(o => o.escrow_status === escrowStatus);
+    // The seeded rows are shaped like real ones, so they go through the same
+    // presenter and the same filters rather than a second set of rules.
+    let results = inMemoryOrders.map(presentOrder);
+    if (status && status !== 'ALL') results = results.filter(o => String(o.status).toLowerCase() === String(status).toLowerCase());
+    if (escrowStatus && escrowStatus !== 'ALL') results = results.filter(o => String(o.escrow_status).toLowerCase() === String(escrowStatus).toLowerCase());
     if (search) {
       const q = search.toLowerCase();
       results = results.filter(o => (o.order_number && o.order_number.toLowerCase().includes(q)) || (o.customer_name && o.customer_name.toLowerCase().includes(q)));
@@ -1153,19 +1195,14 @@ class SuperAdminRepository {
     const db = this.db;
     if (db) {
       try {
-        const { data, error } = await db.from('orders').select('*, stores(name), profiles(full_name)').eq('id', id).maybeSingle();
-        if (!error && data) {
-          return {
-            ...data,
-            customer_name: (data.profiles && data.profiles.full_name) || 'Acheteur LOUMOO',
-            store_name: (data.stores && data.stores.name) || 'Boutique'
-          };
-        }
+        const { data, error } = await db.from('orders').select(ORDER_COLUMNS).eq('id', id).maybeSingle();
+        if (!error) return presentOrder(data);
+        logger.error(`[SuperAdminRepository] getOrderById failed for ${id}: ${error.message}`);
       } catch (err) {
-        logger.warn(`[SuperAdminRepository] getOrderById error:`, err.message);
+        logger.error(`[SuperAdminRepository] getOrderById error:`, err.message);
       }
     }
-    return inMemoryOrders.find(o => o.id === id) || null;
+    return presentOrder(inMemoryOrders.find(o => o.id === id) || null);
   }
 
   static async updateOrder(id, updates = {}, adminId = 'super_admin') {
@@ -1175,19 +1212,30 @@ class SuperAdminRepository {
     const payload = { ...updates, updated_at: new Date().toISOString() };
     const db = this.db;
     if (db) {
+      let failure = null;
       try {
-        const { data, error } = await db.from('orders').update(payload).eq('id', id).select().single();
-        if (!error && data) return { success: true, order: data, oldOrder };
+        const { data, error } = await db.from('orders').update(payload).eq('id', id).select(ORDER_COLUMNS).single();
+        if (!error && data) return { success: true, order: presentOrder(data), oldOrder };
+        failure = error ? error.message : 'the order row was not returned';
       } catch (err) {
-        logger.warn(`[SuperAdminRepository] updateOrder DB error:`, err.message);
+        failure = err.message;
       }
+      // A real database is attached and it refused the write. Falling through to
+      // the seeded array would answer 200 for a financial action — an escrow
+      // release or a refund — that never touched the order, which is how the
+      // escrow endpoint reported success while writing to columns iam.orders
+      // does not have. Report the failure instead.
+      logger.error(`[SuperAdminRepository] updateOrder failed for ${id}: ${failure}`);
+      return { success: false, error: `Order update failed: ${failure}` };
     }
 
     const idx = inMemoryOrders.findIndex(o => o.id === id);
     if (idx !== -1) {
       const updated = { ...inMemoryOrders[idx], ...payload };
       inMemoryOrders[idx] = updated;
-      return { success: true, order: updated, oldOrder };
+      // Presented, so the derived escrow_status/status follow the columns that
+      // were just written instead of keeping the values they had before.
+      return { success: true, order: presentOrder(updated), oldOrder };
     }
     return { success: false, error: 'Order update failed' };
   }
