@@ -113,11 +113,18 @@ async function run() {
   assert.ok(Array.isArray(orders) && orders.length > 0, 'getAdminOrders must return orders array');
 
   const targetOrder = orders[0];
-  // Resolve escrow with action 'RELEASE'
+  // Resolve escrow with action 'RELEASE'. The escrow state an order has IS its
+  // payment_status (iam.orders, migration 019) — `escrow_status` is the console's
+  // alias for that column, so it reads back in that column's vocabulary. The
+  // endpoint used to write `escrow_status: 'RELEASED'` and `status: 'COMPLETED'`
+  // to columns the table does not have, so nothing it claimed ever persisted;
+  // releasing escrow also does not retro-deliver the parcel, which is why the
+  // fulfillment status is left where the delivery put it.
   const escrowRes = await api.resolveAdminEscrow(targetOrder.id, 'RELEASE');
   const resolvedOrder = escrowRes.order || escrowRes;
-  assert.strictEqual(resolvedOrder.escrow_status, 'RELEASED');
-  assert.strictEqual(resolvedOrder.status, 'COMPLETED');
+  assert.strictEqual(resolvedOrder.escrow_status, 'released');
+  assert.strictEqual(resolvedOrder.payment_status, 'released');
+  assert.strictEqual(resolvedOrder.status, targetOrder.status, 'the fulfillment status is not touched by an escrow action');
   console.log('    ✓ 6. getAdminOrders() and resolveAdminEscrow() verified');
 
   // ── 8. getSystemSettings() & updateSystemSettings(payload) ──
