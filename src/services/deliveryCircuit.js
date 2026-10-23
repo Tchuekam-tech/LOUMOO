@@ -564,6 +564,11 @@
     if (status === 401 || e.code === 'UNAUTHENTICATED') {
       return { kind: 'auth', message: 'Your session ended. Sign in to place your order.', itemIds: [] };
     }
+    if (status === 403) {
+      // The account may not buy yet (email not verified, onboarding unfinished):
+      // the server says what to do next, so show that rather than "try again".
+      return { kind: 'account', message: message || 'Finish setting up your LOUMOO account to place an order.', itemIds: [] };
+    }
     if (e.status === 0 || e.code === 'OFFLINE') {
       return { kind: 'network', message: 'You seem to be offline. Your bag is saved: try again when you are connected.', itemIds: [] };
     }

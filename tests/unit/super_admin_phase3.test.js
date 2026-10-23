@@ -78,7 +78,7 @@ async function run() {
   // Moderate listing with string action
   const modRes1 = await api.moderateListing(listingToModerate.id, 'APPROVED');
   const modListing1 = modRes1.listing || modRes1;
-  assert.strictEqual(modListing1.status, 'ACTIVE');
+  assert.strictEqual(modListing1.status, 'PUBLISHED', 'approving publishes the listing');
 
   // Moderate listing with structured object
   const modRes2 = await api.moderateListing(listingToModerate.id, {
@@ -86,7 +86,8 @@ async function run() {
     reason: 'Price anomaly investigation'
   });
   const modListing2 = modRes2.listing || modRes2;
-  assert.strictEqual(modListing2.status, 'INACTIVE');
+  assert.strictEqual(modListing2.status, 'PAUSED', 'suspending pauses it');
+  assert.ok(!('is_approved' in modListing2), 'no is_approved flag (a listing has no such column)');
   console.log('    ✓ 4. getAdminListings() and moderateListing() verified (string and object actions)');
 
   // ── 6. getAdminUsers(filter), updateAdminUserRole(id, role), updateAdminUserKyc(id, status) ──
@@ -117,7 +118,19 @@ async function run() {
   const escrowRes = await api.resolveAdminEscrow(targetOrder.id, 'RELEASE');
   const resolvedOrder = escrowRes.order || escrowRes;
   assert.strictEqual(resolvedOrder.escrow_status, 'RELEASED');
-  assert.strictEqual(resolvedOrder.status, 'COMPLETED');
+  assert.strictEqual(resolvedOrder.status, 'DELIVERED', 'a release settles the protection; the order stays delivered');
+
+  // Funds are released only after the handover, and a settled order is final.
+  const processing = orders.find((o) => o.status === 'PROCESSING');
+  let refused = null;
+  try { await api.resolveAdminEscrow(processing.id, 'RELEASE'); } catch (e) { refused = e; }
+  assert.ok(refused && /after the handover/.test(refused.message), 'an undelivered order cannot be released');
+  refused = null;
+  try { await api.resolveAdminEscrow(targetOrder.id, 'REFUND'); } catch (e) { refused = e; }
+  assert.ok(refused && /already settled/.test(refused.message), 'a released order cannot then be refunded');
+  const refunded = await api.resolveAdminEscrow(processing.id, 'REFUND');
+  const refundedOrder = refunded.order || refunded;
+  assert.deepStrictEqual([refundedOrder.escrow_status, refundedOrder.status], ['REFUNDED', 'CANCELLED'], 'refunding a processing order cancels it');
   console.log('    ✓ 6. getAdminOrders() and resolveAdminEscrow() verified');
 
   // ── 8. getSystemSettings() & updateSystemSettings(payload) ──

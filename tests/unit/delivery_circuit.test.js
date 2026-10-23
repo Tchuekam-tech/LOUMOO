@@ -202,6 +202,9 @@ function testOrderErrors() {
   assert.ok(/Only 1 unit/.test(e(409, 'Insufficient stock for "Phone". Only 1 unit(s) available, but requested 3.').message), 'the server\'s own stock message is shown');
   assert.strictEqual(e(400, 'Unit price mismatch on "Phone"').kind, 'invalid');
   assert.strictEqual(e(0, 'Cannot reach LOUMOO', 'OFFLINE').kind, 'network');
+  const notReady = e(403, 'Verify your email address before continuing.', 'FORBIDDEN');
+  assert.strictEqual(notReady.kind, 'account', 'an account that may not buy yet is not a server outage');
+  assert.strictEqual(notReady.message, 'Verify your email address before continuing.', 'the server\'s next step is shown');
   assert.strictEqual(e(429, 'Too many attempts').kind, 'server');
   assert.strictEqual(e(503, 'whatever').kind, 'server');
   assert.ok(/bag is saved/.test(e(500, 'boom').message), 'a server failure reassures that the bag is kept');

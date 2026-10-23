@@ -14,6 +14,9 @@ const logger = require('../../../shared/logging/logger');
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
+// iam.organization_members.status CHECK (migration 008).
+const MEMBER_STATUSES = Object.freeze(['ACTIVE', 'INVITED', 'SUSPENDED']);
+
 class OrganizationService {
   /**
    * Create an organization and establish the creator as OWNER.
@@ -451,11 +454,21 @@ class OrganizationService {
       if (!Object.values(ORG_ROLES).includes(role)) {
         throw new ValidationError(`Invalid role '${payload.role}'.`);
       }
+      // Only the OWNER may hand out the OWNER role, here as in addMember. The
+      // guard above only looked at the target's CURRENT role, so an ADMIN could
+      // PATCH their own membership to OWNER (permissions ['*']) and take over.
+      if (role === ORG_ROLES.OWNER && requesterMembership.role !== ORG_ROLES.OWNER) {
+        throw new UnauthorizedError('Only the organization owner can grant the OWNER role.');
+      }
       updateData.role = role;
       updateData.permissions = this._resolveGrantedPermissions(requesterMembership, role, payload.permissions);
     }
     if (payload.status) {
-      updateData.status = String(payload.status).toUpperCase();
+      const status = String(payload.status).toUpperCase();
+      if (!MEMBER_STATUSES.includes(status)) {
+        throw new ValidationError(`Invalid status '${payload.status}'. Allowed: ${MEMBER_STATUSES.join(', ')}`);
+      }
+      updateData.status = status;
     }
     updateData.updated_at = new Date().toISOString();
 

@@ -37,10 +37,12 @@ async function run() {
   }
 
   const mockApi = {
-    getAnnouncementFeed: async (params) => {
+    // The feed is whatever sellers published. Starts empty; filled below.
+    feedItems: [],
+    getAnnouncementFeed: async function (params) {
       return {
-        announcements: [],
-        total: 0
+        announcements: this.feedItems.slice(),
+        total: this.feedItems.length
       };
     },
     getAnnouncement: async (id) => {
@@ -110,9 +112,19 @@ async function run() {
   console.log('[1/5] Verifying Announce feed loads cards even when LoumooPublishing is null...');
   assert.strictEqual(sandbox.window.LoumooPublishing, undefined);
 
-  // Trigger loadAnnouncements
-  await comp.loadAnnouncements();
-  assert(comp.state.announcements && comp.state.announcements.length > 0, 'loadAnnouncements must populate fallback announcements when backend feed is empty');
+  // An empty feed is shown as empty: no built-in "product drops" from stores that
+  // do not exist (it used to fill the gap with invented offers, prices and CTAs).
+  await comp.loadAnnouncements({ force: true });
+  assert.deepStrictEqual(comp.state.announcements, [], 'an empty feed stays empty, never invented broadcasts');
+  assert.strictEqual(comp.renderVals().announceCards.length, 0, 'and so it shows the "Nothing here yet" state');
+
+  // What sellers published loads, without LoumooPublishing.
+  mockApi.feedItems = [{
+    id: 'ann_real_1', type: 'PRODUCT_DROP', title: 'Tecno Camon 50 restock', body: 'Back in stock at our Akwa boutique.',
+    storeName: 'Akwa Phones', ctaLabel: 'View product', ctaType: 'PRODUCT', publishedAt: '2026-10-20T10:00:00.000Z'
+  }];
+  await comp.loadAnnouncements({ force: true });
+  assert(comp.state.announcements && comp.state.announcements.length === 1, 'the published broadcast loads');
 
   // Evaluate renderVals
   const vals = comp.renderVals();

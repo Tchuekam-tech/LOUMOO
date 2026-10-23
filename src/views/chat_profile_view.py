@@ -391,7 +391,7 @@ def get_chat_and_profile_view():
             </span>
           </div>
           <h3 style="margin:6px 0 2px;font:800 18px/1.2 var(--font-heading);color:var(--color-text)">{{ currentStoreName }}</h3>
-          <div style="font:400 12px/1.4 var(--font-body);color:var(--color-text-secondary)">{{ currentStoreCategoryLabel }} · Verified Merchant</div>
+          <div style="font:400 12px/1.4 var(--font-body);color:var(--color-text-secondary)">{{ currentStoreCategoryLabel }} · {{ currentStoreIsVerified ? 'Verified Merchant' : 'Not yet verified' }}</div>
         </div>
         <div style="width:44px;height:44px;border-radius:var(--radius-md);background:var(--color-surface-subtle);border:1px solid var(--color-divider);display:flex;align-items:center;justify-content:center;color:var(--color-accent);flex-shrink:0">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><circle cx="12" cy="12" r="2"/></svg>

@@ -359,7 +359,17 @@ class OrderCreationService {
         standardShippingFeeXaf
       });
 
-      // 5. Construct Order Aggregate
+      // 5. Hold the stock. checkInventory above only LOOKED: without a hold, every
+      // concurrent (or later) buyer saw the same units free and a listing with one
+      // left was sold again and again. All lines or none; the held lines ride on
+      // the order and are released when it is cancelled, consumed when delivered.
+      const heldInventory = typeof this.repository.reserveInventory === 'function'
+        ? await this.repository.reserveInventory(evaluatedItems.map(it => ({
+          listingId: it.listingId, variantId: it.variantId, quantity: it.quantity, title: it.title
+        })))
+        : [];
+
+      // 6. Construct Order Aggregate
       const orderItems = pricing.lineItems.map(it => new OrderItem({
         listingId: it.listingId,
         variantId: it.variantId,
@@ -388,7 +398,8 @@ class OrderCreationService {
         shippingFeeXaf: pricing.shippingFeeXaf,
         totalAmountXaf: pricing.totalAmountXaf,
         currency: 'XAF',
-        shippingAddress: data.shippingAddress || {},
+        // `_inventory` is set here, never taken from the request.
+        shippingAddress: { ...(data.shippingAddress || {}), _inventory: heldInventory },
         deliveryMethod: data.deliveryMethod,
         // The preference as RESOLVED above: null for pickup, or when the chosen
         // provider turned out unavailable, so the order never carries a dead pick.
@@ -405,8 +416,14 @@ class OrderCreationService {
         ]
       });
 
-      // 6. Atomically persist to database
-      const savedOrder = await this.repository.saveOrder(order);
+      // 7. Atomically persist to database (an order that was not stored holds nothing)
+      let savedOrder;
+      try {
+        savedOrder = await this.repository.saveOrder(order);
+      } catch (saveErr) {
+        if (heldInventory.length) await this.repository.releaseInventory(heldInventory);
+        throw saveErr;
+      }
 
       // If the buyer's chosen provider was dropped above, tell them honestly: the
       // order succeeded at the standard city rate, it was not silently switched.
@@ -417,7 +434,7 @@ class OrderCreationService {
         savedOrder.deliveryNotice = buildDroppedPreferenceNotice(droppedPreferenceReason, savedOrder.shippingFeeXaf);
       }
 
-      // 7. Save Idempotency Cache Result
+      // 8. Save Idempotency Cache Result
       if (scopedKey) {
         const responseBody = {
           success: true,
@@ -430,7 +447,7 @@ class OrderCreationService {
         });
       }
 
-      // 8. Invalidate Buyer's Purchase History Cache
+      // 9. Invalidate Buyer's Purchase History Cache
       try {
         if (CacheService.delPattern) {
           await CacheService.delPattern(`purchases:${userId}:*`);
@@ -441,7 +458,7 @@ class OrderCreationService {
         logger.warn(`[OrderCreationService] Cache invalidation warning: ${cacheErr.message}`);
       }
 
-      // 9. Asynchronous Activity & Notification Dispatch
+      // 10. Asynchronous Activity & Notification Dispatch
       if (UserActivityUseCase && typeof UserActivityUseCase.recordActivity === 'function') {
         UserActivityUseCase.recordActivity(userId, {
           actionType: 'order_placed',

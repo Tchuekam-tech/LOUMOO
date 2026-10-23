@@ -478,8 +478,8 @@ async function startFixture(opts = {}) {
     },
 
     /**
-     * A throw-away SELLER with a store created WITHOUT a business phone (so the store
-     * inherits the owner's account phone, as the app does), left in DRAFT until
+     * A throw-away SELLER with a store created WITHOUT a business phone (the store
+     * must not inherit the owner's account phone), left in DRAFT until
      * `activate()` is called. After activation (PATCH /stores/:id/location + onboarding
      * ACTIVE, the app's own routes) the account is SELLER_READY with role 'seller'.
      */

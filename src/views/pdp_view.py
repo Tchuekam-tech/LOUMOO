@@ -117,7 +117,9 @@ def get_product_view():
           <div class="pdp-media-viewport {{ currentProduct.mediaStyle === 'lifestyle' ? 'pdp-media-lifestyle' : 'pdp-media-cutout' }}">
             
             <!-- Top Badges -->
-            <span class="loumoo-card-badge badge-pill-sale">{{ currentProductBadge || 'VERIFIED BOUTIQUE' }}</span>
+            <sc-if value="{{ currentProductBadge }}">
+              <span class="loumoo-card-badge badge-pill-sale">{{ currentProductBadge }}</span>
+            </sc-if>
 
             <!-- Top Right Wishlist -->
             <button onClick="{{ () => toggleProductWishlist(currentProduct && currentProduct.id, currentProductTitle) }}" class="loumoo-card-wishlist-btn" aria-label="Save product to wishlist">
@@ -309,7 +311,7 @@ def get_product_view():
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="var(--color-accent)" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                   </sc-if>
                 </div>
-                <div style="font:400 12px/1 var(--font-body);color:var(--color-text-secondary);margin-top:4px">{{ productStoreCity || 'Douala' }} · ★ {{ productStoreRating || '5.0' }} · Official Boutique</div>
+                <div style="font:400 12px/1 var(--font-body);color:var(--color-text-secondary);margin-top:4px">{{ productStoreCity || 'Douala' }}<sc-if value="{{ productStoreRating }}"> · ★ {{ productStoreRating }}</sc-if><sc-if value="{{ productStoreVerified }}"> · Verified boutique</sc-if></div>
               </div>
             </div>
             

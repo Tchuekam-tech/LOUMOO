@@ -1756,11 +1756,11 @@ async function testAHubOpenedAfterAccountChangeNeverShowsThePreviousRidersState(
 }
 
 // ---- the seller's rider picker: the empty state says WHY it is empty ----
-async function pickerWorld(listDriversResult) {
+async function pickerWorld(listDriversResult, orderExtra = {}) {
   const w = makeScreenWorld();
   w.listCalls = [];
   w.listResult = listDriversResult;
-  const order = { id: 'ord_1', orderNumber: 'LM-1', title: 'Phone', itemCount: 1, totalXaf: 100000, buyerName: 'Awa', area: 'Akwa', placedAt: '2026-10-05T07:00:00.000Z' };
+  const order = Object.assign({ id: 'ord_1', orderNumber: 'LM-1', title: 'Phone', itemCount: 1, totalXaf: 100000, buyerName: 'Awa', area: 'Akwa', placedAt: '2026-10-05T07:00:00.000Z' }, orderExtra);
   const delivery = { id: 'dlv_1', orderId: 'ord_1', status: 'pending_assignment', viewerRole: 'seller', driver: null, pickup: { label: 'Shop', address: 'Akwa' }, dropoff: { area: 'Akwa' } };
   w.api = {
     dispatchBoard: async () => ({ items: [{ order, delivery }] }),
@@ -1778,6 +1778,17 @@ async function pickerWorld(listDriversResult) {
   w.pickerView = () => nav.records[nav.records.length - 1].view;
   w.list = () => w.picker().content.children[2];
   return w;
+}
+
+async function testThePickerSubtitleNamesTheCustomersPick() {
+  // The picker object had two `subtitle` keys and the later, unconditional one
+  // won, so the seller was never told their customer's chosen rider comes first.
+  const free = await pickerWorld({ drivers: [], summary: { registered: 1, available: 0 } });
+  assert.ok(!/customer/.test(free.pickerView().subtitle), 'no pick, no mention of one: ' + free.pickerView().subtitle);
+  const picked = await pickerWorld({ drivers: [], summary: { registered: 1, available: 0 } }, { preferredDriverId: 'rider_1' });
+  const subtitle = picked.pickerView().subtitle;
+  assert.ok(/^Online riders only\./.test(subtitle), 'still says it lists online riders only: ' + subtitle);
+  assert.ok(/customer’s pick comes first/.test(subtitle), 'and that the customer\'s pick comes first: ' + subtitle);
 }
 
 async function testThePickerSaysWhyNoRiderIsListed() {
@@ -1892,7 +1903,8 @@ async function run() {
   await testAHubOpenedAfterAccountChangeNeverShowsThePreviousRidersState();
   console.log('    ✓ The rider hub (the real script, a fake DOM): one availability card per state with only the buttons that apply, hints on offers, the server\'s refusal in the toast, a closed overlay leaves the heartbeat alone and shares no position, a stale overview cannot revive the card.');
   await testThePickerSaysWhyNoRiderIsListed();
-  console.log('    ✓ The seller\'s rider picker says "no rider is online right now" when riders exist but none is online, and keeps the old wording when nobody is registered.');
+  await testThePickerSubtitleNamesTheCustomersPick();
+  console.log('    ✓ The seller\'s rider picker says "no rider is online right now" when riders exist but none is online, keeps the old wording when nobody is registered, and says when the customer\'s pick comes first.');
   await testNoGlobalsLeak(globalsBefore, fetchBefore);
 }
 
