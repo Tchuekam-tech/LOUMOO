@@ -23,10 +23,13 @@ class PurchaseHistoryUseCase {
 
   /**
    * Place a new order with server-authoritative pricing and validation.
+   *
+   * The idempotency key is passed through, not dropped: without it a retry after
+   * a dropped connection places a second order for the same bag.
    */
-  async createOrder(userId, payload = {}) {
+  async createOrder(userId, payload = {}, { idempotencyKey = null } = {}) {
     if (!userId) throw new ValidationError('User ID is required');
-    const order = await this.creationService.createOrder(userId, payload);
+    const order = await this.creationService.createOrder(userId, payload, { idempotencyKey });
     return order.toJSON();
   }
 
