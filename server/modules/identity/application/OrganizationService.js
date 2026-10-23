@@ -451,6 +451,14 @@ class OrganizationService {
       if (!Object.values(ORG_ROLES).includes(role)) {
         throw new ValidationError(`Invalid role '${payload.role}'.`);
       }
+      // The same rule addMember enforces, and for the same reason. The guard
+      // above only protects a membership that is ALREADY the owner's, so an
+      // ADMIN could promote any ordinary member — their own membership
+      // included — to OWNER, whose role permissions are ['*']. That is the
+      // whole escalation in one request.
+      if (role === ORG_ROLES.OWNER && requesterMembership.role !== ORG_ROLES.OWNER) {
+        throw new UnauthorizedError('Only the organization owner can grant the OWNER role.');
+      }
       updateData.role = role;
       updateData.permissions = this._resolveGrantedPermissions(requesterMembership, role, payload.permissions);
     }
