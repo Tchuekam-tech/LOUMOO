@@ -5,15 +5,15 @@
  * `iam.listing_inventory` (listing level) and `iam.listing_variants.stock_quantity`
  * (per combination), never in a JSON blob.
  *
- * The reservation helpers below operate on a loaded `ListingInventory` entity
- * so the concurrency rules stay in the domain model; `adjustStock` is the
- * seller-facing write and goes straight to the repository.
+ * `adjustStock` is the seller-facing write and goes straight to the repository.
+ * Holding stock for an order is NOT done here — see the note at the foot of
+ * the class.
  */
 
 const ListingRepository = require('../infrastructure/ListingRepository');
 const ListingInventory = require('../domain/ListingInventory');
 const CacheService = require('../../../infrastructure/cache/CacheService');
-const { ConflictError, ValidationError, NotFoundError } = require('../../../shared/errors/AppError');
+const { ValidationError, NotFoundError } = require('../../../shared/errors/AppError');
 
 class ListingInventoryUseCase {
   /**
@@ -78,29 +78,18 @@ class ListingInventoryUseCase {
   }
 
   /**
-   * Holds stock for an in-flight order. The domain entity owns the rule about
-   * what "available" means; this only persists the outcome.
+   * Stock is held by the order path, not from here.
+   *
+   * There used to be a `reserveStock` on this class. Nothing ever called it,
+   * and it could not have been used safely if anything had: it read the row,
+   * computed the new figure in JavaScript and wrote it back, so two orders
+   * racing for the last unit would both read the same `reserved` and the
+   * second write would overwrite the first.
+   *
+   * `OrderRepository.reserveInventory` / `releaseInventory` /
+   * `consumeInventory` do this as a compare-and-swap on the row, and they are
+   * wired into order creation, cancellation and delivery. Reach for those.
    */
-  static async reserveStock(listingId, quantity = 1) {
-    if (quantity <= 0) throw new ValidationError('Quantity must be greater than zero.');
-
-    const row = await ListingRepository.getInventory(listingId);
-    if (!row) throw new ConflictError('This listing does not track stock.');
-
-    const inventory = new ListingInventory(row);
-    inventory.reserve(quantity);   // throws ConflictError when it cannot
-
-    const saved = await ListingRepository.upsertInventory(listingId, {
-      onHand: inventory.onHand,
-      reserved: inventory.reserved,
-      lowStockThreshold: inventory.lowStockThreshold,
-      allowBackorder: inventory.allowBackorder,
-      trackInventory: inventory.trackInventory
-    });
-
-    await CacheService.delete(`listing:${listingId}`, 'catalog').catch(() => null);
-    return new ListingInventory(saved).toJSON();
-  }
 }
 
 module.exports = ListingInventoryUseCase;
