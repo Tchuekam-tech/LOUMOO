@@ -19,7 +19,7 @@ const NotificationService = require('../../application/NotificationService');
 const AccountSecurityService = require('../../application/AccountSecurityService');
 const DeleteAccountUseCase = require('../../application/DeleteAccountUseCase');
 const PrivacyPreferencesUseCase = require('../../application/PrivacyPreferencesUseCase');
-const { requireAuth } = require('../guards/authGuard');
+const { requireAuth, requireCapability, optionalAuth } = require('../guards/authGuard');
 const ProfileRepository = require('../../infrastructure/ProfileRepository');
 const AccountStateService = require('../../application/AccountStateService');
 const UserProfile = require('../../entities/UserProfile');
@@ -53,10 +53,22 @@ router.get('/me', requireAuth, async (req, res) => {
 // previous revision invented an "Orca Electronics Douala" card for any id
 // containing "orca" and a "LOUMOO Merchant" card for everything else, so this
 // endpoint answered 200 for users who did not exist.
-router.get('/:userId/public', async (req, res, next) => {
+// A profile marked private must be private on EVERY path that serves it.
+// /u/:username (PublicProfileService) has always refused one; this route did
+// not even look, so the same person's card was handed out here regardless of
+// the setting. optionalAuth so the owner can still see their own card.
+router.get('/:userId/public', optionalAuth, async (req, res, next) => {
   try {
     const { userId } = req.params;
     const cacheKey = `identity:public:${userId}`;
+
+    const isSelf = Boolean(req.principal && req.principal.id === userId);
+    // Asked before the cache, not after: a card cached while the profile was
+    // public would otherwise keep being served for the rest of its five
+    // minutes after the owner made it private.
+    if (!isSelf && await PrivacyPreferencesUseCase.isProfilePrivate(userId)) {
+      throw new NotFoundError('User', userId);
+    }
 
     let card = await CacheService.get(cacheKey);
 
@@ -314,9 +326,16 @@ router.post('/me/notifications/:id/read', requireAuth, async (req, res, next) =>
 });
 
 // POST /api/v1/users/me/orders (Place a new order — payment deferred, pay on delivery)
-router.post('/me/orders', requireAuth, async (req, res, next) => {
+// The same order placement as POST /api/v1/orders, and held to the same two rules,
+// because a second door into checkout is only safe while it is the same door:
+//   - `canPurchase`, so an account whose contact is unverified or whose onboarding
+//     is unfinished cannot place here what the other route refuses it;
+//   - the Idempotency-Key header, so a retried request after a dropped connection
+//     returns the order that was already placed instead of placing a second one.
+router.post('/me/orders', requireAuth, requireCapability('canPurchase'), async (req, res, next) => {
   try {
-    const order = await PurchaseHistoryUseCase.createOrder(req.userProfile.id, req.body);
+    const idempotencyKey = req.headers['idempotency-key'] || req.headers['x-idempotency-key'] || req.body?.idempotencyKey || null;
+    const order = await PurchaseHistoryUseCase.createOrder(req.userProfile.id, req.body, { idempotencyKey });
     await UserActivityUseCase.recordActivity(req.userProfile.id, {
       actionType: 'order_placed',
       title: 'Order Placed',

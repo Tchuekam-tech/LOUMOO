@@ -10,7 +10,16 @@ const { NotFoundError, AuthorizationError, ValidationError, ConflictError } = re
 const logger = require('../../../shared/logging/logger');
 const MediaStorageService = require('../../../infrastructure/storage/MediaStorageService');
 
+const { OrganizationMember } = require('../../identity/domain/Organization');
+
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/**
+ * What an organization member must hold to speak for a store. An announcement
+ * goes out under the store's name to everyone who follows it, so it belongs
+ * with the store's other content, not with plain membership.
+ */
+const ANNOUNCE_PERMISSIONS = Object.freeze(['store.manage', 'store.manage_products']);
 
 class AnnouncementService {
   static async _verifyStoreAndOrgAccess(principal, storeId) {
@@ -40,7 +49,13 @@ class AnnouncementService {
         .eq('status', 'ACTIVE')
         .maybeSingle();
 
-      if (member) {
+      // Belonging to the organization is not the same as speaking for its store.
+      // This used to accept ANY active member, so a MEMBER — whose only
+      // permission is `org.view` — could publish, edit and delete announcements
+      // that reach every follower under the store's name. The rest of the app
+      // (storeAuthGuard) has always checked the permission, not the row.
+      const membership = member ? new OrganizationMember({ ...member, organization_id: store.organization_id, user_id: principal.id }) : null;
+      if (membership && ANNOUNCE_PERMISSIONS.some((permission) => membership.hasPermission(permission))) {
         return { store, organizationId: store.organization_id };
       }
     }

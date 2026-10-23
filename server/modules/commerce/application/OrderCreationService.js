@@ -12,6 +12,7 @@ const { PricingEngine, resolveCityRate, foldCity } = require('../domain/PricingE
 const { CreateOrderInputSchema } = require('../presentation/validators/orderSchemas');
 const { OrderRepository } = require('../infrastructure/OrderRepository');
 const IdempotencyService = require('../../../infrastructure/cache/IdempotencyService');
+const DistributedLockService = require('../../../infrastructure/cache/DistributedLockService');
 const CacheService = require('../../../infrastructure/cache/CacheService');
 const {
   ValidationError,
@@ -86,11 +87,28 @@ function describeError(err) {
   return message ? `${head} ${message}` : head;
 }
 
+/**
+ * The buyers whose order is being placed at this moment, shared by every
+ * OrderCreationService in the process.
+ *
+ * It used to be per-instance, and there are two instances — the one the
+ * /api/v1/orders router holds and the one PurchaseHistoryUseCase holds for
+ * /api/v1/users/me/orders — so the same bag sent to both routes at once passed
+ * the guard twice and became two orders. One registry, one answer.
+ */
+const ACTIVE_CREATIONS = new Set();
+
+/** How long the cross-process half of the guard holds a buyer's slot. */
+const CREATE_LOCK_TTL_MS = 30000;
+
 class OrderCreationService {
   constructor(repository = null, deps = {}) {
     this.repository = repository || new OrderRepository();
-    // Concurrency mutex for in-flight creations per user
-    this._activeLocks = new Set();
+    // Buyers whose order is being placed right now, shared across every
+    // instance of this service in the process (see ACTIVE_CREATIONS).
+    this._activeLocks = deps.activeLocks || ACTIVE_CREATIONS;
+    // The cross-process half of the same guard. Injectable for tests.
+    this._lockService = deps.lockService || DistributedLockService;
     // How a preferred provider is looked up when pricing the order. Injectable so
     // a test can supply providers without the shared delivery singleton; in
     // production it lazily reads the shared DeliveryService's repository, keeping
@@ -170,17 +188,49 @@ class OrderCreationService {
           logger.info(`[OrderCreationService] Idempotency hit: returning existing order for key ${effectiveIdempotencyKey}`);
           return new Order(cachedResponse.order);
         }
+        // This key has already completed, but the stored response is not an
+        // order. Falling through would place a SECOND order for a request the
+        // buyer has already had answered — the one thing the key exists to
+        // prevent — so the replay is refused instead.
+        logger.warn(`[OrderCreationService] Idempotency key ${effectiveIdempotencyKey} already completed without an order; refusing the replay.`);
+        throw new IdempotencyError(
+          'This request has already been processed. Start a new checkout to place another order.',
+          effectiveIdempotencyKey
+        );
       }
-      lockAcquired = true;
+      // Only an ACQUIRED key is ours to release on failure. Releasing a
+      // COMPLETED one would erase the record that makes the next replay
+      // idempotent.
+      lockAcquired = idempotencyCheck.state === 'ACQUIRED';
     }
 
-    // Concurrency guard per user to prevent rapid double-clicks without idempotency key
+    // Double-click guard: one order placement per buyer at a time. Two halves —
+    // a process-wide registry (always on) and a Redis lock that extends it
+    // across instances. The Redis half is best effort: when it is unavailable
+    // the local guard still stands, because refusing every checkout during a
+    // cache outage would be worse than the duplicate it prevents. A buyer who
+    // wants a hard guarantee sends an Idempotency-Key, which does fail closed.
     const userLockKey = `lock:createOrder:${userId}`;
     if (this._activeLocks.has(userLockKey)) {
-      if (scopedKey) await IdempotencyService.releaseLock(scopedKey).catch(() => {});
+      if (scopedKey && lockAcquired) await IdempotencyService.releaseLock(scopedKey).catch(() => {});
       throw new ConflictError('Another order creation is currently processing for your account. Please wait.');
     }
     this._activeLocks.add(userLockKey);
+
+    let crossProcessLock = null;
+    try {
+      crossProcessLock = await this._lockService.acquireLock(userLockKey, CREATE_LOCK_TTL_MS);
+      if (crossProcessLock === null) {
+        // Held on another instance: the buyer's previous attempt is still running.
+        this._activeLocks.delete(userLockKey);
+        if (scopedKey && lockAcquired) await IdempotencyService.releaseLock(scopedKey).catch(() => {});
+        throw new ConflictError('Another order creation is currently processing for your account. Please wait.');
+      }
+    } catch (err) {
+      if (err instanceof ConflictError) throw err;
+      logger.warn(`[OrderCreationService] Cross-instance order lock unavailable, the process-local guard stands: ${describeError(err)}`);
+      crossProcessLock = null;
+    }
 
     try {
       // 3. Resolve and authoritatively validate each listing and variant
@@ -315,6 +365,10 @@ class OrderCreationService {
       // city rate — but the buyer is TOLD (deliveryNotice below), not silently
       // switched. Stays null while nothing was dropped. (Integration spec item E.)
       let droppedPreferenceReason = null;
+      // The chosen provider's own tariff, when they set one. Kept apart from the
+      // city rate because it outranks a listing's delivery fee and the city rate
+      // does not — see PricingEngine.calculateOrderPricing.
+      let providerTariffXaf = null;
       // The provider the order ends up with, for the seller's message: the buyer's
       // pick, or (house store only) the default below. { id, name, source }.
       let messageProvider = effectivePreferredDriverId
@@ -327,7 +381,11 @@ class OrderCreationService {
           const active = provider && provider.status === 'active';
           if (active && serves) {
             messageProvider = { id: effectivePreferredDriverId, name: provider.name || null, source: 'buyer' };
-            if (provider.baseFeeXaf != null) standardShippingFeeXaf = provider.baseFeeXaf;
+            // The quote the buyer accepted. It goes to the pricing engine as the
+            // provider tariff, not as the city rate: a listing's own delivery fee
+            // outranks the city rate and was therefore silently re-pricing the
+            // order away from the number the picker had shown.
+            if (provider.baseFeeXaf != null) providerTariffXaf = Number(provider.baseFeeXaf);
             // else the provider quotes the standard city rate: leave it as resolved.
           } else {
             // Gone, suspended, or cannot serve this city: do not keep a dead
@@ -356,7 +414,8 @@ class OrderCreationService {
       const pricing = PricingEngine.calculateOrderPricing(evaluatedItems, {
         deliveryMethod: data.deliveryMethod,
         clientSuppliedTotal,
-        standardShippingFeeXaf
+        standardShippingFeeXaf,
+        providerTariffXaf
       });
 
       // 5. Hold the stock. checkInventory above only LOOKED: without a hold, every
@@ -484,6 +543,9 @@ class OrderCreationService {
       throw err;
     } finally {
       this._activeLocks.delete(userLockKey);
+      if (crossProcessLock) {
+        await this._lockService.releaseLock(userLockKey, crossProcessLock).catch(() => {});
+      }
     }
   }
 

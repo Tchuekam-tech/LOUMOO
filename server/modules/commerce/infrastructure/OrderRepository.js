@@ -217,11 +217,16 @@ class OrderRepository {
     const memKey = `${listingId}:${variantId || 'null'}`;
     if (this._inMemoryInventory.has(memKey)) {
       const inv = this._inMemoryInventory.get(memKey);
-      const avail = inv.onHand - inv.reserved;
+      const avail = (Number(inv.onHand) || 0) - (Number(inv.reserved) || 0);
       return {
-        isAvailable: !inv.trackInventory || (avail >= requestedQuantity),
+        // `allow_backorder` counts here exactly as it does on the database path
+        // below. It did not, so a seller who accepts backorders was refused in
+        // every test that seeds stock in memory while production let them
+        // through — the harness and the real thing disagreed about the same
+        // listing.
+        isAvailable: !inv.trackInventory || Boolean(inv.allowBackorder) || (avail >= requestedQuantity),
         availableQuantity: avail,
-        trackInventory: inv.trackInventory
+        trackInventory: Boolean(inv.trackInventory)
       };
     }
 

@@ -46,12 +46,17 @@ class PricingEngine {
    * @param {object} options
    * @param {string} [options.deliveryMethod='HOME_DELIVERY']
    * @param {number|null} [options.clientSuppliedTotal=null]
+   * @param {number|null} [options.standardShippingFeeXaf=null] the city rate.
+   * @param {number|null} [options.providerTariffXaf=null] the tariff of the
+   *        delivery provider the buyer chose and was quoted. Outranks a
+   *        listing's own delivery fee: the buyer accepted this number.
    * @returns {{subtotalXaf: number, shippingFeeXaf: number, totalAmountXaf: number, lineItems: Array}}
    */
   static calculateOrderPricing(evaluatedItems, {
     deliveryMethod = DELIVERY_METHOD.HOME_DELIVERY,
     clientSuppliedTotal = null,
-    standardShippingFeeXaf = null
+    standardShippingFeeXaf = null,
+    providerTariffXaf = null
   } = {}) {
     if (!Array.isArray(evaluatedItems) || evaluatedItems.length === 0) {
       throw new ValidationError('Cannot calculate pricing for an empty order.');
@@ -128,8 +133,19 @@ class PricingEngine {
         }
       }
 
+      // Precedence, strongest first:
+      //   1. the seller's free-delivery promise — it was made to this buyer and
+      //      only ever lowers what they pay;
+      //   2. the tariff of the provider the buyer CHOSE. They were quoted this
+      //      number at checkout and accepted it, so it is what the order costs.
+      //      It used to sit below the listing fee, which quietly re-priced the
+      //      order away from the quote the picker had shown;
+      //   3. the listing's own delivery fee, for a seller who delivers themselves;
+      //   4. the city rate, then the platform default.
       if (freeDeliveryThreshold != null && subtotalXaf >= freeDeliveryThreshold) {
         shippingFeeXaf = 0;
+      } else if (Number.isInteger(providerTariffXaf) && providerTariffXaf >= 0) {
+        shippingFeeXaf = providerTariffXaf;
       } else if (maxCustomDeliveryFee != null) {
         shippingFeeXaf = maxCustomDeliveryFee;
       } else if (Number.isInteger(standardShippingFeeXaf) && standardShippingFeeXaf >= 0) {

@@ -58,6 +58,25 @@ class PrivacyPreferencesUseCase {
     return defaultPrefs;
   }
 
+  /**
+   * Whether this profile is hidden from people who are not its owner.
+   *
+   * One answer for every path that serves a profile, so they cannot disagree
+   * — /u/:username refused a private profile while /users/:id/public handed
+   * the same person's card out. Answers false when the preference cannot be
+   * read, which matches getPreferences' own default of 'public': a lookup
+   * failure must not silently hide every seller on the platform.
+   */
+  async isProfilePrivate(userId) {
+    if (!userId) return false;
+    try {
+      const prefs = await this.getPreferences(userId);
+      return Boolean(prefs && prefs.profileVisibility === 'private');
+    } catch (err) {
+      return false;
+    }
+  }
+
   async updatePreferences(userId, updates) {
     if (!userId) throw new AuthorizationError('Authentication required');
 
