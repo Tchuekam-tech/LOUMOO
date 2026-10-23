@@ -6,7 +6,8 @@
  */
 
 const SuperAdminRepository = require('../repositories/SuperAdminRepository');
-const { ValidationError, AuthorizationError } = require('../../../server/shared/errors/AppError');
+const { ValidationError, AuthorizationError, ConflictError } = require('../../../server/shared/errors/AppError');
+const { PAYMENT_STATUS } = require('../../../server/modules/commerce/domain/Order');
 const logger = require('../../../server/shared/logging/logger');
 const CacheService = require('../../../server/infrastructure/cache/CacheService');
 
@@ -747,15 +748,41 @@ class SuperAdminService {
       : (actionOrPayload.action || actionOrPayload.escrow_action || '');
     const act = String(actRaw).toUpperCase();
 
+    // iam.orders has `payment_status` (the buyer-protection attestation, see
+    // migration 019) and `fulfillment_status`. It has never had `escrow_status`
+    // or `status`, so every one of these writes was rejected by PostgREST and
+    // the admin's decision never reached the order the buyer and seller read.
+    //
+    // Only the attestation moves here. Cancelling the order is a lifecycle
+    // transition with its own rules — a delivered parcel cannot be un-delivered
+    // — and the old code set `status: 'CANCELLED'` on a column that would not
+    // have accepted it anyway.
     let updates = {};
     if (act === 'RELEASE' || act === 'RELEASED') {
-      updates = { escrow_status: 'RELEASED', status: 'COMPLETED' };
+      updates = { payment_status: PAYMENT_STATUS.RELEASED };
     } else if (act === 'REFUND' || act === 'REFUNDED') {
-      updates = { escrow_status: 'REFUNDED', status: 'CANCELLED' };
+      updates = { payment_status: PAYMENT_STATUS.REFUNDED };
     } else if (act === 'HOLD' || act === 'HELD') {
-      updates = { escrow_status: 'HELD' };
+      updates = { payment_status: PAYMENT_STATUS.ESCROW_HELD };
     } else {
       throw new ValidationError(`Invalid escrow action [${actRaw}]. Supported actions: RELEASE, REFUND, HOLD.`);
+    }
+
+    // `released` and `refunded` are terminal: the delivery sync will not walk
+    // them back, and neither may a second admin click. Re-applying the state the
+    // order already holds is a no-op rather than a second financial event.
+    const current = await SuperAdminRepository.getOrderById(id);
+    if (!current) throw new ValidationError(`Order not found with ID ${id}`);
+    const currentState = String(current.payment_status || '').toLowerCase();
+    if (currentState === updates.payment_status) {
+      logger.info(`[SuperAdminService] Order ${id} is already "${updates.payment_status}"; escrow action [${act}] by ${adminId} changed nothing.`);
+      return current;
+    }
+    const settled = [PAYMENT_STATUS.RELEASED, PAYMENT_STATUS.REFUNDED];
+    if (settled.includes(currentState)) {
+      throw new ConflictError(
+        `Order ${id} is already settled as "${current.payment_status}" and cannot be moved to "${updates.payment_status}".`
+      );
     }
 
     const res = await SuperAdminRepository.updateOrder(id, updates, adminId);
@@ -768,7 +795,7 @@ class SuperAdminService {
       action: 'escrow.resolve',
       resourceType: 'order',
       resourceId: id,
-      oldValues: res.oldOrder ? { escrow_status: res.oldOrder.escrow_status, status: res.oldOrder.status } : null,
+      oldValues: res.oldOrder ? { payment_status: res.oldOrder.payment_status } : null,
       newValues: updates,
       reason: reason || (typeof actionOrPayload === 'object' && actionOrPayload.reason) || `Escrow action [${act}] executed`,
       ipAddress
