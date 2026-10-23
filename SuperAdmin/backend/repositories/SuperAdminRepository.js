@@ -28,6 +28,36 @@ const ORDER_COLUMNS_KPI = 'id, total_amount_xaf, payment_status, fulfillment_sta
  * has no store_id and two separate foreign keys into profiles (buyer and
  * seller), which makes an unqualified PostgREST embed ambiguous.
  */
+/**
+ * What iam.profiles actually holds (migration 001). The console asked for
+ * `full_name` and `kyc_status`; the table has `first_name`/`last_name` and no
+ * KYC column at all, so these selects were refused too and the user list and
+ * every store's owner block came from the seed.
+ *
+ * KYC lives in `metadata.kyc_status`, the JSONB column the table does have.
+ * That is where updateUserKyc writes it and where this reads it back — the
+ * admin endpoint existed but had nowhere to put its answer.
+ */
+const PROFILE_COLUMNS = 'id, first_name, last_name, email, phone_number, city, primary_role, status, metadata, created_at';
+const PROFILE_EMBED = 'profiles!inner(first_name, last_name, email, phone_number, metadata)';
+
+function fullNameOf(row) {
+  const name = [row && row.first_name, row && row.last_name].filter(Boolean).join(' ').trim();
+  return name || null;
+}
+
+function presentProfile(row) {
+  if (!row) return null;
+  const metadata = (row.metadata && typeof row.metadata === 'object') ? row.metadata : {};
+  return {
+    ...row,
+    full_name: fullNameOf(row),
+    // null, not a guess: an account nobody has reviewed has no KYC status, and
+    // inventing one from e-mail verification would be a fabricated attestation.
+    kyc_status: metadata.kyc_status || null
+  };
+}
+
 function presentOrder(row) {
   if (!row) return null;
   const ship = (row.shipping_address && typeof row.shipping_address === 'object') ? row.shipping_address : {};
@@ -214,36 +244,43 @@ const DEFAULT_LISTINGS = [
 ];
 
 // Default in-memory users for fallback / test runs
+// Shaped like an iam.profiles row (migration 001): first_name/last_name, and
+// KYC in the metadata JSONB. They used to carry a `full_name` and a top-level
+// `kyc_status`, neither of which is a column, so the fallback every test read
+// was a different data model from the one production writes.
 const DEFAULT_USERS = [
   {
     id: 'usr_admin_1',
-    full_name: 'Super Admin LOUMOO',
+    first_name: 'Super',
+    last_name: 'Admin LOUMOO',
     email: 'admin@loumoo.cm',
     phone_number: '237690123456',
     primary_role: 'super_admin',
-    kyc_status: 'verified',
+    metadata: { kyc_status: 'verified' },
     status: 'active',
     city: 'Douala',
     created_at: '2026-01-01T00:00:00Z'
   },
   {
     id: 'usr_seller_1',
-    full_name: 'Jean-Paul Ndedi',
+    first_name: 'Jean-Paul',
+    last_name: 'Ndedi',
     email: 'jp.ndedi@gmail.com',
     phone_number: '237677101234',
     primary_role: 'seller',
-    kyc_status: 'verified',
+    metadata: { kyc_status: 'verified' },
     status: 'active',
     city: 'Douala',
     created_at: '2026-08-01T10:00:00Z'
   },
   {
     id: 'usr_buyer_1',
-    full_name: 'Martine Ngo Yomkil',
+    first_name: 'Martine',
+    last_name: 'Ngo Yomkil',
     email: 'martine.ngo@gmail.com',
     phone_number: '237699112233',
     primary_role: 'customer',
-    kyc_status: 'unverified',
+    metadata: { kyc_status: 'unverified' },
     status: 'active',
     city: 'Yaoundé',
     created_at: '2026-09-05T14:20:00Z'
@@ -904,7 +941,7 @@ class SuperAdminRepository {
       try {
         let query = db
           .from('stores')
-          .select('id, owner_id, name, slug, description, category_id, phone_number, email, status, visibility, is_verified, verification_tier, rating, product_count, created_at, updated_at, profiles!inner(full_name, email, phone_number, kyc_status)')
+          .select(`id, owner_id, name, slug, description, category_id, phone_number, email, status, visibility, is_verified, verification_tier, rating, product_count, created_at, updated_at, ${PROFILE_EMBED}`)
           .order('created_at', { ascending: false })
           .range(offset, offset + limit - 1);
 
@@ -958,7 +995,7 @@ class SuperAdminRepository {
       try {
         const { data, error } = await db
           .from('stores')
-          .select('*, profiles!inner(full_name, email, phone_number, kyc_status)')
+          .select(`*, ${PROFILE_EMBED}`)
           .eq('id', id)
           .maybeSingle();
 
@@ -997,18 +1034,22 @@ class SuperAdminRepository {
           .from('stores')
           .update(payload)
           .eq('id', id)
-          .select('*, profiles!inner(full_name, email, phone_number, kyc_status)')
+          .select(`*, ${PROFILE_EMBED}`)
           .single();
 
         if (!error && data) {
-          // If verifying store, also update owner profile kyc_status
+          // Verifying the store also records the owner as KYC-verified. It is
+          // written into the metadata JSONB, where this module keeps KYC —
+          // `kyc_status` is not a column on iam.profiles, so this write was
+          // rejected every time and its error was never even read.
           if (updates.is_verified === true && data.owner_id) {
-            await db.from('profiles').update({ kyc_status: 'verified' }).eq('id', data.owner_id);
+            await this.markOwnerKycVerified(data.owner_id);
           }
           return { success: true, store: data, oldStore };
         }
+        logger.error(`[SuperAdminRepository] updateStore failed for ${id}: ${error ? error.message : 'no row returned'}`);
       } catch (err) {
-        logger.warn(`[SuperAdminRepository] updateStore DB error for ${id}:`, err.message);
+        logger.error(`[SuperAdminRepository] updateStore DB error for ${id}:`, err.message);
       }
     }
 
@@ -1106,20 +1147,24 @@ class SuperAdminRepository {
       try {
         let query = db
           .from('profiles')
-          .select('id, full_name, email, phone_number, city, primary_role, kyc_status, status, created_at')
+          .select(PROFILE_COLUMNS)
           .order('created_at', { ascending: false })
           .range(offset, offset + limit - 1);
 
         if (role && role !== 'ALL') query = query.eq('primary_role', role);
-        if (kyc && kyc !== 'ALL') query = query.eq('kyc_status', kyc);
+        // KYC lives in the metadata JSONB, so it is matched with the ->> operator
+        // rather than as a column of its own.
+        if (kyc && kyc !== 'ALL') query = query.eq('metadata->>kyc_status', kyc);
         if (search) {
-          query = query.or(`full_name.ilike.%${search}%,email.ilike.%${search}%,phone_number.ilike.%${search}%`);
+          const q = String(search).replace(/[%_,()]/g, '');
+          query = query.or(`first_name.ilike.%${q}%,last_name.ilike.%${q}%,email.ilike.%${q}%,phone_number.ilike.%${q}%`);
         }
 
         const { data, error } = await query;
-        if (!error && Array.isArray(data)) return data;
+        if (!error && Array.isArray(data)) return data.map(presentProfile);
+        logger.error(`[SuperAdminRepository] listUsers failed: ${error ? error.message : 'no rows returned'}`);
       } catch (err) {
-        logger.warn('[SuperAdminRepository] listUsers error, using fallback:', err.message);
+        logger.error('[SuperAdminRepository] listUsers error:', err.message);
       }
     }
 
@@ -1133,17 +1178,37 @@ class SuperAdminRepository {
     return results.slice(offset, offset + limit);
   }
 
+  /**
+   * Records a store owner as KYC-verified in `profiles.metadata`, merging over
+   * what the profile already carries. Best effort: the store verification it
+   * follows has already been committed, so a failure here is logged, not thrown.
+   */
+  static async markOwnerKycVerified(ownerId) {
+    try {
+      const owner = await this.getUserById(ownerId);
+      if (!owner) return false;
+      const existing = (owner.metadata && typeof owner.metadata === 'object') ? owner.metadata : {};
+      const res = await this.updateUser(ownerId, { metadata: { ...existing, kyc_status: 'verified' } });
+      if (!res.success) logger.error(`[SuperAdminRepository] could not mark owner ${ownerId} KYC-verified: ${res.error}`);
+      return res.success;
+    } catch (err) {
+      logger.error(`[SuperAdminRepository] could not mark owner ${ownerId} KYC-verified: ${err.message}`);
+      return false;
+    }
+  }
+
   static async getUserById(id) {
     const db = this.db;
     if (db) {
       try {
         const { data, error } = await db.from('profiles').select('*').eq('id', id).maybeSingle();
-        if (!error && data) return data;
+        if (!error) return presentProfile(data);
+        logger.error(`[SuperAdminRepository] getUserById failed for ${id}: ${error.message}`);
       } catch (err) {
-        logger.warn(`[SuperAdminRepository] getUserById error:`, err.message);
+        logger.error(`[SuperAdminRepository] getUserById error:`, err.message);
       }
     }
-    return inMemoryUsers.find(u => u.id === id) || null;
+    return presentProfile(inMemoryUsers.find(u => u.id === id) || null);
   }
 
   static async updateUser(id, updates = {}, adminId = 'super_admin') {
@@ -1151,13 +1216,27 @@ class SuperAdminRepository {
     if (!oldUser) return { success: false, error: 'User not found' };
 
     const payload = { ...updates, updated_at: new Date().toISOString() };
+
+    // `kyc_status` is not a column; it belongs to the metadata JSONB. Merged
+    // over the metadata this call already read, so writing a KYC decision does
+    // not drop whatever else the profile was carrying. Done before the branch,
+    // so the no-database path stores it exactly where the database path does.
+    if (payload.kyc_status !== undefined) {
+      const existing = (oldUser.metadata && typeof oldUser.metadata === 'object') ? oldUser.metadata : {};
+      payload.metadata = { ...existing, ...(payload.metadata || {}), kyc_status: payload.kyc_status };
+      delete payload.kyc_status;
+    }
+
     const db = this.db;
     if (db) {
       try {
         const { data, error } = await db.from('profiles').update(payload).eq('id', id).select().single();
-        if (!error && data) return { success: true, user: data, oldUser };
+        if (!error && data) return { success: true, user: presentProfile(data), oldUser };
+        logger.error(`[SuperAdminRepository] updateUser failed for ${id}: ${error ? error.message : 'no row returned'}`);
+        return { success: false, error: `User update failed: ${error ? error.message : 'no row returned'}` };
       } catch (err) {
-        logger.warn(`[SuperAdminRepository] updateUser DB error:`, err.message);
+        logger.error(`[SuperAdminRepository] updateUser DB error:`, err.message);
+        return { success: false, error: `User update failed: ${err.message}` };
       }
     }
 
@@ -1165,7 +1244,7 @@ class SuperAdminRepository {
     if (idx !== -1) {
       const updated = { ...inMemoryUsers[idx], ...payload };
       inMemoryUsers[idx] = updated;
-      return { success: true, user: updated, oldUser };
+      return { success: true, user: presentProfile(updated), oldUser };
     }
     return { success: false, error: 'User update failed' };
   }
