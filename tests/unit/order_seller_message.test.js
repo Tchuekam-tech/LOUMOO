@@ -322,6 +322,9 @@ function harness(overrides = {}) {
     findListingById: async (id) => listings[id] || null,
     findVariantById: async () => null,
     checkInventory: async () => ({ isAvailable: true, availableQuantity: 99 }),
+    // These listings do not track stock, so there is nothing to hold or give back.
+    reserveInventory: async () => ({ reserved: true, held: 0, trackInventory: false, availableQuantity: 99 }),
+    releaseInventory: async () => false,
     saveOrder: async (order) => { order.id = `ord_${saved.length + 1}`; saved.push(order); return order; }
   };
   const sent = [];
