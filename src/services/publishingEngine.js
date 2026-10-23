@@ -1309,7 +1309,13 @@
         deliveryScope: v.delivery ? (v.deliveryScope || null) : null,
         deliveryZones: v.delivery ? (v.deliveryZones || []) : [],
         etaText: trim(v.etaText) || null,
-        deliveryFeeMinor: v.delivery ? (toInt(v.deliveryFee) || 0) : null,
+        // A BLANK fee means "I have no fee of my own, charge the platform rate",
+        // so it stays null. `|| 0` turned it into a declared zero, and the pricing
+        // engine reads a declared zero as free delivery that outranks the city
+        // rate — so every seller who ticked delivery and left the box empty was
+        // silently shipping for free while the checkout still showed the city
+        // rate. A seller who means free types 0, which toInt keeps as 0.
+        deliveryFeeMinor: v.delivery ? toInt(v.deliveryFee) : null,
         freeDeliveryOverMinor: v.delivery && toInt(v.freeDeliveryOver) ? toInt(v.freeDeliveryOver) : null,
         pickupAddress: v.pickup ? (trim(v.pickupAddress) || null) : null
       };
