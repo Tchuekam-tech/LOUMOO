@@ -203,8 +203,11 @@ a real DB listing or a REAL curated product, else a **404**; a DB error is a
 404. **Fallback kept intentionally** only in `ComparisonService` (comparing a
 possibly-curated id by design).
 
-**Proven by:** `tests/unit/api_hardening.test.js` — with no DB the endpoint is
-503 (never a fabricated 200); a stubbed "no row" is a 404; a real product is 200.
+**Proven by:** `tests/unit/api_hardening.test.js` — with a failing DB the endpoint
+is 503 (never a fabricated 200); a stubbed "no row" is a 404; a real product is 200.
+With NO database configured (dev/demo only — production refuses to boot without
+one) the curated catalogue is the whole answer: curated id 200, unknown id 404
+(`tests/unit/product_detail_not_found.test.js`).
 Also covered on the SEO side by `tests/unit/seo_prerender.test.js` (unknown
 product prerenders a real 404).
 
@@ -345,3 +348,34 @@ curl -sI https://www.loumoo.store/marketplace/category/not-a-category   # 404
 Apply migration 022 (`node scripts/apply_migration.js 022_roles_row_level_security.sql`)
 with the project's credentials; then in Search Console submit
 `https://www.loumoo.store/sitemap.xml` on a `www` (or Domain) property.
+
+---
+
+## Bug sweep  (branch: `claude/laughing-babbage-xdmzlk`)
+
+Found by running every suite, turning the routing matrix's KNOWN_GAPs into
+assertions, a correctness-only lint of the server and the compiled app, a
+schema check of every query column, and reading the modules the matrix does
+not cover. Each fix has a test that fails without it. S1–S4 were also fixed independently on
+`main` (Priority 4); the merge keeps `main`'s versions of those and adds what it
+lacked (password reset and OTP refusals, `recordLogin`, Supabase Auth deletion).
+
+| # | Defect | Fix | Proven by |
+|---|---|---|---|
+| S1 | `GET /products/:id` was 503 for every id with no DB configured (P3 vs no-fabricated-products tests contradicted each other) | no DB → curated catalogue; failing DB → 503 | `product_detail_not_found`, `api_hardening` |
+| S2 | A deleted account signed back in and was silently reactivated | no un-delete in `getOrCreateForClerkUser`/`recordLogin`; one refusal rule on password, OTP and reset; deletion removes the Supabase Auth user | `deleted_account_stays_deleted`, routing matrix |
+| S3 | `POST /orders` ignored `canPurchase` (unverified / mid-onboarding accounts could order) | `requireCapability('canPurchase')`; checkout shows the 403's next step | routing matrix, `delivery_circuit` |
+| S4 | A store created without a phone published the owner's personal phone | only the business phone typed is stored | routing matrix |
+| S5 | Admin API served built-in demo rows against a live DB (columns in no migration); store moderation failed on real stores; listing moderation wrote invalid statuses; admin edits waited 5 min on the identity cache | schema-faithful queries + boundary translation, errors throw, cache invalidation, real listing statuses | routing matrix, `super_admin_phase3`, `query_columns_exist` |
+| S6 | Any signed-in user could edit/publish/delete someone else's personal (store-less) announcement | `_assertCanManage`: author, or the store's team | `announcement_manage_authz` |
+| S7 | An organization ADMIN could promote themselves to OWNER | only the owner grants OWNER; member status validated | `org_owner_escalation` |
+| S8 | A mutual block read as "not blocked" (two rows vs `maybeSingle()`); same flaw let duplicate unverified reviews through | `limit(1)` | `mutual_block` |
+| S9 | Product page: duplicate bindings showed every seller product as verified, MacBook photos for products without images, no specs for API products, demo store/price fallbacks | one `_productDetailView` reading both product shapes, no invented values | `product_page_view` |
+| S10 | Sign-out button skipped emptying the bag (shared devices); "use a different email" kept the old session | one `signOut()`; session cleared | `product_page_view` |
+| S11 | Toast OK button bound to an undefined handler; feeds said "end of listings" under every page | `clearToast`, `catalogHasMore` exposed | `template_bindings_resolve` |
+| S12 | `npm run build:frontend` dropped the SEO head sync and prerender styles (hand-edited into the build output) | moved into `build_redesign.py` | `build_head_in_sync` |
+| S13 | Unknown store shown as "✓ Verified"; every seller's own card said "Verified Merchant"; seller picker never said the customer's pick comes first | real verification only; merged duplicate subtitle | `product_page_view`, `rider_presence_client` |
+| S14 | Orders checked stock but never held it: a listing with 1 unit could be sold to every buyer; cancel/deliver never moved stock; every listing was advertised "in stock ×1000" | reserve on placement (all lines or none, 409 when short), release on cancel, consume on delivery, compare-and-swap; cards show on_hand − reserved | `order_inventory_hold`, routing matrix (reserved 2, was 0) |
+| S15 | Admin escrow wrote order status directly: refunds left the rider en route, stock held, buyer uninformed; releases could "deliver" an undelivered order | release only after delivery; refund cancels through `OrderLifecycleService` first; settled is final; CAS updates | `super_admin_phase3`, routing matrix |
+| S16 | Unrated listings and stores shown as 5.0 stars ("★ 5" on search) | a rating needs at least one review | `product_page_view` |
+| S17 | An empty or failed announcement feed was filled with invented "product drops" (fake stores, prices, buy buttons) | feed shows only published broadcasts; empty/error states | `announce_feed_and_store_edit_loading` |

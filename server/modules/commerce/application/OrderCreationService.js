@@ -104,8 +104,8 @@ const CREATE_LOCK_TTL_MS = 30000;
 class OrderCreationService {
   constructor(repository = null, deps = {}) {
     this.repository = repository || new OrderRepository();
-    // Buyers whose order is being placed right now, shared across every instance
-    // of this service in the process (see ACTIVE_CREATIONS).
+    // Buyers whose order is being placed right now, shared across every
+    // instance of this service in the process (see ACTIVE_CREATIONS).
     this._activeLocks = deps.activeLocks || ACTIVE_CREATIONS;
     // The cross-process half of the same guard. Injectable for tests.
     this._lockService = deps.lockService || DistributedLockService;
@@ -188,27 +188,28 @@ class OrderCreationService {
           logger.info(`[OrderCreationService] Idempotency hit: returning existing order for key ${effectiveIdempotencyKey}`);
           return new Order(cachedResponse.order);
         }
-        // This key has already completed, but the stored response is not an order.
-        // Falling through would place a SECOND order for a request the buyer has
-        // already had answered — the one thing the key exists to prevent — so the
-        // replay is refused instead.
+        // This key has already completed, but the stored response is not an
+        // order. Falling through would place a SECOND order for a request the
+        // buyer has already had answered — the one thing the key exists to
+        // prevent — so the replay is refused instead.
         logger.warn(`[OrderCreationService] Idempotency key ${effectiveIdempotencyKey} already completed without an order; refusing the replay.`);
         throw new IdempotencyError(
           'This request has already been processed. Start a new checkout to place another order.',
           effectiveIdempotencyKey
         );
       }
-      // Only an ACQUIRED key is ours to release on failure. Releasing a COMPLETED
-      // one would erase the record that makes the next replay idempotent.
+      // Only an ACQUIRED key is ours to release on failure. Releasing a
+      // COMPLETED one would erase the record that makes the next replay
+      // idempotent.
       lockAcquired = idempotencyCheck.state === 'ACQUIRED';
     }
 
     // Double-click guard: one order placement per buyer at a time. Two halves —
-    // a process-wide registry (always on) and a Redis lock that extends it across
-    // instances. The Redis half is best effort: when it is unavailable the local
-    // guard still stands, because refusing every checkout during a cache outage
-    // would be worse than the duplicate it prevents. A buyer who wants a hard
-    // guarantee sends an Idempotency-Key, which does fail closed above.
+    // a process-wide registry (always on) and a Redis lock that extends it
+    // across instances. The Redis half is best effort: when it is unavailable
+    // the local guard still stands, because refusing every checkout during a
+    // cache outage would be worse than the duplicate it prevents. A buyer who
+    // wants a hard guarantee sends an Idempotency-Key, which does fail closed.
     const userLockKey = `lock:createOrder:${userId}`;
     if (this._activeLocks.has(userLockKey)) {
       if (scopedKey && lockAcquired) await IdempotencyService.releaseLock(scopedKey).catch(() => {});
@@ -230,12 +231,6 @@ class OrderCreationService {
       logger.warn(`[OrderCreationService] Cross-instance order lock unavailable, the process-local guard stands: ${describeError(err)}`);
       crossProcessLock = null;
     }
-
-    // Stock this attempt has taken off the shelf. Anything in here when the
-    // attempt fails goes straight back — an order that was never placed must
-    // never leave a listing looking sold out.
-    let heldLines = [];
-    let orderPlaced = false;
 
     try {
       // 3. Resolve and authoritatively validate each listing and variant
@@ -423,7 +418,17 @@ class OrderCreationService {
         providerTariffXaf
       });
 
-      // 5. Construct Order Aggregate
+      // 5. Hold the stock. checkInventory above only LOOKED: without a hold, every
+      // concurrent (or later) buyer saw the same units free and a listing with one
+      // left was sold again and again. All lines or none; the held lines ride on
+      // the order and are released when it is cancelled, consumed when delivered.
+      const heldInventory = typeof this.repository.reserveInventory === 'function'
+        ? await this.repository.reserveInventory(evaluatedItems.map(it => ({
+          listingId: it.listingId, variantId: it.variantId, quantity: it.quantity, title: it.title
+        })))
+        : [];
+
+      // 6. Construct Order Aggregate
       const orderItems = pricing.lineItems.map(it => new OrderItem({
         listingId: it.listingId,
         variantId: it.variantId,
@@ -452,7 +457,8 @@ class OrderCreationService {
         shippingFeeXaf: pricing.shippingFeeXaf,
         totalAmountXaf: pricing.totalAmountXaf,
         currency: 'XAF',
-        shippingAddress: data.shippingAddress || {},
+        // `_inventory` is set here, never taken from the request.
+        shippingAddress: { ...(data.shippingAddress || {}), _inventory: heldInventory },
         deliveryMethod: data.deliveryMethod,
         // The preference as RESOLVED above: null for pickup, or when the chosen
         // provider turned out unavailable, so the order never carries a dead pick.
@@ -469,17 +475,14 @@ class OrderCreationService {
         ]
       });
 
-      // 6. Take the stock off the shelf, then persist.
-      // Last thing before the write, so a bag that was going to be refused
-      // anyway — a mixed-store order, a tampered total — never holds a unit,
-      // and the window between the hold and the order existing is as small as
-      // it can be. The `finally` gives these back if the write does not land.
-      heldLines = await this._holdStock(evaluatedItems);
-
-      const savedOrder = await this.repository.saveOrder(order);
-      // From here the stock belongs to the order: it is released when the order
-      // is cancelled and consumed when it is delivered, not by this method.
-      orderPlaced = true;
+      // 7. Atomically persist to database (an order that was not stored holds nothing)
+      let savedOrder;
+      try {
+        savedOrder = await this.repository.saveOrder(order);
+      } catch (saveErr) {
+        if (heldInventory.length) await this.repository.releaseInventory(heldInventory);
+        throw saveErr;
+      }
 
       // If the buyer's chosen provider was dropped above, tell them honestly: the
       // order succeeded at the standard city rate, it was not silently switched.
@@ -490,7 +493,7 @@ class OrderCreationService {
         savedOrder.deliveryNotice = buildDroppedPreferenceNotice(droppedPreferenceReason, savedOrder.shippingFeeXaf);
       }
 
-      // 7. Save Idempotency Cache Result
+      // 8. Save Idempotency Cache Result
       if (scopedKey) {
         const responseBody = {
           success: true,
@@ -503,7 +506,7 @@ class OrderCreationService {
         });
       }
 
-      // 8. Invalidate Buyer's Purchase History Cache
+      // 9. Invalidate Buyer's Purchase History Cache
       try {
         if (CacheService.delPattern) {
           await CacheService.delPattern(`purchases:${userId}:*`);
@@ -514,7 +517,7 @@ class OrderCreationService {
         logger.warn(`[OrderCreationService] Cache invalidation warning: ${cacheErr.message}`);
       }
 
-      // 9. Asynchronous Activity & Notification Dispatch
+      // 10. Asynchronous Activity & Notification Dispatch
       if (UserActivityUseCase && typeof UserActivityUseCase.recordActivity === 'function') {
         UserActivityUseCase.recordActivity(userId, {
           actionType: 'order_placed',
@@ -542,59 +545,6 @@ class OrderCreationService {
       this._activeLocks.delete(userLockKey);
       if (crossProcessLock) {
         await this._lockService.releaseLock(userLockKey, crossProcessLock).catch(() => {});
-      }
-      // The order never got saved: put every unit back on the shelf.
-      if (!orderPlaced && heldLines.length) {
-        await this._releaseStock(heldLines);
-      }
-    }
-  }
-
-  /**
-   * Takes every line of the order off the shelf, atomically, before the order is
-   * written. `checkInventory` above only looked; this is what actually stops two
-   * buyers from being sold the same last unit. The first line that cannot be held
-   * puts back the ones already held and refuses the order with the same message
-   * the availability check uses, so the buyer sees one consistent reason.
-   *
-   * @returns {Promise<Array<{listingId: string, variantId: string|null, quantity: number}>>}
-   *          the lines actually holding stock, for the unwind path.
-   */
-  async _holdStock(evaluatedItems) {
-    const held = [];
-    for (const item of evaluatedItems) {
-      let outcome;
-      try {
-        outcome = await this.repository.reserveInventory(item.listingId, item.variantId, item.quantity);
-      } catch (err) {
-        await this._releaseStock(held);
-        throw err;
-      }
-
-      if (!outcome || !outcome.reserved) {
-        await this._releaseStock(held);
-        const available = outcome ? Math.max(0, outcome.availableQuantity) : 0;
-        throw new ConflictError(
-          `Insufficient stock for "${item.title}". Only ${available} unit(s) available, but requested ${item.quantity}.`
-        );
-      }
-
-      // Nothing was actually held (untracked stock, or backorders allowed): there
-      // is nothing to give back either, so it stays out of the unwind list.
-      if (outcome.held > 0) {
-        held.push({ listingId: item.listingId, variantId: item.variantId, quantity: item.quantity });
-      }
-    }
-    return held;
-  }
-
-  /** Puts held stock back. Best effort: the caller is already failing the order. */
-  async _releaseStock(heldLines) {
-    for (const line of heldLines) {
-      try {
-        await this.repository.releaseInventory(line.listingId, line.variantId, line.quantity);
-      } catch (err) {
-        logger.error(`[OrderCreation] Could not release the hold on ${line.listingId}: ${describeError(err)}`);
       }
     }
   }

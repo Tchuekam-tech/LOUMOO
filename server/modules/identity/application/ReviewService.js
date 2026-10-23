@@ -83,13 +83,15 @@ class ReviewService {
 
     // ── 2. Check Blocking Preferences ──
     if (targetOwnerId) {
-      const { data: block } = await adminDb
+      // A mutual block is two rows; maybeSingle() errored on it, the error was
+      // ignored, and the review went through. limit(1) reads either row.
+      const { data: blocks } = await adminDb
         .from('social_blocks')
         .select('id')
         .or(`and(blocker_id.eq.${authorPrincipal.id},blocked_id.eq.${targetOwnerId}),and(blocker_id.eq.${targetOwnerId},blocked_id.eq.${authorPrincipal.id})`)
-        .maybeSingle();
+        .limit(1);
 
-      if (block) {
+      if (Array.isArray(blocks) && blocks.length > 0) {
         throw new ValidationError('Unable to review this entity due to privacy/blocking preferences.');
       }
     }
@@ -128,6 +130,8 @@ class ReviewService {
       }
     } else {
       // ── 4. Prevent Unverified Review Flooding / Duplicates ──
+      // No unique constraint covers order_id IS NULL, so a race can leave two
+      // rows; maybeSingle() then errored, read as "none", and let more in.
       const { data: existingUnverified } = await adminDb
         .from('reviews')
         .select('id')
@@ -135,9 +139,9 @@ class ReviewService {
         .eq('target_type', targetType)
         .eq('target_id', targetId)
         .is('order_id', null)
-        .maybeSingle();
+        .limit(1);
 
-      if (existingUnverified) {
+      if (Array.isArray(existingUnverified) && existingUnverified.length > 0) {
         throw new ConflictError('You have already submitted a review for this entity. Edit your existing review instead.');
       }
     }

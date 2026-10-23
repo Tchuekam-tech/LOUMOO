@@ -7,7 +7,6 @@
 
 const SuperAdminRepository = require('../repositories/SuperAdminRepository');
 const { ValidationError, AuthorizationError, ConflictError } = require('../../../server/shared/errors/AppError');
-const { PAYMENT_STATUS } = require('../../../server/modules/commerce/domain/Order');
 const logger = require('../../../server/shared/logging/logger');
 const CacheService = require('../../../server/infrastructure/cache/CacheService');
 
@@ -273,29 +272,6 @@ class SuperAdminService {
     });
 
     return result;
-  }
-
-  /**
-   * Updates multiple dynamic system settings in batch, invalidating caches.
-   */
-  static async updateSystemSettings(payload = {}, { adminId = 'super_admin', reason = null, ipAddress = null } = {}) {
-    if (!payload || typeof payload !== 'object') {
-      throw new ValidationError('A settings payload object must be provided.');
-    }
-    const updated = {};
-    for (const [k, v] of Object.entries(payload)) {
-      if (k === 'reason' || k === 'adminId') continue;
-      if (v !== undefined && v !== null && typeof v === 'object') {
-        await this.updateSystemSetting(k, v, { adminId, reason: reason || `Batch update setting [${k}]`, ipAddress });
-        updated[k] = v;
-      }
-    }
-    try {
-      if (CacheService && typeof CacheService.delete === 'function') {
-        await CacheService.delete('system_settings:all', 'admin');
-      }
-    } catch (_) {}
-    return { success: true, updated };
   }
 
   /**
@@ -586,42 +562,40 @@ class SuperAdminService {
     if (!id) throw new ValidationError('Listing ID is required.');
     if (!actionOrUpdates) throw new ValidationError('Action or updates payload is required.');
 
+    // The moderation verbs in the listing lifecycle's own statuses (migration
+    // 005: DRAFT … PUBLISHED, PAUSED, ARCHIVED, REJECTED). They used to write
+    // ACTIVE / INACTIVE and an `is_approved` flag, none of which a listing has:
+    // "approving" a listing took it out of PUBLISHED, and on the database the
+    // write failed outright.
+    const MODERATION = {
+      APPROVE: { status: 'PUBLISHED', audit: 'listing.approve' },
+      REJECT: { status: 'REJECTED', audit: 'listing.reject' },
+      SUSPEND: { status: 'PAUSED', audit: 'listing.suspend' }
+    };
+    const verbOf = (raw) => {
+      const act = String(raw || '').toUpperCase();
+      if (act === 'APPROVED' || act === 'APPROVE' || act === 'ACTIVE' || act === 'PUBLISHED') return 'APPROVE';
+      if (act === 'REJECTED' || act === 'REJECT') return 'REJECT';
+      if (act === 'SUSPENDED' || act === 'SUSPEND' || act === 'PAUSED') return 'SUSPEND';
+      return null;
+    };
+
     let updates = {};
     let auditAction = 'listing.moderate';
+    const given = typeof actionOrUpdates === 'object' ? { ...actionOrUpdates } : {};
+    const verb = verbOf(typeof actionOrUpdates === 'string' ? actionOrUpdates : given.action);
+    const why = given.reason || reason || null;
+    delete given.action;
+    delete given.reason;
 
-    if (typeof actionOrUpdates === 'string') {
-      const act = actionOrUpdates.toUpperCase();
-      if (act === 'APPROVED' || act === 'APPROVE' || act === 'ACTIVE') {
-        updates = { status: 'ACTIVE', is_approved: true };
-        auditAction = 'listing.approve';
-      } else if (act === 'REJECTED' || act === 'REJECT') {
-        updates = { status: 'ARCHIVED', is_approved: false };
-        auditAction = 'listing.reject';
-      } else if (act === 'SUSPENDED' || act === 'SUSPEND') {
-        updates = { status: 'INACTIVE', is_approved: false };
-        auditAction = 'listing.suspend';
-      } else {
-        updates = { status: actionOrUpdates };
-      }
-    } else if (typeof actionOrUpdates === 'object') {
-      if (actionOrUpdates.action) {
-        const act = String(actionOrUpdates.action).toUpperCase();
-        if (act === 'APPROVED' || act === 'APPROVE' || act === 'ACTIVE') {
-          updates = { status: 'ACTIVE', is_approved: true, ...actionOrUpdates };
-          auditAction = 'listing.approve';
-        } else if (act === 'REJECTED' || act === 'REJECT') {
-          updates = { status: 'ARCHIVED', is_approved: false, ...actionOrUpdates };
-          auditAction = 'listing.reject';
-        } else if (act === 'SUSPENDED' || act === 'SUSPEND') {
-          updates = { status: 'INACTIVE', is_approved: false, ...actionOrUpdates };
-          auditAction = 'listing.suspend';
-        } else {
-          updates = { ...actionOrUpdates };
-        }
-        delete updates.action;
-      } else {
-        updates = { ...actionOrUpdates };
-      }
+    if (verb) {
+      updates = { ...given, status: MODERATION[verb].status };
+      if (verb === 'REJECT' && why) updates.rejection_reason = why;
+      auditAction = MODERATION[verb].audit;
+    } else if (typeof actionOrUpdates === 'string') {
+      updates = { status: actionOrUpdates };
+    } else {
+      updates = given;
     }
 
     const res = await SuperAdminRepository.updateListing(id, updates, adminId);
@@ -714,7 +688,9 @@ class SuperAdminService {
       throw new ValidationError('A valid KYC status must be specified.');
     }
 
-    const VALID_STATUSES = ['unverified', 'pending', 'verified', 'rejected'];
+    // The profile column holds pending / submitted / verified / rejected;
+    // `unverified` is accepted as the console's name for pending.
+    const VALID_STATUSES = ['unverified', 'pending', 'submitted', 'verified', 'rejected'];
     if (!VALID_STATUSES.includes(targetStatus.toLowerCase())) {
       throw new ValidationError(`Invalid KYC status [${targetStatus}]. Allowed: ${VALID_STATUSES.join(', ')}`);
     }
@@ -739,6 +715,19 @@ class SuperAdminService {
     return order;
   }
 
+  /**
+   * Arbitrates an order's buyer protection: RELEASE (settle to the seller),
+   * REFUND, or HOLD. It used to write the order row directly (status COMPLETED /
+   * CANCELLED), so a refund left the rider heading to the shop, the stock held,
+   * and the buyer uninformed, and a release could mark an order delivered that
+   * never was. The rules, in the order's own terms:
+   *   RELEASE  only after the handover (delivered).
+   *   REFUND   a processing order is cancelled through the order lifecycle first
+   *            (delivery cancelled, stock released, buyer notified); a parcel
+   *            with a rider cannot be refunded until it comes back.
+   *   HOLD     freezes an unsettled order's protection.
+   * A settled order (released or refunded) is final.
+   */
   static async resolveEscrow(id, actionOrPayload, { adminId = 'super_admin', reason = null, ipAddress = null } = {}) {
     if (!id) throw new ValidationError('Order ID is required.');
     if (!actionOrPayload) throw new ValidationError('Escrow action is required.');
@@ -746,63 +735,78 @@ class SuperAdminService {
     const actRaw = typeof actionOrPayload === 'string'
       ? actionOrPayload
       : (actionOrPayload.action || actionOrPayload.escrow_action || '');
-    const act = String(actRaw).toUpperCase();
-
-    // iam.orders has `payment_status` (the buyer-protection attestation, see
-    // migration 019) and `fulfillment_status`. It has never had `escrow_status`
-    // or `status`, so every one of these writes was rejected by PostgREST and
-    // the admin's decision never reached the order the buyer and seller read.
-    //
-    // Only the attestation moves here. Cancelling the order is a lifecycle
-    // transition with its own rules — a delivered parcel cannot be un-delivered
-    // — and the old code set `status: 'CANCELLED'` on a column that would not
-    // have accepted it anyway.
-    let updates = {};
-    if (act === 'RELEASE' || act === 'RELEASED') {
-      updates = { payment_status: PAYMENT_STATUS.RELEASED };
-    } else if (act === 'REFUND' || act === 'REFUNDED') {
-      updates = { payment_status: PAYMENT_STATUS.REFUNDED };
-    } else if (act === 'HOLD' || act === 'HELD') {
-      updates = { payment_status: PAYMENT_STATUS.ESCROW_HELD };
-    } else {
+    const upper = String(actRaw).toUpperCase();
+    const act = { RELEASE: 'RELEASE', RELEASED: 'RELEASE', REFUND: 'REFUND', REFUNDED: 'REFUND', HOLD: 'HOLD', HELD: 'HOLD' }[upper];
+    if (!act) {
       throw new ValidationError(`Invalid escrow action [${actRaw}]. Supported actions: RELEASE, REFUND, HOLD.`);
     }
+    const why = reason || (typeof actionOrPayload === 'object' && actionOrPayload.reason) || `Escrow action [${act}] executed`;
 
-    // `released` and `refunded` are terminal: the delivery sync will not walk
-    // them back, and neither may a second admin click. Re-applying the state the
-    // order already holds is a no-op rather than a second financial event.
-    const current = await SuperAdminRepository.getOrderById(id);
-    if (!current) throw new ValidationError(`Order not found with ID ${id}`);
-    const currentState = String(current.payment_status || '').toLowerCase();
-    if (currentState === updates.payment_status) {
-      logger.info(`[SuperAdminService] Order ${id} is already "${updates.payment_status}"; escrow action [${act}] by ${adminId} changed nothing.`);
-      return current;
+    const before = await SuperAdminRepository.getOrderById(id);
+    if (!before) throw new ValidationError(`Order not found with ID ${id}`);
+    const status = String(before.status || '').toUpperCase();
+    const escrow = String(before.escrow_status || '').toUpperCase();
+
+    if (escrow === 'RELEASED' || escrow === 'REFUNDED') {
+      throw new ConflictError(`This order's buyer protection is already settled (${escrow.toLowerCase()}).`);
     }
-    const settled = [PAYMENT_STATUS.RELEASED, PAYMENT_STATUS.REFUNDED];
-    if (settled.includes(currentState)) {
-      throw new ConflictError(
-        `Order ${id} is already settled as "${current.payment_status}" and cannot be moved to "${updates.payment_status}".`
-      );
+    if (act === 'RELEASE' && status !== 'DELIVERED') {
+      throw new ConflictError(`Funds are released after the handover; this order is ${status.toLowerCase() || 'not delivered'}.`);
+    }
+    if (act === 'REFUND' && status === 'IN_TRANSIT') {
+      throw new ConflictError('The parcel is with a rider. Cancel or return the delivery before refunding the order.');
     }
 
-    const res = await SuperAdminRepository.updateOrder(id, updates, adminId);
-    if (!res.success) {
-      throw new ValidationError(res.error || 'Failed to resolve order escrow');
+    let order;
+    if (SuperAdminRepository.db) {
+      order = await this._settleOrderProtection(before.id, act, { adminId, reason: why });
+    } else {
+      // No database (tests, local demo): the in-memory admin rows, same rules.
+      const updates = act === 'RELEASE' ? { escrow_status: 'RELEASED' }
+        : act === 'REFUND' ? { escrow_status: 'REFUNDED', ...(status === 'PROCESSING' || status === 'PENDING' ? { status: 'CANCELLED' } : {}) }
+          : { escrow_status: 'HELD' };
+      const res = await SuperAdminRepository.updateOrder(id, updates, adminId);
+      if (!res.success) throw new ValidationError(res.error || 'Failed to resolve order escrow');
+      order = res.order;
     }
 
     await SuperAdminRepository.recordAuditLog({
       adminId,
       action: 'escrow.resolve',
       resourceType: 'order',
-      resourceId: id,
-      oldValues: res.oldOrder ? { payment_status: res.oldOrder.payment_status } : null,
-      newValues: updates,
-      reason: reason || (typeof actionOrPayload === 'object' && actionOrPayload.reason) || `Escrow action [${act}] executed`,
+      resourceId: before.id,
+      oldValues: { escrow_status: before.escrow_status, status: before.status },
+      newValues: { escrow_status: order.escrow_status, status: order.status, action: act },
+      reason: why,
       ipAddress
     });
 
-    logger.info(`[SuperAdminService] Order ${id} escrow resolved (${act}) by ${adminId}`);
-    return res.order;
+    logger.info(`[SuperAdminService] Order ${before.id} escrow resolved (${act}) by ${adminId}`);
+    return order;
+  }
+
+  /** The database path of resolveEscrow, through the commerce domain. */
+  static async _settleOrderProtection(orderId, act, { adminId, reason }) {
+    const { OrderRepository } = require('../../../server/modules/commerce/infrastructure/OrderRepository');
+    const { OrderLifecycleService } = require('../../../server/modules/commerce/application/OrderLifecycleService');
+    const { FULFILLMENT_STATUS, PAYMENT_STATUS } = require('../../../server/modules/commerce/domain/Order');
+    const repo = new OrderRepository();
+
+    let order = await repo.findOrderByIdFresh(orderId);
+    if (!order) throw new ValidationError(`Order not found with ID ${orderId}`);
+    const meta = { note: reason, updatedBy: adminId };
+
+    if (act === 'REFUND' && order.fulfillmentStatus === FULFILLMENT_STATUS.PROCESSING) {
+      await new OrderLifecycleService(repo).cancelOrder(order.id, adminId, reason, { userRole: 'admin' });
+      order = await repo.findOrderByIdFresh(order.id);
+    }
+    const next = act === 'RELEASE' ? PAYMENT_STATUS.RELEASED
+      : act === 'REFUND' ? PAYMENT_STATUS.REFUNDED
+        : PAYMENT_STATUS.ESCROW_HELD;
+    if (order.paymentStatus !== next) {
+      await repo.updatePaymentStatusAtomic(order.id, order.paymentStatus, next, meta);
+    }
+    return SuperAdminRepository.getOrderById(order.id);
   }
 }
 

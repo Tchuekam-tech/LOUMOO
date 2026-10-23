@@ -13,10 +13,6 @@ const logger = require('../../../shared/logging/logger');
 const { findCuratedProduct, payablePriceXaf } = require('../../catalog/domain/CuratedCatalog');
 const { getSharedHouseStore } = require('../../store/application/HouseStoreService');
 
-// How many times a stock compare-and-swap re-reads the row before giving up.
-// Contention on one listing is short-lived; a handful of attempts clears it.
-const INVENTORY_CAS_ATTEMPTS = 5;
-
 class OrderRepository {
   constructor(options = {}) {
     const opts = options || {};
@@ -225,8 +221,9 @@ class OrderRepository {
       return {
         // `allow_backorder` counts here exactly as it does on the database path
         // below. It did not, so a seller who accepts backorders was refused in
-        // every test that seeds stock in memory while production let them through
-        // — the harness and the real thing disagreed about the same listing.
+        // every test that seeds stock in memory while production let them
+        // through — the harness and the real thing disagreed about the same
+        // listing.
         isAvailable: !inv.trackInventory || Boolean(inv.allowBackorder) || (avail >= requestedQuantity),
         availableQuantity: avail,
         trackInventory: Boolean(inv.trackInventory)
@@ -279,209 +276,6 @@ class OrderRepository {
       availableQuantity: 9999,
       trackInventory: false
     };
-  }
-
-  /**
-   * Holds stock for an order line, atomically.
-   *
-   * `checkInventory` only READS: two buyers racing for the last unit both see it
-   * free and both orders are accepted. This is the write that makes the check
-   * mean something — a compare-and-swap on `reserved`, exactly like the order
-   * status updaters: the UPDATE only matches while the row still holds the
-   * `reserved` value this call read, so of two racing reservations one lands and
-   * the other retries against the new figure (and is refused once the stock has
-   * genuinely run out).
-   *
-   * Untracked stock and backorder-friendly listings hold nothing: there is no
-   * number to run out of, so they always succeed.
-   *
-   * @returns {Promise<{reserved: boolean, held: number, trackInventory: boolean, availableQuantity: number}>}
-   */
-  async reserveInventory(listingId, variantId = null, quantity = 1) {
-    const qty = Math.max(0, Number(quantity) || 0);
-    const untracked = { reserved: true, held: 0, trackInventory: false, availableQuantity: Number.MAX_SAFE_INTEGER };
-    if (!qty) return untracked;
-
-    const memKey = `${listingId}:${variantId || 'null'}`;
-    if (this._inMemoryInventory.has(memKey)) {
-      const inv = this._inMemoryInventory.get(memKey);
-      if (!inv.trackInventory) return untracked;
-      const available = (Number(inv.onHand) || 0) - (Number(inv.reserved) || 0);
-      if (!inv.allowBackorder && available < qty) {
-        return { reserved: false, held: 0, trackInventory: true, availableQuantity: available };
-      }
-      inv.reserved = (Number(inv.reserved) || 0) + qty;
-      return { reserved: true, held: qty, trackInventory: true, availableQuantity: available - qty };
-    }
-
-    if (!this.db) return untracked;
-
-    for (let attempt = 0; attempt < INVENTORY_CAS_ATTEMPTS; attempt += 1) {
-      const row = await this._inventoryRow(listingId, variantId);
-      // No stock record at all, or the seller does not track stock: nothing to hold.
-      if (!row || !row.track_inventory) return untracked;
-
-      const onHand = Number(row.on_hand) || 0;
-      const held = Number(row.reserved) || 0;
-      const available = onHand - held;
-      if (!row.allow_backorder && available < qty) {
-        return { reserved: false, held: 0, trackInventory: true, availableQuantity: available };
-      }
-
-      if (await this._swapReserved(row, held, held + qty, 'reserveInventory')) {
-        return { reserved: true, held: qty, trackInventory: true, availableQuantity: available - qty };
-      }
-      // Another order moved `reserved` between the read and the write: look again.
-    }
-
-    // Contended beyond the retry budget. Refusing is the safe answer: an order that
-    // was not placed can be retried, stock that was oversold cannot be unsold.
-    logger.warn(`[OrderRepository] Could not reserve stock for ${listingId}${variantId ? `/${variantId}` : ''} after ${INVENTORY_CAS_ATTEMPTS} attempts.`);
-    return { reserved: false, held: 0, trackInventory: true, availableQuantity: 0 };
-  }
-
-  /**
-   * Gives back stock held by `reserveInventory` — the order was refused after the
-   * hold, or it was cancelled. Never drives `reserved` below zero. Best effort:
-   * the caller is already unwinding, so a failure here is logged, not thrown.
-   */
-  async releaseInventory(listingId, variantId = null, quantity = 1) {
-    const qty = Math.max(0, Number(quantity) || 0);
-    if (!qty) return false;
-
-    const memKey = `${listingId}:${variantId || 'null'}`;
-    if (this._inMemoryInventory.has(memKey)) {
-      const inv = this._inMemoryInventory.get(memKey);
-      if (!inv.trackInventory) return false;
-      inv.reserved = Math.max(0, (Number(inv.reserved) || 0) - qty);
-      return true;
-    }
-
-    if (!this.db) return false;
-
-    try {
-      for (let attempt = 0; attempt < INVENTORY_CAS_ATTEMPTS; attempt += 1) {
-        const row = await this._inventoryRow(listingId, variantId);
-        if (!row || !row.track_inventory) return false;
-        const held = Number(row.reserved) || 0;
-        if (held === 0) return true;
-        if (await this._swapReserved(row, held, Math.max(0, held - qty), 'releaseInventory')) return true;
-      }
-    } catch (err) {
-      logger.error(`[OrderRepository] Could not release stock for ${listingId}${variantId ? `/${variantId}` : ''}: ${err.message}`);
-      return false;
-    }
-    logger.warn(`[OrderRepository] Stock release for ${listingId}${variantId ? `/${variantId}` : ''} lost every attempt; ${qty} unit(s) stay held.`);
-    return false;
-  }
-
-  /**
-   * Turns a hold into a sale: the units leave `on_hand` and the hold is dropped in
-   * the SAME write, so the two can never disagree. Called once an order is
-   * delivered. Best effort and logged, like the release.
-   */
-  async consumeInventory(listingId, variantId = null, quantity = 1) {
-    const qty = Math.max(0, Number(quantity) || 0);
-    if (!qty) return false;
-
-    const memKey = `${listingId}:${variantId || 'null'}`;
-    if (this._inMemoryInventory.has(memKey)) {
-      const inv = this._inMemoryInventory.get(memKey);
-      if (!inv.trackInventory) return false;
-      inv.onHand = Math.max(0, (Number(inv.onHand) || 0) - qty);
-      inv.reserved = Math.max(0, (Number(inv.reserved) || 0) - qty);
-      return true;
-    }
-
-    if (!this.db) return false;
-
-    try {
-      for (let attempt = 0; attempt < INVENTORY_CAS_ATTEMPTS; attempt += 1) {
-        const row = await this._inventoryRow(listingId, variantId);
-        if (!row || !row.track_inventory) return false;
-        const held = Number(row.reserved) || 0;
-        const onHand = Number(row.on_hand) || 0;
-
-        const { data, error } = await this.db
-          .from('listing_inventory')
-          .update({
-            on_hand: Math.max(0, onHand - qty),
-            reserved: Math.max(0, held - qty),
-            updated_at: new Date().toISOString()
-          })
-          .eq('id', row.id)
-          .eq('reserved', held)
-          .eq('on_hand', onHand)
-          .select('id')
-          .maybeSingle();
-
-        if (error) {
-          logger.error(`[OrderRepository] consumeInventory failed for ${listingId}: ${error.message}`);
-          return false;
-        }
-        if (data) return true;
-      }
-    } catch (err) {
-      logger.error(`[OrderRepository] Could not consume stock for ${listingId}${variantId ? `/${variantId}` : ''}: ${err.message}`);
-      return false;
-    }
-    logger.warn(`[OrderRepository] Stock consumption for ${listingId}${variantId ? `/${variantId}` : ''} lost every attempt.`);
-    return false;
-  }
-
-  /**
-   * Settles every line of a delivered or cancelled order in one go: `consume`
-   * turns the holds into sales, `release` gives them back. Idempotent by
-   * construction — the caller reaches it only through a compare-and-swap on the
-   * order status, which succeeds once per transition. Never throws.
-   */
-  async settleInventoryForOrder(order, outcome) {
-    const items = (order && Array.isArray(order.items)) ? order.items : [];
-    for (const item of items) {
-      if (!item || !item.listingId) continue;
-      try {
-        if (outcome === 'consume') {
-          await this.consumeInventory(item.listingId, item.variantId || null, item.quantity);
-        } else {
-          await this.releaseInventory(item.listingId, item.variantId || null, item.quantity);
-        }
-      } catch (err) {
-        logger.error(`[OrderRepository] Stock settlement (${outcome}) failed for order ${order.id}, listing ${item.listingId}: ${err.message}`);
-      }
-    }
-  }
-
-  /** The stock row for one order line, or null. Mirrors checkInventory's lookup. */
-  async _inventoryRow(listingId, variantId) {
-    let query = this.db
-      .from('listing_inventory')
-      .select('id, on_hand, reserved, track_inventory, allow_backorder')
-      .eq('listing_id', listingId);
-    query = variantId ? query.eq('variant_id', variantId) : query.is('variant_id', null);
-
-    const { data, error } = await query.maybeSingle();
-    if (error) {
-      handleDatabaseFailure(error, 'OrderRepository._inventoryRow');
-      return null;
-    }
-    return data || null;
-  }
-
-  /** The swap itself: writes `next` only while `reserved` is still `expected`. */
-  async _swapReserved(row, expected, next, label) {
-    const { data, error } = await this.db
-      .from('listing_inventory')
-      .update({ reserved: next, updated_at: new Date().toISOString() })
-      .eq('id', row.id)
-      .eq('reserved', expected)
-      .select('id')
-      .maybeSingle();
-
-    if (error) {
-      handleDatabaseFailure(error, `OrderRepository.${label}`);
-      return false;
-    }
-    return Boolean(data);
   }
 
   /**
@@ -825,7 +619,7 @@ class OrderRepository {
       if (persisted) {
         const updated = this._mapRowToOrder(persisted);
         this._inMemoryOrders.set(updated.id, updated);
-        await this._settleStockFor(updated, nextStatus);
+        await this._settleInventory(existing, nextStatus);
         return updated;
       }
     }
@@ -835,23 +629,20 @@ class OrderRepository {
     existing.timeline = updatedTimeline;
     existing.updatedAt = new Date().toISOString();
     this._inMemoryOrders.set(existing.id, existing);
-    await this._settleStockFor(existing, nextStatus);
+    await this._settleInventory(existing, nextStatus);
     return existing;
   }
 
   /**
-   * The one place an order's stock is settled, so it cannot drift whichever route
-   * moved the order: the buyer cancelling, the seller changing the status, or the
-   * delivery module syncing the order behind a rider's scan all land here. The
-   * compare-and-swap above succeeds once per transition, so this runs once too.
-   * Never throws — the status change has already been committed.
+   * The stock an order held follows its end: released on cancellation, consumed
+   * on delivery. Runs only after this method's compare-and-swap won, which
+   * happens once per order, so stock is never released or consumed twice.
    */
-  async _settleStockFor(order, nextStatus) {
-    if (nextStatus === FULFILLMENT_STATUS.DELIVERED) {
-      await this.settleInventoryForOrder(order, 'consume');
-    } else if (nextStatus === FULFILLMENT_STATUS.CANCELLED) {
-      await this.settleInventoryForOrder(order, 'release');
-    }
+  async _settleInventory(order, nextStatus) {
+    const held = OrderRepository.heldInventory(order);
+    if (!held.length) return;
+    if (nextStatus === FULFILLMENT_STATUS.CANCELLED) await this.releaseInventory(held);
+    else if (nextStatus === FULFILLMENT_STATUS.DELIVERED) await this.commitInventory(held);
   }
 
   /**
@@ -941,6 +732,130 @@ class OrderRepository {
     return existing;
   }
 
+
+  /* ------------------------------------------------------------- inventory
+   * An order holds its stock from placement until it ends: placing it RESERVES
+   * the quantity (reserved += q), cancelling RELEASES it (reserved -= q) and
+   * delivering CONSUMES it (on_hand -= q, reserved -= q). checkInventory used to
+   * be the only step, so stock was never held and a listing with 1 unit could be
+   * sold any number of times. Each move is a compare-and-swap on the row's
+   * current numbers, retried on a race, so two buyers of the last unit cannot
+   * both win. Untracked listings (no row, or track_inventory false) are not
+   * touched and are reported as such.
+   */
+
+  /** One listing line's inventory row, or null. */
+  async _readInventory(listingId, variantId) {
+    let query = this.db
+      .from('listing_inventory')
+      .select('id, on_hand, reserved, track_inventory, allow_backorder')
+      .eq('listing_id', listingId);
+    query = variantId ? query.eq('variant_id', variantId) : query.is('variant_id', null);
+    const { data, error } = await query.order('id', { ascending: true }).limit(1);
+    if (error) throw new InfrastructureError('Supabase', `inventory read failed: ${error.message}`, error);
+    return (data && data[0]) || null;
+  }
+
+  /**
+   * Applies { reserved, onHand } deltas to one line. With `requireAvailable`
+   * (a reservation) it refuses when on_hand - reserved < quantity, unless the
+   * listing allows backorders. Returns { tracked, available }.
+   */
+  async _moveInventory(listingId, variantId, { reserved = 0, onHand = 0 }, { requireAvailable = 0 } = {}) {
+    const memKey = `${listingId}:${variantId || 'null'}`;
+    if (this._inMemoryInventory.has(memKey)) {
+      const inv = this._inMemoryInventory.get(memKey);
+      if (!inv.trackInventory) return { tracked: false };
+      const available = inv.onHand - inv.reserved;
+      if (requireAvailable && !inv.allowBackorder && available < requireAvailable) {
+        return { tracked: true, refused: true, available };
+      }
+      inv.reserved = Math.max(0, inv.reserved + reserved);
+      inv.onHand = Math.max(0, inv.onHand + onHand);
+      return { tracked: true, available: inv.onHand - inv.reserved };
+    }
+    if (!this.db) return { tracked: false };
+
+    for (let attempt = 0; attempt < 5; attempt++) {
+      const row = await this._readInventory(listingId, variantId);
+      if (!row || !row.track_inventory) return { tracked: false };
+      const curOnHand = Number(row.on_hand) || 0;
+      const curReserved = Number(row.reserved) || 0;
+      const available = curOnHand - curReserved;
+      if (requireAvailable && !row.allow_backorder && available < requireAvailable) {
+        return { tracked: true, refused: true, available };
+      }
+      const { data, error } = await this.db
+        .from('listing_inventory')
+        .update({
+          reserved: Math.max(0, curReserved + reserved),
+          on_hand: Math.max(0, curOnHand + onHand),
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', row.id)
+        .eq('reserved', curReserved)
+        .eq('on_hand', curOnHand)
+        .select('id')
+        .maybeSingle();
+      if (error) throw new InfrastructureError('Supabase', `inventory update failed: ${error.message}`, error);
+      if (data) return { tracked: true, available: Math.max(0, curOnHand + onHand) - Math.max(0, curReserved + reserved) };
+      // Someone moved this row between the read and the write: read again.
+    }
+    throw new ConflictError('Stock for this item is changing too quickly. Please try again.');
+  }
+
+  /**
+   * Holds stock for every line of an order, all or nothing. Returns the lines
+   * that were actually held (tracked listings only), to be stored on the order
+   * and released or consumed when it ends. A line that cannot be held releases
+   * the ones already held and throws a 409 naming the item.
+   */
+  async reserveInventory(lines) {
+    const held = [];
+    try {
+      for (const line of lines) {
+        const res = await this._moveInventory(line.listingId, line.variantId, { reserved: line.quantity }, { requireAvailable: line.quantity });
+        if (res.refused) {
+          throw new ConflictError(
+            `Insufficient stock for "${line.title || line.listingId}". Only ${Math.max(0, res.available)} unit(s) available, but requested ${line.quantity}.`
+          );
+        }
+        if (res.tracked) held.push({ listingId: line.listingId, variantId: line.variantId || null, quantity: line.quantity });
+      }
+    } catch (err) {
+      await this.releaseInventory(held);
+      throw err;
+    }
+    return held;
+  }
+
+  /** Gives held stock back (the order was cancelled, or never saved). Best effort. */
+  async releaseInventory(lines) {
+    for (const line of lines || []) {
+      try {
+        await this._moveInventory(line.listingId, line.variantId, { reserved: -line.quantity });
+      } catch (err) {
+        logger.error(`[OrderRepository] Could not release ${line.quantity} of ${line.listingId}: ${err.message}`);
+      }
+    }
+  }
+
+  /** The held stock left with the buyer (the order was delivered). Best effort. */
+  async commitInventory(lines) {
+    for (const line of lines || []) {
+      try {
+        await this._moveInventory(line.listingId, line.variantId, { reserved: -line.quantity, onHand: -line.quantity });
+      } catch (err) {
+        logger.error(`[OrderRepository] Could not consume ${line.quantity} of ${line.listingId}: ${err.message}`);
+      }
+    }
+  }
+
+  /** What an order holds: the lines its placement reserved. */
+  static heldInventory(order) {
+    const meta = (order && order.shippingAddress) || {};
+    return Array.isArray(meta._inventory) ? meta._inventory : [];
+  }
 
   // --- Test Harness Seed Helpers ---
   seedListing(listing) {

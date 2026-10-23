@@ -118,10 +118,9 @@ Things a browser test needs to know:
 
 ## KNOWN_GAPs the matrix records (logged, not failing)
 
-See the end of the test output; they are server behaviours found while building this, not fixed here:
-an `admin` can promote any account to `super_admin` (role route and mass-assignment); `canPurchase` is not enforced by
-`POST /orders` (unverified and onboarding accounts can order); the admin API serves built-in demo rows instead of the
-database (its queries select columns that are in no migration), which also makes admin store suspension/KYC unusable;
-a store created without a phone publishes the owner's account phone on `GET /stores/:id/profile`; a deleted account can sign
-back in and is silently reactivated. One more is a harness limitation, labelled as such (storefront reviews/recommendations
-embeds the stand-in cannot resolve).
+The defects this matrix first found are fixed and now asserted, so a regression fails the run: an `admin` cannot
+promote anyone to `super_admin` (role route or mass-assignment); `POST /orders` refuses an account without `canPurchase`
+(403); the admin API reads the real database (no built-in demo rows) and store suspension works on a real store, which is
+then hidden publicly; a store created without a phone does not publish the owner's account phone; a deleted account
+cannot sign back in and stays anonymized. The one KNOWN_GAP still logged is a harness limitation, labelled as such
+(storefront reviews/recommendations embeds the stand-in cannot resolve).

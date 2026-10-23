@@ -15,7 +15,8 @@
  *   e. seller routes: the dispatch board and the rider list
  *   f. admin API:     administrator and super_admin only; forged credentials refused
  *   g. public store:  what the public storefront JSON may and may not contain
- *   h. KNOWN_GAPs:    defects found while building this. Logged, never failing.
+ *   h. regressions:   defects found while building this, now fixed and asserted (plus one
+ *                     harness-limitation KNOWN_GAP that is logged, never failing)
  *
  * Run:  node tests/routing/backend_authz.e2e.test.js
  *
@@ -242,16 +243,14 @@ async function run() {
       counters.assertions += 1;
       assert.strictEqual(after.status, 401, `old session after deletion: ${after.status} ${short(after.body)}`);
       assert.strictEqual(after.body.error.code, 'UNAUTHENTICATED');
-      // Can the deleted account simply sign in again?  (a probe: logged as a KNOWN_GAP, never failing)
+      assert.strictEqual(dataOf(del).identityRemoved, true, 'the Supabase sign-in credential is removed with the account');
+      // The deleted account cannot simply sign in again with its old password.
       const relogin = await fx.api('POST', '/api/v1/auth/login', { body: { email: doomed.email, password: doomed.password }, client: 'doomed#d' });
+      counters.assertions += 2;
+      assert.strictEqual(relogin.status, 401, `sign-in after deletion: ${relogin.status} ${short(relogin.body)}`);
+      const row = (await sql('SELECT deleted_at, account_status FROM iam.profiles WHERE id = $1', [doomed.profileId]))[0];
       counters.assertions += 1;
-      assert.ok(relogin.status < 500, `sign-in after deletion: ${relogin.status} ${short(relogin.body)}`);
-      if (relogin.status === 200) {
-        const back = await fx.api('GET', '/api/v1/me/state', { token: dataOf(relogin).token, client: 'doomed#d' });
-        gap(`a deleted account can sign back in and is silently reactivated: DELETE /api/v1/users/me -> 200 {identityRemoved:${JSON.stringify(dataOf(del).identityRemoved)}} (only the Clerk identity is deleted, and Clerk is not what signs people in), then POST /api/v1/auth/login with the old password -> 200 and GET /me/state -> ${back.status} ${back.status === 200 ? dataOf(back).state : ''} (ProfileRepository.getOrCreateForClerkUser un-deletes the profile BEFORE the login route's "deleted account cannot be reopened" check, so that check never fires)`);
-      } else {
-        out(`      (closed: sign-in after deletion -> ${relogin.status})`);
-      }
+      assert.ok(row.deleted_at && row.account_status === 'anonymized', `the profile stays deleted: ${JSON.stringify(row)}`);
       return `deleted: old session 401; sign-in afterwards ${relogin.status}`;
     });
 
@@ -259,6 +258,16 @@ async function run() {
     /* b. orders                                                                 */
     /* ======================================================================= */
     heading('b. orders — /api/v1/orders');
+
+    await check('placed orders hold their stock in iam.listing_inventory (reserved = what open orders hold)', async () => {
+      const [inv] = await sql('SELECT on_hand, reserved FROM iam.listing_inventory WHERE listing_id = $1 AND variant_id IS NULL', [I.listingId]);
+      const open = await sql("SELECT items FROM iam.orders WHERE fulfillment_status NOT IN ('cancelled', 'delivered')");
+      const held = open.reduce((n, o) => n + (o.items || []).filter((it) => it.listingId === I.listingId).reduce((m, it) => m + Number(it.quantity || 0), 0), 0);
+      counters.assertions += 2;
+      assert.ok(held > 0, 'the fixture placed orders on the listing');
+      assert.strictEqual(Number(inv.reserved), held, `reserved ${inv.reserved} vs ${held} held by open orders (on_hand ${inv.on_hand})`);
+      return `on_hand ${inv.on_hand}, reserved ${inv.reserved}`;
+    });
 
     const noOrderLeak = (who, r) => {
       const o = dataOf(r).order;
@@ -768,10 +777,10 @@ async function run() {
     /* ======================================================================= */
     /* h. KNOWN_GAPs                                                             */
     /* ======================================================================= */
-    heading('h. KNOWN_GAP probes — defects found while building this; logged, never failing');
+    heading('h. regressions — defects found while building this, now fixed and asserted');
 
     // ---- (1) an admin can make someone super_admin --------------------------------
-    await check('probe: can an `admin` (not super_admin) grant the top role?  PATCH /admin/users/:id/role and PATCH /admin/users/:id', async () => {
+    await check('an `admin` (not super_admin) cannot grant the top role: PATCH /admin/users/:id/role and PATCH /admin/users/:id', async () => {
       const t1 = await fx.throwaway('elev');
       const t2 = await fx.throwaway('mass');
       const roleOf = async (id) => (await sql('SELECT primary_role FROM iam.profiles WHERE id = $1', [id]))[0].primary_role;
@@ -779,39 +788,35 @@ async function run() {
       const after1 = await roleOf(t1.profileId);
       const r2 = await call('admin', 'PATCH', `/api/v1/admin/users/${t2.profileId}`, { body: { primary_role: 'super_admin' } });
       const after2 = await roleOf(t2.profileId);
-      counters.assertions += 2;
+      counters.assertions += 4;
       assert.ok(r1.status < 500 && r2.status < 500, `a 5xx here: role ${r1.status}, mass-assign ${r2.status}`);
-      if (after1 === 'super_admin') gap(`an admin can promote any account to super_admin: PATCH /api/v1/admin/users/:id/role {role:"super_admin"} -> ${r1.status}, iam.profiles.primary_role is now "super_admin" (the route guard only requires admin; no super_admin check)`);
-      else gap(`(closed? verify) PATCH /admin/users/:id/role {role:"super_admin"} as admin -> ${r1.status}; primary_role stayed "${after1}"`);
-      if (after2 === 'super_admin') gap(`an admin can mass-assign primary_role: PATCH /api/v1/admin/users/:id {primary_role:"super_admin"} -> ${r2.status}, role is now "super_admin" (SuperAdminRepository.updateUser writes the raw body into profiles)`);
-      else gap(`(closed? verify) PATCH /admin/users/:id {primary_role} as admin -> ${r2.status}; role stayed "${after2}"`);
+      assert.strictEqual(r1.status, 403, `PATCH /api/v1/admin/users/:id/role {role:"super_admin"} as admin -> ${r1.status}`);
+      assert.strictEqual(after1, 'customer', `an admin promoted an account to "${after1}" through the role route`);
+      assert.strictEqual(r2.status, 400, `PATCH /api/v1/admin/users/:id {primary_role} as admin -> ${r2.status}`);
+      assert.strictEqual(after2, 'customer', `an admin mass-assigned primary_role "${after2}"`);
       return `role route ${r1.status} -> ${after1}; mass-assign ${r2.status} -> ${after2}`;
     });
 
-    // ---- (2) a suspended store is still public ------------------------------------
-    await check('probe: is a SUSPENDED store still served publicly?  (admin POST /admin/stores/:id/suspend, then GET /stores/s/:slug)', async () => {
+    // ---- (2) admin store moderation works on a real store, and hides it ----------
+    await check('an admin can suspend a real store, which is then hidden publicly, and reactivate it', async () => {
       const sus = await call('admin', 'POST', `/api/v1/admin/stores/${rival.storeId}/suspend`, { body: { reason: 'fixture probe' } });
       const after = (await sql('SELECT status, visibility FROM iam.stores WHERE id = $1', [rival.storeId]))[0];
-      counters.assertions += 1;
-      assert.ok(sus.status < 500, `suspend answered ${sus.status}`);
-      if (after.status === 'SUSPENDED') {
-        const bySlug = await call('anonymous', 'GET', `/api/v1/stores/s/${rival.storeSlug}`);
-        const byProfile = await call('anonymous', 'GET', `/api/v1/stores/${rival.storeSlug}/profile`);
-        const byId = await call('anonymous', 'GET', `/api/v1/stores/${rival.storeId}/profile`);
-        if (bySlug.status === 200) gap(`a SUSPENDED store is still returned by GET /api/v1/stores/s/:slug -> ${bySlug.status} (PublicProfileService.getSellerPublicProfile only hides ARCHIVED/DELETED); GET /stores/:slug/profile -> ${byProfile.status}, /stores/:id/profile -> ${byId.status}`);
-        else out(`      (closed: a SUSPENDED store answers GET /stores/s/:slug with ${bySlug.status})`);
-        await call('admin', 'POST', `/api/v1/admin/stores/${rival.storeId}/reactivate`, { body: {} });
-      } else {
-        gap(`admin store moderation does not work on a real store: POST /api/v1/admin/stores/:id/suspend -> ${sus.status} ${short(sus.body && sus.body.error ? sus.body.error.message : sus.body, 90)}; the store row stayed "${after.status}" (SuperAdminRepository.getStoreById selects columns the schema does not have, falls back to its built-in demo stores and finds no such store). So "a suspended store is still public" (GET /stores/s/:slug only hides ARCHIVED/DELETED) could not be exercised through the app's routes; not forced with a direct UPDATE`);
-      }
+      counters.assertions += 4;
+      assert.strictEqual(sus.status, 200, `POST /api/v1/admin/stores/:id/suspend on a real store -> ${sus.status} ${short(sus.body)}`);
+      assert.strictEqual(after.status, 'SUSPENDED', `the store row is "${after.status}" after an admin suspension`);
+      const bySlug = await call('anonymous', 'GET', `/api/v1/stores/s/${rival.storeSlug}`);
+      assert.strictEqual(bySlug.status, 404, `a SUSPENDED store is still returned by GET /api/v1/stores/s/:slug -> ${bySlug.status}`);
+      const back = await call('admin', 'POST', `/api/v1/admin/stores/${rival.storeId}/reactivate`, { body: {} });
+      const restored = (await sql('SELECT status FROM iam.stores WHERE id = $1', [rival.storeId]))[0];
+      assert.ok(back.status === 200 && restored.status === 'ACTIVE', `reactivate -> ${back.status}, store row "${restored.status}"`);
       // Not a gap, a design note the router depends on: a store is public from the moment it is created.
       const draft = draftPublic;
       out(`      (note, by design — CreateStoreUseCase: a created store is status ACTIVE / visibility PUBLIC at once, before onboarding: GET /stores/s/:slug -> ${draft.bySlug.status}, GET /stores/:id/profile -> ${draft.profile.status} for a store whose owner is not yet seller-ready)`);
       return `suspend ${sus.status}, store row ${after.status}`;
     });
 
-    // ---- (3) canPurchase is not enforced by POST /orders --------------------------
-    await check('probe: can an account that is not purchase-ready (canPurchase=false) place an order?', async () => {
+    // ---- (3) canPurchase is enforced by POST /orders ------------------------------
+    await check('POST /orders refuses an account that is not purchase-ready (canPurchase=false) with 403', async () => {
       const results = [];
       for (const who of ['unverified', 'onboarding']) {
         const r = await call(who, 'POST', '/api/v1/orders', {
@@ -821,20 +826,19 @@ async function run() {
         assert.ok(r.status < 500, `POST /orders as ${who}: ${r.status} ${short(r.body)}`);
         const caps = (await state(who)).capabilities;
         if (r.status === 201) {
-          const orderId = dataOf(r).order.id;
-          gap(`canPurchase is not enforced server-side: ${who} (state ${P[who].state}, canPurchase ${caps.canPurchase}) can POST /api/v1/orders -> 201 (order ${orderId}); POST /orders only uses requireAuth`);
           // keep the seller's board tidy: the buyer cancels it again
-          await call(who, 'POST', `/api/v1/orders/${orderId}/cancel`, { body: { reason: 'fixture probe' } });
-        } else {
-          out(`      (${who} cannot place an order: ${r.status})`);
+          await call(who, 'POST', `/api/v1/orders/${dataOf(r).order.id}/cancel`, { body: { reason: 'fixture probe' } });
         }
+        counters.assertions += 1;
+        assert.strictEqual(caps.canPurchase, false, `${who} is not purchase-ready`);
+        assert.strictEqual(r.status, 403, `canPurchase is enforced server-side: ${who} (state ${P[who].state}) POST /api/v1/orders -> ${r.status} ${short(r.body)}`);
         results.push(`${who} ${r.status}`);
       }
       return results.join(', ');
     });
 
-    // ---- (4) the admin API serves built-in demo data -------------------------------
-    await check('probe: does the admin API show the real database?', async () => {
+    // ---- (4) the admin API reads the real database --------------------------------
+    await check('the admin API reads the real database (stores, users, orders, listings, overview KPIs)', async () => {
       const stores = dataOf(await call('admin', 'GET', '/api/v1/admin/stores')).stores || [];
       const users = dataOf(await call('admin', 'GET', '/api/v1/admin/users')).users || [];
       const orders = dataOf(await call('admin', 'GET', '/api/v1/admin/orders')).orders || [];
@@ -845,20 +849,18 @@ async function run() {
         orders: orders.some((o) => o.id === I.orderId),
         listings: listings.some((l) => l.id === I.listingId),
       };
-      counters.assertions += 4;
-      const demo = Object.entries(real).filter(([, ok]) => !ok).map(([k]) => k);
-      if (demo.length) {
-        // Evidence: which of the columns the repository selects exist in the schema the migrations built.
-        const wanted = { profiles: ['full_name', 'kyc_status'], orders: ['total_amount', 'status', 'escrow_status', 'user_id', 'store_id'], listings: ['base_price', 'stock_quantity'], stores: ['city', 'product_count'] };
-        const missing = [];
-        for (const [table, cols] of Object.entries(wanted)) {
-          const have = (await sql(`SELECT column_name FROM information_schema.columns WHERE table_schema = 'iam' AND table_name = $1`, [table])).map((r) => r.column_name);
-          const gone = cols.filter((c) => !have.includes(c));
-          if (gone.length) missing.push(`${table}.${gone.join('/')}`);
-        }
-        gap(`GET /api/v1/admin/${demo.join(', /api/v1/admin/')} answer 200 with built-in demo rows (e.g. "${(stores[0] || {}).name || (users[0] || {}).full_name || ''}") instead of the database: SuperAdminRepository selects columns the schema does not have (${missing.join(', ') || 'see Postgres 42703 in dbErrors()'}), swallows the error and serves its built-in demo rows, in every NODE_ENV. The overview KPIs (86 orders, 142 users...) are invented too`);
-      }
-      return `real rows visible: ${JSON.stringify(real)}`;
+      counters.assertions += 6;
+      assert.deepStrictEqual(real, { stores: true, users: true, orders: true, listings: true }, 'the admin API lists the real rows, not built-in demo data');
+      assert.ok(!stores.some((x) => x.name === 'Orca Electronics'), 'no demo store is served against a live database');
+      const user = users.find((u) => u.id === P.customer.profileId);
+      assert.strictEqual(user.full_name, `${P.customer.firstName} ${P.customer.lastName}`, 'a user\'s name comes from first_name/last_name');
+      const order = orders.find((o) => o.id === I.orderId);
+      const row = (await sql('SELECT total_amount_xaf FROM iam.orders WHERE id = $1', [I.orderId]))[0];
+      assert.strictEqual(order.total_amount, Number(row.total_amount_xaf), 'an order\'s total is its real total');
+      const kpis = dataOf(await call('admin', 'GET', '/api/v1/admin/overview')).kpis || {};
+      const [{ n }] = await sql('SELECT count(*)::int AS n FROM iam.profiles');
+      assert.strictEqual(kpis.registeredUsers, n, `the overview counts the real users (${kpis.registeredUsers} vs ${n})`);
+      return `real rows visible: ${JSON.stringify(real)}; ${kpis.totalOrders} order(s), ${kpis.registeredUsers} user(s)`;
     });
 
     // ---- (5) the public storefront drops reviews and recommendations silently ------
@@ -869,18 +871,32 @@ async function run() {
       return `${bad.length} failed reads`;
     });
 
-    // ---- (6) a store without a phone publishes the owner's account phone -----------
-    await check('probe: does a store created without a business phone publish the owner\'s personal phone?', async () => {
+    // ---- (6) a store without a phone never publishes the owner's account phone ----
+    await check('a store created without a business phone does not publish the owner\'s personal phone', async () => {
       const profile = draftPublic.profile;
-      counters.assertions += 1;
+      counters.assertions += 2;
       assert.strictEqual(profile.status, 200, `GET /stores/:id/profile for the rival's store: ${profile.status}`);
       const published = dataOf(profile).phoneNumber;
-      if (published && published === rival.phone) {
-        gap(`a store created without phoneNumber inherits the owner's ACCOUNT phone and publishes it: GET /api/v1/stores/:id/profile -> phoneNumber "${published}" (CreateStoreUseCase: phone_number = input.phoneNumber || principal.phoneNumber)`);
-      } else {
-        out(`      (the rival's published store phone is ${JSON.stringify(published)}, not the owner's ${rival.phone})`);
-      }
+      assert.notStrictEqual(published, rival.phone, `GET /api/v1/stores/:id/profile publishes the owner's account phone "${published}"`);
       return `published phoneNumber ${JSON.stringify(published)}`;
+    });
+
+    // ---- (7) admin escrow resolution goes through the order's own lifecycle -------
+    await check('admin escrow: release needs the handover; a refund cancels the order and gives its stock back', async () => {
+      const rel = await call('admin', 'POST', `/api/v1/admin/orders/${I.strangerOrderId}/escrow`, { body: { action: 'RELEASE' } });
+      counters.assertions += 1;
+      assert.strictEqual(rel.status, 409, `releasing an undelivered order: ${rel.status} ${short(rel.body)}`);
+      const [before] = await sql('SELECT reserved FROM iam.listing_inventory WHERE listing_id = $1 AND variant_id IS NULL', [I.listingId]);
+      const [{ items }] = await sql('SELECT items FROM iam.orders WHERE id = $1', [I.strangerOrderId]);
+      const qty = items.filter((it) => it.listingId === I.listingId).reduce((n, it) => n + Number(it.quantity || 0), 0);
+      const ref = await call('admin', 'POST', `/api/v1/admin/orders/${I.strangerOrderId}/escrow`, { body: { action: 'REFUND', reason: 'fixture probe' } });
+      const [row] = await sql('SELECT fulfillment_status, payment_status FROM iam.orders WHERE id = $1', [I.strangerOrderId]);
+      const [after] = await sql('SELECT reserved FROM iam.listing_inventory WHERE listing_id = $1 AND variant_id IS NULL', [I.listingId]);
+      counters.assertions += 3;
+      assert.strictEqual(ref.status, 200, `refund: ${ref.status} ${short(ref.body)}`);
+      assert.deepStrictEqual([row.fulfillment_status, row.payment_status], ['cancelled', 'refunded'], 'the order is cancelled and refunded');
+      assert.strictEqual(Number(after.reserved), Number(before.reserved) - qty, `its ${qty} held unit(s) were released`);
+      return `release ${rel.status}; refund ${ref.status} -> ${row.fulfillment_status}/${row.payment_status}, reserved ${before.reserved} -> ${after.reserved}`;
     });
 
     /* ======================================================================= */
@@ -905,8 +921,6 @@ async function run() {
         const msg = String(e.error || '');
         return (/\/auth\/v1\/token/.test(e.path) && /invalid_credentials|email_not_confirmed/.test(msg)) // the harness tries a login before each sign-up; a signed-up account that has not entered its code cannot sign in
           || (/\/auth\/v1\/user/.test(e.path) && /bad_jwt/.test(msg)) // the identity provider asks the auth service about a token it cannot verify itself (the forged/garbage tokens above)
-          || (/\/rest\/v1\/(profiles|orders|stores|listings)\?select=/.test(e.path) && /42703/.test(msg)) // admin read models (KNOWN_GAP: demo data)
-          || (/\/rest\/v1\/auth_sessions/.test(e.path) && /PGRST205/.test(msg)) // DELETE /users/me revokes sessions in a table no migration creates (best effort, logged at debug)
           || (/\/rest\/v1\/(reviews|social_recommendations)\?/.test(e.path) && /PGRST200/.test(msg)); // storefront reviews (KNOWN_GAP: harness limitation)
       };
       const unexpected = errors.filter((e) => !expectedError(e));
@@ -919,7 +933,7 @@ async function run() {
       // (the one WARN that mentions ERROR is env.js noting that the harness set LOUMOO_TEST_AUTH_SECRET, on purpose)
       const own = stack.errors().filter((l) => !/List reviews|List recommendations|LOUMOO_TEST_AUTH_SECRET/.test(l));
       assert.deepStrictEqual(own.slice(0, 5), [], 'ERROR-level server log lines');
-      return `${errors.length} expected database error(s): ${count(/42703/)} missing-column (admin read models), ${count(/PGRST200/)} missing-relationship (reviews), ${count(/bad_jwt/)} bad_jwt (forged tokens), ${count(/invalid_credentials|email_not_confirmed/)} refused sign-ins (before sign-up / before the code is entered), ${count(/PGRST205/)} missing-table (auth_sessions); 0 unexpected`;
+      return `${errors.length} expected database error(s): ${count(/PGRST200/)} missing-relationship (reviews), ${count(/bad_jwt/)} bad_jwt (forged tokens), ${count(/invalid_credentials|email_not_confirmed/)} refused sign-ins (before sign-up / before the code is entered); 0 unexpected`;
     });
   } finally {
     await fx.stop();

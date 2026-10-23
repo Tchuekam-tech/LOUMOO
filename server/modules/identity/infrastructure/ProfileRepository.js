@@ -48,6 +48,11 @@ class ProfileRepository {
     return SupabaseDatabase.getAdmin();
   }
 
+  /** Whether a profile row belongs to an account its owner deleted (anonymized). */
+  static isDeletedProfile(profile) {
+    return Boolean(profile && (profile.deleted_at || profile.account_status === 'anonymized'));
+  }
+
   /* ---------------------------------------------------------------- reads */
 
   static async findByClerkUserId(clerkUserId, { useCache = true } = {}) {
@@ -140,8 +145,7 @@ class ProfileRepository {
       // back in. The row is returned as it is; callers and requireAuth refuse it
       // (state DELETED). Only a profile whose provider identity alone was marked
       // gone (clerk_deleted_at) is restored.
-      const deletedByOwner = Boolean(existing.deleted_at) || existing.account_status === 'anonymized';
-      if (!deletedByOwner && existing.clerk_deleted_at) {
+      if (!this.isDeletedProfile(existing) && existing.clerk_deleted_at) {
         const reactivation = {
           clerk_deleted_at: null,
           deleted_at: null,
@@ -291,12 +295,10 @@ class ProfileRepository {
 
   static async recordLogin(userId, clerkUserId) {
     try {
+      // Only the timestamp. Clearing deleted_at / account_status here un-deleted
+      // (and un-suspended) whoever got this far.
       await this.db.from('profiles').update({
-        last_login_at: nowIso(),
-        clerk_deleted_at: null,
-        deleted_at: null,
-        status: 'active',
-        account_status: 'active'
+        last_login_at: nowIso()
       }).eq('id', userId);
       await this.invalidate(clerkUserId, userId);
     } catch (err) {

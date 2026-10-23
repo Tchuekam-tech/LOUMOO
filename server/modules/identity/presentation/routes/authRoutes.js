@@ -138,6 +138,21 @@ function requestSource(req) {
  *
  * @returns {Promise<{sent:boolean, code?:string, throttled?:boolean}>}
  */
+/**
+ * The one sign-in refusal rule, shared by every path that mints a session
+ * (password, OTP verification, password reset): a deleted account cannot be
+ * reopened with credentials that still work at the identity provider, and a
+ * suspended one is told why.
+ */
+function assertProfileCanSignIn(profile) {
+  if (ProfileRepository.isDeletedProfile(profile)) {
+    throw new AuthenticationError('This account has been deleted and cannot be accessed.');
+  }
+  if (profile.account_status === 'suspended' || profile.status === 'suspended') {
+    throw new AuthenticationError('This account has been suspended. Contact LOUMOO support.');
+  }
+}
+
 async function prepareAndSendOtp({ email, fields = {}, requireExisting = false, subject, intro, ip = null }) {
   const existing = await CacheService.get(email, OTP_NAMESPACE);
 
@@ -418,6 +433,7 @@ router.post('/verify-otp', async (req, res, next) => {
       phoneNumber: cached.phone,
       city: cached.city
     });
+    assertProfileCanSignIn(profile);
 
     const now = new Date().toISOString();
     await ProfileRepository.update(profile.id, {
@@ -552,14 +568,7 @@ router.post('/login', async (req, res, next) => {
       city: meta.city || ''
     });
 
-    // A deleted account must not be re-openable with credentials that still
-    // work at the identity provider.
-    if (profile.deleted_at || profile.account_status === 'anonymized') {
-      throw new AuthenticationError('This account has been deleted and cannot be accessed.');
-    }
-    if (profile.account_status === 'suspended' || profile.status === 'suspended') {
-      throw new AuthenticationError('This account has been suspended. Contact LOUMOO support.');
-    }
+    assertProfileCanSignIn(profile);
 
     // Supabase confirmed the address at signup; mirror that once so the
     // account state machine does not send a verified user back to /verify.
@@ -703,6 +712,14 @@ router.post('/reset-password', async (req, res, next) => {
       throw new AuthenticationError('Account not found.');
     }
 
+    // Refuse BEFORE touching the credential: resetting a deleted or suspended
+    // account's password must not hand it a fresh session.
+    const { profile } = await ProfileRepository.getOrCreateForClerkUser({
+      clerkUserId: userId,
+      email: cleanEmail
+    });
+    assertProfileCanSignIn(profile);
+
     // Authoritative password update in Supabase
     const { error: updateErr } = await admin.auth.admin.updateUserById(userId, {
       password: newPassword,
@@ -712,11 +729,6 @@ router.post('/reset-password', async (req, res, next) => {
       logger.error(`[Auth] Failed to update password for ${cleanEmail}: ${updateErr.message}`);
       throw new InfrastructureError('Identity', 'Could not update password. Please try again.');
     }
-
-    const { profile } = await ProfileRepository.getOrCreateForClerkUser({
-      clerkUserId: userId,
-      email: cleanEmail
-    });
 
     const sessionToken = issueSessionToken({
       userId,

@@ -521,8 +521,9 @@
     var hasPick = !!(order && order.preferredDriverId);
     return {
       title: 'Choose a rider',
-      subtitle: hasPick ? 'Your customer’s pick comes first. Riders who passed are marked.' : 'Free riders come first. Riders who passed on this order are marked.',
-      subtitle: 'Online riders only. Free riders come first. Riders who passed on this order are marked.',
+      subtitle: hasPick
+        ? 'Online riders only. Your customer’s pick comes first. Riders who passed are marked.'
+        : 'Online riders only. Free riders come first. Riders who passed on this order are marked.',
       render: function (page) {
         var ui = UI(), api = API();
         var riders = null, summary = null, query = '';
