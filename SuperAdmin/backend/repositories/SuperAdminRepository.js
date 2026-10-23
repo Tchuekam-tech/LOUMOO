@@ -58,6 +58,27 @@ function presentProfile(row) {
   };
 }
 
+/**
+ * What iam.listings actually holds (migration 005). The console asked for
+ * `base_price`, `stock_quantity` and `is_featured`; prices are *_minor, stock
+ * lives in iam.listing_inventory, and there is no featured flag — so this
+ * select was refused too and the moderation list showed seeded demo listings.
+ */
+const LISTING_COLUMNS = 'id, store_id, seller_id, title, slug, description, category_id, currency, base_price_minor, sale_price_minor, status, visibility, created_at, updated_at';
+
+function presentListing(row) {
+  if (!row) return null;
+  const base = Number(row.base_price_minor) || 0;
+  const sale = row.sale_price_minor == null ? null : Number(row.sale_price_minor);
+  return {
+    ...row,
+    // What a buyer would pay, in XAF — the lower of the pair when both are set,
+    // the same rule the storefront uses.
+    base_price: sale != null && sale > 0 ? Math.min(base, sale) : base,
+    store_name: (row.stores && row.stores.name) || 'Boutique'
+  };
+}
+
 function presentOrder(row) {
   if (!row) return null;
   const ship = (row.shipping_address && typeof row.shipping_address === 'object') ? row.shipping_address : {};
@@ -1077,19 +1098,21 @@ class SuperAdminRepository {
       try {
         let query = db
           .from('listings')
-          .select('id, store_id, title, slug, description, category_id, base_price, currency, stock_quantity, status, is_featured, created_at, stores!inner(name)')
+          .select(`${LISTING_COLUMNS}, stores!inner(name)`)
+          .is('deleted_at', null)
           .order('created_at', { ascending: false })
           .range(offset, offset + limit - 1);
 
         if (status && status !== 'ALL') query = query.eq('status', status);
-        if (search) query = query.ilike('title', `%${search}%`);
+        if (search) query = query.ilike('title', `%${String(search).replace(/[%_,()]/g, '')}%`);
 
         const { data, error } = await query;
         if (!error && Array.isArray(data)) {
-          return data.map(l => ({ ...l, store_name: (l.stores && l.stores.name) || 'Boutique' }));
+          return data.map(presentListing);
         }
+        logger.error(`[SuperAdminRepository] listListings failed: ${error ? error.message : 'no rows returned'}`);
       } catch (err) {
-        logger.warn('[SuperAdminRepository] listListings error, using fallback:', err.message);
+        logger.error('[SuperAdminRepository] listListings error:', err.message);
       }
     }
 
@@ -1107,9 +1130,10 @@ class SuperAdminRepository {
     if (db) {
       try {
         const { data, error } = await db.from('listings').select('*, stores(name)').eq('id', id).maybeSingle();
-        if (!error && data) return { ...data, store_name: (data.stores && data.stores.name) || 'Boutique' };
+        if (!error) return presentListing(data);
+        logger.error(`[SuperAdminRepository] getListingById failed for ${id}: ${error.message}`);
       } catch (err) {
-        logger.warn(`[SuperAdminRepository] getListingById error for ${id}:`, err.message);
+        logger.error(`[SuperAdminRepository] getListingById error for ${id}:`, err.message);
       }
     }
     return inMemoryListings.find(l => l.id === id) || null;
@@ -1124,9 +1148,12 @@ class SuperAdminRepository {
     if (db) {
       try {
         const { data, error } = await db.from('listings').update(payload).eq('id', id).select().single();
-        if (!error && data) return { success: true, listing: data, oldListing };
+        if (!error && data) return { success: true, listing: presentListing(data), oldListing };
+        logger.error(`[SuperAdminRepository] updateListing failed for ${id}: ${error ? error.message : 'no row returned'}`);
+        return { success: false, error: `Listing update failed: ${error ? error.message : 'no row returned'}` };
       } catch (err) {
-        logger.warn(`[SuperAdminRepository] updateListing DB error:`, err.message);
+        logger.error(`[SuperAdminRepository] updateListing DB error:`, err.message);
+        return { success: false, error: `Listing update failed: ${err.message}` };
       }
     }
 
