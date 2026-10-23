@@ -329,10 +329,6 @@ class OrderCreationService {
         throw new NotFoundError('Listing', unorderableIds.join(', '));
       }
 
-      // Stock the order has taken off the shelf, so it can be put back if
-      // anything below refuses the order. Filled by _holdStock.
-      heldLines = await this._holdStock(evaluatedItems);
-
       // An order belongs to exactly one seller: the seller is who receives it, who
       // arranges its delivery and who is paid. A bag that mixes stores would be
       // filed under the first item's seller and the others would never hear of
@@ -473,7 +469,13 @@ class OrderCreationService {
         ]
       });
 
-      // 6. Atomically persist to database
+      // 6. Take the stock off the shelf, then persist.
+      // Last thing before the write, so a bag that was going to be refused
+      // anyway — a mixed-store order, a tampered total — never holds a unit,
+      // and the window between the hold and the order existing is as small as
+      // it can be. The `finally` gives these back if the write does not land.
+      heldLines = await this._holdStock(evaluatedItems);
+
       const savedOrder = await this.repository.saveOrder(order);
       // From here the stock belongs to the order: it is released when the order
       // is cancelled and consumed when it is delivered, not by this method.
