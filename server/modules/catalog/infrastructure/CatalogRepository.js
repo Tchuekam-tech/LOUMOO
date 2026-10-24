@@ -20,6 +20,7 @@ const { HOUSE_STORE } = require('../../store/domain/HouseStore');
 const { getSharedHouseStore } = require('../../store/application/HouseStoreService');
 const { priceToNumber } = require('../domain/CuratedCatalog');
 const CuratedUrls = require('../domain/CuratedUrls');
+const Money = require('../../../../src/shared/money');
 
 const CATALOG_SELECT_COLUMNS = [
   'id', 'store_id', 'seller_id', 'listing_type', 'category_id', 'title', 'slug',
@@ -835,9 +836,9 @@ class CatalogRepository {
   }
 }
 
+// The shared money formatter (src/shared/money.js) — one definition of "85 000 FCFA" for the whole app.
 function formatXaf(amount) {
-  const s = String(Math.round(amount)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  return `${s} FCFA`;
+  return Money.formatXaf(amount);
 }
 
 module.exports = CatalogRepository;

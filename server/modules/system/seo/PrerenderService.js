@@ -223,11 +223,9 @@ async function hydrate(resolved) {
   return { entity: null, status: 200 };
 }
 
+// Delegates to the shared money formatter (src/shared/money.js); identical output, one definition.
 function formatPrice(amount, currency) {
-  const n = Math.round(Number(amount) || 0);
-  if (!n) return '';
-  const grouped = String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  return (currency || 'XAF') === 'XAF' ? `${grouped} FCFA` : `${grouped} ${currency}`;
+  return require('../../../../src/shared/money').formatMoney(amount, currency);
 }
 
 /**
