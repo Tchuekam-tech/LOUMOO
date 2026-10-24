@@ -415,6 +415,14 @@ async function sendPrerendered(req, res) {
     res.status(200).set('Content-Type', 'text/html; charset=utf-8').set('Cache-Control', 'no-cache');
     return req.method === 'HEAD' ? res.end() : res.send(shell);
   }
+  // A legacy id URL of a curated product: permanent redirect to the product's canonical slug, query kept.
+  // Crawlers and the CDN may keep it for an hour; it only changes if a family's primary ever does.
+  if (result.redirect) {
+    const q = req.originalUrl.indexOf('?');
+    const search = q === -1 ? '' : req.originalUrl.slice(q).split('#')[0];
+    res.set('Cache-Control', 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400');
+    return res.redirect(result.redirect.status, result.redirect.to + search);
+  }
   res.status(result.status);
   res.set('Content-Type', 'text/html; charset=utf-8');
   // Public, indexable pages may be cached by the CDN (per-URL body, no private

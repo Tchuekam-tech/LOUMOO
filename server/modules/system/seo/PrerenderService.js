@@ -58,24 +58,43 @@ function categoryDirectory() {
   try { return require('./CategoryDirectory'); } catch (_) { return null; }
 }
 
+function curatedUrls() {
+  try { return require('../../catalog/domain/CuratedUrls'); } catch (_) { return null; }
+}
+
 // A product link is only worth emitting when the router will accept it.
 const PRODUCT_PARAM_RE = /^[A-Za-z0-9_-]{1,128}$/;
 const LISTING_LINKS = 24;
+// The curated catalogue repeats each product, so a page's first cards are often the same product
+// several times over; read further than LISTING_LINKS and keep the distinct ones.
+const LISTING_SCAN = LISTING_LINKS * 4;
 
+/**
+ * The URL a product is indexed at. A curated product has ONE canonical page per family of repeats
+ * (CuratedUrls), so any member links to, and canonicalises to, the primary's slug. A live listing's
+ * is its own slug (or id).
+ */
 function productPath(p) {
+  if (p && p.curated) {
+    const urls = curatedUrls();
+    const canonical = urls && urls.canonicalPathFor(p.id);
+    if (canonical) return canonical;
+  }
   const key = String((p && (p.slug || p.id)) || '');
   return PRODUCT_PARAM_RE.test(key) ? `/product/${key}` : null;
 }
 
-/** Up to LISTING_LINKS public products for a listing page; [] on any failure. */
+/** Up to LISTING_LINKS distinct public products for a listing page; [] on any failure. */
 async function listingItems(filters) {
   const repo = catalogRepo();
   if (!repo || typeof repo.listPublishedListings !== 'function') return [];
   try {
-    const res = await repo.listPublishedListings(Object.assign({ page: 1, limit: LISTING_LINKS }, filters));
+    const res = await repo.listPublishedListings(Object.assign({ page: 1, limit: LISTING_SCAN }, filters));
+    const seen = new Set();
     return ((res && res.items) || [])
       .map((p) => ({ title: p.title, path: productPath(p), price: seoModel.payablePrice(p), currency: p.currency || 'XAF' }))
-      .filter((it) => it.title && it.path);
+      .filter((it) => it.title && it.path && !seen.has(it.path) && seen.add(it.path))
+      .slice(0, LISTING_LINKS);
   } catch (err) {
     warn(`[Prerender] listing links omitted: ${err && err.message ? err.message : err}`);
     return [];
@@ -108,12 +127,19 @@ async function hydrate(resolved) {
       const product = await repo.findIndexableProductByIdOrSlug(params.id);
       if (!product) return { entity: null, status: 404 };
       const canonicalPath = productPath(product) || undefined;
+      // A curated product reached by its immutable id (the URL the catalogue had before it had slugs,
+      // and the one a repeated product used to carry as "_2" ... "_26") is an alias: it resolves BY ID,
+      // so it is a permanent redirect to the family's primary slug, not a second page that competes
+      // with it. Reached by a slug it is the product's real URL: it answers 200, and a member that is
+      // not the primary names the primary as its canonical.
+      const redirectTo = product.curated && canonicalPath && params.id === product.id && canonicalPath !== `/product/${params.id}`
+        ? canonicalPath : undefined;
       const dir = categoryDirectory();
       const category = dir && dir.find(product.category);
       const breadcrumbs = [{ name: 'Accueil', path: '/' }];
       if (category) breadcrumbs.push({ name: category.name, path: dir.pathFor(category) });
       breadcrumbs.push({ name: product.title, path: canonicalPath || `/product/${params.id}` });
-      return { entity: product, status: 200, canonicalPath, breadcrumbs };
+      return { entity: product, status: 200, canonicalPath, breadcrumbs, redirectTo };
     } catch (err) {
       warn(`[Prerender] product hydrate degraded (serving route-level shell): ${err && err.message ? err.message : err}`);
       return { entity: null, status: 200 };
@@ -269,7 +295,8 @@ function inject(shellHtml, headHtml, contentHtml) {
 
 /**
  * @param {{url:string, shellHtml:string|Buffer, siteUrl:string}} args
- * @returns {Promise<{html:string, status:number, cacheable:boolean, descriptor:object}>}
+ * @returns {Promise<{html:string, status:number, cacheable:boolean, descriptor:object, redirect?:{status:number,to:string}}>}
+ *   `redirect` is set (status 301, html '') when the URL is a legacy alias of another page.
  */
 async function renderPage({ url, shellHtml, siteUrl }) {
   const pathname = pathnameOf(url);
@@ -283,6 +310,10 @@ async function renderPage({ url, shellHtml, siteUrl }) {
   } else {
     h = await hydrate(resolved);
     status = h.status;
+  }
+  // A permanent redirect has no document: the gateway answers with the Location (server/index.js).
+  if (h.redirectTo) {
+    return { redirect: { status: 301, to: h.redirectTo }, status: 301, html: '', cacheable: true, descriptor: { indexable: false } };
   }
   const entity = h.entity || null;
 

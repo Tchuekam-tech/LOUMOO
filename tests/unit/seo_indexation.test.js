@@ -79,9 +79,12 @@ async function run() {
   /* ── 2. Product structured data is true to the page ─────────────────── */
   const curated = CatalogRepository._curatedCards().find((c) => c.id === CURATED_ID);
   assert.ok(curated && curated.salePriceNumeric > curated.priceNumeric, 'fixture: a curated product with a higher compare-at price');
-  let r = await render(`/product/${CURATED_ID}`);
+  // The product's page is its slug; its id is the legacy URL and redirects (tests/unit/seo_canonical_product.test.js).
+  const CURATED_PATH = CuratedUrls.canonicalPathFor(CURATED_ID);
+  let r = await render(CURATED_PATH);
   assert.strictEqual(r.status, 200, 'a curated product page is 200');
   assert.strictEqual(robotsOf(r.html), 'index,follow');
+  assert.strictEqual(canonicalOf(r.html), `${SITE}${CURATED_PATH}`, 'a curated product page is its own canonical');
   let ld = jsonLdOf(r.html);
   const product = ld.find((x) => x['@type'] === 'Product');
   assert.ok(product, 'Product JSON-LD present');
