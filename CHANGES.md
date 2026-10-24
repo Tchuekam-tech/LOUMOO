@@ -351,6 +351,65 @@ with the project's credentials; then in Search Console submit
 
 ---
 
+## Priority 6 — Sitemap indexation + security headers  (branch: `fix/seo-sitemap-hygiene`)
+
+Measured on the live site on 2026-10-24: `sitemap.xml` had **1,116** URLs: 982 products (972 seed
+products that are 160 different ones, each under up to 26 ids such as
+`phone_google_google_pixel_8_pro_128gb_unlocke_17`, plus 10 listings), **105** stores of which **86** were
+`test-boutique-*` / `loop-test-boutique-*` rows the test harnesses left in the database, two
+`untitled-draft-listing` slugs, a harness listing and the same MacBook three times. After: **212**.
+
+### 19. Deterministic product slugs
+The seed catalogue's ids were cut at 45 characters mid-word with a `_2` … `_26` counter on collisions
+(`scripts/repopulate_full_catalog.py clean_slug`). `ProductSlug.js` derives the slug from the title's whole words
+(≤ 56 chars) and a 4-character hash of the immutable id; same product, same slug; no counter; the Python
+generators use the same algorithm and raise on a repeated id instead of numbering it. Ids are untouched.
+Proven by `product_slug` (all 972 products, generated twice: identical, 0 duplicates, 0 mid-word cuts).
+
+### 20. A sitemap of real, distinct, public pages
+One URL per curated product (the primary of its family, by slug); no placeholder or test listings, no test
+stores, no PRIVATE stores, one listing per offer; `lastmod` only where a real `updated_at` exists. Proven by
+`seo_sitemap_hygiene` (production-shaped rows) and `curated_urls`.
+
+### 21. One canonical URL per product
+`/product/<legacy id>` is an id lookup, so it 301s (query kept) to the family's primary slug; a slug answers
+200 and a repeat's canonical is the primary's. Live listings and 404s unchanged. The router no longer rewrites a
+slug URL into the id URL after load (it did, and replaced the server's title and canonical with a generic title
+and the redirecting URL: found in a browser). Proven by `seo_canonical_product`, `routing_router`.
+
+### 22. Security headers
+`Cross-Origin-Opener-Policy: same-origin`, `Cross-Origin-Resource-Policy: same-origin`,
+`Cross-Origin-Embedder-Policy: credentialless` (**relaxed from `require-corp`**: it blocks every cross-origin image
+whose host sends no CORP header, which includes Supabase Storage and any URL `img-src https:` allows; measured in
+Chrome, table in `security_headers_isolation`), and `preload` on HSTS. CSP and every other header: byte-identical
+to `main`. `preload` is consent, not enrolment (the apex response is Vercel's, `docs/ROUTING.md`).
+
+### 23. Apex redirect: what the repository can and cannot do
+`https://loumoo.store/x` is already one hop. `http://loumoo.store/x` is two because Vercel upgrades to https before
+any project config runs; `vercel.json` cannot remove that. The generated config now holds the apex → `www` rule
+(host-conditional, first, dormant while the Domains redirect answers first). `docs/ROUTING.md` has the table and
+the two ways to get a single hop (a redirect in front of Vercel, or HSTS preload).
+
+### Deploy checklist (after deploying; nothing was deployed from here)
+```bash
+curl -s https://www.loumoo.store/sitemap.xml | grep -c "<loc>"                                  # ~212
+curl -s https://www.loumoo.store/sitemap.xml | grep -c "test-boutique"                          # 0
+curl -s https://www.loumoo.store/sitemap.xml | grep -c "untitled-draft-listing\|harness-test-listing"  # 0
+curl -s https://www.loumoo.store/sitemap.xml | grep -c "_2</loc>"                               # 0
+curl -s https://www.loumoo.store/sitemap.xml | grep -o "<loc>[^<]*" | sort | uniq -d            # (nothing)
+curl -s https://www.loumoo.store/product/google-pixel-8-pro-128gb-unlocked-android-14-8vxz | grep -o '<link rel="canonical"[^>]*>'
+curl -sI https://www.loumoo.store/product/phone_google_google_pixel_8_pro_128gb_unlocke_17 | grep -iE "^HTTP|^location"   # 301 -> the slug
+curl -sI https://www.loumoo.store/ | grep -i "cross-origin\|strict-transport"
+curl -sIL -o /dev/null -w "%{num_redirects} %{url_effective}\n" https://loumoo.store/marketplace      # 1 (note -L: without it curl counts 0)
+curl -sIL -o /dev/null -w "%{num_redirects} %{url_effective}\n" http://loumoo.store/marketplace       # 2 (see 23)
+curl -sIo /dev/null -w "%{http_code}\n" https://www.loumoo.store/this-route-does-not-exist             # 404
+curl -s https://www.loumoo.store/rider/src/services/riderHub.js                                        # Not found
+```
+Then in Search Console resubmit `https://www.loumoo.store/sitemap.xml`; the legacy `_N` URLs will drop out as the
+301s are recrawled.
+
+---
+
 ## Bug sweep  (branch: `claude/laughing-babbage-xdmzlk`)
 
 Found by running every suite, turning the routing matrix's KNOWN_GAPs into

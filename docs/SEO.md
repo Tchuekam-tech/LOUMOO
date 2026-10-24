@@ -28,7 +28,38 @@ What the site gives Google, what it cannot force, and what has to happen outside
 | Crawlable links to all of them from every page | `src/seo/siteNav.json` | §2 |
 | Real 404 for unknown URLs (no soft-404), self-canonical, no private path indexed | `PrerenderService`, `vercel.json` | `seo_prerender`, `seo_indexation`, `routing_deploy` |
 | `sitemap.xml` with the guides (`lastmod` = the copy's review date) | `SitemapService.js` | §6 |
+| One URL per product: readable slug, 301 from the legacy id, one canonical per family of repeats | `ProductSlug.js`, `CuratedUrls.js`, `PrerenderService.js` | `product_slug`, `curated_urls`, `seo_canonical_product` |
+| A sitemap of real, distinct, public pages (no test stores, placeholder drafts or repeated products) | `SitemapService.js`, `IndexingPolicy.js` | `seo_sitemap_hygiene` |
 | Favicon (`/favicon.ico` has 16/32/48 px entries), 1200×630 social card | `Assets/brand/` | §4 |
+
+## One page per product, and a sitemap of real pages
+
+The seed catalogue has 972 products that are 160 different ones (the generators repeated each under a
+new id, photo and "(#11)"). Before this, each was a URL (`/product/phone_google_..._unlocke_17`, ids cut
+at 45 characters mid-word, with a `_2` … `_26` counter), the sitemap listed all 972, and the live sitemap
+also carried 86 throwaway "test-boutique" stores, two `untitled-draft-listing` slugs, a harness listing and
+the same MacBook three times: 1,116 URLs for about 210 real pages.
+
+- **Slug** = the title's whole words (≤ 56 characters) + a 4-character hash of the immutable id
+  (`google-pixel-8-pro-128gb-unlocked-android-14-8vxz`): deterministic, never cut inside a word, no
+  counter (`ProductSlug.js`; `scripts/catalog_slug.py` is the same algorithm for the Python generators,
+  which no longer mint `_N` ids). It is stored in the catalogue files; `node scripts/assign_catalog_slugs.js`
+  writes it (and `--check` verifies it). The `id` never changes: orders, carts, reviews and stock are filed under it.
+- **Family** = same title (counter removed) + brand; **primary** = the member with the shortest id, so it is
+  independent of the dataset's order (`CuratedUrls.js`).
+- **URLs.** `/product/<legacy id>` → **301** to the primary's slug (it resolves *by id*, so it is an alias);
+  `/product/<primary slug>` → 200, canonical = itself; `/product/<another member's slug>` → 200, canonical = the
+  primary (a visitor in the app may be on it), never `noindex`. Live listings are unchanged.
+- **Sitemap** = static pages + categories + the 160 primaries + real listings + live stores. Left out: a
+  placeholder slug (`untitled-draft-listing-*`, `harness-test-listing-*`), a listing of a test or PRIVATE store,
+  repeats of one offer (same title, seller name, category and price: the oldest stays), and stores that are not
+  ACTIVE/PUBLIC or are the harnesses' (`test-boutique-*`, `loop-test-boutique-*`, `harness-test-*`, "Test
+  Boutique …"). `lastmod` only where a real `updated_at` exists (never for the static catalogue).
+- **The browser** holds a product under its id (that is what the bag and checkout send) but its address is the
+  slug, and an address that already names the product by either key is never rewritten into the other
+  (`routes.js` `urlBind`), so the server's head (title, canonical) survives hydration.
+
+After deploy, verify with the commands in `CHANGES.md` "Priority 6".
 
 ## Not published on purpose (needs a real value from the owner)
 
@@ -94,6 +125,18 @@ These are product or content calls, not SEO bugs, but Google will index what the
 
 ## Known limits (follow-ups)
 
+- The catalogue itself still repeats products (972 cards for 160 products, each with its own photo and
+  "(#N)" title): only the URLs were consolidated, the marketplace still shows every card. Trimming the data is
+  a product decision.
+- The test stores and listings the harnesses left in the production database still exist and still answer 200
+  (they are not `noindex`, and `/stores` can list them); they are only kept out of the sitemap, by name. The
+  proper fix is to delete them and add an `is_test` column that the harnesses set (a production migration, not
+  made here). `kamer-tech-solutions-*` (three stores with one name) and the other timestamp-suffixed stores look
+  like the same residue but are not named like it, so they are still listed.
+- Two real-looking listings keep a draft slug (`untitled-draft-listing-k4x5` is a Samsung Galaxy S24 Ultra):
+  the slug was minted from the placeholder title and never regenerated. They are excluded from the sitemap per
+  the rule above; re-slugging them (with a redirect) would bring them back.
+
 - The visible app has no `<a href>` links: navigation uses click handlers, so the only anchors
   a rendering crawler finds on the home page are in the hidden `#loumoo-prerender` block
   (the four guides, by contrast, have a visible nav and footer). The router already
@@ -111,5 +154,10 @@ These are product or content calls, not SEO bugs, but Google will index what the
 node tests/unit/seo_search_dominance.test.js   # brand-search surface
 node tests/unit/seo_indexation.test.js         # canonical, indexation, sitemap
 node tests/unit/seo_prerender.test.js          # prerender head + real 404s
+node tests/unit/product_slug.test.js           # slugs: unique, idempotent, whole-word (all 972 products)
+node tests/unit/curated_urls.test.js           # families, primaries, legacy ids
+node tests/unit/seo_canonical_product.test.js  # canonical, 301s, query kept, 404s unchanged
+node tests/unit/seo_sitemap_hygiene.test.js    # the sitemap against production-shaped data
+node tests/unit/security_headers_isolation.test.js  # COOP / COEP / CORP / HSTS preload
 node tests/unit/routing_deploy.test.js         # Vercel/Express behaviour (needs `node scripts/assemble_public.js` first)
 ```
