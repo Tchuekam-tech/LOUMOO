@@ -26,6 +26,8 @@ import json
 import urllib.parse
 import unicodedata
 
+import catalog_slug
+
 if sys.stdout.encoding != 'utf-8':
     try:
         sys.stdout.reconfigure(encoding='utf-8')
@@ -58,9 +60,9 @@ def calc_10_percent_discount(benchmark_price):
     return fmt_xaf(price), fmt_xaf(sale_price)
 
 def clean_slug(text):
-    text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('utf-8')
-    text = re.sub(r'[^a-zA-Z0-9]+', '_', text).strip('_').lower()
-    return text[:45]
+    # The product's immutable id: the whole text, never cut at 45 characters mid-word (see
+    # scripts/catalog_slug.py). The public URL slug is derived from it in register_product().
+    return catalog_slug.immutable_id(text)
 
 TECH_STORES = [
     {"name": "Orca Electronics", "city": "Akwa, Douala", "rating": "4.9"},
@@ -126,14 +128,9 @@ def main():
     used_ids = set()
 
     def register_product(p):
-        pid = p['id']
-        suffix = 1
-        orig_id = pid
-        while pid in used_ids:
-            suffix += 1
-            pid = f"{orig_id}_{suffix}"
-        p['id'] = pid
-        used_ids.add(pid)
+        # A repeated id is a bug in the generator's input, never fixed with a "_2" ... "_26" counter.
+        pid = catalog_slug.claim_id(used_ids, p['id'])
+        p['slug'] = catalog_slug.product_slug(p['title'], pid)
         products[pid] = p
 
     # ══════════════════════════════════════════════════════════════════════════
