@@ -19,6 +19,7 @@ const { config } = require('../../../config/env');
 const { HOUSE_STORE } = require('../../store/domain/HouseStore');
 const { getSharedHouseStore } = require('../../store/application/HouseStoreService');
 const { priceToNumber } = require('../domain/CuratedCatalog');
+const CuratedUrls = require('../domain/CuratedUrls');
 
 const CATALOG_SELECT_COLUMNS = [
   'id', 'store_id', 'seller_id', 'listing_type', 'category_id', 'title', 'slug',
@@ -690,9 +691,12 @@ class CatalogRepository {
     const compareAt = this._priceToNumber(p.salePrice);
     const cover = p.coverImage || (Array.isArray(p.images) && p.images[0]) || null;
     const hasDiscount = compareAt && compareAt > priceNumeric;
+    // The id is the immutable key (orders, carts and reviews are filed under it); the slug is the
+    // product's public URL key (CuratedUrls / ProductSlug). Both resolve to this card.
+    const entry = CuratedUrls.resolve(p.id || id);
     return {
       id: p.id || id,
-      slug: p.id || id,
+      slug: entry ? entry.slug : (p.id || id),
       title: p.title,
       category: p.category || 'general',
       categoryLabel: p.categoryLabel || '',
@@ -769,9 +773,10 @@ class CatalogRepository {
     return out;
   }
 
-  // The curated product whose id (or slug, which is the same thing for curated
-  // cards) is exactly `idOrSlug`, or null. No fuzzy or partial matching: a near
-  // miss would show one product's page, price and photos under another's link.
+  // The curated product whose id or slug is exactly `idOrSlug`, or null. The id is
+  // the immutable key (and the legacy URL); the slug is the public URL. No fuzzy or
+  // partial matching: a near miss would show one product's page, price and photos
+  // under another's link.
   static _curatedDetail(idOrSlug) {
     const wanted = String(idOrSlug == null ? '' : idOrSlug).trim();
     if (!wanted) return null;
