@@ -35,9 +35,14 @@ function text(value) {
   return String(value == null ? '' : value);
 }
 
-/** True for a store the test harnesses created: by its slug or its name. */
+/**
+ * True for a store the test harnesses created. The `is_test` flag (migration 023) is authoritative
+ * when the row carries it; the slug/name patterns are the fallback for rows read without the column
+ * (before the migration runs) and for a flagged store that was renamed to look ordinary.
+ */
 function isTestStore(store) {
   if (!store) return false;
+  if (store.is_test === true) return true;
   return TEST_STORE_SLUG.test(text(store.slug)) || TEST_STORE_NAME.test(text(store.name).trim());
 }
 
