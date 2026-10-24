@@ -32,6 +32,7 @@ const SeoContent = require('../../server/modules/system/seo/SeoContent');
 const SitemapService = require('../../server/modules/system/seo/SitemapService');
 const PrerenderService = require('../../server/modules/system/seo/PrerenderService');
 const CatalogRepository = require('../../server/modules/catalog/infrastructure/CatalogRepository');
+const CuratedUrls = require('../../server/modules/catalog/domain/CuratedUrls');
 const StoreRepository = require('../../server/modules/store/infrastructure/StoreRepository');
 
 const ROOT = path.resolve(__dirname, '../..');
@@ -174,10 +175,11 @@ async function run() {
   assert.strictEqual((xml.match(/<url>/g) || []).length, (xml.match(/<\/url>/g) || []).length, 'balanced <url> elements');
   const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
   assert.strictEqual(new Set(locs).size, locs.length, 'no duplicate <loc>');
-  assert.ok(locs.length > 900, `the curated catalogue is listed (${locs.length} URLs)`);
+  assert.ok(locs.length > 150 && locs.length < 260, `the curated catalogue is listed once per product, not once per id (${locs.length} URLs)`);
   assert.ok(locs.length <= 50000, 'within the 50,000-URL sitemap limit');
   assert.ok(Buffer.byteLength(xml) < 50 * 1024 * 1024, 'within the 50 MB sitemap limit');
-  assert.ok(locs.includes(`${SITE}/product/${CURATED_ID}`), 'curated products are in the sitemap');
+  assert.ok(locs.includes(`${SITE}${CuratedUrls.canonicalPathFor(CURATED_ID)}`), 'curated products are in the sitemap, by their slug');
+  assert.ok(!locs.includes(`${SITE}/product/${CURATED_ID}`), 'and not by their legacy id');
   assert.ok(locs.includes(`${SITE}/marketplace/category/electronics`), 'category pages are in the sitemap');
   assert.ok(!locs.includes(`${SITE}/marketplace/category/banks`), 'an empty category is not');
   for (const loc of locs) {
