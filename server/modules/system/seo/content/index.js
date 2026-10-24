@@ -42,6 +42,11 @@ function curatedCards() {
   try { return require('../../../catalog/infrastructure/CatalogRepository')._curatedCards() || []; } catch (_) { return []; }
 }
 
+// Which URL is THE page of a curated product (CuratedUrls); inert if that module cannot load.
+function curatedUrls() {
+  try { return require('../../../catalog/domain/CuratedUrls'); } catch (_) { return { resolve: () => null, canonicalPathFor: () => null }; }
+}
+
 /**
  * A catalogue title cut off at an elision ("... des Hauts Plateaux de l", "Huile d"): the
  * dataset has four. It is a crawlable, visible product name on a page about trust, so such a
@@ -59,6 +64,9 @@ function featuredProducts(cards, n) {
   const byCategory = new Map();
   for (const c of cards) {
     if (!c || !c.title || !PARAM_RE.test(String(c.id || '')) || !(c.image || (c.images && c.images[0]))) continue;
+    // A repeated product is featured once, as its primary (the canonical page of the family).
+    const entry = curatedUrls().resolve(c.id);
+    if (entry && !entry.isPrimary) continue;
     if (looksTruncated(c.title)) continue;
     if (!seoModel.payablePrice(c)) continue;
     const key = String(c.category || 'other').toLowerCase();
@@ -74,7 +82,7 @@ function featuredProducts(cards, n) {
     for (const [, list] of order) {
       if (out.length >= n) break;
       const c = list[round];
-      if (c) out.push({ title: c.title, path: `/product/${c.id}`, price: seoModel.payablePrice(c), currency: c.currency || 'XAF', image: c.image || c.images[0] });
+      if (c) out.push({ title: c.title, path: curatedUrls().canonicalPathFor(c.id) || `/product/${c.id}`, price: seoModel.payablePrice(c), currency: c.currency || 'XAF', image: c.image || c.images[0] });
     }
   }
   return out;
