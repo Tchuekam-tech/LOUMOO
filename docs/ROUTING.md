@@ -316,6 +316,38 @@ writes `public/robots.txt`) and the browser router (which follows the canonical 
 all switch. Sign-in is not host-sensitive (the session token is first-party and stored per origin, so a
 visitor who switches between the two hosts is signed out of the other).
 
+**How many hops the apex takes** (measured on the live site, `curl -sIL -w '%{num_redirects}'`, 2026-10-24):
+
+| Request | Hops | Who answers |
+| --- | --- | --- |
+| `https://loumoo.store/x?q=1` | **1** — 308 to `https://www.loumoo.store/x?q=1` | the Vercel Domains redirect |
+| `http://loumoo.store/x?q=1` | **2** — 308 to `https://loumoo.store/x?q=1`, then the row above | Vercel's own http→https upgrade, then the Domains redirect |
+
+The generated `vercel.json` also carries the same rule as its **first** redirect (`has: host loumoo.store`
+→ `https://www.loumoo.store/$1`, 308, path and query kept). It matches only the apex host, so `www` and
+preview URLs get no hop. It is in effect only for requests that reach this project with the apex as their
+Host, i.e. once the apex is attached to the project as a normal domain instead of as a Domains redirect; until
+then the Domains redirect answers first and this rule is dormant (the tests prove it against a model of Vercel's
+routing, `tests/helpers/vercelEmulator.js`). **What the repository cannot do:** the first hop of the
+`http://` row is Vercel upgrading the connection to https before any project configuration runs, and no
+`vercel.json` rule can remove it. To make `http://loumoo.store` a single hop, redirect it in a layer in front of
+Vercel (a DNS provider or CDN redirect rule: `http://loumoo.store/*` → `https://www.loumoo.store/$1`, 308); to
+make it no hop at all for returning browsers, get the domain onto the HSTS preload list (next paragraph).
+
+**Security headers.** Every response carries `Strict-Transport-Security: max-age=31536000; includeSubDomains;
+preload`, `Cross-Origin-Opener-Policy: same-origin`, `Cross-Origin-Embedder-Policy: credentialless` and
+`Cross-Origin-Resource-Policy: same-origin`, from the gateway (`server/shared/middleware/securityHeaders.js`)
+and from the sitewide rule of the generated `vercel.json`, which takes the values from the same constants.
+COEP is `credentialless`, not `require-corp`: `require-corp` blocks every cross-origin image whose host sends no
+`Cross-Origin-Resource-Policy` header, which includes Supabase Storage (sellers' photos) and any URL the CSP's
+`img-src https:` allows; `credentialless` isolates the page and loads them (Safari ignores it). The measured
+comparison is in `tests/unit/security_headers_isolation.test.js`. **`preload` is consent, not enrolment:**
+hstspreload.org reads the header of the *apex* (`https://loumoo.store`) and while the apex is a Vercel Domains
+redirect that response is Vercel's own (`max-age=63072000`, no `includeSubDomains`, no `preload`), so the domain
+cannot be submitted yet. Attaching the apex to the project, so that the `vercel.json` rules above answer it with
+these headers, is the step that makes it eligible. Enrolment is slow to undo (browsers ship the list), and
+`includeSubDomains` means every subdomain must be https-only first.
+
 ## 6. Admin vs super admin
 
 `/admin` and `/superadmin` are the **standalone control center** (`SuperAdmin/frontend`), published at both

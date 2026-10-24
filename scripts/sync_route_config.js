@@ -10,11 +10,12 @@
  *   node scripts/sync_route_config.js --check  fail (exit 1) if it is out of date
  *
  * What is generated:
- *   vercel.json   "redirects" (legacy paths), "rewrites" (the API function, the
- *                 crawlability endpoints, the control center, and one entry per
- *                 application route pointing at the prerender function), "trailingSlash",
- *                 and in "headers" the HSTS value and the cross-origin isolation headers
- *                 of the sitewide rule (the rest of "headers" is kept as it is in the file)
+ *   vercel.json   "redirects" (the apex host -> the canonical host, then legacy paths),
+ *                 "rewrites" (the API function, the crawlability endpoints, the control
+ *                 center, and one entry per application route pointing at the prerender
+ *                 function), "trailingSlash", and in "headers" the HSTS value and the
+ *                 cross-origin isolation headers of the sitewide rule (the rest of
+ *                 "headers" is kept as it is in the file)
  *
  * The LAST rewrite is a catch-all to the SAME function (never to index.html). A URL that
  * is neither a file nor a registered route reaches the gateway, which answers a document
@@ -44,6 +45,13 @@ const ROOT = path.resolve(__dirname, '..');
 const VERCEL = path.join(ROOT, 'vercel.json');
 
 const PARAM = '[A-Za-z0-9_-]+';
+
+// The host that answers 200 (src/routing/routes.js ORIGIN) and its apex. A request for the apex that
+// reaches this project is sent to the canonical host in ONE hop, path and query kept. The rule is a
+// condition on the host: a request for www (or a preview URL) never matches it, so the canonical host
+// never gets an extra hop.
+const CANONICAL_ORIGIN = Routes.ORIGIN;
+const APEX_HOST = new URL(CANONICAL_ORIGIN).hostname.replace(/^www\./, '');
 
 /** '/store/:slug' -> Vercel path-to-regexp '/store/:slug([A-Za-z0-9_-]+)'. */
 function vercelSource(p) {
@@ -95,7 +103,9 @@ function withSitewideSecurity(headers) {
 }
 
 function buildVercel(existing) {
-  const redirects = aliasList().map(a => ({ source: vercelSource(a.from), destination: a.to, permanent: true }));
+  // First, so the apex is sent to the canonical host before any other rule can answer it.
+  const apexRedirect = { source: '/(.*)', has: [{ type: 'host', value: APEX_HOST }], destination: `${CANONICAL_ORIGIN}/$1`, permanent: true };
+  const redirects = [apexRedirect].concat(aliasList().map(a => ({ source: vercelSource(a.from), destination: a.to, permanent: true })));
 
   const rewrites = [{ source: '/api/(.*)', destination: '/api/index.js' }];
   // Dynamic crawlability endpoints are served by the Express function, not the
