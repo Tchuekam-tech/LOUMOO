@@ -12,7 +12,9 @@
  * What is generated:
  *   vercel.json   "redirects" (legacy paths), "rewrites" (the API function, the
  *                 crawlability endpoints, the control center, and one entry per
- *                 application route pointing at the prerender function), "trailingSlash"
+ *                 application route pointing at the prerender function), "trailingSlash",
+ *                 and in "headers" the HSTS value and the cross-origin isolation headers
+ *                 of the sitewide rule (the rest of "headers" is kept as it is in the file)
  *
  * The LAST rewrite is a catch-all to the SAME function (never to index.html). A URL that
  * is neither a file nor a registered route reaches the gateway, which answers a document
@@ -36,6 +38,7 @@
 const fs = require('fs');
 const path = require('path');
 const Routes = require('../src/routing/routes');
+const { HSTS, CROSS_ORIGIN_HEADERS } = require('../server/shared/middleware/securityHeaders');
 
 const ROOT = path.resolve(__dirname, '..');
 const VERCEL = path.join(ROOT, 'vercel.json');
@@ -71,6 +74,26 @@ function aliasList() {
   return out;
 }
 
+/**
+ * The sitewide header rule ('/(.*)') keeps every header it already has. Only two things come from
+ * the gateway's own constants (server/shared/middleware/securityHeaders.js), so the CDN and the
+ * function can never disagree about them (tests/unit/security_headers_csp.test.js): the HSTS value
+ * (which gained `preload`) and the cross-origin isolation headers (appended once).
+ */
+function withSitewideSecurity(headers) {
+  return headers.map(rule => {
+    if (rule.source !== '/(.*)') return rule;
+    const list = rule.headers.map(h => Object.assign({}, h));
+    const hsts = list.find(h => h.key === 'Strict-Transport-Security');
+    if (hsts) hsts.value = HSTS; else list.push({ key: 'Strict-Transport-Security', value: HSTS });
+    Object.keys(CROSS_ORIGIN_HEADERS).forEach(key => {
+      const have = list.find(h => h.key === key);
+      if (have) have.value = CROSS_ORIGIN_HEADERS[key]; else list.push({ key, value: CROSS_ORIGIN_HEADERS[key] });
+    });
+    return Object.assign({}, rule, { headers: list });
+  });
+}
+
 function buildVercel(existing) {
   const redirects = aliasList().map(a => ({ source: vercelSource(a.from), destination: a.to, permanent: true }));
 
@@ -101,9 +124,9 @@ function buildVercel(existing) {
   const content = contentRoutes().map(r => r.path.slice(1)).sort();
   const base = (existing.headers || []).filter(h => !/^\/\(([a-z0-9|-]+)\)$/.test(h.source));
   const homeRule = base.find(h => h.source === '/');
-  out.headers = homeRule && content.length
+  out.headers = withSitewideSecurity(homeRule && content.length
     ? base.concat([{ source: '/(' + content.join('|') + ')', headers: homeRule.headers }])
-    : base;
+    : base);
   // "Other": no Framework Preset (and so no preset-injected SPA fallback) whatever the dashboard says.
   out.framework = null;
   out.trailingSlash = false;
