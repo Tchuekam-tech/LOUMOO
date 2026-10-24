@@ -7,9 +7,9 @@ The same algorithm as server/modules/catalog/domain/ProductSlug.js, which is the
 reference (read its header for the why). tests/unit/product_slug.test.js runs both over
 the whole seed catalogue and fails if a single slug differs.
 
-    slug = <whole words of the title, at most 56 characters>-<4 characters>
+    slug = <whole words of the title, at most 60 characters>-<6 lowercase hex characters>
 
-    - the 4 characters are a hash of the product's IMMUTABLE id, so the same product has
+    - the 6 hex characters are a hash of the product's IMMUTABLE id, so the same product has
       the same slug on every run, and no other product can change it;
     - the title is cut between words, never inside one;
     - there is NO counter: an id that is already taken is a generator bug (raise), not
@@ -26,10 +26,8 @@ import re
 import sys
 import unicodedata
 
-MAX_BASE_LENGTH = 56
-SUFFIX_LENGTH = 4
-ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyz'
-SUFFIX_SPACE = len(ALPHABET) ** SUFFIX_LENGTH
+MAX_BASE_LENGTH = 60
+SUFFIX_LENGTH = 6  # lowercase hex characters (see stable_suffix); matches ProductSlug.js
 FALLBACK_BASE = 'product'
 # The router accepts [A-Za-z0-9_-]{1,128}; an id past it would be a page nobody can open.
 MAX_ID_LENGTH = 128
@@ -73,15 +71,11 @@ def truncate_on_word_boundary(words, limit=MAX_BASE_LENGTH):
 
 
 def stable_suffix(immutable_id):
+    """SUFFIX_LENGTH (6) lowercase hex characters: the leading hex digits of the id's SHA-256."""
     ident = '' if immutable_id is None else str(immutable_id)
     if not ident:
         raise ValueError("a slug suffix needs the product's immutable id")
-    n = int.from_bytes(hashlib.sha256(ident.encode('utf-8')).digest()[:4], 'big') % SUFFIX_SPACE
-    out = ''
-    for _ in range(SUFFIX_LENGTH):
-        out = ALPHABET[n % len(ALPHABET)] + out
-        n //= len(ALPHABET)
-    return out
+    return hashlib.sha256(ident.encode('utf-8')).hexdigest()[:SUFFIX_LENGTH]
 
 
 def product_slug(title, immutable_id):

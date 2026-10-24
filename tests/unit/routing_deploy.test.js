@@ -244,7 +244,7 @@ async function run() {
   }, 'the first redirect sends the apex host to the canonical host');
   const atApex = (u) => host.get(u, { host: 'loumoo.store' });
   [['/', `${Routes.ORIGIN}/`], ['/marketplace', `${Routes.ORIGIN}/marketplace`], ['/marketplace?x=1&utm_source=a', `${Routes.ORIGIN}/marketplace?x=1&utm_source=a`],
-    ['/product/google-pixel-8-pro-128gb-unlocked-android-14-8vxz', `${Routes.ORIGIN}/product/google-pixel-8-pro-128gb-unlocked-android-14-8vxz`],
+    ['/product/google-pixel-8-pro-128gb-unlocked-android-14-d8f82a', `${Routes.ORIGIN}/product/google-pixel-8-pro-128gb-unlocked-android-14-d8f82a`],
     ['/marketplace/category/fashion?page=2', `${Routes.ORIGIN}/marketplace/category/fashion?page=2`], ['/sitemap.xml', `${Routes.ORIGIN}/sitemap.xml`],
     ['/does-not-exist', `${Routes.ORIGIN}/does-not-exist`]].forEach(([from, to]) => {
     const r = atApex(from);

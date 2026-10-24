@@ -63,7 +63,7 @@ async function run() {
   assert.strictEqual(Slug.truncateOnWordBoundary(['extraordinarily', 'long'], 5), 'extraordinarily', 'a first word longer than the limit is kept whole, never cut');
 
   const suffix = Slug.stableSuffix('phone_google_google_pixel_8_pro_128gb_unlocke');
-  assert.ok(/^[0-9a-z]{4}$/.test(suffix), `the suffix is four lowercase letters/digits (the convention of the hand-published listings), got ${suffix}`);
+  assert.ok(/^[0-9a-f]{6}$/.test(suffix), `the suffix is six lowercase hex characters, got ${suffix}`);
   assert.strictEqual(Slug.stableSuffix('phone_google_google_pixel_8_pro_128gb_unlocke'), suffix, 'same id, same suffix');
   assert.notStrictEqual(Slug.stableSuffix('phone_google_google_pixel_8_pro_128gb_unlocke_2'), suffix, 'the next id gets a different one');
   assert.throws(() => Slug.stableSuffix(''), /immutable id/, 'no id, no slug');
@@ -71,16 +71,17 @@ async function run() {
 
   // Pinned: a change of algorithm would move every URL, so it must be a deliberate edit of these lines.
   assert.strictEqual(Slug.productSlug('Google Pixel 8 Pro 128GB Unlocked Android 14', 'phone_google_google_pixel_8_pro_128gb_unlocke'),
-    'google-pixel-8-pro-128gb-unlocked-android-14-8vxz');
+    'google-pixel-8-pro-128gb-unlocked-android-14-d8f82a');
   assert.strictEqual(Slug.productSlug('Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#1)', 'shoe_kraasa_kraasa_bottines_chelsea_homme_mic'),
-    'kraasa-bottines-chelsea-homme-micro-daim-elastique-119j');
+    'kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-cf6fd4');
 
   assert.strictEqual(Slug.productSlug('MacBook Air (#11)', 'a'), Slug.productSlug('MacBook Air', 'a'), 'the generator counter is not part of the slug');
   assert.notStrictEqual(Slug.productSlug('MacBook Air', 'a'), Slug.productSlug('MacBook Air', 'b'), 'two products with one title differ by their id');
-  assert.ok(/^product-[0-9a-z]{4}$/.test(Slug.productSlug('', 'x')) && /^product-[0-9a-z]{4}$/.test(Slug.productSlug('!!!', 'x')), 'a title with no words still gets a valid slug');
-  assert.ok(Slug.isProductSlug('iphone-screen-replacement-same-day-90-day-guarantee-6y0z'), 'the hand-published shape is the same shape');
+  assert.ok(/^product-[0-9a-f]{6}$/.test(Slug.productSlug('', 'x')) && /^product-[0-9a-f]{6}$/.test(Slug.productSlug('!!!', 'x')), 'a title with no words still gets a valid slug');
+  assert.ok(Slug.isProductSlug('google-pixel-8-pro-128gb-unlocked-android-14-d8f82a'), 'the 6-hex shape validates');
+  assert.ok(Slug.isProductSlug('iphone-screen-replacement-same-day-90-day-guarantee-6y0z'), 'the hand-published 4-base36 shape validates too');
   assert.ok(!Slug.isProductSlug('phone_google_google_pixel_8_pro_128gb_unlocke_2'), 'a legacy underscore id is not a slug');
-  console.log('    ✓ ProductSlug: whole words, a stable 4-character suffix of the immutable id, no counter');
+  console.log('    ✓ ProductSlug: whole words, a stable 6-hex suffix of the immutable id, no counter');
 
   /* ── 2. the whole seed catalogue, twice ─────────────────────────────── */
   const ids = Object.keys(catalogProducts);
