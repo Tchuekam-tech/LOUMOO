@@ -17,6 +17,8 @@ import json
 import urllib.parse
 import unicodedata
 
+import catalog_slug
+
 if sys.stdout.encoding != 'utf-8':
     try:
         sys.stdout.reconfigure(encoding='utf-8')
@@ -43,9 +45,10 @@ def fmt_xaf(amount):
     return f"XAF {s}"
 
 def clean_slug(text):
-    text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('utf-8')
-    text = re.sub(r'[^a-zA-Z0-9]+', '_', text).strip('_').lower()
-    return text[:45]
+    # The product's immutable id: the whole text, never cut (it used to be cut at 45 characters,
+    # mid-word, which made distinct products collide). The public URL slug is derived from it
+    # and the title by product_slug() in add_product().
+    return catalog_slug.immutable_id(text)
 
 # Merchant Pools
 TECH_STORES = [
@@ -109,14 +112,10 @@ def generate_catalog():
     used_ids = set()
 
     def add_product(p):
-        pid = p['id']
-        suffix = 1
-        orig_id = pid
-        while pid in used_ids:
-            suffix += 1
-            pid = f"{orig_id}_{suffix}"
-        p['id'] = pid
-        used_ids.add(pid)
+        # An id that is already taken is a bug in the generator's input, not something to fix
+        # with a "_2", "_3" ... counter (that put 26 URLs on one phone).
+        pid = catalog_slug.claim_id(used_ids, p['id'])
+        p['slug'] = catalog_slug.product_slug(p['title'], pid)
         products[pid] = p
 
     # ══════════════════════════════════════════════════════════════════════════

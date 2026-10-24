@@ -397,6 +397,40 @@ async function run() {
     console.log('    ✓ routing_router: record canonicalisation right after a URL-driven open replaces the entry');
   }
   {
+    // A product is HELD under its id (the bag and checkout send that to the server) but LIVES at its slug.
+    // Opened by a slug URL it must stay there when the shell reports the record's id: the server wrote that
+    // page's head (title, canonical) for that URL, and the router only keeps the server's head on that path.
+    const record = { id: 'phone_x_1', slug: 'phone-x-ab12' };
+    const opened = { screen: 'product', currentProductId: record.id, currentProduct: record };
+
+    const bySlug = load('/product/phone-x-ab12', { guardState: null });
+    await bySlug.Router.start(bySlug.adapter); await settle();
+    const entries = bySlug.env.entries.length;
+    bySlug.Router.syncFromState(opened);
+    assert.strictEqual(here(bySlug.env), '/product/phone-x-ab12', 'opened by its slug, the product stays on its slug (not rewritten to the id)');
+    assert.strictEqual(bySlug.env.entries.length, entries, 'and nothing is pushed or replaced');
+
+    const byId = load('/product/phone_x_1', { guardState: null });
+    await byId.Router.start(byId.adapter); await settle();
+    byId.Router.syncFromState(opened);
+    assert.strictEqual(here(byId.env), '/product/phone_x_1', 'opened by its id, it is not bounced to the slug a moment later');
+
+    const fromList = load('/marketplace', { guardState: stateOf('ready') });
+    await fromList.Router.start(fromList.adapter); await settle();
+    fromList.Router.syncFromState(opened);
+    assert.strictEqual(here(fromList.env), '/product/phone-x-ab12', 'opened from the app, the address is the product\'s slug');
+
+    const next = { id: 'phone_y_1', slug: 'phone-y-cd34' };
+    fromList.Router.syncFromState({ screen: 'product', currentProductId: next.id, currentProduct: next });
+    assert.strictEqual(here(fromList.env), '/product/phone-y-cd34', 'another product is another place, at its slug');
+
+    const mismatch = load('/marketplace', { guardState: stateOf('ready') });
+    await mismatch.Router.start(mismatch.adapter); await settle();
+    mismatch.Router.syncFromState({ screen: 'product', currentProductId: 'phone_z_1', currentProduct: record });
+    assert.strictEqual(here(mismatch.env), '/product/phone_z_1', 'a loaded record that is not the one being opened lends it no slug');
+    console.log('    ✓ routing_router: a product keeps the key it was opened by; the app\'s own navigation uses its slug');
+  }
+  {
     const t = load('/travel', { guardState: stateOf('ready') });
     await t.Router.start(t.adapter); await settle();
     assert.strictEqual(t.env.winListeners.popstate.length, 1);

@@ -12,6 +12,7 @@ import re
 import json
 import urllib.parse
 import unicodedata
+import catalog_slug
 import numpy as np
 from PIL import Image
 from scipy.fftpack import dct
@@ -92,12 +93,6 @@ def clean_title_from_filename(filename, subcat):
     if len(base) > 65:
         base = base[:65].rsplit(' ', 1)[0]
     return base.strip()
-
-def slugify(text):
-    text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('ascii')
-    text = re.sub(r'[^\w\s-]', '', text).strip().lower()
-    text = re.sub(r'[-\s]+', '_', text)
-    return text[:40].strip('_')
 
 def run_fashion_population(dry_run=False):
     fashion_dir = os.path.join('Assets', 'fashion')
@@ -308,18 +303,16 @@ def run_fashion_population(dry_run=False):
         store = stores[store_idx % len(stores)]
         store_idx += 1
 
-        base_slug = 'fash_' + slugify(clean_title)
-        if not base_slug or base_slug == 'fash_':
-            base_slug = f"fash_{sub}_{idx}"
-        candidate_slug = base_slug
-        suffix = 1
-        while candidate_slug in existing_ids or candidate_slug in used_slugs:
-            suffix += 1
-            candidate_slug = f"{base_slug}_{suffix}"
-        used_slugs.add(candidate_slug)
+        # The immutable id: the whole title plus the product's own index, never cut and never a
+        # "_2" ... "_26" counter (scripts/catalog_slug.py). A repeat is a bug, not something to number.
+        candidate_slug = catalog_slug.immutable_id(f"fash_{clean_title}_{idx}")
+        if candidate_slug in existing_ids:
+            raise ValueError(f"product id {candidate_slug!r} already exists in the catalogue")
+        catalog_slug.claim_id(used_slugs, candidate_slug)
 
         products.append({
             'id': candidate_slug,
+            'slug': catalog_slug.product_slug(clean_title, candidate_slug),
             'title': clean_title,
             'brand': default_brand,
             'category': 'fashion',

@@ -8,13 +8,16 @@
  *      (src/routing/routes.js) so the sitemap can never list a private,
  *      auth-only, redirect-only or not-yet-built page.
  *   2. Published, public product detail pages (iam.listings), by their
- *      canonical slug.
+ *      canonical slug: not a placeholder draft, not a throwaway test store's,
+ *      and one per offer (IndexingPolicy).
  *   3. The curated storefront catalogue (src/data/catalog_products.js): the
  *      house store's products, which the marketplace sells and whose pages
  *      answer 200 — static data, so listed even when the database is down.
+ *      ONE URL per product: the seed data repeats each product under several ids
+ *      (CuratedUrls), and only the primary of each family is listed, by its slug.
  *   4. Category pages that have products (CategoryDirectory), the same rule the
  *      prerender uses to mark a category page indexable.
- *   5. Active public store pages (iam.stores).
+ *   5. Active public store pages (iam.stores), minus the test harnesses' stores.
  *
  * Database access is best-effort: if Supabase is unreachable, unconfigured
  * (hermetic tests), or errors, the dynamic sections are simply omitted and the
@@ -22,6 +25,8 @@
  */
 
 const SeoContent = require('./SeoContent');
+const IndexingPolicy = require('./IndexingPolicy');
+const CuratedUrls = require('../../catalog/domain/CuratedUrls');
 const FrontendRoutes = require('../../../../src/routing/routes');
 const logger = require('../../../shared/logging/logger');
 
@@ -85,6 +90,10 @@ const PARAM_RE = /^[A-Za-z0-9_-]{1,128}$/;
 /**
  * Live listings as sitemap entries, plus the set of their category ids (so the
  * category section can list a category that only has database listings).
+ * A listing is offered only when it is a real, public product: a placeholder slug
+ * ("untitled-draft-listing-…"), a throwaway test store's listing, a PRIVATE store's
+ * listing and the repeats of an offer are left out (IndexingPolicy). `lastmod` is the
+ * row's own updated_at.
  * @returns {Promise<{entries: Array, categories: Set<string>}>}
  */
 async function collectProductEntries(db) {
@@ -93,7 +102,7 @@ async function collectProductEntries(db) {
   try {
     const { data, error } = await db
       .from('listings')
-      .select('id, slug, category_id, updated_at, stores!inner(status)')
+      .select('id, slug, title, category_id, base_price_minor, created_at, updated_at, stores!inner(status, slug, name, visibility)')
       .eq('status', 'PUBLISHED')
       .eq('visibility', 'PUBLIC')
       .eq('stores.status', 'ACTIVE')
@@ -105,8 +114,12 @@ async function collectProductEntries(db) {
     if (rows.length > MAX_PRODUCTS) {
       logger.warn(`[Sitemap] product listings clipped at ${MAX_PRODUCTS}; add a sitemap index.`);
     }
+    const offered = rows.slice(0, MAX_PRODUCTS).filter((r) =>
+      !IndexingPolicy.hasPlaceholderSlug(r) &&
+      IndexingPolicy.isPublicStore(r.stores) &&
+      !IndexingPolicy.isTestStore(r.stores));
     const entries = [];
-    for (const r of rows.slice(0, MAX_PRODUCTS)) {
+    for (const r of IndexingPolicy.dropRepeatedListings(offered)) {
       const key = String(r.slug || r.id || '');
       if (!PARAM_RE.test(key)) continue;
       if (r.category_id) categories.add(String(r.category_id).toLowerCase());
@@ -119,21 +132,25 @@ async function collectProductEntries(db) {
   }
 }
 
-/** The curated catalogue's product pages (static data; never throws). */
+/**
+ * The curated catalogue's product pages (static data; never throws): the primary of each family of
+ * repeated products, by its slug. The other members of a family answer 200 with the primary as their
+ * canonical (or 301 to it, for the legacy id URL) and are not listed.
+ */
 function collectCuratedEntries() {
-  let cards = [];
+  let primaries = [];
   try {
-    cards = require('../../catalog/infrastructure/CatalogRepository')._curatedCards() || [];
+    primaries = CuratedUrls.defaultIndex().primaries();
   } catch (err) {
     logger.warn(`[Sitemap] curated section omitted: ${err && err.message ? err.message : err}`);
     return [];
   }
-  return cards
-    .filter((c) => c && c.title && PARAM_RE.test(String(c.id || '')))
+  return primaries
+    .filter((p) => PARAM_RE.test(p.slug))
     .slice(0, MAX_PRODUCTS)
     // No lastmod: the dataset carries no modification date, and a made-up one
-    // is worse than none.
-    .map((c) => ({ path: `/product/${c.id}`, changefreq: 'weekly', priority: 0.6 }));
+    // is worse than none. The dataset changes with a release, not weekly.
+    .map((p) => ({ path: `/product/${p.slug}`, changefreq: 'monthly', priority: 0.6 }));
 }
 
 /** Category pages with at least one product (curated, or a live listing's category_id). */
@@ -150,11 +167,12 @@ async function collectStoreEntries(db) {
   try {
     const { data, error } = await db
       .from('stores')
-      .select('slug, updated_at, status, visibility')
+      .select('slug, name, updated_at, status, visibility')
       .eq('status', 'ACTIVE')
       .limit(MAX_STORES + 1);
     if (error) throw error;
-    const rows = (data || []).filter((r) => r.slug && PARAM_RE.test(String(r.slug)) && (r.visibility == null || r.visibility === 'PUBLIC'));
+    // Live means ACTIVE and not PRIVATE; the test harnesses' stores are real rows too, and are not shops.
+    const rows = (data || []).filter((r) => r.slug && PARAM_RE.test(String(r.slug)) && IndexingPolicy.isPublicStore(r) && !IndexingPolicy.isTestStore(r));
     if (rows.length > MAX_STORES) {
       logger.warn(`[Sitemap] stores clipped at ${MAX_STORES}; add a sitemap index.`);
     }
@@ -174,9 +192,10 @@ async function collectStoreEntries(db) {
  * Build the complete sitemap XML string for `siteUrl`.
  * @param {object} args
  * @param {string} args.siteUrl absolute origin, e.g. https://loumoo.store
+ * @param {object|null} [args.db] a Supabase client; omitted, the admin client (null without credentials)
  */
-async function buildSitemap({ siteUrl } = {}) {
-  const db = tryDb();
+async function buildSitemap({ siteUrl, db: injected } = {}) {
+  const db = injected === undefined ? tryDb() : injected;
   const [products, stores] = await Promise.all([
     collectProductEntries(db),
     collectStoreEntries(db)

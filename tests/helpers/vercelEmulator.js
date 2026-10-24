@@ -6,7 +6,9 @@
  * account. It implements the subset the project uses, in Vercel's documented order:
  *
  *   1. trailingSlash:false   '/x/' -> 308 '/x'
- *   2. redirects             first match, 308 for permanent, query string kept
+ *   2. redirects             first match, 308 for permanent, query string kept; a redirect may be
+ *                            conditional on the Host header (has:[{type:'host',value}]), and the
+ *                            request's host is get(url, { host }) (default: www.loumoo.store)
  *   3. filesystem            an exact file in the output directory wins over rewrites
  *   4. rewrites              first match; '/api/...' goes to the serverless function
  *   5. no match              404.html (if present) with a 404 status, otherwise a bare 404
@@ -66,9 +68,24 @@ function matchParen(s, start) {
   throw new Error(`vercelEmulator: unbalanced parenthesis in ${s}`);
 }
 
+const DEFAULT_HOST = 'www.loumoo.store';
+
 function createEmulator({ config, outputDir }) {
   const redirects = (config.redirects || []).map(r => ({ ...r, c: compileSource(r.source) }));
   const rewrites = (config.rewrites || []).map(r => ({ ...r, c: compileSource(r.source) }));
+  // The one condition the config uses: a REDIRECT that applies to one Host (the apex -> the canonical
+  // host). Header, cookie and query conditions, `missing`, and a conditional rewrite are not modelled, so
+  // they throw instead of quietly being treated as unconditional.
+  redirects.forEach(r => {
+    if (r.missing) throw new Error(`vercelEmulator: 'missing' is not supported (redirect ${r.source})`);
+    (r.has || []).forEach(h => {
+      if (h.type !== 'host' || typeof h.value !== 'string') throw new Error(`vercelEmulator: only has:{type:'host'} is supported (redirect ${r.source})`);
+    });
+  });
+  rewrites.forEach(r => {
+    if (r.has || r.missing) throw new Error(`vercelEmulator: a conditional rewrite is not supported (${r.source})`);
+  });
+  const hostMatches = (item, host) => !item.has || item.has.every(h => new RegExp('^(?:' + h.value + ')$', 'i').test(host));
   const fileAt = (p) => {
     let decoded;
     try { decoded = decodeURIComponent(p); } catch (e) { return null; }
@@ -77,24 +94,33 @@ function createEmulator({ config, outputDir }) {
     if (!full.startsWith(outputDir)) return null;
     try { return fs.statSync(full).isFile() ? full : null; } catch (e) { return null; }
   };
-  const matchAny = (list, pathname) => {
+  const matchAny = (list, pathname, host) => {
     // Vercel matches the request path as received (percent-encoded) and its decoded form.
     let decoded = pathname;
     try { decoded = decodeURIComponent(pathname); } catch (e) { /* keep raw */ }
     for (const item of list) {
+      if (!hostMatches(item, host)) continue;
       const m = item.c.re.exec(pathname) || item.c.re.exec(decoded);
       if (m) return Object.assign({}, item, { groups: m.slice(1) });
     }
     return null;
   };
-  // ':id' in a destination is replaced by what the source captured, as Vercel does.
-  const fill = (dest, item) => dest.replace(/:([A-Za-z_][A-Za-z0-9_]*)/g, (all, n) => {
-    const i = item.c.names.indexOf(n);
-    return i === -1 ? all : item.groups[i];
-  });
+  // ':id' in a destination is replaced by what the source captured, and '$1' by the first unnamed
+  // capture ('/(.*)'), as Vercel does.
+  const fill = (dest, item) => dest
+    .replace(/:([A-Za-z_][A-Za-z0-9_]*)/g, (all, n) => {
+      const i = item.c.names.indexOf(n);
+      return i === -1 ? all : item.groups[i];
+    })
+    .replace(/\$(\d+)/g, (all, n) => (item.groups[Number(n) - 1] === undefined ? all : item.groups[Number(n) - 1]));
 
-  /** @returns {{status:number, via:string, file?:string, location?:string, destination?:string}} */
-  function get(url) {
+  /**
+   * @param {string} url  path and query, as requested
+   * @param {{host?:string}} [request]  the Host header (default: the canonical host)
+   * @returns {{status:number, via:string, file?:string, location?:string, destination?:string}}
+   */
+  function get(url, request) {
+    const host = (request && request.host) || DEFAULT_HOST;
     const q = url.indexOf('?');
     let pathname = q === -1 ? url : url.slice(0, q);
     const search = q === -1 ? '' : url.slice(q);
@@ -102,14 +128,14 @@ function createEmulator({ config, outputDir }) {
     if (config.trailingSlash === false && pathname.length > 1 && pathname.endsWith('/')) {
       return { status: 308, via: 'trailing-slash', location: pathname.replace(/\/+$/, '') + search };
     }
-    const red = matchAny(redirects, pathname);
+    const red = matchAny(redirects, pathname, host);
     if (red) {
       return { status: red.permanent === false ? 307 : 308, via: 'redirect', location: fill(red.destination, red) + search };
     }
     if (pathname === '/') pathname = '/index.html';
     const file = fileAt(pathname);
     if (file) return { status: 200, via: 'static', file };
-    const rw = matchAny(rewrites, pathname);
+    const rw = matchAny(rewrites, pathname, host);
     if (rw) {
       if (rw.destination.startsWith('/api/')) return { status: 200, via: 'function', destination: rw.destination };
       const dest = fileAt(rw.destination);

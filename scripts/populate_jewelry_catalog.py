@@ -12,6 +12,7 @@ import re
 import json
 import urllib.parse
 import unicodedata
+import catalog_slug
 import numpy as np
 from PIL import Image
 from scipy.fftpack import dct
@@ -55,12 +56,6 @@ def calculate_color_hist(cv_img):
 
 def hamming_distance(h1, h2):
     return np.count_nonzero(h1 != h2)
-
-def slugify(text):
-    text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('ascii')
-    text = re.sub(r'[^\w\s-]', '', text).strip().lower()
-    text = re.sub(r'[-\s]+', '_', text)
-    return text[:45].strip('_')
 
 # Curated product catalog metadata for Assets/jelweries
 JEWELRY_CATALOG_METADATA = {
@@ -802,18 +797,13 @@ def run_jewelry_population(dry_run=False):
         store = STORES[store_idx % len(STORES)]
         store_idx += 1
 
-        base_slug = 'jewel_' + slugify(meta['title'])
-        if not base_slug or base_slug == 'jewel_':
-            base_slug = f"jewel_item_{idx}"
-        candidate_slug = base_slug
-        suffix = 1
-        while candidate_slug in used_slugs:
-            suffix += 1
-            candidate_slug = f"{base_slug}_{suffix}"
-        used_slugs.add(candidate_slug)
+        # The immutable id: the whole title plus the product's own index, never cut and never a
+        # "_2" ... "_26" counter (scripts/catalog_slug.py). A repeat is a bug, not something to number.
+        candidate_slug = catalog_slug.claim_id(used_slugs, catalog_slug.immutable_id(f"jewel_{meta['title']}_{idx}"))
 
         products.append({
             'id': candidate_slug,
+            'slug': catalog_slug.product_slug(meta['title'], candidate_slug),
             'title': meta['title'],
             'brand': meta['brand'],
             'category': 'fashion',

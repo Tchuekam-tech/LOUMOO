@@ -88,8 +88,14 @@
    * @param {string} id
    * @param {string} path           '/store/:slug'
    * @param {object} o
-   *   kind, screen, overlay, overlayArgs, access, title, bind, fixed, enter,
+   *   kind, screen, overlay, overlayArgs, access, title, bind, urlBind, fixed, enter,
    *   direct, fallback, aliases, parent, guestOnly, notes, status
+   *   urlBind  { param: { path, record } }: the record's PUBLIC key when it has one apart from
+   *            the key the shell holds it under (`bind`). A product is held under its id (what
+   *            the bag and checkout send to the server) but lives at its slug. `path` is where
+   *            the slug is in state; `record` is the loaded record's own id, which must equal
+   *            the bound value (the slug of a record that is not the one being opened is no
+   *            business of this URL). See urlKey().
    */
   function def(id, path, o) {
     o = o || {};
@@ -104,6 +110,7 @@
       access: o.access || PUBLIC,
       title: o.title || 'LOUMOO',
       bind: o.bind || null,
+      urlBind: o.urlBind || null,
       fixed: o.fixed || null,
       enter: o.enter || null,
       direct: o.direct || 'allow',
@@ -130,7 +137,7 @@
   def('freeday',       '/marketplace/free-day',      { screen: 'freeday', title: 'Free delivery day', parent: 'marketplace' });
   def('compare',       '/compare',                   { screen: 'vs', enter: '_enterCompare', title: 'Compare products', parent: 'marketplace' });
   def('compareResults', '/compare/results',          { screen: 'vsCompare', enter: '_enterCompare', title: 'Comparison', direct: 'redirect', fallback: 'compare', parent: 'compare' });
-  def('product',       '/product/:id',               { screen: 'product', bind: { id: 'currentProductId' }, enter: 'loadProductDetails', title: 'Product', parent: 'marketplace' });
+  def('product',       '/product/:id',               { screen: 'product', bind: { id: 'currentProductId' }, urlBind: { id: { path: 'currentProduct.slug', record: 'currentProduct.id' } }, enter: 'loadProductDetails', title: 'Product', parent: 'marketplace' });
   def('stores',        '/stores',                    { screen: 'store', title: 'Verified stores', parent: 'marketplace' });
   def('brand',         '/brand',                     { screen: 'brand', title: 'Official brands', parent: 'stores' });
   def('storefront',    '/store/:slug',               { screen: 'business', bind: { slug: 'currentStoreId' }, enter: '_enterStorefront', title: 'Store', parent: 'stores' });
@@ -473,12 +480,38 @@
   }
 
   /**
+   * The key a route parameter shows in the address bar. Normally what `bind` holds. A route with
+   * a `urlBind` shows the record's public key instead (a product's slug, not its id), with one
+   * rule that matters: when the address bar ALREADY names this record, by that key or by the
+   * bound one, it is left alone. A visitor who arrived by a slug URL must stay on it (the server
+   * wrote that page's head for the URL it was asked for, and the router only keeps the server's
+   * head on that path), and one who arrived by an id URL is not bounced to the slug a moment
+   * later (that would be a second history entry for one page).
+   * @param {object} route
+   * @param {string} name     the route parameter
+   * @param {string} bound    the value `bind` found in state, as a string
+   * @param {object} state
+   * @param {object} [current] the parameters of the URL now in the address bar
+   */
+  function urlKey(route, name, bound, state, current) {
+    var rule = route.urlBind && route.urlBind[name];
+    if (!rule) return bound;
+    var pub = getByPath(state, rule.path);
+    if (typeof pub !== 'string' || !pub || !new RegExp('^' + PARAM_RE + '$').test(pub)) return bound;
+    if (rule.record && String(getByPath(state, rule.record)) !== bound) return bound;
+    var shown = current && current[name];
+    if (shown && (shown === bound || shown === pub)) return shown;
+    return pub;
+  }
+
+  /**
    * The route (and its path) that represents a shell state, or null when the
    * screen has no URL. Used to keep the address bar in step with `state.screen`.
    * @param {string} screen
    * @param {object} state  the shell state (read-only)
+   * @param {object} [current] the route parameters of the URL in the address bar now (see urlKey)
    */
-  function forState(screen, state) {
+  function forState(screen, state, current) {
     state = state || {};
     var best = null;
     for (var i = 0; i < ROUTES.length; i++) {
@@ -493,7 +526,7 @@
       if (r.bind) {
         Object.keys(r.bind).forEach(function (name) {
           var v = getByPath(state, r.bind[name]);
-          if (v == null || v === '') complete = false; else params[name] = String(v);
+          if (v == null || v === '') complete = false; else params[name] = urlKey(r, name, String(v), state, current);
         });
       }
       var path = complete ? build(r.id, params) : null;

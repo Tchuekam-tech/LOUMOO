@@ -32,6 +32,7 @@ const { PAGES } = require('../../server/modules/system/seo/content/pages');
 const SitemapService = require('../../server/modules/system/seo/SitemapService');
 const CategoryDirectory = require('../../server/modules/system/seo/CategoryDirectory');
 const CatalogRepository = require('../../server/modules/catalog/infrastructure/CatalogRepository');
+const CuratedUrls = require('../../server/modules/catalog/domain/CuratedUrls');
 
 const ROOT = path.resolve(__dirname, '../..');
 const SITE = Routes.ORIGIN;
@@ -214,7 +215,13 @@ async function run() {
       assert.ok(!/[?#]/.test(href), `${where}: ${href} carries no query or fragment`);
       const res = Routes.resolve(href);
       if (res.type !== 'route') assert.fail(`${where}: broken internal link ${href}`);
-      if (res.route.id === 'product') assert.ok(curatedIds.has(decodeURIComponent(href.slice('/product/'.length))), `${where}: ${href} is a real product`);
+      if (res.route.id === 'product') {
+        const key = decodeURIComponent(href.slice('/product/'.length));
+        const entry = CuratedUrls.resolve(key);
+        assert.ok(entry && curatedIds.has(entry.id), `${where}: ${href} is a real product`);
+        assert.strictEqual(entry.slug, key, `${where}: ${href} links the product by its slug, never by the legacy id (which redirects)`);
+        assert.ok(entry.isPrimary, `${where}: ${href} is the canonical page of its family, not one of its repeats`);
+      }
       assert.ok(res.route.access.kind === 'public' || href === '/onboarding', `${where}: ${href} is a public destination (sign-up aside)`);
     });
     PAGES.forEach((p) => assert.ok(hrefs.includes(p.path), `${where}: links to ${p.path}`));

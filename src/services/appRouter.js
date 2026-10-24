@@ -639,7 +639,9 @@
       closeOverlay();
     }
 
-    var r = Routes.forState(screen, state);
+    // S.cur.params are the parameters of the URL in the address bar: a product opened by its slug
+    // (or by its id) stays on that URL instead of being rewritten into the other (Routes.forState).
+    var r = Routes.forState(screen, state, S.cur && S.cur.params);
     if (!r) return;
     var l = currentLocation();
     var sameRoute = S.cur && S.cur.routeId === r.route.id;

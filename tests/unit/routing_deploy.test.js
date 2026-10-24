@@ -232,6 +232,36 @@ async function run() {
   redir('/orders/42/', '/orders/42');
   console.log('    ✓ routing_deploy: legacy aliases redirect permanently with the query kept; trailing slashes are canonicalised');
 
+  // The apex host reaches the canonical host in ONE hop (a single 308, path and query kept); the
+  // canonical host and preview URLs are never touched by the rule, so www gets no extra hop.
+  // (This is the project's half. The plain-http request is upgraded to https by Vercel itself before
+  // any of this config runs, and the Domains redirect is a dashboard setting: docs/ROUTING.md.)
+  assert.deepStrictEqual(vercel.redirects[0], {
+    source: '/(.*)',
+    has: [{ type: 'host', value: 'loumoo.store' }],
+    destination: `${Routes.ORIGIN}/$1`,
+    permanent: true
+  }, 'the first redirect sends the apex host to the canonical host');
+  const atApex = (u) => host.get(u, { host: 'loumoo.store' });
+  [['/', `${Routes.ORIGIN}/`], ['/marketplace', `${Routes.ORIGIN}/marketplace`], ['/marketplace?x=1&utm_source=a', `${Routes.ORIGIN}/marketplace?x=1&utm_source=a`],
+    ['/product/google-pixel-8-pro-128gb-unlocked-android-14-8vxz', `${Routes.ORIGIN}/product/google-pixel-8-pro-128gb-unlocked-android-14-8vxz`],
+    ['/marketplace/category/fashion?page=2', `${Routes.ORIGIN}/marketplace/category/fashion?page=2`], ['/sitemap.xml', `${Routes.ORIGIN}/sitemap.xml`],
+    ['/does-not-exist', `${Routes.ORIGIN}/does-not-exist`]].forEach(([from, to]) => {
+    const r = atApex(from);
+    assert.strictEqual(r.status, 308, `apex ${from} -> ${r.status}`);
+    assert.strictEqual(r.location, to, `apex ${from} goes straight to ${to}`);
+    // and that ONE hop is the last: what it points at is answered, not redirected again
+    const next = host.get(to.slice(Routes.ORIGIN.length), { host: new URL(Routes.ORIGIN).hostname });
+    assert.notStrictEqual(next.via, 'redirect', `${to} must not redirect again (that would be a second hop)`);
+  });
+  ['www.loumoo.store', 'loumoo-git-feature-abc123.vercel.app', 'loumoo-production.up.railway.app', 'xloumoo.store', 'loumoo.store.evil.example'].forEach(h => {
+    const r = host.get('/marketplace?x=1', { host: h });
+    assert.notStrictEqual(r.via, 'redirect', `${h} is not the apex: no hop`);
+    assert.strictEqual(r.status, 200, `${h}: served, not redirected`);
+  });
+  assert.strictEqual(host.get('/login', { host: 'www.loumoo.store' }).location, '/sign-in', 'the legacy aliases still apply on the canonical host');
+  console.log('    ✓ routing_deploy: the apex host is sent to https://www.loumoo.store in one 308, path and query kept; www and preview hosts get no hop');
+
   /* ---------------------------------------------------- 3. assets resolve from the root */
   const documents = ['index.html', '404.html'].concat(fs.readdirSync(PUBLIC).filter(f => /Screens\.dc\.html$/.test(f)));
   const shell = fs.readFileSync(path.join(PUBLIC, 'index.html'), 'utf8');
