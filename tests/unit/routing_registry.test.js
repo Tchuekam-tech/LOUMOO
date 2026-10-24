@@ -189,6 +189,15 @@ async function run() {
   assert.strictEqual(Routes.forState('signIn', {}).path, '/sign-in', 'the suspended alias must never be derived from state');
   const degraded = Routes.forState('business', {});
   assert.ok(degraded && degraded.degraded && degraded.path === '/stores', 'a parameterised screen with no value falls back to its listing, never to a lie');
+  // A product is held under its id but lives at its slug (urlBind), unless the address bar already names it.
+  const held = { currentProductId: 'phone_x_1', currentProduct: { id: 'phone_x_1', slug: 'phone-x-ab12' } };
+  assert.strictEqual(Routes.forState('product', held).path, '/product/phone-x-ab12', 'the URL is the slug');
+  assert.strictEqual(Routes.forState('product', held, { id: 'phone_x_1' }).path, '/product/phone_x_1', 'an address that names the product by its id is left alone');
+  assert.strictEqual(Routes.forState('product', held, { id: 'phone-x-ab12' }).path, '/product/phone-x-ab12', 'and so is one that names it by its slug');
+  assert.strictEqual(Routes.forState('product', held, { id: 'another-one' }).path, '/product/phone-x-ab12', 'another record in the address bar is replaced');
+  assert.strictEqual(Routes.forState('product', { currentProductId: 'phone_x_1' }).path, '/product/phone_x_1', 'no loaded record, no slug: the bound id');
+  assert.strictEqual(Routes.forState('product', { currentProductId: 'phone_x_1', currentProduct: { id: 'phone_x_1', slug: 'not a slug!' } }).path, '/product/phone_x_1', 'an unusable slug is ignored');
+  assert.strictEqual(Routes.forState('product', { currentProductId: 'other', currentProduct: held.currentProduct }).path, '/product/other', 'the loaded record must be the one bound');
   assert.strictEqual(Routes.forState('loading', {}), null);
   assert.strictEqual(Routes.forState('superAdmin', {}), null, 'the unreachable legacy admin prototype gets no URL');
   console.log('    ✓ routing_registry: forState() maps shell state to the right URL, with safe fallbacks');
