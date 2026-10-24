@@ -32,6 +32,8 @@ try { ({ chromium } = require('playwright')); } catch (_) { chromium = null; }
 
 const ORIGIN = require(path.join(ROOT, 'src/routing/routes')).ORIGIN;
 const CURATED_ID = 'phone_tecno_tecno_camon_50_pro_5g_256gb_12gb_';
+// A curated product lives at its slug; its id is a legacy URL that the gateway redirects (301) to it.
+const CURATED_PATH = require(path.join(ROOT, 'server/modules/catalog/domain/CuratedUrls')).canonicalPathFor(CURATED_ID);
 
 async function headOf(page) {
   return page.evaluate(() => {
@@ -91,18 +93,38 @@ async function run() {
   try {
     /* 1. A product keeps the server's head after mount. */
     let page = await newPage();
-    let resp = await page.goto(`${base}/product/${CURATED_ID}`, { waitUntil: 'load', timeout: 60000 });
+    let resp = await page.goto(`${base}${CURATED_PATH}`, { waitUntil: 'load', timeout: 60000 });
     assert.strictEqual(resp.status(), 200);
     assert.ok(resp.headers()['content-security-policy'], 'served with the gateway CSP');
     await settle(page);
     let h = await headOf(page);
-    assert.strictEqual(h.canonical, `${ORIGIN}/product/${CURATED_ID}`, 'product canonical kept');
+    // The shell reports the record's ID once it has resolved the slug; the router must keep the address
+    // (and so the server's head) on the slug instead of rewriting it to the legacy id URL (a generic
+    // title and a canonical that redirects).
+    assert.strictEqual(new URL(page.url()).pathname, CURATED_PATH, 'the address stays on the product\'s slug after mount');
+    assert.strictEqual(h.canonical, `${ORIGIN}${CURATED_PATH}`, 'product canonical kept');
     assert.strictEqual(h.robots, 'index,follow');
     assert.ok(/Tecno Camon 50 Pro/.test(h.title), `product title kept after mount (got "${h.title}")`);
     assert.ok(h.jsonLd.includes('Product') && h.jsonLd.includes('BreadcrumbList'), `Product + BreadcrumbList JSON-LD kept (got ${h.jsonLd})`);
     assert.strictEqual(h.canonicals, 1, 'exactly one canonical');
     checks += 1;
     console.log(`    ✓ product: "${h.title}" ${h.robots} ${h.canonical}`);
+
+    /* 1b. The legacy id URL is a 301 to the slug, and lands with the same head. */
+    const legacy = await newPage();
+    resp = await legacy.goto(`${base}/product/${CURATED_ID}?utm_source=mail`, { waitUntil: 'load', timeout: 60000 });
+    assert.ok(resp.request().redirectedFrom(), 'the legacy id URL was redirected');
+    assert.strictEqual(resp.request().redirectedFrom().redirectedTo(), resp.request(), 'by one hop');
+    assert.strictEqual((await resp.request().redirectedFrom().response()).status(), 301, 'with a 301');
+    await settle(legacy);
+    const landed = await headOf(legacy);
+    assert.strictEqual(new URL(legacy.url()).pathname, CURATED_PATH, 'it lands on the slug');
+    assert.strictEqual(new URL(legacy.url()).search, '?utm_source=mail', 'the query string survives the redirect');
+    assert.strictEqual(landed.canonical, `${ORIGIN}${CURATED_PATH}`, 'and the canonical is the slug URL');
+    assert.ok(/Tecno Camon 50 Pro/.test(landed.title), 'with the product\'s own title');
+    checks += 1;
+    console.log(`    ✓ legacy id URL: 301 -> ${new URL(legacy.url()).pathname}${new URL(legacy.url()).search}`);
+    await legacy.close();
 
     /* 4. In-app navigation still updates the head. */
     await page.evaluate(() => window.LoumooRouter && window.LoumooRouter.navigate('/stores'));
