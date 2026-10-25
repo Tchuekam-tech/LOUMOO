@@ -48,6 +48,13 @@
       });
     return loadSDK.pending;
   }
+  const readDataUrl = (blob) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(new Error('Could not read this image.'));
+      reader.readAsDataURL(blob);
+    });
   const cards = (items) =>
     (items || []).map((p) => ({
       ...p,
@@ -584,13 +591,7 @@
           throw new Error(
             'Photo search is unavailable. Please search by typing.',
           );
-        const data = await new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = () =>
-            reject(new Error('Could not read this image.'));
-          reader.readAsDataURL(file);
-        });
+        const data = await readDataUrl(file);
         if (!this.current('visual', r)) return;
         this.d.visualPreview = data;
         this.emit();
