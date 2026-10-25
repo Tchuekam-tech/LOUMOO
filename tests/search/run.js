@@ -1,6 +1,6 @@
 require('../setup');
 (async () => {
-  for (const name of ['database', 'service', 'browser'])
+  for (const name of ['database', 'service', 'browser', 'photo'])
     await require(`./${name}.test`)();
   console.log('PASS universal search: all isolated suites');
 })().then(
