@@ -123,6 +123,17 @@ async function ladder() {
   await preparePhoto(file(3e6), kit);
   assert.deepEqual(kit.log.attempts, [[900, 600, 0.85]]);
 
+  // A small picture that nothing shrinks enough does not repeat its native size
+  // at every edge: it is tried once, then each genuinely smaller size.
+  kit = fakeKit({ width: 900, height: 600, bytesPerPixel: 1000 });
+  await assert.rejects(preparePhoto(file(3e6), kit), /shrink/);
+  assert.deepEqual(
+    [...new Set(kit.log.attempts.map(([w, h]) => `${w}x${h}`))],
+    ['900x600', '720x480', '540x360', '400x267'],
+  );
+  assert.equal(kit.log.attempts.length, 4 * PHOTO.qualities.length);
+  tidy(kit.log);
+
   // A sliver never rounds down to zero pixels.
   kit = fakeKit({ width: 1, height: 5000 });
   await preparePhoto(file(3e6), kit);
