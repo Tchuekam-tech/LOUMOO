@@ -196,6 +196,164 @@ async function failures() {
   tidy(log);
 }
 
+const tick = () => new Promise((r) => setImmediate(r));
+const deferred = () => {
+  let resolve;
+  const promise = new Promise((r) => {
+    resolve = r;
+  });
+  return { promise, resolve };
+};
+// A controller whose only collaborators are fakes. `calls` is every request the
+// photo handler made to the API; `prepared` is every file it asked to shrink.
+function controller({ visual = true, prepare } = {}) {
+  const calls = [],
+    prepared = [];
+  const c = new Search({
+    api: {
+      searchCapabilities: async () => ({ text: true, visual }),
+      searchVisual: async (body, signal) => {
+        calls.push({ body, signal });
+        return { items: [{ id: 'bag', title: 'Bag' }], message: 'Possible bags' };
+      },
+    },
+    preparePhoto:
+      prepare ||
+      (async (f) => {
+        prepared.push(f);
+        return 'data:image/jpeg;base64,SMALL';
+      }),
+  });
+  return { c, calls, prepared };
+}
+const pick = (f) => ({
+  target: { files: [f], value: 'C:\\fakepath\\' + f.name },
+});
+
+async function handler() {
+  // A 6 MB phone photo used to be refused outright. Now it is shrunk and the
+  // shrunk copy is what is previewed and sent.
+  let { c, calls, prepared } = controller();
+  const e = pick({ name: 'IMG_1.jpg', type: 'image/jpeg', size: 6e6 });
+  await c.photo(e);
+  assert.equal(prepared.length, 1);
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].body.imageData, 'data:image/jpeg;base64,SMALL');
+  assert.equal(c.d.visualPreview, 'data:image/jpeg;base64,SMALL');
+  assert.equal(c.d.visualItems[0].id, 'bag');
+  assert.equal(c.d.visualError, '');
+  assert.equal(c.d.visualBusy, false);
+  assert.equal(e.target.value, '', 'the same photo can be picked again');
+  c.destroy();
+
+  // What is still refused, before any decoding is attempted.
+  const limit = PHOTO.maxInputBytes;
+  for (const [f, message] of [
+    [
+      { name: 'huge.jpg', type: 'image/jpeg', size: limit + 1 },
+      'Choose a photo smaller than 25 MB.',
+    ],
+    [
+      { name: 'a.gif', type: 'image/gif', size: 1000 },
+      'Choose a JPEG, PNG or WebP photo.',
+    ],
+    [
+      { name: 'unknown', type: '', size: 1000 },
+      'Choose a JPEG, PNG or WebP photo.',
+    ],
+  ]) {
+    ({ c, calls, prepared } = controller());
+    await c.photo(pick(f));
+    assert.equal(c.d.visualError, message, f.name);
+    assert.equal(c.d.visualBusy, false);
+    assert.equal(prepared.length + calls.length, 0, f.name);
+    c.destroy();
+  }
+  // ...and exactly the cap is fine.
+  ({ c, calls } = controller());
+  await c.photo(pick({ name: 'edge.jpg', type: 'image/jpeg', size: limit }));
+  assert.equal(calls.length, 1);
+  c.destroy();
+
+  // No photo search on this deployment: no work is wasted on the photo.
+  ({ c, calls, prepared } = controller({ visual: false }));
+  await c.photo(pick({ name: 'p.jpg', type: 'image/jpeg', size: 6e6 }));
+  assert.equal(
+    c.d.visualError,
+    'Photo search is unavailable. Please search by typing.',
+  );
+  assert.equal(prepared.length + calls.length, 0);
+  c.destroy();
+
+  // A photo that cannot be shrunk shows the reason and sends nothing.
+  ({ c, calls } = controller({
+    prepare: async () => {
+      throw new Error('We could not shrink this photo enough to send it.');
+    },
+  }));
+  await c.photo(pick({ name: 'p.jpg', type: 'image/jpeg', size: 6e6 }));
+  assert.equal(
+    c.d.visualError,
+    'We could not shrink this photo enough to send it.',
+  );
+  assert.equal(c.d.visualBusy, false);
+  assert.equal(c.d.visualPreview, '');
+  assert.equal(calls.length, 0);
+  c.destroy();
+
+  // Picking another photo while the first is still being shrunk: only the
+  // newer one is searched and shown.
+  const first = deferred();
+  let n = 0;
+  ({ c, calls } = controller({
+    prepare: async () =>
+      n++ === 0 ? first.promise : 'data:image/jpeg;base64,SECOND',
+  }));
+  const older = c.photo(pick({ name: '1.jpg', type: 'image/jpeg', size: 6e6 }));
+  await tick();
+  await c.photo(pick({ name: '2.jpg', type: 'image/jpeg', size: 6e6 }));
+  first.resolve('data:image/jpeg;base64,FIRST');
+  await older;
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].body.imageData, 'data:image/jpeg;base64,SECOND');
+  assert.equal(c.d.visualPreview, 'data:image/jpeg;base64,SECOND');
+  c.destroy();
+
+  // Out of the box (no injected shrink) the controller uses the real
+  // preparePhoto: a small file is read as picked, a big one is shrunk.
+  const kit = Search.photoKit,
+    saved = { ...kit },
+    fake = fakeKit();
+  try {
+    Object.assign(kit, {
+      decode: fake.decode,
+      draw: fake.draw,
+      read: fake.read,
+    });
+    const sent = [];
+    const plain = new Search({
+      api: {
+        searchCapabilities: async () => ({ visual: true }),
+        searchVisual: async (body) => {
+          sent.push(body.imageData);
+          return { items: [], message: '' };
+        },
+      },
+    });
+    await plain.photo(pick({ name: 'big.jpg', type: 'image/jpeg', size: 6e6 }));
+    await plain.photo(
+      pick({ name: 'small.jpg', type: 'image/jpeg', size: 4e5 }),
+    );
+    assert.deepEqual(sent, [
+      'data:image/jpeg;base64,688128',
+      'data:image/jpeg;base64,400000',
+    ]);
+    plain.destroy();
+  } finally {
+    Object.assign(kit, saved);
+  }
+}
+
 function serverContract() {
   // The client budget must agree with what the server really accepts. If the
   // server limit or its accepted types ever change, this fails and PHOTO has to
@@ -234,8 +392,9 @@ module.exports = async () => {
   await passThrough();
   await ladder();
   await failures();
+  await handler();
   serverContract();
   console.log(
-    'PASS photo: untouched under the limit; size and quality ladder, orientation, no upscaling, failures end in a plain message, budget matches the server validator',
+    'PASS photo: untouched under the limit; size and quality ladder, orientation, no upscaling, failures end in a plain message, handler wiring, budget matches the server validator',
   );
 };
