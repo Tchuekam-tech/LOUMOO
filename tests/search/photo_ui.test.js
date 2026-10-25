@@ -175,9 +175,12 @@ const bytesOf = (dataUrl) => Buffer.from(dataUrl.split(',')[1], 'base64');
           img = new Image();
         img.src = url;
         await img.decode();
-        return [img.naturalWidth, img.naturalHeight, plain.length];
+        // The last item: did any EXIF segment (GPS position, device) survive?
+        const exifLeft = atob(url.split(',')[1]).includes('Exif');
+        return [img.naturalWidth, img.naturalHeight, plain.length, exifLeft];
       };
       return {
+        inputHadExif: new TextDecoder('latin1').decode(tagged).includes('Exif'),
         tagged: await dims(
           new File([tagged], 'IMG_ROT.jpg', { type: 'image/jpeg' }),
         ),
@@ -192,6 +195,8 @@ const bytesOf = (dataUrl) => Buffer.from(dataUrl.split(',')[1], 'base64');
     assert.ok(th > tw, `tagged photo is upright (${tw}x${th})`);
     assert.ok(Math.abs(tw / th - 2 / 3) < 0.01, `tagged keeps 2:3 (${tw}x${th})`);
     assert.ok(pw > ph, `untagged control stays landscape (${pw}x${ph})`);
+    assert.equal(orientation.inputHadExif, true, 'fixture carries EXIF');
+    assert.equal(orientation.tagged[3], false, 'EXIF is not forwarded');
 
     // 4. Transparency. JPEG has no alpha, so a transparent area must come out
     // white and not black. The bottom half is noise so the file is oversize.
