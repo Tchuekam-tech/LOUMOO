@@ -26,6 +26,18 @@
       : e?.status === 429
         ? 'Please wait a minute before trying again.'
         : e?.message || 'Please try again.';
+  // Photo search upload budget. The server (SearchAI.validateImage) takes a
+  // JPEG/PNG/WebP data URL of at most 1 MiB decoded and that limit is unchanged.
+  // A phone photo is several MB, so anything larger is shrunk on the device
+  // before it is sent; a picture already inside the limit goes up untouched.
+  const PHOTO = {
+    types: ['image/jpeg', 'image/png', 'image/webp'],
+    serverBytes: 1048576, // mirrors the server limit (a test pins it to the validator)
+    targetBytes: 786432, // 768 KiB: well inside the limit and quick on mobile data
+    maxInputBytes: 26214400, // 25 MiB: refuse before decoding something absurd
+    edges: [1280, 960, 720, 540, 400], // longest side in px, tried largest first
+    qualities: [0.85, 0.7, 0.55, 0.4], // JPEG quality, tried highest first
+  };
   function loadSDK() {
     if (root.LoumooCombiSDK) return Promise.resolve(root.LoumooCombiSDK);
     if (!loadSDK.pending)
