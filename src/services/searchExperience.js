@@ -26,6 +26,21 @@
       : e?.status === 429
         ? 'Please wait a minute before trying again.'
         : e?.message || 'Please try again.';
+  // Photo search upload budget. The server (SearchAI.validateImage) takes a
+  // JPEG/PNG/WebP data URL of at most 1 MiB decoded and that limit is unchanged.
+  // A phone photo is several MB, so anything larger is shrunk on the device
+  // before it is sent; a picture already inside the limit goes up untouched.
+  const PHOTO = {
+    types: ['image/jpeg', 'image/png', 'image/webp'],
+    serverBytes: 1048576, // mirrors the server limit (a test pins it to the validator)
+    targetBytes: 786432, // 768 KiB: well inside the limit and quick on mobile data
+    maxInputBytes: 26214400, // 25 MiB: refuse before decoding something absurd
+    edges: [1280, 960, 720, 540, 400], // longest side in px, tried largest first
+    qualities: [0.85, 0.7, 0.55, 0.4], // JPEG quality, tried highest first
+  };
+  const UNREADABLE = 'Could not read this image.';
+  const TOO_BIG =
+    'We could not shrink this photo enough to send it. Try another one.';
   function loadSDK() {
     if (root.LoumooCombiSDK) return Promise.resolve(root.LoumooCombiSDK);
     if (!loadSDK.pending)
@@ -47,6 +62,114 @@
         throw e;
       });
     return loadSDK.pending;
+  }
+  const readDataUrl = (blob) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(new Error(UNREADABLE));
+      reader.readAsDataURL(blob);
+    });
+  // Decode through <img>: every current browser applies the photo's EXIF
+  // rotation to it (and to a canvas drawn from it), so a portrait shot stored
+  // sideways on the sensor is not sent to the model lying on its side. close()
+  // releases the object URL once drawing is finished.
+  function decodePhoto(file) {
+    const url = root.URL.createObjectURL(file);
+    const img = new root.Image();
+    const close = () => root.URL.revokeObjectURL(url);
+    img.src = url;
+    return (
+      img.decode
+        ? img.decode()
+        : new Promise((resolve, reject) => {
+            img.onload = resolve;
+            img.onerror = reject;
+          })
+    ).then(
+      () => ({
+        source: img,
+        width: img.naturalWidth,
+        height: img.naturalHeight,
+        close,
+      }),
+      (e) => {
+        close();
+        throw e;
+      },
+    );
+  }
+  // Paint the photo onto a canvas of the target size and hand back a JPEG
+  // encoder for it. JPEG has no alpha, so the canvas is filled white first;
+  // otherwise the transparent parts of a PNG would come out black.
+  function drawPhoto(img, width, height) {
+    const canvas = root.document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, width, height);
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img.source, 0, 0, width, height);
+    return {
+      blob: (quality) =>
+        new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', quality)),
+      // Give the pixel memory back now; mobile Safari is slow to reclaim canvases.
+      release: () => {
+        canvas.width = canvas.height = 0;
+      },
+    };
+  }
+  const photoKit = { read: readDataUrl, decode: decodePhoto, draw: drawPhoto };
+  // Largest size and best quality first, stepping down until the JPEG fits the
+  // target. Returns the data URL, or null when nothing fits.
+  async function shrinkPhoto(img, kit) {
+    const longest = Math.max(img.width, img.height);
+    let tried = '';
+    for (const edge of PHOTO.edges) {
+      const scale = Math.min(1, edge / longest);
+      const width = Math.max(1, Math.round(img.width * scale));
+      const height = Math.max(1, Math.round(img.height * scale));
+      // A photo smaller than the next edge would only repeat the last size.
+      if (`${width}x${height}` === tried) continue;
+      tried = `${width}x${height}`;
+      const canvas = kit.draw(img, width, height);
+      try {
+        for (const quality of PHOTO.qualities) {
+          const blob = await canvas.blob(quality);
+          if (blob && blob.size > 0 && blob.size <= PHOTO.targetBytes)
+            return kit.read(blob);
+        }
+      } finally {
+        canvas.release();
+      }
+    }
+    return null;
+  }
+  // The data URL that photo search sends. A picture already inside the server
+  // limit is read as picked; a larger one is decoded and re-encoded as a JPEG.
+  // `kit` is the seam the tests use to stand in for the browser.
+  async function preparePhoto(file, kit = photoKit) {
+    if (file.size <= PHOTO.serverBytes) return kit.read(file);
+    let img;
+    try {
+      img = await kit.decode(file);
+    } catch (e) {
+      throw new Error(UNREADABLE, { cause: e });
+    }
+    if (!(img.width > 0 && img.height > 0)) {
+      img.close();
+      throw new Error(UNREADABLE);
+    }
+    try {
+      const data = await shrinkPhoto(img, kit);
+      if (data) return data;
+    } catch (e) {
+      throw new Error(TOO_BIG, { cause: e });
+    } finally {
+      img.close();
+    }
+    throw new Error(TOO_BIG);
   }
   const cards = (items) =>
     (items || []).map((p) => ({
@@ -77,12 +200,14 @@
       openItem = () => {},
       storage,
       loadConversation = loadSDK,
+      preparePhoto: prepare = preparePhoto,
     } = {}) {
       this.api = api;
       this.changed = changed;
       this.navigate = navigate;
       this.openItem = openItem;
       this.loadConversation = loadConversation;
+      this.preparePhoto = prepare;
       try {
         this.storage = storage || root.sessionStorage;
       } catch (_) {}
@@ -575,22 +700,17 @@
       this.d.visualPreview = '';
       this.emit();
       try {
-        if (
-          !['image/jpeg', 'image/png', 'image/webp'].includes(file.type) ||
-          file.size > 1048576
-        )
-          throw new Error('Choose a JPEG, PNG or WebP smaller than 1 MB.');
+        if (!PHOTO.types.includes(file.type))
+          throw new Error('Choose a JPEG, PNG or WebP photo.');
+        if (file.size > PHOTO.maxInputBytes)
+          throw new Error(
+            `Choose a photo smaller than ${PHOTO.maxInputBytes / 1048576} MB.`,
+          );
         if (!(await this.capabilities()).visual)
           throw new Error(
             'Photo search is unavailable. Please search by typing.',
           );
-        const data = await new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = () =>
-            reject(new Error('Could not read this image.'));
-          reader.readAsDataURL(file);
-        });
+        const data = await this.preparePhoto(file);
         if (!this.current('visual', r)) return;
         this.d.visualPreview = data;
         this.emit();
@@ -821,5 +941,9 @@
       };
     }
   }
+  // Exposed so the browser and unit tests can drive the shrink directly.
+  SearchExperience.PHOTO = PHOTO;
+  SearchExperience.photoKit = photoKit;
+  SearchExperience.preparePhoto = preparePhoto;
   return SearchExperience;
 });
