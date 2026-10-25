@@ -38,6 +38,9 @@
     edges: [1280, 960, 720, 540, 400], // longest side in px, tried largest first
     qualities: [0.85, 0.7, 0.55, 0.4], // JPEG quality, tried highest first
   };
+  const UNREADABLE = 'Could not read this image.';
+  const TOO_BIG =
+    'We could not shrink this photo enough to send it. Try another one.';
   function loadSDK() {
     if (root.LoumooCombiSDK) return Promise.resolve(root.LoumooCombiSDK);
     if (!loadSDK.pending)
@@ -64,7 +67,7 @@
     new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => resolve(reader.result);
-      reader.onerror = () => reject(new Error('Could not read this image.'));
+      reader.onerror = () => reject(new Error(UNREADABLE));
       reader.readAsDataURL(blob);
     });
   // Decode through <img>: every current browser applies the photo's EXIF
@@ -118,9 +121,6 @@
     };
   }
   const photoKit = { read: readDataUrl, decode: decodePhoto, draw: drawPhoto };
-  const UNREADABLE = 'Could not read this image.';
-  const TOO_BIG =
-    'We could not shrink this photo enough to send it. Try another one.';
   // Largest size and best quality first, stepping down until the JPEG fits the
   // target. Returns the data URL, or null when nothing fits.
   async function shrinkPhoto(img, kit) {
