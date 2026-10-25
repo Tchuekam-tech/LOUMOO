@@ -16,7 +16,7 @@
     "test:delivery": "node tests/delivery/run.js",
     "delivery:readiness": "node scripts/verify_delivery_readiness.js",
     "test:search": "node tests/search/run.js",
-    "test:search:ui": "node tests/search/ui.test.js",
+    "test:search:ui": "node tests/search/ui.test.js && node tests/search/photo_ui.test.js",
     "test:performance": "node tests/unit/frontend_performance.test.js",
     "test:unit": "node tests/run_all.js",
     "test:security": "node tests/integration/api_security.test.js",
