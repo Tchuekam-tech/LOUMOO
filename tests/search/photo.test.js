@@ -127,10 +127,77 @@ async function ladder() {
   tidy(kit.log);
 }
 
+async function failures() {
+  const unreadable = 'Could not read this image.',
+    tooBig =
+      'We could not shrink this photo enough to send it. Try another one.';
+
+  // The browser cannot decode it.
+  let boom = new Error('EncodingError'),
+    kit = fakeKit({ decodeError: boom });
+  await assert.rejects(
+    preparePhoto(file(6e6), kit),
+    (e) => e.message === unreadable && e.cause === boom,
+  );
+  assert.equal(kit.log.attempts.length, 0);
+
+  // It decodes to nothing.
+  kit = fakeKit({ width: 0, height: 0 });
+  await assert.rejects(preparePhoto(file(6e6), kit), { message: unreadable });
+  tidy(kit.log);
+
+  // Nothing fits: every size and every quality is tried, then a plain message.
+  kit = fakeKit({ bytesPerPixel: 1000 });
+  await assert.rejects(preparePhoto(file(6e6), kit), { message: tooBig });
+  assert.equal(
+    kit.log.attempts.length,
+    PHOTO.edges.length * PHOTO.qualities.length,
+  );
+  tidy(kit.log);
+
+  // toBlob can hand back null or an empty blob; that is a miss, not a crash.
+  kit = fakeKit({ blobFor: (w, h, q) => (q > 0.5 ? null : { size: 0 }) });
+  await assert.rejects(preparePhoto(file(6e6), kit), { message: tooBig });
+  tidy(kit.log);
+  kit = fakeKit({ blobFor: (w, h, q) => (q === 0.85 ? null : { size: 1000 }) });
+  assert.equal(
+    await preparePhoto(file(6e6), kit),
+    'data:image/jpeg;base64,1000',
+  );
+  assert.deepEqual(
+    kit.log.attempts.map((a) => a[2]),
+    [0.85, 0.7],
+  );
+  tidy(kit.log);
+
+  // The canvas itself fails (no 2d context, out of memory).
+  boom = new TypeError('no context');
+  kit = fakeKit({ drawError: boom });
+  await assert.rejects(
+    preparePhoto(file(6e6), kit),
+    (e) => e.message === tooBig && e.cause === boom,
+  );
+  tidy(kit.log);
+
+  // Reading the finished JPEG fails.
+  boom = new Error('read failed');
+  kit = fakeKit();
+  const log = kit.log;
+  kit.read = async () => {
+    throw boom;
+  };
+  await assert.rejects(
+    preparePhoto(file(6e6), kit),
+    (e) => e.message === tooBig && e.cause === boom,
+  );
+  tidy(log);
+}
+
 module.exports = async () => {
   await passThrough();
   await ladder();
+  await failures();
   console.log(
-    'PASS photo: untouched under the limit; size and quality ladder, orientation, no upscaling',
+    'PASS photo: untouched under the limit; size and quality ladder, orientation, no upscaling, failures end in a plain message',
   );
 };
