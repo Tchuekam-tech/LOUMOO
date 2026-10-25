@@ -74,6 +74,12 @@ put its replacement in the API host's server environment.
 - `POST /api/v1/search/assistant`: authenticated `{message, context?}`.
 - `POST /api/v1/search/visual`: authenticated `{imageData, message?}`; JPEG/PNG/WebP
   data URL, maximum 1 MiB, magic bytes validated. No arbitrary remote image fetch.
+  The 1 MiB limit applies to what is sent, not to what the shopper picks: the web
+  client (`preparePhoto` in `src/services/searchExperience.js`) accepts files up to
+  25 MB, sends one already under 1 MiB untouched, and otherwise re-encodes it as a
+  JPEG (longest side 1280 px or less, under 768 KiB, EXIF rotation applied, EXIF
+  metadata dropped). `tests/search/photo.test.js` pins these numbers to the
+  server's validator; `photo_ui.test.js` checks them in Chromium.
 
 Discovery has a separate rate budget from commerce. Paid routes have per-account
 minute and daily limits. Responses use no-store. Simultaneous identical database
