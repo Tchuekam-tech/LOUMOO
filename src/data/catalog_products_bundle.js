@@ -2,7 +2,7 @@
 window.PRODUCTS_DATA = {
   "phone_tecno_tecno_camon_50_pro_5g_256gb_12gb_": {
     "id": "phone_tecno_tecno_camon_50_pro_5g_256gb_12gb_",
-    "slug": "tecno-camon-50-pro-5g-256gb-12gb-ram-zhvt",
+    "slug": "tecno-camon-50-pro-5g-256gb-12gb-ram-c3d1c8",
     "title": "Tecno Camon 50 Pro 5G 256GB / 12GB RAM",
     "brand": "Tecno",
     "category": "electronics",
@@ -52,7 +52,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_apple_apple_iphone_15_128gb_noir_minuit": {
     "id": "phone_apple_apple_iphone_15_128gb_noir_minuit",
-    "slug": "apple-iphone-15-128gb-noir-minuit-08es",
+    "slug": "apple-iphone-15-128gb-noir-minuit-08829f",
     "title": "Apple iPhone 15 128GB Noir Minuit (#2)",
     "brand": "Apple",
     "category": "electronics",
@@ -102,7 +102,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_tecno_tecno_spark_20_pro_256gb_8gb_ram_": {
     "id": "phone_tecno_tecno_spark_20_pro_256gb_8gb_ram_",
-    "slug": "tecno-spark-20-pro-256gb-8gb-ram-gt1y",
+    "slug": "tecno-spark-20-pro-256gb-8gb-ram-a02096",
     "title": "Tecno Spark 20 Pro+ 256GB / 8GB RAM (#3)",
     "brand": "Tecno",
     "category": "electronics",
@@ -152,7 +152,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8a_128gb_bay_blue_4": {
     "id": "phone_google_google_pixel_8a_128gb_bay_blue_4",
-    "slug": "google-pixel-8a-128gb-bay-blue-3jav",
+    "slug": "google-pixel-8a-128gb-bay-blue-69d445",
     "title": "Google Pixel 8a 128GB Bay Blue (#4)",
     "brand": "Google",
     "category": "electronics",
@@ -202,7 +202,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_samsung_samsung_galaxy_a25_5g_128gb_blu": {
     "id": "phone_samsung_samsung_galaxy_a25_5g_128gb_blu",
-    "slug": "samsung-galaxy-a25-5g-128gb-blue-black-59rs",
+    "slug": "samsung-galaxy-a25-5g-128gb-blue-black-a04ba1",
     "title": "Samsung Galaxy A25 5G 128GB Blue Black (#5)",
     "brand": "Samsung",
     "category": "electronics",
@@ -252,7 +252,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_infinix_infinix_zero_30_5g_256gb_rome_g": {
     "id": "phone_infinix_infinix_zero_30_5g_256gb_rome_g",
-    "slug": "infinix-zero-30-5g-256gb-rome-green-b86o",
+    "slug": "infinix-zero-30-5g-256gb-rome-green-aa3922",
     "title": "Infinix Zero 30 5G 256GB Rome Green (#6)",
     "brand": "Infinix",
     "category": "electronics",
@@ -302,7 +302,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_samsung_samsung_galaxy_s24_5g_256gb_ony": {
     "id": "phone_samsung_samsung_galaxy_s24_5g_256gb_ony",
-    "slug": "samsung-galaxy-s24-5g-256gb-onyx-black-g3o6",
+    "slug": "samsung-galaxy-s24-5g-256gb-onyx-black-b55969",
     "title": "Samsung Galaxy S24+ 5G 256GB Onyx Black (#7)",
     "brand": "Samsung",
     "category": "electronics",
@@ -352,7 +352,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_apple_apple_iphone_15_128gb_noir_minuit_2": {
     "id": "phone_apple_apple_iphone_15_128gb_noir_minuit_2",
-    "slug": "apple-iphone-15-128gb-noir-minuit-e1d9",
+    "slug": "apple-iphone-15-128gb-noir-minuit-307e62",
     "title": "Apple iPhone 15 128GB Noir Minuit (#8)",
     "brand": "Apple",
     "category": "electronics",
@@ -402,7 +402,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_tecno_tecno_spark_20_pro_256gb_8gb_ram__2": {
     "id": "phone_tecno_tecno_spark_20_pro_256gb_8gb_ram__2",
-    "slug": "tecno-spark-20-pro-256gb-8gb-ram-s7dg",
+    "slug": "tecno-spark-20-pro-256gb-8gb-ram-201d54",
     "title": "Tecno Spark 20 Pro+ 256GB / 8GB RAM (#9)",
     "brand": "Tecno",
     "category": "electronics",
@@ -452,7 +452,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8a_128gb_bay_blue_1": {
     "id": "phone_google_google_pixel_8a_128gb_bay_blue_1",
-    "slug": "google-pixel-8a-128gb-bay-blue-kkss",
+    "slug": "google-pixel-8a-128gb-bay-blue-473ccd",
     "title": "Google Pixel 8a 128GB Bay Blue (#10)",
     "brand": "Google",
     "category": "electronics",
@@ -502,7 +502,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_samsung_samsung_galaxy_a25_5g_128gb_blu_2": {
     "id": "phone_samsung_samsung_galaxy_a25_5g_128gb_blu_2",
-    "slug": "samsung-galaxy-a25-5g-128gb-blue-black-95zs",
+    "slug": "samsung-galaxy-a25-5g-128gb-blue-black-768f26",
     "title": "Samsung Galaxy A25 5G 128GB Blue Black (#11)",
     "brand": "Samsung",
     "category": "electronics",
@@ -552,7 +552,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_infinix_infinix_zero_30_5g_256gb_rome_g_2": {
     "id": "phone_infinix_infinix_zero_30_5g_256gb_rome_g_2",
-    "slug": "infinix-zero-30-5g-256gb-rome-green-ynr6",
+    "slug": "infinix-zero-30-5g-256gb-rome-green-a4ae98",
     "title": "Infinix Zero 30 5G 256GB Rome Green (#12)",
     "brand": "Infinix",
     "category": "electronics",
@@ -602,7 +602,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-aa1h",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-2979af",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -652,7 +652,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-8vxz",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-d8f82a",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -702,7 +702,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_oneplus_oneplus_ace_2_pro_5g_512gb_16gb": {
     "id": "phone_oneplus_oneplus_ace_2_pro_5g_512gb_16gb",
-    "slug": "oneplus-ace-2-pro-5g-512gb-16gb-ram-flagship-5m36",
+    "slug": "oneplus-ace-2-pro-5g-512gb-16gb-ram-flagship-e24553",
     "title": "OnePlus Ace 2 Pro 5G 512GB / 16GB RAM Flagship",
     "brand": "OnePlus",
     "category": "electronics",
@@ -752,7 +752,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_2": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_2",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-o4u7",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-545cb8",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -802,7 +802,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_3": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_3",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-g5l1",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-824ab5",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -852,7 +852,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_samsung_samsung_galaxy_a55_5g_256gb_awe": {
     "id": "phone_samsung_samsung_galaxy_a55_5g_256gb_awe",
-    "slug": "samsung-galaxy-a55-5g-256gb-awesome-navy-stn7",
+    "slug": "samsung-galaxy-a55-5g-256gb-awesome-navy-1e0390",
     "title": "Samsung Galaxy A55 5G 256GB Awesome Navy (#18)",
     "brand": "Samsung",
     "category": "electronics",
@@ -902,7 +902,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_apple_apple_iphone_15_pro_max_256gb_tit": {
     "id": "phone_apple_apple_iphone_15_pro_max_256gb_tit",
-    "slug": "apple-iphone-15-pro-max-256gb-titanium-naturel-r23j",
+    "slug": "apple-iphone-15-pro-max-256gb-titanium-naturel-a1f534",
     "title": "Apple iPhone 15 Pro Max 256GB Titanium Naturel (#19)",
     "brand": "Apple",
     "category": "electronics",
@@ -952,7 +952,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_apple_apple_iphone_15_pro_max_256gb_tit_2": {
     "id": "phone_apple_apple_iphone_15_pro_max_256gb_tit_2",
-    "slug": "apple-iphone-15-pro-max-256gb-titanium-naturel-0cq1",
+    "slug": "apple-iphone-15-pro-max-256gb-titanium-naturel-fe166a",
     "title": "Apple iPhone 15 Pro Max 256GB Titanium Naturel (#20)",
     "brand": "Apple",
     "category": "electronics",
@@ -1002,7 +1002,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_apple_apple_iphone_15_pro_max_256gb_tit_3": {
     "id": "phone_apple_apple_iphone_15_pro_max_256gb_tit_3",
-    "slug": "apple-iphone-15-pro-max-256gb-titanium-naturel-fngn",
+    "slug": "apple-iphone-15-pro-max-256gb-titanium-naturel-21ae74",
     "title": "Apple iPhone 15 Pro Max 256GB Titanium Naturel (#21)",
     "brand": "Apple",
     "category": "electronics",
@@ -1052,7 +1052,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_infinix_infinix_note_40_pro_5g_256gb_12": {
     "id": "phone_infinix_infinix_note_40_pro_5g_256gb_12",
-    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-rizq",
+    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-d0b63c",
     "title": "Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#22)",
     "brand": "Infinix",
     "category": "electronics",
@@ -1102,7 +1102,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_oneplus_oneplus_ace_2_pro_5g_512gb_16gb_2": {
     "id": "phone_oneplus_oneplus_ace_2_pro_5g_512gb_16gb_2",
-    "slug": "oneplus-ace-2-pro-5g-512gb-16gb-ram-flagship-dg1g",
+    "slug": "oneplus-ace-2-pro-5g-512gb-16gb-ram-flagship-de7d00",
     "title": "OnePlus Ace 2 Pro 5G 512GB / 16GB RAM Flagship",
     "brand": "OnePlus",
     "category": "electronics",
@@ -1152,7 +1152,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_4": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_4",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-k01y",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-bd5e80",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -1202,7 +1202,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_2": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_2",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-1d6z",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-08e9f2",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -1252,7 +1252,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_3": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_3",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-pcyr",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-16320a",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -1302,7 +1302,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_4": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_4",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-2sv3",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-8c7759",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -1352,7 +1352,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_5": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_5",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-u6yy",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-7369fe",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -1402,7 +1402,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_6": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_6",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-5vx4",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-b150fb",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -1452,7 +1452,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_5": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_5",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-jwdf",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-ae8d59",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -1502,7 +1502,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_6": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_6",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-8joa",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-61bbe5",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -1552,7 +1552,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_7": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_7",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-zmjz",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-14d28b",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -1602,7 +1602,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_8": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_8",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-1600",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-e20ee6",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -1652,7 +1652,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_7": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_7",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-yki1",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-308d00",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -1702,7 +1702,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_8": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_8",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-gsqb",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-8498a1",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -1752,7 +1752,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_9": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_9",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-nk8z",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-727e9d",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -1802,7 +1802,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_10": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_10",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-6a8r",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-2dde83",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -1852,7 +1852,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_11": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_11",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-bewx",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-de150a",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -1902,7 +1902,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_12": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_12",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-zwr1",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-ea9076",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -1952,7 +1952,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_13": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_13",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-in4q",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-e4e8f3",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -2002,7 +2002,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_14": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_14",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-r6il",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-67b144",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -2052,7 +2052,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_15": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_15",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-kj37",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-70623f",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -2102,7 +2102,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_9": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_9",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-ywvh",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-20889e",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -2152,7 +2152,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_10": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_10",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-6xoy",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-8d2db2",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -2202,7 +2202,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_11": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_11",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-t5b0",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-7cebff",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -2252,7 +2252,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_16": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_16",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-15g5",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-4fe4af",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -2302,7 +2302,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_17": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_17",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-qwa6",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-2c531f",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -2352,7 +2352,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_12": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_12",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-8upu",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-a60307",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -2402,7 +2402,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_13": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_13",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-ifs6",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-6d7985",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -2452,7 +2452,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_14": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_14",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-12d3",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-45fb5d",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -2502,7 +2502,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_15": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_15",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-wzt9",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-ff2df1",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -2552,7 +2552,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_16": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_16",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-ylfp",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-0de96b",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -2602,7 +2602,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_18": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_18",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-1j3l",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-93c55a",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -2652,7 +2652,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_17": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_17",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-vlbh",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-1eb8ef",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -2702,7 +2702,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_samsung_samsung_galaxy_s24_5g_256gb_ony_2": {
     "id": "phone_samsung_samsung_galaxy_s24_5g_256gb_ony_2",
-    "slug": "samsung-galaxy-s24-5g-256gb-onyx-black-ov0b",
+    "slug": "samsung-galaxy-s24-5g-256gb-onyx-black-36214e",
     "title": "Samsung Galaxy S24+ 5G 256GB Onyx Black (#55)",
     "brand": "Samsung",
     "category": "electronics",
@@ -2752,7 +2752,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_18": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_18",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-77bi",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-2e2c0d",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -2802,7 +2802,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_tecno_tecno_spark_20_pro_256gb_8gb_ram__3": {
     "id": "phone_tecno_tecno_spark_20_pro_256gb_8gb_ram__3",
-    "slug": "tecno-spark-20-pro-256gb-8gb-ram-l2fp",
+    "slug": "tecno-spark-20-pro-256gb-8gb-ram-6faf3a",
     "title": "Tecno Spark 20 Pro+ 256GB / 8GB RAM (#57)",
     "brand": "Tecno",
     "category": "electronics",
@@ -2852,7 +2852,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8a_128gb_bay_blue_5": {
     "id": "phone_google_google_pixel_8a_128gb_bay_blue_5",
-    "slug": "google-pixel-8a-128gb-bay-blue-sr4r",
+    "slug": "google-pixel-8a-128gb-bay-blue-542cc0",
     "title": "Google Pixel 8a 128GB Bay Blue (#58)",
     "brand": "Google",
     "category": "electronics",
@@ -2902,7 +2902,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_samsung_samsung_galaxy_a25_5g_128gb_blu_3": {
     "id": "phone_samsung_samsung_galaxy_a25_5g_128gb_blu_3",
-    "slug": "samsung-galaxy-a25-5g-128gb-blue-black-r6jx",
+    "slug": "samsung-galaxy-a25-5g-128gb-blue-black-193434",
     "title": "Samsung Galaxy A25 5G 128GB Blue Black (#59)",
     "brand": "Samsung",
     "category": "electronics",
@@ -2952,7 +2952,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_infinix_infinix_note_40_pro_5g_256gb_12_2": {
     "id": "phone_infinix_infinix_note_40_pro_5g_256gb_12_2",
-    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-cq72",
+    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-993549",
     "title": "Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#60)",
     "brand": "Infinix",
     "category": "electronics",
@@ -3002,7 +3002,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_infinix_infinix_note_40_pro_5g_256gb_12_3": {
     "id": "phone_infinix_infinix_note_40_pro_5g_256gb_12_3",
-    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-5d16",
+    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-053885",
     "title": "Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#61)",
     "brand": "Infinix",
     "category": "electronics",
@@ -3052,7 +3052,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_infinix_infinix_note_40_pro_5g_256gb_12_4": {
     "id": "phone_infinix_infinix_note_40_pro_5g_256gb_12_4",
-    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-axzr",
+    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-65583e",
     "title": "Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#62)",
     "brand": "Infinix",
     "category": "electronics",
@@ -3102,7 +3102,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_infinix_infinix_note_40_pro_5g_256gb_12_5": {
     "id": "phone_infinix_infinix_note_40_pro_5g_256gb_12_5",
-    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-y7j4",
+    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-ccd377",
     "title": "Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#63)",
     "brand": "Infinix",
     "category": "electronics",
@@ -3152,7 +3152,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_infinix_infinix_note_40_pro_5g_256gb_12_6": {
     "id": "phone_infinix_infinix_note_40_pro_5g_256gb_12_6",
-    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-ri78",
+    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-ab2b61",
     "title": "Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#64)",
     "brand": "Infinix",
     "category": "electronics",
@@ -3202,7 +3202,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_infinix_infinix_note_40_pro_5g_256gb_12_7": {
     "id": "phone_infinix_infinix_note_40_pro_5g_256gb_12_7",
-    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-nwho",
+    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-c67d82",
     "title": "Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#65)",
     "brand": "Infinix",
     "category": "electronics",
@@ -3252,7 +3252,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_infinix_infinix_note_40_pro_5g_256gb_12_8": {
     "id": "phone_infinix_infinix_note_40_pro_5g_256gb_12_8",
-    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-044d",
+    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-7ed7e7",
     "title": "Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#66)",
     "brand": "Infinix",
     "category": "electronics",
@@ -3302,7 +3302,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_infinix_infinix_note_40_pro_5g_256gb_12_9": {
     "id": "phone_infinix_infinix_note_40_pro_5g_256gb_12_9",
-    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-xqtl",
+    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-5630e2",
     "title": "Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#67)",
     "brand": "Infinix",
     "category": "electronics",
@@ -3352,7 +3352,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_infinix_infinix_note_40_pro_5g_256gb_12_10": {
     "id": "phone_infinix_infinix_note_40_pro_5g_256gb_12_10",
-    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-hhsv",
+    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-1c616f",
     "title": "Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#68)",
     "brand": "Infinix",
     "category": "electronics",
@@ -3402,7 +3402,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_infinix_infinix_note_40_pro_5g_256gb_12_11": {
     "id": "phone_infinix_infinix_note_40_pro_5g_256gb_12_11",
-    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-ufj9",
+    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-a6df6c",
     "title": "Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#69)",
     "brand": "Infinix",
     "category": "electronics",
@@ -3452,7 +3452,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_19": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_19",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-e4jb",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-f1cfdd",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -3502,7 +3502,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_19": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_19",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-7wob",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-0aef2e",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -3552,7 +3552,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_20": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_20",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-xib8",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-0c4e94",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -3602,7 +3602,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_samsung_samsung_galaxy_s24_5g_256gb_ony_3": {
     "id": "phone_samsung_samsung_galaxy_s24_5g_256gb_ony_3",
-    "slug": "samsung-galaxy-s24-5g-256gb-onyx-black-i5p3",
+    "slug": "samsung-galaxy-s24-5g-256gb-onyx-black-7e649b",
     "title": "Samsung Galaxy S24+ 5G 256GB Onyx Black (#73)",
     "brand": "Samsung",
     "category": "electronics",
@@ -3652,7 +3652,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_21": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_21",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-qeno",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-d01baa",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -3702,7 +3702,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_tecno_tecno_spark_20_pro_256gb_8gb_ram__4": {
     "id": "phone_tecno_tecno_spark_20_pro_256gb_8gb_ram__4",
-    "slug": "tecno-spark-20-pro-256gb-8gb-ram-pye9",
+    "slug": "tecno-spark-20-pro-256gb-8gb-ram-2282d2",
     "title": "Tecno Spark 20 Pro+ 256GB / 8GB RAM (#75)",
     "brand": "Tecno",
     "category": "electronics",
@@ -3752,7 +3752,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_oneplus_oneplus_ace_2_pro_5g_512gb_16gb_3": {
     "id": "phone_oneplus_oneplus_ace_2_pro_5g_512gb_16gb_3",
-    "slug": "oneplus-ace-2-pro-5g-512gb-16gb-ram-flagship-91er",
+    "slug": "oneplus-ace-2-pro-5g-512gb-16gb-ram-flagship-e3e1d3",
     "title": "OnePlus Ace 2 Pro 5G 512GB / 16GB RAM Flagship",
     "brand": "OnePlus",
     "category": "electronics",
@@ -3802,7 +3802,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_oneplus_oneplus_ace_2_pro_5g_512gb_16gb_4": {
     "id": "phone_oneplus_oneplus_ace_2_pro_5g_512gb_16gb_4",
-    "slug": "oneplus-ace-2-pro-5g-512gb-16gb-ram-flagship-immp",
+    "slug": "oneplus-ace-2-pro-5g-512gb-16gb-ram-flagship-89019b",
     "title": "OnePlus Ace 2 Pro 5G 512GB / 16GB RAM Flagship",
     "brand": "OnePlus",
     "category": "electronics",
@@ -3852,7 +3852,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_oneplus_oneplus_ace_2_pro_5g_512gb_16gb_5": {
     "id": "phone_oneplus_oneplus_ace_2_pro_5g_512gb_16gb_5",
-    "slug": "oneplus-ace-2-pro-5g-512gb-16gb-ram-flagship-ed3w",
+    "slug": "oneplus-ace-2-pro-5g-512gb-16gb-ram-flagship-ab3ba7",
     "title": "OnePlus Ace 2 Pro 5G 512GB / 16GB RAM Flagship",
     "brand": "OnePlus",
     "category": "electronics",
@@ -3902,7 +3902,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_samsung_samsung_galaxy_s24_5g_256gb_ony_4": {
     "id": "phone_samsung_samsung_galaxy_s24_5g_256gb_ony_4",
-    "slug": "samsung-galaxy-s24-5g-256gb-onyx-black-lt0a",
+    "slug": "samsung-galaxy-s24-5g-256gb-onyx-black-6e48f3",
     "title": "Samsung Galaxy S24+ 5G 256GB Onyx Black (#79)",
     "brand": "Samsung",
     "category": "electronics",
@@ -3952,7 +3952,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_apple_apple_iphone_15_128gb_noir_minuit_3": {
     "id": "phone_apple_apple_iphone_15_128gb_noir_minuit_3",
-    "slug": "apple-iphone-15-128gb-noir-minuit-y12o",
+    "slug": "apple-iphone-15-128gb-noir-minuit-cfba93",
     "title": "Apple iPhone 15 128GB Noir Minuit (#80)",
     "brand": "Apple",
     "category": "electronics",
@@ -4002,7 +4002,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_tecno_tecno_spark_20_pro_256gb_8gb_ram__5": {
     "id": "phone_tecno_tecno_spark_20_pro_256gb_8gb_ram__5",
-    "slug": "tecno-spark-20-pro-256gb-8gb-ram-qg9q",
+    "slug": "tecno-spark-20-pro-256gb-8gb-ram-ea0995",
     "title": "Tecno Spark 20 Pro+ 256GB / 8GB RAM (#81)",
     "brand": "Tecno",
     "category": "electronics",
@@ -4052,7 +4052,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8a_128gb_bay_blue_8": {
     "id": "phone_google_google_pixel_8a_128gb_bay_blue_8",
-    "slug": "google-pixel-8a-128gb-bay-blue-vrvs",
+    "slug": "google-pixel-8a-128gb-bay-blue-87bdc9",
     "title": "Google Pixel 8a 128GB Bay Blue (#82)",
     "brand": "Google",
     "category": "electronics",
@@ -4102,7 +4102,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_samsung_samsung_galaxy_a25_5g_128gb_blu_4": {
     "id": "phone_samsung_samsung_galaxy_a25_5g_128gb_blu_4",
-    "slug": "samsung-galaxy-a25-5g-128gb-blue-black-o226",
+    "slug": "samsung-galaxy-a25-5g-128gb-blue-black-923b54",
     "title": "Samsung Galaxy A25 5G 128GB Blue Black (#83)",
     "brand": "Samsung",
     "category": "electronics",
@@ -4152,7 +4152,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_infinix_infinix_zero_30_5g_256gb_rome_g_3": {
     "id": "phone_infinix_infinix_zero_30_5g_256gb_rome_g_3",
-    "slug": "infinix-zero-30-5g-256gb-rome-green-5kk9",
+    "slug": "infinix-zero-30-5g-256gb-rome-green-b50507",
     "title": "Infinix Zero 30 5G 256GB Rome Green (#84)",
     "brand": "Infinix",
     "category": "electronics",
@@ -4202,7 +4202,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_samsung_samsung_galaxy_s24_5g_256gb_ony_5": {
     "id": "phone_samsung_samsung_galaxy_s24_5g_256gb_ony_5",
-    "slug": "samsung-galaxy-s24-5g-256gb-onyx-black-jn9z",
+    "slug": "samsung-galaxy-s24-5g-256gb-onyx-black-17fb4b",
     "title": "Samsung Galaxy S24+ 5G 256GB Onyx Black (#85)",
     "brand": "Samsung",
     "category": "electronics",
@@ -4252,7 +4252,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_apple_apple_iphone_15_128gb_noir_minuit_4": {
     "id": "phone_apple_apple_iphone_15_128gb_noir_minuit_4",
-    "slug": "apple-iphone-15-128gb-noir-minuit-ndbk",
+    "slug": "apple-iphone-15-128gb-noir-minuit-a5da1b",
     "title": "Apple iPhone 15 128GB Noir Minuit (#86)",
     "brand": "Apple",
     "category": "electronics",
@@ -4302,7 +4302,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_tecno_tecno_spark_20_pro_256gb_8gb_ram__6": {
     "id": "phone_tecno_tecno_spark_20_pro_256gb_8gb_ram__6",
-    "slug": "tecno-spark-20-pro-256gb-8gb-ram-hzbh",
+    "slug": "tecno-spark-20-pro-256gb-8gb-ram-6e797c",
     "title": "Tecno Spark 20 Pro+ 256GB / 8GB RAM (#87)",
     "brand": "Tecno",
     "category": "electronics",
@@ -4352,7 +4352,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8a_128gb_bay_blue_8_2": {
     "id": "phone_google_google_pixel_8a_128gb_bay_blue_8_2",
-    "slug": "google-pixel-8a-128gb-bay-blue-2x1o",
+    "slug": "google-pixel-8a-128gb-bay-blue-a9ccb3",
     "title": "Google Pixel 8a 128GB Bay Blue (#88)",
     "brand": "Google",
     "category": "electronics",
@@ -4402,7 +4402,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_22": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_22",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-zple",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-95ab02",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -4452,7 +4452,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_23": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_23",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-t68e",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-5914dd",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -4502,7 +4502,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_20": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_20",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-fz0z",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-ed9cc4",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -4552,7 +4552,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-pylc",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-68308b",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#92)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -4602,7 +4602,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_2": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_2",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-chxf",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-cfab3f",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#93)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -4652,7 +4652,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_3": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_3",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-of55",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-bfaf1c",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#94)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -4702,7 +4702,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_4": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_4",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-jqo5",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-57c0f9",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#95)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -4752,7 +4752,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_5": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_5",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-6t86",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-c92552",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#96)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -4802,7 +4802,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_6": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_6",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-z3yo",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-06b480",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#97)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -4852,7 +4852,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_7": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_7",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-lyzm",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-829bbc",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#98)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -4902,7 +4902,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_8": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_8",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-5f9s",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-dac305",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#99)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -4952,7 +4952,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_9": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_9",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-iwbb",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-d1303d",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#100)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -5002,7 +5002,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_10": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_10",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-b86k",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-25c617",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#101)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -5052,7 +5052,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_samsung_samsung_galaxy_s24_ultra_5g_256": {
     "id": "phone_samsung_samsung_galaxy_s24_ultra_5g_256",
-    "slug": "samsung-galaxy-s24-ultra-5g-256gb-titanium-gray-dke9",
+    "slug": "samsung-galaxy-s24-ultra-5g-256gb-titanium-gray-c05ac9",
     "title": "Samsung Galaxy S24 Ultra 5G 256GB Titanium Gray",
     "brand": "Samsung",
     "category": "electronics",
@@ -5102,7 +5102,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_samsung_samsung_galaxy_s24_ultra_5g_256_2": {
     "id": "phone_samsung_samsung_galaxy_s24_ultra_5g_256_2",
-    "slug": "samsung-galaxy-s24-ultra-5g-256gb-titanium-gray-tt98",
+    "slug": "samsung-galaxy-s24-ultra-5g-256gb-titanium-gray-f44220",
     "title": "Samsung Galaxy S24 Ultra 5G 256GB Titanium Gray",
     "brand": "Samsung",
     "category": "electronics",
@@ -5152,7 +5152,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_infinix_infinix_note_40_pro_5g_256gb_12_12": {
     "id": "phone_infinix_infinix_note_40_pro_5g_256gb_12_12",
-    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-06gd",
+    "slug": "infinix-note-40-pro-5g-256gb-12gb-ram-55b278",
     "title": "Infinix Note 40 Pro+ 5G 256GB / 12GB RAM (#104)",
     "brand": "Infinix",
     "category": "electronics",
@@ -5202,7 +5202,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_tecno_tecno_spark_20_pro_256gb_8gb_ram__7": {
     "id": "phone_tecno_tecno_spark_20_pro_256gb_8gb_ram__7",
-    "slug": "tecno-spark-20-pro-256gb-8gb-ram-c4ys",
+    "slug": "tecno-spark-20-pro-256gb-8gb-ram-ea7f8a",
     "title": "Tecno Spark 20 Pro+ 256GB / 8GB RAM (#105)",
     "brand": "Tecno",
     "category": "electronics",
@@ -5252,7 +5252,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_tecno_tecno_camon_50_5g_256gb_8gb_ram_1": {
     "id": "phone_tecno_tecno_camon_50_5g_256gb_8gb_ram_1",
-    "slug": "tecno-camon-50-5g-256gb-8gb-ram-c5am",
+    "slug": "tecno-camon-50-5g-256gb-8gb-ram-4e85b5",
     "title": "Tecno Camon 50 5G 256GB / 8GB RAM",
     "brand": "Tecno",
     "category": "electronics",
@@ -5302,7 +5302,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_samsung_samsung_galaxy_a25_5g_128gb_blu_5": {
     "id": "phone_samsung_samsung_galaxy_a25_5g_128gb_blu_5",
-    "slug": "samsung-galaxy-a25-5g-128gb-blue-black-npzz",
+    "slug": "samsung-galaxy-a25-5g-128gb-blue-black-d233f6",
     "title": "Samsung Galaxy A25 5G 128GB Blue Black (#107)",
     "brand": "Samsung",
     "category": "electronics",
@@ -5352,7 +5352,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_tecno_tecno_camon_50_pro_5g_256gb_12gb__2": {
     "id": "phone_tecno_tecno_camon_50_pro_5g_256gb_12gb__2",
-    "slug": "tecno-camon-50-pro-5g-256gb-12gb-ram-ecj0",
+    "slug": "tecno-camon-50-pro-5g-256gb-12gb-ram-5408dd",
     "title": "Tecno Camon 50 Pro 5G 256GB / 12GB RAM",
     "brand": "Tecno",
     "category": "electronics",
@@ -5402,7 +5402,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_tecno_tecno_camon_50_pro_5g_256gb_12gb__3": {
     "id": "phone_tecno_tecno_camon_50_pro_5g_256gb_12gb__3",
-    "slug": "tecno-camon-50-pro-5g-256gb-12gb-ram-qm0s",
+    "slug": "tecno-camon-50-pro-5g-256gb-12gb-ram-49a830",
     "title": "Tecno Camon 50 Pro 5G 256GB / 12GB RAM",
     "brand": "Tecno",
     "category": "electronics",
@@ -5452,7 +5452,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_tecno_tecno_camon_50_pro_5g_256gb_12gb__4": {
     "id": "phone_tecno_tecno_camon_50_pro_5g_256gb_12gb__4",
-    "slug": "tecno-camon-50-pro-5g-256gb-12gb-ram-ream",
+    "slug": "tecno-camon-50-pro-5g-256gb-12gb-ram-ca9ac8",
     "title": "Tecno Camon 50 Pro 5G 256GB / 12GB RAM",
     "brand": "Tecno",
     "category": "electronics",
@@ -5502,7 +5502,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_tecno_tecno_camon_50_pro_5g_256gb_12gb__5": {
     "id": "phone_tecno_tecno_camon_50_pro_5g_256gb_12gb__5",
-    "slug": "tecno-camon-50-pro-5g-256gb-12gb-ram-srz6",
+    "slug": "tecno-camon-50-pro-5g-256gb-12gb-ram-c018ba",
     "title": "Tecno Camon 50 Pro 5G 256GB / 12GB RAM",
     "brand": "Tecno",
     "category": "electronics",
@@ -5552,7 +5552,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8a_128gb_bay_blue_1_2": {
     "id": "phone_google_google_pixel_8a_128gb_bay_blue_1_2",
-    "slug": "google-pixel-8a-128gb-bay-blue-fygf",
+    "slug": "google-pixel-8a-128gb-bay-blue-709240",
     "title": "Google Pixel 8a 128GB Bay Blue (#112)",
     "brand": "Google",
     "category": "electronics",
@@ -5602,7 +5602,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_24": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_24",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-53x4",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-96af24",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -5652,7 +5652,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_infinix_infinix_zero_30_5g_256gb_rome_g_4": {
     "id": "phone_infinix_infinix_zero_30_5g_256gb_rome_g_4",
-    "slug": "infinix-zero-30-5g-256gb-rome-green-ksm8",
+    "slug": "infinix-zero-30-5g-256gb-rome-green-fa23cf",
     "title": "Infinix Zero 30 5G 256GB Rome Green (#114)",
     "brand": "Infinix",
     "category": "electronics",
@@ -5702,7 +5702,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_samsung_samsung_galaxy_s24_5g_256gb_ony_6": {
     "id": "phone_samsung_samsung_galaxy_s24_5g_256gb_ony_6",
-    "slug": "samsung-galaxy-s24-5g-256gb-onyx-black-3ikp",
+    "slug": "samsung-galaxy-s24-5g-256gb-onyx-black-f21532",
     "title": "Samsung Galaxy S24+ 5G 256GB Onyx Black (#115)",
     "brand": "Samsung",
     "category": "electronics",
@@ -5752,7 +5752,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_apple_apple_iphone_15_128gb_noir_minuit_5": {
     "id": "phone_apple_apple_iphone_15_128gb_noir_minuit_5",
-    "slug": "apple-iphone-15-128gb-noir-minuit-u0qc",
+    "slug": "apple-iphone-15-128gb-noir-minuit-16b581",
     "title": "Apple iPhone 15 128GB Noir Minuit (#116)",
     "brand": "Apple",
     "category": "electronics",
@@ -5802,7 +5802,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_tecno_tecno_spark_20_pro_256gb_8gb_ram__8": {
     "id": "phone_tecno_tecno_spark_20_pro_256gb_8gb_ram__8",
-    "slug": "tecno-spark-20-pro-256gb-8gb-ram-3ahp",
+    "slug": "tecno-spark-20-pro-256gb-8gb-ram-2df602",
     "title": "Tecno Spark 20 Pro+ 256GB / 8GB RAM (#117)",
     "brand": "Tecno",
     "category": "electronics",
@@ -5852,7 +5852,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8a_128gb_bay_blue_1_3": {
     "id": "phone_google_google_pixel_8a_128gb_bay_blue_1_3",
-    "slug": "google-pixel-8a-128gb-bay-blue-5zsu",
+    "slug": "google-pixel-8a-128gb-bay-blue-e7470a",
     "title": "Google Pixel 8a 128GB Bay Blue (#118)",
     "brand": "Google",
     "category": "electronics",
@@ -5902,7 +5902,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_samsung_samsung_galaxy_a25_5g_128gb_blu_6": {
     "id": "phone_samsung_samsung_galaxy_a25_5g_128gb_blu_6",
-    "slug": "samsung-galaxy-a25-5g-128gb-blue-black-51yl",
+    "slug": "samsung-galaxy-a25-5g-128gb-blue-black-b3843a",
     "title": "Samsung Galaxy A25 5G 128GB Blue Black (#119)",
     "brand": "Samsung",
     "category": "electronics",
@@ -5952,7 +5952,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_infinix_infinix_zero_30_5g_256gb_rome_g_5": {
     "id": "phone_infinix_infinix_zero_30_5g_256gb_rome_g_5",
-    "slug": "infinix-zero-30-5g-256gb-rome-green-ufz7",
+    "slug": "infinix-zero-30-5g-256gb-rome-green-b8179a",
     "title": "Infinix Zero 30 5G 256GB Rome Green (#120)",
     "brand": "Infinix",
     "category": "electronics",
@@ -6002,7 +6002,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_samsung_samsung_galaxy_s24_5g_256gb_ony_7": {
     "id": "phone_samsung_samsung_galaxy_s24_5g_256gb_ony_7",
-    "slug": "samsung-galaxy-s24-5g-256gb-onyx-black-4sae",
+    "slug": "samsung-galaxy-s24-5g-256gb-onyx-black-c007a6",
     "title": "Samsung Galaxy S24+ 5G 256GB Onyx Black (#121)",
     "brand": "Samsung",
     "category": "electronics",
@@ -6052,7 +6052,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_apple_apple_iphone_15_128gb_noir_minuit_6": {
     "id": "phone_apple_apple_iphone_15_128gb_noir_minuit_6",
-    "slug": "apple-iphone-15-128gb-noir-minuit-1zuz",
+    "slug": "apple-iphone-15-128gb-noir-minuit-3c2c64",
     "title": "Apple iPhone 15 128GB Noir Minuit (#122)",
     "brand": "Apple",
     "category": "electronics",
@@ -6102,7 +6102,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_tecno_tecno_spark_20_pro_256gb_8gb_ram__9": {
     "id": "phone_tecno_tecno_spark_20_pro_256gb_8gb_ram__9",
-    "slug": "tecno-spark-20-pro-256gb-8gb-ram-1epo",
+    "slug": "tecno-spark-20-pro-256gb-8gb-ram-5f82fa",
     "title": "Tecno Spark 20 Pro+ 256GB / 8GB RAM (#123)",
     "brand": "Tecno",
     "category": "electronics",
@@ -6152,7 +6152,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8a_128gb_bay_blue_1_4": {
     "id": "phone_google_google_pixel_8a_128gb_bay_blue_1_4",
-    "slug": "google-pixel-8a-128gb-bay-blue-esbp",
+    "slug": "google-pixel-8a-128gb-bay-blue-481f56",
     "title": "Google Pixel 8a 128GB Bay Blue (#124)",
     "brand": "Google",
     "category": "electronics",
@@ -6202,7 +6202,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_samsung_samsung_galaxy_a25_5g_128gb_blu_7": {
     "id": "phone_samsung_samsung_galaxy_a25_5g_128gb_blu_7",
-    "slug": "samsung-galaxy-a25-5g-128gb-blue-black-9gbo",
+    "slug": "samsung-galaxy-a25-5g-128gb-blue-black-af52f1",
     "title": "Samsung Galaxy A25 5G 128GB Blue Black (#125)",
     "brand": "Samsung",
     "category": "electronics",
@@ -6252,7 +6252,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_infinix_infinix_zero_30_5g_256gb_rome_g_6": {
     "id": "phone_infinix_infinix_zero_30_5g_256gb_rome_g_6",
-    "slug": "infinix-zero-30-5g-256gb-rome-green-2zbv",
+    "slug": "infinix-zero-30-5g-256gb-rome-green-2d4263",
     "title": "Infinix Zero 30 5G 256GB Rome Green (#126)",
     "brand": "Infinix",
     "category": "electronics",
@@ -6302,7 +6302,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_25": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_25",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-ct9s",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-e0b063",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -6352,7 +6352,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_11": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_11",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-2oyg",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-808d6e",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#128)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -6402,7 +6402,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_12": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_12",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-f091",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-fba020",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#129)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -6452,7 +6452,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_13": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_13",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-hmv8",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-a3554d",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#130)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -6502,7 +6502,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_14": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_14",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-7y2v",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-937d09",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#131)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -6552,7 +6552,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_15": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_15",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-fh40",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-f5d1fb",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#132)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -6602,7 +6602,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_16": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_16",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-l1xb",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-5d9062",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#133)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -6652,7 +6652,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_17": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_17",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-lzvv",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-79e609",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#134)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -6702,7 +6702,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_18": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_18",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-owak",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-9589ae",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#135)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -6752,7 +6752,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_19": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_19",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-gr6q",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-59f2af",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#136)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -6802,7 +6802,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_20": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_20",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-ni39",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-45be73",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#137)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -6852,7 +6852,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_21": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_21",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-74wt",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-9315f1",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#138)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -6902,7 +6902,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_22": {
     "id": "phone_xiaomi_xiaomi_redmi_note_13_pro_5g_512g_22",
-    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-ok8d",
+    "slug": "xiaomi-redmi-note-13-pro-5g-512gb-12gb-9e2587",
     "title": "Xiaomi Redmi Note 13 Pro+ 5G 512GB / 12GB (#139)",
     "brand": "Xiaomi",
     "category": "electronics",
@@ -6952,7 +6952,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_21": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_21",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-devg",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-8362ac",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -7002,7 +7002,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_8_pro_128gb_unlocke_26": {
     "id": "phone_google_google_pixel_8_pro_128gb_unlocke_26",
-    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-j0lt",
+    "slug": "google-pixel-8-pro-128gb-unlocked-android-14-15fa44",
     "title": "Google Pixel 8 Pro 128GB Unlocked Android 14",
     "brand": "Google",
     "category": "electronics",
@@ -7052,7 +7052,7 @@ window.PRODUCTS_DATA = {
   },
   "phone_google_google_pixel_10_pro_fold_512gb_j_22": {
     "id": "phone_google_google_pixel_10_pro_fold_512gb_j_22",
-    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-ml9l",
+    "slug": "google-pixel-10-pro-fold-512gb-jade-unlocked-d69ad4",
     "title": "Google Pixel 10 Pro Fold 512GB Jade Unlocked",
     "brand": "Google",
     "category": "electronics",
@@ -7102,7 +7102,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_air_m2_13_6_pouces": {
     "id": "laptop_apple_apple_macbook_air_m2_13_6_pouces",
-    "slug": "apple-macbook-air-m2-13-6-pouces-minuit-8gb-ram-256gb-2cz2",
+    "slug": "apple-macbook-air-m2-13-6-pouces-minuit-8gb-ram-256gb-ssd-d1a49c",
     "title": "Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #1)",
     "brand": "Apple",
     "category": "electronics",
@@ -7152,7 +7152,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_air_m3_15_3_pouces": {
     "id": "laptop_apple_apple_macbook_air_m3_15_3_pouces",
-    "slug": "apple-macbook-air-m3-15-3-pouces-lumiere-stellaire-16gb-ovhd",
+    "slug": "apple-macbook-air-m3-15-3-pouces-lumiere-stellaire-16gb-ram-9121fe",
     "title": "Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #2)",
     "brand": "Apple",
     "category": "electronics",
@@ -7202,7 +7202,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_pro_14_m3_pro_gris": {
     "id": "laptop_apple_apple_macbook_pro_14_m3_pro_gris",
-    "slug": "apple-macbook-pro-14-m3-pro-gris-sideral-18gb-ram-512gb-nt33",
+    "slug": "apple-macbook-pro-14-m3-pro-gris-sideral-18gb-ram-512gb-ssd-eb6e81",
     "title": "Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #3)",
     "brand": "Apple",
     "category": "electronics",
@@ -7252,7 +7252,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_neo_13_pouces_puce": {
     "id": "laptop_apple_apple_macbook_neo_13_pouces_puce",
-    "slug": "apple-macbook-neo-13-pouces-puce-a19-bionic-12gb-ram-tble",
+    "slug": "apple-macbook-neo-13-pouces-puce-a19-bionic-12gb-ram-512gb-f140e8",
     "title": "Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #4)",
     "brand": "Apple",
     "category": "electronics",
@@ -7302,7 +7302,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_microsoft_microsoft_surface_laptop_5_1": {
     "id": "laptop_microsoft_microsoft_surface_laptop_5_1",
-    "slug": "microsoft-surface-laptop-5-13-5-pouces-ecran-tactile-je6y",
+    "slug": "microsoft-surface-laptop-5-13-5-pouces-ecran-tactile-e3690d",
     "title": "Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #5)",
     "brand": "Microsoft",
     "category": "electronics",
@@ -7352,7 +7352,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_microsoft_microsoft_surface_pro_9_2_en": {
     "id": "laptop_microsoft_microsoft_surface_pro_9_2_en",
-    "slug": "microsoft-surface-pro-9-2-en-1-tablette-pc-ecran-120hz-1trl",
+    "slug": "microsoft-surface-pro-9-2-en-1-tablette-pc-ecran-120hz-core-e10f14",
     "title": "Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #6)",
     "brand": "Microsoft",
     "category": "electronics",
@@ -7402,7 +7402,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_lenovo_lenovo_thinkpad_x1_carbon_gen_1": {
     "id": "laptop_lenovo_lenovo_thinkpad_x1_carbon_gen_1",
-    "slug": "lenovo-thinkpad-x1-carbon-gen-11-fibre-de-carbone-core-z3ou",
+    "slug": "lenovo-thinkpad-x1-carbon-gen-11-fibre-de-carbone-core-i7-8d5b60",
     "title": "Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #7)",
     "brand": "Lenovo",
     "category": "electronics",
@@ -7452,7 +7452,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_lenovo_lenovo_yoga_9i_convertible_2_en": {
     "id": "laptop_lenovo_lenovo_yoga_9i_convertible_2_en",
-    "slug": "lenovo-yoga-9i-convertible-2-en-1-double-ecran-oled-uryv",
+    "slug": "lenovo-yoga-9i-convertible-2-en-1-double-ecran-oled-c4e857",
     "title": "Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #8)",
     "brand": "Lenovo",
     "category": "electronics",
@@ -7502,7 +7502,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_dell_dell_xps_15_9530_ecran_3_5k_oled_": {
     "id": "laptop_dell_dell_xps_15_9530_ecran_3_5k_oled_",
-    "slug": "dell-xps-15-9530-ecran-3-5k-oled-tactile-core-i7-rtx-797v",
+    "slug": "dell-xps-15-9530-ecran-3-5k-oled-tactile-core-i7-rtx-4060-0f0980",
     "title": "Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #9)",
     "brand": "Dell",
     "category": "electronics",
@@ -7552,7 +7552,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_hp_hp_spectre_x360_2_en_1_14_pouces_ol": {
     "id": "laptop_hp_hp_spectre_x360_2_en_1_14_pouces_ol",
-    "slug": "hp-spectre-x360-2-en-1-14-pouces-oled-120hz-intel-core-8tft",
+    "slug": "hp-spectre-x360-2-en-1-14-pouces-oled-120hz-intel-core-ultra-0d3d4b",
     "title": "HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #10)",
     "brand": "HP",
     "category": "electronics",
@@ -7602,7 +7602,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_air_m2_13_6_pouces_2": {
     "id": "laptop_apple_apple_macbook_air_m2_13_6_pouces_2",
-    "slug": "apple-macbook-air-m2-13-6-pouces-minuit-8gb-ram-256gb-zlw7",
+    "slug": "apple-macbook-air-m2-13-6-pouces-minuit-8gb-ram-256gb-ssd-3274b0",
     "title": "Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #11)",
     "brand": "Apple",
     "category": "electronics",
@@ -7652,7 +7652,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_air_m3_15_3_pouces_2": {
     "id": "laptop_apple_apple_macbook_air_m3_15_3_pouces_2",
-    "slug": "apple-macbook-air-m3-15-3-pouces-lumiere-stellaire-16gb-n9u3",
+    "slug": "apple-macbook-air-m3-15-3-pouces-lumiere-stellaire-16gb-ram-5cc4ef",
     "title": "Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #12)",
     "brand": "Apple",
     "category": "electronics",
@@ -7702,7 +7702,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_pro_14_m3_pro_gris_2": {
     "id": "laptop_apple_apple_macbook_pro_14_m3_pro_gris_2",
-    "slug": "apple-macbook-pro-14-m3-pro-gris-sideral-18gb-ram-512gb-6ro8",
+    "slug": "apple-macbook-pro-14-m3-pro-gris-sideral-18gb-ram-512gb-ssd-5c390a",
     "title": "Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #13)",
     "brand": "Apple",
     "category": "electronics",
@@ -7752,7 +7752,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_neo_13_pouces_puce_2": {
     "id": "laptop_apple_apple_macbook_neo_13_pouces_puce_2",
-    "slug": "apple-macbook-neo-13-pouces-puce-a19-bionic-12gb-ram-8ke6",
+    "slug": "apple-macbook-neo-13-pouces-puce-a19-bionic-12gb-ram-512gb-869359",
     "title": "Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #14)",
     "brand": "Apple",
     "category": "electronics",
@@ -7802,7 +7802,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_microsoft_microsoft_surface_laptop_5_1_2": {
     "id": "laptop_microsoft_microsoft_surface_laptop_5_1_2",
-    "slug": "microsoft-surface-laptop-5-13-5-pouces-ecran-tactile-mhvl",
+    "slug": "microsoft-surface-laptop-5-13-5-pouces-ecran-tactile-7acd0e",
     "title": "Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #15)",
     "brand": "Microsoft",
     "category": "electronics",
@@ -7852,7 +7852,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_microsoft_microsoft_surface_pro_9_2_en_2": {
     "id": "laptop_microsoft_microsoft_surface_pro_9_2_en_2",
-    "slug": "microsoft-surface-pro-9-2-en-1-tablette-pc-ecran-120hz-08e3",
+    "slug": "microsoft-surface-pro-9-2-en-1-tablette-pc-ecran-120hz-core-278b95",
     "title": "Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #16)",
     "brand": "Microsoft",
     "category": "electronics",
@@ -7902,7 +7902,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_lenovo_lenovo_thinkpad_x1_carbon_gen_1_2": {
     "id": "laptop_lenovo_lenovo_thinkpad_x1_carbon_gen_1_2",
-    "slug": "lenovo-thinkpad-x1-carbon-gen-11-fibre-de-carbone-core-od9c",
+    "slug": "lenovo-thinkpad-x1-carbon-gen-11-fibre-de-carbone-core-i7-75332b",
     "title": "Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #17)",
     "brand": "Lenovo",
     "category": "electronics",
@@ -7952,7 +7952,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_lenovo_lenovo_yoga_9i_convertible_2_en_2": {
     "id": "laptop_lenovo_lenovo_yoga_9i_convertible_2_en_2",
-    "slug": "lenovo-yoga-9i-convertible-2-en-1-double-ecran-oled-u4tk",
+    "slug": "lenovo-yoga-9i-convertible-2-en-1-double-ecran-oled-2e6fa2",
     "title": "Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #18)",
     "brand": "Lenovo",
     "category": "electronics",
@@ -8002,7 +8002,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_dell_dell_xps_15_9530_ecran_3_5k_oled__2": {
     "id": "laptop_dell_dell_xps_15_9530_ecran_3_5k_oled__2",
-    "slug": "dell-xps-15-9530-ecran-3-5k-oled-tactile-core-i7-rtx-a3ze",
+    "slug": "dell-xps-15-9530-ecran-3-5k-oled-tactile-core-i7-rtx-4060-988005",
     "title": "Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #19)",
     "brand": "Dell",
     "category": "electronics",
@@ -8052,7 +8052,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_hp_hp_spectre_x360_2_en_1_14_pouces_ol_2": {
     "id": "laptop_hp_hp_spectre_x360_2_en_1_14_pouces_ol_2",
-    "slug": "hp-spectre-x360-2-en-1-14-pouces-oled-120hz-intel-core-ugqo",
+    "slug": "hp-spectre-x360-2-en-1-14-pouces-oled-120hz-intel-core-ultra-55e1a9",
     "title": "HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #20)",
     "brand": "HP",
     "category": "electronics",
@@ -8102,7 +8102,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_air_m2_13_6_pouces_3": {
     "id": "laptop_apple_apple_macbook_air_m2_13_6_pouces_3",
-    "slug": "apple-macbook-air-m2-13-6-pouces-minuit-8gb-ram-256gb-jrfc",
+    "slug": "apple-macbook-air-m2-13-6-pouces-minuit-8gb-ram-256gb-ssd-22b1ab",
     "title": "Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #21)",
     "brand": "Apple",
     "category": "electronics",
@@ -8152,7 +8152,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_air_m3_15_3_pouces_3": {
     "id": "laptop_apple_apple_macbook_air_m3_15_3_pouces_3",
-    "slug": "apple-macbook-air-m3-15-3-pouces-lumiere-stellaire-16gb-tt2p",
+    "slug": "apple-macbook-air-m3-15-3-pouces-lumiere-stellaire-16gb-ram-1a699f",
     "title": "Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #22)",
     "brand": "Apple",
     "category": "electronics",
@@ -8202,7 +8202,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_pro_14_m3_pro_gris_3": {
     "id": "laptop_apple_apple_macbook_pro_14_m3_pro_gris_3",
-    "slug": "apple-macbook-pro-14-m3-pro-gris-sideral-18gb-ram-512gb-oe6j",
+    "slug": "apple-macbook-pro-14-m3-pro-gris-sideral-18gb-ram-512gb-ssd-3bbc31",
     "title": "Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #23)",
     "brand": "Apple",
     "category": "electronics",
@@ -8252,7 +8252,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_neo_13_pouces_puce_3": {
     "id": "laptop_apple_apple_macbook_neo_13_pouces_puce_3",
-    "slug": "apple-macbook-neo-13-pouces-puce-a19-bionic-12gb-ram-kg1i",
+    "slug": "apple-macbook-neo-13-pouces-puce-a19-bionic-12gb-ram-512gb-550d7f",
     "title": "Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #24)",
     "brand": "Apple",
     "category": "electronics",
@@ -8302,7 +8302,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_microsoft_microsoft_surface_laptop_5_1_3": {
     "id": "laptop_microsoft_microsoft_surface_laptop_5_1_3",
-    "slug": "microsoft-surface-laptop-5-13-5-pouces-ecran-tactile-08hq",
+    "slug": "microsoft-surface-laptop-5-13-5-pouces-ecran-tactile-9a2cae",
     "title": "Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #25)",
     "brand": "Microsoft",
     "category": "electronics",
@@ -8352,7 +8352,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_microsoft_microsoft_surface_pro_9_2_en_3": {
     "id": "laptop_microsoft_microsoft_surface_pro_9_2_en_3",
-    "slug": "microsoft-surface-pro-9-2-en-1-tablette-pc-ecran-120hz-jqs5",
+    "slug": "microsoft-surface-pro-9-2-en-1-tablette-pc-ecran-120hz-core-a3a3b0",
     "title": "Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #26)",
     "brand": "Microsoft",
     "category": "electronics",
@@ -8402,7 +8402,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_lenovo_lenovo_thinkpad_x1_carbon_gen_1_3": {
     "id": "laptop_lenovo_lenovo_thinkpad_x1_carbon_gen_1_3",
-    "slug": "lenovo-thinkpad-x1-carbon-gen-11-fibre-de-carbone-core-ks64",
+    "slug": "lenovo-thinkpad-x1-carbon-gen-11-fibre-de-carbone-core-i7-5f7724",
     "title": "Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #27)",
     "brand": "Lenovo",
     "category": "electronics",
@@ -8452,7 +8452,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_lenovo_lenovo_yoga_9i_convertible_2_en_3": {
     "id": "laptop_lenovo_lenovo_yoga_9i_convertible_2_en_3",
-    "slug": "lenovo-yoga-9i-convertible-2-en-1-double-ecran-oled-zlw4",
+    "slug": "lenovo-yoga-9i-convertible-2-en-1-double-ecran-oled-c003f6",
     "title": "Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #28)",
     "brand": "Lenovo",
     "category": "electronics",
@@ -8502,7 +8502,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_dell_dell_xps_15_9530_ecran_3_5k_oled__3": {
     "id": "laptop_dell_dell_xps_15_9530_ecran_3_5k_oled__3",
-    "slug": "dell-xps-15-9530-ecran-3-5k-oled-tactile-core-i7-rtx-b89m",
+    "slug": "dell-xps-15-9530-ecran-3-5k-oled-tactile-core-i7-rtx-4060-2b47ae",
     "title": "Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #29)",
     "brand": "Dell",
     "category": "electronics",
@@ -8552,7 +8552,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_hp_hp_spectre_x360_2_en_1_14_pouces_ol_3": {
     "id": "laptop_hp_hp_spectre_x360_2_en_1_14_pouces_ol_3",
-    "slug": "hp-spectre-x360-2-en-1-14-pouces-oled-120hz-intel-core-npbr",
+    "slug": "hp-spectre-x360-2-en-1-14-pouces-oled-120hz-intel-core-ultra-626075",
     "title": "HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #30)",
     "brand": "HP",
     "category": "electronics",
@@ -8602,7 +8602,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_air_m2_13_6_pouces_4": {
     "id": "laptop_apple_apple_macbook_air_m2_13_6_pouces_4",
-    "slug": "apple-macbook-air-m2-13-6-pouces-minuit-8gb-ram-256gb-0b52",
+    "slug": "apple-macbook-air-m2-13-6-pouces-minuit-8gb-ram-256gb-ssd-6f6d31",
     "title": "Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #31)",
     "brand": "Apple",
     "category": "electronics",
@@ -8652,7 +8652,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_air_m3_15_3_pouces_4": {
     "id": "laptop_apple_apple_macbook_air_m3_15_3_pouces_4",
-    "slug": "apple-macbook-air-m3-15-3-pouces-lumiere-stellaire-16gb-7o16",
+    "slug": "apple-macbook-air-m3-15-3-pouces-lumiere-stellaire-16gb-ram-daf7e0",
     "title": "Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #32)",
     "brand": "Apple",
     "category": "electronics",
@@ -8702,7 +8702,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_pro_14_m3_pro_gris_4": {
     "id": "laptop_apple_apple_macbook_pro_14_m3_pro_gris_4",
-    "slug": "apple-macbook-pro-14-m3-pro-gris-sideral-18gb-ram-512gb-ibpn",
+    "slug": "apple-macbook-pro-14-m3-pro-gris-sideral-18gb-ram-512gb-ssd-2517bd",
     "title": "Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #33)",
     "brand": "Apple",
     "category": "electronics",
@@ -8752,7 +8752,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_neo_13_pouces_puce_4": {
     "id": "laptop_apple_apple_macbook_neo_13_pouces_puce_4",
-    "slug": "apple-macbook-neo-13-pouces-puce-a19-bionic-12gb-ram-857e",
+    "slug": "apple-macbook-neo-13-pouces-puce-a19-bionic-12gb-ram-512gb-21a91c",
     "title": "Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #34)",
     "brand": "Apple",
     "category": "electronics",
@@ -8802,7 +8802,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_microsoft_microsoft_surface_laptop_5_1_4": {
     "id": "laptop_microsoft_microsoft_surface_laptop_5_1_4",
-    "slug": "microsoft-surface-laptop-5-13-5-pouces-ecran-tactile-b4ml",
+    "slug": "microsoft-surface-laptop-5-13-5-pouces-ecran-tactile-3f6705",
     "title": "Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #35)",
     "brand": "Microsoft",
     "category": "electronics",
@@ -8852,7 +8852,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_microsoft_microsoft_surface_pro_9_2_en_4": {
     "id": "laptop_microsoft_microsoft_surface_pro_9_2_en_4",
-    "slug": "microsoft-surface-pro-9-2-en-1-tablette-pc-ecran-120hz-cozy",
+    "slug": "microsoft-surface-pro-9-2-en-1-tablette-pc-ecran-120hz-core-9500d9",
     "title": "Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #36)",
     "brand": "Microsoft",
     "category": "electronics",
@@ -8902,7 +8902,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_lenovo_lenovo_thinkpad_x1_carbon_gen_1_4": {
     "id": "laptop_lenovo_lenovo_thinkpad_x1_carbon_gen_1_4",
-    "slug": "lenovo-thinkpad-x1-carbon-gen-11-fibre-de-carbone-core-7k2t",
+    "slug": "lenovo-thinkpad-x1-carbon-gen-11-fibre-de-carbone-core-i7-2e45ef",
     "title": "Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #37)",
     "brand": "Lenovo",
     "category": "electronics",
@@ -8952,7 +8952,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_lenovo_lenovo_yoga_9i_convertible_2_en_4": {
     "id": "laptop_lenovo_lenovo_yoga_9i_convertible_2_en_4",
-    "slug": "lenovo-yoga-9i-convertible-2-en-1-double-ecran-oled-1zr9",
+    "slug": "lenovo-yoga-9i-convertible-2-en-1-double-ecran-oled-325cc2",
     "title": "Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #38)",
     "brand": "Lenovo",
     "category": "electronics",
@@ -9002,7 +9002,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_dell_dell_xps_15_9530_ecran_3_5k_oled__4": {
     "id": "laptop_dell_dell_xps_15_9530_ecran_3_5k_oled__4",
-    "slug": "dell-xps-15-9530-ecran-3-5k-oled-tactile-core-i7-rtx-fc8z",
+    "slug": "dell-xps-15-9530-ecran-3-5k-oled-tactile-core-i7-rtx-4060-782d9b",
     "title": "Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #39)",
     "brand": "Dell",
     "category": "electronics",
@@ -9052,7 +9052,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_hp_hp_spectre_x360_2_en_1_14_pouces_ol_4": {
     "id": "laptop_hp_hp_spectre_x360_2_en_1_14_pouces_ol_4",
-    "slug": "hp-spectre-x360-2-en-1-14-pouces-oled-120hz-intel-core-jw96",
+    "slug": "hp-spectre-x360-2-en-1-14-pouces-oled-120hz-intel-core-ultra-70fb92",
     "title": "HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #40)",
     "brand": "HP",
     "category": "electronics",
@@ -9102,7 +9102,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_air_m2_13_6_pouces_5": {
     "id": "laptop_apple_apple_macbook_air_m2_13_6_pouces_5",
-    "slug": "apple-macbook-air-m2-13-6-pouces-minuit-8gb-ram-256gb-98oj",
+    "slug": "apple-macbook-air-m2-13-6-pouces-minuit-8gb-ram-256gb-ssd-8afb80",
     "title": "Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #41)",
     "brand": "Apple",
     "category": "electronics",
@@ -9152,7 +9152,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_air_m3_15_3_pouces_5": {
     "id": "laptop_apple_apple_macbook_air_m3_15_3_pouces_5",
-    "slug": "apple-macbook-air-m3-15-3-pouces-lumiere-stellaire-16gb-jfns",
+    "slug": "apple-macbook-air-m3-15-3-pouces-lumiere-stellaire-16gb-ram-919e44",
     "title": "Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #42)",
     "brand": "Apple",
     "category": "electronics",
@@ -9202,7 +9202,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_pro_14_m3_pro_gris_5": {
     "id": "laptop_apple_apple_macbook_pro_14_m3_pro_gris_5",
-    "slug": "apple-macbook-pro-14-m3-pro-gris-sideral-18gb-ram-512gb-6yvh",
+    "slug": "apple-macbook-pro-14-m3-pro-gris-sideral-18gb-ram-512gb-ssd-e1dfc6",
     "title": "Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #43)",
     "brand": "Apple",
     "category": "electronics",
@@ -9252,7 +9252,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_neo_13_pouces_puce_5": {
     "id": "laptop_apple_apple_macbook_neo_13_pouces_puce_5",
-    "slug": "apple-macbook-neo-13-pouces-puce-a19-bionic-12gb-ram-3nd6",
+    "slug": "apple-macbook-neo-13-pouces-puce-a19-bionic-12gb-ram-512gb-7fc115",
     "title": "Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #44)",
     "brand": "Apple",
     "category": "electronics",
@@ -9302,7 +9302,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_microsoft_microsoft_surface_laptop_5_1_5": {
     "id": "laptop_microsoft_microsoft_surface_laptop_5_1_5",
-    "slug": "microsoft-surface-laptop-5-13-5-pouces-ecran-tactile-02rl",
+    "slug": "microsoft-surface-laptop-5-13-5-pouces-ecran-tactile-621c62",
     "title": "Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #45)",
     "brand": "Microsoft",
     "category": "electronics",
@@ -9352,7 +9352,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_microsoft_microsoft_surface_pro_9_2_en_5": {
     "id": "laptop_microsoft_microsoft_surface_pro_9_2_en_5",
-    "slug": "microsoft-surface-pro-9-2-en-1-tablette-pc-ecran-120hz-utid",
+    "slug": "microsoft-surface-pro-9-2-en-1-tablette-pc-ecran-120hz-core-e30aab",
     "title": "Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #46)",
     "brand": "Microsoft",
     "category": "electronics",
@@ -9402,7 +9402,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_lenovo_lenovo_thinkpad_x1_carbon_gen_1_5": {
     "id": "laptop_lenovo_lenovo_thinkpad_x1_carbon_gen_1_5",
-    "slug": "lenovo-thinkpad-x1-carbon-gen-11-fibre-de-carbone-core-jcr9",
+    "slug": "lenovo-thinkpad-x1-carbon-gen-11-fibre-de-carbone-core-i7-8480d2",
     "title": "Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #47)",
     "brand": "Lenovo",
     "category": "electronics",
@@ -9452,7 +9452,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_lenovo_lenovo_yoga_9i_convertible_2_en_5": {
     "id": "laptop_lenovo_lenovo_yoga_9i_convertible_2_en_5",
-    "slug": "lenovo-yoga-9i-convertible-2-en-1-double-ecran-oled-g8vv",
+    "slug": "lenovo-yoga-9i-convertible-2-en-1-double-ecran-oled-7ae23b",
     "title": "Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #48)",
     "brand": "Lenovo",
     "category": "electronics",
@@ -9502,7 +9502,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_dell_dell_xps_15_9530_ecran_3_5k_oled__5": {
     "id": "laptop_dell_dell_xps_15_9530_ecran_3_5k_oled__5",
-    "slug": "dell-xps-15-9530-ecran-3-5k-oled-tactile-core-i7-rtx-f0xz",
+    "slug": "dell-xps-15-9530-ecran-3-5k-oled-tactile-core-i7-rtx-4060-6527e4",
     "title": "Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #49)",
     "brand": "Dell",
     "category": "electronics",
@@ -9552,7 +9552,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_hp_hp_spectre_x360_2_en_1_14_pouces_ol_5": {
     "id": "laptop_hp_hp_spectre_x360_2_en_1_14_pouces_ol_5",
-    "slug": "hp-spectre-x360-2-en-1-14-pouces-oled-120hz-intel-core-5gx0",
+    "slug": "hp-spectre-x360-2-en-1-14-pouces-oled-120hz-intel-core-ultra-80a909",
     "title": "HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #50)",
     "brand": "HP",
     "category": "electronics",
@@ -9602,7 +9602,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_air_m2_13_6_pouces_6": {
     "id": "laptop_apple_apple_macbook_air_m2_13_6_pouces_6",
-    "slug": "apple-macbook-air-m2-13-6-pouces-minuit-8gb-ram-256gb-hb1d",
+    "slug": "apple-macbook-air-m2-13-6-pouces-minuit-8gb-ram-256gb-ssd-0e5d41",
     "title": "Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #51)",
     "brand": "Apple",
     "category": "electronics",
@@ -9652,7 +9652,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_air_m3_15_3_pouces_6": {
     "id": "laptop_apple_apple_macbook_air_m3_15_3_pouces_6",
-    "slug": "apple-macbook-air-m3-15-3-pouces-lumiere-stellaire-16gb-dhfe",
+    "slug": "apple-macbook-air-m3-15-3-pouces-lumiere-stellaire-16gb-ram-6f100e",
     "title": "Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #52)",
     "brand": "Apple",
     "category": "electronics",
@@ -9702,7 +9702,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_pro_14_m3_pro_gris_6": {
     "id": "laptop_apple_apple_macbook_pro_14_m3_pro_gris_6",
-    "slug": "apple-macbook-pro-14-m3-pro-gris-sideral-18gb-ram-512gb-5rte",
+    "slug": "apple-macbook-pro-14-m3-pro-gris-sideral-18gb-ram-512gb-ssd-2842ee",
     "title": "Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #53)",
     "brand": "Apple",
     "category": "electronics",
@@ -9752,7 +9752,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_neo_13_pouces_puce_6": {
     "id": "laptop_apple_apple_macbook_neo_13_pouces_puce_6",
-    "slug": "apple-macbook-neo-13-pouces-puce-a19-bionic-12gb-ram-3u46",
+    "slug": "apple-macbook-neo-13-pouces-puce-a19-bionic-12gb-ram-512gb-0da043",
     "title": "Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #54)",
     "brand": "Apple",
     "category": "electronics",
@@ -9802,7 +9802,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_microsoft_microsoft_surface_laptop_5_1_6": {
     "id": "laptop_microsoft_microsoft_surface_laptop_5_1_6",
-    "slug": "microsoft-surface-laptop-5-13-5-pouces-ecran-tactile-zpre",
+    "slug": "microsoft-surface-laptop-5-13-5-pouces-ecran-tactile-e8f643",
     "title": "Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #55)",
     "brand": "Microsoft",
     "category": "electronics",
@@ -9852,7 +9852,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_microsoft_microsoft_surface_pro_9_2_en_6": {
     "id": "laptop_microsoft_microsoft_surface_pro_9_2_en_6",
-    "slug": "microsoft-surface-pro-9-2-en-1-tablette-pc-ecran-120hz-et8j",
+    "slug": "microsoft-surface-pro-9-2-en-1-tablette-pc-ecran-120hz-core-603fec",
     "title": "Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #56)",
     "brand": "Microsoft",
     "category": "electronics",
@@ -9902,7 +9902,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_lenovo_lenovo_thinkpad_x1_carbon_gen_1_6": {
     "id": "laptop_lenovo_lenovo_thinkpad_x1_carbon_gen_1_6",
-    "slug": "lenovo-thinkpad-x1-carbon-gen-11-fibre-de-carbone-core-q1lc",
+    "slug": "lenovo-thinkpad-x1-carbon-gen-11-fibre-de-carbone-core-i7-e0ed10",
     "title": "Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #57)",
     "brand": "Lenovo",
     "category": "electronics",
@@ -9952,7 +9952,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_lenovo_lenovo_yoga_9i_convertible_2_en_6": {
     "id": "laptop_lenovo_lenovo_yoga_9i_convertible_2_en_6",
-    "slug": "lenovo-yoga-9i-convertible-2-en-1-double-ecran-oled-j519",
+    "slug": "lenovo-yoga-9i-convertible-2-en-1-double-ecran-oled-a8be55",
     "title": "Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #58)",
     "brand": "Lenovo",
     "category": "electronics",
@@ -10002,7 +10002,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_dell_dell_xps_15_9530_ecran_3_5k_oled__6": {
     "id": "laptop_dell_dell_xps_15_9530_ecran_3_5k_oled__6",
-    "slug": "dell-xps-15-9530-ecran-3-5k-oled-tactile-core-i7-rtx-6xgw",
+    "slug": "dell-xps-15-9530-ecran-3-5k-oled-tactile-core-i7-rtx-4060-5a0551",
     "title": "Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #59)",
     "brand": "Dell",
     "category": "electronics",
@@ -10052,7 +10052,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_hp_hp_spectre_x360_2_en_1_14_pouces_ol_6": {
     "id": "laptop_hp_hp_spectre_x360_2_en_1_14_pouces_ol_6",
-    "slug": "hp-spectre-x360-2-en-1-14-pouces-oled-120hz-intel-core-6pua",
+    "slug": "hp-spectre-x360-2-en-1-14-pouces-oled-120hz-intel-core-ultra-8778b1",
     "title": "HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #60)",
     "brand": "HP",
     "category": "electronics",
@@ -10102,7 +10102,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_air_m2_13_6_pouces_7": {
     "id": "laptop_apple_apple_macbook_air_m2_13_6_pouces_7",
-    "slug": "apple-macbook-air-m2-13-6-pouces-minuit-8gb-ram-256gb-l7lm",
+    "slug": "apple-macbook-air-m2-13-6-pouces-minuit-8gb-ram-256gb-ssd-30d060",
     "title": "Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #61)",
     "brand": "Apple",
     "category": "electronics",
@@ -10152,7 +10152,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_air_m3_15_3_pouces_7": {
     "id": "laptop_apple_apple_macbook_air_m3_15_3_pouces_7",
-    "slug": "apple-macbook-air-m3-15-3-pouces-lumiere-stellaire-16gb-jo0w",
+    "slug": "apple-macbook-air-m3-15-3-pouces-lumiere-stellaire-16gb-ram-05dc7a",
     "title": "Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #62)",
     "brand": "Apple",
     "category": "electronics",
@@ -10202,7 +10202,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_pro_14_m3_pro_gris_7": {
     "id": "laptop_apple_apple_macbook_pro_14_m3_pro_gris_7",
-    "slug": "apple-macbook-pro-14-m3-pro-gris-sideral-18gb-ram-512gb-aj93",
+    "slug": "apple-macbook-pro-14-m3-pro-gris-sideral-18gb-ram-512gb-ssd-89e280",
     "title": "Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #63)",
     "brand": "Apple",
     "category": "electronics",
@@ -10252,7 +10252,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_neo_13_pouces_puce_7": {
     "id": "laptop_apple_apple_macbook_neo_13_pouces_puce_7",
-    "slug": "apple-macbook-neo-13-pouces-puce-a19-bionic-12gb-ram-vi6y",
+    "slug": "apple-macbook-neo-13-pouces-puce-a19-bionic-12gb-ram-512gb-ff79c4",
     "title": "Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #64)",
     "brand": "Apple",
     "category": "electronics",
@@ -10302,7 +10302,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_microsoft_microsoft_surface_laptop_5_1_7": {
     "id": "laptop_microsoft_microsoft_surface_laptop_5_1_7",
-    "slug": "microsoft-surface-laptop-5-13-5-pouces-ecran-tactile-l0t0",
+    "slug": "microsoft-surface-laptop-5-13-5-pouces-ecran-tactile-d63332",
     "title": "Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #65)",
     "brand": "Microsoft",
     "category": "electronics",
@@ -10352,7 +10352,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_microsoft_microsoft_surface_pro_9_2_en_7": {
     "id": "laptop_microsoft_microsoft_surface_pro_9_2_en_7",
-    "slug": "microsoft-surface-pro-9-2-en-1-tablette-pc-ecran-120hz-02b3",
+    "slug": "microsoft-surface-pro-9-2-en-1-tablette-pc-ecran-120hz-core-aa178e",
     "title": "Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #66)",
     "brand": "Microsoft",
     "category": "electronics",
@@ -10402,7 +10402,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_lenovo_lenovo_thinkpad_x1_carbon_gen_1_7": {
     "id": "laptop_lenovo_lenovo_thinkpad_x1_carbon_gen_1_7",
-    "slug": "lenovo-thinkpad-x1-carbon-gen-11-fibre-de-carbone-core-3377",
+    "slug": "lenovo-thinkpad-x1-carbon-gen-11-fibre-de-carbone-core-i7-1788fd",
     "title": "Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #67)",
     "brand": "Lenovo",
     "category": "electronics",
@@ -10452,7 +10452,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_lenovo_lenovo_yoga_9i_convertible_2_en_7": {
     "id": "laptop_lenovo_lenovo_yoga_9i_convertible_2_en_7",
-    "slug": "lenovo-yoga-9i-convertible-2-en-1-double-ecran-oled-q8e5",
+    "slug": "lenovo-yoga-9i-convertible-2-en-1-double-ecran-oled-d8eae2",
     "title": "Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #68)",
     "brand": "Lenovo",
     "category": "electronics",
@@ -10502,7 +10502,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_dell_dell_xps_15_9530_ecran_3_5k_oled__7": {
     "id": "laptop_dell_dell_xps_15_9530_ecran_3_5k_oled__7",
-    "slug": "dell-xps-15-9530-ecran-3-5k-oled-tactile-core-i7-rtx-czaa",
+    "slug": "dell-xps-15-9530-ecran-3-5k-oled-tactile-core-i7-rtx-4060-60a522",
     "title": "Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #69)",
     "brand": "Dell",
     "category": "electronics",
@@ -10552,7 +10552,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_hp_hp_spectre_x360_2_en_1_14_pouces_ol_7": {
     "id": "laptop_hp_hp_spectre_x360_2_en_1_14_pouces_ol_7",
-    "slug": "hp-spectre-x360-2-en-1-14-pouces-oled-120hz-intel-core-s1c3",
+    "slug": "hp-spectre-x360-2-en-1-14-pouces-oled-120hz-intel-core-ultra-dbd368",
     "title": "HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #70)",
     "brand": "HP",
     "category": "electronics",
@@ -10602,7 +10602,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_air_m2_13_6_pouces_8": {
     "id": "laptop_apple_apple_macbook_air_m2_13_6_pouces_8",
-    "slug": "apple-macbook-air-m2-13-6-pouces-minuit-8gb-ram-256gb-pmsy",
+    "slug": "apple-macbook-air-m2-13-6-pouces-minuit-8gb-ram-256gb-ssd-8a6d65",
     "title": "Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #71)",
     "brand": "Apple",
     "category": "electronics",
@@ -10652,7 +10652,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_air_m3_15_3_pouces_8": {
     "id": "laptop_apple_apple_macbook_air_m3_15_3_pouces_8",
-    "slug": "apple-macbook-air-m3-15-3-pouces-lumiere-stellaire-16gb-rzc2",
+    "slug": "apple-macbook-air-m3-15-3-pouces-lumiere-stellaire-16gb-ram-c218bd",
     "title": "Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #72)",
     "brand": "Apple",
     "category": "electronics",
@@ -10702,7 +10702,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_pro_14_m3_pro_gris_8": {
     "id": "laptop_apple_apple_macbook_pro_14_m3_pro_gris_8",
-    "slug": "apple-macbook-pro-14-m3-pro-gris-sideral-18gb-ram-512gb-v2nl",
+    "slug": "apple-macbook-pro-14-m3-pro-gris-sideral-18gb-ram-512gb-ssd-009644",
     "title": "Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #73)",
     "brand": "Apple",
     "category": "electronics",
@@ -10752,7 +10752,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_neo_13_pouces_puce_8": {
     "id": "laptop_apple_apple_macbook_neo_13_pouces_puce_8",
-    "slug": "apple-macbook-neo-13-pouces-puce-a19-bionic-12gb-ram-dppy",
+    "slug": "apple-macbook-neo-13-pouces-puce-a19-bionic-12gb-ram-512gb-466ae2",
     "title": "Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #74)",
     "brand": "Apple",
     "category": "electronics",
@@ -10802,7 +10802,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_microsoft_microsoft_surface_laptop_5_1_8": {
     "id": "laptop_microsoft_microsoft_surface_laptop_5_1_8",
-    "slug": "microsoft-surface-laptop-5-13-5-pouces-ecran-tactile-nweg",
+    "slug": "microsoft-surface-laptop-5-13-5-pouces-ecran-tactile-a38d04",
     "title": "Microsoft Surface Laptop 5 13.5 pouces Écran Tactile PixelSense Core i7 (Configuration Pro #75)",
     "brand": "Microsoft",
     "category": "electronics",
@@ -10852,7 +10852,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_microsoft_microsoft_surface_pro_9_2_en_8": {
     "id": "laptop_microsoft_microsoft_surface_pro_9_2_en_8",
-    "slug": "microsoft-surface-pro-9-2-en-1-tablette-pc-ecran-120hz-kofi",
+    "slug": "microsoft-surface-pro-9-2-en-1-tablette-pc-ecran-120hz-core-f2216a",
     "title": "Microsoft Surface Pro 9 2-en-1 Tablette PC Écran 120Hz Core i5 (Configuration Pro #76)",
     "brand": "Microsoft",
     "category": "electronics",
@@ -10902,7 +10902,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_lenovo_lenovo_thinkpad_x1_carbon_gen_1_8": {
     "id": "laptop_lenovo_lenovo_thinkpad_x1_carbon_gen_1_8",
-    "slug": "lenovo-thinkpad-x1-carbon-gen-11-fibre-de-carbone-core-m4qc",
+    "slug": "lenovo-thinkpad-x1-carbon-gen-11-fibre-de-carbone-core-i7-efa1ba",
     "title": "Lenovo ThinkPad X1 Carbon Gen 11 Fibre de Carbone Core i7 vPro (Configuration Pro #77)",
     "brand": "Lenovo",
     "category": "electronics",
@@ -10952,7 +10952,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_lenovo_lenovo_yoga_9i_convertible_2_en_8": {
     "id": "laptop_lenovo_lenovo_yoga_9i_convertible_2_en_8",
-    "slug": "lenovo-yoga-9i-convertible-2-en-1-double-ecran-oled-77ol",
+    "slug": "lenovo-yoga-9i-convertible-2-en-1-double-ecran-oled-c624bd",
     "title": "Lenovo Yoga 9i Convertible 2-en-1 Double Écran OLED PureSight (Configuration Pro #78)",
     "brand": "Lenovo",
     "category": "electronics",
@@ -11002,7 +11002,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_dell_dell_xps_15_9530_ecran_3_5k_oled__8": {
     "id": "laptop_dell_dell_xps_15_9530_ecran_3_5k_oled__8",
-    "slug": "dell-xps-15-9530-ecran-3-5k-oled-tactile-core-i7-rtx-srbd",
+    "slug": "dell-xps-15-9530-ecran-3-5k-oled-tactile-core-i7-rtx-4060-4daae0",
     "title": "Dell XPS 15 9530 Écran 3.5K OLED Tactile Core i7 RTX 4060 (Configuration Pro #79)",
     "brand": "Dell",
     "category": "electronics",
@@ -11052,7 +11052,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_hp_hp_spectre_x360_2_en_1_14_pouces_ol_8": {
     "id": "laptop_hp_hp_spectre_x360_2_en_1_14_pouces_ol_8",
-    "slug": "hp-spectre-x360-2-en-1-14-pouces-oled-120hz-intel-core-7s81",
+    "slug": "hp-spectre-x360-2-en-1-14-pouces-oled-120hz-intel-core-ultra-04ed5b",
     "title": "HP Spectre x360 2-en-1 14 pouces OLED 120Hz Intel Core Ultra 7 (Configuration Pro #80)",
     "brand": "HP",
     "category": "electronics",
@@ -11102,7 +11102,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_air_m2_13_6_pouces_9": {
     "id": "laptop_apple_apple_macbook_air_m2_13_6_pouces_9",
-    "slug": "apple-macbook-air-m2-13-6-pouces-minuit-8gb-ram-256gb-dqe8",
+    "slug": "apple-macbook-air-m2-13-6-pouces-minuit-8gb-ram-256gb-ssd-abd4fa",
     "title": "Apple MacBook Air M2 13.6 pouces Minuit (8GB RAM / 256GB SSD) (Configuration Pro #81)",
     "brand": "Apple",
     "category": "electronics",
@@ -11152,7 +11152,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_air_m3_15_3_pouces_9": {
     "id": "laptop_apple_apple_macbook_air_m3_15_3_pouces_9",
-    "slug": "apple-macbook-air-m3-15-3-pouces-lumiere-stellaire-16gb-rx3c",
+    "slug": "apple-macbook-air-m3-15-3-pouces-lumiere-stellaire-16gb-ram-b5aeb6",
     "title": "Apple MacBook Air M3 15.3 pouces Lumière Stellaire (16GB RAM / 512GB SSD) (Configuration Pro #82)",
     "brand": "Apple",
     "category": "electronics",
@@ -11202,7 +11202,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_pro_14_m3_pro_gris_9": {
     "id": "laptop_apple_apple_macbook_pro_14_m3_pro_gris_9",
-    "slug": "apple-macbook-pro-14-m3-pro-gris-sideral-18gb-ram-512gb-jh4j",
+    "slug": "apple-macbook-pro-14-m3-pro-gris-sideral-18gb-ram-512gb-ssd-a8580e",
     "title": "Apple MacBook Pro 14 M3 Pro Gris Sidéral (18GB RAM / 512GB SSD) (Configuration Pro #83)",
     "brand": "Apple",
     "category": "electronics",
@@ -11252,7 +11252,7 @@ window.PRODUCTS_DATA = {
   },
   "laptop_apple_apple_macbook_neo_13_pouces_puce_9": {
     "id": "laptop_apple_apple_macbook_neo_13_pouces_puce_9",
-    "slug": "apple-macbook-neo-13-pouces-puce-a19-bionic-12gb-ram-chj2",
+    "slug": "apple-macbook-neo-13-pouces-puce-a19-bionic-12gb-ram-512gb-60d80a",
     "title": "Apple MacBook Neo 13 pouces Puce A19 Bionic (12GB RAM / 512GB SSD) (Configuration Pro #84)",
     "brand": "Apple",
     "category": "electronics",
@@ -11302,7 +11302,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_max_casque_bluetoot": {
     "id": "audio_apple_apple_airpods_max_casque_bluetoot",
-    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-8tyj",
+    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-active-461a85",
     "title": "Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#1)",
     "brand": "Apple",
     "category": "electronics",
@@ -11352,7 +11352,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_4_ecouteurs_sans_fi": {
     "id": "audio_apple_apple_airpods_4_ecouteurs_sans_fi",
-    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-ryjd",
+    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-de-943eaf",
     "title": "Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#2)",
     "brand": "Apple",
     "category": "electronics",
@@ -11402,7 +11402,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta": {
     "id": "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta",
-    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-lmg7",
+    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-413bcf",
     "title": "JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#3)",
     "brand": "JBL",
     "category": "electronics",
@@ -11452,7 +11452,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel": {
     "id": "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel",
-    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-h7vy",
+    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-5dda8b",
     "title": "JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#4)",
     "brand": "JBL",
     "category": "electronics",
@@ -11502,7 +11502,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_mifa_mifa_a90_enceinte_bluetooth_puissa": {
     "id": "audio_mifa_mifa_a90_enceinte_bluetooth_puissa",
-    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-rfnw",
+    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-11ff1b",
     "title": "mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#5)",
     "brand": "mifa",
     "category": "electronics",
@@ -11552,7 +11552,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_spacebuds_ecouteurs_true_": {
     "id": "audio_oraimo_oraimo_spacebuds_ecouteurs_true_",
-    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-0a0h",
+    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-a763ba",
     "title": "Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#6)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -11602,7 +11602,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_freepods_4_ecouteurs_sans": {
     "id": "audio_oraimo_oraimo_freepods_4_ecouteurs_sans",
-    "slug": "oraimo-freepods-4-ecouteurs-sans-fil-bluetooth-5-3-avec-hrq0",
+    "slug": "oraimo-freepods-4-ecouteurs-sans-fil-bluetooth-5-3-avec-f4b9b2",
     "title": "Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#7)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -11652,7 +11652,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_amazon_amazon_echo_dot_enceinte_intelli": {
     "id": "audio_amazon_amazon_echo_dot_enceinte_intelli",
-    "slug": "amazon-echo-dot-enceinte-intelligente-avec-horloge-led-ogck",
+    "slug": "amazon-echo-dot-enceinte-intelligente-avec-horloge-led-et-2f055d",
     "title": "Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#8)",
     "brand": "Amazon",
     "category": "electronics",
@@ -11702,7 +11702,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_dji_dji_mic_microphone_cravate_sans_fil": {
     "id": "audio_dji_dji_mic_microphone_cravate_sans_fil",
-    "slug": "dji-mic-microphone-cravate-sans-fil-double-emetteur-0aqx",
+    "slug": "dji-mic-microphone-cravate-sans-fil-double-emetteur-6c85f2",
     "title": "DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#9)",
     "brand": "DJI",
     "category": "electronics",
@@ -11752,7 +11752,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_sony_sony_wh_1000xm5_casque_audio_sans_": {
     "id": "audio_sony_sony_wh_1000xm5_casque_audio_sans_",
-    "slug": "sony-wh-1000xm5-casque-audio-sans-fil-reduction-de-bruit-c3x3",
+    "slug": "sony-wh-1000xm5-casque-audio-sans-fil-reduction-de-bruit-63587e",
     "title": "Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#10)",
     "brand": "Sony",
     "category": "electronics",
@@ -11802,7 +11802,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_max_casque_bluetoot_2": {
     "id": "audio_apple_apple_airpods_max_casque_bluetoot_2",
-    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-yway",
+    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-active-8458a1",
     "title": "Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#11)",
     "brand": "Apple",
     "category": "electronics",
@@ -11852,7 +11852,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_4_ecouteurs_sans_fi_2": {
     "id": "audio_apple_apple_airpods_4_ecouteurs_sans_fi_2",
-    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-foit",
+    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-de-0a27ae",
     "title": "Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#12)",
     "brand": "Apple",
     "category": "electronics",
@@ -11902,7 +11902,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta_2": {
     "id": "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta_2",
-    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-xl8b",
+    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-c436f0",
     "title": "JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#13)",
     "brand": "JBL",
     "category": "electronics",
@@ -11952,7 +11952,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel_2": {
     "id": "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel_2",
-    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-d1qq",
+    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-688dde",
     "title": "JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#14)",
     "brand": "JBL",
     "category": "electronics",
@@ -12002,7 +12002,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_mifa_mifa_a90_enceinte_bluetooth_puissa_2": {
     "id": "audio_mifa_mifa_a90_enceinte_bluetooth_puissa_2",
-    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-pbsj",
+    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-ee09f0",
     "title": "mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#15)",
     "brand": "mifa",
     "category": "electronics",
@@ -12052,7 +12052,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_spacebuds_ecouteurs_true__2": {
     "id": "audio_oraimo_oraimo_spacebuds_ecouteurs_true__2",
-    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-rrlu",
+    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-e6d665",
     "title": "Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#16)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -12102,7 +12102,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_freepods_4_ecouteurs_sans_2": {
     "id": "audio_oraimo_oraimo_freepods_4_ecouteurs_sans_2",
-    "slug": "oraimo-freepods-4-ecouteurs-sans-fil-bluetooth-5-3-avec-ieol",
+    "slug": "oraimo-freepods-4-ecouteurs-sans-fil-bluetooth-5-3-avec-c47904",
     "title": "Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#17)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -12152,7 +12152,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_amazon_amazon_echo_dot_enceinte_intelli_2": {
     "id": "audio_amazon_amazon_echo_dot_enceinte_intelli_2",
-    "slug": "amazon-echo-dot-enceinte-intelligente-avec-horloge-led-hmav",
+    "slug": "amazon-echo-dot-enceinte-intelligente-avec-horloge-led-et-a221be",
     "title": "Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#18)",
     "brand": "Amazon",
     "category": "electronics",
@@ -12202,7 +12202,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_dji_dji_mic_microphone_cravate_sans_fil_2": {
     "id": "audio_dji_dji_mic_microphone_cravate_sans_fil_2",
-    "slug": "dji-mic-microphone-cravate-sans-fil-double-emetteur-xt4b",
+    "slug": "dji-mic-microphone-cravate-sans-fil-double-emetteur-3c2969",
     "title": "DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#19)",
     "brand": "DJI",
     "category": "electronics",
@@ -12252,7 +12252,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_sony_sony_wh_1000xm5_casque_audio_sans__2": {
     "id": "audio_sony_sony_wh_1000xm5_casque_audio_sans__2",
-    "slug": "sony-wh-1000xm5-casque-audio-sans-fil-reduction-de-bruit-kok9",
+    "slug": "sony-wh-1000xm5-casque-audio-sans-fil-reduction-de-bruit-e9d238",
     "title": "Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#20)",
     "brand": "Sony",
     "category": "electronics",
@@ -12302,7 +12302,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_max_casque_bluetoot_3": {
     "id": "audio_apple_apple_airpods_max_casque_bluetoot_3",
-    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-g5i2",
+    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-active-2c1837",
     "title": "Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#21)",
     "brand": "Apple",
     "category": "electronics",
@@ -12352,7 +12352,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_4_ecouteurs_sans_fi_3": {
     "id": "audio_apple_apple_airpods_4_ecouteurs_sans_fi_3",
-    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-xj5y",
+    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-de-0ccebe",
     "title": "Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#22)",
     "brand": "Apple",
     "category": "electronics",
@@ -12402,7 +12402,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta_3": {
     "id": "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta_3",
-    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-b0dd",
+    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-964cd3",
     "title": "JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#23)",
     "brand": "JBL",
     "category": "electronics",
@@ -12452,7 +12452,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel_3": {
     "id": "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel_3",
-    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-4nn7",
+    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-d7c19b",
     "title": "JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#24)",
     "brand": "JBL",
     "category": "electronics",
@@ -12502,7 +12502,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_mifa_mifa_a90_enceinte_bluetooth_puissa_3": {
     "id": "audio_mifa_mifa_a90_enceinte_bluetooth_puissa_3",
-    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-kzpu",
+    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-37d23e",
     "title": "mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#25)",
     "brand": "mifa",
     "category": "electronics",
@@ -12552,7 +12552,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_spacebuds_ecouteurs_true__3": {
     "id": "audio_oraimo_oraimo_spacebuds_ecouteurs_true__3",
-    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-nv1y",
+    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-fba66d",
     "title": "Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#26)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -12602,7 +12602,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_freepods_4_ecouteurs_sans_3": {
     "id": "audio_oraimo_oraimo_freepods_4_ecouteurs_sans_3",
-    "slug": "oraimo-freepods-4-ecouteurs-sans-fil-bluetooth-5-3-avec-kdk2",
+    "slug": "oraimo-freepods-4-ecouteurs-sans-fil-bluetooth-5-3-avec-3f6d9a",
     "title": "Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#27)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -12652,7 +12652,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_amazon_amazon_echo_dot_enceinte_intelli_3": {
     "id": "audio_amazon_amazon_echo_dot_enceinte_intelli_3",
-    "slug": "amazon-echo-dot-enceinte-intelligente-avec-horloge-led-gxhe",
+    "slug": "amazon-echo-dot-enceinte-intelligente-avec-horloge-led-et-b25922",
     "title": "Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#28)",
     "brand": "Amazon",
     "category": "electronics",
@@ -12702,7 +12702,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_dji_dji_mic_microphone_cravate_sans_fil_3": {
     "id": "audio_dji_dji_mic_microphone_cravate_sans_fil_3",
-    "slug": "dji-mic-microphone-cravate-sans-fil-double-emetteur-nfnb",
+    "slug": "dji-mic-microphone-cravate-sans-fil-double-emetteur-af5ce5",
     "title": "DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#29)",
     "brand": "DJI",
     "category": "electronics",
@@ -12752,7 +12752,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_sony_sony_wh_1000xm5_casque_audio_sans__3": {
     "id": "audio_sony_sony_wh_1000xm5_casque_audio_sans__3",
-    "slug": "sony-wh-1000xm5-casque-audio-sans-fil-reduction-de-bruit-p9t7",
+    "slug": "sony-wh-1000xm5-casque-audio-sans-fil-reduction-de-bruit-faa724",
     "title": "Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#30)",
     "brand": "Sony",
     "category": "electronics",
@@ -12802,7 +12802,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_max_casque_bluetoot_4": {
     "id": "audio_apple_apple_airpods_max_casque_bluetoot_4",
-    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-snjn",
+    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-active-85bafd",
     "title": "Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#31)",
     "brand": "Apple",
     "category": "electronics",
@@ -12852,7 +12852,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_4_ecouteurs_sans_fi_4": {
     "id": "audio_apple_apple_airpods_4_ecouteurs_sans_fi_4",
-    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-3heh",
+    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-de-070480",
     "title": "Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#32)",
     "brand": "Apple",
     "category": "electronics",
@@ -12902,7 +12902,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta_4": {
     "id": "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta_4",
-    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-uw2y",
+    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-507a00",
     "title": "JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#33)",
     "brand": "JBL",
     "category": "electronics",
@@ -12952,7 +12952,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel_4": {
     "id": "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel_4",
-    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-4rs3",
+    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-8e12d0",
     "title": "JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#34)",
     "brand": "JBL",
     "category": "electronics",
@@ -13002,7 +13002,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_mifa_mifa_a90_enceinte_bluetooth_puissa_4": {
     "id": "audio_mifa_mifa_a90_enceinte_bluetooth_puissa_4",
-    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-wiyf",
+    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-873e2d",
     "title": "mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#35)",
     "brand": "mifa",
     "category": "electronics",
@@ -13052,7 +13052,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_spacebuds_ecouteurs_true__4": {
     "id": "audio_oraimo_oraimo_spacebuds_ecouteurs_true__4",
-    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-fwxa",
+    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-dc97cf",
     "title": "Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#36)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -13102,7 +13102,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_freepods_4_ecouteurs_sans_4": {
     "id": "audio_oraimo_oraimo_freepods_4_ecouteurs_sans_4",
-    "slug": "oraimo-freepods-4-ecouteurs-sans-fil-bluetooth-5-3-avec-gncu",
+    "slug": "oraimo-freepods-4-ecouteurs-sans-fil-bluetooth-5-3-avec-ed0379",
     "title": "Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#37)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -13152,7 +13152,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_amazon_amazon_echo_dot_enceinte_intelli_4": {
     "id": "audio_amazon_amazon_echo_dot_enceinte_intelli_4",
-    "slug": "amazon-echo-dot-enceinte-intelligente-avec-horloge-led-pyyh",
+    "slug": "amazon-echo-dot-enceinte-intelligente-avec-horloge-led-et-afab97",
     "title": "Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#38)",
     "brand": "Amazon",
     "category": "electronics",
@@ -13202,7 +13202,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_dji_dji_mic_microphone_cravate_sans_fil_4": {
     "id": "audio_dji_dji_mic_microphone_cravate_sans_fil_4",
-    "slug": "dji-mic-microphone-cravate-sans-fil-double-emetteur-s9db",
+    "slug": "dji-mic-microphone-cravate-sans-fil-double-emetteur-85a114",
     "title": "DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#39)",
     "brand": "DJI",
     "category": "electronics",
@@ -13252,7 +13252,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_sony_sony_wh_1000xm5_casque_audio_sans__4": {
     "id": "audio_sony_sony_wh_1000xm5_casque_audio_sans__4",
-    "slug": "sony-wh-1000xm5-casque-audio-sans-fil-reduction-de-bruit-uyds",
+    "slug": "sony-wh-1000xm5-casque-audio-sans-fil-reduction-de-bruit-f85db9",
     "title": "Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#40)",
     "brand": "Sony",
     "category": "electronics",
@@ -13302,7 +13302,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_max_casque_bluetoot_5": {
     "id": "audio_apple_apple_airpods_max_casque_bluetoot_5",
-    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-tzeg",
+    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-active-7369d8",
     "title": "Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#41)",
     "brand": "Apple",
     "category": "electronics",
@@ -13352,7 +13352,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_4_ecouteurs_sans_fi_5": {
     "id": "audio_apple_apple_airpods_4_ecouteurs_sans_fi_5",
-    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-zj7i",
+    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-de-f2459e",
     "title": "Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#42)",
     "brand": "Apple",
     "category": "electronics",
@@ -13402,7 +13402,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta_5": {
     "id": "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta_5",
-    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-7prz",
+    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-809102",
     "title": "JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#43)",
     "brand": "JBL",
     "category": "electronics",
@@ -13452,7 +13452,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel_5": {
     "id": "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel_5",
-    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-0qjz",
+    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-7dbe6e",
     "title": "JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#44)",
     "brand": "JBL",
     "category": "electronics",
@@ -13502,7 +13502,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_mifa_mifa_a90_enceinte_bluetooth_puissa_5": {
     "id": "audio_mifa_mifa_a90_enceinte_bluetooth_puissa_5",
-    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-ppag",
+    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-ea55f0",
     "title": "mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#45)",
     "brand": "mifa",
     "category": "electronics",
@@ -13552,7 +13552,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_spacebuds_ecouteurs_true__5": {
     "id": "audio_oraimo_oraimo_spacebuds_ecouteurs_true__5",
-    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-mxxd",
+    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-32520b",
     "title": "Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#46)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -13602,7 +13602,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_freepods_4_ecouteurs_sans_5": {
     "id": "audio_oraimo_oraimo_freepods_4_ecouteurs_sans_5",
-    "slug": "oraimo-freepods-4-ecouteurs-sans-fil-bluetooth-5-3-avec-jtrv",
+    "slug": "oraimo-freepods-4-ecouteurs-sans-fil-bluetooth-5-3-avec-e0821f",
     "title": "Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#47)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -13652,7 +13652,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_amazon_amazon_echo_dot_enceinte_intelli_5": {
     "id": "audio_amazon_amazon_echo_dot_enceinte_intelli_5",
-    "slug": "amazon-echo-dot-enceinte-intelligente-avec-horloge-led-rogm",
+    "slug": "amazon-echo-dot-enceinte-intelligente-avec-horloge-led-et-fa28b6",
     "title": "Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#48)",
     "brand": "Amazon",
     "category": "electronics",
@@ -13702,7 +13702,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_dji_dji_mic_microphone_cravate_sans_fil_5": {
     "id": "audio_dji_dji_mic_microphone_cravate_sans_fil_5",
-    "slug": "dji-mic-microphone-cravate-sans-fil-double-emetteur-pk2b",
+    "slug": "dji-mic-microphone-cravate-sans-fil-double-emetteur-aff82e",
     "title": "DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#49)",
     "brand": "DJI",
     "category": "electronics",
@@ -13752,7 +13752,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_sony_sony_wh_1000xm5_casque_audio_sans__5": {
     "id": "audio_sony_sony_wh_1000xm5_casque_audio_sans__5",
-    "slug": "sony-wh-1000xm5-casque-audio-sans-fil-reduction-de-bruit-hxnd",
+    "slug": "sony-wh-1000xm5-casque-audio-sans-fil-reduction-de-bruit-f252b8",
     "title": "Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#50)",
     "brand": "Sony",
     "category": "electronics",
@@ -13802,7 +13802,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_max_casque_bluetoot_6": {
     "id": "audio_apple_apple_airpods_max_casque_bluetoot_6",
-    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-chya",
+    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-active-62f241",
     "title": "Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#51)",
     "brand": "Apple",
     "category": "electronics",
@@ -13852,7 +13852,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_4_ecouteurs_sans_fi_6": {
     "id": "audio_apple_apple_airpods_4_ecouteurs_sans_fi_6",
-    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-7x3v",
+    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-de-dff980",
     "title": "Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#52)",
     "brand": "Apple",
     "category": "electronics",
@@ -13902,7 +13902,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta_6": {
     "id": "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta_6",
-    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-nsrc",
+    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-331faf",
     "title": "JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#53)",
     "brand": "JBL",
     "category": "electronics",
@@ -13952,7 +13952,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel_6": {
     "id": "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel_6",
-    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-khn4",
+    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-784ae7",
     "title": "JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#54)",
     "brand": "JBL",
     "category": "electronics",
@@ -14002,7 +14002,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_mifa_mifa_a90_enceinte_bluetooth_puissa_6": {
     "id": "audio_mifa_mifa_a90_enceinte_bluetooth_puissa_6",
-    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-32vw",
+    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-1b3d41",
     "title": "mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#55)",
     "brand": "mifa",
     "category": "electronics",
@@ -14052,7 +14052,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_spacebuds_ecouteurs_true__6": {
     "id": "audio_oraimo_oraimo_spacebuds_ecouteurs_true__6",
-    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-pnf7",
+    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-e988de",
     "title": "Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#56)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -14102,7 +14102,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_freepods_4_ecouteurs_sans_6": {
     "id": "audio_oraimo_oraimo_freepods_4_ecouteurs_sans_6",
-    "slug": "oraimo-freepods-4-ecouteurs-sans-fil-bluetooth-5-3-avec-v6hl",
+    "slug": "oraimo-freepods-4-ecouteurs-sans-fil-bluetooth-5-3-avec-b9654d",
     "title": "Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#57)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -14152,7 +14152,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_amazon_amazon_echo_dot_enceinte_intelli_6": {
     "id": "audio_amazon_amazon_echo_dot_enceinte_intelli_6",
-    "slug": "amazon-echo-dot-enceinte-intelligente-avec-horloge-led-fgil",
+    "slug": "amazon-echo-dot-enceinte-intelligente-avec-horloge-led-et-1a7909",
     "title": "Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#58)",
     "brand": "Amazon",
     "category": "electronics",
@@ -14202,7 +14202,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_dji_dji_mic_microphone_cravate_sans_fil_6": {
     "id": "audio_dji_dji_mic_microphone_cravate_sans_fil_6",
-    "slug": "dji-mic-microphone-cravate-sans-fil-double-emetteur-kctd",
+    "slug": "dji-mic-microphone-cravate-sans-fil-double-emetteur-5727a3",
     "title": "DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#59)",
     "brand": "DJI",
     "category": "electronics",
@@ -14252,7 +14252,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_sony_sony_wh_1000xm5_casque_audio_sans__6": {
     "id": "audio_sony_sony_wh_1000xm5_casque_audio_sans__6",
-    "slug": "sony-wh-1000xm5-casque-audio-sans-fil-reduction-de-bruit-tduz",
+    "slug": "sony-wh-1000xm5-casque-audio-sans-fil-reduction-de-bruit-9cf56a",
     "title": "Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#60)",
     "brand": "Sony",
     "category": "electronics",
@@ -14302,7 +14302,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_max_casque_bluetoot_7": {
     "id": "audio_apple_apple_airpods_max_casque_bluetoot_7",
-    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-b713",
+    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-active-b809e6",
     "title": "Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#61)",
     "brand": "Apple",
     "category": "electronics",
@@ -14352,7 +14352,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_4_ecouteurs_sans_fi_7": {
     "id": "audio_apple_apple_airpods_4_ecouteurs_sans_fi_7",
-    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-8lb6",
+    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-de-1cf4de",
     "title": "Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#62)",
     "brand": "Apple",
     "category": "electronics",
@@ -14402,7 +14402,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta_7": {
     "id": "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta_7",
-    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-e1ht",
+    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-74deee",
     "title": "JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#63)",
     "brand": "JBL",
     "category": "electronics",
@@ -14452,7 +14452,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel_7": {
     "id": "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel_7",
-    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-i0tk",
+    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-a98a91",
     "title": "JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#64)",
     "brand": "JBL",
     "category": "electronics",
@@ -14502,7 +14502,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_mifa_mifa_a90_enceinte_bluetooth_puissa_7": {
     "id": "audio_mifa_mifa_a90_enceinte_bluetooth_puissa_7",
-    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-8m3q",
+    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-730dbe",
     "title": "mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#65)",
     "brand": "mifa",
     "category": "electronics",
@@ -14552,7 +14552,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_spacebuds_ecouteurs_true__7": {
     "id": "audio_oraimo_oraimo_spacebuds_ecouteurs_true__7",
-    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-nxbf",
+    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-40d6ef",
     "title": "Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#66)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -14602,7 +14602,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_freepods_4_ecouteurs_sans_7": {
     "id": "audio_oraimo_oraimo_freepods_4_ecouteurs_sans_7",
-    "slug": "oraimo-freepods-4-ecouteurs-sans-fil-bluetooth-5-3-avec-tpid",
+    "slug": "oraimo-freepods-4-ecouteurs-sans-fil-bluetooth-5-3-avec-67662e",
     "title": "Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#67)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -14652,7 +14652,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_amazon_amazon_echo_dot_enceinte_intelli_7": {
     "id": "audio_amazon_amazon_echo_dot_enceinte_intelli_7",
-    "slug": "amazon-echo-dot-enceinte-intelligente-avec-horloge-led-ggg7",
+    "slug": "amazon-echo-dot-enceinte-intelligente-avec-horloge-led-et-d02e36",
     "title": "Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#68)",
     "brand": "Amazon",
     "category": "electronics",
@@ -14702,7 +14702,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_dji_dji_mic_microphone_cravate_sans_fil_7": {
     "id": "audio_dji_dji_mic_microphone_cravate_sans_fil_7",
-    "slug": "dji-mic-microphone-cravate-sans-fil-double-emetteur-65av",
+    "slug": "dji-mic-microphone-cravate-sans-fil-double-emetteur-dc10b6",
     "title": "DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#69)",
     "brand": "DJI",
     "category": "electronics",
@@ -14752,7 +14752,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_sony_sony_wh_1000xm5_casque_audio_sans__7": {
     "id": "audio_sony_sony_wh_1000xm5_casque_audio_sans__7",
-    "slug": "sony-wh-1000xm5-casque-audio-sans-fil-reduction-de-bruit-eobx",
+    "slug": "sony-wh-1000xm5-casque-audio-sans-fil-reduction-de-bruit-aabbbb",
     "title": "Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#70)",
     "brand": "Sony",
     "category": "electronics",
@@ -14802,7 +14802,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_max_casque_bluetoot_8": {
     "id": "audio_apple_apple_airpods_max_casque_bluetoot_8",
-    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-3wsu",
+    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-active-5534fb",
     "title": "Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#71)",
     "brand": "Apple",
     "category": "electronics",
@@ -14852,7 +14852,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_4_ecouteurs_sans_fi_8": {
     "id": "audio_apple_apple_airpods_4_ecouteurs_sans_fi_8",
-    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-378p",
+    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-de-82c1a1",
     "title": "Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#72)",
     "brand": "Apple",
     "category": "electronics",
@@ -14902,7 +14902,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta_8": {
     "id": "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta_8",
-    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-on1m",
+    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-8f87c3",
     "title": "JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#73)",
     "brand": "JBL",
     "category": "electronics",
@@ -14952,7 +14952,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel_8": {
     "id": "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel_8",
-    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-a48g",
+    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-2bfa4a",
     "title": "JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#74)",
     "brand": "JBL",
     "category": "electronics",
@@ -15002,7 +15002,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_mifa_mifa_a90_enceinte_bluetooth_puissa_8": {
     "id": "audio_mifa_mifa_a90_enceinte_bluetooth_puissa_8",
-    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-x9br",
+    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-4792b7",
     "title": "mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#75)",
     "brand": "mifa",
     "category": "electronics",
@@ -15052,7 +15052,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_spacebuds_ecouteurs_true__8": {
     "id": "audio_oraimo_oraimo_spacebuds_ecouteurs_true__8",
-    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-o5me",
+    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-b62c2d",
     "title": "Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#76)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -15102,7 +15102,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_freepods_4_ecouteurs_sans_8": {
     "id": "audio_oraimo_oraimo_freepods_4_ecouteurs_sans_8",
-    "slug": "oraimo-freepods-4-ecouteurs-sans-fil-bluetooth-5-3-avec-c2tm",
+    "slug": "oraimo-freepods-4-ecouteurs-sans-fil-bluetooth-5-3-avec-6d281b",
     "title": "Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#77)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -15152,7 +15152,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_amazon_amazon_echo_dot_enceinte_intelli_8": {
     "id": "audio_amazon_amazon_echo_dot_enceinte_intelli_8",
-    "slug": "amazon-echo-dot-enceinte-intelligente-avec-horloge-led-uo18",
+    "slug": "amazon-echo-dot-enceinte-intelligente-avec-horloge-led-et-506037",
     "title": "Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#78)",
     "brand": "Amazon",
     "category": "electronics",
@@ -15202,7 +15202,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_dji_dji_mic_microphone_cravate_sans_fil_8": {
     "id": "audio_dji_dji_mic_microphone_cravate_sans_fil_8",
-    "slug": "dji-mic-microphone-cravate-sans-fil-double-emetteur-x9vh",
+    "slug": "dji-mic-microphone-cravate-sans-fil-double-emetteur-282340",
     "title": "DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#79)",
     "brand": "DJI",
     "category": "electronics",
@@ -15252,7 +15252,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_sony_sony_wh_1000xm5_casque_audio_sans__8": {
     "id": "audio_sony_sony_wh_1000xm5_casque_audio_sans__8",
-    "slug": "sony-wh-1000xm5-casque-audio-sans-fil-reduction-de-bruit-j2a7",
+    "slug": "sony-wh-1000xm5-casque-audio-sans-fil-reduction-de-bruit-cfc98d",
     "title": "Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#80)",
     "brand": "Sony",
     "category": "electronics",
@@ -15302,7 +15302,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_max_casque_bluetoot_9": {
     "id": "audio_apple_apple_airpods_max_casque_bluetoot_9",
-    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-xeca",
+    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-active-bf1bba",
     "title": "Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#81)",
     "brand": "Apple",
     "category": "electronics",
@@ -15352,7 +15352,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_4_ecouteurs_sans_fi_9": {
     "id": "audio_apple_apple_airpods_4_ecouteurs_sans_fi_9",
-    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-687n",
+    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-de-b13799",
     "title": "Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#82)",
     "brand": "Apple",
     "category": "electronics",
@@ -15402,7 +15402,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta_9": {
     "id": "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta_9",
-    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-xgff",
+    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-4c476a",
     "title": "JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#83)",
     "brand": "JBL",
     "category": "electronics",
@@ -15452,7 +15452,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel_9": {
     "id": "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel_9",
-    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-r2j9",
+    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-cde84d",
     "title": "JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#84)",
     "brand": "JBL",
     "category": "electronics",
@@ -15502,7 +15502,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_mifa_mifa_a90_enceinte_bluetooth_puissa_9": {
     "id": "audio_mifa_mifa_a90_enceinte_bluetooth_puissa_9",
-    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-91gl",
+    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-feb65f",
     "title": "mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#85)",
     "brand": "mifa",
     "category": "electronics",
@@ -15552,7 +15552,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_spacebuds_ecouteurs_true__9": {
     "id": "audio_oraimo_oraimo_spacebuds_ecouteurs_true__9",
-    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-mc8c",
+    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-3a20ab",
     "title": "Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#86)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -15602,7 +15602,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_freepods_4_ecouteurs_sans_9": {
     "id": "audio_oraimo_oraimo_freepods_4_ecouteurs_sans_9",
-    "slug": "oraimo-freepods-4-ecouteurs-sans-fil-bluetooth-5-3-avec-e9at",
+    "slug": "oraimo-freepods-4-ecouteurs-sans-fil-bluetooth-5-3-avec-6c5ca0",
     "title": "Oraimo FreePods 4 Écouteurs Sans Fil Bluetooth 5.3 avec Réduction de Bruit (#87)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -15652,7 +15652,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_amazon_amazon_echo_dot_enceinte_intelli_9": {
     "id": "audio_amazon_amazon_echo_dot_enceinte_intelli_9",
-    "slug": "amazon-echo-dot-enceinte-intelligente-avec-horloge-led-vapm",
+    "slug": "amazon-echo-dot-enceinte-intelligente-avec-horloge-led-et-e98ce3",
     "title": "Amazon Echo Dot Enceinte Intelligente avec Horloge LED et Alexa (#88)",
     "brand": "Amazon",
     "category": "electronics",
@@ -15702,7 +15702,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_dji_dji_mic_microphone_cravate_sans_fil_9": {
     "id": "audio_dji_dji_mic_microphone_cravate_sans_fil_9",
-    "slug": "dji-mic-microphone-cravate-sans-fil-double-emetteur-c2dx",
+    "slug": "dji-mic-microphone-cravate-sans-fil-double-emetteur-f18183",
     "title": "DJI Mic Microphone Cravate Sans Fil Double Émetteur Récepteur 250m (#89)",
     "brand": "DJI",
     "category": "electronics",
@@ -15752,7 +15752,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_sony_sony_wh_1000xm5_casque_audio_sans__9": {
     "id": "audio_sony_sony_wh_1000xm5_casque_audio_sans__9",
-    "slug": "sony-wh-1000xm5-casque-audio-sans-fil-reduction-de-bruit-wy6w",
+    "slug": "sony-wh-1000xm5-casque-audio-sans-fil-reduction-de-bruit-28d66c",
     "title": "Sony WH-1000XM5 Casque Audio Sans Fil Réduction de Bruit Ultime (#90)",
     "brand": "Sony",
     "category": "electronics",
@@ -15802,7 +15802,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_max_casque_bluetoot_10": {
     "id": "audio_apple_apple_airpods_max_casque_bluetoot_10",
-    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-a8ga",
+    "slug": "apple-airpods-max-casque-bluetooth-reduction-de-bruit-active-5d088a",
     "title": "Apple AirPods Max Casque Bluetooth Réduction de Bruit Active Gris Sidéral (#91)",
     "brand": "Apple",
     "category": "electronics",
@@ -15852,7 +15852,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_apple_apple_airpods_4_ecouteurs_sans_fi_10": {
     "id": "audio_apple_apple_airpods_4_ecouteurs_sans_fi_10",
-    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-7eqn",
+    "slug": "apple-airpods-4-ecouteurs-sans-fil-avec-reduction-active-de-f5e5de",
     "title": "Apple AirPods 4 Écouteurs Sans Fil avec Réduction Active de Bruit (#92)",
     "brand": "Apple",
     "category": "electronics",
@@ -15902,7 +15902,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta_10": {
     "id": "audio_jbl_jbl_flip_6_enceinte_bluetooth_porta_10",
-    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-rxez",
+    "slug": "jbl-flip-6-enceinte-bluetooth-portable-etanche-ip67-5cae9e",
     "title": "JBL Flip 6 Enceinte Bluetooth Portable Étanche IP67 Puissance 30W (#93)",
     "brand": "JBL",
     "category": "electronics",
@@ -15952,7 +15952,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel_10": {
     "id": "audio_jbl_jbl_tune_230nc_ecouteurs_true_wirel_10",
-    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-zl7k",
+    "slug": "jbl-tune-230nc-ecouteurs-true-wireless-bass-reduction-de-c79fbf",
     "title": "JBL Tune 230NC Écouteurs True Wireless Bass Réduction de Bruit (#94)",
     "brand": "JBL",
     "category": "electronics",
@@ -16002,7 +16002,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_mifa_mifa_a90_enceinte_bluetooth_puissa_10": {
     "id": "audio_mifa_mifa_a90_enceinte_bluetooth_puissa_10",
-    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-yhjb",
+    "slug": "mifa-a90-enceinte-bluetooth-puissante-60w-amplificateur-3fde2a",
     "title": "mifa A90 Enceinte Bluetooth Puissante 60W Amplificateur Class D (#95)",
     "brand": "mifa",
     "category": "electronics",
@@ -16052,7 +16052,7 @@ window.PRODUCTS_DATA = {
   },
   "audio_oraimo_oraimo_spacebuds_ecouteurs_true__10": {
     "id": "audio_oraimo_oraimo_spacebuds_ecouteurs_true__10",
-    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-0sli",
+    "slug": "oraimo-spacebuds-ecouteurs-true-wireless-hybrid-anc-50db-27bf3d",
     "title": "Oraimo SpaceBuds Écouteurs True Wireless Hybrid ANC 50dB (#96)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -16102,7 +16102,7 @@ window.PRODUCTS_DATA = {
   },
   "power_dji_dji_osmo_pocket_3_creator_combo_cam": {
     "id": "power_dji_dji_osmo_pocket_3_creator_combo_cam",
-    "slug": "dji-osmo-pocket-3-creator-combo-camera-4k-120fps-capteur-yhl9",
+    "slug": "dji-osmo-pocket-3-creator-combo-camera-4k-120fps-capteur-1-0b9be0",
     "title": "DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#1)",
     "brand": "DJI",
     "category": "electronics",
@@ -16152,7 +16152,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_oraimo_powerbank_30000mah_avec_4": {
     "id": "power_oraimo_oraimo_powerbank_30000mah_avec_4",
-    "slug": "oraimo-powerbank-30000mah-avec-4-cables-integres-et-nc1v",
+    "slug": "oraimo-powerbank-30000mah-avec-4-cables-integres-et-lampe-0c2db5",
     "title": "Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#2)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -16202,7 +16202,7 @@ window.PRODUCTS_DATA = {
   },
   "power_anker_anker_737_power_bank_24000mah_cha": {
     "id": "power_anker_anker_737_power_bank_24000mah_cha",
-    "slug": "anker-737-power-bank-24000mah-charge-ultra-rapide-oeen",
+    "slug": "anker-737-power-bank-24000mah-charge-ultra-rapide-e205cf",
     "title": "Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#3)",
     "brand": "Anker",
     "category": "electronics",
@@ -16252,7 +16252,7 @@ window.PRODUCTS_DATA = {
   },
   "power_baseus_baseus_gan5_pro_chargeur_secteur": {
     "id": "power_baseus_baseus_gan5_pro_chargeur_secteur",
-    "slug": "baseus-gan5-pro-chargeur-secteur-100w-4-ports-2x-usb-c-xk60",
+    "slug": "baseus-gan5-pro-chargeur-secteur-100w-4-ports-2x-usb-c-2x-e58d58",
     "title": "Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#4)",
     "brand": "Baseus",
     "category": "electronics",
@@ -16302,7 +16302,7 @@ window.PRODUCTS_DATA = {
   },
   "power_sony_manette_sans_fil_sony_dualsense_pl": {
     "id": "power_sony_manette_sans_fil_sony_dualsense_pl",
-    "slug": "manette-sans-fil-sony-dualsense-playstation-5-blanc-noir-cgpd",
+    "slug": "manette-sans-fil-sony-dualsense-playstation-5-blanc-noir-792bd9",
     "title": "Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#5)",
     "brand": "Sony",
     "category": "electronics",
@@ -16352,7 +16352,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_oraimo_smart_shaver_rasoir_elect": {
     "id": "power_oraimo_oraimo_smart_shaver_rasoir_elect",
-    "slug": "oraimo-smart-shaver-rasoir-electrique-3-tetes-flottantes-9uwi",
+    "slug": "oraimo-smart-shaver-rasoir-electrique-3-tetes-flottantes-3d-f91bbc",
     "title": "Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#6)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -16402,7 +16402,7 @@ window.PRODUCTS_DATA = {
   },
   "power_ordro_ordro_ep7_camera_frontale_pov_4k_": {
     "id": "power_ordro_ordro_ep7_camera_frontale_pov_4k_",
-    "slug": "ordro-ep7-camera-frontale-pov-4k-60fps-vlog-youtube-uzn1",
+    "slug": "ordro-ep7-camera-frontale-pov-4k-60fps-vlog-youtube-30f0f7",
     "title": "Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#7)",
     "brand": "Ordro",
     "category": "electronics",
@@ -16452,7 +16452,7 @@ window.PRODUCTS_DATA = {
   },
   "power_apple_apple_airtag_pack_de_4_balises_de": {
     "id": "power_apple_apple_airtag_pack_de_4_balises_de",
-    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-vumg",
+    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-3a7453",
     "title": "Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#8)",
     "brand": "Apple",
     "category": "electronics",
@@ -16502,7 +16502,7 @@ window.PRODUCTS_DATA = {
   },
   "power_motorola_montre_connectee_moto_360_3eme": {
     "id": "power_motorola_montre_connectee_moto_360_3eme",
-    "slug": "montre-connectee-moto-360-3eme-generation-ecran-amoled-ya0k",
+    "slug": "montre-connectee-moto-360-3eme-generation-ecran-amoled-metal-5b9939",
     "title": "Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#9)",
     "brand": "Motorola",
     "category": "electronics",
@@ -16552,7 +16552,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_cable_de_charge_ultra_rapide_ora": {
     "id": "power_oraimo_cable_de_charge_ultra_rapide_ora",
-    "slug": "cable-de-charge-ultra-rapide-oraimo-3a-tresse-nylon-4g82",
+    "slug": "cable-de-charge-ultra-rapide-oraimo-3a-tresse-nylon-eac6f4",
     "title": "Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#10)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -16602,7 +16602,7 @@ window.PRODUCTS_DATA = {
   },
   "power_dji_dji_osmo_pocket_3_creator_combo_cam_2": {
     "id": "power_dji_dji_osmo_pocket_3_creator_combo_cam_2",
-    "slug": "dji-osmo-pocket-3-creator-combo-camera-4k-120fps-capteur-2vr8",
+    "slug": "dji-osmo-pocket-3-creator-combo-camera-4k-120fps-capteur-1-a6e570",
     "title": "DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#11)",
     "brand": "DJI",
     "category": "electronics",
@@ -16652,7 +16652,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_oraimo_powerbank_30000mah_avec_4_2": {
     "id": "power_oraimo_oraimo_powerbank_30000mah_avec_4_2",
-    "slug": "oraimo-powerbank-30000mah-avec-4-cables-integres-et-n27r",
+    "slug": "oraimo-powerbank-30000mah-avec-4-cables-integres-et-lampe-5a2a6e",
     "title": "Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#12)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -16702,7 +16702,7 @@ window.PRODUCTS_DATA = {
   },
   "power_anker_anker_737_power_bank_24000mah_cha_2": {
     "id": "power_anker_anker_737_power_bank_24000mah_cha_2",
-    "slug": "anker-737-power-bank-24000mah-charge-ultra-rapide-4c77",
+    "slug": "anker-737-power-bank-24000mah-charge-ultra-rapide-4d4c9a",
     "title": "Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#13)",
     "brand": "Anker",
     "category": "electronics",
@@ -16752,7 +16752,7 @@ window.PRODUCTS_DATA = {
   },
   "power_baseus_baseus_gan5_pro_chargeur_secteur_2": {
     "id": "power_baseus_baseus_gan5_pro_chargeur_secteur_2",
-    "slug": "baseus-gan5-pro-chargeur-secteur-100w-4-ports-2x-usb-c-mao4",
+    "slug": "baseus-gan5-pro-chargeur-secteur-100w-4-ports-2x-usb-c-2x-3351df",
     "title": "Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#14)",
     "brand": "Baseus",
     "category": "electronics",
@@ -16802,7 +16802,7 @@ window.PRODUCTS_DATA = {
   },
   "power_sony_manette_sans_fil_sony_dualsense_pl_2": {
     "id": "power_sony_manette_sans_fil_sony_dualsense_pl_2",
-    "slug": "manette-sans-fil-sony-dualsense-playstation-5-blanc-noir-embr",
+    "slug": "manette-sans-fil-sony-dualsense-playstation-5-blanc-noir-ed1ba8",
     "title": "Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#15)",
     "brand": "Sony",
     "category": "electronics",
@@ -16852,7 +16852,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_oraimo_smart_shaver_rasoir_elect_2": {
     "id": "power_oraimo_oraimo_smart_shaver_rasoir_elect_2",
-    "slug": "oraimo-smart-shaver-rasoir-electrique-3-tetes-flottantes-lzyd",
+    "slug": "oraimo-smart-shaver-rasoir-electrique-3-tetes-flottantes-3d-02dd45",
     "title": "Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#16)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -16902,7 +16902,7 @@ window.PRODUCTS_DATA = {
   },
   "power_ordro_ordro_ep7_camera_frontale_pov_4k__2": {
     "id": "power_ordro_ordro_ep7_camera_frontale_pov_4k__2",
-    "slug": "ordro-ep7-camera-frontale-pov-4k-60fps-vlog-youtube-1nph",
+    "slug": "ordro-ep7-camera-frontale-pov-4k-60fps-vlog-youtube-fa9655",
     "title": "Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#17)",
     "brand": "Ordro",
     "category": "electronics",
@@ -16952,7 +16952,7 @@ window.PRODUCTS_DATA = {
   },
   "power_apple_apple_airtag_pack_de_4_balises_de_2": {
     "id": "power_apple_apple_airtag_pack_de_4_balises_de_2",
-    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-eakr",
+    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-e1cb5c",
     "title": "Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#18)",
     "brand": "Apple",
     "category": "electronics",
@@ -17002,7 +17002,7 @@ window.PRODUCTS_DATA = {
   },
   "power_motorola_montre_connectee_moto_360_3eme_2": {
     "id": "power_motorola_montre_connectee_moto_360_3eme_2",
-    "slug": "montre-connectee-moto-360-3eme-generation-ecran-amoled-uay2",
+    "slug": "montre-connectee-moto-360-3eme-generation-ecran-amoled-metal-27a0fd",
     "title": "Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#19)",
     "brand": "Motorola",
     "category": "electronics",
@@ -17052,7 +17052,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_cable_de_charge_ultra_rapide_ora_2": {
     "id": "power_oraimo_cable_de_charge_ultra_rapide_ora_2",
-    "slug": "cable-de-charge-ultra-rapide-oraimo-3a-tresse-nylon-mqu0",
+    "slug": "cable-de-charge-ultra-rapide-oraimo-3a-tresse-nylon-c76358",
     "title": "Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#20)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -17102,7 +17102,7 @@ window.PRODUCTS_DATA = {
   },
   "power_dji_dji_osmo_pocket_3_creator_combo_cam_3": {
     "id": "power_dji_dji_osmo_pocket_3_creator_combo_cam_3",
-    "slug": "dji-osmo-pocket-3-creator-combo-camera-4k-120fps-capteur-rete",
+    "slug": "dji-osmo-pocket-3-creator-combo-camera-4k-120fps-capteur-1-3d0b84",
     "title": "DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#21)",
     "brand": "DJI",
     "category": "electronics",
@@ -17152,7 +17152,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_oraimo_powerbank_30000mah_avec_4_3": {
     "id": "power_oraimo_oraimo_powerbank_30000mah_avec_4_3",
-    "slug": "oraimo-powerbank-30000mah-avec-4-cables-integres-et-hwpw",
+    "slug": "oraimo-powerbank-30000mah-avec-4-cables-integres-et-lampe-fea30e",
     "title": "Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#22)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -17202,7 +17202,7 @@ window.PRODUCTS_DATA = {
   },
   "power_anker_anker_737_power_bank_24000mah_cha_3": {
     "id": "power_anker_anker_737_power_bank_24000mah_cha_3",
-    "slug": "anker-737-power-bank-24000mah-charge-ultra-rapide-cqst",
+    "slug": "anker-737-power-bank-24000mah-charge-ultra-rapide-fd8576",
     "title": "Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#23)",
     "brand": "Anker",
     "category": "electronics",
@@ -17252,7 +17252,7 @@ window.PRODUCTS_DATA = {
   },
   "power_baseus_baseus_gan5_pro_chargeur_secteur_3": {
     "id": "power_baseus_baseus_gan5_pro_chargeur_secteur_3",
-    "slug": "baseus-gan5-pro-chargeur-secteur-100w-4-ports-2x-usb-c-7kkb",
+    "slug": "baseus-gan5-pro-chargeur-secteur-100w-4-ports-2x-usb-c-2x-d82a32",
     "title": "Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#24)",
     "brand": "Baseus",
     "category": "electronics",
@@ -17302,7 +17302,7 @@ window.PRODUCTS_DATA = {
   },
   "power_sony_manette_sans_fil_sony_dualsense_pl_3": {
     "id": "power_sony_manette_sans_fil_sony_dualsense_pl_3",
-    "slug": "manette-sans-fil-sony-dualsense-playstation-5-blanc-noir-lizm",
+    "slug": "manette-sans-fil-sony-dualsense-playstation-5-blanc-noir-879cdd",
     "title": "Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#25)",
     "brand": "Sony",
     "category": "electronics",
@@ -17352,7 +17352,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_oraimo_smart_shaver_rasoir_elect_3": {
     "id": "power_oraimo_oraimo_smart_shaver_rasoir_elect_3",
-    "slug": "oraimo-smart-shaver-rasoir-electrique-3-tetes-flottantes-z87i",
+    "slug": "oraimo-smart-shaver-rasoir-electrique-3-tetes-flottantes-3d-3fab6f",
     "title": "Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#26)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -17402,7 +17402,7 @@ window.PRODUCTS_DATA = {
   },
   "power_ordro_ordro_ep7_camera_frontale_pov_4k__3": {
     "id": "power_ordro_ordro_ep7_camera_frontale_pov_4k__3",
-    "slug": "ordro-ep7-camera-frontale-pov-4k-60fps-vlog-youtube-gv7q",
+    "slug": "ordro-ep7-camera-frontale-pov-4k-60fps-vlog-youtube-ab70b2",
     "title": "Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#27)",
     "brand": "Ordro",
     "category": "electronics",
@@ -17452,7 +17452,7 @@ window.PRODUCTS_DATA = {
   },
   "power_apple_apple_airtag_pack_de_4_balises_de_3": {
     "id": "power_apple_apple_airtag_pack_de_4_balises_de_3",
-    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-2gej",
+    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-e891b2",
     "title": "Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#28)",
     "brand": "Apple",
     "category": "electronics",
@@ -17502,7 +17502,7 @@ window.PRODUCTS_DATA = {
   },
   "power_motorola_montre_connectee_moto_360_3eme_3": {
     "id": "power_motorola_montre_connectee_moto_360_3eme_3",
-    "slug": "montre-connectee-moto-360-3eme-generation-ecran-amoled-6qfb",
+    "slug": "montre-connectee-moto-360-3eme-generation-ecran-amoled-metal-3b62bc",
     "title": "Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#29)",
     "brand": "Motorola",
     "category": "electronics",
@@ -17552,7 +17552,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_cable_de_charge_ultra_rapide_ora_3": {
     "id": "power_oraimo_cable_de_charge_ultra_rapide_ora_3",
-    "slug": "cable-de-charge-ultra-rapide-oraimo-3a-tresse-nylon-drlh",
+    "slug": "cable-de-charge-ultra-rapide-oraimo-3a-tresse-nylon-7b7a3d",
     "title": "Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#30)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -17602,7 +17602,7 @@ window.PRODUCTS_DATA = {
   },
   "power_dji_dji_osmo_pocket_3_creator_combo_cam_4": {
     "id": "power_dji_dji_osmo_pocket_3_creator_combo_cam_4",
-    "slug": "dji-osmo-pocket-3-creator-combo-camera-4k-120fps-capteur-qzt2",
+    "slug": "dji-osmo-pocket-3-creator-combo-camera-4k-120fps-capteur-1-7a69bd",
     "title": "DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#31)",
     "brand": "DJI",
     "category": "electronics",
@@ -17652,7 +17652,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_oraimo_powerbank_30000mah_avec_4_4": {
     "id": "power_oraimo_oraimo_powerbank_30000mah_avec_4_4",
-    "slug": "oraimo-powerbank-30000mah-avec-4-cables-integres-et-oaxm",
+    "slug": "oraimo-powerbank-30000mah-avec-4-cables-integres-et-lampe-726583",
     "title": "Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#32)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -17702,7 +17702,7 @@ window.PRODUCTS_DATA = {
   },
   "power_anker_anker_737_power_bank_24000mah_cha_4": {
     "id": "power_anker_anker_737_power_bank_24000mah_cha_4",
-    "slug": "anker-737-power-bank-24000mah-charge-ultra-rapide-t17y",
+    "slug": "anker-737-power-bank-24000mah-charge-ultra-rapide-fe77b8",
     "title": "Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#33)",
     "brand": "Anker",
     "category": "electronics",
@@ -17752,7 +17752,7 @@ window.PRODUCTS_DATA = {
   },
   "power_baseus_baseus_gan5_pro_chargeur_secteur_4": {
     "id": "power_baseus_baseus_gan5_pro_chargeur_secteur_4",
-    "slug": "baseus-gan5-pro-chargeur-secteur-100w-4-ports-2x-usb-c-0mct",
+    "slug": "baseus-gan5-pro-chargeur-secteur-100w-4-ports-2x-usb-c-2x-b0e6b8",
     "title": "Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#34)",
     "brand": "Baseus",
     "category": "electronics",
@@ -17802,7 +17802,7 @@ window.PRODUCTS_DATA = {
   },
   "power_sony_manette_sans_fil_sony_dualsense_pl_4": {
     "id": "power_sony_manette_sans_fil_sony_dualsense_pl_4",
-    "slug": "manette-sans-fil-sony-dualsense-playstation-5-blanc-noir-v7ls",
+    "slug": "manette-sans-fil-sony-dualsense-playstation-5-blanc-noir-0c6693",
     "title": "Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#35)",
     "brand": "Sony",
     "category": "electronics",
@@ -17852,7 +17852,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_oraimo_smart_shaver_rasoir_elect_4": {
     "id": "power_oraimo_oraimo_smart_shaver_rasoir_elect_4",
-    "slug": "oraimo-smart-shaver-rasoir-electrique-3-tetes-flottantes-90k0",
+    "slug": "oraimo-smart-shaver-rasoir-electrique-3-tetes-flottantes-3d-07d579",
     "title": "Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#36)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -17902,7 +17902,7 @@ window.PRODUCTS_DATA = {
   },
   "power_ordro_ordro_ep7_camera_frontale_pov_4k__4": {
     "id": "power_ordro_ordro_ep7_camera_frontale_pov_4k__4",
-    "slug": "ordro-ep7-camera-frontale-pov-4k-60fps-vlog-youtube-x899",
+    "slug": "ordro-ep7-camera-frontale-pov-4k-60fps-vlog-youtube-6a4fed",
     "title": "Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#37)",
     "brand": "Ordro",
     "category": "electronics",
@@ -17952,7 +17952,7 @@ window.PRODUCTS_DATA = {
   },
   "power_apple_apple_airtag_pack_de_4_balises_de_4": {
     "id": "power_apple_apple_airtag_pack_de_4_balises_de_4",
-    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-wsid",
+    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-833d36",
     "title": "Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#38)",
     "brand": "Apple",
     "category": "electronics",
@@ -18002,7 +18002,7 @@ window.PRODUCTS_DATA = {
   },
   "power_motorola_montre_connectee_moto_360_3eme_4": {
     "id": "power_motorola_montre_connectee_moto_360_3eme_4",
-    "slug": "montre-connectee-moto-360-3eme-generation-ecran-amoled-d9cs",
+    "slug": "montre-connectee-moto-360-3eme-generation-ecran-amoled-metal-ab213d",
     "title": "Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#39)",
     "brand": "Motorola",
     "category": "electronics",
@@ -18052,7 +18052,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_cable_de_charge_ultra_rapide_ora_4": {
     "id": "power_oraimo_cable_de_charge_ultra_rapide_ora_4",
-    "slug": "cable-de-charge-ultra-rapide-oraimo-3a-tresse-nylon-70fl",
+    "slug": "cable-de-charge-ultra-rapide-oraimo-3a-tresse-nylon-7158e9",
     "title": "Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#40)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -18102,7 +18102,7 @@ window.PRODUCTS_DATA = {
   },
   "power_dji_dji_osmo_pocket_3_creator_combo_cam_5": {
     "id": "power_dji_dji_osmo_pocket_3_creator_combo_cam_5",
-    "slug": "dji-osmo-pocket-3-creator-combo-camera-4k-120fps-capteur-gagw",
+    "slug": "dji-osmo-pocket-3-creator-combo-camera-4k-120fps-capteur-1-0ddc63",
     "title": "DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#41)",
     "brand": "DJI",
     "category": "electronics",
@@ -18152,7 +18152,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_oraimo_powerbank_30000mah_avec_4_5": {
     "id": "power_oraimo_oraimo_powerbank_30000mah_avec_4_5",
-    "slug": "oraimo-powerbank-30000mah-avec-4-cables-integres-et-0eou",
+    "slug": "oraimo-powerbank-30000mah-avec-4-cables-integres-et-lampe-b14d15",
     "title": "Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#42)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -18202,7 +18202,7 @@ window.PRODUCTS_DATA = {
   },
   "power_anker_anker_737_power_bank_24000mah_cha_5": {
     "id": "power_anker_anker_737_power_bank_24000mah_cha_5",
-    "slug": "anker-737-power-bank-24000mah-charge-ultra-rapide-tjpu",
+    "slug": "anker-737-power-bank-24000mah-charge-ultra-rapide-96c08a",
     "title": "Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#43)",
     "brand": "Anker",
     "category": "electronics",
@@ -18252,7 +18252,7 @@ window.PRODUCTS_DATA = {
   },
   "power_baseus_baseus_gan5_pro_chargeur_secteur_5": {
     "id": "power_baseus_baseus_gan5_pro_chargeur_secteur_5",
-    "slug": "baseus-gan5-pro-chargeur-secteur-100w-4-ports-2x-usb-c-7b7u",
+    "slug": "baseus-gan5-pro-chargeur-secteur-100w-4-ports-2x-usb-c-2x-a3e7b9",
     "title": "Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#44)",
     "brand": "Baseus",
     "category": "electronics",
@@ -18302,7 +18302,7 @@ window.PRODUCTS_DATA = {
   },
   "power_sony_manette_sans_fil_sony_dualsense_pl_5": {
     "id": "power_sony_manette_sans_fil_sony_dualsense_pl_5",
-    "slug": "manette-sans-fil-sony-dualsense-playstation-5-blanc-noir-ys3x",
+    "slug": "manette-sans-fil-sony-dualsense-playstation-5-blanc-noir-da0ae3",
     "title": "Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#45)",
     "brand": "Sony",
     "category": "electronics",
@@ -18352,7 +18352,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_oraimo_smart_shaver_rasoir_elect_5": {
     "id": "power_oraimo_oraimo_smart_shaver_rasoir_elect_5",
-    "slug": "oraimo-smart-shaver-rasoir-electrique-3-tetes-flottantes-0nrd",
+    "slug": "oraimo-smart-shaver-rasoir-electrique-3-tetes-flottantes-3d-da8c5f",
     "title": "Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#46)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -18402,7 +18402,7 @@ window.PRODUCTS_DATA = {
   },
   "power_ordro_ordro_ep7_camera_frontale_pov_4k__5": {
     "id": "power_ordro_ordro_ep7_camera_frontale_pov_4k__5",
-    "slug": "ordro-ep7-camera-frontale-pov-4k-60fps-vlog-youtube-4hlj",
+    "slug": "ordro-ep7-camera-frontale-pov-4k-60fps-vlog-youtube-4a98bb",
     "title": "Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#47)",
     "brand": "Ordro",
     "category": "electronics",
@@ -18452,7 +18452,7 @@ window.PRODUCTS_DATA = {
   },
   "power_apple_apple_airtag_pack_de_4_balises_de_5": {
     "id": "power_apple_apple_airtag_pack_de_4_balises_de_5",
-    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-laej",
+    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-793221",
     "title": "Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#48)",
     "brand": "Apple",
     "category": "electronics",
@@ -18502,7 +18502,7 @@ window.PRODUCTS_DATA = {
   },
   "power_motorola_montre_connectee_moto_360_3eme_5": {
     "id": "power_motorola_montre_connectee_moto_360_3eme_5",
-    "slug": "montre-connectee-moto-360-3eme-generation-ecran-amoled-ik1g",
+    "slug": "montre-connectee-moto-360-3eme-generation-ecran-amoled-metal-ee9ee4",
     "title": "Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#49)",
     "brand": "Motorola",
     "category": "electronics",
@@ -18552,7 +18552,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_cable_de_charge_ultra_rapide_ora_5": {
     "id": "power_oraimo_cable_de_charge_ultra_rapide_ora_5",
-    "slug": "cable-de-charge-ultra-rapide-oraimo-3a-tresse-nylon-i59u",
+    "slug": "cable-de-charge-ultra-rapide-oraimo-3a-tresse-nylon-5d27cd",
     "title": "Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#50)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -18602,7 +18602,7 @@ window.PRODUCTS_DATA = {
   },
   "power_dji_dji_osmo_pocket_3_creator_combo_cam_6": {
     "id": "power_dji_dji_osmo_pocket_3_creator_combo_cam_6",
-    "slug": "dji-osmo-pocket-3-creator-combo-camera-4k-120fps-capteur-zq51",
+    "slug": "dji-osmo-pocket-3-creator-combo-camera-4k-120fps-capteur-1-e1f43f",
     "title": "DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#51)",
     "brand": "DJI",
     "category": "electronics",
@@ -18652,7 +18652,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_oraimo_powerbank_30000mah_avec_4_6": {
     "id": "power_oraimo_oraimo_powerbank_30000mah_avec_4_6",
-    "slug": "oraimo-powerbank-30000mah-avec-4-cables-integres-et-vmw3",
+    "slug": "oraimo-powerbank-30000mah-avec-4-cables-integres-et-lampe-83efca",
     "title": "Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#52)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -18702,7 +18702,7 @@ window.PRODUCTS_DATA = {
   },
   "power_anker_anker_737_power_bank_24000mah_cha_6": {
     "id": "power_anker_anker_737_power_bank_24000mah_cha_6",
-    "slug": "anker-737-power-bank-24000mah-charge-ultra-rapide-brz2",
+    "slug": "anker-737-power-bank-24000mah-charge-ultra-rapide-2b61b3",
     "title": "Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#53)",
     "brand": "Anker",
     "category": "electronics",
@@ -18752,7 +18752,7 @@ window.PRODUCTS_DATA = {
   },
   "power_baseus_baseus_gan5_pro_chargeur_secteur_6": {
     "id": "power_baseus_baseus_gan5_pro_chargeur_secteur_6",
-    "slug": "baseus-gan5-pro-chargeur-secteur-100w-4-ports-2x-usb-c-49qt",
+    "slug": "baseus-gan5-pro-chargeur-secteur-100w-4-ports-2x-usb-c-2x-e5df02",
     "title": "Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#54)",
     "brand": "Baseus",
     "category": "electronics",
@@ -18802,7 +18802,7 @@ window.PRODUCTS_DATA = {
   },
   "power_sony_manette_sans_fil_sony_dualsense_pl_6": {
     "id": "power_sony_manette_sans_fil_sony_dualsense_pl_6",
-    "slug": "manette-sans-fil-sony-dualsense-playstation-5-blanc-noir-t7v8",
+    "slug": "manette-sans-fil-sony-dualsense-playstation-5-blanc-noir-f94326",
     "title": "Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#55)",
     "brand": "Sony",
     "category": "electronics",
@@ -18852,7 +18852,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_oraimo_smart_shaver_rasoir_elect_6": {
     "id": "power_oraimo_oraimo_smart_shaver_rasoir_elect_6",
-    "slug": "oraimo-smart-shaver-rasoir-electrique-3-tetes-flottantes-hkw2",
+    "slug": "oraimo-smart-shaver-rasoir-electrique-3-tetes-flottantes-3d-1592bb",
     "title": "Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#56)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -18902,7 +18902,7 @@ window.PRODUCTS_DATA = {
   },
   "power_ordro_ordro_ep7_camera_frontale_pov_4k__6": {
     "id": "power_ordro_ordro_ep7_camera_frontale_pov_4k__6",
-    "slug": "ordro-ep7-camera-frontale-pov-4k-60fps-vlog-youtube-njyh",
+    "slug": "ordro-ep7-camera-frontale-pov-4k-60fps-vlog-youtube-219a73",
     "title": "Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#57)",
     "brand": "Ordro",
     "category": "electronics",
@@ -18952,7 +18952,7 @@ window.PRODUCTS_DATA = {
   },
   "power_apple_apple_airtag_pack_de_4_balises_de_6": {
     "id": "power_apple_apple_airtag_pack_de_4_balises_de_6",
-    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-pl0u",
+    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-ef0a69",
     "title": "Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#58)",
     "brand": "Apple",
     "category": "electronics",
@@ -19002,7 +19002,7 @@ window.PRODUCTS_DATA = {
   },
   "power_motorola_montre_connectee_moto_360_3eme_6": {
     "id": "power_motorola_montre_connectee_moto_360_3eme_6",
-    "slug": "montre-connectee-moto-360-3eme-generation-ecran-amoled-fm8x",
+    "slug": "montre-connectee-moto-360-3eme-generation-ecran-amoled-metal-48ecf6",
     "title": "Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#59)",
     "brand": "Motorola",
     "category": "electronics",
@@ -19052,7 +19052,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_cable_de_charge_ultra_rapide_ora_6": {
     "id": "power_oraimo_cable_de_charge_ultra_rapide_ora_6",
-    "slug": "cable-de-charge-ultra-rapide-oraimo-3a-tresse-nylon-4w3t",
+    "slug": "cable-de-charge-ultra-rapide-oraimo-3a-tresse-nylon-8bdf10",
     "title": "Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#60)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -19102,7 +19102,7 @@ window.PRODUCTS_DATA = {
   },
   "power_dji_dji_osmo_pocket_3_creator_combo_cam_7": {
     "id": "power_dji_dji_osmo_pocket_3_creator_combo_cam_7",
-    "slug": "dji-osmo-pocket-3-creator-combo-camera-4k-120fps-capteur-e35n",
+    "slug": "dji-osmo-pocket-3-creator-combo-camera-4k-120fps-capteur-1-18c45e",
     "title": "DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#61)",
     "brand": "DJI",
     "category": "electronics",
@@ -19152,7 +19152,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_oraimo_powerbank_30000mah_avec_4_7": {
     "id": "power_oraimo_oraimo_powerbank_30000mah_avec_4_7",
-    "slug": "oraimo-powerbank-30000mah-avec-4-cables-integres-et-m7j6",
+    "slug": "oraimo-powerbank-30000mah-avec-4-cables-integres-et-lampe-7f1ae4",
     "title": "Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#62)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -19202,7 +19202,7 @@ window.PRODUCTS_DATA = {
   },
   "power_anker_anker_737_power_bank_24000mah_cha_7": {
     "id": "power_anker_anker_737_power_bank_24000mah_cha_7",
-    "slug": "anker-737-power-bank-24000mah-charge-ultra-rapide-sy9l",
+    "slug": "anker-737-power-bank-24000mah-charge-ultra-rapide-3bf2b2",
     "title": "Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#63)",
     "brand": "Anker",
     "category": "electronics",
@@ -19252,7 +19252,7 @@ window.PRODUCTS_DATA = {
   },
   "power_baseus_baseus_gan5_pro_chargeur_secteur_7": {
     "id": "power_baseus_baseus_gan5_pro_chargeur_secteur_7",
-    "slug": "baseus-gan5-pro-chargeur-secteur-100w-4-ports-2x-usb-c-4obp",
+    "slug": "baseus-gan5-pro-chargeur-secteur-100w-4-ports-2x-usb-c-2x-83a957",
     "title": "Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#64)",
     "brand": "Baseus",
     "category": "electronics",
@@ -19302,7 +19302,7 @@ window.PRODUCTS_DATA = {
   },
   "power_sony_manette_sans_fil_sony_dualsense_pl_7": {
     "id": "power_sony_manette_sans_fil_sony_dualsense_pl_7",
-    "slug": "manette-sans-fil-sony-dualsense-playstation-5-blanc-noir-5stn",
+    "slug": "manette-sans-fil-sony-dualsense-playstation-5-blanc-noir-e7fa4e",
     "title": "Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#65)",
     "brand": "Sony",
     "category": "electronics",
@@ -19352,7 +19352,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_oraimo_smart_shaver_rasoir_elect_7": {
     "id": "power_oraimo_oraimo_smart_shaver_rasoir_elect_7",
-    "slug": "oraimo-smart-shaver-rasoir-electrique-3-tetes-flottantes-rzvj",
+    "slug": "oraimo-smart-shaver-rasoir-electrique-3-tetes-flottantes-3d-6f3404",
     "title": "Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#66)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -19402,7 +19402,7 @@ window.PRODUCTS_DATA = {
   },
   "power_ordro_ordro_ep7_camera_frontale_pov_4k__7": {
     "id": "power_ordro_ordro_ep7_camera_frontale_pov_4k__7",
-    "slug": "ordro-ep7-camera-frontale-pov-4k-60fps-vlog-youtube-otvw",
+    "slug": "ordro-ep7-camera-frontale-pov-4k-60fps-vlog-youtube-077a37",
     "title": "Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#67)",
     "brand": "Ordro",
     "category": "electronics",
@@ -19452,7 +19452,7 @@ window.PRODUCTS_DATA = {
   },
   "power_apple_apple_airtag_pack_de_4_balises_de_7": {
     "id": "power_apple_apple_airtag_pack_de_4_balises_de_7",
-    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-k7wz",
+    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-e38345",
     "title": "Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#68)",
     "brand": "Apple",
     "category": "electronics",
@@ -19502,7 +19502,7 @@ window.PRODUCTS_DATA = {
   },
   "power_motorola_montre_connectee_moto_360_3eme_7": {
     "id": "power_motorola_montre_connectee_moto_360_3eme_7",
-    "slug": "montre-connectee-moto-360-3eme-generation-ecran-amoled-c41h",
+    "slug": "montre-connectee-moto-360-3eme-generation-ecran-amoled-metal-8a16e2",
     "title": "Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#69)",
     "brand": "Motorola",
     "category": "electronics",
@@ -19552,7 +19552,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_cable_de_charge_ultra_rapide_ora_7": {
     "id": "power_oraimo_cable_de_charge_ultra_rapide_ora_7",
-    "slug": "cable-de-charge-ultra-rapide-oraimo-3a-tresse-nylon-9c6h",
+    "slug": "cable-de-charge-ultra-rapide-oraimo-3a-tresse-nylon-c50c55",
     "title": "Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#70)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -19602,7 +19602,7 @@ window.PRODUCTS_DATA = {
   },
   "power_dji_dji_osmo_pocket_3_creator_combo_cam_8": {
     "id": "power_dji_dji_osmo_pocket_3_creator_combo_cam_8",
-    "slug": "dji-osmo-pocket-3-creator-combo-camera-4k-120fps-capteur-jrkh",
+    "slug": "dji-osmo-pocket-3-creator-combo-camera-4k-120fps-capteur-1-736292",
     "title": "DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#71)",
     "brand": "DJI",
     "category": "electronics",
@@ -19652,7 +19652,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_oraimo_powerbank_30000mah_avec_4_8": {
     "id": "power_oraimo_oraimo_powerbank_30000mah_avec_4_8",
-    "slug": "oraimo-powerbank-30000mah-avec-4-cables-integres-et-7jk3",
+    "slug": "oraimo-powerbank-30000mah-avec-4-cables-integres-et-lampe-ba07e0",
     "title": "Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#72)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -19702,7 +19702,7 @@ window.PRODUCTS_DATA = {
   },
   "power_anker_anker_737_power_bank_24000mah_cha_8": {
     "id": "power_anker_anker_737_power_bank_24000mah_cha_8",
-    "slug": "anker-737-power-bank-24000mah-charge-ultra-rapide-4j50",
+    "slug": "anker-737-power-bank-24000mah-charge-ultra-rapide-437d1b",
     "title": "Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#73)",
     "brand": "Anker",
     "category": "electronics",
@@ -19752,7 +19752,7 @@ window.PRODUCTS_DATA = {
   },
   "power_baseus_baseus_gan5_pro_chargeur_secteur_8": {
     "id": "power_baseus_baseus_gan5_pro_chargeur_secteur_8",
-    "slug": "baseus-gan5-pro-chargeur-secteur-100w-4-ports-2x-usb-c-pe04",
+    "slug": "baseus-gan5-pro-chargeur-secteur-100w-4-ports-2x-usb-c-2x-3a22d7",
     "title": "Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#74)",
     "brand": "Baseus",
     "category": "electronics",
@@ -19802,7 +19802,7 @@ window.PRODUCTS_DATA = {
   },
   "power_sony_manette_sans_fil_sony_dualsense_pl_8": {
     "id": "power_sony_manette_sans_fil_sony_dualsense_pl_8",
-    "slug": "manette-sans-fil-sony-dualsense-playstation-5-blanc-noir-pujg",
+    "slug": "manette-sans-fil-sony-dualsense-playstation-5-blanc-noir-2b6bb7",
     "title": "Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#75)",
     "brand": "Sony",
     "category": "electronics",
@@ -19852,7 +19852,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_oraimo_smart_shaver_rasoir_elect_8": {
     "id": "power_oraimo_oraimo_smart_shaver_rasoir_elect_8",
-    "slug": "oraimo-smart-shaver-rasoir-electrique-3-tetes-flottantes-rvmv",
+    "slug": "oraimo-smart-shaver-rasoir-electrique-3-tetes-flottantes-3d-89eed9",
     "title": "Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#76)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -19902,7 +19902,7 @@ window.PRODUCTS_DATA = {
   },
   "power_ordro_ordro_ep7_camera_frontale_pov_4k__8": {
     "id": "power_ordro_ordro_ep7_camera_frontale_pov_4k__8",
-    "slug": "ordro-ep7-camera-frontale-pov-4k-60fps-vlog-youtube-67rx",
+    "slug": "ordro-ep7-camera-frontale-pov-4k-60fps-vlog-youtube-917b39",
     "title": "Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#77)",
     "brand": "Ordro",
     "category": "electronics",
@@ -19952,7 +19952,7 @@ window.PRODUCTS_DATA = {
   },
   "power_apple_apple_airtag_pack_de_4_balises_de_8": {
     "id": "power_apple_apple_airtag_pack_de_4_balises_de_8",
-    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-1k6m",
+    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-136d1e",
     "title": "Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#78)",
     "brand": "Apple",
     "category": "electronics",
@@ -20002,7 +20002,7 @@ window.PRODUCTS_DATA = {
   },
   "power_motorola_montre_connectee_moto_360_3eme_8": {
     "id": "power_motorola_montre_connectee_moto_360_3eme_8",
-    "slug": "montre-connectee-moto-360-3eme-generation-ecran-amoled-q4m5",
+    "slug": "montre-connectee-moto-360-3eme-generation-ecran-amoled-metal-b52d4a",
     "title": "Montre Connectée Moto 360 3ème Génération Écran AMOLED Métal (#79)",
     "brand": "Motorola",
     "category": "electronics",
@@ -20052,7 +20052,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_cable_de_charge_ultra_rapide_ora_8": {
     "id": "power_oraimo_cable_de_charge_ultra_rapide_ora_8",
-    "slug": "cable-de-charge-ultra-rapide-oraimo-3a-tresse-nylon-0m6j",
+    "slug": "cable-de-charge-ultra-rapide-oraimo-3a-tresse-nylon-bdd0d8",
     "title": "Câble de Charge Ultra-Rapide Oraimo 3A Tressé Nylon Résistant Type-C (#80)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -20102,7 +20102,7 @@ window.PRODUCTS_DATA = {
   },
   "power_dji_dji_osmo_pocket_3_creator_combo_cam_9": {
     "id": "power_dji_dji_osmo_pocket_3_creator_combo_cam_9",
-    "slug": "dji-osmo-pocket-3-creator-combo-camera-4k-120fps-capteur-6qbb",
+    "slug": "dji-osmo-pocket-3-creator-combo-camera-4k-120fps-capteur-1-977d53",
     "title": "DJI Osmo Pocket 3 Creator Combo Caméra 4K 120fps Capteur 1 Pouce (#81)",
     "brand": "DJI",
     "category": "electronics",
@@ -20152,7 +20152,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_oraimo_powerbank_30000mah_avec_4_9": {
     "id": "power_oraimo_oraimo_powerbank_30000mah_avec_4_9",
-    "slug": "oraimo-powerbank-30000mah-avec-4-cables-integres-et-w7gz",
+    "slug": "oraimo-powerbank-30000mah-avec-4-cables-integres-et-lampe-92dae7",
     "title": "Oraimo PowerBank 30000mAh avec 4 Câbles Intégrés et Lampe LED (#82)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -20202,7 +20202,7 @@ window.PRODUCTS_DATA = {
   },
   "power_anker_anker_737_power_bank_24000mah_cha_9": {
     "id": "power_anker_anker_737_power_bank_24000mah_cha_9",
-    "slug": "anker-737-power-bank-24000mah-charge-ultra-rapide-o27d",
+    "slug": "anker-737-power-bank-24000mah-charge-ultra-rapide-44be8f",
     "title": "Anker 737 Power Bank 24000mAh Charge Ultra-Rapide Bidirectionnelle 140W (#83)",
     "brand": "Anker",
     "category": "electronics",
@@ -20252,7 +20252,7 @@ window.PRODUCTS_DATA = {
   },
   "power_baseus_baseus_gan5_pro_chargeur_secteur_9": {
     "id": "power_baseus_baseus_gan5_pro_chargeur_secteur_9",
-    "slug": "baseus-gan5-pro-chargeur-secteur-100w-4-ports-2x-usb-c-llkh",
+    "slug": "baseus-gan5-pro-chargeur-secteur-100w-4-ports-2x-usb-c-2x-7c99bc",
     "title": "Baseus GaN5 Pro Chargeur Secteur 100W 4 Ports (2x USB-C + 2x USB-A) (#84)",
     "brand": "Baseus",
     "category": "electronics",
@@ -20302,7 +20302,7 @@ window.PRODUCTS_DATA = {
   },
   "power_sony_manette_sans_fil_sony_dualsense_pl_9": {
     "id": "power_sony_manette_sans_fil_sony_dualsense_pl_9",
-    "slug": "manette-sans-fil-sony-dualsense-playstation-5-blanc-noir-qpll",
+    "slug": "manette-sans-fil-sony-dualsense-playstation-5-blanc-noir-f05864",
     "title": "Manette Sans Fil Sony DualSense PlayStation 5 Blanc / Noir (#85)",
     "brand": "Sony",
     "category": "electronics",
@@ -20352,7 +20352,7 @@ window.PRODUCTS_DATA = {
   },
   "power_oraimo_oraimo_smart_shaver_rasoir_elect_9": {
     "id": "power_oraimo_oraimo_smart_shaver_rasoir_elect_9",
-    "slug": "oraimo-smart-shaver-rasoir-electrique-3-tetes-flottantes-9qhr",
+    "slug": "oraimo-smart-shaver-rasoir-electrique-3-tetes-flottantes-3d-740ed5",
     "title": "Oraimo Smart Shaver Rasoir Électrique 3 Têtes Flottantes 3D Étanche IPX7 (#86)",
     "brand": "Oraimo",
     "category": "electronics",
@@ -20402,7 +20402,7 @@ window.PRODUCTS_DATA = {
   },
   "power_ordro_ordro_ep7_camera_frontale_pov_4k__9": {
     "id": "power_ordro_ordro_ep7_camera_frontale_pov_4k__9",
-    "slug": "ordro-ep7-camera-frontale-pov-4k-60fps-vlog-youtube-oedd",
+    "slug": "ordro-ep7-camera-frontale-pov-4k-60fps-vlog-youtube-6b638e",
     "title": "Ordro EP7 Caméra Frontale POV 4K 60fps Vlog YouTube Mains-Libres (#87)",
     "brand": "Ordro",
     "category": "electronics",
@@ -20452,7 +20452,7 @@ window.PRODUCTS_DATA = {
   },
   "power_apple_apple_airtag_pack_de_4_balises_de_9": {
     "id": "power_apple_apple_airtag_pack_de_4_balises_de_9",
-    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-xqg9",
+    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-e78e0c",
     "title": "Apple AirTag Pack de 4 Balises de Localisation Précise Réseau Localiser (#88)",
     "brand": "Apple",
     "category": "electronics",
@@ -20502,7 +20502,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-119j",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-cf6fd4",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#1)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -20552,7 +20552,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-l7kk",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-64f909",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#2)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -20602,7 +20602,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-qsr6",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-36a2d5",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#3)",
     "brand": "Nike",
     "category": "fashion",
@@ -20652,7 +20652,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-eqxk",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-c1c26e",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#4)",
     "brand": "Nike",
     "category": "fashion",
@@ -20702,7 +20702,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket": {
     "id": "shoe_new_balance_new_balance_550_retro_basket",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-7gm8",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-ed96b4",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#5)",
     "brand": "New Balance",
     "category": "fashion",
@@ -20752,7 +20752,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_adidas_adidas_originals_samba_classic_cu": {
     "id": "shoe_adidas_adidas_originals_samba_classic_cu",
-    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-kyqt",
+    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-c179f8",
     "title": "Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#6)",
     "brand": "Adidas",
     "category": "fashion",
@@ -20802,7 +20802,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_timberland_timberland_bottes_6_inch_prem": {
     "id": "shoe_timberland_timberland_bottes_6_inch_prem",
-    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ih1h",
+    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ble-19c7c7",
     "title": "Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#7)",
     "brand": "Timberland",
     "category": "fashion",
@@ -20852,7 +20852,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_zara_luxe_sandales_a_talons_aiguilles_do": {
     "id": "shoe_zara_luxe_sandales_a_talons_aiguilles_do",
-    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-l3mj",
+    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-f7d690",
     "title": "Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#8)",
     "brand": "Zara Luxe",
     "category": "fashion",
@@ -20902,7 +20902,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_fashion_chic_sandales_plates_style_coree": {
     "id": "shoe_fashion_chic_sandales_plates_style_coree",
-    "slug": "sandales-plates-style-coreen-tressees-chic-dete-zj6q",
+    "slug": "sandales-plates-style-coreen-tressees-chic-dete-pointures-f05eab",
     "title": "Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#9)",
     "brand": "Fashion Chic",
     "category": "fashion",
@@ -20952,7 +20952,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_alexander_mcqueen_sneakers_basses_en_cui": {
     "id": "shoe_alexander_mcqueen_sneakers_basses_en_cui",
-    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-i2md",
+    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-82b296",
     "title": "Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#10)",
     "brand": "Alexander McQueen",
     "category": "fashion",
@@ -21002,7 +21002,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_2": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_2",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-p8zc",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-2a047c",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#11)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -21052,7 +21052,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni_2": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni_2",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-dohn",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-f6ea9f",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#12)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -21102,7 +21102,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl_2": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl_2",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-o5p8",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-ae437e",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#13)",
     "brand": "Nike",
     "category": "fashion",
@@ -21152,7 +21152,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu_2": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu_2",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-ef36",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-5e8bf3",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#14)",
     "brand": "Nike",
     "category": "fashion",
@@ -21202,7 +21202,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket_2": {
     "id": "shoe_new_balance_new_balance_550_retro_basket_2",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-e5yk",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-bd40b7",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#15)",
     "brand": "New Balance",
     "category": "fashion",
@@ -21252,7 +21252,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_adidas_adidas_originals_samba_classic_cu_2": {
     "id": "shoe_adidas_adidas_originals_samba_classic_cu_2",
-    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-ek89",
+    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-57d6ea",
     "title": "Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#16)",
     "brand": "Adidas",
     "category": "fashion",
@@ -21302,7 +21302,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_timberland_timberland_bottes_6_inch_prem_2": {
     "id": "shoe_timberland_timberland_bottes_6_inch_prem_2",
-    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-8vbu",
+    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ble-3595c7",
     "title": "Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#17)",
     "brand": "Timberland",
     "category": "fashion",
@@ -21352,7 +21352,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_zara_luxe_sandales_a_talons_aiguilles_do_2": {
     "id": "shoe_zara_luxe_sandales_a_talons_aiguilles_do_2",
-    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-rj0k",
+    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-59c719",
     "title": "Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#18)",
     "brand": "Zara Luxe",
     "category": "fashion",
@@ -21402,7 +21402,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_fashion_chic_sandales_plates_style_coree_2": {
     "id": "shoe_fashion_chic_sandales_plates_style_coree_2",
-    "slug": "sandales-plates-style-coreen-tressees-chic-dete-8gbh",
+    "slug": "sandales-plates-style-coreen-tressees-chic-dete-pointures-d51054",
     "title": "Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#19)",
     "brand": "Fashion Chic",
     "category": "fashion",
@@ -21452,7 +21452,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_alexander_mcqueen_sneakers_basses_en_cui_2": {
     "id": "shoe_alexander_mcqueen_sneakers_basses_en_cui_2",
-    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-iqlp",
+    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-bd90dc",
     "title": "Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#20)",
     "brand": "Alexander McQueen",
     "category": "fashion",
@@ -21502,7 +21502,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_3": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_3",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-c6fa",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-2c2f04",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#21)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -21552,7 +21552,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni_3": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni_3",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-8y0g",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-66d741",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#22)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -21602,7 +21602,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl_3": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl_3",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-s9kz",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-0db1a7",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#23)",
     "brand": "Nike",
     "category": "fashion",
@@ -21652,7 +21652,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu_3": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu_3",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-eaeu",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-71c49c",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#24)",
     "brand": "Nike",
     "category": "fashion",
@@ -21702,7 +21702,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket_3": {
     "id": "shoe_new_balance_new_balance_550_retro_basket_3",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-l9if",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-6c7b3e",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#25)",
     "brand": "New Balance",
     "category": "fashion",
@@ -21752,7 +21752,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_adidas_adidas_originals_samba_classic_cu_3": {
     "id": "shoe_adidas_adidas_originals_samba_classic_cu_3",
-    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-qai0",
+    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-c4cb84",
     "title": "Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#26)",
     "brand": "Adidas",
     "category": "fashion",
@@ -21802,7 +21802,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_timberland_timberland_bottes_6_inch_prem_3": {
     "id": "shoe_timberland_timberland_bottes_6_inch_prem_3",
-    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-fvrn",
+    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ble-ba0dd0",
     "title": "Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#27)",
     "brand": "Timberland",
     "category": "fashion",
@@ -21852,7 +21852,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_zara_luxe_sandales_a_talons_aiguilles_do_3": {
     "id": "shoe_zara_luxe_sandales_a_talons_aiguilles_do_3",
-    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-3pwx",
+    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-47b0f1",
     "title": "Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#28)",
     "brand": "Zara Luxe",
     "category": "fashion",
@@ -21902,7 +21902,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_fashion_chic_sandales_plates_style_coree_3": {
     "id": "shoe_fashion_chic_sandales_plates_style_coree_3",
-    "slug": "sandales-plates-style-coreen-tressees-chic-dete-5eax",
+    "slug": "sandales-plates-style-coreen-tressees-chic-dete-pointures-ea1439",
     "title": "Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#29)",
     "brand": "Fashion Chic",
     "category": "fashion",
@@ -21952,7 +21952,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_alexander_mcqueen_sneakers_basses_en_cui_3": {
     "id": "shoe_alexander_mcqueen_sneakers_basses_en_cui_3",
-    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-nbbh",
+    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-1a9842",
     "title": "Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#30)",
     "brand": "Alexander McQueen",
     "category": "fashion",
@@ -22002,7 +22002,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_4": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_4",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-8nty",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-67d757",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#31)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -22052,7 +22052,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni_4": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni_4",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-uaxs",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-7851e3",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#32)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -22102,7 +22102,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl_4": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl_4",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-d4cl",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-f235aa",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#33)",
     "brand": "Nike",
     "category": "fashion",
@@ -22152,7 +22152,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu_4": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu_4",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-m7e5",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-75b1c5",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#34)",
     "brand": "Nike",
     "category": "fashion",
@@ -22202,7 +22202,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket_4": {
     "id": "shoe_new_balance_new_balance_550_retro_basket_4",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-q3cq",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-f68cf1",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#35)",
     "brand": "New Balance",
     "category": "fashion",
@@ -22252,7 +22252,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_adidas_adidas_originals_samba_classic_cu_4": {
     "id": "shoe_adidas_adidas_originals_samba_classic_cu_4",
-    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-i0qv",
+    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-52f190",
     "title": "Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#36)",
     "brand": "Adidas",
     "category": "fashion",
@@ -22302,7 +22302,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_timberland_timberland_bottes_6_inch_prem_4": {
     "id": "shoe_timberland_timberland_bottes_6_inch_prem_4",
-    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-zufk",
+    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ble-b9355d",
     "title": "Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#37)",
     "brand": "Timberland",
     "category": "fashion",
@@ -22352,7 +22352,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_zara_luxe_sandales_a_talons_aiguilles_do_4": {
     "id": "shoe_zara_luxe_sandales_a_talons_aiguilles_do_4",
-    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-gxh0",
+    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-791566",
     "title": "Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#38)",
     "brand": "Zara Luxe",
     "category": "fashion",
@@ -22402,7 +22402,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_fashion_chic_sandales_plates_style_coree_4": {
     "id": "shoe_fashion_chic_sandales_plates_style_coree_4",
-    "slug": "sandales-plates-style-coreen-tressees-chic-dete-iymf",
+    "slug": "sandales-plates-style-coreen-tressees-chic-dete-pointures-62c399",
     "title": "Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#39)",
     "brand": "Fashion Chic",
     "category": "fashion",
@@ -22452,7 +22452,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_alexander_mcqueen_sneakers_basses_en_cui_4": {
     "id": "shoe_alexander_mcqueen_sneakers_basses_en_cui_4",
-    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-7hg7",
+    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-466673",
     "title": "Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#40)",
     "brand": "Alexander McQueen",
     "category": "fashion",
@@ -22502,7 +22502,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_5": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_5",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-toky",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-bc985c",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#41)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -22552,7 +22552,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni_5": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni_5",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-bzj7",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-842eb0",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#42)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -22602,7 +22602,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl_5": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl_5",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pb8m",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-167ee5",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#43)",
     "brand": "Nike",
     "category": "fashion",
@@ -22652,7 +22652,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu_5": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu_5",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-2ru7",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-3e4727",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#44)",
     "brand": "Nike",
     "category": "fashion",
@@ -22702,7 +22702,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket_5": {
     "id": "shoe_new_balance_new_balance_550_retro_basket_5",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-rjfg",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-291f75",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#45)",
     "brand": "New Balance",
     "category": "fashion",
@@ -22752,7 +22752,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_adidas_adidas_originals_samba_classic_cu_5": {
     "id": "shoe_adidas_adidas_originals_samba_classic_cu_5",
-    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-rov7",
+    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-4dc3be",
     "title": "Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#46)",
     "brand": "Adidas",
     "category": "fashion",
@@ -22802,7 +22802,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_timberland_timberland_bottes_6_inch_prem_5": {
     "id": "shoe_timberland_timberland_bottes_6_inch_prem_5",
-    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-3a7b",
+    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ble-cb09c2",
     "title": "Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#47)",
     "brand": "Timberland",
     "category": "fashion",
@@ -22852,7 +22852,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_zara_luxe_sandales_a_talons_aiguilles_do_5": {
     "id": "shoe_zara_luxe_sandales_a_talons_aiguilles_do_5",
-    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-y5xg",
+    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-e8f528",
     "title": "Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#48)",
     "brand": "Zara Luxe",
     "category": "fashion",
@@ -22902,7 +22902,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_fashion_chic_sandales_plates_style_coree_5": {
     "id": "shoe_fashion_chic_sandales_plates_style_coree_5",
-    "slug": "sandales-plates-style-coreen-tressees-chic-dete-n1dc",
+    "slug": "sandales-plates-style-coreen-tressees-chic-dete-pointures-b8ac1a",
     "title": "Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#49)",
     "brand": "Fashion Chic",
     "category": "fashion",
@@ -22952,7 +22952,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_alexander_mcqueen_sneakers_basses_en_cui_5": {
     "id": "shoe_alexander_mcqueen_sneakers_basses_en_cui_5",
-    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-buuj",
+    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-d92d89",
     "title": "Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#50)",
     "brand": "Alexander McQueen",
     "category": "fashion",
@@ -23002,7 +23002,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_6": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_6",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-0bvu",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-33f5a3",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#51)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -23052,7 +23052,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni_6": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni_6",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-li2g",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-727d25",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#52)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -23102,7 +23102,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl_6": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl_6",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-ovxi",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-aa5c7c",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#53)",
     "brand": "Nike",
     "category": "fashion",
@@ -23152,7 +23152,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu_6": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu_6",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-05r6",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-72ee19",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#54)",
     "brand": "Nike",
     "category": "fashion",
@@ -23202,7 +23202,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket_6": {
     "id": "shoe_new_balance_new_balance_550_retro_basket_6",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-9hto",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-8a4847",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#55)",
     "brand": "New Balance",
     "category": "fashion",
@@ -23252,7 +23252,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_adidas_adidas_originals_samba_classic_cu_6": {
     "id": "shoe_adidas_adidas_originals_samba_classic_cu_6",
-    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-fbtd",
+    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-5d0c2a",
     "title": "Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#56)",
     "brand": "Adidas",
     "category": "fashion",
@@ -23302,7 +23302,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_timberland_timberland_bottes_6_inch_prem_6": {
     "id": "shoe_timberland_timberland_bottes_6_inch_prem_6",
-    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-l3sa",
+    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ble-2e9c77",
     "title": "Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#57)",
     "brand": "Timberland",
     "category": "fashion",
@@ -23352,7 +23352,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_zara_luxe_sandales_a_talons_aiguilles_do_6": {
     "id": "shoe_zara_luxe_sandales_a_talons_aiguilles_do_6",
-    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-yqyo",
+    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-3fc4b9",
     "title": "Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#58)",
     "brand": "Zara Luxe",
     "category": "fashion",
@@ -23402,7 +23402,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_fashion_chic_sandales_plates_style_coree_6": {
     "id": "shoe_fashion_chic_sandales_plates_style_coree_6",
-    "slug": "sandales-plates-style-coreen-tressees-chic-dete-i7xz",
+    "slug": "sandales-plates-style-coreen-tressees-chic-dete-pointures-7748ff",
     "title": "Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#59)",
     "brand": "Fashion Chic",
     "category": "fashion",
@@ -23452,7 +23452,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_alexander_mcqueen_sneakers_basses_en_cui_6": {
     "id": "shoe_alexander_mcqueen_sneakers_basses_en_cui_6",
-    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-bs0f",
+    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-a3043e",
     "title": "Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#60)",
     "brand": "Alexander McQueen",
     "category": "fashion",
@@ -23502,7 +23502,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_7": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_7",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-1acf",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-2af3b7",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#61)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -23552,7 +23552,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni_7": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni_7",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-livj",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-8f858b",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#62)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -23602,7 +23602,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl_7": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl_7",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-se1n",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-0d4b3a",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#63)",
     "brand": "Nike",
     "category": "fashion",
@@ -23652,7 +23652,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu_7": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu_7",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-v13f",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-51fa89",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#64)",
     "brand": "Nike",
     "category": "fashion",
@@ -23702,7 +23702,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket_7": {
     "id": "shoe_new_balance_new_balance_550_retro_basket_7",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-y1nf",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-94f66b",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#65)",
     "brand": "New Balance",
     "category": "fashion",
@@ -23752,7 +23752,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_adidas_adidas_originals_samba_classic_cu_7": {
     "id": "shoe_adidas_adidas_originals_samba_classic_cu_7",
-    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-lfkf",
+    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-f1eeb2",
     "title": "Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#66)",
     "brand": "Adidas",
     "category": "fashion",
@@ -23802,7 +23802,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_timberland_timberland_bottes_6_inch_prem_7": {
     "id": "shoe_timberland_timberland_bottes_6_inch_prem_7",
-    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-v08y",
+    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ble-6b1b60",
     "title": "Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#67)",
     "brand": "Timberland",
     "category": "fashion",
@@ -23852,7 +23852,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_zara_luxe_sandales_a_talons_aiguilles_do_7": {
     "id": "shoe_zara_luxe_sandales_a_talons_aiguilles_do_7",
-    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-7kfh",
+    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-9ae54e",
     "title": "Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#68)",
     "brand": "Zara Luxe",
     "category": "fashion",
@@ -23902,7 +23902,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_fashion_chic_sandales_plates_style_coree_7": {
     "id": "shoe_fashion_chic_sandales_plates_style_coree_7",
-    "slug": "sandales-plates-style-coreen-tressees-chic-dete-3h98",
+    "slug": "sandales-plates-style-coreen-tressees-chic-dete-pointures-e2aa52",
     "title": "Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#69)",
     "brand": "Fashion Chic",
     "category": "fashion",
@@ -23952,7 +23952,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_alexander_mcqueen_sneakers_basses_en_cui_7": {
     "id": "shoe_alexander_mcqueen_sneakers_basses_en_cui_7",
-    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-hoh7",
+    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-a56f8a",
     "title": "Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#70)",
     "brand": "Alexander McQueen",
     "category": "fashion",
@@ -24002,7 +24002,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_8": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_8",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-cv1q",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-ee8136",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#71)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -24052,7 +24052,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni_8": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni_8",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-znsg",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-258a99",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#72)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -24102,7 +24102,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl_8": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl_8",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-zw9h",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-439370",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#73)",
     "brand": "Nike",
     "category": "fashion",
@@ -24152,7 +24152,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu_8": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu_8",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-wlk0",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-aa4859",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#74)",
     "brand": "Nike",
     "category": "fashion",
@@ -24202,7 +24202,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket_8": {
     "id": "shoe_new_balance_new_balance_550_retro_basket_8",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-jyyn",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-f5eecf",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#75)",
     "brand": "New Balance",
     "category": "fashion",
@@ -24252,7 +24252,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_adidas_adidas_originals_samba_classic_cu_8": {
     "id": "shoe_adidas_adidas_originals_samba_classic_cu_8",
-    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-v6ee",
+    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-d854a2",
     "title": "Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#76)",
     "brand": "Adidas",
     "category": "fashion",
@@ -24302,7 +24302,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_timberland_timberland_bottes_6_inch_prem_8": {
     "id": "shoe_timberland_timberland_bottes_6_inch_prem_8",
-    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-86sn",
+    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ble-28c4cb",
     "title": "Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#77)",
     "brand": "Timberland",
     "category": "fashion",
@@ -24352,7 +24352,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_zara_luxe_sandales_a_talons_aiguilles_do_8": {
     "id": "shoe_zara_luxe_sandales_a_talons_aiguilles_do_8",
-    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-l0fy",
+    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-8c1dcc",
     "title": "Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#78)",
     "brand": "Zara Luxe",
     "category": "fashion",
@@ -24402,7 +24402,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_fashion_chic_sandales_plates_style_coree_8": {
     "id": "shoe_fashion_chic_sandales_plates_style_coree_8",
-    "slug": "sandales-plates-style-coreen-tressees-chic-dete-tzcn",
+    "slug": "sandales-plates-style-coreen-tressees-chic-dete-pointures-b7e404",
     "title": "Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#79)",
     "brand": "Fashion Chic",
     "category": "fashion",
@@ -24452,7 +24452,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_alexander_mcqueen_sneakers_basses_en_cui_8": {
     "id": "shoe_alexander_mcqueen_sneakers_basses_en_cui_8",
-    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-dzzh",
+    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-de3082",
     "title": "Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#80)",
     "brand": "Alexander McQueen",
     "category": "fashion",
@@ -24502,7 +24502,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_9": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_9",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-ztdx",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-9c79d9",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#81)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -24552,7 +24552,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni_9": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni_9",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-jwu3",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-57c118",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#82)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -24602,7 +24602,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl_9": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl_9",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-ixnr",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-3fb976",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#83)",
     "brand": "Nike",
     "category": "fashion",
@@ -24652,7 +24652,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu_9": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu_9",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-xl7z",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-c65125",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#84)",
     "brand": "Nike",
     "category": "fashion",
@@ -24702,7 +24702,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket_9": {
     "id": "shoe_new_balance_new_balance_550_retro_basket_9",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-t4kv",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-f0c0a0",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#85)",
     "brand": "New Balance",
     "category": "fashion",
@@ -24752,7 +24752,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_adidas_adidas_originals_samba_classic_cu_9": {
     "id": "shoe_adidas_adidas_originals_samba_classic_cu_9",
-    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-248q",
+    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-f4fb70",
     "title": "Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#86)",
     "brand": "Adidas",
     "category": "fashion",
@@ -24802,7 +24802,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_timberland_timberland_bottes_6_inch_prem_9": {
     "id": "shoe_timberland_timberland_bottes_6_inch_prem_9",
-    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-7r0g",
+    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ble-1c5a7f",
     "title": "Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#87)",
     "brand": "Timberland",
     "category": "fashion",
@@ -24852,7 +24852,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_zara_luxe_sandales_a_talons_aiguilles_do_9": {
     "id": "shoe_zara_luxe_sandales_a_talons_aiguilles_do_9",
-    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-3ofk",
+    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-5c0395",
     "title": "Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#88)",
     "brand": "Zara Luxe",
     "category": "fashion",
@@ -24902,7 +24902,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_fashion_chic_sandales_plates_style_coree_9": {
     "id": "shoe_fashion_chic_sandales_plates_style_coree_9",
-    "slug": "sandales-plates-style-coreen-tressees-chic-dete-00gw",
+    "slug": "sandales-plates-style-coreen-tressees-chic-dete-pointures-daf26d",
     "title": "Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#89)",
     "brand": "Fashion Chic",
     "category": "fashion",
@@ -24952,7 +24952,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_alexander_mcqueen_sneakers_basses_en_cui_9": {
     "id": "shoe_alexander_mcqueen_sneakers_basses_en_cui_9",
-    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-8xz2",
+    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-569f5e",
     "title": "Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#90)",
     "brand": "Alexander McQueen",
     "category": "fashion",
@@ -25002,7 +25002,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_10": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_10",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-z5l6",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-aaca50",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#91)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -25052,7 +25052,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni_10": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni_10",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-1979",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-3e12d0",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#92)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -25102,7 +25102,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl_10": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl_10",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-i9iv",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-81324a",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#93)",
     "brand": "Nike",
     "category": "fashion",
@@ -25152,7 +25152,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu_10": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu_10",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-micx",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-5f451d",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#94)",
     "brand": "Nike",
     "category": "fashion",
@@ -25202,7 +25202,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket_10": {
     "id": "shoe_new_balance_new_balance_550_retro_basket_10",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-hj5r",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-e16726",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#95)",
     "brand": "New Balance",
     "category": "fashion",
@@ -25252,7 +25252,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_adidas_adidas_originals_samba_classic_cu_10": {
     "id": "shoe_adidas_adidas_originals_samba_classic_cu_10",
-    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-jqsa",
+    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-0c44c8",
     "title": "Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#96)",
     "brand": "Adidas",
     "category": "fashion",
@@ -25302,7 +25302,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_timberland_timberland_bottes_6_inch_prem_10": {
     "id": "shoe_timberland_timberland_bottes_6_inch_prem_10",
-    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-v30w",
+    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ble-fef953",
     "title": "Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#97)",
     "brand": "Timberland",
     "category": "fashion",
@@ -25352,7 +25352,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_zara_luxe_sandales_a_talons_aiguilles_do_10": {
     "id": "shoe_zara_luxe_sandales_a_talons_aiguilles_do_10",
-    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-k0cl",
+    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-375166",
     "title": "Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#98)",
     "brand": "Zara Luxe",
     "category": "fashion",
@@ -25402,7 +25402,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_fashion_chic_sandales_plates_style_coree_10": {
     "id": "shoe_fashion_chic_sandales_plates_style_coree_10",
-    "slug": "sandales-plates-style-coreen-tressees-chic-dete-qm5c",
+    "slug": "sandales-plates-style-coreen-tressees-chic-dete-pointures-fc0ee7",
     "title": "Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#99)",
     "brand": "Fashion Chic",
     "category": "fashion",
@@ -25452,7 +25452,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_alexander_mcqueen_sneakers_basses_en_cui_10": {
     "id": "shoe_alexander_mcqueen_sneakers_basses_en_cui_10",
-    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-qz4k",
+    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-2a38f9",
     "title": "Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#100)",
     "brand": "Alexander McQueen",
     "category": "fashion",
@@ -25502,7 +25502,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_11": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_11",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-c3g1",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-ee6709",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#101)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -25552,7 +25552,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni_11": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni_11",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-iw0z",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-9cd450",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#102)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -25602,7 +25602,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl_11": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl_11",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-zddc",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-af7f06",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#103)",
     "brand": "Nike",
     "category": "fashion",
@@ -25652,7 +25652,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu_11": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu_11",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-zkp5",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-e68f11",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#104)",
     "brand": "Nike",
     "category": "fashion",
@@ -25702,7 +25702,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket_11": {
     "id": "shoe_new_balance_new_balance_550_retro_basket_11",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-fitl",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-10dcb5",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#105)",
     "brand": "New Balance",
     "category": "fashion",
@@ -25752,7 +25752,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_adidas_adidas_originals_samba_classic_cu_11": {
     "id": "shoe_adidas_adidas_originals_samba_classic_cu_11",
-    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-auni",
+    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-1c0fd1",
     "title": "Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#106)",
     "brand": "Adidas",
     "category": "fashion",
@@ -25802,7 +25802,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_timberland_timberland_bottes_6_inch_prem_11": {
     "id": "shoe_timberland_timberland_bottes_6_inch_prem_11",
-    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-vrrc",
+    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ble-dbbc70",
     "title": "Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#107)",
     "brand": "Timberland",
     "category": "fashion",
@@ -25852,7 +25852,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_zara_luxe_sandales_a_talons_aiguilles_do_11": {
     "id": "shoe_zara_luxe_sandales_a_talons_aiguilles_do_11",
-    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-ktt8",
+    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-7ab23c",
     "title": "Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#108)",
     "brand": "Zara Luxe",
     "category": "fashion",
@@ -25902,7 +25902,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_fashion_chic_sandales_plates_style_coree_11": {
     "id": "shoe_fashion_chic_sandales_plates_style_coree_11",
-    "slug": "sandales-plates-style-coreen-tressees-chic-dete-2wil",
+    "slug": "sandales-plates-style-coreen-tressees-chic-dete-pointures-98c7c7",
     "title": "Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#109)",
     "brand": "Fashion Chic",
     "category": "fashion",
@@ -25952,7 +25952,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_alexander_mcqueen_sneakers_basses_en_cui_11": {
     "id": "shoe_alexander_mcqueen_sneakers_basses_en_cui_11",
-    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-htay",
+    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-042777",
     "title": "Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#110)",
     "brand": "Alexander McQueen",
     "category": "fashion",
@@ -26002,7 +26002,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_12": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_12",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-ovt2",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-117d25",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#111)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -26052,7 +26052,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni_12": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni_12",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-opxa",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-2deba3",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#112)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -26102,7 +26102,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl_12": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl_12",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-abbw",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-80dfbe",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#113)",
     "brand": "Nike",
     "category": "fashion",
@@ -26152,7 +26152,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu_12": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu_12",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-84jt",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-fd1ba9",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#114)",
     "brand": "Nike",
     "category": "fashion",
@@ -26202,7 +26202,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket_12": {
     "id": "shoe_new_balance_new_balance_550_retro_basket_12",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-0ra1",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-8526fc",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#115)",
     "brand": "New Balance",
     "category": "fashion",
@@ -26252,7 +26252,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_adidas_adidas_originals_samba_classic_cu_12": {
     "id": "shoe_adidas_adidas_originals_samba_classic_cu_12",
-    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-m2bi",
+    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-79190e",
     "title": "Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#116)",
     "brand": "Adidas",
     "category": "fashion",
@@ -26302,7 +26302,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_timberland_timberland_bottes_6_inch_prem_12": {
     "id": "shoe_timberland_timberland_bottes_6_inch_prem_12",
-    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-7wnt",
+    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ble-c6a561",
     "title": "Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#117)",
     "brand": "Timberland",
     "category": "fashion",
@@ -26352,7 +26352,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_zara_luxe_sandales_a_talons_aiguilles_do_12": {
     "id": "shoe_zara_luxe_sandales_a_talons_aiguilles_do_12",
-    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-7rqk",
+    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-feb578",
     "title": "Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#118)",
     "brand": "Zara Luxe",
     "category": "fashion",
@@ -26402,7 +26402,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_fashion_chic_sandales_plates_style_coree_12": {
     "id": "shoe_fashion_chic_sandales_plates_style_coree_12",
-    "slug": "sandales-plates-style-coreen-tressees-chic-dete-fjua",
+    "slug": "sandales-plates-style-coreen-tressees-chic-dete-pointures-dd17b2",
     "title": "Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#119)",
     "brand": "Fashion Chic",
     "category": "fashion",
@@ -26452,7 +26452,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_alexander_mcqueen_sneakers_basses_en_cui_12": {
     "id": "shoe_alexander_mcqueen_sneakers_basses_en_cui_12",
-    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-s4ln",
+    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-57fa34",
     "title": "Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#120)",
     "brand": "Alexander McQueen",
     "category": "fashion",
@@ -26502,7 +26502,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_13": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_13",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-5h42",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-d527d6",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#121)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -26552,7 +26552,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni_13": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni_13",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-p8aa",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-0392f9",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#122)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -26602,7 +26602,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl_13": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl_13",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-p2ts",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-3ef0ce",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#123)",
     "brand": "Nike",
     "category": "fashion",
@@ -26652,7 +26652,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu_13": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu_13",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-78m6",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-e092ca",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#124)",
     "brand": "Nike",
     "category": "fashion",
@@ -26702,7 +26702,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket_13": {
     "id": "shoe_new_balance_new_balance_550_retro_basket_13",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-a4o0",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-8f308c",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#125)",
     "brand": "New Balance",
     "category": "fashion",
@@ -26752,7 +26752,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_adidas_adidas_originals_samba_classic_cu_13": {
     "id": "shoe_adidas_adidas_originals_samba_classic_cu_13",
-    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-cgwf",
+    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-e517d0",
     "title": "Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#126)",
     "brand": "Adidas",
     "category": "fashion",
@@ -26802,7 +26802,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_timberland_timberland_bottes_6_inch_prem_13": {
     "id": "shoe_timberland_timberland_bottes_6_inch_prem_13",
-    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-auvp",
+    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ble-0c71b6",
     "title": "Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#127)",
     "brand": "Timberland",
     "category": "fashion",
@@ -26852,7 +26852,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_zara_luxe_sandales_a_talons_aiguilles_do_13": {
     "id": "shoe_zara_luxe_sandales_a_talons_aiguilles_do_13",
-    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-lczp",
+    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-ed86f9",
     "title": "Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#128)",
     "brand": "Zara Luxe",
     "category": "fashion",
@@ -26902,7 +26902,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_fashion_chic_sandales_plates_style_coree_13": {
     "id": "shoe_fashion_chic_sandales_plates_style_coree_13",
-    "slug": "sandales-plates-style-coreen-tressees-chic-dete-kqxs",
+    "slug": "sandales-plates-style-coreen-tressees-chic-dete-pointures-e96bc0",
     "title": "Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#129)",
     "brand": "Fashion Chic",
     "category": "fashion",
@@ -26952,7 +26952,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_alexander_mcqueen_sneakers_basses_en_cui_13": {
     "id": "shoe_alexander_mcqueen_sneakers_basses_en_cui_13",
-    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-0cri",
+    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-1686c1",
     "title": "Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#130)",
     "brand": "Alexander McQueen",
     "category": "fashion",
@@ -27002,7 +27002,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_14": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_14",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-qski",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-b393b4",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#131)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -27052,7 +27052,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni_14": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni_14",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-l9fu",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-d900fa",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#132)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -27102,7 +27102,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl_14": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl_14",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-fgd4",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-3e034b",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#133)",
     "brand": "Nike",
     "category": "fashion",
@@ -27152,7 +27152,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu_14": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu_14",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-884q",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-f3b29d",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#134)",
     "brand": "Nike",
     "category": "fashion",
@@ -27202,7 +27202,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket_14": {
     "id": "shoe_new_balance_new_balance_550_retro_basket_14",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-ithw",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-50f18d",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#135)",
     "brand": "New Balance",
     "category": "fashion",
@@ -27252,7 +27252,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_adidas_adidas_originals_samba_classic_cu_14": {
     "id": "shoe_adidas_adidas_originals_samba_classic_cu_14",
-    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-44fb",
+    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-a5ffa9",
     "title": "Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#136)",
     "brand": "Adidas",
     "category": "fashion",
@@ -27302,7 +27302,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_timberland_timberland_bottes_6_inch_prem_14": {
     "id": "shoe_timberland_timberland_bottes_6_inch_prem_14",
-    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-lro2",
+    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ble-fff2fb",
     "title": "Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#137)",
     "brand": "Timberland",
     "category": "fashion",
@@ -27352,7 +27352,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_zara_luxe_sandales_a_talons_aiguilles_do_14": {
     "id": "shoe_zara_luxe_sandales_a_talons_aiguilles_do_14",
-    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-pyfs",
+    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-f02498",
     "title": "Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#138)",
     "brand": "Zara Luxe",
     "category": "fashion",
@@ -27402,7 +27402,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_fashion_chic_sandales_plates_style_coree_14": {
     "id": "shoe_fashion_chic_sandales_plates_style_coree_14",
-    "slug": "sandales-plates-style-coreen-tressees-chic-dete-jnwm",
+    "slug": "sandales-plates-style-coreen-tressees-chic-dete-pointures-6e476c",
     "title": "Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#139)",
     "brand": "Fashion Chic",
     "category": "fashion",
@@ -27452,7 +27452,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_alexander_mcqueen_sneakers_basses_en_cui_14": {
     "id": "shoe_alexander_mcqueen_sneakers_basses_en_cui_14",
-    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-ujs4",
+    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-e80bec",
     "title": "Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#140)",
     "brand": "Alexander McQueen",
     "category": "fashion",
@@ -27502,7 +27502,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_15": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_15",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-gk6q",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-517017",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#141)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -27552,7 +27552,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni_15": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni_15",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-v3q6",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-7a1fc7",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#142)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -27602,7 +27602,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl_15": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl_15",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-s9cl",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-5d6242",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#143)",
     "brand": "Nike",
     "category": "fashion",
@@ -27652,7 +27652,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu_15": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu_15",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-8o9n",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-9330aa",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#144)",
     "brand": "Nike",
     "category": "fashion",
@@ -27702,7 +27702,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket_15": {
     "id": "shoe_new_balance_new_balance_550_retro_basket_15",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-kcsg",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-02f5ba",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#145)",
     "brand": "New Balance",
     "category": "fashion",
@@ -27752,7 +27752,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_adidas_adidas_originals_samba_classic_cu_15": {
     "id": "shoe_adidas_adidas_originals_samba_classic_cu_15",
-    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-k023",
+    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-894f78",
     "title": "Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#146)",
     "brand": "Adidas",
     "category": "fashion",
@@ -27802,7 +27802,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_timberland_timberland_bottes_6_inch_prem_15": {
     "id": "shoe_timberland_timberland_bottes_6_inch_prem_15",
-    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-2cb6",
+    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ble-17eef9",
     "title": "Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#147)",
     "brand": "Timberland",
     "category": "fashion",
@@ -27852,7 +27852,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_zara_luxe_sandales_a_talons_aiguilles_do_15": {
     "id": "shoe_zara_luxe_sandales_a_talons_aiguilles_do_15",
-    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-1gb6",
+    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-482f79",
     "title": "Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#148)",
     "brand": "Zara Luxe",
     "category": "fashion",
@@ -27902,7 +27902,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_fashion_chic_sandales_plates_style_coree_15": {
     "id": "shoe_fashion_chic_sandales_plates_style_coree_15",
-    "slug": "sandales-plates-style-coreen-tressees-chic-dete-ugy2",
+    "slug": "sandales-plates-style-coreen-tressees-chic-dete-pointures-59e2d2",
     "title": "Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#149)",
     "brand": "Fashion Chic",
     "category": "fashion",
@@ -27952,7 +27952,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_alexander_mcqueen_sneakers_basses_en_cui_15": {
     "id": "shoe_alexander_mcqueen_sneakers_basses_en_cui_15",
-    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-o3lm",
+    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-916e54",
     "title": "Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#150)",
     "brand": "Alexander McQueen",
     "category": "fashion",
@@ -28002,7 +28002,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_16": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_16",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-oelz",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-18cbb6",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#151)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -28052,7 +28052,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni_16": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni_16",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-h1rx",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-5e40f0",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#152)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -28102,7 +28102,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl_16": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl_16",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-itnr",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-8098ea",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#153)",
     "brand": "Nike",
     "category": "fashion",
@@ -28152,7 +28152,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu_16": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu_16",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-tn5x",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-d96d75",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#154)",
     "brand": "Nike",
     "category": "fashion",
@@ -28202,7 +28202,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket_16": {
     "id": "shoe_new_balance_new_balance_550_retro_basket_16",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-c9d5",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-e9ff7b",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#155)",
     "brand": "New Balance",
     "category": "fashion",
@@ -28252,7 +28252,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_adidas_adidas_originals_samba_classic_cu_16": {
     "id": "shoe_adidas_adidas_originals_samba_classic_cu_16",
-    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-a9ab",
+    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-92cb47",
     "title": "Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#156)",
     "brand": "Adidas",
     "category": "fashion",
@@ -28302,7 +28302,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_timberland_timberland_bottes_6_inch_prem_16": {
     "id": "shoe_timberland_timberland_bottes_6_inch_prem_16",
-    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-yz5j",
+    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ble-b981a2",
     "title": "Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#157)",
     "brand": "Timberland",
     "category": "fashion",
@@ -28352,7 +28352,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_zara_luxe_sandales_a_talons_aiguilles_do_16": {
     "id": "shoe_zara_luxe_sandales_a_talons_aiguilles_do_16",
-    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-3vn0",
+    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-9b15ef",
     "title": "Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#158)",
     "brand": "Zara Luxe",
     "category": "fashion",
@@ -28402,7 +28402,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_fashion_chic_sandales_plates_style_coree_16": {
     "id": "shoe_fashion_chic_sandales_plates_style_coree_16",
-    "slug": "sandales-plates-style-coreen-tressees-chic-dete-v95n",
+    "slug": "sandales-plates-style-coreen-tressees-chic-dete-pointures-1a5106",
     "title": "Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#159)",
     "brand": "Fashion Chic",
     "category": "fashion",
@@ -28452,7 +28452,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_alexander_mcqueen_sneakers_basses_en_cui_16": {
     "id": "shoe_alexander_mcqueen_sneakers_basses_en_cui_16",
-    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-ehqr",
+    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-4c39ea",
     "title": "Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#160)",
     "brand": "Alexander McQueen",
     "category": "fashion",
@@ -28502,7 +28502,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_17": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_17",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-g7y0",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-f51f1c",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#161)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -28552,7 +28552,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni_17": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni_17",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-f2q2",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-1d465f",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#162)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -28602,7 +28602,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl_17": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl_17",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-8dfi",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-6b71c6",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#163)",
     "brand": "Nike",
     "category": "fashion",
@@ -28652,7 +28652,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu_17": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu_17",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-ylym",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-b298fa",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#164)",
     "brand": "Nike",
     "category": "fashion",
@@ -28702,7 +28702,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket_17": {
     "id": "shoe_new_balance_new_balance_550_retro_basket_17",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-ip21",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-941e76",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#165)",
     "brand": "New Balance",
     "category": "fashion",
@@ -28752,7 +28752,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_adidas_adidas_originals_samba_classic_cu_17": {
     "id": "shoe_adidas_adidas_originals_samba_classic_cu_17",
-    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-9uhq",
+    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-327bfa",
     "title": "Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#166)",
     "brand": "Adidas",
     "category": "fashion",
@@ -28802,7 +28802,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_timberland_timberland_bottes_6_inch_prem_17": {
     "id": "shoe_timberland_timberland_bottes_6_inch_prem_17",
-    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-s9i1",
+    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ble-33a302",
     "title": "Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#167)",
     "brand": "Timberland",
     "category": "fashion",
@@ -28852,7 +28852,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_zara_luxe_sandales_a_talons_aiguilles_do_17": {
     "id": "shoe_zara_luxe_sandales_a_talons_aiguilles_do_17",
-    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-gn5y",
+    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-45062a",
     "title": "Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#168)",
     "brand": "Zara Luxe",
     "category": "fashion",
@@ -28902,7 +28902,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_fashion_chic_sandales_plates_style_coree_17": {
     "id": "shoe_fashion_chic_sandales_plates_style_coree_17",
-    "slug": "sandales-plates-style-coreen-tressees-chic-dete-9wql",
+    "slug": "sandales-plates-style-coreen-tressees-chic-dete-pointures-ac6c07",
     "title": "Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#169)",
     "brand": "Fashion Chic",
     "category": "fashion",
@@ -28952,7 +28952,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_alexander_mcqueen_sneakers_basses_en_cui_17": {
     "id": "shoe_alexander_mcqueen_sneakers_basses_en_cui_17",
-    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-dy0z",
+    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-0f27e4",
     "title": "Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#170)",
     "brand": "Alexander McQueen",
     "category": "fashion",
@@ -29002,7 +29002,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_18": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_18",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-trc5",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-b14859",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#171)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -29052,7 +29052,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni_18": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni_18",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-0223",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-a863dc",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#172)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -29102,7 +29102,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl_18": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl_18",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-5otq",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-5c51e6",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#173)",
     "brand": "Nike",
     "category": "fashion",
@@ -29152,7 +29152,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu_18": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu_18",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-bfra",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-495080",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#174)",
     "brand": "Nike",
     "category": "fashion",
@@ -29202,7 +29202,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket_18": {
     "id": "shoe_new_balance_new_balance_550_retro_basket_18",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-owix",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-afde16",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#175)",
     "brand": "New Balance",
     "category": "fashion",
@@ -29252,7 +29252,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_adidas_adidas_originals_samba_classic_cu_18": {
     "id": "shoe_adidas_adidas_originals_samba_classic_cu_18",
-    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-2su0",
+    "slug": "adidas-originals-samba-classic-cuir-noir-avec-bandes-b89db2",
     "title": "Adidas Originals Samba Classic Cuir Noir avec Bandes Blanches - Pointures 39-44 (#176)",
     "brand": "Adidas",
     "category": "fashion",
@@ -29302,7 +29302,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_timberland_timberland_bottes_6_inch_prem_18": {
     "id": "shoe_timberland_timberland_bottes_6_inch_prem_18",
-    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-lupm",
+    "slug": "timberland-bottes-6-inch-premium-waterproof-cuir-nubuck-ble-ac27a5",
     "title": "Timberland Bottes 6-Inch Premium Waterproof Cuir Nubuck Blé - Pointures 40-45 (#177)",
     "brand": "Timberland",
     "category": "fashion",
@@ -29352,7 +29352,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_zara_luxe_sandales_a_talons_aiguilles_do_18": {
     "id": "shoe_zara_luxe_sandales_a_talons_aiguilles_do_18",
-    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-xxbb",
+    "slug": "sandales-a-talons-aiguilles-dorees-avec-bride-cheville-d06de7",
     "title": "Sandales à Talons Aiguilles Dorées avec Bride Cheville Ajustable - Pointures 41-46 (#178)",
     "brand": "Zara Luxe",
     "category": "fashion",
@@ -29402,7 +29402,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_fashion_chic_sandales_plates_style_coree_18": {
     "id": "shoe_fashion_chic_sandales_plates_style_coree_18",
-    "slug": "sandales-plates-style-coreen-tressees-chic-dete-hkdc",
+    "slug": "sandales-plates-style-coreen-tressees-chic-dete-pointures-901c80",
     "title": "Sandales Plates Style Coréen Tressées Chic d'Été - Pointures 37-41 (#179)",
     "brand": "Fashion Chic",
     "category": "fashion",
@@ -29452,7 +29452,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_alexander_mcqueen_sneakers_basses_en_cui_18": {
     "id": "shoe_alexander_mcqueen_sneakers_basses_en_cui_18",
-    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-n2gt",
+    "slug": "sneakers-basses-en-cuir-blanc-semelle-compensee-oversize-9d8ab1",
     "title": "Sneakers Basses en Cuir Blanc Semelle Compensée Oversize - Pointures 38-42 (#180)",
     "brand": "Alexander McQueen",
     "category": "fashion",
@@ -29502,7 +29502,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_19": {
     "id": "shoe_kraasa_kraasa_bottines_chelsea_homme_mic_19",
-    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-bh75",
+    "slug": "kraasa-bottines-chelsea-homme-micro-daim-elastique-slip-on-4e3858",
     "title": "Kraasa Bottines Chelsea Homme Micro-Daim Élastique Slip-On - Pointures 39-44 (#181)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -29552,7 +29552,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_armonia_milano_mocassins_de_ville_armoni_19": {
     "id": "shoe_armonia_milano_mocassins_de_ville_armoni_19",
-    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-786c",
+    "slug": "mocassins-de-ville-armonia-milano-cuir-glace-bicolore-32607c",
     "title": "Mocassins de Ville Armonía Milano Cuir Glacé Bicolore - Pointures 40-45 (#182)",
     "brand": "Armonía Milano",
     "category": "fashion",
@@ -29602,7 +29602,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_jordan_4_retro_military_bl_19": {
     "id": "shoe_nike_nike_air_jordan_4_retro_military_bl_19",
-    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-6m0c",
+    "slug": "nike-air-jordan-4-retro-military-black-cuir-suede-pointures-4d9b1b",
     "title": "Nike Air Jordan 4 Retro 'Military Black' Cuir & Suède - Pointures 41-46 (#183)",
     "brand": "Nike",
     "category": "fashion",
@@ -29652,7 +29652,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_nike_nike_air_force_1_07_triple_white_cu_19": {
     "id": "shoe_nike_nike_air_force_1_07_triple_white_cu_19",
-    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-7ffi",
+    "slug": "nike-air-force-1-07-triple-white-cuir-veritable-homme-femme-3b967c",
     "title": "Nike Air Force 1 '07 Triple White Cuir Véritable Homme / Femme - Pointures 37-41 (#184)",
     "brand": "Nike",
     "category": "fashion",
@@ -29702,7 +29702,7 @@ window.PRODUCTS_DATA = {
   },
   "shoe_new_balance_new_balance_550_retro_basket_19": {
     "id": "shoe_new_balance_new_balance_550_retro_basket_19",
-    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-y9xt",
+    "slug": "new-balance-550-retro-basketball-vintage-blanc-vert-517cb3",
     "title": "New Balance 550 Retro Basketball Vintage Blanc & Vert - Pointures 38-42 (#185)",
     "brand": "New Balance",
     "category": "fashion",
@@ -29752,7 +29752,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_maison_bastos_robe_de_soiree_sirene_h": {
     "id": "apparel_maison_bastos_robe_de_soiree_sirene_h",
-    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-crcg",
+    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-fente-ae21c0",
     "title": "Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #1)",
     "brand": "Maison Bastos",
     "category": "fashion",
@@ -29798,7 +29798,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_afroluxe_ensemble_deux_pieces_palazzo": {
     "id": "apparel_afroluxe_ensemble_deux_pieces_palazzo",
-    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-90fd",
+    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-75dba3",
     "title": "Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #2)",
     "brand": "AfroLuxe",
     "category": "fashion",
@@ -29844,7 +29844,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_couture_royale_grand_boubou_royal_afr": {
     "id": "apparel_couture_royale_grand_boubou_royal_afr",
-    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-jcna",
+    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-fil-7c64e0",
     "title": "Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #3)",
     "brand": "Couture Royale",
     "category": "fashion",
@@ -29890,7 +29890,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_armonia_cuir_sac_a_main_cuir_graine_a": {
     "id": "apparel_armonia_cuir_sac_a_main_cuir_graine_a",
-    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-mxep",
+    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-c5afc8",
     "title": "Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #4)",
     "brand": "Armonía Cuir",
     "category": "fashion",
@@ -29936,7 +29936,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_kraasa_luggage_sac_a_dos_voyage_lapto": {
     "id": "apparel_kraasa_luggage_sac_a_dos_voyage_lapto",
-    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-4on2",
+    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-compartiment-2373f7",
     "title": "Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #5)",
     "brand": "Kraasa Luggage",
     "category": "fashion",
@@ -29982,7 +29982,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_milano_sartoria_costume_homme_3_piece": {
     "id": "apparel_milano_sartoria_costume_homme_3_piece",
-    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-n0n4",
+    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-peignee-42bd3d",
     "title": "Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #6)",
     "brand": "Milano Sartoria",
     "category": "fashion",
@@ -30028,7 +30028,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_maison_bastos_robe_de_soiree_sirene_h_2": {
     "id": "apparel_maison_bastos_robe_de_soiree_sirene_h_2",
-    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-o9ts",
+    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-fente-75b33e",
     "title": "Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #7)",
     "brand": "Maison Bastos",
     "category": "fashion",
@@ -30074,7 +30074,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_afroluxe_ensemble_deux_pieces_palazzo_2": {
     "id": "apparel_afroluxe_ensemble_deux_pieces_palazzo_2",
-    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-cvgs",
+    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-5c0a21",
     "title": "Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #8)",
     "brand": "AfroLuxe",
     "category": "fashion",
@@ -30120,7 +30120,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_couture_royale_grand_boubou_royal_afr_2": {
     "id": "apparel_couture_royale_grand_boubou_royal_afr_2",
-    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-c68n",
+    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-fil-baa4f2",
     "title": "Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #9)",
     "brand": "Couture Royale",
     "category": "fashion",
@@ -30166,7 +30166,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_armonia_cuir_sac_a_main_cuir_graine_a_2": {
     "id": "apparel_armonia_cuir_sac_a_main_cuir_graine_a_2",
-    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-9flf",
+    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-c53fa9",
     "title": "Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #10)",
     "brand": "Armonía Cuir",
     "category": "fashion",
@@ -30212,7 +30212,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_2": {
     "id": "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_2",
-    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-bpyx",
+    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-compartiment-4ceb58",
     "title": "Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #11)",
     "brand": "Kraasa Luggage",
     "category": "fashion",
@@ -30258,7 +30258,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_milano_sartoria_costume_homme_3_piece_2": {
     "id": "apparel_milano_sartoria_costume_homme_3_piece_2",
-    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-8afo",
+    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-peignee-bda30c",
     "title": "Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #12)",
     "brand": "Milano Sartoria",
     "category": "fashion",
@@ -30304,7 +30304,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_maison_bastos_robe_de_soiree_sirene_h_3": {
     "id": "apparel_maison_bastos_robe_de_soiree_sirene_h_3",
-    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-0ocr",
+    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-fente-f0ac5f",
     "title": "Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #13)",
     "brand": "Maison Bastos",
     "category": "fashion",
@@ -30350,7 +30350,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_afroluxe_ensemble_deux_pieces_palazzo_3": {
     "id": "apparel_afroluxe_ensemble_deux_pieces_palazzo_3",
-    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-n88c",
+    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-cb3196",
     "title": "Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #14)",
     "brand": "AfroLuxe",
     "category": "fashion",
@@ -30396,7 +30396,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_couture_royale_grand_boubou_royal_afr_3": {
     "id": "apparel_couture_royale_grand_boubou_royal_afr_3",
-    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-mpvc",
+    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-fil-1b7e7e",
     "title": "Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #15)",
     "brand": "Couture Royale",
     "category": "fashion",
@@ -30442,7 +30442,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_armonia_cuir_sac_a_main_cuir_graine_a_3": {
     "id": "apparel_armonia_cuir_sac_a_main_cuir_graine_a_3",
-    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-2by0",
+    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-1d23ab",
     "title": "Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #16)",
     "brand": "Armonía Cuir",
     "category": "fashion",
@@ -30488,7 +30488,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_3": {
     "id": "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_3",
-    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-d50d",
+    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-compartiment-a485a5",
     "title": "Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #17)",
     "brand": "Kraasa Luggage",
     "category": "fashion",
@@ -30534,7 +30534,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_milano_sartoria_costume_homme_3_piece_3": {
     "id": "apparel_milano_sartoria_costume_homme_3_piece_3",
-    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-q5mr",
+    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-peignee-0714a5",
     "title": "Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #18)",
     "brand": "Milano Sartoria",
     "category": "fashion",
@@ -30580,7 +30580,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_maison_bastos_robe_de_soiree_sirene_h_4": {
     "id": "apparel_maison_bastos_robe_de_soiree_sirene_h_4",
-    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-k79b",
+    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-fente-67790a",
     "title": "Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #19)",
     "brand": "Maison Bastos",
     "category": "fashion",
@@ -30626,7 +30626,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_afroluxe_ensemble_deux_pieces_palazzo_4": {
     "id": "apparel_afroluxe_ensemble_deux_pieces_palazzo_4",
-    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-r3b4",
+    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-89bb08",
     "title": "Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #20)",
     "brand": "AfroLuxe",
     "category": "fashion",
@@ -30672,7 +30672,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_couture_royale_grand_boubou_royal_afr_4": {
     "id": "apparel_couture_royale_grand_boubou_royal_afr_4",
-    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-oozf",
+    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-fil-60fa5c",
     "title": "Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #21)",
     "brand": "Couture Royale",
     "category": "fashion",
@@ -30718,7 +30718,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_armonia_cuir_sac_a_main_cuir_graine_a_4": {
     "id": "apparel_armonia_cuir_sac_a_main_cuir_graine_a_4",
-    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-odq5",
+    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-1cb339",
     "title": "Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #22)",
     "brand": "Armonía Cuir",
     "category": "fashion",
@@ -30764,7 +30764,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_4": {
     "id": "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_4",
-    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-eo96",
+    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-compartiment-9000d0",
     "title": "Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #23)",
     "brand": "Kraasa Luggage",
     "category": "fashion",
@@ -30810,7 +30810,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_milano_sartoria_costume_homme_3_piece_4": {
     "id": "apparel_milano_sartoria_costume_homme_3_piece_4",
-    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-1fyi",
+    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-peignee-ad664b",
     "title": "Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #24)",
     "brand": "Milano Sartoria",
     "category": "fashion",
@@ -30856,7 +30856,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_maison_bastos_robe_de_soiree_sirene_h_5": {
     "id": "apparel_maison_bastos_robe_de_soiree_sirene_h_5",
-    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-alpj",
+    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-fente-7dabd3",
     "title": "Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #25)",
     "brand": "Maison Bastos",
     "category": "fashion",
@@ -30902,7 +30902,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_afroluxe_ensemble_deux_pieces_palazzo_5": {
     "id": "apparel_afroluxe_ensemble_deux_pieces_palazzo_5",
-    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-o94l",
+    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-a4a730",
     "title": "Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #26)",
     "brand": "AfroLuxe",
     "category": "fashion",
@@ -30948,7 +30948,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_couture_royale_grand_boubou_royal_afr_5": {
     "id": "apparel_couture_royale_grand_boubou_royal_afr_5",
-    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-jyke",
+    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-fil-5fa9d0",
     "title": "Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #27)",
     "brand": "Couture Royale",
     "category": "fashion",
@@ -30994,7 +30994,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_armonia_cuir_sac_a_main_cuir_graine_a_5": {
     "id": "apparel_armonia_cuir_sac_a_main_cuir_graine_a_5",
-    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-1t1c",
+    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-d68c08",
     "title": "Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #28)",
     "brand": "Armonía Cuir",
     "category": "fashion",
@@ -31040,7 +31040,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_5": {
     "id": "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_5",
-    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-gixx",
+    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-compartiment-8e6811",
     "title": "Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #29)",
     "brand": "Kraasa Luggage",
     "category": "fashion",
@@ -31086,7 +31086,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_milano_sartoria_costume_homme_3_piece_5": {
     "id": "apparel_milano_sartoria_costume_homme_3_piece_5",
-    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-kz5r",
+    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-peignee-29ce2f",
     "title": "Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #30)",
     "brand": "Milano Sartoria",
     "category": "fashion",
@@ -31132,7 +31132,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_maison_bastos_robe_de_soiree_sirene_h_6": {
     "id": "apparel_maison_bastos_robe_de_soiree_sirene_h_6",
-    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-boad",
+    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-fente-3f6768",
     "title": "Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #31)",
     "brand": "Maison Bastos",
     "category": "fashion",
@@ -31178,7 +31178,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_afroluxe_ensemble_deux_pieces_palazzo_6": {
     "id": "apparel_afroluxe_ensemble_deux_pieces_palazzo_6",
-    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-1ck7",
+    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-2959b2",
     "title": "Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #32)",
     "brand": "AfroLuxe",
     "category": "fashion",
@@ -31224,7 +31224,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_couture_royale_grand_boubou_royal_afr_6": {
     "id": "apparel_couture_royale_grand_boubou_royal_afr_6",
-    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-eoth",
+    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-fil-ff876d",
     "title": "Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #33)",
     "brand": "Couture Royale",
     "category": "fashion",
@@ -31270,7 +31270,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_armonia_cuir_sac_a_main_cuir_graine_a_6": {
     "id": "apparel_armonia_cuir_sac_a_main_cuir_graine_a_6",
-    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-y6lj",
+    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-2ff2f3",
     "title": "Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #34)",
     "brand": "Armonía Cuir",
     "category": "fashion",
@@ -31316,7 +31316,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_6": {
     "id": "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_6",
-    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-tp4l",
+    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-compartiment-1868f7",
     "title": "Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #35)",
     "brand": "Kraasa Luggage",
     "category": "fashion",
@@ -31362,7 +31362,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_milano_sartoria_costume_homme_3_piece_6": {
     "id": "apparel_milano_sartoria_costume_homme_3_piece_6",
-    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-zaax",
+    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-peignee-49e19f",
     "title": "Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #36)",
     "brand": "Milano Sartoria",
     "category": "fashion",
@@ -31408,7 +31408,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_maison_bastos_robe_de_soiree_sirene_h_7": {
     "id": "apparel_maison_bastos_robe_de_soiree_sirene_h_7",
-    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-zzbk",
+    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-fente-c01ddb",
     "title": "Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #37)",
     "brand": "Maison Bastos",
     "category": "fashion",
@@ -31454,7 +31454,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_afroluxe_ensemble_deux_pieces_palazzo_7": {
     "id": "apparel_afroluxe_ensemble_deux_pieces_palazzo_7",
-    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-tzlt",
+    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-df55cf",
     "title": "Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #38)",
     "brand": "AfroLuxe",
     "category": "fashion",
@@ -31500,7 +31500,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_couture_royale_grand_boubou_royal_afr_7": {
     "id": "apparel_couture_royale_grand_boubou_royal_afr_7",
-    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-mamh",
+    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-fil-776587",
     "title": "Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #39)",
     "brand": "Couture Royale",
     "category": "fashion",
@@ -31546,7 +31546,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_armonia_cuir_sac_a_main_cuir_graine_a_7": {
     "id": "apparel_armonia_cuir_sac_a_main_cuir_graine_a_7",
-    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-o0kt",
+    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-ad0fd8",
     "title": "Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #40)",
     "brand": "Armonía Cuir",
     "category": "fashion",
@@ -31592,7 +31592,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_7": {
     "id": "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_7",
-    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-iwyd",
+    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-compartiment-797d54",
     "title": "Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #41)",
     "brand": "Kraasa Luggage",
     "category": "fashion",
@@ -31638,7 +31638,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_milano_sartoria_costume_homme_3_piece_7": {
     "id": "apparel_milano_sartoria_costume_homme_3_piece_7",
-    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-u2p4",
+    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-peignee-e3bd8b",
     "title": "Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #42)",
     "brand": "Milano Sartoria",
     "category": "fashion",
@@ -31684,7 +31684,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_maison_bastos_robe_de_soiree_sirene_h_8": {
     "id": "apparel_maison_bastos_robe_de_soiree_sirene_h_8",
-    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-t886",
+    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-fente-8b09ba",
     "title": "Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #43)",
     "brand": "Maison Bastos",
     "category": "fashion",
@@ -31730,7 +31730,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_afroluxe_ensemble_deux_pieces_palazzo_8": {
     "id": "apparel_afroluxe_ensemble_deux_pieces_palazzo_8",
-    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-pytt",
+    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-114aa8",
     "title": "Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #44)",
     "brand": "AfroLuxe",
     "category": "fashion",
@@ -31776,7 +31776,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_couture_royale_grand_boubou_royal_afr_8": {
     "id": "apparel_couture_royale_grand_boubou_royal_afr_8",
-    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-etod",
+    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-fil-2fcb8a",
     "title": "Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #45)",
     "brand": "Couture Royale",
     "category": "fashion",
@@ -31822,7 +31822,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_armonia_cuir_sac_a_main_cuir_graine_a_8": {
     "id": "apparel_armonia_cuir_sac_a_main_cuir_graine_a_8",
-    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-g0jr",
+    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-bca842",
     "title": "Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #46)",
     "brand": "Armonía Cuir",
     "category": "fashion",
@@ -31868,7 +31868,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_8": {
     "id": "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_8",
-    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-jrs7",
+    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-compartiment-f93c6c",
     "title": "Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #47)",
     "brand": "Kraasa Luggage",
     "category": "fashion",
@@ -31914,7 +31914,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_milano_sartoria_costume_homme_3_piece_8": {
     "id": "apparel_milano_sartoria_costume_homme_3_piece_8",
-    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-5y04",
+    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-peignee-0fa257",
     "title": "Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #48)",
     "brand": "Milano Sartoria",
     "category": "fashion",
@@ -31960,7 +31960,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_maison_bastos_robe_de_soiree_sirene_h_9": {
     "id": "apparel_maison_bastos_robe_de_soiree_sirene_h_9",
-    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-3g4j",
+    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-fente-11bac5",
     "title": "Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #49)",
     "brand": "Maison Bastos",
     "category": "fashion",
@@ -32006,7 +32006,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_afroluxe_ensemble_deux_pieces_palazzo_9": {
     "id": "apparel_afroluxe_ensemble_deux_pieces_palazzo_9",
-    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-920u",
+    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-2b9305",
     "title": "Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #50)",
     "brand": "AfroLuxe",
     "category": "fashion",
@@ -32052,7 +32052,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_couture_royale_grand_boubou_royal_afr_9": {
     "id": "apparel_couture_royale_grand_boubou_royal_afr_9",
-    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-h3mp",
+    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-fil-8f4f23",
     "title": "Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #51)",
     "brand": "Couture Royale",
     "category": "fashion",
@@ -32098,7 +32098,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_armonia_cuir_sac_a_main_cuir_graine_a_9": {
     "id": "apparel_armonia_cuir_sac_a_main_cuir_graine_a_9",
-    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-oxmy",
+    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-042c89",
     "title": "Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #52)",
     "brand": "Armonía Cuir",
     "category": "fashion",
@@ -32144,7 +32144,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_9": {
     "id": "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_9",
-    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-x0ab",
+    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-compartiment-82f07a",
     "title": "Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #53)",
     "brand": "Kraasa Luggage",
     "category": "fashion",
@@ -32190,7 +32190,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_milano_sartoria_costume_homme_3_piece_9": {
     "id": "apparel_milano_sartoria_costume_homme_3_piece_9",
-    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-ntzb",
+    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-peignee-faf301",
     "title": "Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #54)",
     "brand": "Milano Sartoria",
     "category": "fashion",
@@ -32236,7 +32236,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_maison_bastos_robe_de_soiree_sirene_h_10": {
     "id": "apparel_maison_bastos_robe_de_soiree_sirene_h_10",
-    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-igxo",
+    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-fente-fc8940",
     "title": "Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #55)",
     "brand": "Maison Bastos",
     "category": "fashion",
@@ -32282,7 +32282,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_afroluxe_ensemble_deux_pieces_palazzo_10": {
     "id": "apparel_afroluxe_ensemble_deux_pieces_palazzo_10",
-    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-ercr",
+    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-b48b6c",
     "title": "Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #56)",
     "brand": "AfroLuxe",
     "category": "fashion",
@@ -32328,7 +32328,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_couture_royale_grand_boubou_royal_afr_10": {
     "id": "apparel_couture_royale_grand_boubou_royal_afr_10",
-    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-zg4h",
+    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-fil-fa7b21",
     "title": "Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #57)",
     "brand": "Couture Royale",
     "category": "fashion",
@@ -32374,7 +32374,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_armonia_cuir_sac_a_main_cuir_graine_a_10": {
     "id": "apparel_armonia_cuir_sac_a_main_cuir_graine_a_10",
-    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-5tu2",
+    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-f216d8",
     "title": "Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #58)",
     "brand": "Armonía Cuir",
     "category": "fashion",
@@ -32420,7 +32420,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_10": {
     "id": "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_10",
-    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-rroj",
+    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-compartiment-9b0d50",
     "title": "Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #59)",
     "brand": "Kraasa Luggage",
     "category": "fashion",
@@ -32466,7 +32466,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_milano_sartoria_costume_homme_3_piece_10": {
     "id": "apparel_milano_sartoria_costume_homme_3_piece_10",
-    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-55a1",
+    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-peignee-fae5b3",
     "title": "Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #60)",
     "brand": "Milano Sartoria",
     "category": "fashion",
@@ -32512,7 +32512,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_maison_bastos_robe_de_soiree_sirene_h_11": {
     "id": "apparel_maison_bastos_robe_de_soiree_sirene_h_11",
-    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-wfiu",
+    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-fente-18848a",
     "title": "Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #61)",
     "brand": "Maison Bastos",
     "category": "fashion",
@@ -32558,7 +32558,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_afroluxe_ensemble_deux_pieces_palazzo_11": {
     "id": "apparel_afroluxe_ensemble_deux_pieces_palazzo_11",
-    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-swhk",
+    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-cbb5c5",
     "title": "Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #62)",
     "brand": "AfroLuxe",
     "category": "fashion",
@@ -32604,7 +32604,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_couture_royale_grand_boubou_royal_afr_11": {
     "id": "apparel_couture_royale_grand_boubou_royal_afr_11",
-    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-ekqu",
+    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-fil-5f8c5a",
     "title": "Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #63)",
     "brand": "Couture Royale",
     "category": "fashion",
@@ -32650,7 +32650,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_armonia_cuir_sac_a_main_cuir_graine_a_11": {
     "id": "apparel_armonia_cuir_sac_a_main_cuir_graine_a_11",
-    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-bwq7",
+    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-f39b9b",
     "title": "Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #64)",
     "brand": "Armonía Cuir",
     "category": "fashion",
@@ -32696,7 +32696,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_11": {
     "id": "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_11",
-    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-seju",
+    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-compartiment-f6c1d8",
     "title": "Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #65)",
     "brand": "Kraasa Luggage",
     "category": "fashion",
@@ -32742,7 +32742,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_milano_sartoria_costume_homme_3_piece_11": {
     "id": "apparel_milano_sartoria_costume_homme_3_piece_11",
-    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-bgh7",
+    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-peignee-49ea4a",
     "title": "Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #66)",
     "brand": "Milano Sartoria",
     "category": "fashion",
@@ -32788,7 +32788,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_maison_bastos_robe_de_soiree_sirene_h_12": {
     "id": "apparel_maison_bastos_robe_de_soiree_sirene_h_12",
-    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-qwyg",
+    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-fente-0594c0",
     "title": "Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #67)",
     "brand": "Maison Bastos",
     "category": "fashion",
@@ -32834,7 +32834,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_afroluxe_ensemble_deux_pieces_palazzo_12": {
     "id": "apparel_afroluxe_ensemble_deux_pieces_palazzo_12",
-    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-22di",
+    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-457bee",
     "title": "Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #68)",
     "brand": "AfroLuxe",
     "category": "fashion",
@@ -32880,7 +32880,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_couture_royale_grand_boubou_royal_afr_12": {
     "id": "apparel_couture_royale_grand_boubou_royal_afr_12",
-    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-hk9t",
+    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-fil-d71764",
     "title": "Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #69)",
     "brand": "Couture Royale",
     "category": "fashion",
@@ -32926,7 +32926,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_armonia_cuir_sac_a_main_cuir_graine_a_12": {
     "id": "apparel_armonia_cuir_sac_a_main_cuir_graine_a_12",
-    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-euj0",
+    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-1b2c01",
     "title": "Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #70)",
     "brand": "Armonía Cuir",
     "category": "fashion",
@@ -32972,7 +32972,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_12": {
     "id": "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_12",
-    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-l209",
+    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-compartiment-d9e77d",
     "title": "Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #71)",
     "brand": "Kraasa Luggage",
     "category": "fashion",
@@ -33018,7 +33018,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_milano_sartoria_costume_homme_3_piece_12": {
     "id": "apparel_milano_sartoria_costume_homme_3_piece_12",
-    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-phue",
+    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-peignee-781b35",
     "title": "Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #72)",
     "brand": "Milano Sartoria",
     "category": "fashion",
@@ -33064,7 +33064,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_maison_bastos_robe_de_soiree_sirene_h_13": {
     "id": "apparel_maison_bastos_robe_de_soiree_sirene_h_13",
-    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-5itn",
+    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-fente-e378ce",
     "title": "Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #73)",
     "brand": "Maison Bastos",
     "category": "fashion",
@@ -33110,7 +33110,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_afroluxe_ensemble_deux_pieces_palazzo_13": {
     "id": "apparel_afroluxe_ensemble_deux_pieces_palazzo_13",
-    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-1ryq",
+    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-8ec415",
     "title": "Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #74)",
     "brand": "AfroLuxe",
     "category": "fashion",
@@ -33156,7 +33156,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_couture_royale_grand_boubou_royal_afr_13": {
     "id": "apparel_couture_royale_grand_boubou_royal_afr_13",
-    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-50sh",
+    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-fil-5836a4",
     "title": "Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #75)",
     "brand": "Couture Royale",
     "category": "fashion",
@@ -33202,7 +33202,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_armonia_cuir_sac_a_main_cuir_graine_a_13": {
     "id": "apparel_armonia_cuir_sac_a_main_cuir_graine_a_13",
-    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-2b3p",
+    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-9bfb7a",
     "title": "Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #76)",
     "brand": "Armonía Cuir",
     "category": "fashion",
@@ -33248,7 +33248,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_13": {
     "id": "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_13",
-    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-7bfb",
+    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-compartiment-347ac1",
     "title": "Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #77)",
     "brand": "Kraasa Luggage",
     "category": "fashion",
@@ -33294,7 +33294,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_milano_sartoria_costume_homme_3_piece_13": {
     "id": "apparel_milano_sartoria_costume_homme_3_piece_13",
-    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-ql6a",
+    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-peignee-90094b",
     "title": "Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #78)",
     "brand": "Milano Sartoria",
     "category": "fashion",
@@ -33340,7 +33340,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_maison_bastos_robe_de_soiree_sirene_h_14": {
     "id": "apparel_maison_bastos_robe_de_soiree_sirene_h_14",
-    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-hbxd",
+    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-fente-080ea6",
     "title": "Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #79)",
     "brand": "Maison Bastos",
     "category": "fashion",
@@ -33386,7 +33386,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_afroluxe_ensemble_deux_pieces_palazzo_14": {
     "id": "apparel_afroluxe_ensemble_deux_pieces_palazzo_14",
-    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-kvnv",
+    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-336a7e",
     "title": "Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #80)",
     "brand": "AfroLuxe",
     "category": "fashion",
@@ -33432,7 +33432,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_couture_royale_grand_boubou_royal_afr_14": {
     "id": "apparel_couture_royale_grand_boubou_royal_afr_14",
-    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-vxex",
+    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-fil-a96135",
     "title": "Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #81)",
     "brand": "Couture Royale",
     "category": "fashion",
@@ -33478,7 +33478,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_armonia_cuir_sac_a_main_cuir_graine_a_14": {
     "id": "apparel_armonia_cuir_sac_a_main_cuir_graine_a_14",
-    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-8nfr",
+    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-40b26e",
     "title": "Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #82)",
     "brand": "Armonía Cuir",
     "category": "fashion",
@@ -33524,7 +33524,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_14": {
     "id": "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_14",
-    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-hc5g",
+    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-compartiment-231675",
     "title": "Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #83)",
     "brand": "Kraasa Luggage",
     "category": "fashion",
@@ -33570,7 +33570,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_milano_sartoria_costume_homme_3_piece_14": {
     "id": "apparel_milano_sartoria_costume_homme_3_piece_14",
-    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-gkbo",
+    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-peignee-ec031f",
     "title": "Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #84)",
     "brand": "Milano Sartoria",
     "category": "fashion",
@@ -33616,7 +33616,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_maison_bastos_robe_de_soiree_sirene_h_15": {
     "id": "apparel_maison_bastos_robe_de_soiree_sirene_h_15",
-    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-0auu",
+    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-fente-d7719e",
     "title": "Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #85)",
     "brand": "Maison Bastos",
     "category": "fashion",
@@ -33662,7 +33662,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_afroluxe_ensemble_deux_pieces_palazzo_15": {
     "id": "apparel_afroluxe_ensemble_deux_pieces_palazzo_15",
-    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-4lze",
+    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-7d410b",
     "title": "Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #86)",
     "brand": "AfroLuxe",
     "category": "fashion",
@@ -33708,7 +33708,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_couture_royale_grand_boubou_royal_afr_15": {
     "id": "apparel_couture_royale_grand_boubou_royal_afr_15",
-    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-1vya",
+    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-fil-024ecf",
     "title": "Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #87)",
     "brand": "Couture Royale",
     "category": "fashion",
@@ -33754,7 +33754,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_armonia_cuir_sac_a_main_cuir_graine_a_15": {
     "id": "apparel_armonia_cuir_sac_a_main_cuir_graine_a_15",
-    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-1gus",
+    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-c0388b",
     "title": "Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #88)",
     "brand": "Armonía Cuir",
     "category": "fashion",
@@ -33800,7 +33800,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_15": {
     "id": "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_15",
-    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-gs7e",
+    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-compartiment-aebe63",
     "title": "Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #89)",
     "brand": "Kraasa Luggage",
     "category": "fashion",
@@ -33846,7 +33846,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_milano_sartoria_costume_homme_3_piece_15": {
     "id": "apparel_milano_sartoria_costume_homme_3_piece_15",
-    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-63ap",
+    "slug": "costume-homme-3-pieces-coupe-italienne-slim-en-laine-peignee-d5dbae",
     "title": "Costume Homme 3 Pièces Coupe Italienne Slim en Laine Peignée (Modèle Créateur #90)",
     "brand": "Milano Sartoria",
     "category": "fashion",
@@ -33892,7 +33892,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_maison_bastos_robe_de_soiree_sirene_h_16": {
     "id": "apparel_maison_bastos_robe_de_soiree_sirene_h_16",
-    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-djee",
+    "slug": "robe-de-soiree-sirene-haute-couture-satin-de-soie-avec-fente-4d3986",
     "title": "Robe de Soirée Sirène Haute Couture Satin de Soie avec Fente (Modèle Créateur #91)",
     "brand": "Maison Bastos",
     "category": "fashion",
@@ -33938,7 +33938,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_afroluxe_ensemble_deux_pieces_palazzo_16": {
     "id": "apparel_afroluxe_ensemble_deux_pieces_palazzo_16",
-    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-qfce",
+    "slug": "ensemble-deux-pieces-palazzo-chic-veste-kimono-tissee-480dff",
     "title": "Ensemble Deux Pièces Palazzo Chic & Veste Kimono Tissée (Modèle Créateur #92)",
     "brand": "AfroLuxe",
     "category": "fashion",
@@ -33984,7 +33984,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_couture_royale_grand_boubou_royal_afr_16": {
     "id": "apparel_couture_royale_grand_boubou_royal_afr_16",
-    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-0qlt",
+    "slug": "grand-boubou-royal-africain-bazin-riche-getzner-brode-fil-efc5c1",
     "title": "Grand Boubou Royal Africain Bazin Riche Getzner Brodé Fil d'Or (Modèle Créateur #93)",
     "brand": "Couture Royale",
     "category": "fashion",
@@ -34030,7 +34030,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_armonia_cuir_sac_a_main_cuir_graine_a_16": {
     "id": "apparel_armonia_cuir_sac_a_main_cuir_graine_a_16",
-    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-enes",
+    "slug": "sac-a-main-cuir-graine-avec-bandouliere-signature-et-76930e",
     "title": "Sac à Main Cuir Grainé avec Bandoulière Signature et Bouclerie Dorée (Modèle Créateur #94)",
     "brand": "Armonía Cuir",
     "category": "fashion",
@@ -34076,7 +34076,7 @@ window.PRODUCTS_DATA = {
   },
   "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_16": {
     "id": "apparel_kraasa_luggage_sac_a_dos_voyage_lapto_16",
-    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-i8fo",
+    "slug": "sac-a-dos-voyage-laptop-cuir-noir-impermeable-compartiment-e10122",
     "title": "Sac à Dos Voyage & Laptop Cuir Noir Imperméable Compartiment PC 16 pouces (Modèle Créateur #95)",
     "brand": "Kraasa Luggage",
     "category": "fashion",
@@ -34122,7 +34122,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_horlogerie_suisse_montre_automatique_s": {
     "id": "luxury_horlogerie_suisse_montre_automatique_s",
-    "slug": "montre-automatique-suisse-squelette-acier-316l-verre-qqma",
+    "slug": "montre-automatique-suisse-squelette-acier-316l-verre-saphir-bd968e",
     "title": "Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#1)",
     "brand": "Horlogerie Suisse",
     "category": "fashion",
@@ -34168,7 +34168,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_geneva_luxury_montre_hommage_chronogra": {
     "id": "luxury_geneva_luxury_montre_hommage_chronogra",
-    "slug": "montre-hommage-chronographe-lunette-ceramique-acier-i6d4",
+    "slug": "montre-hommage-chronographe-lunette-ceramique-acier-oyster-3a8438",
     "title": "Montre Hommage Chronographe Lunette Céramique Acier Oyster (#2)",
     "brand": "Geneva Luxury",
     "category": "fashion",
@@ -34214,7 +34214,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_joaillerie_royale_bracelet_jonc_luxe_p": {
     "id": "luxury_joaillerie_royale_bracelet_jonc_luxe_p",
-    "slug": "bracelet-jonc-luxe-plaque-or-18-carats-pave-zirconium-s20d",
+    "slug": "bracelet-jonc-luxe-plaque-or-18-carats-pave-zirconium-aaa-d5eb51",
     "title": "Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#3)",
     "brand": "Joaillerie Royale",
     "category": "fashion",
@@ -34260,7 +34260,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_atelier_bonanjo_collier_pendentif_diam": {
     "id": "luxury_atelier_bonanjo_collier_pendentif_diam",
-    "slug": "collier-pendentif-diamant-solitaire-chaine-forcat-argent-8q6p",
+    "slug": "collier-pendentif-diamant-solitaire-chaine-forcat-argent-925-f31932",
     "title": "Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#4)",
     "brand": "Atelier Bonanjo",
     "category": "fashion",
@@ -34306,7 +34306,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_prestige_bijoux_bague_de_fiancailles_e": {
     "id": "luxury_prestige_bijoux_bague_de_fiancailles_e",
-    "slug": "bague-de-fiancailles-eternite-or-blanc-solitaire-cristal-10i1",
+    "slug": "bague-de-fiancailles-eternite-or-blanc-solitaire-cristal-bc83f3",
     "title": "Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#5)",
     "brand": "Prestige Bijoux",
     "category": "fashion",
@@ -34352,7 +34352,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_horlogerie_suisse_montre_automatique_s_2": {
     "id": "luxury_horlogerie_suisse_montre_automatique_s_2",
-    "slug": "montre-automatique-suisse-squelette-acier-316l-verre-x3td",
+    "slug": "montre-automatique-suisse-squelette-acier-316l-verre-saphir-54affe",
     "title": "Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#6)",
     "brand": "Horlogerie Suisse",
     "category": "fashion",
@@ -34398,7 +34398,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_geneva_luxury_montre_hommage_chronogra_2": {
     "id": "luxury_geneva_luxury_montre_hommage_chronogra_2",
-    "slug": "montre-hommage-chronographe-lunette-ceramique-acier-c060",
+    "slug": "montre-hommage-chronographe-lunette-ceramique-acier-oyster-811434",
     "title": "Montre Hommage Chronographe Lunette Céramique Acier Oyster (#7)",
     "brand": "Geneva Luxury",
     "category": "fashion",
@@ -34444,7 +34444,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_joaillerie_royale_bracelet_jonc_luxe_p_2": {
     "id": "luxury_joaillerie_royale_bracelet_jonc_luxe_p_2",
-    "slug": "bracelet-jonc-luxe-plaque-or-18-carats-pave-zirconium-ellx",
+    "slug": "bracelet-jonc-luxe-plaque-or-18-carats-pave-zirconium-aaa-baa6ac",
     "title": "Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#8)",
     "brand": "Joaillerie Royale",
     "category": "fashion",
@@ -34490,7 +34490,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_atelier_bonanjo_collier_pendentif_diam_2": {
     "id": "luxury_atelier_bonanjo_collier_pendentif_diam_2",
-    "slug": "collier-pendentif-diamant-solitaire-chaine-forcat-argent-9k7u",
+    "slug": "collier-pendentif-diamant-solitaire-chaine-forcat-argent-925-de46fa",
     "title": "Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#9)",
     "brand": "Atelier Bonanjo",
     "category": "fashion",
@@ -34536,7 +34536,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_prestige_bijoux_bague_de_fiancailles_e_2": {
     "id": "luxury_prestige_bijoux_bague_de_fiancailles_e_2",
-    "slug": "bague-de-fiancailles-eternite-or-blanc-solitaire-cristal-3ler",
+    "slug": "bague-de-fiancailles-eternite-or-blanc-solitaire-cristal-175618",
     "title": "Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#10)",
     "brand": "Prestige Bijoux",
     "category": "fashion",
@@ -34582,7 +34582,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_horlogerie_suisse_montre_automatique_s_3": {
     "id": "luxury_horlogerie_suisse_montre_automatique_s_3",
-    "slug": "montre-automatique-suisse-squelette-acier-316l-verre-f148",
+    "slug": "montre-automatique-suisse-squelette-acier-316l-verre-saphir-3a81fb",
     "title": "Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#11)",
     "brand": "Horlogerie Suisse",
     "category": "fashion",
@@ -34628,7 +34628,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_geneva_luxury_montre_hommage_chronogra_3": {
     "id": "luxury_geneva_luxury_montre_hommage_chronogra_3",
-    "slug": "montre-hommage-chronographe-lunette-ceramique-acier-8tg3",
+    "slug": "montre-hommage-chronographe-lunette-ceramique-acier-oyster-4fea25",
     "title": "Montre Hommage Chronographe Lunette Céramique Acier Oyster (#12)",
     "brand": "Geneva Luxury",
     "category": "fashion",
@@ -34674,7 +34674,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_joaillerie_royale_bracelet_jonc_luxe_p_3": {
     "id": "luxury_joaillerie_royale_bracelet_jonc_luxe_p_3",
-    "slug": "bracelet-jonc-luxe-plaque-or-18-carats-pave-zirconium-wh2m",
+    "slug": "bracelet-jonc-luxe-plaque-or-18-carats-pave-zirconium-aaa-589712",
     "title": "Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#13)",
     "brand": "Joaillerie Royale",
     "category": "fashion",
@@ -34720,7 +34720,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_atelier_bonanjo_collier_pendentif_diam_3": {
     "id": "luxury_atelier_bonanjo_collier_pendentif_diam_3",
-    "slug": "collier-pendentif-diamant-solitaire-chaine-forcat-argent-lbiv",
+    "slug": "collier-pendentif-diamant-solitaire-chaine-forcat-argent-925-a5bf04",
     "title": "Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#14)",
     "brand": "Atelier Bonanjo",
     "category": "fashion",
@@ -34766,7 +34766,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_prestige_bijoux_bague_de_fiancailles_e_3": {
     "id": "luxury_prestige_bijoux_bague_de_fiancailles_e_3",
-    "slug": "bague-de-fiancailles-eternite-or-blanc-solitaire-cristal-ufgy",
+    "slug": "bague-de-fiancailles-eternite-or-blanc-solitaire-cristal-3f4180",
     "title": "Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#15)",
     "brand": "Prestige Bijoux",
     "category": "fashion",
@@ -34812,7 +34812,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_horlogerie_suisse_montre_automatique_s_4": {
     "id": "luxury_horlogerie_suisse_montre_automatique_s_4",
-    "slug": "montre-automatique-suisse-squelette-acier-316l-verre-8ni8",
+    "slug": "montre-automatique-suisse-squelette-acier-316l-verre-saphir-38b01f",
     "title": "Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#16)",
     "brand": "Horlogerie Suisse",
     "category": "fashion",
@@ -34858,7 +34858,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_geneva_luxury_montre_hommage_chronogra_4": {
     "id": "luxury_geneva_luxury_montre_hommage_chronogra_4",
-    "slug": "montre-hommage-chronographe-lunette-ceramique-acier-nnrl",
+    "slug": "montre-hommage-chronographe-lunette-ceramique-acier-oyster-e19ec5",
     "title": "Montre Hommage Chronographe Lunette Céramique Acier Oyster (#17)",
     "brand": "Geneva Luxury",
     "category": "fashion",
@@ -34904,7 +34904,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_joaillerie_royale_bracelet_jonc_luxe_p_4": {
     "id": "luxury_joaillerie_royale_bracelet_jonc_luxe_p_4",
-    "slug": "bracelet-jonc-luxe-plaque-or-18-carats-pave-zirconium-6o3d",
+    "slug": "bracelet-jonc-luxe-plaque-or-18-carats-pave-zirconium-aaa-d3c1e2",
     "title": "Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#18)",
     "brand": "Joaillerie Royale",
     "category": "fashion",
@@ -34950,7 +34950,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_atelier_bonanjo_collier_pendentif_diam_4": {
     "id": "luxury_atelier_bonanjo_collier_pendentif_diam_4",
-    "slug": "collier-pendentif-diamant-solitaire-chaine-forcat-argent-ma2a",
+    "slug": "collier-pendentif-diamant-solitaire-chaine-forcat-argent-925-abdb10",
     "title": "Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#19)",
     "brand": "Atelier Bonanjo",
     "category": "fashion",
@@ -34996,7 +34996,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_prestige_bijoux_bague_de_fiancailles_e_4": {
     "id": "luxury_prestige_bijoux_bague_de_fiancailles_e_4",
-    "slug": "bague-de-fiancailles-eternite-or-blanc-solitaire-cristal-2agf",
+    "slug": "bague-de-fiancailles-eternite-or-blanc-solitaire-cristal-bf1f36",
     "title": "Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#20)",
     "brand": "Prestige Bijoux",
     "category": "fashion",
@@ -35042,7 +35042,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_horlogerie_suisse_montre_automatique_s_5": {
     "id": "luxury_horlogerie_suisse_montre_automatique_s_5",
-    "slug": "montre-automatique-suisse-squelette-acier-316l-verre-xn03",
+    "slug": "montre-automatique-suisse-squelette-acier-316l-verre-saphir-72ec4d",
     "title": "Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#21)",
     "brand": "Horlogerie Suisse",
     "category": "fashion",
@@ -35088,7 +35088,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_geneva_luxury_montre_hommage_chronogra_5": {
     "id": "luxury_geneva_luxury_montre_hommage_chronogra_5",
-    "slug": "montre-hommage-chronographe-lunette-ceramique-acier-7mss",
+    "slug": "montre-hommage-chronographe-lunette-ceramique-acier-oyster-6c24a7",
     "title": "Montre Hommage Chronographe Lunette Céramique Acier Oyster (#22)",
     "brand": "Geneva Luxury",
     "category": "fashion",
@@ -35134,7 +35134,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_joaillerie_royale_bracelet_jonc_luxe_p_5": {
     "id": "luxury_joaillerie_royale_bracelet_jonc_luxe_p_5",
-    "slug": "bracelet-jonc-luxe-plaque-or-18-carats-pave-zirconium-xag8",
+    "slug": "bracelet-jonc-luxe-plaque-or-18-carats-pave-zirconium-aaa-729f2b",
     "title": "Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#23)",
     "brand": "Joaillerie Royale",
     "category": "fashion",
@@ -35180,7 +35180,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_atelier_bonanjo_collier_pendentif_diam_5": {
     "id": "luxury_atelier_bonanjo_collier_pendentif_diam_5",
-    "slug": "collier-pendentif-diamant-solitaire-chaine-forcat-argent-q3o1",
+    "slug": "collier-pendentif-diamant-solitaire-chaine-forcat-argent-925-5c2d2d",
     "title": "Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#24)",
     "brand": "Atelier Bonanjo",
     "category": "fashion",
@@ -35226,7 +35226,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_prestige_bijoux_bague_de_fiancailles_e_5": {
     "id": "luxury_prestige_bijoux_bague_de_fiancailles_e_5",
-    "slug": "bague-de-fiancailles-eternite-or-blanc-solitaire-cristal-ohpz",
+    "slug": "bague-de-fiancailles-eternite-or-blanc-solitaire-cristal-c97ecb",
     "title": "Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#25)",
     "brand": "Prestige Bijoux",
     "category": "fashion",
@@ -35272,7 +35272,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_horlogerie_suisse_montre_automatique_s_6": {
     "id": "luxury_horlogerie_suisse_montre_automatique_s_6",
-    "slug": "montre-automatique-suisse-squelette-acier-316l-verre-28eq",
+    "slug": "montre-automatique-suisse-squelette-acier-316l-verre-saphir-5bb5ab",
     "title": "Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#26)",
     "brand": "Horlogerie Suisse",
     "category": "fashion",
@@ -35318,7 +35318,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_geneva_luxury_montre_hommage_chronogra_6": {
     "id": "luxury_geneva_luxury_montre_hommage_chronogra_6",
-    "slug": "montre-hommage-chronographe-lunette-ceramique-acier-apiw",
+    "slug": "montre-hommage-chronographe-lunette-ceramique-acier-oyster-d5f898",
     "title": "Montre Hommage Chronographe Lunette Céramique Acier Oyster (#27)",
     "brand": "Geneva Luxury",
     "category": "fashion",
@@ -35364,7 +35364,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_joaillerie_royale_bracelet_jonc_luxe_p_6": {
     "id": "luxury_joaillerie_royale_bracelet_jonc_luxe_p_6",
-    "slug": "bracelet-jonc-luxe-plaque-or-18-carats-pave-zirconium-ttou",
+    "slug": "bracelet-jonc-luxe-plaque-or-18-carats-pave-zirconium-aaa-c3cdbe",
     "title": "Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#28)",
     "brand": "Joaillerie Royale",
     "category": "fashion",
@@ -35410,7 +35410,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_atelier_bonanjo_collier_pendentif_diam_6": {
     "id": "luxury_atelier_bonanjo_collier_pendentif_diam_6",
-    "slug": "collier-pendentif-diamant-solitaire-chaine-forcat-argent-ld77",
+    "slug": "collier-pendentif-diamant-solitaire-chaine-forcat-argent-925-2680b6",
     "title": "Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#29)",
     "brand": "Atelier Bonanjo",
     "category": "fashion",
@@ -35456,7 +35456,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_prestige_bijoux_bague_de_fiancailles_e_6": {
     "id": "luxury_prestige_bijoux_bague_de_fiancailles_e_6",
-    "slug": "bague-de-fiancailles-eternite-or-blanc-solitaire-cristal-mzhv",
+    "slug": "bague-de-fiancailles-eternite-or-blanc-solitaire-cristal-6a7be4",
     "title": "Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#30)",
     "brand": "Prestige Bijoux",
     "category": "fashion",
@@ -35502,7 +35502,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_horlogerie_suisse_montre_automatique_s_7": {
     "id": "luxury_horlogerie_suisse_montre_automatique_s_7",
-    "slug": "montre-automatique-suisse-squelette-acier-316l-verre-2m9q",
+    "slug": "montre-automatique-suisse-squelette-acier-316l-verre-saphir-38abd3",
     "title": "Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#31)",
     "brand": "Horlogerie Suisse",
     "category": "fashion",
@@ -35548,7 +35548,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_geneva_luxury_montre_hommage_chronogra_7": {
     "id": "luxury_geneva_luxury_montre_hommage_chronogra_7",
-    "slug": "montre-hommage-chronographe-lunette-ceramique-acier-wfb5",
+    "slug": "montre-hommage-chronographe-lunette-ceramique-acier-oyster-b3caf8",
     "title": "Montre Hommage Chronographe Lunette Céramique Acier Oyster (#32)",
     "brand": "Geneva Luxury",
     "category": "fashion",
@@ -35594,7 +35594,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_joaillerie_royale_bracelet_jonc_luxe_p_7": {
     "id": "luxury_joaillerie_royale_bracelet_jonc_luxe_p_7",
-    "slug": "bracelet-jonc-luxe-plaque-or-18-carats-pave-zirconium-q9be",
+    "slug": "bracelet-jonc-luxe-plaque-or-18-carats-pave-zirconium-aaa-3688d1",
     "title": "Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#33)",
     "brand": "Joaillerie Royale",
     "category": "fashion",
@@ -35640,7 +35640,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_atelier_bonanjo_collier_pendentif_diam_7": {
     "id": "luxury_atelier_bonanjo_collier_pendentif_diam_7",
-    "slug": "collier-pendentif-diamant-solitaire-chaine-forcat-argent-vb1m",
+    "slug": "collier-pendentif-diamant-solitaire-chaine-forcat-argent-925-3625e5",
     "title": "Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#34)",
     "brand": "Atelier Bonanjo",
     "category": "fashion",
@@ -35686,7 +35686,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_prestige_bijoux_bague_de_fiancailles_e_7": {
     "id": "luxury_prestige_bijoux_bague_de_fiancailles_e_7",
-    "slug": "bague-de-fiancailles-eternite-or-blanc-solitaire-cristal-entn",
+    "slug": "bague-de-fiancailles-eternite-or-blanc-solitaire-cristal-7bc7c4",
     "title": "Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#35)",
     "brand": "Prestige Bijoux",
     "category": "fashion",
@@ -35732,7 +35732,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_horlogerie_suisse_montre_automatique_s_8": {
     "id": "luxury_horlogerie_suisse_montre_automatique_s_8",
-    "slug": "montre-automatique-suisse-squelette-acier-316l-verre-nh1k",
+    "slug": "montre-automatique-suisse-squelette-acier-316l-verre-saphir-08f9af",
     "title": "Montre Automatique Suisse Squelette Acier 316L Verre Saphir (#36)",
     "brand": "Horlogerie Suisse",
     "category": "fashion",
@@ -35778,7 +35778,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_geneva_luxury_montre_hommage_chronogra_8": {
     "id": "luxury_geneva_luxury_montre_hommage_chronogra_8",
-    "slug": "montre-hommage-chronographe-lunette-ceramique-acier-xfvq",
+    "slug": "montre-hommage-chronographe-lunette-ceramique-acier-oyster-b5e5e6",
     "title": "Montre Hommage Chronographe Lunette Céramique Acier Oyster (#37)",
     "brand": "Geneva Luxury",
     "category": "fashion",
@@ -35824,7 +35824,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_joaillerie_royale_bracelet_jonc_luxe_p_8": {
     "id": "luxury_joaillerie_royale_bracelet_jonc_luxe_p_8",
-    "slug": "bracelet-jonc-luxe-plaque-or-18-carats-pave-zirconium-b4g7",
+    "slug": "bracelet-jonc-luxe-plaque-or-18-carats-pave-zirconium-aaa-a637e7",
     "title": "Bracelet Jonc Luxe Plaqué Or 18 Carats Pavé Zirconium AAA (#38)",
     "brand": "Joaillerie Royale",
     "category": "fashion",
@@ -35870,7 +35870,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_atelier_bonanjo_collier_pendentif_diam_8": {
     "id": "luxury_atelier_bonanjo_collier_pendentif_diam_8",
-    "slug": "collier-pendentif-diamant-solitaire-chaine-forcat-argent-yyfe",
+    "slug": "collier-pendentif-diamant-solitaire-chaine-forcat-argent-925-670366",
     "title": "Collier Pendentif Diamant Solitaire & Chaîne Forçat Argent 925 (#39)",
     "brand": "Atelier Bonanjo",
     "category": "fashion",
@@ -35916,7 +35916,7 @@ window.PRODUCTS_DATA = {
   },
   "luxury_prestige_bijoux_bague_de_fiancailles_e_8": {
     "id": "luxury_prestige_bijoux_bague_de_fiancailles_e_8",
-    "slug": "bague-de-fiancailles-eternite-or-blanc-solitaire-cristal-o4aq",
+    "slug": "bague-de-fiancailles-eternite-or-blanc-solitaire-cristal-0a140f",
     "title": "Bague de Fiançailles Éternité Or Blanc & Solitaire Cristal Scintillant (#40)",
     "brand": "Prestige Bijoux",
     "category": "fashion",
@@ -35962,7 +35962,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_kitchenaid_robot_patissier_multifonc": {
     "id": "home_app_kitchenaid_robot_patissier_multifonc",
-    "slug": "robot-patissier-multifonction-kitchenaid-artisan-4-8l-izos",
+    "slug": "robot-patissier-multifonction-kitchenaid-artisan-4-8l-avec-ca14a7",
     "title": "Robot Pâtissier Multifonction KitchenAid Artisan 4.8L avec Bol Inox (#1)",
     "brand": "KitchenAid",
     "category": "home",
@@ -36012,7 +36012,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_acoqoos_extracteur_de_jus_a_froid_ac": {
     "id": "home_app_acoqoos_extracteur_de_jus_a_froid_ac",
-    "slug": "extracteur-de-jus-a-froid-acoqoos-cold-press-slow-juicer-qd0j",
+    "slug": "extracteur-de-jus-a-froid-acoqoos-cold-press-slow-juicer-60-76cea6",
     "title": "Extracteur de Jus à Froid ACOQOOS Cold Press Slow Juicer 60 RPM (#2)",
     "brand": "ACOQOOS",
     "category": "home",
@@ -36062,7 +36062,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_oraimo_friteuse_sans_huile_oraimo_nu": {
     "id": "home_app_oraimo_friteuse_sans_huile_oraimo_nu",
-    "slug": "friteuse-sans-huile-oraimo-nutrifry-smart-air-fryer-5l-wicu",
+    "slug": "friteuse-sans-huile-oraimo-nutrifry-smart-air-fryer-5l-8df34d",
     "title": "Friteuse Sans Huile Oraimo NutriFry Smart Air Fryer 5L Tactile 1500W (#3)",
     "brand": "Oraimo",
     "category": "home",
@@ -36112,7 +36112,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_barista_art_machine_a_expresso_cappu": {
     "id": "home_app_barista_art_machine_a_expresso_cappu",
-    "slug": "machine-a-expresso-cappuccino-vintage-pression-15-bars-cpty",
+    "slug": "machine-a-expresso-cappuccino-vintage-pression-15-bars-buse-30e3f5",
     "title": "Machine à Expresso & Cappuccino Vintage Pression 15 Bars Buse Vapeur (#4)",
     "brand": "Barista Art",
     "category": "home",
@@ -36162,7 +36162,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_nutrisqueeze_presse_fruits_et_legume": {
     "id": "home_app_nutrisqueeze_presse_fruits_et_legume",
-    "slug": "presse-fruits-et-legumes-compact-nutriments-preserves-55-98km",
+    "slug": "presse-fruits-et-legumes-compact-nutriments-preserves-55-rpm-62896b",
     "title": "Presse Fruits et Légumes Compact Nutriments Préservés 55 RPM (#5)",
     "brand": "NutriSqueeze",
     "category": "home",
@@ -36212,7 +36212,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_moulinex_mixeur_plongeant_4_en_1_ave": {
     "id": "home_app_moulinex_mixeur_plongeant_4_en_1_ave",
-    "slug": "mixeur-plongeant-4-en-1-avec-pied-inox-hachoir-500ml-et-v3wl",
+    "slug": "mixeur-plongeant-4-en-1-avec-pied-inox-hachoir-500ml-et-8fbfa0",
     "title": "Mixeur Plongeant 4-en-1 avec Pied Inox, Hachoir 500ml et Fouet (#6)",
     "brand": "Moulinex",
     "category": "home",
@@ -36262,7 +36262,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_thermasafe_bouilloire_electrique_san": {
     "id": "home_app_thermasafe_bouilloire_electrique_san",
-    "slug": "bouilloire-electrique-sans-fil-2l-double-paroi-inox-7n51",
+    "slug": "bouilloire-electrique-sans-fil-2l-double-paroi-inox-7c762b",
     "title": "Bouilloire Électrique Sans Fil 2L Double Paroi Inox Anti-Brûlure (#7)",
     "brand": "ThermaSafe",
     "category": "home",
@@ -36312,7 +36312,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_crispytime_gaufrier_appareil_croque_": {
     "id": "home_app_crispytime_gaufrier_appareil_croque_",
-    "slug": "gaufrier-appareil-croque-monsieur-plaques-antiadhesives-06cu",
+    "slug": "gaufrier-appareil-croque-monsieur-plaques-antiadhesives-eaaa48",
     "title": "Gaufrier & Appareil Croque-Monsieur Plaques Antiadhésives Amovibles (#8)",
     "brand": "CrispyTime",
     "category": "home",
@@ -36362,7 +36362,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_handheld_mousseur_a_lait_electrique_": {
     "id": "home_app_handheld_mousseur_a_lait_electrique_",
-    "slug": "mousseur-a-lait-electrique-rechargeable-usb-c-double-5tzu",
+    "slug": "mousseur-a-lait-electrique-rechargeable-usb-c-double-tete-28dcbf",
     "title": "Mousseur à Lait Électrique Rechargeable USB-C Double Tête Inox (#9)",
     "brand": "Handheld",
     "category": "home",
@@ -36412,7 +36412,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_citrusmaster_presse_agrumes_electriq": {
     "id": "home_app_citrusmaster_presse_agrumes_electriq",
-    "slug": "presse-agrumes-electrique-professionnel-a-levier-inox-cly2",
+    "slug": "presse-agrumes-electrique-professionnel-a-levier-inox-160w-668cfa",
     "title": "Presse-Agrumes Électrique Professionnel à Levier Inox 160W (#10)",
     "brand": "CitrusMaster",
     "category": "home",
@@ -36462,7 +36462,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_kitchenaid_robot_patissier_multifonc_2": {
     "id": "home_app_kitchenaid_robot_patissier_multifonc_2",
-    "slug": "robot-patissier-multifonction-kitchenaid-artisan-4-8l-drrn",
+    "slug": "robot-patissier-multifonction-kitchenaid-artisan-4-8l-avec-1a4493",
     "title": "Robot Pâtissier Multifonction KitchenAid Artisan 4.8L avec Bol Inox (#11)",
     "brand": "KitchenAid",
     "category": "home",
@@ -36512,7 +36512,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_acoqoos_extracteur_de_jus_a_froid_ac_2": {
     "id": "home_app_acoqoos_extracteur_de_jus_a_froid_ac_2",
-    "slug": "extracteur-de-jus-a-froid-acoqoos-cold-press-slow-juicer-862n",
+    "slug": "extracteur-de-jus-a-froid-acoqoos-cold-press-slow-juicer-60-f2b248",
     "title": "Extracteur de Jus à Froid ACOQOOS Cold Press Slow Juicer 60 RPM (#12)",
     "brand": "ACOQOOS",
     "category": "home",
@@ -36562,7 +36562,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_oraimo_friteuse_sans_huile_oraimo_nu_2": {
     "id": "home_app_oraimo_friteuse_sans_huile_oraimo_nu_2",
-    "slug": "friteuse-sans-huile-oraimo-nutrifry-smart-air-fryer-5l-tc0y",
+    "slug": "friteuse-sans-huile-oraimo-nutrifry-smart-air-fryer-5l-b5c959",
     "title": "Friteuse Sans Huile Oraimo NutriFry Smart Air Fryer 5L Tactile 1500W (#13)",
     "brand": "Oraimo",
     "category": "home",
@@ -36612,7 +36612,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_barista_art_machine_a_expresso_cappu_2": {
     "id": "home_app_barista_art_machine_a_expresso_cappu_2",
-    "slug": "machine-a-expresso-cappuccino-vintage-pression-15-bars-aske",
+    "slug": "machine-a-expresso-cappuccino-vintage-pression-15-bars-buse-837a70",
     "title": "Machine à Expresso & Cappuccino Vintage Pression 15 Bars Buse Vapeur (#14)",
     "brand": "Barista Art",
     "category": "home",
@@ -36662,7 +36662,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_nutrisqueeze_presse_fruits_et_legume_2": {
     "id": "home_app_nutrisqueeze_presse_fruits_et_legume_2",
-    "slug": "presse-fruits-et-legumes-compact-nutriments-preserves-55-cux6",
+    "slug": "presse-fruits-et-legumes-compact-nutriments-preserves-55-rpm-fe6c34",
     "title": "Presse Fruits et Légumes Compact Nutriments Préservés 55 RPM (#15)",
     "brand": "NutriSqueeze",
     "category": "home",
@@ -36712,7 +36712,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_moulinex_mixeur_plongeant_4_en_1_ave_2": {
     "id": "home_app_moulinex_mixeur_plongeant_4_en_1_ave_2",
-    "slug": "mixeur-plongeant-4-en-1-avec-pied-inox-hachoir-500ml-et-aor4",
+    "slug": "mixeur-plongeant-4-en-1-avec-pied-inox-hachoir-500ml-et-cadbc5",
     "title": "Mixeur Plongeant 4-en-1 avec Pied Inox, Hachoir 500ml et Fouet (#16)",
     "brand": "Moulinex",
     "category": "home",
@@ -36762,7 +36762,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_thermasafe_bouilloire_electrique_san_2": {
     "id": "home_app_thermasafe_bouilloire_electrique_san_2",
-    "slug": "bouilloire-electrique-sans-fil-2l-double-paroi-inox-5mm1",
+    "slug": "bouilloire-electrique-sans-fil-2l-double-paroi-inox-790d5a",
     "title": "Bouilloire Électrique Sans Fil 2L Double Paroi Inox Anti-Brûlure (#17)",
     "brand": "ThermaSafe",
     "category": "home",
@@ -36812,7 +36812,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_crispytime_gaufrier_appareil_croque__2": {
     "id": "home_app_crispytime_gaufrier_appareil_croque__2",
-    "slug": "gaufrier-appareil-croque-monsieur-plaques-antiadhesives-6bb3",
+    "slug": "gaufrier-appareil-croque-monsieur-plaques-antiadhesives-62d439",
     "title": "Gaufrier & Appareil Croque-Monsieur Plaques Antiadhésives Amovibles (#18)",
     "brand": "CrispyTime",
     "category": "home",
@@ -36862,7 +36862,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_handheld_mousseur_a_lait_electrique__2": {
     "id": "home_app_handheld_mousseur_a_lait_electrique__2",
-    "slug": "mousseur-a-lait-electrique-rechargeable-usb-c-double-afgd",
+    "slug": "mousseur-a-lait-electrique-rechargeable-usb-c-double-tete-7990ea",
     "title": "Mousseur à Lait Électrique Rechargeable USB-C Double Tête Inox (#19)",
     "brand": "Handheld",
     "category": "home",
@@ -36912,7 +36912,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_citrusmaster_presse_agrumes_electriq_2": {
     "id": "home_app_citrusmaster_presse_agrumes_electriq_2",
-    "slug": "presse-agrumes-electrique-professionnel-a-levier-inox-0dso",
+    "slug": "presse-agrumes-electrique-professionnel-a-levier-inox-160w-b0e68c",
     "title": "Presse-Agrumes Électrique Professionnel à Levier Inox 160W (#20)",
     "brand": "CitrusMaster",
     "category": "home",
@@ -36962,7 +36962,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_kitchenaid_robot_patissier_multifonc_3": {
     "id": "home_app_kitchenaid_robot_patissier_multifonc_3",
-    "slug": "robot-patissier-multifonction-kitchenaid-artisan-4-8l-gijj",
+    "slug": "robot-patissier-multifonction-kitchenaid-artisan-4-8l-avec-4c3b5a",
     "title": "Robot Pâtissier Multifonction KitchenAid Artisan 4.8L avec Bol Inox (#21)",
     "brand": "KitchenAid",
     "category": "home",
@@ -37012,7 +37012,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_acoqoos_extracteur_de_jus_a_froid_ac_3": {
     "id": "home_app_acoqoos_extracteur_de_jus_a_froid_ac_3",
-    "slug": "extracteur-de-jus-a-froid-acoqoos-cold-press-slow-juicer-ko52",
+    "slug": "extracteur-de-jus-a-froid-acoqoos-cold-press-slow-juicer-60-ac406f",
     "title": "Extracteur de Jus à Froid ACOQOOS Cold Press Slow Juicer 60 RPM (#22)",
     "brand": "ACOQOOS",
     "category": "home",
@@ -37062,7 +37062,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_oraimo_friteuse_sans_huile_oraimo_nu_3": {
     "id": "home_app_oraimo_friteuse_sans_huile_oraimo_nu_3",
-    "slug": "friteuse-sans-huile-oraimo-nutrifry-smart-air-fryer-5l-sk41",
+    "slug": "friteuse-sans-huile-oraimo-nutrifry-smart-air-fryer-5l-1a1bd8",
     "title": "Friteuse Sans Huile Oraimo NutriFry Smart Air Fryer 5L Tactile 1500W (#23)",
     "brand": "Oraimo",
     "category": "home",
@@ -37112,7 +37112,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_barista_art_machine_a_expresso_cappu_3": {
     "id": "home_app_barista_art_machine_a_expresso_cappu_3",
-    "slug": "machine-a-expresso-cappuccino-vintage-pression-15-bars-63jt",
+    "slug": "machine-a-expresso-cappuccino-vintage-pression-15-bars-buse-6955f3",
     "title": "Machine à Expresso & Cappuccino Vintage Pression 15 Bars Buse Vapeur (#24)",
     "brand": "Barista Art",
     "category": "home",
@@ -37162,7 +37162,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_nutrisqueeze_presse_fruits_et_legume_3": {
     "id": "home_app_nutrisqueeze_presse_fruits_et_legume_3",
-    "slug": "presse-fruits-et-legumes-compact-nutriments-preserves-55-gezz",
+    "slug": "presse-fruits-et-legumes-compact-nutriments-preserves-55-rpm-d67ccd",
     "title": "Presse Fruits et Légumes Compact Nutriments Préservés 55 RPM (#25)",
     "brand": "NutriSqueeze",
     "category": "home",
@@ -37212,7 +37212,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_moulinex_mixeur_plongeant_4_en_1_ave_3": {
     "id": "home_app_moulinex_mixeur_plongeant_4_en_1_ave_3",
-    "slug": "mixeur-plongeant-4-en-1-avec-pied-inox-hachoir-500ml-et-p0lx",
+    "slug": "mixeur-plongeant-4-en-1-avec-pied-inox-hachoir-500ml-et-c6fe72",
     "title": "Mixeur Plongeant 4-en-1 avec Pied Inox, Hachoir 500ml et Fouet (#26)",
     "brand": "Moulinex",
     "category": "home",
@@ -37262,7 +37262,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_thermasafe_bouilloire_electrique_san_3": {
     "id": "home_app_thermasafe_bouilloire_electrique_san_3",
-    "slug": "bouilloire-electrique-sans-fil-2l-double-paroi-inox-je7l",
+    "slug": "bouilloire-electrique-sans-fil-2l-double-paroi-inox-4387b0",
     "title": "Bouilloire Électrique Sans Fil 2L Double Paroi Inox Anti-Brûlure (#27)",
     "brand": "ThermaSafe",
     "category": "home",
@@ -37312,7 +37312,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_crispytime_gaufrier_appareil_croque__3": {
     "id": "home_app_crispytime_gaufrier_appareil_croque__3",
-    "slug": "gaufrier-appareil-croque-monsieur-plaques-antiadhesives-wxn1",
+    "slug": "gaufrier-appareil-croque-monsieur-plaques-antiadhesives-d487fc",
     "title": "Gaufrier & Appareil Croque-Monsieur Plaques Antiadhésives Amovibles (#28)",
     "brand": "CrispyTime",
     "category": "home",
@@ -37362,7 +37362,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_handheld_mousseur_a_lait_electrique__3": {
     "id": "home_app_handheld_mousseur_a_lait_electrique__3",
-    "slug": "mousseur-a-lait-electrique-rechargeable-usb-c-double-fkh2",
+    "slug": "mousseur-a-lait-electrique-rechargeable-usb-c-double-tete-f785bd",
     "title": "Mousseur à Lait Électrique Rechargeable USB-C Double Tête Inox (#29)",
     "brand": "Handheld",
     "category": "home",
@@ -37412,7 +37412,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_citrusmaster_presse_agrumes_electriq_3": {
     "id": "home_app_citrusmaster_presse_agrumes_electriq_3",
-    "slug": "presse-agrumes-electrique-professionnel-a-levier-inox-d7h8",
+    "slug": "presse-agrumes-electrique-professionnel-a-levier-inox-160w-0cd9e7",
     "title": "Presse-Agrumes Électrique Professionnel à Levier Inox 160W (#30)",
     "brand": "CitrusMaster",
     "category": "home",
@@ -37462,7 +37462,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_kitchenaid_robot_patissier_multifonc_4": {
     "id": "home_app_kitchenaid_robot_patissier_multifonc_4",
-    "slug": "robot-patissier-multifonction-kitchenaid-artisan-4-8l-w151",
+    "slug": "robot-patissier-multifonction-kitchenaid-artisan-4-8l-avec-8da613",
     "title": "Robot Pâtissier Multifonction KitchenAid Artisan 4.8L avec Bol Inox (#31)",
     "brand": "KitchenAid",
     "category": "home",
@@ -37512,7 +37512,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_acoqoos_extracteur_de_jus_a_froid_ac_4": {
     "id": "home_app_acoqoos_extracteur_de_jus_a_froid_ac_4",
-    "slug": "extracteur-de-jus-a-froid-acoqoos-cold-press-slow-juicer-6gcb",
+    "slug": "extracteur-de-jus-a-froid-acoqoos-cold-press-slow-juicer-60-569d99",
     "title": "Extracteur de Jus à Froid ACOQOOS Cold Press Slow Juicer 60 RPM (#32)",
     "brand": "ACOQOOS",
     "category": "home",
@@ -37562,7 +37562,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_oraimo_friteuse_sans_huile_oraimo_nu_4": {
     "id": "home_app_oraimo_friteuse_sans_huile_oraimo_nu_4",
-    "slug": "friteuse-sans-huile-oraimo-nutrifry-smart-air-fryer-5l-bciz",
+    "slug": "friteuse-sans-huile-oraimo-nutrifry-smart-air-fryer-5l-ff04e7",
     "title": "Friteuse Sans Huile Oraimo NutriFry Smart Air Fryer 5L Tactile 1500W (#33)",
     "brand": "Oraimo",
     "category": "home",
@@ -37612,7 +37612,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_barista_art_machine_a_expresso_cappu_4": {
     "id": "home_app_barista_art_machine_a_expresso_cappu_4",
-    "slug": "machine-a-expresso-cappuccino-vintage-pression-15-bars-mfjx",
+    "slug": "machine-a-expresso-cappuccino-vintage-pression-15-bars-buse-4757c0",
     "title": "Machine à Expresso & Cappuccino Vintage Pression 15 Bars Buse Vapeur (#34)",
     "brand": "Barista Art",
     "category": "home",
@@ -37662,7 +37662,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_nutrisqueeze_presse_fruits_et_legume_4": {
     "id": "home_app_nutrisqueeze_presse_fruits_et_legume_4",
-    "slug": "presse-fruits-et-legumes-compact-nutriments-preserves-55-yukt",
+    "slug": "presse-fruits-et-legumes-compact-nutriments-preserves-55-rpm-84d8bd",
     "title": "Presse Fruits et Légumes Compact Nutriments Préservés 55 RPM (#35)",
     "brand": "NutriSqueeze",
     "category": "home",
@@ -37712,7 +37712,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_moulinex_mixeur_plongeant_4_en_1_ave_4": {
     "id": "home_app_moulinex_mixeur_plongeant_4_en_1_ave_4",
-    "slug": "mixeur-plongeant-4-en-1-avec-pied-inox-hachoir-500ml-et-skh5",
+    "slug": "mixeur-plongeant-4-en-1-avec-pied-inox-hachoir-500ml-et-408d5a",
     "title": "Mixeur Plongeant 4-en-1 avec Pied Inox, Hachoir 500ml et Fouet (#36)",
     "brand": "Moulinex",
     "category": "home",
@@ -37762,7 +37762,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_thermasafe_bouilloire_electrique_san_4": {
     "id": "home_app_thermasafe_bouilloire_electrique_san_4",
-    "slug": "bouilloire-electrique-sans-fil-2l-double-paroi-inox-vzvo",
+    "slug": "bouilloire-electrique-sans-fil-2l-double-paroi-inox-1a37ec",
     "title": "Bouilloire Électrique Sans Fil 2L Double Paroi Inox Anti-Brûlure (#37)",
     "brand": "ThermaSafe",
     "category": "home",
@@ -37812,7 +37812,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_crispytime_gaufrier_appareil_croque__4": {
     "id": "home_app_crispytime_gaufrier_appareil_croque__4",
-    "slug": "gaufrier-appareil-croque-monsieur-plaques-antiadhesives-vckt",
+    "slug": "gaufrier-appareil-croque-monsieur-plaques-antiadhesives-806e93",
     "title": "Gaufrier & Appareil Croque-Monsieur Plaques Antiadhésives Amovibles (#38)",
     "brand": "CrispyTime",
     "category": "home",
@@ -37862,7 +37862,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_handheld_mousseur_a_lait_electrique__4": {
     "id": "home_app_handheld_mousseur_a_lait_electrique__4",
-    "slug": "mousseur-a-lait-electrique-rechargeable-usb-c-double-2i40",
+    "slug": "mousseur-a-lait-electrique-rechargeable-usb-c-double-tete-e4f717",
     "title": "Mousseur à Lait Électrique Rechargeable USB-C Double Tête Inox (#39)",
     "brand": "Handheld",
     "category": "home",
@@ -37912,7 +37912,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_citrusmaster_presse_agrumes_electriq_4": {
     "id": "home_app_citrusmaster_presse_agrumes_electriq_4",
-    "slug": "presse-agrumes-electrique-professionnel-a-levier-inox-xe1e",
+    "slug": "presse-agrumes-electrique-professionnel-a-levier-inox-160w-a9e265",
     "title": "Presse-Agrumes Électrique Professionnel à Levier Inox 160W (#40)",
     "brand": "CitrusMaster",
     "category": "home",
@@ -37962,7 +37962,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_kitchenaid_robot_patissier_multifonc_5": {
     "id": "home_app_kitchenaid_robot_patissier_multifonc_5",
-    "slug": "robot-patissier-multifonction-kitchenaid-artisan-4-8l-m7pa",
+    "slug": "robot-patissier-multifonction-kitchenaid-artisan-4-8l-avec-340537",
     "title": "Robot Pâtissier Multifonction KitchenAid Artisan 4.8L avec Bol Inox (#41)",
     "brand": "KitchenAid",
     "category": "home",
@@ -38012,7 +38012,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_acoqoos_extracteur_de_jus_a_froid_ac_5": {
     "id": "home_app_acoqoos_extracteur_de_jus_a_froid_ac_5",
-    "slug": "extracteur-de-jus-a-froid-acoqoos-cold-press-slow-juicer-32ud",
+    "slug": "extracteur-de-jus-a-froid-acoqoos-cold-press-slow-juicer-60-4ab15b",
     "title": "Extracteur de Jus à Froid ACOQOOS Cold Press Slow Juicer 60 RPM (#42)",
     "brand": "ACOQOOS",
     "category": "home",
@@ -38062,7 +38062,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_oraimo_friteuse_sans_huile_oraimo_nu_5": {
     "id": "home_app_oraimo_friteuse_sans_huile_oraimo_nu_5",
-    "slug": "friteuse-sans-huile-oraimo-nutrifry-smart-air-fryer-5l-eul0",
+    "slug": "friteuse-sans-huile-oraimo-nutrifry-smart-air-fryer-5l-cd7916",
     "title": "Friteuse Sans Huile Oraimo NutriFry Smart Air Fryer 5L Tactile 1500W (#43)",
     "brand": "Oraimo",
     "category": "home",
@@ -38112,7 +38112,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_barista_art_machine_a_expresso_cappu_5": {
     "id": "home_app_barista_art_machine_a_expresso_cappu_5",
-    "slug": "machine-a-expresso-cappuccino-vintage-pression-15-bars-3doj",
+    "slug": "machine-a-expresso-cappuccino-vintage-pression-15-bars-buse-99e209",
     "title": "Machine à Expresso & Cappuccino Vintage Pression 15 Bars Buse Vapeur (#44)",
     "brand": "Barista Art",
     "category": "home",
@@ -38162,7 +38162,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_nutrisqueeze_presse_fruits_et_legume_5": {
     "id": "home_app_nutrisqueeze_presse_fruits_et_legume_5",
-    "slug": "presse-fruits-et-legumes-compact-nutriments-preserves-55-34o9",
+    "slug": "presse-fruits-et-legumes-compact-nutriments-preserves-55-rpm-bdb901",
     "title": "Presse Fruits et Légumes Compact Nutriments Préservés 55 RPM (#45)",
     "brand": "NutriSqueeze",
     "category": "home",
@@ -38212,7 +38212,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_moulinex_mixeur_plongeant_4_en_1_ave_5": {
     "id": "home_app_moulinex_mixeur_plongeant_4_en_1_ave_5",
-    "slug": "mixeur-plongeant-4-en-1-avec-pied-inox-hachoir-500ml-et-ofd6",
+    "slug": "mixeur-plongeant-4-en-1-avec-pied-inox-hachoir-500ml-et-5d92c9",
     "title": "Mixeur Plongeant 4-en-1 avec Pied Inox, Hachoir 500ml et Fouet (#46)",
     "brand": "Moulinex",
     "category": "home",
@@ -38262,7 +38262,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_thermasafe_bouilloire_electrique_san_5": {
     "id": "home_app_thermasafe_bouilloire_electrique_san_5",
-    "slug": "bouilloire-electrique-sans-fil-2l-double-paroi-inox-9570",
+    "slug": "bouilloire-electrique-sans-fil-2l-double-paroi-inox-1bf4f9",
     "title": "Bouilloire Électrique Sans Fil 2L Double Paroi Inox Anti-Brûlure (#47)",
     "brand": "ThermaSafe",
     "category": "home",
@@ -38312,7 +38312,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_crispytime_gaufrier_appareil_croque__5": {
     "id": "home_app_crispytime_gaufrier_appareil_croque__5",
-    "slug": "gaufrier-appareil-croque-monsieur-plaques-antiadhesives-ztwi",
+    "slug": "gaufrier-appareil-croque-monsieur-plaques-antiadhesives-08b598",
     "title": "Gaufrier & Appareil Croque-Monsieur Plaques Antiadhésives Amovibles (#48)",
     "brand": "CrispyTime",
     "category": "home",
@@ -38362,7 +38362,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_handheld_mousseur_a_lait_electrique__5": {
     "id": "home_app_handheld_mousseur_a_lait_electrique__5",
-    "slug": "mousseur-a-lait-electrique-rechargeable-usb-c-double-c4jd",
+    "slug": "mousseur-a-lait-electrique-rechargeable-usb-c-double-tete-0fd9ff",
     "title": "Mousseur à Lait Électrique Rechargeable USB-C Double Tête Inox (#49)",
     "brand": "Handheld",
     "category": "home",
@@ -38412,7 +38412,7 @@ window.PRODUCTS_DATA = {
   },
   "home_app_citrusmaster_presse_agrumes_electriq_5": {
     "id": "home_app_citrusmaster_presse_agrumes_electriq_5",
-    "slug": "presse-agrumes-electrique-professionnel-a-levier-inox-9pju",
+    "slug": "presse-agrumes-electrique-professionnel-a-levier-inox-160w-e3fbee",
     "title": "Presse-Agrumes Électrique Professionnel à Levier Inox 160W (#50)",
     "brand": "CitrusMaster",
     "category": "home",
@@ -38462,7 +38462,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_granitestone_batterie_de_cuisine_10": {
     "id": "home_cook_granitestone_batterie_de_cuisine_10",
-    "slug": "batterie-de-cuisine-10-pieces-revetement-granit-4ty1",
+    "slug": "batterie-de-cuisine-10-pieces-revetement-granit-antiadhesif-c05491",
     "title": "Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#1)",
     "brand": "GraniteStone",
     "category": "home",
@@ -38508,7 +38508,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_chefmaster_poele_a_frire_profession": {
     "id": "home_cook_chefmaster_poele_a_frire_profession",
-    "slug": "poele-a-frire-professionnelle-fonte-daluminium-poignee-ecft",
+    "slug": "poele-a-frire-professionnelle-fonte-daluminium-poignee-d4143c",
     "title": "Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#2)",
     "brand": "ChefMaster",
     "category": "home",
@@ -38554,7 +38554,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_saveurs_d_afrique_marmite_faitout_t": {
     "id": "home_cook_saveurs_d_afrique_marmite_faitout_t",
-    "slug": "marmite-faitout-traditionnel-haute-capacite-12l-3swe",
+    "slug": "marmite-faitout-traditionnel-haute-capacite-12l-aluminium-2e5ce4",
     "title": "Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#3)",
     "brand": "Saveurs d'Afrique",
     "category": "home",
@@ -38600,7 +38600,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_kitchen_craft_presse_citron_manuel_": {
     "id": "home_cook_kitchen_craft_presse_citron_manuel_",
-    "slug": "presse-citron-manuel-en-verre-cannele-avec-socle-verseur-zrv8",
+    "slug": "presse-citron-manuel-en-verre-cannele-avec-socle-verseur-b1b325",
     "title": "Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#4)",
     "brand": "Kitchen Craft",
     "category": "home",
@@ -38646,7 +38646,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_culinarypro_ecumoire_araignee_en_ac": {
     "id": "home_cook_culinarypro_ecumoire_araignee_en_ac",
-    "slug": "ecumoire-araignee-en-acier-inoxydable-avec-manche-bois-jp7g",
+    "slug": "ecumoire-araignee-en-acier-inoxydable-avec-manche-bois-330323",
     "title": "Écumoire Araignée en Acier Inoxydable avec Manche Bois Massif (#5)",
     "brand": "CulinaryPro",
     "category": "home",
@@ -38692,7 +38692,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_flamme_securite_lot_de_4_allume_gaz": {
     "id": "home_cook_flamme_securite_lot_de_4_allume_gaz",
-    "slug": "lot-de-4-allume-gaz-de-cuisine-rechargeables-flamme-4f25",
+    "slug": "lot-de-4-allume-gaz-de-cuisine-rechargeables-flamme-reglable-fd1905",
     "title": "Lot de 4 Allume-Gaz de Cuisine Rechargeables Flamme Réglable (#6)",
     "brand": "Flamme Sécurité",
     "category": "home",
@@ -38738,7 +38738,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_granitestone_batterie_de_cuisine_10_2": {
     "id": "home_cook_granitestone_batterie_de_cuisine_10_2",
-    "slug": "batterie-de-cuisine-10-pieces-revetement-granit-c29m",
+    "slug": "batterie-de-cuisine-10-pieces-revetement-granit-antiadhesif-95b3cd",
     "title": "Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#7)",
     "brand": "GraniteStone",
     "category": "home",
@@ -38784,7 +38784,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_chefmaster_poele_a_frire_profession_2": {
     "id": "home_cook_chefmaster_poele_a_frire_profession_2",
-    "slug": "poele-a-frire-professionnelle-fonte-daluminium-poignee-dhe1",
+    "slug": "poele-a-frire-professionnelle-fonte-daluminium-poignee-2fe437",
     "title": "Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#8)",
     "brand": "ChefMaster",
     "category": "home",
@@ -38830,7 +38830,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_saveurs_d_afrique_marmite_faitout_t_2": {
     "id": "home_cook_saveurs_d_afrique_marmite_faitout_t_2",
-    "slug": "marmite-faitout-traditionnel-haute-capacite-12l-sc8a",
+    "slug": "marmite-faitout-traditionnel-haute-capacite-12l-aluminium-cd9c51",
     "title": "Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#9)",
     "brand": "Saveurs d'Afrique",
     "category": "home",
@@ -38876,7 +38876,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_kitchen_craft_presse_citron_manuel__2": {
     "id": "home_cook_kitchen_craft_presse_citron_manuel__2",
-    "slug": "presse-citron-manuel-en-verre-cannele-avec-socle-verseur-hue9",
+    "slug": "presse-citron-manuel-en-verre-cannele-avec-socle-verseur-7eb145",
     "title": "Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#10)",
     "brand": "Kitchen Craft",
     "category": "home",
@@ -38922,7 +38922,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_culinarypro_ecumoire_araignee_en_ac_2": {
     "id": "home_cook_culinarypro_ecumoire_araignee_en_ac_2",
-    "slug": "ecumoire-araignee-en-acier-inoxydable-avec-manche-bois-mmqz",
+    "slug": "ecumoire-araignee-en-acier-inoxydable-avec-manche-bois-d5340d",
     "title": "Écumoire Araignée en Acier Inoxydable avec Manche Bois Massif (#11)",
     "brand": "CulinaryPro",
     "category": "home",
@@ -38968,7 +38968,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_flamme_securite_lot_de_4_allume_gaz_2": {
     "id": "home_cook_flamme_securite_lot_de_4_allume_gaz_2",
-    "slug": "lot-de-4-allume-gaz-de-cuisine-rechargeables-flamme-k0ip",
+    "slug": "lot-de-4-allume-gaz-de-cuisine-rechargeables-flamme-reglable-e8514f",
     "title": "Lot de 4 Allume-Gaz de Cuisine Rechargeables Flamme Réglable (#12)",
     "brand": "Flamme Sécurité",
     "category": "home",
@@ -39014,7 +39014,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_granitestone_batterie_de_cuisine_10_3": {
     "id": "home_cook_granitestone_batterie_de_cuisine_10_3",
-    "slug": "batterie-de-cuisine-10-pieces-revetement-granit-h0mi",
+    "slug": "batterie-de-cuisine-10-pieces-revetement-granit-antiadhesif-80fe25",
     "title": "Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#13)",
     "brand": "GraniteStone",
     "category": "home",
@@ -39060,7 +39060,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_chefmaster_poele_a_frire_profession_3": {
     "id": "home_cook_chefmaster_poele_a_frire_profession_3",
-    "slug": "poele-a-frire-professionnelle-fonte-daluminium-poignee-ocfz",
+    "slug": "poele-a-frire-professionnelle-fonte-daluminium-poignee-94227b",
     "title": "Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#14)",
     "brand": "ChefMaster",
     "category": "home",
@@ -39106,7 +39106,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_saveurs_d_afrique_marmite_faitout_t_3": {
     "id": "home_cook_saveurs_d_afrique_marmite_faitout_t_3",
-    "slug": "marmite-faitout-traditionnel-haute-capacite-12l-ghsi",
+    "slug": "marmite-faitout-traditionnel-haute-capacite-12l-aluminium-451fb0",
     "title": "Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#15)",
     "brand": "Saveurs d'Afrique",
     "category": "home",
@@ -39152,7 +39152,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_kitchen_craft_presse_citron_manuel__3": {
     "id": "home_cook_kitchen_craft_presse_citron_manuel__3",
-    "slug": "presse-citron-manuel-en-verre-cannele-avec-socle-verseur-l3c9",
+    "slug": "presse-citron-manuel-en-verre-cannele-avec-socle-verseur-b6aa24",
     "title": "Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#16)",
     "brand": "Kitchen Craft",
     "category": "home",
@@ -39198,7 +39198,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_culinarypro_ecumoire_araignee_en_ac_3": {
     "id": "home_cook_culinarypro_ecumoire_araignee_en_ac_3",
-    "slug": "ecumoire-araignee-en-acier-inoxydable-avec-manche-bois-omtk",
+    "slug": "ecumoire-araignee-en-acier-inoxydable-avec-manche-bois-9c71e3",
     "title": "Écumoire Araignée en Acier Inoxydable avec Manche Bois Massif (#17)",
     "brand": "CulinaryPro",
     "category": "home",
@@ -39244,7 +39244,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_flamme_securite_lot_de_4_allume_gaz_3": {
     "id": "home_cook_flamme_securite_lot_de_4_allume_gaz_3",
-    "slug": "lot-de-4-allume-gaz-de-cuisine-rechargeables-flamme-zn3l",
+    "slug": "lot-de-4-allume-gaz-de-cuisine-rechargeables-flamme-reglable-eb106a",
     "title": "Lot de 4 Allume-Gaz de Cuisine Rechargeables Flamme Réglable (#18)",
     "brand": "Flamme Sécurité",
     "category": "home",
@@ -39290,7 +39290,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_granitestone_batterie_de_cuisine_10_4": {
     "id": "home_cook_granitestone_batterie_de_cuisine_10_4",
-    "slug": "batterie-de-cuisine-10-pieces-revetement-granit-0r31",
+    "slug": "batterie-de-cuisine-10-pieces-revetement-granit-antiadhesif-77094e",
     "title": "Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#19)",
     "brand": "GraniteStone",
     "category": "home",
@@ -39336,7 +39336,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_chefmaster_poele_a_frire_profession_4": {
     "id": "home_cook_chefmaster_poele_a_frire_profession_4",
-    "slug": "poele-a-frire-professionnelle-fonte-daluminium-poignee-3vr8",
+    "slug": "poele-a-frire-professionnelle-fonte-daluminium-poignee-5180b1",
     "title": "Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#20)",
     "brand": "ChefMaster",
     "category": "home",
@@ -39382,7 +39382,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_saveurs_d_afrique_marmite_faitout_t_4": {
     "id": "home_cook_saveurs_d_afrique_marmite_faitout_t_4",
-    "slug": "marmite-faitout-traditionnel-haute-capacite-12l-xcz5",
+    "slug": "marmite-faitout-traditionnel-haute-capacite-12l-aluminium-ed8f83",
     "title": "Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#21)",
     "brand": "Saveurs d'Afrique",
     "category": "home",
@@ -39428,7 +39428,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_kitchen_craft_presse_citron_manuel__4": {
     "id": "home_cook_kitchen_craft_presse_citron_manuel__4",
-    "slug": "presse-citron-manuel-en-verre-cannele-avec-socle-verseur-axdr",
+    "slug": "presse-citron-manuel-en-verre-cannele-avec-socle-verseur-712871",
     "title": "Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#22)",
     "brand": "Kitchen Craft",
     "category": "home",
@@ -39474,7 +39474,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_culinarypro_ecumoire_araignee_en_ac_4": {
     "id": "home_cook_culinarypro_ecumoire_araignee_en_ac_4",
-    "slug": "ecumoire-araignee-en-acier-inoxydable-avec-manche-bois-3pc2",
+    "slug": "ecumoire-araignee-en-acier-inoxydable-avec-manche-bois-e5c4fa",
     "title": "Écumoire Araignée en Acier Inoxydable avec Manche Bois Massif (#23)",
     "brand": "CulinaryPro",
     "category": "home",
@@ -39520,7 +39520,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_flamme_securite_lot_de_4_allume_gaz_4": {
     "id": "home_cook_flamme_securite_lot_de_4_allume_gaz_4",
-    "slug": "lot-de-4-allume-gaz-de-cuisine-rechargeables-flamme-1x9h",
+    "slug": "lot-de-4-allume-gaz-de-cuisine-rechargeables-flamme-reglable-ef1332",
     "title": "Lot de 4 Allume-Gaz de Cuisine Rechargeables Flamme Réglable (#24)",
     "brand": "Flamme Sécurité",
     "category": "home",
@@ -39566,7 +39566,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_granitestone_batterie_de_cuisine_10_5": {
     "id": "home_cook_granitestone_batterie_de_cuisine_10_5",
-    "slug": "batterie-de-cuisine-10-pieces-revetement-granit-0l10",
+    "slug": "batterie-de-cuisine-10-pieces-revetement-granit-antiadhesif-6eed3e",
     "title": "Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#25)",
     "brand": "GraniteStone",
     "category": "home",
@@ -39612,7 +39612,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_chefmaster_poele_a_frire_profession_5": {
     "id": "home_cook_chefmaster_poele_a_frire_profession_5",
-    "slug": "poele-a-frire-professionnelle-fonte-daluminium-poignee-v0xt",
+    "slug": "poele-a-frire-professionnelle-fonte-daluminium-poignee-97c1e1",
     "title": "Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#26)",
     "brand": "ChefMaster",
     "category": "home",
@@ -39658,7 +39658,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_saveurs_d_afrique_marmite_faitout_t_5": {
     "id": "home_cook_saveurs_d_afrique_marmite_faitout_t_5",
-    "slug": "marmite-faitout-traditionnel-haute-capacite-12l-x288",
+    "slug": "marmite-faitout-traditionnel-haute-capacite-12l-aluminium-ba1a0b",
     "title": "Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#27)",
     "brand": "Saveurs d'Afrique",
     "category": "home",
@@ -39704,7 +39704,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_kitchen_craft_presse_citron_manuel__5": {
     "id": "home_cook_kitchen_craft_presse_citron_manuel__5",
-    "slug": "presse-citron-manuel-en-verre-cannele-avec-socle-verseur-00ma",
+    "slug": "presse-citron-manuel-en-verre-cannele-avec-socle-verseur-a62fff",
     "title": "Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#28)",
     "brand": "Kitchen Craft",
     "category": "home",
@@ -39750,7 +39750,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_culinarypro_ecumoire_araignee_en_ac_5": {
     "id": "home_cook_culinarypro_ecumoire_araignee_en_ac_5",
-    "slug": "ecumoire-araignee-en-acier-inoxydable-avec-manche-bois-8ah7",
+    "slug": "ecumoire-araignee-en-acier-inoxydable-avec-manche-bois-056ddd",
     "title": "Écumoire Araignée en Acier Inoxydable avec Manche Bois Massif (#29)",
     "brand": "CulinaryPro",
     "category": "home",
@@ -39796,7 +39796,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_flamme_securite_lot_de_4_allume_gaz_5": {
     "id": "home_cook_flamme_securite_lot_de_4_allume_gaz_5",
-    "slug": "lot-de-4-allume-gaz-de-cuisine-rechargeables-flamme-v37q",
+    "slug": "lot-de-4-allume-gaz-de-cuisine-rechargeables-flamme-reglable-1f859c",
     "title": "Lot de 4 Allume-Gaz de Cuisine Rechargeables Flamme Réglable (#30)",
     "brand": "Flamme Sécurité",
     "category": "home",
@@ -39842,7 +39842,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_granitestone_batterie_de_cuisine_10_6": {
     "id": "home_cook_granitestone_batterie_de_cuisine_10_6",
-    "slug": "batterie-de-cuisine-10-pieces-revetement-granit-jdo1",
+    "slug": "batterie-de-cuisine-10-pieces-revetement-granit-antiadhesif-83808c",
     "title": "Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#31)",
     "brand": "GraniteStone",
     "category": "home",
@@ -39888,7 +39888,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_chefmaster_poele_a_frire_profession_6": {
     "id": "home_cook_chefmaster_poele_a_frire_profession_6",
-    "slug": "poele-a-frire-professionnelle-fonte-daluminium-poignee-rxkj",
+    "slug": "poele-a-frire-professionnelle-fonte-daluminium-poignee-f1598c",
     "title": "Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#32)",
     "brand": "ChefMaster",
     "category": "home",
@@ -39934,7 +39934,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_saveurs_d_afrique_marmite_faitout_t_6": {
     "id": "home_cook_saveurs_d_afrique_marmite_faitout_t_6",
-    "slug": "marmite-faitout-traditionnel-haute-capacite-12l-1qz7",
+    "slug": "marmite-faitout-traditionnel-haute-capacite-12l-aluminium-b64f7b",
     "title": "Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#33)",
     "brand": "Saveurs d'Afrique",
     "category": "home",
@@ -39980,7 +39980,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_kitchen_craft_presse_citron_manuel__6": {
     "id": "home_cook_kitchen_craft_presse_citron_manuel__6",
-    "slug": "presse-citron-manuel-en-verre-cannele-avec-socle-verseur-5d3i",
+    "slug": "presse-citron-manuel-en-verre-cannele-avec-socle-verseur-bfa18b",
     "title": "Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#34)",
     "brand": "Kitchen Craft",
     "category": "home",
@@ -40026,7 +40026,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_culinarypro_ecumoire_araignee_en_ac_6": {
     "id": "home_cook_culinarypro_ecumoire_araignee_en_ac_6",
-    "slug": "ecumoire-araignee-en-acier-inoxydable-avec-manche-bois-xvf5",
+    "slug": "ecumoire-araignee-en-acier-inoxydable-avec-manche-bois-9c2b94",
     "title": "Écumoire Araignée en Acier Inoxydable avec Manche Bois Massif (#35)",
     "brand": "CulinaryPro",
     "category": "home",
@@ -40072,7 +40072,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_flamme_securite_lot_de_4_allume_gaz_6": {
     "id": "home_cook_flamme_securite_lot_de_4_allume_gaz_6",
-    "slug": "lot-de-4-allume-gaz-de-cuisine-rechargeables-flamme-amva",
+    "slug": "lot-de-4-allume-gaz-de-cuisine-rechargeables-flamme-reglable-5f898c",
     "title": "Lot de 4 Allume-Gaz de Cuisine Rechargeables Flamme Réglable (#36)",
     "brand": "Flamme Sécurité",
     "category": "home",
@@ -40118,7 +40118,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_granitestone_batterie_de_cuisine_10_7": {
     "id": "home_cook_granitestone_batterie_de_cuisine_10_7",
-    "slug": "batterie-de-cuisine-10-pieces-revetement-granit-d0q6",
+    "slug": "batterie-de-cuisine-10-pieces-revetement-granit-antiadhesif-b7716c",
     "title": "Batterie de Cuisine 10 Pièces Revêtement Granit Antiadhésif Tous Feux (#37)",
     "brand": "GraniteStone",
     "category": "home",
@@ -40164,7 +40164,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_chefmaster_poele_a_frire_profession_7": {
     "id": "home_cook_chefmaster_poele_a_frire_profession_7",
-    "slug": "poele-a-frire-professionnelle-fonte-daluminium-poignee-g49s",
+    "slug": "poele-a-frire-professionnelle-fonte-daluminium-poignee-861894",
     "title": "Poêle à Frire Professionnelle Fonte d'Aluminium Poignée Isolante 28cm (#38)",
     "brand": "ChefMaster",
     "category": "home",
@@ -40210,7 +40210,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_saveurs_d_afrique_marmite_faitout_t_7": {
     "id": "home_cook_saveurs_d_afrique_marmite_faitout_t_7",
-    "slug": "marmite-faitout-traditionnel-haute-capacite-12l-81n2",
+    "slug": "marmite-faitout-traditionnel-haute-capacite-12l-aluminium-36957b",
     "title": "Marmite Faitout Traditionnel Haute Capacité 12L Aluminium Épais (#39)",
     "brand": "Saveurs d'Afrique",
     "category": "home",
@@ -40256,7 +40256,7 @@ window.PRODUCTS_DATA = {
   },
   "home_cook_kitchen_craft_presse_citron_manuel__7": {
     "id": "home_cook_kitchen_craft_presse_citron_manuel__7",
-    "slug": "presse-citron-manuel-en-verre-cannele-avec-socle-verseur-zywt",
+    "slug": "presse-citron-manuel-en-verre-cannele-avec-socle-verseur-ace519",
     "title": "Presse-Citron Manuel en Verre Cannelé avec Socle Verseur (#40)",
     "brand": "Kitchen Craft",
     "category": "home",
@@ -40302,7 +40302,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_service_6_assiettes_a_des": {
     "id": "home_table_malacasa_service_6_assiettes_a_des",
-    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-sxvx",
+    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-serie-95260b",
     "title": "Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#1)",
     "brand": "MALACASA",
     "category": "home",
@@ -40348,7 +40348,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_imperial_service_de_table": {
     "id": "home_table_malacasa_imperial_service_de_table",
-    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-8eif",
+    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-lisere-or-cb8d8c",
     "title": "Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#2)",
     "brand": "MALACASA Imperial",
     "category": "home",
@@ -40394,7 +40394,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_oneida_menagere_de_couverts_20_pie": {
     "id": "home_table_oneida_menagere_de_couverts_20_pie",
-    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-ksox",
+    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-hyde-55f468",
     "title": "Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#3)",
     "brand": "Oneida",
     "category": "home",
@@ -40440,7 +40440,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_cristal_chic_set_de_4_verres_a_smo": {
     "id": "home_table_cristal_chic_set_de_4_verres_a_smo",
-    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-4plm",
+    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-verre-f9febb",
     "title": "Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#4)",
     "brand": "Cristal Chic",
     "category": "home",
@@ -40486,7 +40486,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_royal_table_service_a_cafe_the_12_": {
     "id": "home_table_royal_table_service_a_cafe_the_12_",
-    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-1c9r",
+    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-soucoupes-fb2fe1",
     "title": "Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#5)",
     "brand": "Royal Table",
     "category": "home",
@@ -40532,7 +40532,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_service_6_assiettes_a_des_2": {
     "id": "home_table_malacasa_service_6_assiettes_a_des_2",
-    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-eyeb",
+    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-serie-fa0606",
     "title": "Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#6)",
     "brand": "MALACASA",
     "category": "home",
@@ -40578,7 +40578,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_imperial_service_de_table_2": {
     "id": "home_table_malacasa_imperial_service_de_table_2",
-    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-bpoi",
+    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-lisere-or-a66b94",
     "title": "Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#7)",
     "brand": "MALACASA Imperial",
     "category": "home",
@@ -40624,7 +40624,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_oneida_menagere_de_couverts_20_pie_2": {
     "id": "home_table_oneida_menagere_de_couverts_20_pie_2",
-    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-2nhv",
+    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-hyde-29a783",
     "title": "Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#8)",
     "brand": "Oneida",
     "category": "home",
@@ -40670,7 +40670,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_cristal_chic_set_de_4_verres_a_smo_2": {
     "id": "home_table_cristal_chic_set_de_4_verres_a_smo_2",
-    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-phwy",
+    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-verre-38bc1c",
     "title": "Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#9)",
     "brand": "Cristal Chic",
     "category": "home",
@@ -40716,7 +40716,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_royal_table_service_a_cafe_the_12__2": {
     "id": "home_table_royal_table_service_a_cafe_the_12__2",
-    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-admq",
+    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-soucoupes-52d27e",
     "title": "Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#10)",
     "brand": "Royal Table",
     "category": "home",
@@ -40762,7 +40762,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_service_6_assiettes_a_des_3": {
     "id": "home_table_malacasa_service_6_assiettes_a_des_3",
-    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-q8sj",
+    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-serie-d302ca",
     "title": "Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#11)",
     "brand": "MALACASA",
     "category": "home",
@@ -40808,7 +40808,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_imperial_service_de_table_3": {
     "id": "home_table_malacasa_imperial_service_de_table_3",
-    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-4nif",
+    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-lisere-or-033770",
     "title": "Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#12)",
     "brand": "MALACASA Imperial",
     "category": "home",
@@ -40854,7 +40854,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_oneida_menagere_de_couverts_20_pie_3": {
     "id": "home_table_oneida_menagere_de_couverts_20_pie_3",
-    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-warm",
+    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-hyde-cfd2f9",
     "title": "Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#13)",
     "brand": "Oneida",
     "category": "home",
@@ -40900,7 +40900,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_cristal_chic_set_de_4_verres_a_smo_3": {
     "id": "home_table_cristal_chic_set_de_4_verres_a_smo_3",
-    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-uaam",
+    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-verre-823b23",
     "title": "Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#14)",
     "brand": "Cristal Chic",
     "category": "home",
@@ -40946,7 +40946,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_royal_table_service_a_cafe_the_12__3": {
     "id": "home_table_royal_table_service_a_cafe_the_12__3",
-    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-dzla",
+    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-soucoupes-f46a1e",
     "title": "Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#15)",
     "brand": "Royal Table",
     "category": "home",
@@ -40992,7 +40992,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_service_6_assiettes_a_des_4": {
     "id": "home_table_malacasa_service_6_assiettes_a_des_4",
-    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-g0bi",
+    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-serie-6b10b2",
     "title": "Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#16)",
     "brand": "MALACASA",
     "category": "home",
@@ -41038,7 +41038,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_imperial_service_de_table_4": {
     "id": "home_table_malacasa_imperial_service_de_table_4",
-    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-zljx",
+    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-lisere-or-1104a0",
     "title": "Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#17)",
     "brand": "MALACASA Imperial",
     "category": "home",
@@ -41084,7 +41084,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_oneida_menagere_de_couverts_20_pie_4": {
     "id": "home_table_oneida_menagere_de_couverts_20_pie_4",
-    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-6vqy",
+    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-hyde-b5ec9f",
     "title": "Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#18)",
     "brand": "Oneida",
     "category": "home",
@@ -41130,7 +41130,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_cristal_chic_set_de_4_verres_a_smo_4": {
     "id": "home_table_cristal_chic_set_de_4_verres_a_smo_4",
-    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-0f9h",
+    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-verre-152000",
     "title": "Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#19)",
     "brand": "Cristal Chic",
     "category": "home",
@@ -41176,7 +41176,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_royal_table_service_a_cafe_the_12__4": {
     "id": "home_table_royal_table_service_a_cafe_the_12__4",
-    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-1smd",
+    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-soucoupes-c7078b",
     "title": "Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#20)",
     "brand": "Royal Table",
     "category": "home",
@@ -41222,7 +41222,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_service_6_assiettes_a_des_5": {
     "id": "home_table_malacasa_service_6_assiettes_a_des_5",
-    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-ph0b",
+    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-serie-6f1897",
     "title": "Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#21)",
     "brand": "MALACASA",
     "category": "home",
@@ -41268,7 +41268,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_imperial_service_de_table_5": {
     "id": "home_table_malacasa_imperial_service_de_table_5",
-    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-av9w",
+    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-lisere-or-463599",
     "title": "Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#22)",
     "brand": "MALACASA Imperial",
     "category": "home",
@@ -41314,7 +41314,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_oneida_menagere_de_couverts_20_pie_5": {
     "id": "home_table_oneida_menagere_de_couverts_20_pie_5",
-    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-khe9",
+    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-hyde-83b498",
     "title": "Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#23)",
     "brand": "Oneida",
     "category": "home",
@@ -41360,7 +41360,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_cristal_chic_set_de_4_verres_a_smo_5": {
     "id": "home_table_cristal_chic_set_de_4_verres_a_smo_5",
-    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-w4kt",
+    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-verre-452ad1",
     "title": "Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#24)",
     "brand": "Cristal Chic",
     "category": "home",
@@ -41406,7 +41406,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_royal_table_service_a_cafe_the_12__5": {
     "id": "home_table_royal_table_service_a_cafe_the_12__5",
-    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-z02k",
+    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-soucoupes-c8ec81",
     "title": "Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#25)",
     "brand": "Royal Table",
     "category": "home",
@@ -41452,7 +41452,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_service_6_assiettes_a_des_6": {
     "id": "home_table_malacasa_service_6_assiettes_a_des_6",
-    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-ylyq",
+    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-serie-820af5",
     "title": "Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#26)",
     "brand": "MALACASA",
     "category": "home",
@@ -41498,7 +41498,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_imperial_service_de_table_6": {
     "id": "home_table_malacasa_imperial_service_de_table_6",
-    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-1tj4",
+    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-lisere-or-838dad",
     "title": "Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#27)",
     "brand": "MALACASA Imperial",
     "category": "home",
@@ -41544,7 +41544,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_oneida_menagere_de_couverts_20_pie_6": {
     "id": "home_table_oneida_menagere_de_couverts_20_pie_6",
-    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-ildh",
+    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-hyde-901d3b",
     "title": "Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#28)",
     "brand": "Oneida",
     "category": "home",
@@ -41590,7 +41590,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_cristal_chic_set_de_4_verres_a_smo_6": {
     "id": "home_table_cristal_chic_set_de_4_verres_a_smo_6",
-    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-tq53",
+    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-verre-26a04a",
     "title": "Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#29)",
     "brand": "Cristal Chic",
     "category": "home",
@@ -41636,7 +41636,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_royal_table_service_a_cafe_the_12__6": {
     "id": "home_table_royal_table_service_a_cafe_the_12__6",
-    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-9g3u",
+    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-soucoupes-dc7993",
     "title": "Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#30)",
     "brand": "Royal Table",
     "category": "home",
@@ -41682,7 +41682,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_service_6_assiettes_a_des_7": {
     "id": "home_table_malacasa_service_6_assiettes_a_des_7",
-    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-nof5",
+    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-serie-6eb0cc",
     "title": "Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#31)",
     "brand": "MALACASA",
     "category": "home",
@@ -41728,7 +41728,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_imperial_service_de_table_7": {
     "id": "home_table_malacasa_imperial_service_de_table_7",
-    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-366k",
+    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-lisere-or-fa7dc8",
     "title": "Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#32)",
     "brand": "MALACASA Imperial",
     "category": "home",
@@ -41774,7 +41774,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_oneida_menagere_de_couverts_20_pie_7": {
     "id": "home_table_oneida_menagere_de_couverts_20_pie_7",
-    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-xc0g",
+    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-hyde-12034e",
     "title": "Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#33)",
     "brand": "Oneida",
     "category": "home",
@@ -41820,7 +41820,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_cristal_chic_set_de_4_verres_a_smo_7": {
     "id": "home_table_cristal_chic_set_de_4_verres_a_smo_7",
-    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-7tch",
+    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-verre-c009ce",
     "title": "Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#34)",
     "brand": "Cristal Chic",
     "category": "home",
@@ -41866,7 +41866,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_royal_table_service_a_cafe_the_12__7": {
     "id": "home_table_royal_table_service_a_cafe_the_12__7",
-    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-85sr",
+    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-soucoupes-33148d",
     "title": "Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#35)",
     "brand": "Royal Table",
     "category": "home",
@@ -41912,7 +41912,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_service_6_assiettes_a_des_8": {
     "id": "home_table_malacasa_service_6_assiettes_a_des_8",
-    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-ehn9",
+    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-serie-b4a4dc",
     "title": "Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#36)",
     "brand": "MALACASA",
     "category": "home",
@@ -41958,7 +41958,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_imperial_service_de_table_8": {
     "id": "home_table_malacasa_imperial_service_de_table_8",
-    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-ovj8",
+    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-lisere-or-16b1d7",
     "title": "Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#37)",
     "brand": "MALACASA Imperial",
     "category": "home",
@@ -42004,7 +42004,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_oneida_menagere_de_couverts_20_pie_8": {
     "id": "home_table_oneida_menagere_de_couverts_20_pie_8",
-    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-30u3",
+    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-hyde-dedc18",
     "title": "Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#38)",
     "brand": "Oneida",
     "category": "home",
@@ -42050,7 +42050,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_cristal_chic_set_de_4_verres_a_smo_8": {
     "id": "home_table_cristal_chic_set_de_4_verres_a_smo_8",
-    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-e9dr",
+    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-verre-5007a5",
     "title": "Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#39)",
     "brand": "Cristal Chic",
     "category": "home",
@@ -42096,7 +42096,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_royal_table_service_a_cafe_the_12__8": {
     "id": "home_table_royal_table_service_a_cafe_the_12__8",
-    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-ghm5",
+    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-soucoupes-01a5cd",
     "title": "Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#40)",
     "brand": "Royal Table",
     "category": "home",
@@ -42142,7 +42142,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_service_6_assiettes_a_des_9": {
     "id": "home_table_malacasa_service_6_assiettes_a_des_9",
-    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-73do",
+    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-serie-9e4c59",
     "title": "Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#41)",
     "brand": "MALACASA",
     "category": "home",
@@ -42188,7 +42188,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_imperial_service_de_table_9": {
     "id": "home_table_malacasa_imperial_service_de_table_9",
-    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-2213",
+    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-lisere-or-2c5b11",
     "title": "Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#42)",
     "brand": "MALACASA Imperial",
     "category": "home",
@@ -42234,7 +42234,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_oneida_menagere_de_couverts_20_pie_9": {
     "id": "home_table_oneida_menagere_de_couverts_20_pie_9",
-    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-qfmg",
+    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-hyde-a0f478",
     "title": "Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#43)",
     "brand": "Oneida",
     "category": "home",
@@ -42280,7 +42280,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_cristal_chic_set_de_4_verres_a_smo_9": {
     "id": "home_table_cristal_chic_set_de_4_verres_a_smo_9",
-    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-cvdd",
+    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-verre-48b7bf",
     "title": "Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#44)",
     "brand": "Cristal Chic",
     "category": "home",
@@ -42326,7 +42326,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_royal_table_service_a_cafe_the_12__9": {
     "id": "home_table_royal_table_service_a_cafe_the_12__9",
-    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-u0yf",
+    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-soucoupes-709c44",
     "title": "Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#45)",
     "brand": "Royal Table",
     "category": "home",
@@ -42372,7 +42372,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_service_6_assiettes_a_des_10": {
     "id": "home_table_malacasa_service_6_assiettes_a_des_10",
-    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-7dto",
+    "slug": "service-6-assiettes-a-dessert-porcelaine-blanc-creme-serie-468001",
     "title": "Service 6 Assiettes à Dessert Porcelaine Blanc Crème Série Amparo (#46)",
     "brand": "MALACASA",
     "category": "home",
@@ -42418,7 +42418,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_malacasa_imperial_service_de_table_10": {
     "id": "home_table_malacasa_imperial_service_de_table_10",
-    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-cnol",
+    "slug": "service-de-table-complet-24-pieces-porcelaine-fine-lisere-or-feec34",
     "title": "Service de Table Complet 24 Pièces Porcelaine Fine Liseré Or (#47)",
     "brand": "MALACASA Imperial",
     "category": "home",
@@ -42464,7 +42464,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_oneida_menagere_de_couverts_20_pie_10": {
     "id": "home_table_oneida_menagere_de_couverts_20_pie_10",
-    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-3w8n",
+    "slug": "menagere-de-couverts-20-pieces-acier-inoxydable-oneida-hyde-013651",
     "title": "Ménagère de Couverts 20 Pièces Acier Inoxydable Oneida Hyde Park (#48)",
     "brand": "Oneida",
     "category": "home",
@@ -42510,7 +42510,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_cristal_chic_set_de_4_verres_a_smo_10": {
     "id": "home_table_cristal_chic_set_de_4_verres_a_smo_10",
-    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-89kd",
+    "slug": "set-de-4-verres-a-smoothie-cocktail-avec-pailles-en-verre-12be7d",
     "title": "Set de 4 Verres à Smoothie & Cocktail avec Pailles en Verre Réutilisables (#49)",
     "brand": "Cristal Chic",
     "category": "home",
@@ -42556,7 +42556,7 @@ window.PRODUCTS_DATA = {
   },
   "home_table_royal_table_service_a_cafe_the_12__10": {
     "id": "home_table_royal_table_service_a_cafe_the_12__10",
-    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-1suh",
+    "slug": "service-a-cafe-the-12-pieces-porcelaine-fine-avec-soucoupes-23d86e",
     "title": "Service à Café & Thé 12 Pièces Porcelaine Fine avec Soucoupes Bambou (#50)",
     "brand": "Royal Table",
     "category": "home",
@@ -42602,7 +42602,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_speedypress_presse_a_repasser_vapeu": {
     "id": "home_care_speedypress_presse_a_repasser_vapeu",
-    "slug": "presse-a-repasser-vapeur-professionnelle-speedypress-ccth",
+    "slug": "presse-a-repasser-vapeur-professionnelle-speedypress-compact-3d1a6d",
     "title": "Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#1)",
     "brand": "SpeedyPress",
     "category": "home",
@@ -42648,7 +42648,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_steampro_defroisseur_vapeur_vertica": {
     "id": "home_care_steampro_defroisseur_vapeur_vertica",
-    "slug": "defroisseur-vapeur-vertical-portatif-design-escargot-q3ny",
+    "slug": "defroisseur-vapeur-vertical-portatif-design-escargot-1500w-d5b6ab",
     "title": "Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#2)",
     "brand": "SteamPro",
     "category": "home",
@@ -42694,7 +42694,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_wazhou_storage_fut_de_rangement_her": {
     "id": "home_care_wazhou_storage_fut_de_rangement_her",
-    "slug": "fut-de-rangement-hermetique-plastique-bleu-qualite-3v6d",
+    "slug": "fut-de-rangement-hermetique-plastique-bleu-qualite-0fa0dc",
     "title": "Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#3)",
     "brand": "Wazhou Storage",
     "category": "home",
@@ -42740,7 +42740,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_maisonclean_support_telescopique_re": {
     "id": "home_care_maisonclean_support_telescopique_re",
-    "slug": "support-telescopique-reglable-pour-presse-a-repasser-qoku",
+    "slug": "support-telescopique-reglable-pour-presse-a-repasser-vapeur-01468a",
     "title": "Support Télescopique Réglable pour Presse à Repasser Vapeur (#4)",
     "brand": "MaisonClean",
     "category": "home",
@@ -42786,7 +42786,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_organizehome_panier_de_rangement_li": {
     "id": "home_care_organizehome_panier_de_rangement_li",
-    "slug": "panier-de-rangement-linge-objets-bambou-naturel-pliable-buxq",
+    "slug": "panier-de-rangement-linge-objets-bambou-naturel-pliable-75l-0489be",
     "title": "Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#5)",
     "brand": "OrganizeHome",
     "category": "home",
@@ -42832,7 +42832,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_speedypress_presse_a_repasser_vapeu_2": {
     "id": "home_care_speedypress_presse_a_repasser_vapeu_2",
-    "slug": "presse-a-repasser-vapeur-professionnelle-speedypress-ek83",
+    "slug": "presse-a-repasser-vapeur-professionnelle-speedypress-compact-c05b7e",
     "title": "Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#6)",
     "brand": "SpeedyPress",
     "category": "home",
@@ -42878,7 +42878,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_steampro_defroisseur_vapeur_vertica_2": {
     "id": "home_care_steampro_defroisseur_vapeur_vertica_2",
-    "slug": "defroisseur-vapeur-vertical-portatif-design-escargot-scqv",
+    "slug": "defroisseur-vapeur-vertical-portatif-design-escargot-1500w-34701a",
     "title": "Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#7)",
     "brand": "SteamPro",
     "category": "home",
@@ -42924,7 +42924,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_wazhou_storage_fut_de_rangement_her_2": {
     "id": "home_care_wazhou_storage_fut_de_rangement_her_2",
-    "slug": "fut-de-rangement-hermetique-plastique-bleu-qualite-c8te",
+    "slug": "fut-de-rangement-hermetique-plastique-bleu-qualite-608afb",
     "title": "Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#8)",
     "brand": "Wazhou Storage",
     "category": "home",
@@ -42970,7 +42970,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_maisonclean_support_telescopique_re_2": {
     "id": "home_care_maisonclean_support_telescopique_re_2",
-    "slug": "support-telescopique-reglable-pour-presse-a-repasser-hnf3",
+    "slug": "support-telescopique-reglable-pour-presse-a-repasser-vapeur-feefc2",
     "title": "Support Télescopique Réglable pour Presse à Repasser Vapeur (#9)",
     "brand": "MaisonClean",
     "category": "home",
@@ -43016,7 +43016,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_organizehome_panier_de_rangement_li_2": {
     "id": "home_care_organizehome_panier_de_rangement_li_2",
-    "slug": "panier-de-rangement-linge-objets-bambou-naturel-pliable-01sx",
+    "slug": "panier-de-rangement-linge-objets-bambou-naturel-pliable-75l-07b576",
     "title": "Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#10)",
     "brand": "OrganizeHome",
     "category": "home",
@@ -43062,7 +43062,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_speedypress_presse_a_repasser_vapeu_3": {
     "id": "home_care_speedypress_presse_a_repasser_vapeu_3",
-    "slug": "presse-a-repasser-vapeur-professionnelle-speedypress-wspc",
+    "slug": "presse-a-repasser-vapeur-professionnelle-speedypress-compact-7a6ddf",
     "title": "Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#11)",
     "brand": "SpeedyPress",
     "category": "home",
@@ -43108,7 +43108,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_steampro_defroisseur_vapeur_vertica_3": {
     "id": "home_care_steampro_defroisseur_vapeur_vertica_3",
-    "slug": "defroisseur-vapeur-vertical-portatif-design-escargot-9js2",
+    "slug": "defroisseur-vapeur-vertical-portatif-design-escargot-1500w-fd8330",
     "title": "Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#12)",
     "brand": "SteamPro",
     "category": "home",
@@ -43154,7 +43154,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_wazhou_storage_fut_de_rangement_her_3": {
     "id": "home_care_wazhou_storage_fut_de_rangement_her_3",
-    "slug": "fut-de-rangement-hermetique-plastique-bleu-qualite-um6w",
+    "slug": "fut-de-rangement-hermetique-plastique-bleu-qualite-2c2283",
     "title": "Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#13)",
     "brand": "Wazhou Storage",
     "category": "home",
@@ -43200,7 +43200,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_maisonclean_support_telescopique_re_3": {
     "id": "home_care_maisonclean_support_telescopique_re_3",
-    "slug": "support-telescopique-reglable-pour-presse-a-repasser-6xmf",
+    "slug": "support-telescopique-reglable-pour-presse-a-repasser-vapeur-97ca5b",
     "title": "Support Télescopique Réglable pour Presse à Repasser Vapeur (#14)",
     "brand": "MaisonClean",
     "category": "home",
@@ -43246,7 +43246,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_organizehome_panier_de_rangement_li_3": {
     "id": "home_care_organizehome_panier_de_rangement_li_3",
-    "slug": "panier-de-rangement-linge-objets-bambou-naturel-pliable-b889",
+    "slug": "panier-de-rangement-linge-objets-bambou-naturel-pliable-75l-c88eb1",
     "title": "Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#15)",
     "brand": "OrganizeHome",
     "category": "home",
@@ -43292,7 +43292,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_speedypress_presse_a_repasser_vapeu_4": {
     "id": "home_care_speedypress_presse_a_repasser_vapeu_4",
-    "slug": "presse-a-repasser-vapeur-professionnelle-speedypress-hkq8",
+    "slug": "presse-a-repasser-vapeur-professionnelle-speedypress-compact-8c34fb",
     "title": "Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#16)",
     "brand": "SpeedyPress",
     "category": "home",
@@ -43338,7 +43338,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_steampro_defroisseur_vapeur_vertica_4": {
     "id": "home_care_steampro_defroisseur_vapeur_vertica_4",
-    "slug": "defroisseur-vapeur-vertical-portatif-design-escargot-0yq4",
+    "slug": "defroisseur-vapeur-vertical-portatif-design-escargot-1500w-1c88ec",
     "title": "Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#17)",
     "brand": "SteamPro",
     "category": "home",
@@ -43384,7 +43384,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_wazhou_storage_fut_de_rangement_her_4": {
     "id": "home_care_wazhou_storage_fut_de_rangement_her_4",
-    "slug": "fut-de-rangement-hermetique-plastique-bleu-qualite-u4z9",
+    "slug": "fut-de-rangement-hermetique-plastique-bleu-qualite-2ed627",
     "title": "Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#18)",
     "brand": "Wazhou Storage",
     "category": "home",
@@ -43430,7 +43430,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_maisonclean_support_telescopique_re_4": {
     "id": "home_care_maisonclean_support_telescopique_re_4",
-    "slug": "support-telescopique-reglable-pour-presse-a-repasser-ouo9",
+    "slug": "support-telescopique-reglable-pour-presse-a-repasser-vapeur-e05271",
     "title": "Support Télescopique Réglable pour Presse à Repasser Vapeur (#19)",
     "brand": "MaisonClean",
     "category": "home",
@@ -43476,7 +43476,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_organizehome_panier_de_rangement_li_4": {
     "id": "home_care_organizehome_panier_de_rangement_li_4",
-    "slug": "panier-de-rangement-linge-objets-bambou-naturel-pliable-oi9m",
+    "slug": "panier-de-rangement-linge-objets-bambou-naturel-pliable-75l-3dbcda",
     "title": "Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#20)",
     "brand": "OrganizeHome",
     "category": "home",
@@ -43522,7 +43522,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_speedypress_presse_a_repasser_vapeu_5": {
     "id": "home_care_speedypress_presse_a_repasser_vapeu_5",
-    "slug": "presse-a-repasser-vapeur-professionnelle-speedypress-rjar",
+    "slug": "presse-a-repasser-vapeur-professionnelle-speedypress-compact-9c8d95",
     "title": "Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#21)",
     "brand": "SpeedyPress",
     "category": "home",
@@ -43568,7 +43568,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_steampro_defroisseur_vapeur_vertica_5": {
     "id": "home_care_steampro_defroisseur_vapeur_vertica_5",
-    "slug": "defroisseur-vapeur-vertical-portatif-design-escargot-wsho",
+    "slug": "defroisseur-vapeur-vertical-portatif-design-escargot-1500w-9dab3e",
     "title": "Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#22)",
     "brand": "SteamPro",
     "category": "home",
@@ -43614,7 +43614,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_wazhou_storage_fut_de_rangement_her_5": {
     "id": "home_care_wazhou_storage_fut_de_rangement_her_5",
-    "slug": "fut-de-rangement-hermetique-plastique-bleu-qualite-dsm5",
+    "slug": "fut-de-rangement-hermetique-plastique-bleu-qualite-883122",
     "title": "Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#23)",
     "brand": "Wazhou Storage",
     "category": "home",
@@ -43660,7 +43660,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_maisonclean_support_telescopique_re_5": {
     "id": "home_care_maisonclean_support_telescopique_re_5",
-    "slug": "support-telescopique-reglable-pour-presse-a-repasser-n0u7",
+    "slug": "support-telescopique-reglable-pour-presse-a-repasser-vapeur-164a01",
     "title": "Support Télescopique Réglable pour Presse à Repasser Vapeur (#24)",
     "brand": "MaisonClean",
     "category": "home",
@@ -43706,7 +43706,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_organizehome_panier_de_rangement_li_5": {
     "id": "home_care_organizehome_panier_de_rangement_li_5",
-    "slug": "panier-de-rangement-linge-objets-bambou-naturel-pliable-63jy",
+    "slug": "panier-de-rangement-linge-objets-bambou-naturel-pliable-75l-c47041",
     "title": "Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#25)",
     "brand": "OrganizeHome",
     "category": "home",
@@ -43752,7 +43752,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_speedypress_presse_a_repasser_vapeu_6": {
     "id": "home_care_speedypress_presse_a_repasser_vapeu_6",
-    "slug": "presse-a-repasser-vapeur-professionnelle-speedypress-0xks",
+    "slug": "presse-a-repasser-vapeur-professionnelle-speedypress-compact-4f7e03",
     "title": "Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#26)",
     "brand": "SpeedyPress",
     "category": "home",
@@ -43798,7 +43798,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_steampro_defroisseur_vapeur_vertica_6": {
     "id": "home_care_steampro_defroisseur_vapeur_vertica_6",
-    "slug": "defroisseur-vapeur-vertical-portatif-design-escargot-cg2h",
+    "slug": "defroisseur-vapeur-vertical-portatif-design-escargot-1500w-b6a3fc",
     "title": "Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#27)",
     "brand": "SteamPro",
     "category": "home",
@@ -43844,7 +43844,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_wazhou_storage_fut_de_rangement_her_6": {
     "id": "home_care_wazhou_storage_fut_de_rangement_her_6",
-    "slug": "fut-de-rangement-hermetique-plastique-bleu-qualite-honh",
+    "slug": "fut-de-rangement-hermetique-plastique-bleu-qualite-abbe2a",
     "title": "Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#28)",
     "brand": "Wazhou Storage",
     "category": "home",
@@ -43890,7 +43890,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_maisonclean_support_telescopique_re_6": {
     "id": "home_care_maisonclean_support_telescopique_re_6",
-    "slug": "support-telescopique-reglable-pour-presse-a-repasser-44hv",
+    "slug": "support-telescopique-reglable-pour-presse-a-repasser-vapeur-887722",
     "title": "Support Télescopique Réglable pour Presse à Repasser Vapeur (#29)",
     "brand": "MaisonClean",
     "category": "home",
@@ -43936,7 +43936,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_organizehome_panier_de_rangement_li_6": {
     "id": "home_care_organizehome_panier_de_rangement_li_6",
-    "slug": "panier-de-rangement-linge-objets-bambou-naturel-pliable-taal",
+    "slug": "panier-de-rangement-linge-objets-bambou-naturel-pliable-75l-af7ab1",
     "title": "Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#30)",
     "brand": "OrganizeHome",
     "category": "home",
@@ -43982,7 +43982,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_speedypress_presse_a_repasser_vapeu_7": {
     "id": "home_care_speedypress_presse_a_repasser_vapeu_7",
-    "slug": "presse-a-repasser-vapeur-professionnelle-speedypress-tahe",
+    "slug": "presse-a-repasser-vapeur-professionnelle-speedypress-compact-6397fc",
     "title": "Presse à Repasser Vapeur Professionnelle SpeedyPress Compact 22 pouces (#31)",
     "brand": "SpeedyPress",
     "category": "home",
@@ -44028,7 +44028,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_steampro_defroisseur_vapeur_vertica_7": {
     "id": "home_care_steampro_defroisseur_vapeur_vertica_7",
-    "slug": "defroisseur-vapeur-vertical-portatif-design-escargot-plgv",
+    "slug": "defroisseur-vapeur-vertical-portatif-design-escargot-1500w-6816a7",
     "title": "Défroisseur Vapeur Vertical Portatif Design Escargot 1500W (#32)",
     "brand": "SteamPro",
     "category": "home",
@@ -44074,7 +44074,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_wazhou_storage_fut_de_rangement_her_7": {
     "id": "home_care_wazhou_storage_fut_de_rangement_her_7",
-    "slug": "fut-de-rangement-hermetique-plastique-bleu-qualite-kabr",
+    "slug": "fut-de-rangement-hermetique-plastique-bleu-qualite-85cea9",
     "title": "Fût de Rangement Hermétique Plastique Bleu Qualité Alimentaire 60L (#33)",
     "brand": "Wazhou Storage",
     "category": "home",
@@ -44120,7 +44120,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_maisonclean_support_telescopique_re_7": {
     "id": "home_care_maisonclean_support_telescopique_re_7",
-    "slug": "support-telescopique-reglable-pour-presse-a-repasser-90hr",
+    "slug": "support-telescopique-reglable-pour-presse-a-repasser-vapeur-b95585",
     "title": "Support Télescopique Réglable pour Presse à Repasser Vapeur (#34)",
     "brand": "MaisonClean",
     "category": "home",
@@ -44166,7 +44166,7 @@ window.PRODUCTS_DATA = {
   },
   "home_care_organizehome_panier_de_rangement_li_7": {
     "id": "home_care_organizehome_panier_de_rangement_li_7",
-    "slug": "panier-de-rangement-linge-objets-bambou-naturel-pliable-ck5u",
+    "slug": "panier-de-rangement-linge-objets-bambou-naturel-pliable-75l-090b8b",
     "title": "Panier de Rangement Linge & Objets Bambou Naturel Pliable 75L (#35)",
     "brand": "OrganizeHome",
     "category": "home",
@@ -44212,7 +44212,7 @@ window.PRODUCTS_DATA = {
   },
   "beauty_boss_bottled_night_100ml_edt": {
     "id": "beauty_boss_bottled_night_100ml_edt",
-    "slug": "hugo-boss-bottled-night-eau-de-toilette-100ml-nv42",
+    "slug": "hugo-boss-bottled-night-eau-de-toilette-100ml-vaporisateur-4f0e32",
     "title": "Hugo Boss Bottled Night Eau de Toilette 100ml Vaporisateur",
     "brand": "Hugo Boss Parfums",
     "category": "beauty",
@@ -44250,7 +44250,7 @@ window.PRODUCTS_DATA = {
   },
   "beauty_jean_paul_gaultier_le_beau_le_parfum": {
     "id": "beauty_jean_paul_gaultier_le_beau_le_parfum",
-    "slug": "jean-paul-gaultier-le-beau-le-parfum-intense-125ml-0ult",
+    "slug": "jean-paul-gaultier-le-beau-le-parfum-intense-125ml-f5e132",
     "title": "Jean Paul Gaultier Le Beau Le Parfum Intense 125ml",
     "brand": "Jean Paul Gaultier",
     "category": "beauty",
@@ -44288,7 +44288,7 @@ window.PRODUCTS_DATA = {
   },
   "beauty_homme_liberte_50ml_extrait_parfum": {
     "id": "beauty_homme_liberte_50ml_extrait_parfum",
-    "slug": "homme-liberte-extrait-de-parfum-50ml-niche-collection-slhl",
+    "slug": "homme-liberte-extrait-de-parfum-50ml-niche-collection-2c2113",
     "title": "Homme Liberté Extrait de Parfum 50ml Niche Collection",
     "brand": "Maison Liberté Paris",
     "category": "beauty",
@@ -44326,7 +44326,7 @@ window.PRODUCTS_DATA = {
   },
   "beauty_bentley_for_men_fragrance_eau_intense": {
     "id": "beauty_bentley_for_men_fragrance_eau_intense",
-    "slug": "bentley-for-men-intense-eau-de-parfum-100ml-z8yn",
+    "slug": "bentley-for-men-intense-eau-de-parfum-100ml-888d4b",
     "title": "Bentley For Men Intense Eau de Parfum 100ml",
     "brand": "Bentley Fragrances",
     "category": "beauty",
@@ -44364,7 +44364,7 @@ window.PRODUCTS_DATA = {
   },
   "beauty_loude_gel_nettoyant_visage_panthenol": {
     "id": "beauty_loude_gel_nettoyant_visage_panthenol",
-    "slug": "loude-gel-nettoyant-facial-doux-au-panthenol-b5-200ml-7j9y",
+    "slug": "loude-gel-nettoyant-facial-doux-au-panthenol-b5-200ml-aeb7ce",
     "title": "LOUDÉ Gel Nettoyant Facial Doux au Panthénol & B5 200ml",
     "brand": "LOUDÉ Dermo-Cosmetics",
     "category": "beauty",
@@ -44402,7 +44402,7 @@ window.PRODUCTS_DATA = {
   },
   "beauty_soin_regard_anti_cernes_poches_peptides": {
     "id": "beauty_soin_regard_anti_cernes_poches_peptides",
-    "slug": "serum-eclat-regard-anti-cernes-anti-poches-peptides-15ml-q74f",
+    "slug": "serum-eclat-regard-anti-cernes-anti-poches-peptides-15ml-70cccc",
     "title": "Sérum Éclat Regard Anti-Cernes & Anti-Poches Peptides 15ml",
     "brand": "DermaLuxe Botanicals",
     "category": "beauty",
@@ -44440,7 +44440,7 @@ window.PRODUCTS_DATA = {
   },
   "beauty_shampooing_naturel_nourrissant_cheveux_secs": {
     "id": "beauty_shampooing_naturel_nourrissant_cheveux_secs",
-    "slug": "shampooing-naturel-nourrissant-huiles-vegetales-karite-9b3y",
+    "slug": "shampooing-naturel-nourrissant-huiles-vegetales-karite-300ml-42e6bc",
     "title": "Shampooing Naturel Nourrissant Huiles Végétales & Karité 300ml",
     "brand": "Botanical Pure Cameroon",
     "category": "beauty",
@@ -44478,7 +44478,7 @@ window.PRODUCTS_DATA = {
   },
   "beauty_creme_hydratation_profonde_instant_glow": {
     "id": "beauty_creme_hydratation_profonde_instant_glow",
-    "slug": "creme-hydratation-profonde-eclat-instant-glow-50ml-xs44",
+    "slug": "creme-hydratation-profonde-eclat-instant-glow-50ml-041934",
     "title": "Crème Hydratation Profonde & Éclat Instant Glow 50ml",
     "brand": "Glow Botanics",
     "category": "beauty",
@@ -44516,7 +44516,7 @@ window.PRODUCTS_DATA = {
   },
   "sport_nike_joyride_running_cushion_sneakers": {
     "id": "sport_nike_joyride_running_cushion_sneakers",
-    "slug": "nike-joyride-dual-run-sneakers-de-running-amorti-6qqa",
+    "slug": "nike-joyride-dual-run-sneakers-de-running-amorti-dynamique-e72df1",
     "title": "Nike Joyride Dual Run Sneakers de Running Amorti Dynamique",
     "brand": "Nike Running",
     "category": "sports",
@@ -44554,7 +44554,7 @@ window.PRODUCTS_DATA = {
   },
   "sport_nike_air_jordan_retro_high_og": {
     "id": "sport_nike_air_jordan_retro_high_og",
-    "slug": "nike-air-jordan-1-retro-high-baskets-performance-wjkq",
+    "slug": "nike-air-jordan-1-retro-high-baskets-performance-streetwear-fde072",
     "title": "Nike Air Jordan 1 Retro High Baskets Performance & Streetwear",
     "brand": "Jordan Brand",
     "category": "sports",
@@ -44592,7 +44592,7 @@ window.PRODUCTS_DATA = {
   },
   "sport_nike_air_force_1_low_triple_white": {
     "id": "sport_nike_air_force_1_low_triple_white",
-    "slug": "nike-air-force-1-p3qd",
+    "slug": "nike-air-force-1-946fe9",
     "title": "Nike Air Force 1 ",
     "brand": "Nike Sportswear",
     "category": "sports",
@@ -44630,7 +44630,7 @@ window.PRODUCTS_DATA = {
   },
   "sport_chaussures_entrainement_fitness_running_pro": {
     "id": "sport_chaussures_entrainement_fitness_running_pro",
-    "slug": "chaussures-d-18fu",
+    "slug": "chaussures-d-ccbbfd",
     "title": "Chaussures d",
     "brand": "Pro Athletic Tech",
     "category": "sports",
@@ -44668,7 +44668,7 @@ window.PRODUCTS_DATA = {
   },
   "sport_bouteille_isotherme_inox_sport_1l": {
     "id": "sport_bouteille_isotherme_inox_sport_1l",
-    "slug": "bouteille-gourde-isotherme-sport-inox-1000ml-anti-fuite-r0ec",
+    "slug": "bouteille-gourde-isotherme-sport-inox-1000ml-anti-fuite-522aee",
     "title": "Bouteille Gourde Isotherme Sport Inox 1000ml Anti-Fuite",
     "brand": "HydroSport Elite",
     "category": "sports",
@@ -44706,7 +44706,7 @@ window.PRODUCTS_DATA = {
   },
   "sport_kit_bandes_resistance_fitness_musculation": {
     "id": "sport_kit_bandes_resistance_fitness_musculation",
-    "slug": "kit-5-bandes-elastiques-de-resistance-musculation-hodv",
+    "slug": "kit-5-bandes-elastiques-de-resistance-musculation-complete-ab2462",
     "title": "Kit 5 Bandes Élastiques de Résistance & Musculation Complète",
     "brand": "FitPro Active",
     "category": "sports",
@@ -44744,7 +44744,7 @@ window.PRODUCTS_DATA = {
   },
   "groc_panier_recolte_bio_maraicher": {
     "id": "groc_panier_recolte_bio_maraicher",
-    "slug": "panier-recolte-bio-legumes-frais-du-marche-10kg-assortis-mbzn",
+    "slug": "panier-recolte-bio-legumes-frais-du-marche-10kg-assortis-aaa78e",
     "title": "Panier Récolte Bio & Légumes Frais du Marché (10kg Assortis)",
     "brand": "Les Jardins Maraîchers de l",
     "category": "groceries",
@@ -44782,7 +44782,7 @@ window.PRODUCTS_DATA = {
   },
   "groc_cafe_arabica_mont_cameroun_500g": {
     "id": "groc_cafe_arabica_mont_cameroun_500g",
-    "slug": "cafe-pure-arabica-des-hauts-plateaux-de-l-xqao",
+    "slug": "cafe-pure-arabica-des-hauts-plateaux-de-l-a1468d",
     "title": "Café Pure Arabica des Hauts Plateaux de l",
     "brand": "Mont Cameroun Coffee Roasters",
     "category": "groceries",
@@ -44820,7 +44820,7 @@ window.PRODUCTS_DATA = {
   },
   "groc_miel_sauvage_pur_adamaoua_1l": {
     "id": "groc_miel_sauvage_pur_adamaoua_1l",
-    "slug": "miel-sauvage-pur-naturel-de-l-jadr",
+    "slug": "miel-sauvage-pur-naturel-de-l-e0681c",
     "title": "Miel Sauvage Pur & Naturel de l",
     "brand": "Rucher Sauvage de Ngaoundéré",
     "category": "groceries",
@@ -44858,7 +44858,7 @@ window.PRODUCTS_DATA = {
   },
   "groc_huile_olive_vierge_extra_bio_1l": {
     "id": "groc_huile_olive_vierge_extra_bio_1l",
-    "slug": "huile-d-qegg",
+    "slug": "huile-d-12cb66",
     "title": "Huile d",
     "brand": "Oliva Dorata Mediterranean",
     "category": "groceries",
@@ -44896,7 +44896,7 @@ window.PRODUCTS_DATA = {
   },
   "groc_riz_parfume_super_luxe_25kg": {
     "id": "groc_riz_parfume_super_luxe_25kg",
-    "slug": "riz-parfume-jasmin-long-grain-selection-or-25kg-sac-tl5d",
+    "slug": "riz-parfume-jasmin-long-grain-selection-or-25kg-sac-tisse-053023",
     "title": "Riz Parfumé Jasmin Long Grain Sélection Or 25kg Sac Tissé",
     "brand": "Royal Jasmine Selected",
     "category": "groceries",
@@ -44934,7 +44934,7 @@ window.PRODUCTS_DATA = {
   },
   "groc_chocolat_noir_artisanat_cameroun": {
     "id": "groc_chocolat_noir_artisanat_cameroun",
-    "slug": "coffret-decouverte-chocolats-purs-grands-crus-cameroun-lv5v",
+    "slug": "coffret-decouverte-chocolats-purs-grands-crus-cameroun-70-5bc3a5",
     "title": "Coffret Découverte Chocolats Purs Grands Crus Cameroun 70% (Lot de 4)",
     "brand": "Cacao d",
     "category": "groceries",
@@ -44972,7 +44972,7 @@ window.PRODUCTS_DATA = {
   },
   "groc_the_vert_infusion_gingembre_citron": {
     "id": "groc_the_vert_infusion_gingembre_citron",
-    "slug": "the-vert-bio-infusion-detox-gingembre-citronnelle-100-ynnl",
+    "slug": "the-vert-bio-infusion-detox-gingembre-citronnelle-100-c5eb64",
     "title": "Thé Vert Bio & Infusion Détox Gingembre Citronnelle 100 Sachets",
     "brand": "Herboristerie des Plateaux",
     "category": "groceries",
@@ -45010,7 +45010,7 @@ window.PRODUCTS_DATA = {
   },
   "groc_pack_eau_minerale_tangui_15l": {
     "id": "groc_pack_eau_minerale_tangui_15l",
-    "slug": "pack-6-bouteilles-eau-minerale-naturelle-tangui-1-5l-fwae",
+    "slug": "pack-6-bouteilles-eau-minerale-naturelle-tangui-1-5l-9dec1a",
     "title": "Pack 6 Bouteilles Eau Minérale Naturelle Tangui 1.5L",
     "brand": "Tangui Eau Minérale",
     "category": "groceries",
@@ -45048,7 +45048,7 @@ window.PRODUCTS_DATA = {
   },
   "shea_lotion": {
     "id": "shea_lotion",
-    "slug": "lait-corporel-nourrissant-au-pur-beurre-de-karite-bio-udgm",
+    "slug": "lait-corporel-nourrissant-au-pur-beurre-de-karite-bio-500ml-0ecd12",
     "title": "Lait Corporel Nourrissant au Pur Beurre de Karité Bio (500ml)",
     "brand": "AfriPure Botanicals",
     "category": "beauty",
@@ -45094,7 +45094,7 @@ window.PRODUCTS_DATA = {
   },
   "na_tobacco_vanille_10": {
     "id": "na_tobacco_vanille_10",
-    "slug": "tobacco-vanille-extrait-de-parfum-30ml-flacon-luxe-1gk6",
+    "slug": "tobacco-vanille-extrait-de-parfum-30ml-flacon-luxe-cb889b",
     "title": "Tobacco Vanille Extrait De Parfum (30ml Flacon Luxe Vaporisateur)",
     "brand": "Tom Ford",
     "category": "beauty",
@@ -45144,7 +45144,7 @@ window.PRODUCTS_DATA = {
   },
   "sawa_hotel_suite": {
     "id": "sawa_hotel_suite",
-    "slug": "hotel-sawa-douala-presidential-executive-suite-pool-bzlg",
+    "slug": "hotel-sawa-douala-presidential-executive-suite-pool-harbor-90e58f",
     "title": "Hotel Sawa Douala — Presidential Executive Suite (Pool & Harbor View)",
     "brand": "Hotel Sawa",
     "category": "hospitality",
@@ -45182,7 +45182,7 @@ window.PRODUCTS_DATA = {
   },
   "finexs_vip_bus": {
     "id": "finexs_vip_bus",
-    "slug": "finexs-voyages-vip-coach-express-douala-akwa-yaounde-hcn8",
+    "slug": "finexs-voyages-vip-coach-express-douala-akwa-yaounde-mvan-065af9",
     "title": "Finexs Voyages VIP Coach Express — Douala Akwa ⇄ Yaoundé Mvan",
     "brand": "Finexs Voyages",
     "category": "travel",
@@ -45220,7 +45220,7 @@ window.PRODUCTS_DATA = {
   },
   "it_consulting_service": {
     "id": "it_consulting_service",
-    "slug": "senior-cloud-architecture-devsecops-engineering-kh3m",
+    "slug": "senior-cloud-architecture-devsecops-engineering-consulting-a70b97",
     "title": "Senior Cloud Architecture & DevSecOps Engineering Consulting",
     "brand": "Ascendant Tech Labs",
     "category": "services",
@@ -45258,7 +45258,7 @@ window.PRODUCTS_DATA = {
   },
   "tecno_camon40": {
     "id": "tecno_camon40",
-    "slug": "tecno-camon-40-ai-camera-256gb-8gb-ram-ovoe",
+    "slug": "tecno-camon-40-ai-camera-256gb-8gb-ram-2c6b51",
     "title": "TECNO Camon 40 AI Camera 256GB / 8GB RAM",
     "brand": "Tecno",
     "category": "electronics",
@@ -45308,7 +45308,7 @@ window.PRODUCTS_DATA = {
   },
   "samsung_s24_ultra": {
     "id": "samsung_s24_ultra",
-    "slug": "samsung-galaxy-s24-ultra-256gb-titanium-22hi",
+    "slug": "samsung-galaxy-s24-ultra-256gb-titanium-459590",
     "title": "Samsung Galaxy S24 Ultra 256GB Titanium",
     "brand": "Samsung",
     "category": "electronics",
@@ -45358,7 +45358,7 @@ window.PRODUCTS_DATA = {
   },
   "galaxy_s26_ultra": {
     "id": "galaxy_s26_ultra",
-    "slug": "samsung-galaxy-s26-ultra-512gb-titanium-black-1mwq",
+    "slug": "samsung-galaxy-s26-ultra-512gb-titanium-black-290d04",
     "title": "Samsung Galaxy S26 Ultra 512GB Titanium Black",
     "brand": "Samsung",
     "category": "electronics",
@@ -45408,7 +45408,7 @@ window.PRODUCTS_DATA = {
   },
   "iphone_17_pro_max": {
     "id": "iphone_17_pro_max",
-    "slug": "apple-iphone-17-pro-max-512gb-cosmic-blue-h3yg",
+    "slug": "apple-iphone-17-pro-max-512gb-cosmic-blue-4238e3",
     "title": "Apple iPhone 17 Pro Max 512GB Cosmic Blue",
     "brand": "Apple",
     "category": "electronics",
@@ -45458,7 +45458,7 @@ window.PRODUCTS_DATA = {
   },
   "iphone_15_pro": {
     "id": "iphone_15_pro",
-    "slug": "apple-iphone-15-pro-256gb-natural-titanium-n628",
+    "slug": "apple-iphone-15-pro-256gb-natural-titanium-a9c17d",
     "title": "Apple iPhone 15 Pro 256GB Natural Titanium",
     "brand": "Apple",
     "category": "electronics",
@@ -45504,7 +45504,7 @@ window.PRODUCTS_DATA = {
   },
   "macbook_m2": {
     "id": "macbook_m2",
-    "slug": "macbook-air-13-puce-m2-8gb-ram-256gb-ssd-3uf5",
+    "slug": "macbook-air-13-puce-m2-8gb-ram-256gb-ssd-91c66c",
     "title": "MacBook Air 13” (Puce M2, 8GB RAM, 256GB SSD)",
     "brand": "Apple",
     "category": "electronics",
@@ -45558,7 +45558,7 @@ window.PRODUCTS_DATA = {
   },
   "surface_laptop": {
     "id": "surface_laptop",
-    "slug": "microsoft-surface-laptop-5-13-5-touch-core-i7-512gb-jk1l",
+    "slug": "microsoft-surface-laptop-5-13-5-touch-core-i7-512gb-4f5804",
     "title": "Microsoft Surface Laptop 5 (13.5” Touch, Core i7, 512GB)",
     "brand": "Microsoft",
     "category": "electronics",
@@ -45608,7 +45608,7 @@ window.PRODUCTS_DATA = {
   },
   "ps5_slim": {
     "id": "ps5_slim",
-    "slug": "sony-playstation-5-slim-edition-1tb-ssd-3pge",
+    "slug": "sony-playstation-5-slim-edition-1tb-ssd-68edbb",
     "title": "Sony PlayStation 5 Slim Edition 1TB SSD",
     "brand": "Sony",
     "category": "electronics",
@@ -45654,7 +45654,7 @@ window.PRODUCTS_DATA = {
   },
   "airpods_max": {
     "id": "airpods_max",
-    "slug": "apple-airpods-max-casque-sans-fil-anc-haute-fidelite-u6s6",
+    "slug": "apple-airpods-max-casque-sans-fil-anc-haute-fidelite-592f37",
     "title": "Apple AirPods Max (Casque Sans Fil ANC Haute Fidélité)",
     "brand": "Apple",
     "category": "electronics",
@@ -45704,7 +45704,7 @@ window.PRODUCTS_DATA = {
   },
   "airpods_4": {
     "id": "airpods_4",
-    "slug": "apple-airpods-4-edition-reduction-active-du-bruit-wvmt",
+    "slug": "apple-airpods-4-edition-reduction-active-du-bruit-8b3f96",
     "title": "Apple AirPods 4 (Édition Réduction Active du Bruit)",
     "brand": "Apple",
     "category": "electronics",
@@ -45754,7 +45754,7 @@ window.PRODUCTS_DATA = {
   },
   "jbl_flip6": {
     "id": "jbl_flip6",
-    "slug": "jbl-flip-6-enceinte-bluetooth-portable-30w-ip67-2642",
+    "slug": "jbl-flip-6-enceinte-bluetooth-portable-30w-ip67-599b6a",
     "title": "JBL Flip 6 Enceinte Bluetooth Portable (30W IP67)",
     "brand": "JBL",
     "category": "electronics",
@@ -45804,7 +45804,7 @@ window.PRODUCTS_DATA = {
   },
   "alexa_speaker": {
     "id": "alexa_speaker",
-    "slug": "amazon-echo-dot-5th-gen-enceinte-connectee-alexa-horloge-bmcj",
+    "slug": "amazon-echo-dot-5th-gen-enceinte-connectee-alexa-horloge-led-2a47ab",
     "title": "Amazon Echo Dot 5th Gen (Enceinte Connectée Alexa + Horloge LED)",
     "brand": "Amazon",
     "category": "electronics",
@@ -45850,7 +45850,7 @@ window.PRODUCTS_DATA = {
   },
   "apple_airtag": {
     "id": "apple_airtag",
-    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-6r9v",
+    "slug": "apple-airtag-pack-de-4-balises-de-localisation-precise-8e143a",
     "title": "Apple AirTag (Pack de 4 Balises de Localisation Précise)",
     "brand": "Apple",
     "category": "electronics",
@@ -45896,7 +45896,7 @@ window.PRODUCTS_DATA = {
   },
   "dji_osmo_pocket3": {
     "id": "dji_osmo_pocket3",
-    "slug": "dji-osmo-pocket-3-creator-combo-stabilisateur-3-axes-fur3",
+    "slug": "dji-osmo-pocket-3-creator-combo-stabilisateur-3-axes-a3a0eb",
     "title": "DJI Osmo Pocket 3 Creator Combo (Stabilisateur 3 Axes 4K/120fps)",
     "brand": "DJI",
     "category": "electronics",
@@ -45946,7 +45946,7 @@ window.PRODUCTS_DATA = {
   },
   "action_cam": {
     "id": "action_cam",
-    "slug": "4k-pov-wearable-action-cam-ordro-ep7-ultra-hd-60fps-3sda",
+    "slug": "4k-pov-wearable-action-cam-ordro-ep7-ultra-hd-60fps-8ac45c",
     "title": "4K POV Wearable Action Cam (Ordro EP7 Ultra HD 60fps)",
     "brand": "Ordro",
     "category": "electronics",
@@ -45992,7 +45992,7 @@ window.PRODUCTS_DATA = {
   },
   "lapel_mic": {
     "id": "lapel_mic",
-    "slug": "micro-cravate-sans-fil-double-emetteur-plug-play-type-c-8flv",
+    "slug": "micro-cravate-sans-fil-double-emetteur-plug-play-type-c-ios-94e430",
     "title": "Micro Cravate Sans Fil Double Émetteur (Plug & Play Type-C & iOS)",
     "brand": "Saramonic",
     "category": "electronics",
@@ -46038,7 +46038,7 @@ window.PRODUCTS_DATA = {
   },
   "mifa_a90": {
     "id": "mifa_a90",
-    "slug": "mifa-a90-enceinte-bluetooth-boombox-60w-ipx8-waterproof-eba2",
+    "slug": "mifa-a90-enceinte-bluetooth-boombox-60w-ipx8-waterproof-rgb-ab085c",
     "title": "MIFA A90 Enceinte Bluetooth Boombox 60W (IPX8 Waterproof & RGB)",
     "brand": "MIFA",
     "category": "electronics",
@@ -46088,7 +46088,7 @@ window.PRODUCTS_DATA = {
   },
   "power_bank": {
     "id": "power_bank",
-    "slug": "batterie-externe-solaire-30-000mah-ultra-rapide-4-cables-xngf",
+    "slug": "batterie-externe-solaire-30-000mah-ultra-rapide-4-cables-eb28a0",
     "title": "Batterie Externe Solaire 30,000mAh Ultra-Rapide (4 Câbles Intégrés)",
     "brand": "PowerCore",
     "category": "electronics",
@@ -46138,7 +46138,7 @@ window.PRODUCTS_DATA = {
   },
   "nike_air_force_1": {
     "id": "nike_air_force_1",
-    "slug": "nike-air-force-1-07-low-triple-white-classic-sneakers-e97v",
+    "slug": "nike-air-force-1-07-low-triple-white-classic-sneakers-e418cc",
     "title": "Nike Air Force 1 '07 Low (Triple White Classic Sneakers)",
     "brand": "Nike",
     "category": "fashion",
@@ -46184,7 +46184,7 @@ window.PRODUCTS_DATA = {
   },
   "chelsea_boots": {
     "id": "chelsea_boots",
-    "slug": "kraasa-bottines-chelsea-en-daim-veritable-slip-on-homme-2vny",
+    "slug": "kraasa-bottines-chelsea-en-daim-veritable-slip-on-homme-0a04f0",
     "title": "Kraasa Bottines Chelsea en Daim Véritable (Slip-On Homme)",
     "brand": "Kraasa",
     "category": "fashion",
@@ -46230,7 +46230,7 @@ window.PRODUCTS_DATA = {
   },
   "dress_loafers": {
     "id": "dress_loafers",
-    "slug": "mocassins-richelieu-bicolores-en-cuir-fait-main-fijz",
+    "slug": "mocassins-richelieu-bicolores-en-cuir-fait-main-spectator-085a3e",
     "title": "Mocassins Richelieu Bicolores en Cuir Fait Main (Spectator Loafers)",
     "brand": "Armonía",
     "category": "fashion",
@@ -46276,7 +46276,7 @@ window.PRODUCTS_DATA = {
   },
   "leather_satchel": {
     "id": "leather_satchel",
-    "slug": "sac-a-main-trapeze-en-cuir-graine-structure-monogramme-qabw",
+    "slug": "sac-a-main-trapeze-en-cuir-graine-structure-monogramme-luxe-4edca9",
     "title": "Sac à Main Trapèze en Cuir Grainé Structuré (Monogramme Luxe)",
     "brand": "Armonía",
     "category": "fashion",
@@ -46322,7 +46322,7 @@ window.PRODUCTS_DATA = {
   },
   "stiletto_heels": {
     "id": "stiletto_heels",
-    "slug": "escarpins-stiletto-banquet-chic-10cm-bout-pointu-soiree-xkls",
+    "slug": "escarpins-stiletto-banquet-chic-10cm-bout-pointu-soiree-70d20c",
     "title": "Escarpins Stiletto Banquet Chic 10cm (Bout Pointu Soirée)",
     "brand": "Soirée Chic",
     "category": "fashion",
@@ -46368,7 +46368,7 @@ window.PRODUCTS_DATA = {
   },
   "ankara_palazzo": {
     "id": "ankara_palazzo",
-    "slug": "ensemble-pantalon-palazzo-kimono-wax-africain-100-coton-g6oy",
+    "slug": "ensemble-pantalon-palazzo-kimono-wax-africain-100-coton-4037a6",
     "title": "Ensemble Pantalon Palazzo & Kimono Wax Africain (100% Coton)",
     "brand": "AfroChic Atelier",
     "category": "fashion",
@@ -46414,7 +46414,7 @@ window.PRODUCTS_DATA = {
   },
   "artisan_sandals": {
     "id": "artisan_sandals",
-    "slug": "sandales-artisanales-tressees-en-cuir-marron-homme-o5rh",
+    "slug": "sandales-artisanales-tressees-en-cuir-marron-homme-5f464a",
     "title": "Sandales Artisanales Tressées en Cuir Marron Homme",
     "brand": "Artisan Cuir",
     "category": "fashion",
@@ -46460,7 +46460,7 @@ window.PRODUCTS_DATA = {
   },
   "beaded_bracelet": {
     "id": "beaded_bracelet",
-    "slug": "bracelet-pour-homme-en-pierres-naturelles-noires-charms-unod",
+    "slug": "bracelet-pour-homme-en-pierres-naturelles-noires-charms-8af11e",
     "title": "Bracelet pour Homme en Pierres Naturelles Noires & Charms",
     "brand": "Zulu Heritage",
     "category": "jewelry",
@@ -46506,7 +46506,7 @@ window.PRODUCTS_DATA = {
   },
   "home_station_expresso_infusion_barista_maison": {
     "id": "home_station_expresso_infusion_barista_maison",
-    "slug": "station-expresso-infusion-barista-maison-15-bar-2h82",
+    "slug": "station-expresso-infusion-barista-maison-15-bar-italienne-14078b",
     "title": "Station Expresso & Infusion Barista Maison (15 Bar Italienne)",
     "brand": "DeLonghi",
     "category": "home",
@@ -46552,7 +46552,7 @@ window.PRODUCTS_DATA = {
   },
   "cold_press_juicer": {
     "id": "cold_press_juicer",
-    "slug": "extracteur-de-jus-slow-juicer-a-froid-mastication-lente-3vbl",
+    "slug": "extracteur-de-jus-slow-juicer-a-froid-mastication-lente-150w-5601fc",
     "title": "Extracteur de Jus Slow Juicer à Froid (Mastication Lente 150W)",
     "brand": "Hurom",
     "category": "home",
@@ -46598,7 +46598,7 @@ window.PRODUCTS_DATA = {
   },
   "espresso_maker": {
     "id": "espresso_maker",
-    "slug": "machine-a-cafe-expresso-retro-compacte-avec-buse-vapeur-chhs",
+    "slug": "machine-a-cafe-expresso-retro-compacte-avec-buse-vapeur-dfe31f",
     "title": "Machine à Café Expresso Rétro Compacte avec Buse Vapeur",
     "brand": "DeLonghi",
     "category": "home",
@@ -46644,7 +46644,7 @@ window.PRODUCTS_DATA = {
   },
   "oraimo_airfryer": {
     "id": "oraimo_airfryer",
-    "slug": "friteuse-sans-huile-oraimo-smartfryer-5l-ecran-tactile-56cq",
+    "slug": "friteuse-sans-huile-oraimo-smartfryer-5l-ecran-tactile-1500w-91adbe",
     "title": "Friteuse Sans Huile Oraimo SmartFryer 5L Écran Tactile (1500W)",
     "brand": "Oraimo",
     "category": "home",
@@ -46690,7 +46690,7 @@ window.PRODUCTS_DATA = {
   },
   "na_double_monk_01": {
     "id": "na_double_monk_01",
-    "slug": "armonia-double-monk-shoes-glossy-italian-box-calfskin-d9jl",
+    "slug": "armonia-double-monk-shoes-glossy-italian-box-calfskin-ec80eb",
     "title": "Armonía Double-Monk Shoes (Glossy Italian Box Calfskin)",
     "brand": "Armonía",
     "category": "fashion",
@@ -46736,7 +46736,7 @@ window.PRODUCTS_DATA = {
   },
   "na_danbaoly_bag_02": {
     "id": "na_danbaoly_bag_02",
-    "slug": "danbaoly-crimson-red-handbag-bow-tie-charm-edition-x1rv",
+    "slug": "danbaoly-crimson-red-handbag-bow-tie-charm-edition-dbf09b",
     "title": "Danbaoly Crimson Red Handbag (Bow-Tie Charm Edition)",
     "brand": "Danbaoly",
     "category": "fashion",
@@ -46782,7 +46782,7 @@ window.PRODUCTS_DATA = {
   },
   "na_pedro_backpack_03": {
     "id": "na_pedro_backpack_03",
-    "slug": "pedro-tri-tone-heritage-rucksack-travel-tech-backpack-at61",
+    "slug": "pedro-tri-tone-heritage-rucksack-travel-tech-backpack-7f794b",
     "title": "Pedro Tri-Tone Heritage Rucksack (Travel Tech Backpack)",
     "brand": "Pedro",
     "category": "fashion",
@@ -46828,7 +46828,7 @@ window.PRODUCTS_DATA = {
   },
   "na_boat_speaker_04": {
     "id": "na_boat_speaker_04",
-    "slug": "boat-stone-1400-crimson-wireless-speaker-30w-dynamic-vjog",
+    "slug": "boat-stone-1400-crimson-wireless-speaker-30w-dynamic-bass-3b5ac5",
     "title": "boAt Stone 1400 Crimson Wireless Speaker (30W Dynamic Bass)",
     "brand": "boAt",
     "category": "electronics",
@@ -46874,7 +46874,7 @@ window.PRODUCTS_DATA = {
   },
   "na_pixel_10_pro_05": {
     "id": "na_pixel_10_pro_05",
-    "slug": "google-pixel-10-pro-5g-titanium-256gb-google-tensor-g5-ndrh",
+    "slug": "google-pixel-10-pro-5g-titanium-256gb-google-tensor-g5-153058",
     "title": "Google Pixel 10 Pro 5G Titanium (256GB Google Tensor G5)",
     "brand": "Google",
     "category": "electronics",
@@ -46924,7 +46924,7 @@ window.PRODUCTS_DATA = {
   },
   "na_amina_muaddi_06": {
     "id": "na_amina_muaddi_06",
-    "slug": "amina-muaddi-sunburst-duo-escarpins-sculptes-ornes-de-wyw1",
+    "slug": "amina-muaddi-sunburst-duo-escarpins-sculptes-ornes-de-b5656b",
     "title": "Amina Muaddi Sunburst Duo (Escarpins Sculptés Ornés de Cristaux)",
     "brand": "Amina Muaddi",
     "category": "fashion",
@@ -46970,7 +46970,7 @@ window.PRODUCTS_DATA = {
   },
   "na_noire_birkin_07": {
     "id": "na_noire_birkin_07",
-    "slug": "noire-alligator-birkin-luxury-handbag-gold-plated-bnek",
+    "slug": "noire-alligator-birkin-luxury-handbag-gold-plated-hardware-d02aca",
     "title": "NOIRE Alligator Birkin Luxury Handbag (Gold Plated Hardware)",
     "brand": "NOIRE",
     "category": "fashion",
@@ -47016,7 +47016,7 @@ window.PRODUCTS_DATA = {
   },
   "na_bigtree_heels_08": {
     "id": "na_bigtree_heels_08",
-    "slug": "bigtree-emerald-stiletto-pumps-finition-velours-emeraude-sm38",
+    "slug": "bigtree-emerald-stiletto-pumps-finition-velours-emeraude-e08860",
     "title": "Bigtree Emerald Stiletto Pumps (Finition Velours Émeraude)",
     "brand": "Bigtree",
     "category": "fashion",
@@ -47062,7 +47062,7 @@ window.PRODUCTS_DATA = {
   },
   "na_artisan_brogue_09": {
     "id": "na_artisan_brogue_09",
-    "slug": "artisan-lug-sole-chunky-brogues-derbies-cuir-patine-2tcx",
+    "slug": "artisan-lug-sole-chunky-brogues-derbies-cuir-patine-homme-fe9850",
     "title": "Artisan Lug-Sole Chunky Brogues (Derbies Cuir Patiné Homme)",
     "brand": "Artisan Cuir",
     "category": "fashion",
@@ -47108,7 +47108,7 @@ window.PRODUCTS_DATA = {
   },
   "na_infinity_necklace_11": {
     "id": "na_infinity_necklace_11",
-    "slug": "crystal-infinity-parure-set-collier-infini-boucles-d3zm",
+    "slug": "crystal-infinity-parure-set-collier-infini-boucles-cristaux-254749",
     "title": "Crystal Infinity Parure Set (Collier Infini & Boucles Cristaux)",
     "brand": "Swarovski Elements",
     "category": "jewelry",

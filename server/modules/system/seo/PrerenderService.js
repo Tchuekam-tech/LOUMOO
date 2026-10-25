@@ -125,7 +125,16 @@ async function hydrate(resolved) {
     if (!repo) return { entity: null, status: 200 };
     try {
       const product = await repo.findIndexableProductByIdOrSlug(params.id);
-      if (!product) return { entity: null, status: 404 };
+      if (!product) {
+        // Not a live listing or curated product. It may be the OLD slug of a listing that was
+        // re-slugged or de-duplicated (iam.listing_redirects) — 301 to the survivor's current slug.
+        // Best-effort: a missing table (pre-migration) or a dead target yields null → a normal 404.
+        const redirect = typeof repo.findListingRedirect === 'function' ? await repo.findListingRedirect(params.id) : null;
+        if (redirect && redirect.targetSlug && redirect.targetSlug !== params.id) {
+          return { entity: null, status: 200, redirectTo: `/product/${redirect.targetSlug}` };
+        }
+        return { entity: null, status: 404 };
+      }
       const canonicalPath = productPath(product) || undefined;
       // A curated product reached by its immutable id (the URL the catalogue had before it had slugs,
       // and the one a repeated product used to carry as "_2" ... "_26") is an alias: it resolves BY ID,
@@ -214,11 +223,9 @@ async function hydrate(resolved) {
   return { entity: null, status: 200 };
 }
 
+// Delegates to the shared money formatter (src/shared/money.js); identical output, one definition.
 function formatPrice(amount, currency) {
-  const n = Math.round(Number(amount) || 0);
-  if (!n) return '';
-  const grouped = String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  return (currency || 'XAF') === 'XAF' ? `${grouped} FCFA` : `${grouped} ${currency}`;
+  return require('../../../../src/shared/money').formatMoney(amount, currency);
 }
 
 /**

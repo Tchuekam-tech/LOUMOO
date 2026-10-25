@@ -118,6 +118,24 @@ async function run() {
   } finally { CatalogRepository.findIndexableProductByIdOrSlug = origFind; }
   console.log('    ✓ a live listing is untouched: by id or slug, canonical = its slug');
 
+  /* ── a DB listing redirect (iam.listing_redirects): an archived/renamed slug 301s to the survivor ── */
+  const origFind2 = CatalogRepository.findIndexableProductByIdOrSlug;
+  const origRedirect = CatalogRepository.findListingRedirect;
+  CatalogRepository.findIndexableProductByIdOrSlug = async () => null; // no live listing or curated product
+  CatalogRepository.findListingRedirect = async (slug) => (slug === 'macbook-air-m3-olddup' ? { targetSlug: 'macbook-air-m3-kept99' } : null);
+  try {
+    r = await render('/product/macbook-air-m3-olddup?ref=mail');
+    assert.deepStrictEqual(r.redirect, { status: 301, to: '/product/macbook-air-m3-kept99' }, 'an old duplicate slug 301s to the surviving listing');
+    assert.strictEqual(r.html, '', 'the redirect carries no document');
+    r = await render('/product/genuinely-unknown-xxxxxx');
+    assert.strictEqual(r.status, 404, 'a slug with no live listing and no redirect row is still a real 404');
+    assert.ok(!r.redirect);
+  } finally {
+    CatalogRepository.findIndexableProductByIdOrSlug = origFind2;
+    CatalogRepository.findListingRedirect = origRedirect;
+  }
+  console.log('    ✓ a DB listing redirect: an old/archived slug 301s to the survivor; an unknown slug stays a 404');
+
   /* ── a store page ───────────────────────────────────────────────────── */
   const origStore = StoreRepository.findByIdOrSlug;
   StoreRepository.findByIdOrSlug = async () => ({ id: 'sto_1', slug: 'acme-1f3a', name: 'Acme', status: 'ACTIVE', visibility: 'PUBLIC', description: 'Shop', is_verified: false });

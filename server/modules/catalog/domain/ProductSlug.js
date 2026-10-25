@@ -3,11 +3,11 @@
  * ---------------------------------------------------------------------------
  * The one place a curated product's URL slug is derived. A slug is
  *
- *     <whole words of the title, at most MAX_BASE_LENGTH characters>-<4 characters>
+ *     <whole words of the title, at most MAX_BASE_LENGTH characters>-<SUFFIX_LENGTH hex chars>
  *
- * for example  google-pixel-8-pro-128gb-unlocked-android-14-k3x9  — the shape the
- * hand-published listings already have (Listing.generateSlug: words, then four
- * lowercase letters/digits), but DERIVED instead of drawn at random:
+ * for example  google-pixel-8-pro-128gb-unlocked-android-14-8a3f1c  — the same SHAPE the
+ * hand-published listings have (Listing.generateSlug: words, then a short lowercase suffix),
+ * but DERIVED instead of drawn at random:
  *
  *   - Deterministic and idempotent. The suffix is a hash of the product's IMMUTABLE
  *     id, so the same product gets the same slug on every run, machine and rebuild,
@@ -20,9 +20,15 @@
  *     (that scheme minted a new URL every time the catalogue was rebuilt in a different
  *     order, and put 26 copies of one phone in the sitemap).
  *
- * The suffix space is 36^4 (1,679,616), so two products can only collide when they also
- * share every word of their truncated title; tests/unit/product_slug.test.js proves the
- * whole seed catalogue is collision-free, and CuratedUrls refuses to serve a duplicate.
+ * Suffix: SUFFIX_LENGTH (6) lowercase hex characters, the first 24 bits of the id's SHA-256.
+ * The hand-published listings use a 4-character base36 tail (e.g. "-6y0z", which contains y/z,
+ * so it is base36, not hex); this generator uses 6 hex characters instead — a larger space
+ * (16^6 = 16,777,216 vs 36^4 = 1,679,616) that is more collision-resistant and still the same
+ * readable "<words>-<short tail>" shape. isProductSlug accepts both tails, so a stored curated
+ * slug and a hand-created listing slug both validate. Two products can only collide when they
+ * ALSO share every word of their truncated title; tests/unit/product_slug.test.js proves the
+ * whole seed catalogue is collision-free, CuratedUrls refuses to serve a duplicate, and the
+ * `uq_listings_slug` unique index (migration 023) makes a live-listing collision fail loudly.
  *
  * scripts/catalog_slug.py is the same algorithm for the Python catalogue generators; the
  * test runs both over the catalogue and compares.
@@ -31,14 +37,13 @@
 
 const crypto = require('crypto');
 
-const MAX_BASE_LENGTH = 56;
-const SUFFIX_LENGTH = 4;
-const ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyz';
-const SUFFIX_SPACE = Math.pow(ALPHABET.length, SUFFIX_LENGTH);
+const MAX_BASE_LENGTH = 60;
+const SUFFIX_LENGTH = 6;
 const FALLBACK_BASE = 'product';
 
-// The shape of every slug this module makes (and of the hand-published ones).
-const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*-[0-9a-z]{4}$/;
+// The shape of every slug this module makes (6 hex) and of the hand-published ones (4 base36):
+// whole words, then a 4-to-6 lowercase-alphanumeric tail.
+const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*-[0-9a-z]{4,6}$/;
 
 // "(#11)", "(Configuration Pro #11)", "(Modèle Créateur #7)" at the END of a title: a counter the
 // catalogue generators add to the titles of a repeated item so each looks unique. It says nothing
@@ -92,19 +97,13 @@ function truncateOnWordBoundary(words, max) {
 }
 
 /**
- * Four lowercase letters/digits derived from the immutable id: the first 32 bits of its SHA-256,
- * written in base 36. Same id, same suffix, always.
+ * SUFFIX_LENGTH (6) lowercase hex characters derived from the immutable id: the leading hex
+ * digits of its SHA-256. Same id, same suffix, always.
  */
 function stableSuffix(immutableId) {
   const id = String(immutableId == null ? '' : immutableId);
   if (!id) throw new TypeError('a slug suffix needs the product\'s immutable id');
-  let n = crypto.createHash('sha256').update(id, 'utf8').digest().readUInt32BE(0) % SUFFIX_SPACE;
-  let out = '';
-  for (let i = 0; i < SUFFIX_LENGTH; i++) {
-    out = ALPHABET[n % ALPHABET.length] + out;
-    n = Math.floor(n / ALPHABET.length);
-  }
-  return out;
+  return crypto.createHash('sha256').update(id, 'utf8').digest('hex').slice(0, SUFFIX_LENGTH);
 }
 
 /** The title part of the slug (no suffix). */

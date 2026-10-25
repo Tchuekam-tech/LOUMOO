@@ -181,6 +181,11 @@ async function createStore(user, { status = 'ACTIVE', name = null, id = null } =
     email: user.email,
     status,
     visibility: 'PUBLIC',
+    // Harness-created stores are flagged so they never reach a public surface (sitemap, store list).
+    // Needs migration 023 applied to the target database (the hermetic PGlite DB applies it; a real
+    // integration DB must have it before these suites run). Belt-and-suspenders: the name/slug also
+    // match IndexingPolicy's test patterns, so filtering works even without the flag.
+    is_test: true,
     onboarding_step: status === 'ACTIVE' ? 'ACTIVE' : 'IN_PROGRESS',
     onboarding_completed: status === 'ACTIVE'
   }).select('*').single();

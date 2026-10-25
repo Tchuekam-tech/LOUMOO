@@ -162,14 +162,20 @@ function collectCategoryEntries(dbCategories) {
     .map((c) => ({ path: dir.pathFor(c), changefreq: 'daily', priority: 0.8 }));
 }
 
+/** Active stores, with `is_test` when the column exists (migration 023) and without it before then. */
+async function selectActiveStores(db) {
+  const q = (cols) => db.from('stores').select(cols).eq('status', 'ACTIVE').limit(MAX_STORES + 1);
+  const withFlag = await q('slug, name, updated_at, status, visibility, is_test');
+  // A database still on the pre-023 schema answers "column is_test does not exist" (PostgREST 42703):
+  // fall back to the columns that have always existed. isTestStore then relies on slug/name patterns.
+  if (withFlag.error) return q('slug, name, updated_at, status, visibility');
+  return withFlag;
+}
+
 async function collectStoreEntries(db) {
   if (!db) return [];
   try {
-    const { data, error } = await db
-      .from('stores')
-      .select('slug, name, updated_at, status, visibility')
-      .eq('status', 'ACTIVE')
-      .limit(MAX_STORES + 1);
+    const { data, error } = await selectActiveStores(db);
     if (error) throw error;
     // Live means ACTIVE and not PRIVATE; the test harnesses' stores are real rows too, and are not shops.
     const rows = (data || []).filter((r) => r.slug && PARAM_RE.test(String(r.slug)) && IndexingPolicy.isPublicStore(r) && !IndexingPolicy.isTestStore(r));

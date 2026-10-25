@@ -20,6 +20,7 @@ const { HOUSE_STORE } = require('../../store/domain/HouseStore');
 const { getSharedHouseStore } = require('../../store/application/HouseStoreService');
 const { priceToNumber } = require('../domain/CuratedCatalog');
 const CuratedUrls = require('../domain/CuratedUrls');
+const Money = require('../../../../src/shared/money');
 
 const CATALOG_SELECT_COLUMNS = [
   'id', 'store_id', 'seller_id', 'listing_type', 'category_id', 'title', 'slug',
@@ -374,6 +375,29 @@ class CatalogRepository {
 
     // DB reachable, no live listing: a curated product or nothing.
     return curated();
+  }
+
+  /**
+   * The CURRENT slug a legacy/archived listing URL should 301 to, or null. Reads iam.listing_redirects
+   * (migration 024) for `oldSlug`, then the surviving listing's live slug. Best-effort: no database,
+   * a missing table (pre-migration), a dead/hidden target or any error all yield null — so the prerender
+   * answers a normal 404 rather than redirecting into nothing.
+   */
+  static async findListingRedirect(oldSlug) {
+    if (!oldSlug || !this.hasDatabase) return null;
+    try {
+      const { data, error } = await this.db
+        .from('listing_redirects').select('target_listing_id').eq('old_slug', String(oldSlug)).maybeSingle();
+      if (error || !data || !data.target_listing_id) return null;
+      const { data: target, error: e2 } = await this.db
+        .from('listings').select('slug')
+        .eq('id', data.target_listing_id).eq('status', 'PUBLISHED').eq('visibility', 'PUBLIC').is('deleted_at', null)
+        .maybeSingle();
+      if (e2 || !target || !target.slug) return null;
+      return { targetSlug: target.slug };
+    } catch (_) {
+      return null;
+    }
   }
 
   static _formatProductDetail(row, store, media = [], attributes = [], inventory = null) {
@@ -812,9 +836,9 @@ class CatalogRepository {
   }
 }
 
+// The shared money formatter (src/shared/money.js) — one definition of "85 000 FCFA" for the whole app.
 function formatXaf(amount) {
-  const s = String(Math.round(amount)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  return `${s} FCFA`;
+  return Money.formatXaf(amount);
 }
 
 module.exports = CatalogRepository;
