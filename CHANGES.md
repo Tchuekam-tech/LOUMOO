@@ -125,8 +125,14 @@ client does not overwrite a freshly prerendered entity page on first load.
 Every application route is served by the Express function, which injects the head
 **and** a small semantic content block (`#loumoo-prerender`) into the shell so a
 crawler or link-preview bot that does not run the SPA still sees real content and
-the right tags. The block is hidden by CSS the instant the SPA mounts (`#dc-root`),
-so humans see the app. The home page `/` — which Vercel serves as a static file
+the right tags. The block is for bots, never for people: it is visually hidden from the
+very first paint (still in the DOM, so crawlers and screen readers keep it), removed
+outright once the SPA mounts (`#dc-root`), and shown only by a `<noscript>` rule when
+scripts cannot run. React, which the app needs before it can mount, is served from
+`src/vendor/` (SRI-pinned, with unpkg as the fallback) so a slow or blocked CDN cannot
+strand the visitor; if React cannot be loaded at all, `support.js` shows a retry screen
+(`tests/unit/boot_react_vendor.test.js`, `tests/routing/browser/boot_fallback.browser.test.js`).
+The home page `/` — which Vercel serves as a static file
 (filesystem precedence beats rewrites) — is prerendered at **build time** by
 `scripts/assemble_public.js`. `vercel.json` rewrites application routes to the
 function and bundles the shell into it (`includeFiles`).
