@@ -200,12 +200,14 @@
       openItem = () => {},
       storage,
       loadConversation = loadSDK,
+      preparePhoto: prepare = preparePhoto,
     } = {}) {
       this.api = api;
       this.changed = changed;
       this.navigate = navigate;
       this.openItem = openItem;
       this.loadConversation = loadConversation;
+      this.preparePhoto = prepare;
       try {
         this.storage = storage || root.sessionStorage;
       } catch (_) {}
@@ -698,16 +700,17 @@
       this.d.visualPreview = '';
       this.emit();
       try {
-        if (
-          !['image/jpeg', 'image/png', 'image/webp'].includes(file.type) ||
-          file.size > 1048576
-        )
-          throw new Error('Choose a JPEG, PNG or WebP smaller than 1 MB.');
+        if (!PHOTO.types.includes(file.type))
+          throw new Error('Choose a JPEG, PNG or WebP photo.');
+        if (file.size > PHOTO.maxInputBytes)
+          throw new Error(
+            `Choose a photo smaller than ${PHOTO.maxInputBytes / 1048576} MB.`,
+          );
         if (!(await this.capabilities()).visual)
           throw new Error(
             'Photo search is unavailable. Please search by typing.',
           );
-        const data = await readDataUrl(file);
+        const data = await this.preparePhoto(file);
         if (!this.current('visual', r)) return;
         this.d.visualPreview = data;
         this.emit();
