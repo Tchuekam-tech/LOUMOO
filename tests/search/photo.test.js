@@ -365,6 +365,117 @@ async function handler() {
   }
 }
 
+// The two browser primitives (decode through <img>, draw to a canvas) against a
+// recording stand-in for the DOM. Real Chromium covers the behaviour; this pins
+// the calls that matter: white before the picture, the quality that was asked
+// for, and the object URL being released on every path.
+async function primitives() {
+  const calls = [],
+    realUrl = { create: URL.createObjectURL, revoke: URL.revokeObjectURL };
+  const ctx = {
+    set fillStyle(v) {
+      calls.push(['fillStyle', v]);
+    },
+    fillRect: (...a) => calls.push(['fillRect', ...a]),
+    set imageSmoothingQuality(v) {
+      calls.push(['smoothing', v]);
+    },
+    drawImage: (...a) => calls.push(['drawImage', ...a]),
+  };
+  const canvas = {
+    width: 0,
+    height: 0,
+    getContext: (kind) => (kind === '2d' ? ctx : null),
+    toBlob: (cb, type, q) => {
+      calls.push(['toBlob', type, q]);
+      cb({ size: 123, type });
+    },
+  };
+  let decodeOutcome = Promise.resolve();
+  class FakeImage {
+    constructor() {
+      FakeImage.last = this;
+    }
+    set src(v) {
+      calls.push(['src', v]);
+    }
+    decode() {
+      return decodeOutcome;
+    }
+    get naturalWidth() {
+      return 800;
+    }
+    get naturalHeight() {
+      return 600;
+    }
+  }
+  globalThis.document = {
+    createElement: (tag) => (calls.push(['create', tag]), canvas),
+  };
+  globalThis.Image = FakeImage;
+  URL.createObjectURL = () => 'blob:fake/1';
+  URL.revokeObjectURL = (u) => calls.push(['revoke', u]);
+  const { decode, draw } = Search.photoKit;
+  const revokes = () => calls.filter((c) => c[0] === 'revoke').length;
+  try {
+    // Decoded through <img>; the URL stays alive until the caller is done.
+    const img = await decode({});
+    assert.deepEqual(
+      [img.width, img.height, calls.find((c) => c[0] === 'src')[1]],
+      [800, 600, 'blob:fake/1'],
+    );
+    assert.equal(revokes(), 0);
+    img.close();
+    assert.deepEqual(calls.filter((c) => c[0] === 'revoke'), [
+      ['revoke', 'blob:fake/1'],
+    ]);
+
+    // A picture the browser cannot decode: rejected, and the URL released now.
+    calls.length = 0;
+    const bad = new Error('EncodingError');
+    decodeOutcome = Promise.reject(bad);
+    await assert.rejects(decode({}), (e) => e === bad);
+    assert.equal(revokes(), 1);
+
+    // Without HTMLImageElement.decode(), load events are used instead.
+    calls.length = 0;
+    FakeImage.prototype.decode = undefined;
+    const pending = decode({});
+    await tick();
+    FakeImage.last.onload();
+    assert.equal((await pending).width, 800);
+    calls.length = 0;
+    const failing = decode({});
+    await tick();
+    const loadError = new Error('load failed');
+    FakeImage.last.onerror(loadError);
+    await assert.rejects(failing, (e) => e === loadError);
+    assert.equal(revokes(), 1);
+
+    // Drawing: white first, then the picture at the requested size, then JPEG at
+    // exactly the quality asked for; release() gives the pixels back.
+    calls.length = 0;
+    const drawn = draw({ source: 'IMG' }, 640, 480);
+    assert.deepEqual(calls, [
+      ['create', 'canvas'],
+      ['fillStyle', '#fff'],
+      ['fillRect', 0, 0, 640, 480],
+      ['smoothing', 'high'],
+      ['drawImage', 'IMG', 0, 0, 640, 480],
+    ]);
+    assert.deepEqual([canvas.width, canvas.height], [640, 480]);
+    assert.deepEqual(await drawn.blob(0.7), { size: 123, type: 'image/jpeg' });
+    assert.deepEqual(calls.at(-1), ['toBlob', 'image/jpeg', 0.7]);
+    drawn.release();
+    assert.deepEqual([canvas.width, canvas.height], [0, 0]);
+  } finally {
+    delete globalThis.document;
+    delete globalThis.Image;
+    URL.createObjectURL = realUrl.create;
+    URL.revokeObjectURL = realUrl.revoke;
+  }
+}
+
 function serverContract() {
   // The client budget must agree with what the server really accepts. If the
   // server limit or its accepted types ever change, this fails and PHOTO has to
@@ -404,8 +515,9 @@ module.exports = async () => {
   await ladder();
   await failures();
   await handler();
+  await primitives();
   serverContract();
   console.log(
-    'PASS photo: untouched under the limit; size and quality ladder, orientation, no upscaling, failures end in a plain message, handler wiring, budget matches the server validator',
+    'PASS photo: untouched under the limit; size and quality ladder, orientation, no upscaling, failures end in a plain message, handler wiring, decode/draw primitives, budget matches the server validator',
   );
 };
