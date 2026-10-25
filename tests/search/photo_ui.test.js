@@ -3,6 +3,7 @@
 // logic; this proves the browser primitives behave the way that logic assumes.
 require('../setup');
 const assert = require('node:assert/strict'),
+  express = require('express'),
   path = require('node:path'),
   zlib = require('node:zlib'),
   { chromium } = require('playwright'),
@@ -239,8 +240,123 @@ const bytesOf = (dataUrl) => Buffer.from(dataUrl.split(',')[1], 'base64');
 
     // 5. Nothing the page did raised an error.
     assert.deepEqual(errors, []);
+
+    // 6. The real shell under the production security headers: home tile ->
+    // photo panel -> pick an oversize photo -> the shrunk copy is searched. The
+    // pages above load the controller bare; only this one exercises the shell's
+    // template binding, its copy, and the CSP (a blob: image has to decode).
+    const app = express();
+    app.use(
+      require('../../server/shared/middleware/securityHeaders').securityHeaders,
+    );
+    app.use(express.static(path.join(__dirname, '../..')));
+    const server = app.listen(0, '127.0.0.1');
+    await new Promise((r) => server.once('listening', r));
+    try {
+      const shell = await browser.newPage({
+        viewport: { width: 390, height: 844 },
+      });
+      const shellErrors = [],
+        posted = [];
+      shell.on('pageerror', (e) => shellErrors.push(e.message));
+      shell.on(
+        'console',
+        (m) =>
+          m.type() === 'error' &&
+          /Content Security Policy/.test(m.text()) &&
+          !/vercel-scripts/.test(m.text()) && // known, unrelated analytics block
+          shellErrors.push(m.text()),
+      );
+      for (const name of ['react', 'react-dom'])
+        await shell.route(
+          `https://unpkg.com/${name}@18.3.1/umd/${name}.production.min.js`,
+          (r) =>
+            r.fulfill({
+              path: path.join(
+                __dirname,
+                `../../node_modules/${name}/umd/${name}.production.min.js`,
+              ),
+              contentType: 'application/javascript',
+              headers: { 'Access-Control-Allow-Origin': '*' },
+            }),
+        );
+      const item = {
+        id: 'fixture-bag',
+        entityType: 'product',
+        title: 'Leather handbag fixture',
+        price: 'XAF 25 000',
+        priceNumeric: 25000,
+        storeName: 'Fixture Store',
+        merchantCity: 'Douala',
+        inStock: null,
+        rating: null,
+      };
+      await shell.route('**/api/**', async (r) => {
+        const p = new URL(r.request().url()).pathname;
+        let data = {};
+        if (p.endsWith('/search/capabilities'))
+          data = { text: true, voice: false, assistant: true, visual: true };
+        else if (p.endsWith('/search/visual')) {
+          posted.push(r.request().postDataJSON());
+          data = { items: [item], total: 1, message: 'These look like bags.' };
+        } else if (p.endsWith('/search/suggest'))
+          data = { items: [item], suggestions: [], total: 1 };
+        else if (p.endsWith('/search'))
+          data = { items: [item], total: 1, page: 1, limit: 20 };
+        else if (p.endsWith('/products')) data = { items: [], total: 0 };
+        else if (p.endsWith('/me/state')) data = { authenticated: false };
+        else if (p.endsWith('/auth/config')) data = { provider: 'none' };
+        await r.fulfill({
+          contentType: 'application/json',
+          body: JSON.stringify({ success: true, data }),
+        });
+      });
+      await shell.goto(
+        `http://127.0.0.1:${server.address().port}/Commerce%20App.dc.html`,
+        { waitUntil: 'domcontentloaded' },
+      );
+      await shell
+        .locator('.lsb-search-input')
+        .waitFor({ state: 'visible', timeout: 30000 });
+      const tile = shell.getByRole('button', { name: /Spatial AI Lens/ });
+      await tile.scrollIntoViewIfNeeded();
+      await tile.click();
+      await shell
+        .getByRole('heading', { name: 'Search by photo' })
+        .waitFor({ state: 'visible', timeout: 15000 });
+      assert.equal(
+        (
+          await shell.locator('label', { hasText: 'Choose a photo' }).innerText()
+        ).trim(),
+        `Choose a photo (JPEG, PNG or WebP, up to ${PHOTO.maxInputBytes / 1048576} MB)`,
+        'the panel states the real cap (rebuild the shell if this is stale)',
+      );
+      await shell.setInputFiles('input[type=file]', {
+        name: 'IMG_0002.png',
+        mimeType: 'image/png',
+        buffer: big,
+      });
+      await shell
+        .locator('.search-card')
+        .first()
+        .waitFor({ state: 'visible', timeout: 20000 });
+      assert.equal(posted.length, 1);
+      assert.ok(validateImage(posted[0].imageData));
+      assert.ok(bytesOf(posted[0].imageData).length <= PHOTO.targetBytes);
+      assert.equal(await shell.locator('.search-error').count(), 0);
+      assert.equal(
+        await shell
+          .locator('.search-panel')
+          .evaluate((el) => el.scrollWidth <= el.clientWidth + 1),
+        true,
+        'no horizontal overflow at 390 px',
+      );
+      assert.deepEqual(shellErrors, []);
+    } finally {
+      await new Promise((r) => server.close(r));
+    }
     console.log(
-      'PASS photo in Chromium: oversize photo shrunk under the server limit and accepted by its validator, small file untouched, EXIF rotation kept, transparency flattened to white',
+      'PASS photo in Chromium: oversize photo shrunk under the server limit and accepted by its validator, small file untouched, EXIF rotation kept, transparency flattened to white, and the real shell sends the shrunk copy under the production CSP',
     );
   } finally {
     await browser?.close();
