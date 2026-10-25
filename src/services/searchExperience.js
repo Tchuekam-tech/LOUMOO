@@ -96,6 +96,27 @@
       },
     );
   }
+  // Paint the photo onto a canvas of the target size and hand back a JPEG
+  // encoder for it. JPEG has no alpha, so the canvas is filled white first;
+  // otherwise the transparent parts of a PNG would come out black.
+  function drawPhoto(img, width, height) {
+    const canvas = root.document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, width, height);
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img.source, 0, 0, width, height);
+    return {
+      blob: (quality) =>
+        new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', quality)),
+      // Give the pixel memory back now; mobile Safari is slow to reclaim canvases.
+      release: () => {
+        canvas.width = canvas.height = 0;
+      },
+    };
+  }
   const cards = (items) =>
     (items || []).map((p) => ({
       ...p,
