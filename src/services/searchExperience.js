@@ -67,6 +67,35 @@
       reader.onerror = () => reject(new Error('Could not read this image.'));
       reader.readAsDataURL(blob);
     });
+  // Decode through <img>: every current browser applies the photo's EXIF
+  // rotation to it (and to a canvas drawn from it), so a portrait shot stored
+  // sideways on the sensor is not sent to the model lying on its side. close()
+  // releases the object URL once drawing is finished.
+  function decodePhoto(file) {
+    const url = root.URL.createObjectURL(file);
+    const img = new root.Image();
+    const close = () => root.URL.revokeObjectURL(url);
+    img.src = url;
+    return (
+      img.decode
+        ? img.decode()
+        : new Promise((resolve, reject) => {
+            img.onload = resolve;
+            img.onerror = reject;
+          })
+    ).then(
+      () => ({
+        source: img,
+        width: img.naturalWidth,
+        height: img.naturalHeight,
+        close,
+      }),
+      (e) => {
+        close();
+        throw e;
+      },
+    );
+  }
   const cards = (items) =>
     (items || []).map((p) => ({
       ...p,
