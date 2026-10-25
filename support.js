@@ -4,7 +4,8 @@
 // before the app could mount, so on a slow or blocked connection the visitor sat on the
 // SEO fallback (or a blank page) for as long as the CDN took, forever if it failed. They
 // are now served from this origin (src/vendor/, byte-identical to the SRI-pinned CDN
-// files; the CDN is the fallback). See loadReactUmd.
+// files; the CDN is the fallback), and a load that fails everywhere shows a retry
+// message instead of a dead screen. See loadReactUmd / showBootFailure.
 //
 // LOCAL PATCH 2 (keep on regeneration): boot() re-fetches the page to recover its
 // exact template text. It used to ignore any response that was not 2xx, but a URL the
@@ -1936,6 +1937,33 @@
       loadScript(LOCAL_REACT_DOM_URL, REACT_DOM_SRI)
     ]).catch(fromCdn).then(() => void 0);
   }
+  // Shown in place of a dead screen when React cannot be loaded from either place.
+  function showBootFailure() {
+    const show = () => {
+      if (document.getElementById("dc-root") || document.getElementById("dc-boot-failure")) return;
+      document.documentElement.classList.add("dc-boot-failed");
+      const fr = /^fr/i.test(navigator.language || "");
+      const box = document.createElement("div");
+      box.id = "dc-boot-failure";
+      box.setAttribute("role", "alert");
+      box.style.cssText = "position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;text-align:center;font:500 16px/1.5 Inter,system-ui,sans-serif;color:#111214";
+      const msg = document.createElement("p");
+      msg.style.margin = "0";
+      msg.textContent = fr ? "LOUMOO n’a pas pu se charger. Vérifiez votre connexion puis réessayez." : "LOUMOO couldn’t load. Check your connection and try again.";
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = fr ? "Réessayer" : "Try again";
+      btn.style.cssText = "font:600 15px Inter,system-ui,sans-serif;color:#fff;background:#007aff;border:0;border-radius:12px;padding:12px 24px;cursor:pointer";
+      btn.addEventListener("click", () => location.reload());
+      box.append(msg, btn);
+      (document.body || document.documentElement).appendChild(box);
+    };
+    try {
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", show);
+      else show();
+    } catch {
+    }
+  }
   function init() {
     const runtime = createRuntime(document);
     let rootName = "Root";
@@ -1997,6 +2025,7 @@
   hideRawTemplate();
   loadReactUmd().then(init).catch((err) => {
     console.error("[dc] failed to load React or boot:", err);
+    showBootFailure();
     throw err;
   });
 })();
