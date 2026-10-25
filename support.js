@@ -1,5 +1,12 @@
 // GENERATED from dc-runtime/src/*.ts — do not edit. Rebuild with `cd dc-runtime && bun run build`.
 //
+// LOCAL PATCH 3 (keep on regeneration): React and ReactDOM were fetched ONLY from unpkg.com
+// before the app could mount, so on a slow or blocked connection the visitor sat on the
+// SEO fallback (or a blank page) for as long as the CDN took, forever if it failed. They
+// are now served from this origin (src/vendor/, byte-identical to the SRI-pinned CDN
+// files; the CDN is the fallback), and a load that fails everywhere shows a retry
+// message instead of a dead screen. See loadReactUmd / showBootFailure.
+//
 // LOCAL PATCH 2 (keep on regeneration): boot() re-fetches the page to recover its
 // exact template text. It used to ignore any response that was not 2xx, but a URL the
 // application has no page for is served WITH the application and a 404 status
@@ -1218,6 +1225,8 @@
   var REACT_SRI = "sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z";
   var REACT_DOM_URL = "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js";
   var REACT_DOM_SRI = "sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1";
+  var LOCAL_REACT_URL = "src/vendor/react.production.min.js";
+  var LOCAL_REACT_DOM_URL = "src/vendor/react-dom.production.min.js";
   var BABEL_URL = "https://unpkg.com/@babel/standalone@7.29.0/babel.min.js";
   var BABEL_SRI = "sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y";
   function cdnScriptFor(url, sri) {
@@ -1914,10 +1923,46 @@
     if (w.React && w.ReactDOM) return Promise.resolve();
     const react = cdnScriptFor(REACT_URL, REACT_SRI);
     const reactDom = cdnScriptFor(REACT_DOM_URL, REACT_DOM_SRI);
-    return Promise.all([
+    const fromCdn = () => Promise.all([
       loadScript(react.src, react.integrity),
       loadScript(reactDom.src, reactDom.integrity)
-    ]).then(() => void 0);
+    ]);
+    // A host that supplies its own copies (window.__resources) is used as given.
+    if (react.integrity === void 0 || reactDom.integrity === void 0) return fromCdn().then(() => void 0);
+    // LOCAL PATCH 3: the same-origin copy first (SRI-pinned to the very bytes the CDN
+    // serves), the CDN only if that fails. Both are a pair: a half-loaded pair is
+    // discarded and the CDN pair loaded whole, so React and ReactDOM always match.
+    return Promise.all([
+      loadScript(LOCAL_REACT_URL, REACT_SRI),
+      loadScript(LOCAL_REACT_DOM_URL, REACT_DOM_SRI)
+    ]).catch(fromCdn).then(() => void 0);
+  }
+  // Shown in place of a dead screen when React cannot be loaded from either place.
+  function showBootFailure() {
+    const show = () => {
+      if (document.getElementById("dc-root") || document.getElementById("dc-boot-failure")) return;
+      document.documentElement.classList.add("dc-boot-failed");
+      const fr = /^fr/i.test(navigator.language || "");
+      const box = document.createElement("div");
+      box.id = "dc-boot-failure";
+      box.setAttribute("role", "alert");
+      box.style.cssText = "position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;text-align:center;font:500 16px/1.5 Inter,system-ui,sans-serif;color:#111214";
+      const msg = document.createElement("p");
+      msg.style.margin = "0";
+      msg.textContent = fr ? "LOUMOO n’a pas pu se charger. Vérifiez votre connexion puis réessayez." : "LOUMOO couldn’t load. Check your connection and try again.";
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = fr ? "Réessayer" : "Try again";
+      btn.style.cssText = "font:600 15px Inter,system-ui,sans-serif;color:#fff;background:#007aff;border:0;border-radius:12px;padding:12px 24px;cursor:pointer";
+      btn.addEventListener("click", () => location.reload());
+      box.append(msg, btn);
+      (document.body || document.documentElement).appendChild(box);
+    };
+    try {
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", show);
+      else show();
+    } catch {
+    }
   }
   function init() {
     const runtime = createRuntime(document);
@@ -1980,6 +2025,7 @@
   hideRawTemplate();
   loadReactUmd().then(init).catch((err) => {
     console.error("[dc] failed to load React or boot:", err);
+    showBootFailure();
     throw err;
   });
 })();

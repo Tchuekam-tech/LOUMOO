@@ -48,6 +48,8 @@ header_and_styles = """<!DOCTYPE html>
 <link rel="icon" type="image/png" sizes="192x192" href="./Assets/brand/icon-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="./Assets/brand/apple-touch-icon.png">
 <meta name="theme-color" content="#0025E5">
+<link rel="preload" as="script" href="./src/vendor/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous">
+<link rel="preload" as="script" href="./src/vendor/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous">
 <script src="./support.js"></script>
 <script defer src="./src/routing/routes.js"></script>
 <script defer src="./src/seo/seoModel.js"></script>
@@ -96,13 +98,28 @@ header_and_styles = """<!DOCTYPE html>
   #dc-root .video-player-backdrop { display: flex !important; }
   .toast-banner { display: none !important; }
   #dc-root .toast-banner { display: flex !important; }
-  /* Server-prerendered fallback content: real, crawlable content for bots and
-     during load; hidden the moment the SPA mounts (#dc-root) so humans see the app. */
-  #loumoo-prerender { max-width: 1100px; margin: 0 auto; padding: 24px 16px; font-family: Inter, system-ui, sans-serif; color: #111214; line-height: 1.5; }
+  /* Server-prerendered fallback content (#loumoo-prerender): real, crawlable HTML for
+     bots, link previews and visitors without JavaScript. A person who can run the app
+     must never see it, not even while the app loads, so it is visually hidden from the
+     first paint (still in the DOM and the accessibility tree, so crawlers and screen
+     readers keep it) and removed outright once the SPA mounts (#dc-root). The
+     <noscript> rule below shows it when scripts cannot run, since the app cannot either. */
+  #loumoo-prerender { max-width: 1100px; font-family: Inter, system-ui, sans-serif; color: #111214; line-height: 1.5; }
   #loumoo-prerender img { max-width: 100%; height: auto; }
   #loumoo-prerender nav a { color: #0062cc; margin-right: 8px; }
+  #loumoo-prerender { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
   body:has(#dc-root) #loumoo-prerender { display: none !important; }
+  /* Until the app mounts, a quiet spinner stands in for the page (CSS only: the page's
+     CSP allows no inline script). A browser without :has() simply shows the background. */
+  body:not(:has(#dc-root))::before { content: ""; position: fixed; top: 50%; left: 50%; width: 28px; height: 28px; margin: -14px 0 0 -14px; box-sizing: border-box; border: 3px solid rgba(0, 122, 255, 0.18); border-top-color: #007aff; border-radius: 50%; animation: dc-boot-spin 0.8s linear infinite; }
+  @keyframes dc-boot-spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { body:not(:has(#dc-root))::before { animation-duration: 2.4s; } }
+  html.dc-boot-failed body::before { display: none !important; }
 </style>
+<noscript><style>
+  #loumoo-prerender { position: static !important; width: auto !important; height: auto !important; margin: 0 auto !important; padding: 24px 16px !important; overflow: visible !important; clip: auto !important; clip-path: none !important; white-space: normal !important; }
+  body::before { display: none !important; }
+</style></noscript>
 </head>
 <body>
 <div id="clerk-captcha" data-sitekey="1x00000000000000000000AA" style="display:none"></div>
