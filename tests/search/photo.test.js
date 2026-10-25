@@ -225,7 +225,10 @@ function controller({ visual = true, prepare } = {}) {
       searchCapabilities: async () => ({ text: true, visual }),
       searchVisual: async (body, signal) => {
         calls.push({ body, signal });
-        return { items: [{ id: 'bag', title: 'Bag' }], message: 'Possible bags' };
+        return {
+          items: [{ id: 'bag', title: 'Bag' }],
+          message: 'Possible bags',
+        };
       },
     },
     preparePhoto:
@@ -426,9 +429,10 @@ async function primitives() {
     );
     assert.equal(revokes(), 0);
     img.close();
-    assert.deepEqual(calls.filter((c) => c[0] === 'revoke'), [
-      ['revoke', 'blob:fake/1'],
-    ]);
+    assert.deepEqual(
+      calls.filter((c) => c[0] === 'revoke'),
+      [['revoke', 'blob:fake/1']],
+    );
 
     // A picture the browser cannot decode: rejected, and the URL released now.
     calls.length = 0;

@@ -194,7 +194,10 @@ const bytesOf = (dataUrl) => Buffer.from(dataUrl.split(',')[1], 'base64');
     const [tw, th] = orientation.tagged,
       [pw, ph] = orientation.plain;
     assert.ok(th > tw, `tagged photo is upright (${tw}x${th})`);
-    assert.ok(Math.abs(tw / th - 2 / 3) < 0.01, `tagged keeps 2:3 (${tw}x${th})`);
+    assert.ok(
+      Math.abs(tw / th - 2 / 3) < 0.01,
+      `tagged keeps 2:3 (${tw}x${th})`,
+    );
     assert.ok(pw > ph, `untagged control stays landscape (${pw}x${ph})`);
     assert.equal(orientation.inputHadExif, true, 'fixture carries EXIF');
     assert.equal(orientation.tagged[3], false, 'EXIF is not forwarded');
@@ -326,7 +329,9 @@ const bytesOf = (dataUrl) => Buffer.from(dataUrl.split(',')[1], 'base64');
         .waitFor({ state: 'visible', timeout: 15000 });
       assert.equal(
         (
-          await shell.locator('label', { hasText: 'Choose a photo' }).innerText()
+          await shell
+            .locator('label', { hasText: 'Choose a photo' })
+            .innerText()
         ).trim(),
         `Choose a photo (JPEG, PNG or WebP, up to ${PHOTO.maxInputBytes / 1048576} MB)`,
         'the panel states the real cap (rebuild the shell if this is stale)',
