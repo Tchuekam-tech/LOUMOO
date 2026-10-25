@@ -1,5 +1,8 @@
 const assert = require('node:assert/strict'),
-  Search = require('../../src/services/searchExperience');
+  Search = require('../../src/services/searchExperience'),
+  {
+    validateImage,
+  } = require('../../server/modules/search/infrastructure/SearchAI');
 const { PHOTO, preparePhoto } = Search;
 
 // A stand-in for the browser. The "photo" is just a width x height, and the JPEG
@@ -193,11 +196,46 @@ async function failures() {
   tidy(log);
 }
 
+function serverContract() {
+  // The client budget must agree with what the server really accepts. If the
+  // server limit or its accepted types ever change, this fails and PHOTO has to
+  // follow, instead of photos being shrunk to the wrong size or refused late.
+  const data = (type, bytes) =>
+    `data:${type};base64,${bytes.toString('base64')}`;
+  const jpeg = (size) => {
+    const b = Buffer.alloc(size);
+    b.set([255, 216, 255]);
+    return data('image/jpeg', b);
+  };
+  assert.ok(PHOTO.targetBytes < PHOTO.serverBytes);
+  for (const size of [PHOTO.targetBytes, PHOTO.serverBytes])
+    assert.equal(validateImage(jpeg(size)), jpeg(size));
+  assert.throws(
+    () => validateImage(jpeg(PHOTO.serverBytes + 1)),
+    (e) => e.statusCode === 400,
+  );
+  // Every type the client lets through is a type the server takes.
+  const magic = {
+    'image/jpeg': Buffer.from([255, 216, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+    'image/png': Buffer.from([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 0]),
+    'image/webp': Buffer.concat([
+      Buffer.from('RIFF'),
+      Buffer.alloc(4),
+      Buffer.from('WEBP'),
+    ]),
+  };
+  assert.deepEqual([...PHOTO.types].sort(), Object.keys(magic).sort());
+  for (const type of PHOTO.types)
+    assert.ok(validateImage(data(type, magic[type])));
+  assert.throws(() => validateImage(data('image/gif', Buffer.from('GIF89a'))));
+}
+
 module.exports = async () => {
   await passThrough();
   await ladder();
   await failures();
+  serverContract();
   console.log(
-    'PASS photo: untouched under the limit; size and quality ladder, orientation, no upscaling, failures end in a plain message',
+    'PASS photo: untouched under the limit; size and quality ladder, orientation, no upscaling, failures end in a plain message, budget matches the server validator',
   );
 };
