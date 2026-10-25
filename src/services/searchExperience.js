@@ -117,6 +117,60 @@
       },
     };
   }
+  const photoKit = { read: readDataUrl, decode: decodePhoto, draw: drawPhoto };
+  const UNREADABLE = 'Could not read this image.';
+  const TOO_BIG =
+    'We could not shrink this photo enough to send it. Try another one.';
+  // Largest size and best quality first, stepping down until the JPEG fits the
+  // target. Returns the data URL, or null when nothing fits.
+  async function shrinkPhoto(img, kit) {
+    const longest = Math.max(img.width, img.height);
+    let tried = '';
+    for (const edge of PHOTO.edges) {
+      const scale = Math.min(1, edge / longest);
+      const width = Math.max(1, Math.round(img.width * scale));
+      const height = Math.max(1, Math.round(img.height * scale));
+      // A photo smaller than the next edge would only repeat the last size.
+      if (`${width}x${height}` === tried) continue;
+      tried = `${width}x${height}`;
+      const canvas = kit.draw(img, width, height);
+      try {
+        for (const quality of PHOTO.qualities) {
+          const blob = await canvas.blob(quality);
+          if (blob && blob.size > 0 && blob.size <= PHOTO.targetBytes)
+            return kit.read(blob);
+        }
+      } finally {
+        canvas.release();
+      }
+    }
+    return null;
+  }
+  // The data URL that photo search sends. A picture already inside the server
+  // limit is read as picked; a larger one is decoded and re-encoded as a JPEG.
+  // `kit` is the seam the tests use to stand in for the browser.
+  async function preparePhoto(file, kit = photoKit) {
+    if (file.size <= PHOTO.serverBytes) return kit.read(file);
+    let img;
+    try {
+      img = await kit.decode(file);
+    } catch (e) {
+      throw new Error(UNREADABLE, { cause: e });
+    }
+    if (!(img.width > 0 && img.height > 0)) {
+      img.close();
+      throw new Error(UNREADABLE);
+    }
+    try {
+      const data = await shrinkPhoto(img, kit);
+      if (data) return data;
+    } catch (e) {
+      throw new Error(TOO_BIG, { cause: e });
+    } finally {
+      img.close();
+    }
+    throw new Error(TOO_BIG);
+  }
   const cards = (items) =>
     (items || []).map((p) => ({
       ...p,
@@ -884,5 +938,9 @@
       };
     }
   }
+  // Exposed so the browser and unit tests can drive the shrink directly.
+  SearchExperience.PHOTO = PHOTO;
+  SearchExperience.photoKit = photoKit;
+  SearchExperience.preparePhoto = preparePhoto;
   return SearchExperience;
 });
