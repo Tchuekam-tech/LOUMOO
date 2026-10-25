@@ -1,5 +1,11 @@
 // GENERATED from dc-runtime/src/*.ts — do not edit. Rebuild with `cd dc-runtime && bun run build`.
 //
+// LOCAL PATCH 3 (keep on regeneration): React and ReactDOM were fetched ONLY from unpkg.com
+// before the app could mount, so on a slow or blocked connection the visitor sat on the
+// SEO fallback (or a blank page) for as long as the CDN took, forever if it failed. They
+// are now served from this origin (src/vendor/, byte-identical to the SRI-pinned CDN
+// files; the CDN is the fallback). See loadReactUmd.
+//
 // LOCAL PATCH 2 (keep on regeneration): boot() re-fetches the page to recover its
 // exact template text. It used to ignore any response that was not 2xx, but a URL the
 // application has no page for is served WITH the application and a 404 status
@@ -1218,6 +1224,8 @@
   var REACT_SRI = "sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z";
   var REACT_DOM_URL = "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js";
   var REACT_DOM_SRI = "sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1";
+  var LOCAL_REACT_URL = "src/vendor/react.production.min.js";
+  var LOCAL_REACT_DOM_URL = "src/vendor/react-dom.production.min.js";
   var BABEL_URL = "https://unpkg.com/@babel/standalone@7.29.0/babel.min.js";
   var BABEL_SRI = "sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y";
   function cdnScriptFor(url, sri) {
@@ -1914,10 +1922,19 @@
     if (w.React && w.ReactDOM) return Promise.resolve();
     const react = cdnScriptFor(REACT_URL, REACT_SRI);
     const reactDom = cdnScriptFor(REACT_DOM_URL, REACT_DOM_SRI);
-    return Promise.all([
+    const fromCdn = () => Promise.all([
       loadScript(react.src, react.integrity),
       loadScript(reactDom.src, reactDom.integrity)
-    ]).then(() => void 0);
+    ]);
+    // A host that supplies its own copies (window.__resources) is used as given.
+    if (react.integrity === void 0 || reactDom.integrity === void 0) return fromCdn().then(() => void 0);
+    // LOCAL PATCH 3: the same-origin copy first (SRI-pinned to the very bytes the CDN
+    // serves), the CDN only if that fails. Both are a pair: a half-loaded pair is
+    // discarded and the CDN pair loaded whole, so React and ReactDOM always match.
+    return Promise.all([
+      loadScript(LOCAL_REACT_URL, REACT_SRI),
+      loadScript(LOCAL_REACT_DOM_URL, REACT_DOM_SRI)
+    ]).catch(fromCdn).then(() => void 0);
   }
   function init() {
     const runtime = createRuntime(document);
